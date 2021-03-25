@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+		"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+
+	<!-- OPMANAGER -->
+	<definition name="opmanager">
+		<put-attribute name="head" 		value="/WEB-INF/views/layouts/opmanager/inc_head.jsp" />
+		<put-attribute name="header" 	value="/WEB-INF/views/layouts/opmanager/inc_header.jsp" />
+		<put-attribute name="content" 	value="blank.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/views/layouts/opmanager/inc_footer.jsp" />
+		<put-attribute name="common" 	value="/WEB-INF/views/layouts/common/inc_common.jsp" />
+		<put-attribute name="script" 	value="/WEB-INF/views/layouts/opmanager/inc_scripts.jsp" />
+	</definition>
+
+	<definition name="//*/views/opmanager/*/error/*"  	template="/WEB-INF/views/layouts/opmanager/layout_{1}.jsp" extends="opmanager">
+		<put-attribute name="content" 	value="/WEB-INF/views/front/i18n/error/{3}.jsp" />
+	</definition>
+
+	<definition name="//*/views/opmanager/*/board/*/*"  	template="/WEB-INF/views/layouts/opmanager/layout_{1}.jsp" extends="opmanager">
+		<put-attribute name="content" 	value="/WEB-INF/views/front/i18n/board/{3}/{4}.jsp" />
+	</definition>
+
+	<definition name="//*/views/opmanager/*/*/*"  	template="/WEB-INF/views/layouts/opmanager/layout_{1}.jsp"  extends="opmanager">
+		<put-attribute name="content" 	value="/WEB-INF/views/opmanager/i18n/{3}/{4}.jsp" />
+	</definition>
+
+	<definition name="//*/views/front/*/file/*"  	template="/WEB-INF/views/layouts/opmanager/layout_{1}.jsp"  extends="opmanager">
+		<put-attribute name="content" 	value="/WEB-INF/views/front/i18n/file/{3}.jsp" />
+	</definition>
+
+
+	<!-- Seller manager -->
+	<!--
+	<definition name="//*/views/ngomanager/*/board/*/*"  	template="/WEB-INF/views/layouts/ngomanager/layout_{1}.jsp">
+		<put-attribute name="head" 		value="/WEB-INF/views/layouts/ngomanager/inc_head.jsp" />
+		<put-attribute name="header" 	value="/WEB-INF/views/layouts/ngomanager/inc_header.jsp" />
+		<put-attribute name="content" 	value="/WEB-INF/views/front/i18n/board/{3}/{4}.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/views/layouts/ngomanager/inc_footer.jsp" />
+		<put-attribute name="common" 	value="/WEB-INF/views/layouts/common/inc_common.jsp" />
+	</definition>
+	-->
+
+
+
+	<!-- FRONT -->
+
+	<!-- ERROR /default/views/{controller}/{language}/error/{method} -->
+	<definition name="//default/views/*/*/error/*"  	template="/WEB-INF/views/layouts/{1}/layout_blank.jsp">
+		<put-attribute name="content" 	value="/WEB-INF/views/{1}/i18n/error/{3}.jsp" />
+	</definition>
+
+	<!--  //{layout}/views/{template}/{language}/{controller}/{method} -->
+	<definition name="//*/views/*/*/*/*"  	template="/WEB-INF/views/layouts/{2}/layout_{1}.jsp">
+		<put-attribute name="head" 		value="/WEB-INF/views/layouts/{2}/inc_head.jsp" />
+		<put-attribute name="header" 	value="/WEB-INF/views/layouts/{2}/inc_header.jsp" />
+		<put-attribute name="lnb" 		value="/WEB-INF/views/layouts/{2}/inc_lnb.jsp" />
+		<put-attribute name="content" 	value="/WEB-INF/views/{2}/i18n/{4}/{5}.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/views/layouts/{2}/inc_footer.jsp" />
+		<put-attribute name="common" 	value="/WEB-INF/views/layouts/common/inc_common.jsp" />
+		<put-attribute name="script" 	value="/WEB-INF/views/layouts/{2}/inc_scripts.jsp" />
+
+		<put-attribute name="saleson_aside" 		value="/WEB-INF/views/layouts/{2}/saleson_aside.jsp" />
+
+		<put-attribute name="side_menu" 		value="/WEB-INF/views/layouts/{2}/side_menu.jsp" />
+		<put-attribute name="aside_category" 		value="/WEB-INF/views/layouts/{2}/aside_category.jsp" />
+	</definition>
+
+	<definition name="//*/views/*/*/*/*/*"  	template="/WEB-INF/views/layouts/{2}/layout_{1}.jsp">
+		<put-attribute name="head" 		value="/WEB-INF/views/layouts/{2}/inc_head.jsp" />
+		<put-attribute name="header" 	value="/WEB-INF/views/layouts/{2}/inc_header.jsp" />
+		<put-attribute name="lnb" 		value="/WEB-INF/views/layouts/{2}/inc_lnb.jsp" />
+		<put-attribute name="content" 	value="/WEB-INF/views/{2}/i18n/{4}/{5}/{6}.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/views/layouts/{2}/inc_footer.jsp" />
+		<put-attribute name="common" 	value="/WEB-INF/views/layouts/common/inc_common.jsp" />
+		<put-attribute name="script" 	value="/WEB-INF/views/layouts/{2}/inc_scripts.jsp" />
+
+		<put-attribute name="saleson_aside" 		value="/WEB-INF/views/layouts/{2}/saleson_aside.jsp" />
+
+		<put-attribute name="side_menu" 		value="/WEB-INF/views/layouts/{2}/side_menu.jsp" />
+		<put-attribute name="aside_category" 		value="/WEB-INF/views/layouts/{2}/aside_category.jsp" />
+	</definition>
+
+	<!--  NEW //{template}//{layout}//{language}//{uri} -->
+	<definition name="//opmanager//*//*//**"  	template="/WEB-INF/views/layouts/opmanager/layout_{1}.jsp" extends="opmanager">
+		<put-attribute name="content" 	value="/WEB-INF/views/opmanager/i18n/{3}.jsp" />
+	</definition>
+
+	<!--  //{template}//{layout}//{language}//{uri} -->
+	<definition name="//*//*//*//**"  	template="/WEB-INF/views/layouts/{1}/layout_{2}.jsp">
+		<put-attribute name="head" 		value="/WEB-INF/views/layouts/{1}/inc_head.jsp" />
+		<put-attribute name="header" 	value="/WEB-INF/views/layouts/{1}/inc_header.jsp" />
+		<put-attribute name="lnb" 		value="/WEB-INF/views/layouts/{1}/inc_lnb.jsp" />
+		<put-attribute name="content" 	value="/WEB-INF/views/{1}/i18n/{4}.jsp" />
+		<put-attribute name="footer" 	value="/WEB-INF/views/layouts/{1}/inc_footer.jsp" />
+		<put-attribute name="common" 	value="/WEB-INF/views/layouts/common/inc_common.jsp" />
+		<put-attribute name="script" 	value="/WEB-INF/views/layouts/{1}/inc_scripts.jsp" />
+
+		<put-attribute name="saleson_aside" 		value="/WEB-INF/views/layouts/{1}/saleson_aside.jsp" />
+
+		<put-attribute name="side_menu" 		value="/WEB-INF/views/layouts/{1}/side_menu.jsp" />
+	</definition>
+</tiles-definitions>

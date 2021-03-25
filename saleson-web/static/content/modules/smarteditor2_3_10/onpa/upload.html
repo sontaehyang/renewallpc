@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>사진 첨부하기 :: SmartEditor2</title>
+<script type="text/javascript" src="/content/scripts/jquery/jquery-1.11.0.min.js"></script>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+
+<form id="editor_upimage" name="editor_upimage" action="/smarteditor/upload-ctp" method="post" target="frame_action" enctype="multipart/form-data">
+      <input type="hidden" name="token" id="token" />
+      
+      <div id="pop_content2">
+      	<p class="dsc" id="info">
+      		<strong>5MB</strong>이하의 이미지 파일(JPG, GIF, PNG, BMP)과<br /> CTP 파만 등록할 수 있습니다.<br><br />
+ 
+      	</p>
+        File : <input type="file" class="upload" id="uploadInputBox" name="file[]" multiple="multiple" /><br />
+          
+      </div>
+      <button type="submit">등록</button>
+</form>
+
+<iframe src="" id="frame_action" name="frame_action"style="width: 100%; height: 300px"></iframe>
+<script type="text/javascript" src="extend.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+$(function(){
+	try{
+		var token = opener.parent.document.getElementById("token").value;
+		$('#token').val(token);
+	} catch(e) {}
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.brand.BrandMapper">
+	<resultMap id="BrandResult" type="saleson.shop.brand.domain.Brand">
+		<result property="brandId" column="BRAND_ID" />
+		<result property="brandName" column="BRAND_NAME" />
+		<result property="brandImage" column="BRAND_IMAGE" />
+		<result property="brandContent" column="BRAND_CONTENT" />
+		<result property="displayFlag" column="DISPLAY_FLAG" />
+		<result property="updatedUserId" column="UPDATED_USER_ID" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="createdUserId" column="CREATED_USER_ID" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	
+	<resultMap id="BrandCategoryResult" type="saleson.shop.brand.domain.BrandCategory">
+		<result property="brandCategoryId" column="BRAND_CATEGORY_ID" />
+		<result property="brandId" column="BRAND_ID" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<!-- 조회 조건 -->
+	<sql id="sqlBrandWhere">
+		<where>
+			<if test='brandName != null and brandName != ""'>
+				BRAND_NAME LIKE CONCAT('%', #{brandName} , '%')
+			</if>
+			<if test="displayFlag != null and displayFlag != ''">
+				AND DISPLAY_FLAG = #{displayFlag}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 조건에 해당하는 데이터 수 -->
+	<select id="getBrandCount" parameterType="saleson.shop.brand.support.BrandParam" resultType="int">
+		SELECT COUNT(*) FROM OP_BRAND
+		<include refid="sqlBrandWhere" />
+	</select>
+	
+	<!-- 조건에 해당하는 데이터 목록 -->
+	<select id="getBrandList" parameterType="saleson.shop.brand.support.BrandParam" resultMap="BrandResult">
+		<include refid="CommonMapper.paginationHeader" />
+		
+			SELECT * FROM OP_BRAND
+			<include refid="sqlBrandWhere" />
+			ORDER BY BRAND_ID DESC
+			
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<!-- 조건에 해당하는 데이터 조회 -->
+	<select id="getBrand" parameterType="saleson.shop.brand.support.BrandParam" resultMap="BrandResult">
+		SELECT * FROM OP_BRAND
+		<include refid="sqlBrandWhere" />
+	</select>
+	
+	<!-- ID로 데이터 조회 -->
+	<select id="getBrandById" parameterType="int" resultMap="BrandResult">
+		SELECT * FROM OP_BRAND
+		WHERE BRAND_ID = #{value}
+	</select>
+	
+	<!-- 데이터 등록 -->
+	<insert id="insertBrand" parameterType="saleson.shop.brand.domain.Brand">
+		INSERT INTO OP_BRAND (BRAND_ID, BRAND_NAME, BRAND_IMAGE, BRAND_CONTENT, DISPLAY_FLAG, UPDATED_USER_ID, UPDATED_DATE, CREATED_USER_ID, CREATED_DATE)
+		VALUES (#{brandId}, #{brandName}, #{brandImage}, #{brandContent}, #{displayFlag}, #{updatedUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{createdUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<!-- 데이터 수정 -->
+	<update id="updateBrand" parameterType="saleson.shop.brand.domain.Brand">
+		UPDATE OP_BRAND
+		<set>
+			BRAND_NAME = #{brandName},
+			<if test="brandImage != null and brandImage != ''">
+				BRAND_IMAGE = #{brandImage},
+			</if>
+			BRAND_CONTENT = #{brandContent},
+			DISPLAY_FLAG = #{displayFlag},
+			UPDATED_USER_ID = #{updatedUserId},
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),
+			CREATED_USER_ID = #{createdUserId},		
+		</set>
+		WHERE BRAND_ID = #{brandId}
+	</update>
+	
+	<!-- ID로 데이터 삭제 -->
+	<delete id="deleteBrandById" parameterType="int">
+		DELETE FROM OP_BRAND
+		WHERE BRAND_ID = #{value}
+	</delete>
+	
+	
+	
+	
+	<!-- 데이터 등록 -->
+	<insert id="insertBrandCategory" parameterType="saleson.shop.brand.domain.BrandCategory">
+		INSERT INTO OP_BRAND_CATEGORY (BRAND_CATEGORY_ID, BRAND_ID, CATEGORY_ID, CREATED_DATE)
+		VALUES (#{brandCategoryId}, #{brandId}, #{categoryId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<!-- 데이터 수정 -->
+	<update id="updateBrandCategory" parameterType="saleson.shop.brand.domain.BrandCategory">
+		UPDATE OP_BRAND_CATEGORY
+		<set>
+			BRAND_ID = #{brandId},
+			CATEGORY_ID = #{categoryId},		
+		</set>
+		WHERE BRAND_CATEGORY_ID = #{brandCategoryId}
+	</update>
+	
+	<!-- ID로 데이터 삭제 -->
+	<delete id="deleteBrandCategoryById" parameterType="int">
+		DELETE FROM OP_BRAND_CATEGORY
+		WHERE BRAND_CATEGORY_ID = #{value}
+	</delete>
+	
+</mapper>

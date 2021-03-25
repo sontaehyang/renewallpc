@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+  <meta name="Keywords" content="입점몰, 세일즈온, JAVA쇼핑몰">
+  <meta name="Description" content="세일즈온은 단기간에 구축비용을 최소화 하는 맞춤형 통합 쇼핑몰 솔루션 입니다.">
+  <meta property="og:title" content="세일즈온, SalesON | JAVA기반의 맞춤형 통합 쇼핑몰 솔루션">  
+  <meta property="og:image" content="http://saleson.onlinepowers.com/content/image_delete/common/og_logo.png">
+  <meta property="og:description" content="세일즈온은 단기간에 구축비용을 최소화 하는 맞춤형 통합 쇼핑몰 솔루션 입니다.">
+  <title>세일즈온 데모</title>
+	<link rel="stylesheet" type="text/css" href="/content/css/base.css"> 
+	<link rel="stylesheet" type="text/css" href="/content/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/layout.css">	
+	<link rel="stylesheet" type="text/css" href="/content/css/event.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/category.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/product.css">	
+	<link rel="stylesheet" type="text/css" href="/content/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/member.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/mypage.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/order.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/intro.css"> 
+	<link rel="stylesheet" type="text/css" href="/content/css/popup.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/jquery-ui-datepicker.css">
+	<link rel="stylesheet" type="text/css" href="../css/pc_guide.css">
+	<!--  js Start -->
+	<script type="text/javascript" src="/content/js/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="/content/js/jquery-ui.js"></script>
+	<script type="text/javascript" src="/content/js/jquery.bxslider.js"></script>	
+	<script type="text/javascript" src="/content/js/jquery.sticky.js"></script>	
+	<script type="text/javascript" src="/content/js/common.js"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<![endif]--> 
+ </head>
+<body>
+
+
+<div id="wrap">
+	<div id="header">
+		<h1>세일즈온 웹 HTML GUIDE</h1>
+		<div class="gnb">
+			<ul>
+				<li><a href="pc_button.html">버튼, 링크</a></li>
+				<li><a href="pc_label.html">라벨</a></li>
+				<li><a href="pc_form.html">폼</a></li>
+				<li class="on"><a href="pc_tab.html">탭</a></li>
+				<li><a href="pc_text.html">텍스트</a></li>
+				<li><a href="pc_board.html">게시판</a></li>
+				<li><a href="pc_etc.html">기타</a></li> 
+			</ul>
+		</div>
+	</div>
+	<!-- //header -->
+
+	<div id="container">
+		<div class="bs-docs-section">
+		
+		<h2>Tab Style 1</h2>
+		<form class="bs-example">
+			<div class="tabs tabs-2">
+				<ul> 
+					<li class="active"><a href="#" class="on">사용 가능한 쿠폰 내역</a></li> 
+					<li><a href="#">사용한 쿠폰</a></li> 
+				</ul> 
+			</div>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"tabs tabs-2"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul&gt;</span> 
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"on"</span><span class="nt">&gt;</span>사용 가능한 쿠폰 내역<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/li&gt;</span> 
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>사용한 쿠폰<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/li&gt;</span> 
+	<span class="nt">&lt;/ul&gt;</span> 
+<span class="nt">&lt;/div&gt;</span>	
+</code>
+			</pre>
+		</figure>
+		
+		<h2>Tab Style 2</h2>
+		<form class="bs-example">
+			<div class="tabs tabs-5">
+				<ul> 
+					<li class="active"><a href="#" class="on">사용 가능한 쿠폰 내역</a></li> 
+					<li><a href="#">사용한 쿠폰</a></li> 
+					<li><a href="#">사용한 쿠폰</a></li> 
+					<li><a href="#">사용한 쿠폰</a></li> 
+					<li><a href="#">사용한 쿠폰</a></li> 
+				</ul> 
+			</div>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"tabs tabs-5"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul&gt;</span> 
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"on"</span><span class="nt">&gt;</span>사용 가능한 쿠폰 내역<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/li&gt;</span> 
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>사용한 쿠폰<span class="nt">&lt;/a>&gt;</span><span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>사용한 쿠폰<span class="nt">&lt;/a>&gt;</span><span class="nt">&lt;/li&gt;</span> 
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>사용한 쿠폰<span class="nt">&lt;/a>&gt;</span><span class="nt">&lt;/li&gt;</span> 
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>사용한 쿠폰<span class="nt">&lt;/a>&gt;</span><span class="nt">&lt;/li&gt;</span> 
+	<span class="nt">&lt;/ul&gt;</span> 
+<span class="nt">&lt;/div&gt;</span>				
+ 				</code>
+			</pre>
+		</figure>
+		
+		<h2>Tab Style FAQ</h2>
+		<form class="bs-example">
+			<div class="faq_tab">
+		 		<ul>
+		 			<li class="on"><a href="#">회원정보</a></li>
+		 			<li><a href="#">주문/배송</a></li>
+		 			<li><a href="#">교환/반품/수리</a></li>
+		 			<li><a href="#">포인트</a></li>
+		 			<li><a href="#">카달로그</a></li>
+		 			<li><a href="#">기타</a></li>
+		 		</ul>
+		 	</div>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"faq_tab"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"on"</span><span class="nt">&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>회원정보<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>주문/배송<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>교환/반품/수리<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>포인트<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>카달로그<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>기타<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/li&gt;</span>
+	<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>	
+</code>
+			</pre>
+		</figure>
+		
+		<h2>주문결제 Tab</h2>
+		<form class="bs-example"> 
+	 		<div class="order_step">
+				<ul>
+					<li class="on"><span class="number">01</span> 장바구니 </li> 
+					<li><span class="number">02</span> 주문결제</li>
+					<li><span class="number">03</span> 주문완료</li> 
+				</ul>
+			</div> 
+			<div class="order_step">
+				<ul>
+					<li class="off"><span class="number">01</span> 장바구니</li>
+					<li class="on"><span class="number">02</span> 주문결제</li>
+					<li><span class="number">03</span> 주문완료</li> 
+				</ul>
+			</div> 
+			<div class="order_step">
+				<ul>
+					<li><span class="number">01</span> 장바구니</li>
+					<li class="off"><span class="number">02</span> 주문결제</li>
+					<li class="on"><span class="number">03</span> 주문완료</li> 
+				</ul>
+			</div> <!--// order_step E -->	 
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_step"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"on"</span><span class="nt">&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"number"</span><span class="nt">&gt;</span>01<span class="nt">&lt;/span&gt;</span> 장바구니 <span class="nt">&lt;/li&gt;</span> 
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"number"</span><span class="nt">&gt;</span>02<span class="nt">&lt;/span&gt;</span> 주문결제<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"number"</span><span class="nt">&gt;</span>03<span class="nt">&lt;/span&gt;</span> 주문완료<span class="nt">&lt;/li&gt;</span> 
+	<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span> 
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_step"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"off"</span><span class="nt">&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span> <span class="s">"number</span>">01<span class="nt">&lt;/span&gt;</span> 장바구니<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"on"</span><span class="nt">&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span> <span class="s">"number"</span>>02<span class="nt">&lt;/span&gt;</span> 주문결제<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span> <span class="s">"number"</span>>03<span class="nt">&lt;/span&gt;</span> 주문완료<span class="nt">&lt;/li&gt;</span> 
+	<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_step"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"number"</span><span class="nt">&gt;</span>01<span class="nt">&lt;/span&gt;</span> 장바구니<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"off"</span><span class="nt">&gt;</span><span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"number"</span><span class="nt">&gt;</span>02<span class="nt">&lt;/span&gt;</span> 주문결제<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"on"</span><span class="nt">&gt;</span><span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"number"</span><span class="nt">&gt;</span>03<span class="nt">&lt;/span&gt;</span> 주문완료<span class="nt">&lt;/li&gt;</span> 
+	<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span> <!--// order_step E -->  
+ 
+ </code>
+			</pre>
+		</figure> 
+		
+		
+		<h2>회원가입 Tab</h2>
+		<form class="bs-example">   
+ 			<div class="join_step step01">
+				<ul>
+					<li class="on"><span>01</span> 본인인증</li>
+					<li><span>02</span> 약관동의</li>
+					<li><span>03</span> 정보입력</li>
+					<li><span>04</span> 가입완료</li>
+				</ul>
+			</div><!--//join_step E-->
+			
+			<div class="join_step step02">
+				<ul>
+					<li><span>01</span> 본인인증</li>
+					<li class="on"><span>02</span> 약관동의</li>
+					<li><span>03</span> 정보입력</li>
+					<li><span>04</span> 가입완료</li>
+				</ul>
+			</div><!--//join_step E-->
+
+			<div class="join_step step03">
+				<ul>
+					<li><span>01</span> 본인인증</li>
+					<li><span>02</span> 약관동의</li>
+					<li class="on"><span>03</span> 정보입력</li>
+					<li><span>04</span> 가입완료</li>
+				</ul>
+			</div><!--//join_step E-->
+
+			<div class="join_step step04">
+				<ul>
+					<li><span>01</span> 본인인증</li>
+					<li><span>02</span> 약관동의</li>
+					<li><span>03</span> 정보입력</li>
+					<li class="on"><span>04</span> 가입완료</li>
+				</ul>
+			</div><!--//join_step E--> 
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span> <span class="s">"join_step step01"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"on"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>01<span class="nt">&lt;/span&gt;</span> 본인인증<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>02<span class="nt">&lt;/span&gt;</span> 약관동의<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>03<span class="nt">&lt;/span&gt;</span> 정보입력<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>04<span class="nt">&lt;/span&gt;</span> 가입완료<span class="nt">&lt;/li&gt;</span>
+	<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span><!--//join_step E-->
+
+<span class="nt">&lt;div</span> <span class="na">class=</span> <span class="s">"join_step step02"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>01<span class="nt">&lt;/span&gt;</span> 본인인증<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span> <span class="s">"on"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>02<span class="nt">&lt;/span&gt;</span> 약관동의<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>03<span class="nt">&lt;/span&gt;</span> 정보입력<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>04<span class="nt">&lt;/span&gt;</span> 가입완료<span class="nt">&lt;/li&gt;</span>
+	<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span><!--//join_step E-->
+
+<span class="nt">&lt;div</span> <span class="na">class=</span> <span class="s">"join_step step03"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>01<span class="nt">&lt;/span&gt;</span> 본인인증<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>2<span class="nt">&lt;/span&gt;</span> 약관동의<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span> <span class="s">"on"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>03<span class="nt">&lt;/span&gt;</span> 정보입력<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>04<span class="nt">&lt;/span&gt;</span> 가입완료<span class="nt">&lt;/li&gt;</span>
+	<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span><!--//join_step E-->
+
+<span class="nt">&lt;div</span> <span class="na">class=</span> <span class="s">"join_step step04"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>01<span class="nt">&lt;/span&gt;</span> 본인인증<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>02<span class="nt">&lt;/span&gt;</span> 약관동의<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span><span class="nt">&lt;span&gt;</span>03<span class="nt">&lt;/span&gt;</span> 정보입력<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span> <span class="s">"on"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>04<span class="nt">&lt;/span&gt;</span> 가입완료<span class="nt">&lt;/li&gt;</span>
+	<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span><!--//join_step E-->  
+ 
+ 
+ </code>
+			</pre>
+		</figure> 
+		
+		</div>
+		<!-- //bs-docs-section -->
+	</div>
+	<!-- //#container -->
+
+</div>
+<!-- //#wrap -->
+
+</body>
+</html>

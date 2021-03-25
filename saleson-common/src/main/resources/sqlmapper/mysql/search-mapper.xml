@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.search.SearchMapper">
+	<resultMap id="SearchResult" type="saleson.shop.search.domain.Search">
+		<result property="searchId" column="SEARCH_ID" />
+		<result property="searchContents" column="SEARCH_CONTENTS" />
+		<result property="searchLink" column="SEARCH_LINK" />
+		<result property="searchMobileLink" column="SEARCH_MOBILE_LINK" />
+		<result property="searchLinkTargetFlag" column="SEARCH_LINK_TARGET_FLAG" />
+		<result property="searchMobileLinkTargetFlag" column="SEARCH_MOBILE_LINK_TARGET_FLAG" />
+		<result property="searchStartDate" column="SEARCH_START_DATE" />
+		<result property="searchEndDate" column="SEARCH_END_DATE" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<!-- 조회 조건 -->
+	<sql id="sqlSearchWhere">
+		<where>
+			<if test='where == "SEARCH_CONTENTS" and (query != null and query != "")'>
+				#{where} LIKE CONCAT('%', #{query}, '%')
+			</if>
+			<choose>
+				<when test='displayFlag == "Y"'>
+					AND SEARCH_START_DATE <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H%i%s') AND SEARCH_END_DATE > DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+				</when>
+				<when test='displayFlag == "N"'>
+					AND SEARCH_START_DATE > DATE_FORMAT(NOW(), '%Y%m%d%H%i%s') OR SEARCH_END_DATE <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+				</when>
+			</choose>
+		</where>
+	</sql>
+
+	<!-- 조건에 해당하는 데이터 수 -->
+	<select id="getSearchCount" parameterType="saleson.shop.search.support.SearchRecommendParam" resultType="int">
+		SELECT COUNT(*) FROM OP_SEARCH
+		<include refid="sqlSearchWhere" />
+	</select>
+	
+	<!-- 조건에 해당하는 데이터 목록 -->
+	<select id="getSearchList" parameterType="saleson.shop.search.support.SearchRecommendParam" resultMap="SearchResult">
+		<include refid="CommonMapper.paginationHeader" />
+		
+			SELECT
+				*
+			FROM OP_SEARCH
+			<include refid="sqlSearchWhere" />
+			ORDER BY SEARCH_ID DESC
+			
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<!-- 조건에 해당하는 데이터 조회 -->
+	<select id="getSearch" parameterType="saleson.shop.search.support.SearchRecommendParam" resultMap="SearchResult">
+		SELECT
+			SEARCH_ID,
+			SEARCH_CONTENTS,
+			SEARCH_LINK,
+			SEARCH_MOBILE_LINK,
+			SEARCH_LINK_TARGET_FLAG,
+			SEARCH_MOBILE_LINK_TARGET_FLAG,
+			SEARCH_START_DATE,
+			SEARCH_END_DATE,
+			CREATED_DATE
+		FROM OP_SEARCH
+		<include refid="sqlSearchWhere" />
+	</select>
+	
+	<!-- ID로 데이터 조회 -->
+	<select id="getSearchById" parameterType="int" resultMap="SearchResult">
+		SELECT
+			SEARCH_ID,
+			SEARCH_CONTENTS,
+			SEARCH_LINK,
+			SEARCH_MOBILE_LINK,
+			SEARCH_LINK_TARGET_FLAG,
+			SEARCH_MOBILE_LINK_TARGET_FLAG,
+			SEARCH_START_DATE,
+			SEARCH_END_DATE,
+			CREATED_DATE
+		FROM OP_SEARCH
+		WHERE SEARCH_ID = #{value}
+	</select>
+	
+	<!-- 데이터 등록 -->
+	<insert id="insertSearch" parameterType="saleson.shop.search.domain.Search">
+		INSERT INTO OP_SEARCH (SEARCH_ID, SEARCH_CONTENTS, SEARCH_LINK, SEARCH_MOBILE_LINK, SEARCH_LINK_TARGET_FLAG, SEARCH_MOBILE_LINK_TARGET_FLAG, SEARCH_START_DATE, SEARCH_END_DATE, CREATED_DATE)
+		VALUES (#{searchId}, #{searchContents}, #{searchLink}, #{searchMobileLink}, #{searchLinkTargetFlag}, #{searchMobileLinkTargetFlag}, #{searchStartDate}, #{searchEndDate}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<!-- 데이터 수정 -->
+	<update id="updateSearch" parameterType="saleson.shop.search.domain.Search">
+		UPDATE OP_SEARCH
+		<set>
+			SEARCH_CONTENTS = #{searchContents},
+			SEARCH_LINK = #{searchLink},
+			SEARCH_MOBILE_LINK = #{searchMobileLink},
+			<if test='searchLinkTargetFlag != null and searchLinkTargetFlag != ""'>
+				SEARCH_LINK_TARGET_FLAG = #{searchLinkTargetFlag},
+			</if>
+			<if test='searchMobileLinkTargetFlag != null and searchMobileLinkTargetFlag != ""'>
+				SEARCH_MOBILE_LINK_TARGET_FLAG = #{searchMobileLinkTargetFlag},
+			</if>
+			SEARCH_START_DATE = #{searchStartDate},
+			SEARCH_END_DATE = #{searchEndDate},		
+		</set>
+		WHERE SEARCH_ID = #{searchId}
+	</update>
+	
+	<!-- ID로 데이터 삭제 -->
+	<delete id="deleteSearchById" parameterType="int">
+		DELETE FROM OP_SEARCH
+		WHERE SEARCH_ID = #{searchId}
+	</delete>
+	
+	<!-- 메인페이지 추천검색어 -->
+	<select id="getSearchForFront" parameterType="saleson.shop.search.support.SearchRecommendParam" resultMap="SearchResult">
+		SELECT
+			SEARCH_ID,
+			SEARCH_CONTENTS,
+			SEARCH_LINK,
+			SEARCH_MOBILE_LINK,
+			SEARCH_LINK_TARGET_FLAG,
+			SEARCH_MOBILE_LINK_TARGET_FLAG
+		FROM OP_SEARCH
+		<include refid="sqlSearchWhere" />
+		ORDER BY RAND() LIMIT 1
+	</select>
+	
+</mapper>

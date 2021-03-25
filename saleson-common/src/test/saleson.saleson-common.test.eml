@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/../../../saleson-common/out/test/classes"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$/../../../saleson-common/src/test">
+		<testFolder url="file://$MODULE_DIR$/../../../saleson-common/src/test/resources"/>
+		<testFolder url="file://$MODULE_DIR$/../../../saleson-common/src/test/generated_tests"/>
+		<testFolder url="file://$MODULE_DIR$/../../../saleson-common/src/test/java"/>
+	</contentEntry>
+	<lib name="cnspay_lite-0.1.2.2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/cnspay_lite-0.1.2.2.jar!/"/>
+	</lib>
+	<lib name="ConnectionKCP.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/ConnectionKCP.jar!/"/>
+	</lib>
+	<lib name="connectMPay-v2.3.1_j6.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/connectMPay-v2.3.1_j6.jar!/"/>
+	</lib>
+	<lib name="easypay_java_client17(utf-8).jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/easypay_java_client17(utf-8).jar!/"/>
+	</lib>
+	<lib name="ExecureCrypto_v1.0_jdk14-1.0.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/ExecureCrypto_v1.0_jdk14-1.0.0.jar!/"/>
+	</lib>
+	<lib name="INIpay50-1.0.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/INIpay50-1.0.0.jar!/"/>
+	</lib>
+	<lib name="INIpay_Sample_v1.2-1.2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/INIpay_Sample_v1.2-1.2.jar!/"/>
+	</lib>
+	<lib name="ipgweb.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/ipgweb.jar!/"/>
+	</lib>
+	<lib name="jaxen-1.1.3.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/jaxen-1.1.3.jar!/"/>
+	</lib>
+	<lib name="jdom.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/jdom.jar!/"/>
+	</lib>
+	<lib name="jPpcliE.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/jPpcliE.jar!/"/>
+	</lib>
+	<lib name="json-lib-2.3-jdk15.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/json-lib-2.3-jdk15.jar!/"/>
+	</lib>
+	<lib name="json_simple-1.0.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/json_simple-1.0.0.jar!/"/>
+	</lib>
+	<lib name="mpay_merchant_encoder-1.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/mpay_merchant_encoder-1.0.jar!/"/>
+	</lib>
+	<lib name="mpay_shopping_merchant-v0.4.16.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/mpay_shopping_merchant-v0.4.16.jar!/"/>
+	</lib>
+	<lib name="nicepay_tx-0.9.9.25.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/nicepay_tx-0.9.9.25.jar!/"/>
+	</lib>
+	<lib name="ojdbc7-12.1.0.2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/ojdbc7-12.1.0.2.jar!/"/>
+	</lib>
+	<lib name="opframework-3.4.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/opframework-3.4.0.jar!/"/>
+	</lib>
+	<lib name="saleson-license-3.2.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/saleson-license-3.2.0.jar!/"/>
+	</lib>
+	<lib name="sciSecuIPIN-v2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/sciSecuIPIN-v2.jar!/"/>
+	</lib>
+	<lib name="sciSecuPCC-1.0.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/sciSecuPCC-1.0.0.jar!/"/>
+	</lib>
+	<lib name="xalan.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/xalan.jar!/"/>
+	</lib>
+	<lib name="xercesImpl.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/xercesImpl.jar!/"/>
+	</lib>
+	<lib name="xml-apis.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/xml-apis.jar!/"/>
+	</lib>
+	<lib name="XPayClient-1.0.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/XPayClient-1.0.0.jar!/"/>
+	</lib>
+	<lib name="xpg_client.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/xpg_client.jar!/"/>
+	</lib>
+	<lib name="Gradle: org.projectlombok:lombok:1.18.12" scope="PROVIDED"/>
+	<lib name="Gradle: io.jsonwebtoken:jjwt-impl:0.10.5" scope="RUNTIME"/>
+	<lib name="Gradle: io.jsonwebtoken:jjwt-jackson:0.10.5" scope="RUNTIME"/>
+	<lib name="Gradle: mysql:mysql-connector-java:8.0.21" scope="RUNTIME"/>
+	<lib name="Gradle: com.microsoft.sqlserver:mssql-jdbc:7.4.1.jre8" scope="RUNTIME"/>
+	<lib name="Gradle: log4j:log4j:1.2.8" scope="RUNTIME"/>
+	<lib name="Gradle: xerces:xercesImpl:2.7.1" scope="RUNTIME"/>
+	<lib name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.6.2" scope="RUNTIME"/>
+	<lib name="Gradle: com.sun.activation:jakarta.activation:1.2.2" scope="RUNTIME"/>
+	<levels>
+		<level name="Gradle: com.querydsl:querydsl-jpa:4.3.1" value="project"/>
+		<level name="Gradle: com.querydsl:querydsl-apt:4.3.1" value="project"/>
+		<level name="Gradle: com.querydsl:querydsl-core:4.3.1" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter-data-jpa:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter-security:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-oxm:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-context-support:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.security:spring-security-taglibs:5.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.session:spring-session-jdbc:2.3.1.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.session:spring-session-core:2.3.1.RELEASE" value="project"/>
+		<level name="Gradle: org.modelmapper:modelmapper:2.3.8" value="project"/>
+		<level name="Gradle: io.jsonwebtoken:jjwt-api:0.10.5" value="project"/>
+		<level name="Gradle: org.apache.commons:commons-dbcp2:2.7.0" value="project"/>
+		<level name="Gradle: com.mchange:mchange-commons-java:0.2.20" value="project"/>
+		<level name="Gradle: net.sf.ehcache:ehcache-core:2.6.6" value="project"/>
+		<level name="Gradle: org.codehaus.castor:castor:1.2" value="project"/>
+		<level name="Gradle: net.coobird:thumbnailator:0.4.8" value="project"/>
+		<level name="Gradle: jmimemagic:jmimemagic:0.1.2" value="project"/>
+		<level name="Gradle: org.aspectj:aspectjweaver:1.9.4" value="project"/>
+		<level name="Gradle: commons-fileupload:commons-fileupload:1.3.1" value="project"/>
+		<level name="Gradle: commons-io:commons-io:2.5" value="project"/>
+		<level name="Gradle: org.apache.commons:commons-compress:1.18" value="project"/>
+		<level name="Gradle: net.sf.ezmorph:ezmorph:1.0.6" value="project"/>
+		<level name="Gradle: commons-lang:commons-lang:2.6" value="project"/>
+		<level name="Gradle: org.apache.httpcomponents:httpmime:4.5.2" value="project"/>
+		<level name="Gradle: com.google.auth:google-auth-library-oauth2-http:0.21.1" value="project"/>
+		<level name="Gradle: org.apache.httpcomponents:httpclient:4.5.2" value="project"/>
+		<level name="Gradle: org.quartz-scheduler:quartz:2.2.0" value="project"/>
+		<level name="Gradle: com.sun.mail:javax.mail:1.6.0" value="project"/>
+		<level name="Gradle: org.twitter4j:twitter4j-core:2.2.2" value="project"/>
+		<level name="Gradle: org.apache.poi:poi-ooxml:3.9" value="project"/>
+		<level name="Gradle: org.apache.poi:poi:3.9" value="project"/>
+		<level name="Gradle: com.jcraft:jsch:0.1.50" value="project"/>
+		<level name="Gradle: net.sf.supercsv:super-csv:2.1.0" value="project"/>
+		<level name="Gradle: org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16" value="project"/>
+		<level name="Gradle: kr.co.linkhub:popbill-sdk:1.13.1" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter-validation:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter-test:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-devtools:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: javax.xml.bind:jaxb-api:2.3.1" value="project"/>
+		<level name="Gradle: javax.xml.soap:javax.xml.soap-api:1.4.0" value="project"/>
+		<level name="Gradle: org.projectlombok:lombok:1.18.12" value="project"/>
+		<level name="Gradle: javax.inject:javax.inject:1" value="project"/>
+		<level name="Gradle: org.slf4j:slf4j-api:1.7.30" value="project"/>
+		<level name="Gradle: com.querydsl:querydsl-codegen:4.3.1" value="project"/>
+		<level name="Gradle: com.google.guava:guava:29.0-android" value="project"/>
+		<level name="Gradle: com.google.code.findbugs:jsr305:3.0.2" value="project"/>
+		<level name="Gradle: com.mysema.commons:mysema-commons-lang:0.2.4" value="project"/>
+		<level name="Gradle: com.infradna.tool:bridge-method-annotation:1.13" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter-aop:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-aspects:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter-jdbc:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.data:spring-data-jpa:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: jakarta.transaction:jakarta.transaction-api:1.3.3" value="project"/>
+		<level name="Gradle: jakarta.persistence:jakarta.persistence-api:2.2.3" value="project"/>
+		<level name="Gradle: org.hibernate:hibernate-core:5.4.21.Final" value="project"/>
+		<level name="Gradle: org.springframework.security:spring-security-config:5.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.security:spring-security-web:5.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-aop:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-beans:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-core:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-context:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.security:spring-security-acl:5.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.security:spring-security-core:5.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-web:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-expression:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-jcl:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.apache.commons:commons-pool2:2.8.1" value="project"/>
+		<level name="Gradle: commons-logging:commons-logging:1.2" value="project"/>
+		<level name="Gradle: oro:oro:2.0.8" value="project"/>
+		<level name="Gradle: xml-apis:xmlParserAPIs:2.0.2" value="project"/>
+		<level name="Gradle: com.google.http-client:google-http-client-jackson2:1.36.0" value="project"/>
+		<level name="Gradle: com.google.http-client:google-http-client:1.36.0" value="project"/>
+		<level name="Gradle: com.google.auto.value:auto-value-annotations:1.7.2" value="project"/>
+		<level name="Gradle: com.google.auth:google-auth-library-credentials:0.21.1" value="project"/>
+		<level name="Gradle: org.apache.httpcomponents:httpcore:4.4.13" value="project"/>
+		<level name="Gradle: commons-codec:commons-codec:1.14" value="project"/>
+		<level name="Gradle: c3p0:c3p0:0.9.1.1" value="project"/>
+		<level name="Gradle: javax.activation:activation:1.1" value="project"/>
+		<level name="Gradle: dom4j:dom4j:1.6.1" value="project"/>
+		<level name="Gradle: org.apache.poi:poi-ooxml-schemas:3.9" value="project"/>
+		<level name="Gradle: kr.co.linkhub:linkhub-auth:1.1.1" value="project"/>
+		<level name="Gradle: com.google.code.gson:gson:2.8.6" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter-json:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-webmvc:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.glassfish:jakarta.el:3.0.3" value="project"/>
+		<level name="Gradle: org.hibernate.validator:hibernate-validator:6.1.5.Final" value="project"/>
+		<level name="Gradle: org.mybatis.spring.boot:mybatis-spring-boot-autoconfigure:2.1.3" value="project"/>
+		<level name="Gradle: org.mybatis:mybatis:3.5.5" value="project"/>
+		<level name="Gradle: org.mybatis:mybatis-spring:2.0.5" value="project"/>
+		<level name="Gradle: com.jayway.jsonpath:json-path:2.4.0" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-test-autoconfigure:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-test:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-test:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" value="project"/>
+		<level name="Gradle: org.assertj:assertj-core:3.16.1" value="project"/>
+		<level name="Gradle: org.hamcrest:hamcrest:2.2" value="project"/>
+		<level name="Gradle: org.junit.vintage:junit-vintage-engine:5.6.2" value="project"/>
+		<level name="Gradle: org.junit.jupiter:junit-jupiter:5.6.2" value="project"/>
+		<level name="Gradle: org.mockito:mockito-junit-jupiter:3.3.3" value="project"/>
+		<level name="Gradle: org.mockito:mockito-core:3.3.3" value="project"/>
+		<level name="Gradle: org.skyscreamer:jsonassert:1.5.0" value="project"/>
+		<level name="Gradle: org.xmlunit:xmlunit-core:2.7.0" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5" value="project"/>
+		<level name="Gradle: org.yaml:snakeyaml:1.26" value="project"/>
+		<level name="Gradle: javax.activation:javax.activation-api:1.2.0" value="project"/>
+		<level name="Gradle: com.mysema.codegen:codegen:0.6.8" value="project"/>
+		<level name="Gradle: org.reflections:reflections:0.9.9" value="project"/>
+		<level name="Gradle: com.google.guava:failureaccess:1.0.1" value="project"/>
+		<level name="Gradle: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" value="project"/>
+		<level name="Gradle: org.checkerframework:checker-compat-qual:2.5.5" value="project"/>
+		<level name="Gradle: com.google.errorprone:error_prone_annotations:2.3.4" value="project"/>
+		<level name="Gradle: com.google.j2objc:j2objc-annotations:1.3" value="project"/>
+		<level name="Gradle: com.zaxxer:HikariCP:3.4.5" value="project"/>
+		<level name="Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-orm:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.springframework:spring-tx:5.2.9.RELEASE" value="project"/>
+		<level name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3" value="project"/>
+		<level name="Gradle: org.hibernate.common:hibernate-commons-annotations:5.1.0.Final" value="project"/>
+		<level name="Gradle: org.jboss.logging:jboss-logging:3.4.1.Final" value="project"/>
+		<level name="Gradle: org.javassist:javassist:3.24.0-GA" value="project"/>
+		<level name="Gradle: net.bytebuddy:byte-buddy:1.10.14" value="project"/>
+		<level name="Gradle: antlr:antlr:2.7.7" value="project"/>
+		<level name="Gradle: org.jboss:jandex:2.1.3.Final" value="project"/>
+		<level name="Gradle: com.fasterxml:classmate:1.5.1" value="project"/>
+		<level name="Gradle: org.dom4j:dom4j:2.1.3" value="project"/>
+		<level name="Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2" value="project"/>
+		<level name="Gradle: io.opencensus:opencensus-contrib-http-util:0.24.0" value="project"/>
+		<level name="Gradle: io.opencensus:opencensus-api:0.24.0" value="project"/>
+		<level name="Gradle: org.apache.xmlbeans:xmlbeans:2.3.0" value="project"/>
+		<level name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.2" value="project"/>
+		<level name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.2" value="project"/>
+		<level name="Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.2" value="project"/>
+		<level name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2" value="project"/>
+		<level name="Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.38" value="project"/>
+		<level name="Gradle: org.apache.tomcat.embed:tomcat-embed-core:9.0.38" value="project"/>
+		<level name="Gradle: jakarta.validation:jakarta.validation-api:2.0.2" value="project"/>
+		<level name="Gradle: net.minidev:json-smart:2.3" value="project"/>
+		<level name="Gradle: jakarta.activation:jakarta.activation-api:1.2.2" value="project"/>
+		<level name="Gradle: org.junit.platform:junit-platform-engine:1.6.2" value="project"/>
+		<level name="Gradle: org.apiguardian:apiguardian-api:1.1.0" value="project"/>
+		<level name="Gradle: junit:junit:4.13" value="project"/>
+		<level name="Gradle: org.junit.jupiter:junit-jupiter-params:5.6.2" value="project"/>
+		<level name="Gradle: org.junit.jupiter:junit-jupiter-api:5.6.2" value="project"/>
+		<level name="Gradle: net.bytebuddy:byte-buddy-agent:1.10.14" value="project"/>
+		<level name="Gradle: org.objenesis:objenesis:2.6" value="project"/>
+		<level name="Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" value="project"/>
+		<level name="Gradle: ch.qos.logback:logback-classic:1.2.3" value="project"/>
+		<level name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3" value="project"/>
+		<level name="Gradle: org.slf4j:jul-to-slf4j:1.7.30" value="project"/>
+		<level name="Gradle: org.eclipse.jdt.core.compiler:ecj:4.3.1" value="project"/>
+		<level name="Gradle: com.google.code.findbugs:annotations:2.0.1" value="project"/>
+		<level name="Gradle: org.glassfish.jaxb:txw2:2.3.3" value="project"/>
+		<level name="Gradle: com.sun.istack:istack-commons-runtime:3.0.11" value="project"/>
+		<level name="Gradle: io.grpc:grpc-context:1.22.1" value="project"/>
+		<level name="Gradle: stax:stax-api:1.0.1" value="project"/>
+		<level name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2" value="project"/>
+		<level name="Gradle: net.minidev:accessors-smart:1.2" value="project"/>
+		<level name="Gradle: org.junit.platform:junit-platform-commons:1.6.2" value="project"/>
+		<level name="Gradle: org.opentest4j:opentest4j:1.2.0" value="project"/>
+		<level name="Gradle: ch.qos.logback:logback-core:1.2.3" value="project"/>
+		<level name="Gradle: org.apache.logging.log4j:log4j-api:2.13.3" value="project"/>
+		<level name="Gradle: org.ow2.asm:asm:5.0.4" value="project"/>
+		<level name="Gradle: io.jsonwebtoken:jjwt-impl:0.10.5" value="project"/>
+		<level name="Gradle: io.jsonwebtoken:jjwt-jackson:0.10.5" value="project"/>
+		<level name="Gradle: mysql:mysql-connector-java:8.0.21" value="project"/>
+		<level name="Gradle: com.microsoft.sqlserver:mssql-jdbc:7.4.1.jre8" value="project"/>
+		<level name="Gradle: log4j:log4j:1.2.8" value="project"/>
+		<level name="Gradle: xerces:xercesImpl:2.7.1" value="project"/>
+		<level name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.6.2" value="project"/>
+		<level name="Gradle: com.sun.activation:jakarta.activation:1.2.2" value="project"/>
+	</levels>
+</component>

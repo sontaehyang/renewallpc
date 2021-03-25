@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+  <meta name="Keywords" content="입점몰, 세일즈온, JAVA쇼핑몰">
+  <meta name="Description" content="세일즈온은 단기간에 구축비용을 최소화 하는 맞춤형 통합 쇼핑몰 솔루션 입니다.">
+  <meta property="og:title" content="세일즈온, SalesON | JAVA기반의 맞춤형 통합 쇼핑몰 솔루션">  
+  <meta property="og:image" content="http://saleson.onlinepowers.com/content/image_delete/common/og_logo.png">
+  <meta property="og:description" content="세일즈온은 단기간에 구축비용을 최소화 하는 맞춤형 통합 쇼핑몰 솔루션 입니다.">
+  <title>세일즈온 데모</title>
+	<link rel="stylesheet" type="text/css" href="/content/css/base.css"> 
+	<link rel="stylesheet" type="text/css" href="/content/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/layout.css">	
+	<link rel="stylesheet" type="text/css" href="/content/css/event.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/category.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/product.css">	
+	<link rel="stylesheet" type="text/css" href="/content/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/member.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/mypage.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/order.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/intro.css"> 
+	<link rel="stylesheet" type="text/css" href="/content/css/popup.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/jquery-ui-datepicker.css">
+	<link rel="stylesheet" type="text/css" href="../css/pc_guide.css">
+	<!--  js Start -->
+	<script type="text/javascript" src="/content/js/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="/content/js/jquery-ui.js"></script>
+	<script type="text/javascript" src="/content/js/jquery.bxslider.js"></script>	
+	<script type="text/javascript" src="/content/js/jquery.sticky.js"></script>	
+	<script type="text/javascript" src="/content/js/common.js"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<![endif]--> 
+ </head>
+<body>
+
+
+<div id="wrap">
+	<div id="header">
+		<h1>세일즈온 웹 HTML GUIDE</h1>
+		<div class="gnb">
+			<ul>
+				<li><a href="pc_button.html">버튼, 링크</a></li>
+				<li><a href="pc_label.html">라벨</a></li>
+				<li><a href="pc_form.html">폼</a></li>
+				<li><a href="pc_tab.html">탭</a></li>
+				<li><a href="pc_text.html">텍스트</a></li>
+				<li><a href="pc_board.html">게시판</a></li>
+				<li class="on"><a href="pc_etc.html">기타</a></li> 
+			</ul>
+		</div>
+	</div>
+	<!-- //header -->
+
+	<div id="container">
+		<div class="bs-docs-section">
+		
+		<h2>마이페이지 info(항목4개)</h2>
+		<form class="bs-example">
+			<div class="order_info">
+				<div class="member_level">
+					<p class="level"><img src="/content/images/icon/icon_gold.png" alt="등급"></p>
+					<p class="name"><span>홍길동</span>님</p>
+					<p class="rating">일반등급</p>
+					<a href="#" class="btn_benefit" title="혜택보기">혜택보기</a>
+				</div><!--// member_level E-->
+				<div class="info_list">
+					<ul class="info">
+						<li>
+							<p class="item point">포인트</p>
+							<p class="remainder"><span>9,999,999</span>P</p>
+						</li>
+						<li>
+							<p class="item coupons">쿠폰 <a href="#" class="btn_down_confirm">다운가능쿠폰</a></p>
+							<p class="remainder"><span>999</span>개</p>
+						</li>
+						<li>
+							<p class="item">배송비 쿠폰</p>
+							<p class="remainder"><span>999</span>개</p>
+						</li>
+						<li>
+							<p class="item cash">캐시</p>
+							<p class="remainder"><span>9,999,999</span>원</p>
+						</li>
+					</ul>
+					<div class="condition_wrap">
+						<div class="order_condition">
+							<span class="title">주문/배송</span>
+							<ol>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step01.gif" alt="order"></span>
+									<p>주문접수 <span><a href="#">30</a>건</span></p> 
+								</li>
+								<li class="btn_order_next"> </li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step02.gif" alt="order"></span>
+									<p>결제완료  <span><a href="#">10</a>건</span></p>  
+								</li>
+								<li class="btn_order_next"></li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step03.gif" alt="order"></span>
+									<p>상품준비중 <span><a href="#">0</a>건</span></p>  
+								</li>
+								<li class="btn_order_next"></li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step04.gif" alt="order"></span>
+									<p>배송중 <span><a href="#" class="ing">1</a>건</span></p> 
+								</li>
+								<li class="btn_order_next"></li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step05.gif" alt="order"></span>
+									<p>배송완료 <span><a href="#">5</a>건</span></p> 
+								</li>
+							</ol>
+						</div> <!--// order_condition E--> 
+						<div class="order_refund">
+							<p class="title">취소/교환/반품</p>
+							<ul>
+								<li>취소 <span><a href="#">0</a>건</span></li>  
+								<li>교환 <span><a href="#" class="ing">2</a>건</span></li>  
+								<li>반품 <span><a href="#">0</a>건</span></li>  
+							</ul>
+						</div><!--// order_refund E--> 
+					</div><!--// condition_wrap E--> 
+				</div><!--// info_list E-->
+			</div>	 
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_info"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"member_level"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"level"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_gold.png"</span> <span class="na">alt=</span><span class="s">"등급"</span><span class="nt">&gt;</span><span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"name"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>홍길동<span class="nt">&lt;/span&gt;</span>님<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"rating"</span><span class="nt">&gt;</span>일반등급<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"btn_benefit"</span> <span class="na">title=</span><span class="s">"혜택보기"</span><span class="nt">&gt;</span>혜택보기<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;/div&gt;</span><!--// member_level E-->
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"info_list"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"info"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;li&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item point"</span><span class="nt">&gt;</span>포인트<span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"remainder"</span><span class="nt">&gt;</span><span>9,999,999</span>P<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item coupons"</span><span class="nt">&gt;</span>쿠폰 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"btn_down_confirm"</span><span class="nt">&gt;</span>다운가능쿠폰<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"remainder"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>999<span class="nt">&lt;/span&gt;</span>개<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item"</span><span class="nt">&gt;</span>배송비 쿠폰<span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"remainder"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>999<span class="nt">&lt;/span&gt;</span>개<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item cash"</span><span class="nt">&gt;</span>캐시<span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"remainder"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>9,999,999<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;/ul&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"condition_wrap"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_condition"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"title"</span><span class="nt">&gt;</span>주문/배송<span class="nt">&lt;/span&gt;</span>
+				<span class="nt">&lt;ol&gt;</span>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step01.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span> <span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>주문접수 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>30<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/p&gt;</span>
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span></span><span class="nt">&gt;</span> <span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step02.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>결제완료  <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>10</a>건</span><span class="nt">&lt;/p&gt;</span>  
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span><span class="nt">&gt;</span></li>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step03.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>상품준비중 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>0</a>건</span><span class="nt">&lt;/p&gt;</span>  
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span><span class="nt">&gt;</span></li>
+					<span class="nt">&lt;li&gt;</span> 
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step04.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>배송중 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"ing"</span><span class="nt">&gt;</span>1</a>건</span><span class="nt">&lt;/p&gt;</span> 
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span><span class="nt">&gt;</span></li>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step05.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>배송완료 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>5</a>건</span><span class="nt">&lt;/p&gt;</span> 
+					<span class="nt">&lt;/li&gt;</span>
+				<span class="nt">&lt;/ol&gt;</span>
+			<span class="nt">&lt;/div&gt;</span> <!--// order_condition E--> 
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_refund"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"title"</span><span class="nt">&gt;</span>취소/교환/반품<span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;ul&gt;</span>
+					<span class="nt">&lt;li&gt;</span>취소 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>0<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/li&gt;</span>  
+					<span class="nt">&lt;li&gt;</span>교환 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"ing"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/li&gt;</span>  
+					<span class="nt">&lt;li&gt;</span>반품 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>0<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/li&gt;</span>  
+				<span class="nt">&lt;/ul&gt;</span>
+			<span class="nt">&lt;/div&gt;</span><!--// order_refund E--> 
+		<span class="nt">&lt;/div&gt;</span><!--// condition_wrap E--> 
+	<span class="nt">&lt;/div&gt;</span><!--// info_list E-->
+<span class="nt">&lt;/div&gt;</span>			
+</code>
+			</pre>
+		</figure>
+		
+		<h2>마이페이지 info(항목3개)</h2>
+		<form class="bs-example">
+			 <div class="order_info">
+				<div class="member_level">
+					<p class="level"><img src="/content/images/icon/icon_gold.png" alt="등급"></p>
+					<p class="name"><span>홍길동</span>님</p>
+					<p class="rating">일반등급</p>
+					<a href="#" class="btn_benefit" title="혜택보기">혜택보기</a>
+				</div><!--// member_level E-->
+				<div class="info_list">
+					<ul class="info list-3">
+						<li>
+							<p class="item point">포인트</p>
+							<p class="remainder"><span>9,999,999</span>P</p>
+						</li>
+						<li>
+							<p class="item coupons">쿠폰 <a href="#" class="btn_down_confirm">다운가능쿠폰</a></p>
+							<p class="remainder"><span>999</span>개</p>
+						</li>
+						<li>
+							<p class="item">배송비 쿠폰</p>
+							<p class="remainder"><span>999</span>개</p>
+						</li> 
+					</ul>
+					<div class="condition_wrap">
+						<div class="order_condition">
+							<span class="title">주문/배송</span>
+							<ol>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step01.gif" alt="order"></span>
+									<p>주문접수 <span><a href="#">30</a>건</span></p> 
+								</li>
+								<li class="btn_order_next"> </li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step02.gif" alt="order"></span>
+									<p>결제완료  <span><a href="#">10</a>건</span></p>  
+								</li>
+								<li class="btn_order_next"></li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step03.gif" alt="order"></span>
+									<p>상품준비중 <span><a href="#">0</a>건</span></p>  
+								</li>
+								<li class="btn_order_next"></li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step04.gif" alt="order"></span>
+									<p>배송중 <span><a href="#" class="ing">1</a>건</span></p> 
+								</li>
+								<li class="btn_order_next"></li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step05.gif" alt="order"></span>
+									<p>배송완료 <span><a href="#">5</a>건</span></p> 
+								</li>
+							</ol>
+						</div> <!--// order_condition E--> 
+						<div class="order_refund">
+							<p class="title">취소/교환/반품</p>
+							<ul>
+								<li>취소 <span><a href="#">0</a>건</span></li>  
+								<li>교환 <span><a href="#" class="ing">2</a>건</span></li>  
+								<li>반품 <span><a href="#">0</a>건</span></li>  
+							</ul>
+						</div><!--// order_refund E--> 
+					</div><!--// condition_wrap E--> 
+				</div><!--// info_list E-->
+			</div>	 
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_info"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"member_level"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"level"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_gold.png"</span> <span class="na">alt=</span><span class="s">"등급"</span><span class="nt">&gt;</span><span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"name"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>홍길동<span class="nt">&lt;/span&gt;</span>님<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"rating"</span><span class="nt">&gt;</span>일반등급<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"btn_benefit"</span> <span class="na">title=</span><span class="s">"혜택보기"</span><span class="nt">&gt;</span>혜택보기<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;/div&gt;</span><!--// member_level E-->
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"info_list"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"info list-3"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;li&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item point"</span><span class="nt">&gt;</span>포인트<span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"remainder"</span><span class="nt">&gt;</span><span>9,999,999</span>P<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item coupons"</span><span class="nt">&gt;</span>쿠폰 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"btn_down_confirm"</span><span class="nt">&gt;</span>다운가능쿠폰<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"remainder"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>999<span class="nt">&lt;/span&gt;</span>개<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item"</span><span class="nt">&gt;</span>배송비 쿠폰<span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"remainder"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>999<span class="nt">&lt;/span&gt;</span>개<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/li&gt;</span> 
+		<span class="nt">&lt;/ul&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"condition_wrap"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_condition"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"title"</span><span class="nt">&gt;</span>주문/배송<span class="nt">&lt;/span&gt;</span>
+				<span class="nt">&lt;ol&gt;</span>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step01.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span> <span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>주문접수 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>30<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/p&gt;</span>
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span></span><span class="nt">&gt;</span> <span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step02.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>결제완료  <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>10</a>건</span><span class="nt">&lt;/p&gt;</span>  
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span><span class="nt">&gt;</span></li>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step03.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>상품준비중 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>0</a>건</span><span class="nt">&lt;/p&gt;</span>  
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span><span class="nt">&gt;</span></li>
+					<span class="nt">&lt;li&gt;</span> 
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step04.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>배송중 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"ing"</span><span class="nt">&gt;</span>1</a>건</span><span class="nt">&lt;/p&gt;</span> 
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span><span class="nt">&gt;</span></li>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step05.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>배송완료 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>5</a>건</span><span class="nt">&lt;/p&gt;</span> 
+					<span class="nt">&lt;/li&gt;</span>
+				<span class="nt">&lt;/ol&gt;</span>
+			<span class="nt">&lt;/div&gt;</span> <!--// order_condition E--> 
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_refund"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"title"</span><span class="nt">&gt;</span>취소/교환/반품<span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;ul&gt;</span>
+					<span class="nt">&lt;li&gt;</span>취소 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>0<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/li&gt;</span>  
+					<span class="nt">&lt;li&gt;</span>교환 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"ing"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/li&gt;</span>  
+					<span class="nt">&lt;li&gt;</span>반품 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>0<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/li&gt;</span>  
+				<span class="nt">&lt;/ul&gt;</span>
+			<span class="nt">&lt;/div&gt;</span><!--// order_refund E--> 
+		<span class="nt">&lt;/div&gt;</span><!--// condition_wrap E--> 
+	<span class="nt">&lt;/div&gt;</span><!--// info_list E-->
+<span class="nt">&lt;/div&gt;</span>	
+ 				</code>
+			</pre>
+		</figure>
+		
+		<h2>마이페이지 info(항목2개)</h2>
+		<form class="bs-example">
+			 <div class="order_info">
+				<div class="member_level">
+					<p class="level"><img src="/content/images/icon/icon_gold.png" alt="등급"></p>
+					<p class="name"><span>홍길동</span>님</p>
+					<p class="rating">일반등급</p>
+					<a href="#" class="btn_benefit" title="혜택보기">혜택보기</a>
+				</div><!--// member_level E-->
+				<div class="info_list">
+					<ul class="info list-2">
+						<li>
+							<p class="item point">포인트</p>
+							<p class="remainder"><span>9,999,999</span>P</p>
+						</li>
+						<li>
+							<p class="item coupons">쿠폰 <a href="#" class="btn_down_confirm">다운가능쿠폰</a></p>
+							<p class="remainder"><span>999</span>개</p>
+						</li> 
+					</ul>
+					<div class="condition_wrap">
+						<div class="order_condition">
+							<span class="title">주문/배송</span>
+							<ol>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step01.gif" alt="order"></span>
+									<p>주문접수 <span><a href="#">30</a>건</span></p> 
+								</li>
+								<li class="btn_order_next"> </li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step02.gif" alt="order"></span>
+									<p>결제완료  <span><a href="#">10</a>건</span></p>  
+								</li>
+								<li class="btn_order_next"></li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step03.gif" alt="order"></span>
+									<p>상품준비중 <span><a href="#">0</a>건</span></p>  
+								</li>
+								<li class="btn_order_next"></li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step04.gif" alt="order"></span>
+									<p>배송중 <span><a href="#" class="ing">1</a>건</span></p> 
+								</li>
+								<li class="btn_order_next"></li>
+								<li>
+									<span class="icon"><img src="/content/images/icon/icon_oreder_step05.gif" alt="order"></span>
+									<p>배송완료 <span><a href="#">5</a>건</span></p> 
+								</li>
+							</ol>
+						</div> <!--// order_condition E--> 
+						<div class="order_refund">
+							<p class="title">취소/교환/반품</p>
+							<ul>
+								<li>취소 <span><a href="#">0</a>건</span></li>  
+								<li>교환 <span><a href="#" class="ing">2</a>건</span></li>  
+								<li>반품 <span><a href="#">0</a>건</span></li>  
+							</ul>
+						</div><!--// order_refund E--> 
+					</div><!--// condition_wrap E--> 
+				</div><!--// info_list E-->
+			</div>	 
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_info"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"member_level"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"level"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_gold.png"</span> <span class="na">alt=</span><span class="s">"등급"</span><span class="nt">&gt;</span><span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"name"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>홍길동<span class="nt">&lt;/span&gt;</span>님<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"rating"</span><span class="nt">&gt;</span>일반등급<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"btn_benefit"</span> <span class="na">title=</span><span class="s">"혜택보기"</span><span class="nt">&gt;</span>혜택보기<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;/div&gt;</span><!--// member_level E-->
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"info_list"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"info list-2"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;li&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item point"</span><span class="nt">&gt;</span>포인트<span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"remainder"</span><span class="nt">&gt;</span><span>9,999,999</span>P<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item coupons"</span><span class="nt">&gt;</span>쿠폰 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"btn_down_confirm"</span><span class="nt">&gt;</span>다운가능쿠폰<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"remainder"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>999<span class="nt">&lt;/span&gt;</span>개<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/li&gt;</span> 
+		<span class="nt">&lt;/ul&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"condition_wrap"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_condition"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"title"</span><span class="nt">&gt;</span>주문/배송<span class="nt">&lt;/span&gt;</span>
+				<span class="nt">&lt;ol&gt;</span>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step01.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span> <span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>주문접수 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>30<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/p&gt;</span>
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span></span><span class="nt">&gt;</span> <span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step02.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>결제완료  <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>10</a>건</span><span class="nt">&lt;/p&gt;</span>  
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span><span class="nt">&gt;</span></li>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step03.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>상품준비중 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>0</a>건</span><span class="nt">&lt;/p&gt;</span>  
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span><span class="nt">&gt;</span></li>
+					<span class="nt">&lt;li&gt;</span> 
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step04.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>배송중 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"ing"</span><span class="nt">&gt;</span>1</a>건</span><span class="nt">&lt;/p&gt;</span> 
+					<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"btn_order_next"</span><span class="nt">&gt;</span></li>
+					<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_oreder_step05.gif"</span> <span class="na">alt=</span><span class="s">"order"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;p&gt;</span>배송완료 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>5</a>건</span><span class="nt">&lt;/p&gt;</span> 
+					<span class="nt">&lt;/li&gt;</span>
+				<span class="nt">&lt;/ol&gt;</span>
+			<span class="nt">&lt;/div&gt;</span> <!--// order_condition E--> 
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_refund"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"title"</span><span class="nt">&gt;</span>취소/교환/반품<span class="nt">&lt;/p&gt;</span>
+				<span class="nt">&lt;ul&gt;</span>
+					<span class="nt">&lt;li&gt;</span>취소 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>0<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/li&gt;</span>  
+					<span class="nt">&lt;li&gt;</span>교환 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"ing"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/li&gt;</span>  
+					<span class="nt">&lt;li&gt;</span>반품 <span class="nt">&lt;span&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>0<span class="nt">&lt;/a&gt;</span>건<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/li&gt;</span>  
+				<span class="nt">&lt;/ul&gt;</span>
+			<span class="nt">&lt;/div&gt;</span><!--// order_refund E--> 
+		<span class="nt">&lt;/div&gt;</span><!--// condition_wrap E--> 
+	<span class="nt">&lt;/div&gt;</span><!--// info_list E-->
+<span class="nt">&lt;/div&gt;</span>	
+ 				</code>
+			</pre>
+		</figure>
+		
+		
+		<h2>상품합계 (width:1080px일 경우)</h2>
+		<form class="bs-example"> 
+			<div style="width:1080px;">
+				<div class="price_box">
+					<div class="price_inner">
+						<div class="money">
+							<p class="txt01">총 상품합계 금액</p>
+							<p class="prices"><span>12,190,000</span>원</p>
+						</div>
+						<span class="icons"><img src="/content/images/icon/icon_plus.png" alt="더하기"></span>
+						<div class="money">
+							<p class="txt01">배송비</p>
+							<p class="prices"><span>2,500</span>원</p>
+						</div>
+						<span class="icons"><img src="/content/images/icon/icon_minus.png" alt="할인"></span>
+						<div class="money">
+							<p class="txt01">쿠폰할인</p>
+							<p class="prices"><span>5,000</span>원</p>
+						</div>
+						<span class="icons"><img src="/content/images/icon/icon_sum.png" alt="합계"></span>
+						<div class="money">
+							<p class="txt01"><strong>결제예정금액</strong></p>
+							<p class="prices total"><span>187,500</span>원</p>
+						</div>
+					</div><!-- // price_inner E -->
+					<div class="add_point">
+						<p>적립예정 포인트 : <span>3,500 P</span> </p>
+					</div>
+				</div>
+			</div> 
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"price_box"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"price_inner"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span>총 상품합계 금액<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>12,190,000<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icons"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span> <span class="s">"/content/images/icon/icon_plus.png"</span> <span class="na">alt=</span><span class="s">"더하기"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span>배송비<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>2,500<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icons"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_minus.png"</span> <span class="na">alt=</span><span class="s">"할인"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span>쿠폰할인<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>5,000<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icons"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_sum.png"</span> <span class="na">alt=</span><span class="s">"합계"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span><span class="nt">&lt;strong&gt;</span>결제예정금액<span class="nt">&lt;/strong&gt;</span><span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices total"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>187,500<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/div&gt;</span><!-- // price_inner E -->
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"add_point"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;p&gt;</span>적립예정 포인트 : <span class="nt">&lt;span&gt;</span>3,500 P<span class="nt">&lt;/span&gt;</span> <span class="nt">&lt;/p&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code>
+			</pre>
+		</figure>
+		
+		<h2>상품합계 (width:1080px일 경우- 할인금액 없는 경우: 해당 html삭제)</h2>
+		<form class="bs-example"> 
+			<div style="width:1080px;">
+				<div class="price_box">
+					<div class="price_inner">
+						<div class="money">
+							<p class="txt01">총 상품합계 금액</p>
+							<p class="prices"><span>12,190,000</span>원</p>
+						</div>
+						<span class="icons"><img src="/content/images/icon/icon_plus.png" alt="더하기"></span>
+						<div class="money">
+							<p class="txt01">배송비</p>
+							<p class="prices"><span>2,500</span>원</p>
+						</div> 
+						<span class="icons"><img src="/content/images/icon/icon_sum.png" alt="합계"></span>
+						<div class="money">
+							<p class="txt01"><strong>결제예정금액</strong></p>
+							<p class="prices total"><span>187,500</span>원</p>
+						</div>
+					</div><!-- // price_inner E -->
+					<div class="add_point">
+						<p>적립예정 포인트 : <span>3,500 P</span> </p>
+					</div>
+				</div>
+			</div> 
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"price_box"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"price_inner"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span>총 상품합계 금액<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>12,190,000<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icons"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span> <span class="s">"/content/images/icon/icon_plus.png"</span> <span class="na">alt=</span><span class="s">"더하기"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span>배송비<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>2,500<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span> 
+		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icons"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_sum.png"</span> <span class="na">alt=</span><span class="s">"합계"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span><span class="nt">&lt;strong&gt;</span>결제예정금액<span class="nt">&lt;/strong&gt;</span><span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices total"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>187,500<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/div&gt;</span><!-- // price_inner E -->
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"add_point"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;p&gt;</span>적립예정 포인트 : <span class="nt">&lt;span&gt;</span>3,500 P<span class="nt">&lt;/span&gt;</span> <span class="nt">&lt;/p&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code>
+			</pre>
+		</figure>
+		
+		<h2>상품합계 (width:884px일 경우)</h2>
+		<form class="bs-example"> 
+			<div style="width:884px;">
+				<div class="price_box min">
+					<div class="price_inner">
+						<div class="money">
+							<p class="txt01">총 상품합계 금액</p>
+							<p class="prices"><span>12,190,000</span>원</p>
+						</div>
+						<span class="icons"><img src="/content/images/icon/icon_plus.png" alt="더하기"></span>
+						<div class="money">
+							<p class="txt01">배송비</p>
+							<p class="prices"><span>2,500</span>원</p>
+						</div>
+						<span class="icons"><img src="/content/images/icon/icon_minus.png" alt="할인"></span>
+						<div class="money">
+							<p class="txt01">쿠폰할인</p>
+							<p class="prices"><span>5,000</span>원</p>
+						</div>
+						<span class="icons"><img src="/content/images/icon/icon_sum.png" alt="합계"></span>
+						<div class="money">
+							<p class="txt01"><strong>결제예정금액</strong></p>
+							<p class="prices total"><span>187,500</span>원</p>
+						</div>
+					</div><!-- // price_inner E -->
+					<div class="add_point">
+						<p>적립예정 포인트 : <span>3,500 P</span> </p>
+					</div>
+				</div> 
+			</div>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"price_box min"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"price_inner"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span>총 상품합계 금액<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>12,190,000<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icons"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span> <span class="s">"/content/images/icon/icon_plus.png"</span> <span class="na">alt=</span><span class="s">"더하기"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span>배송비<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>2,500<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icons"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_minus.png"</span> <span class="na">alt=</span><span class="s">"할인"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span>쿠폰할인<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>5,000<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icons"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_sum.png"</span> <span class="na">alt=</span><span class="s">"합계"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span><span class="nt">&lt;strong&gt;</span>결제예정금액<span class="nt">&lt;/strong&gt;</span><span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices total"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>187,500<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/div&gt;</span><!-- // price_inner E -->
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"add_point"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;p&gt;</span>적립예정 포인트 : <span class="nt">&lt;span&gt;</span>3,500 P<span class="nt">&lt;/span&gt;</span> <span class="nt">&lt;/p&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code>
+			</pre>
+		</figure> 
+		
+		
+		<h2>상품합계 (width:884px일 경우- 할인금액 없는 경우: 해당 html삭제)</h2>
+		<form class="bs-example"> 
+			<div style="width:884px;">
+				<div class="price_box min">
+					<div class="price_inner">
+						<div class="money">
+							<p class="txt01">총 상품합계 금액</p>
+							<p class="prices"><span>12,190,000</span>원</p>
+						</div>
+						<span class="icons"><img src="/content/images/icon/icon_plus.png" alt="더하기"></span>
+						<div class="money">
+							<p class="txt01">배송비</p>
+							<p class="prices"><span>2,500</span>원</p>
+						</div> 
+						<span class="icons"><img src="/content/images/icon/icon_sum.png" alt="합계"></span>
+						<div class="money">
+							<p class="txt01"><strong>결제예정금액</strong></p>
+							<p class="prices total"><span>187,500</span>원</p>
+						</div>
+					</div><!-- // price_inner E -->
+					<div class="add_point">
+						<p>적립예정 포인트 : <span>3,500 P</span> </p>
+					</div>
+				</div> 
+			</div>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"price_box min"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"price_inner"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span>총 상품합계 금액<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>12,190,000<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icons"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span> <span class="s">"/content/images/icon/icon_plus.png"</span> <span class="na">alt=</span><span class="s">"더하기"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span>배송비<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>2,500<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span> 
+		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icons"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/icon/icon_sum.png"</span> <span class="na">alt=</span><span class="s">"합계"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"money"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt01"</span><span class="nt">&gt;</span><span class="nt">&lt;strong&gt;</span>결제예정금액<span class="nt">&lt;/strong&gt;</span><span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prices total"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span>187,500<span class="nt">&lt;/span&gt;</span>원<span class="nt">&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/div&gt;</span><!-- // price_inner E -->
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"add_point"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;p&gt;</span>적립예정 포인트 : <span class="nt">&lt;span&gt;</span>3,500 P<span class="nt">&lt;/span&gt;</span> <span class="nt">&lt;/p&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code>
+			</pre>
+		</figure> 
+		
+		</div>
+		<!-- //bs-docs-section -->
+	</div>
+	<!-- //#container -->
+
+</div>
+<!-- //#wrap -->
+
+</body>
+</html>

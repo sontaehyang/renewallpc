@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.order.addpayment.OrderAddPaymentMapper">
+	
+	<resultMap id="OrderAddPaymentResult" type="saleson.shop.order.addpayment.domain.OrderAddPayment">
+		<id property="addPaymentId" column="ADD_PAYMENT_ID" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="orderSequence" column="ORDER_SEQUENCE" />
+		<result property="refundCode" column="REFUND_CODE" />
+		<result property="issueCode" column="ISSUE_CODE" />
+		<result property="subject" column="SUBJECT" />
+		<result property="addPaymentType" column="ADD_PAYMENT_TYPE" />
+		<result property="amount" column="AMOUNT" />
+		
+		<result property="salesDate" column="SALES_DATE" />
+		<result property="salesCancelDate" column="SALES_CANCEL_DATE" />
+		
+		<result property="remittanceId" column="REMITTANCE_ID" />
+		<result property="remittanceAmount" column="REMITTANCE_AMOUNT" />
+		<result property="remittanceDate" column="REMITTANCE_DATE" />
+		<result property="remittanceExpectedDate" column="REMITTANCE_EXPECTED_DATE" />
+		<result property="remittanceStatusCode" column="REMITTANCE_STATUS_CODE" />
+	</resultMap>
+	
+	<select id="getDuplicateRegistrationCheckByIssueCode" parameterType="saleson.shop.order.addpayment.domain.OrderAddPayment" resultType="Integer">
+		SELECT COUNT(*) FROM OP_ORDER_ADD_PAYMENT
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ISSUE_CODE = #{issueCode}
+	</select>
+	
+	<select id="getOrderAddPaymentListByRefundCode" parameterType="String" resultMap="OrderAddPaymentResult">
+		SELECT * FROM OP_ORDER_ADD_PAYMENT
+		WHERE
+			REFUND_CODE = #{value}
+	</select>
+	
+	<insert id="insertOrderAddPayment" parameterType="saleson.shop.order.addpayment.domain.OrderAddPayment">
+		INSERT INTO OP_ORDER_ADD_PAYMENT (
+			ADD_PAYMENT_ID,
+			SELLER_ID,
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			REFUND_CODE,
+			ISSUE_CODE,
+			SUBJECT,
+			ADD_PAYMENT_TYPE,
+			AMOUNT,
+			REMITTANCE_AMOUNT,
+			SALES_DATE,
+			SALES_CANCEL_DATE,
+			REMITTANCE_DATE,
+			CREATED_DATE
+		) VALUES (
+			#{addPaymentId},
+			#{sellerId},
+			#{orderCode},
+			#{orderSequence},
+			#{refundCode},
+			#{issueCode},
+			#{subject},
+			#{addPaymentType},
+			#{amount},
+			#{remittanceAmount},
+			#{salesDate},
+			#{salesCancelDate},
+			#{remittanceDate},
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+	
+	<update id="deleteOrderAddPaymentById" parameterType="Integer">
+		UPDATE OP_ORDER_ADD_PAYMENT
+		SET REMITTANCE_STATUS_CODE = '0'
+		WHERE
+			ADD_PAYMENT_ID = #{value}
+	</update>
+
+    <delete id="deleteOrderAddPaymentByCancel" parameterType="saleson.shop.order.claimapply.domain.OrderCancelApply">
+        DELETE FROM OP_ORDER_ADD_PAYMENT
+        <where>
+            REFUND_CODE = #{refundCode}
+            AND ORDER_CODE = #{orderCode}
+        </where>
+    </delete>
+
+    <delete id="deleteOrderAddPaymentByReturn" parameterType="saleson.shop.order.claimapply.domain.OrderReturnApply">
+        DELETE FROM OP_ORDER_ADD_PAYMENT
+        <where>
+            REFUND_CODE = #{refundCode}
+            AND ORDER_CODE = #{orderCode}
+        </where>
+    </delete>
+
+    <select id="getOrderAddPaymentCount" parameterType="saleson.shop.order.claimapply.domain.OrderCancelApply" resultType="Integer">
+		SELECT
+		    COUNT(*)
+        FROM
+            OP_ORDER_ADD_PAYMENT
+        WHERE
+            ORDER_CODE = #{orderCode}
+            AND SUBSTRING(ISSUE_CODE,21) = #{shippingSequence}
+            AND ADD_PAYMENT_TYPE = '1'
+	</select>
+</mapper>

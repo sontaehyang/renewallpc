@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.keyword.KeywordMapper">
+	<resultMap id="keywordResult" type="saleson.shop.keyword.domain.Keyword">
+	</resultMap>
+	<insert id="mergeItemKeyword" parameterType="saleson.shop.keyword.domain.Keyword">
+		INSERT INTO 
+			OP_KEYWORD (KEYWORD, KEYWORD_TYPE, CREATED_DATE, KEYWORD_SEPERATION, WEIGHT)
+		VALUES 
+			(#{keyword}, #{keywordType}, DATE_FORMAT(NOW(),'%Y%m%d'), #{keywordSeperation}, '1')
+		ON DUPLICATE KEY
+			UPDATE
+				WEIGHT = WEIGHT + 1 
+	</insert>
+	
+	<select id="getItemKeywordString" resultType="java.lang.String">
+		SELECT ITEM_KEYWORD 
+		FROM OP_ITEM I
+		<where>
+			AND I.DATA_STATUS_CODE = '1' 
+			AND I.DISPLAY_FLAG = 'Y'
+			AND ITEM_KEYWORD != ''
+		</where> 
+		GROUP BY ITEM_KEYWORD
+	</select>
+	
+	<select id="getAutoComplete" parameterType="hashMap" resultMap="keywordResult">
+		SELECT * FROM (
+			SELECT * FROM OP_KEYWORD 
+			WHERE KEYWORD_SEPERATION LIKE CONCAT(#{query},'%') AND KEYWORD_TYPE = '1' 
+			LIMIT 10 
+			
+			UNION
+			
+			SELECT * FROM OP_KEYWORD 
+			WHERE KEYWORD_SEPERATION LIKE CONCAT('%',#{query},'%') AND KEYWORD_TYPE = '1' 
+			LIMIT 10 
+		) T LIMIT 10
+	</select>
+	
+	
+	<delete id="clearDailyKeyword">
+		DELETE FROM OP_KEYWORD WHERE KEYWORD_TYPE = '1'
+	</delete>
+	
+	<insert id="setDailyKeyword">
+		INSERT INTO OP_KEYWORD (KEYWORD, KEYWORD_TYPE, CREATED_DATE, KEYWORD_SEPERATION) VALUES
+		<foreach collection="list" item="itemKeyword" separator=",">
+			(#{itemKeyword.keyword}, #{itemKeyword.keywordType}, DATE_FORMAT(NOW(), '%Y%m%d'), #{itemKeyword.keywordSeperation})
+		</foreach>
+	</insert>
+</mapper>

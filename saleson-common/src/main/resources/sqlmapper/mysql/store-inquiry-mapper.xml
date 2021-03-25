@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.storeinquiry.StoreInquiryMapper">
+	
+	<resultMap id="StoreInquiryResult" type="saleson.shop.storeinquiry.domain.StoreInquiry">
+		<result property="storeInquiryId" column="STORE_INQUIRY_ID" />
+		<result property="company" column="COMPANY" />
+		<result property="userName" column="USER_NAME" />
+		<result property="phoneNumber" column="PHONE_NUMBER" />
+		<result property="email" column="EMAIL" />
+		<result property="homepage" column="HOMEPAGE" />
+		<result property="content" column="CONTENT" />
+		<result property="fileName" column="FILE_NAME" />
+		<result property="status" column="STATUS" />
+		<result property="creationDate" column="CREATION_DATE" />
+	</resultMap>
+	
+	<resultMap id="StoreCountResult" type="saleson.shop.order.domain.OrderCount">
+		<result property="key" column="ID" />
+		<result property="label" column="LABEL" />
+		<result property="count" column="COUNT" />
+	</resultMap>
+	
+	<sql id="sqlStoreInquiryListWhere">
+		<where>
+			<if test='status != null and status != ""'>
+				AND STATUS = #{status}
+			</if>
+			<if test='(where != null and where != "") and (query != null and query !="")'>
+				<if test='where == "COMPANY"'>
+					AND COMPANY LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test='where == "USER_NAME"'>
+					AND USER_NAME LIKE CONCAT('%', #{query}, '%')
+				</if>
+			</if>
+		</where>
+	</sql>
+	
+	<insert id="insertStoreInquiry" parameterType="saleson.shop.storeinquiry.domain.StoreInquiry">
+		INSERT INTO OP_STORE_INQUIRY (STORE_INQUIRY_ID, COMPANY, USER_NAME, PHONE_NUMBER, EMAIL, HOMEPAGE, CONTENT, FILE_NAME, STATUS, CREATION_DATE)
+		VALUES (#{storeInquiryId}, #{company}, #{userName}, #{phoneNumber}, #{email}, #{homepage}, #{content}, #{fileName}, #{status}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<update id="updateStoreInquiryStatus" parameterType="saleson.shop.storeinquiry.domain.StoreInquiry">
+		UPDATE
+			OP_STORE_INQUIRY
+		SET
+			STATUS = #{status}
+		WHERE 
+			STORE_INQUIRY_ID = #{storeInquiryId}
+	</update>
+	
+	<select id="getStoreInquiryList" parameterType="saleson.shop.storeinquiry.support.StoreInquiryParam" resultMap="StoreInquiryResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT *
+			FROM 
+				OP_STORE_INQUIRY
+			<include refid="sqlStoreInquiryListWhere"/>
+			
+			ORDER BY STORE_INQUIRY_ID DESC
+			
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getStoreInquiry" parameterType="Integer" resultMap="StoreInquiryResult">
+			SELECT *
+			FROM 
+				OP_STORE_INQUIRY
+			WHERE
+				STORE_INQUIRY_ID = #{value}
+	</select>
+	
+	<select id="getStoreInquiryCount" parameterType="saleson.shop.storeinquiry.support.StoreInquiryParam" resultType="Integer">
+		SELECT
+			COUNT(*)
+			FROM OP_STORE_INQUIRY
+			<include refid="sqlStoreInquiryListWhere"/>
+	</select>
+	
+	<select id="getStoreInquiryByFileName" parameterType="Integer" resultMap="StoreInquiryResult">
+		SELECT *
+		FROM
+			OP_STORE_INQUIRY
+		WHERE
+			STORE_INQUIRY_ID = #{value}
+			
+	</select>
+	
+	<select id="getOpmanagerStoreCountAll" resultMap="StoreCountResult">
+		
+		<!-- 접수완료 COUNT-->
+		SELECT 'receipt-finish' AS ID, '접수완료' AS LABEL, COUNT(*) AS COUNT
+		FROM OP_STORE_INQUIRY
+		WHERE
+			STATUS = 0
+			
+		UNION ALL
+		
+		<!-- 처리중 COUNT-->
+		SELECT 'process' AS ID, '처리중' AS LABEL, COUNT(*) AS COUNT
+		FROM OP_STORE_INQUIRY
+		WHERE
+			STATUS = 1
+			
+		UNION ALL
+		
+		<!-- 처리완료 COUNT-->
+		SELECT 'process-finish' AS ID, '처리완료' AS LABEL, COUNT(*) AS COUNT
+		FROM OP_STORE_INQUIRY
+		WHERE
+			STATUS = 2
+		
+	</select>
+</mapper>

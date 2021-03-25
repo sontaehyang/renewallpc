@@ -1,0 +1,299 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" 		uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" 		uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" 	uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" 	uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" 	uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" 	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="op" 		uri="/WEB-INF/tlds/functions"%>
+<%@ taglib prefix="page" 	tagdir="/WEB-INF/tags/page"%>
+<%@ taglib prefix="module" 	tagdir="/WEB-INF/tags/modules"%>
+
+
+	<div class="location">
+		<a href="#"></a> &gt;  <a href="#"></a> &gt; <a href="#" class="on"></a>
+	</div>	
+
+	<div class="item_list">
+			
+		<h3><span>특집페이지 설정</span></h3>
+		<form:form modelAttribute="featuredParam" method="get">
+			<div class="board_write">								
+				<table class="board_write_table" summary="관련상품등록">
+					<caption>관련상품등록 </caption>
+					<colgroup>
+						<col style="width: 150px;">
+						<col style="width: 430px;">
+						<col style="width: 150px;">
+						<col style="">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td class="label">${op:message('M00011')}</td>    <!-- 검색구분 -->
+							<td colspan="3">
+								<div>
+									<form:select path="where" title="상세검색 선택">
+										<form:option value="FEATURED_URL">URL</form:option>
+										<form:option value="FEATURED_NAME">${op:message('M01083')}</form:option> <!-- 특집페이지명 -->
+										<!-- 
+										<form:option value="FEATURED_SIMPLE_CONTENT">${op:message('M01084')}</form:option> <!-- 특집페이지 설명 
+										-->
+									</form:select>
+									<form:input path="query" class="w360" title="${op:message('M00022')}" /> <!-- 검색어 -->
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="label">사용유무</td>
+							<td>
+								<div>
+									<p>
+										<form:radiobutton path="featuredFlag" value="" checked="checked" label="${op:message('M00039')}" /> <!-- 전체 -->
+										<form:radiobutton path="featuredFlag" value="Y" label="사용" />
+										<form:radiobutton path="featuredFlag" value="N" label="비사용" />
+									</p>
+								</div>
+							</td>
+				
+							<td class="label">${op:message('M00191')}</td> <!-- 공개유무 -->
+							<td>
+								<div>
+									<p>
+										<form:radiobutton path="displayListFlag" value="" checked="checked" label="${op:message('M00039')}" /> <!-- 전체 -->
+										<form:radiobutton path="displayListFlag" value="Y" label="${op:message('M00096')}" /> <!-- 공개 -->
+										<form:radiobutton path="displayListFlag" value="N" label="${op:message('M00097')}" /> <!-- 비공개 -->
+									</p>
+								</div>
+							</td>
+						</tr>
+
+						
+						<%-- <tr>
+							<td class="label">특집 간략설명</td>
+							<td>
+								<div>
+									<form:input path="featuredSimpleContent" class="full" title="특집 간략설명" />
+								</div>
+							</td>
+						</tr> --%>
+						<tr>
+							<td class="label">구분</td>
+							<td>
+								<div>
+									<input type="radio" name="featuredCodeChecked" value="" id="featuredCodeChecked1" ${op:checked(featuredParam.featuredCodeChecked,'')} /><label for="featuredCodeChecked1">전체</label>
+									<input type="radio" name="featuredCodeChecked" value="esthetic" id="featuredCodeChecked2" ${op:checked(featuredParam.featuredCodeChecked,'esthetic') } /><label for="featuredCodeChecked2">에스테틱</label>
+									<input type="radio" name="featuredCodeChecked" value="hair" id="featuredCodeChecked3" ${op:checked(featuredParam.featuredCodeChecked,'hair') } /><label for="featuredCodeChecked3">헤어</label>
+									<input type="radio" name="featuredCodeChecked" value="nail" id="featuredCodeChecked4" ${op:checked(featuredParam.featuredCodeChecked,'nail') } /><label for="featuredCodeChecked4">네일</label>
+									<input type="radio" name="featuredCodeChecked" value="matsuge_extension" id="featuredCodeChecked5" ${op:checked(featuredParam.featuredCodeChecked,'matsuge_extension') } /><label for="featuredCodeChecked5">속눈썹</label> 
+								</div>
+							</td>
+							
+							<td class="label">${op:message('M00052')} <!-- 출력수 --></td>
+							<td>
+								<div>
+									<form:input path="itemsPerPage" class="_number" title="${op:message('M00052')}" /> 
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+			
+			<div class="btn_all">
+				<div class="btn_left">
+					<button type="button" class="btn btn-dark-gray btn-sm" onclick="location.href='/opmanager/${featuredTypeUri}/list';"><span>${op:message('M00047')}</span></button> <!-- 초기화 -->
+				</div>
+				<div class="btn_right">
+					<button type="submit" class="btn btn-dark-gray btn-sm"><span>${op:message('M00048')}</span></button> <!-- 검색 -->
+				</div>
+			</div>
+		</form:form>
+		
+		<div class="count_title mt20">
+			<h5>
+				${op:message('M00039')} : ${featuredCount} ${op:message('M00743')}
+			</h5>	 <!-- 전체 -->   <!-- 건 조회 --> 
+		</div>
+		
+		<form id="checkedDeleteForm" method="post" action="/opmanager/${featuredTypeUri}/checked-delete">
+			<input type="hidden" name="featuredCode" value="${featuredParam.featuredCodeChecked}" />
+			<div class="board_write">
+				<table class="board_list_table" summary="처리내역 리스트">
+					<caption>처리내역 리스트</caption>
+					<colgroup>
+						<col style="width:50px;">
+						<col style="width:200px">
+						<col style="width:">
+						<col style="width:270px">
+						<col style="width:100px">			
+						<col style="width:70px"> 
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col"><input type="checkbox" class="delete_all" title="체크박스"></th>
+							<th scope="col">구분</th> 
+							<th scope="col">${op:message('M01083')}</th> <!-- 특집페이지명 -->
+							<th scope="col">URL</th>
+							<!--  
+							<th scope="col">${op:message('M01084')}</th> <!-- 특집페이지 설명
+							 -->
+							
+							<th scope="col">${op:message('M00202')}</th>  <!-- 등록일 -->
+							<th scope="col">${op:message('M00087')}</th>  <!-- 수정 -->
+						</tr>
+					</thead>
+					<tbody class="sortable">
+						<c:forEach items="${featuredList}" var="list" varStatus="i">
+							<tr>
+								 <td><input type="checkbox" name="featuredIds" title="체크박스" value="${list.featuredId}"></td>
+								 <td class="tleft">
+								 	${fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(list.featuredCode,'esthetic','에스테틱'),'hair','헤어'),'nail','네일'),'matsuge_extension','속눈썹'),'|',', '),'all','에스테틱, 헤어, 네일, 속눈썹')}
+								 </td>
+								 <td class="tleft"><a href="/opmanager/${featuredTypeUri}/edit/${list.featuredId}">${list.featuredName}</a></td>
+								 <td class="tleft">
+								 	<a href="${featuredTypeUri == 'featured' ? '' : '/sp'}/pages/${list.featuredUrl}" target="_blank"><img src="/content/images/opmanager/common/icon_preview_pc.gif" alt=""></a>
+								 	${featuredTypeUri == 'featured' ? '' : '/sp'}/pages/${list.featuredUrl}
+								 </td>
+								 <!-- 
+								 <td class="tleft">${list.featuredSimpleContent}</td>
+								  -->
+								 <td>${op:date(list.createdDate) }</td>
+								 <td><p class="mb5"><a href="/opmanager/${featuredTypeUri}/edit/${list.featuredId}" class="table_btn">${op:message('M00087')}</a></p></td> <!-- 수정 -->
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>				 
+			</div>
+			
+			<c:if test="${empty featuredList}">
+				<div class="no_content">
+					${op:message('M00473')} <!-- 데이터가 없습니다. -->
+				</div>
+			</c:if>
+				
+			
+			<div class="btn_all">
+				<div class="btn_left mb0">
+					<button type="button" class="btn ctrl_btn checked_delete">${op:message('M01034')}</button> <!-- 일괄삭제 -->
+					
+					<button type="button" id="change_ordering" class="btn btn-dark-gray btn-sm" onclick="changeListOrdering()">${op:message('M00791')}</button> <!-- 정렬순서변경 -->
+					
+					<!-- <button type="button" id="change_ordering2" class="btn ctrl_btn "  onclick="changeListOrdering()">${op:message('M00791')}</button> --> <!-- 정렬순서변경 -->
+				</div>
+				<div class="btn_right mb0">
+					<a href="/opmanager/${featuredTypeUri}/create" class="ctrl_btn">${op:message('M00088')}</a> <!-- 등록 -->
+				</div>
+			</div>
+			
+			<page:pagination-manager />
+		</form>	
+					
+	</div> <!-- // item_list02 -->
+
+
+<style>
+td {background: #fff;}
+.sortable-placeholder td {
+	height: 70px; 
+	background: #d6eafd url("/content/styles/ui-lightness/images/ui-bg_diagonals-thick_20_666666_40x40.png") 50% 50% repeat;
+	opacity: 0.5;
+}
+#change_ordering, #change_ordering2 {
+	display: none;
+}
+#change_ordering2 {
+	position:fixed; right:0; bottom: 166px; z-index: 1000;
+}
+</style>
+
+
+<script type="text/javascript">
+$(function(){
+	if (isPosibleToChangeOrdering()) {
+		// 관련상품 drag sortable
+	    $( ".sortable" ).sortable({
+	        placeholder: "sortable-placeholder"
+	    });
+	    $( ".sortable" ).disableSelection(); 
+	    
+	    $('#change_ordering, #change_ordering2').css({'background-color': '#25a5dc', 'border': '1px solid #25a5dc'}).show();
+	} else {
+		$('#change_ordering, #change_ordering2').css({'background-color': '#c34e00', 'border': '1px solid #c34e00'}).show();
+	}
+	
+	
+	$(".delete_all").on("click",function(){
+		var flag = $(this).prop("checked");
+		$("input[name='featuredIds']").each(function(){
+			$(this).prop("checked",flag);
+		});
+	});		
+	
+	$(".checked_delete").on("click",function(){
+		Common.confirm(Message.get("M00196"),function(){	// 삭제하시겠습니까?
+			if($("input[name='featuredIds']:checked").size() > 0){
+				$("#checkedDeleteForm").submit();
+			}
+		});
+	});
+	
+	$("#reset").on("click",function(){
+		$("input").each(function(){
+			$(this).val('');
+		});
+	});
+});
+
+
+//순서변경 가능여부 체크
+function isPosibleToChangeOrdering() {
+	// 순서 변경이 가능한 조건인지 체크.
+	var $query = $('#query');
+	var $featuredFlag = $('#featuredFlag2');
+	var $displayListFlag = $('#displayListFlag2');
+
+	if ($query.val() != ''
+			|| $featuredFlag.prop('checked') == false 
+			|| $displayListFlag.prop('checked') == false ) {
+		
+		return false;
+	}
+	return true;
+}
+
+// 순서변경 
+function changeListOrdering() {
+	if (!isPosibleToChangeOrdering()) {
+		if (confirm(Message.get("M00298") + '\n' + Message.get("M00299"))) { // '현재 검색 조건으로는 순서 정렬이 불가능합니다. 순서 변경이 가능한 조건으로 다시 검색하시겠습니까?'
+			$('#query').val('');
+			$('#featuredFlag2').prop('checked', true);
+			$('#displayListFlag2').prop('checked', true);
+			
+			$('#featuredParam').submit();
+		} 
+		return;
+	}
+	
+	var $form = $('#checkedDeleteForm');
+
+	if (confirm(Message.get("M01483"))) { // 순서를 변경하시겠습니까? 
+		$('.delete_all').click();
+		var param = $form.serialize();
+		var startOrdering = ((Number('${pagination.currentPage}') - 1) * Number($('#itemsPerPage').val())) + 1;
+		
+		param = param + '&startOrdering=' + startOrdering;
+
+		
+		$.post('/opmanager/featured/list/change-ordering', param, function(response) {
+			Common.responseHandler(response, function(){
+				$('.delete_all').click();
+				alert(Message.get("M01221"));	// 처리되었습니다.
+				location.reload();
+			});
+		});
+	} 
+}
+
+</script>

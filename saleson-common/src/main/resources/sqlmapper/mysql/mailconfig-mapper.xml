@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.mailconfig.MailConfigMapper">
+
+	<resultMap id="MailConfigResult" type="saleson.shop.mailconfig.domain.MailConfig">
+		<result property="mailConfigId" column="MAIL_CONFIG_ID" />
+		<result property="smsConfig" column="SMS_CONFIG" />
+		<result property="templateId" column="TEMPLATE_ID" />
+		<result property="title" column="TITLE" />
+		<result property="buyerSubject" column="BUYER_SUBJECT" />
+		<result property="adminSubject" column="ADMIN_SUBJECT" />
+		<result property="sellerSubject" column="SELLER_SUBJECT" />
+		<result property="buyerContent" column="BUYER_CONTENT" />
+		<result property="adminContent" column="ADMIN_CONTENT" />
+		<result property="sellerContent" column="SELLER_CONTENT" />
+		
+		<result property="mobileBuyerSubject" column="MOBILE_BUYER_SUBJECT" />
+		<result property="mobileAdminSubject" column="MOBILE_ADMIN_SUBJECT" />
+		<result property="mobileSellerSubject" column="MOBILE_SELLER_SUBJECT" />
+		<result property="mobileBuyerContent" column="MOBILE_BUYER_CONTENT" />
+		<result property="mobileAdminContent" column="MOBILE_ADMIN_CONTENT" />
+		<result property="mobileSellerContent" column="MOBILE_SELLER_CONTENT" />
+		
+		<result property="buyerSendFlag" column="BUYER_SEND_FLAG" />
+		<result property="adminSendFlag" column="ADMIN_SEND_FLAG" />
+		<result property="sellerSendFlag" column="SELLER_SEND_FLAG" />
+		<result property="buyerTagUse" column="BUYER_TAG_USE" />
+		<result property="adminTagUse" column="ADMIN_TAG_USE" />
+		<result property="sellerTagUse" column="SELLER_TAG_USE" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<select id="getMailConfigCount" parameterType="saleson.shop.mailconfig.support.MailConfigSearchParam" resultType="Integer" >
+		SELECT COUNT(*)			
+		FROM OP_MAIL_CONFIG 
+	</select>
+	
+	<select id="getMailConfigList" parameterType="saleson.shop.mailconfig.support.MailConfigSearchParam" resultMap="MailConfigResult" >
+		SELECT 
+			MAIL_CONFIG_ID
+			, SMS_CONFIG
+			, TEMPLATE_ID
+			, TITLE
+			, BUYER_SUBJECT
+			, ADMIN_SUBJECT
+			, SELLER_SUBJECT
+			, BUYER_CONTENT
+			, ADMIN_CONTENT
+			, SELLER_CONTENT
+			, MOBILE_BUYER_SUBJECT
+			, MOBILE_ADMIN_SUBJECT
+			, MOBILE_SELLER_SUBJECT
+			, MOBILE_BUYER_CONTENT
+			, MOBILE_ADMIN_CONTENT
+			, MOBILE_SELLER_CONTENT
+			, BUYER_SEND_FLAG
+			, ADMIN_SEND_FLAG
+			, SELLER_SEND_FLAG
+			, BUYER_TAG_USE
+			, ADMIN_TAG_USE
+			, SELLER_TAG_USE
+			, CREATED_DATE
+		FROM OP_MAIL_CONFIG 
+	</select>
+	
+	<select id="getMailConfigDetailsById" parameterType="saleson.shop.mailconfig.support.MailConfigSearchParam" resultMap="MailConfigResult" >
+		SELECT 
+			MAIL_CONFIG_ID
+			, SMS_CONFIG
+			, TEMPLATE_ID
+			, TITLE
+			, BUYER_SUBJECT
+			, ADMIN_SUBJECT
+			, SELLER_SUBJECT
+			, BUYER_CONTENT
+			, ADMIN_CONTENT
+			, SELLER_CONTENT
+			, MOBILE_BUYER_SUBJECT
+			, MOBILE_ADMIN_SUBJECT
+			, MOBILE_SELLER_SUBJECT
+			, MOBILE_BUYER_CONTENT
+			, MOBILE_ADMIN_CONTENT
+			, MOBILE_SELLER_CONTENT
+			, BUYER_SEND_FLAG
+			, ADMIN_SEND_FLAG
+			, SELLER_SEND_FLAG
+			, BUYER_TAG_USE
+			, ADMIN_TAG_USE
+			, SELLER_TAG_USE
+			, CREATED_DATE
+		FROM OP_MAIL_CONFIG 
+		WHERE MAIL_CONFIG_ID = #{mailConfigId}
+	</select>
+	
+	<select id="getMailConfigByTemplateId" parameterType="String" resultMap="MailConfigResult" >
+		SELECT 
+			MAIL_CONFIG_ID
+			, SMS_CONFIG
+			, TEMPLATE_ID
+			, TITLE
+			, BUYER_SUBJECT
+			, ADMIN_SUBJECT
+			, SELLER_SUBJECT
+			, BUYER_CONTENT
+			, ADMIN_CONTENT
+			, SELLER_CONTENT
+			, MOBILE_BUYER_SUBJECT
+			, MOBILE_ADMIN_SUBJECT
+			, MOBILE_SELLER_SUBJECT
+			, MOBILE_BUYER_CONTENT
+			, MOBILE_ADMIN_CONTENT
+			, MOBILE_SELLER_CONTENT
+			, BUYER_SEND_FLAG
+			, ADMIN_SEND_FLAG
+			, SELLER_SEND_FLAG
+			, BUYER_TAG_USE
+			, ADMIN_TAG_USE
+			, SELLER_TAG_USE
+			, CREATED_DATE
+		FROM OP_MAIL_CONFIG 
+		WHERE
+			TEMPLATE_ID = #{templateId}
+	</select>
+	
+	<insert id="insertMailConfig" parameterType="saleson.shop.mailconfig.domain.MailConfig">
+		INSERT INTO OP_MAIL_CONFIG (MAIL_CONFIG_ID, SMS_CONFIG, TEMPLATE_ID, TITLE, BUYER_SUBJECT, ADMIN_SUBJECT, SELLER_SUBJECT, BUYER_CONTENT, ADMIN_CONTENT, SELLER_CONTENT, BUYER_SEND_FLAG, ADMIN_SEND_FLAG, SELLER_SEND_FLAG, BUYER_TAG_USE, ADMIN_TAG_USE, SELLER_TAG_USE, CREATED_DATE, MOBILE_BUYER_SUBJECT, MOBILE_ADMIN_SUBJECT, MOBILE_SELLER_SUBJECT, MOBILE_BUYER_CONTENT, MOBILE_ADMIN_CONTENT, MOBILE_SELLER_CONTENT)
+		VALUES (#{mailConfigId}, #{smsConfig}, #{templateId}, #{title}, #{buyerSubject}, #{adminSubject}, #{sellerSubject}, #{buyerContent}, #{adminContent}, #{sellerContent}, #{buyerSendFlag}, #{adminSendFlag}, #{sellerSendFlag}, #{buyerTagUse}, #{adminTagUse}, #{sellerTagUse}, DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'), #{mobileBuyerSubject}, #{mobileAdminSubject}, #{mobileSellerSubject}, #{mobileBuyerContent}, #{mobileAdminContent}, #{mobileSellerContent})
+	</insert>
+	
+	<update id="updateMailConfigById" parameterType="saleson.shop.mailconfig.domain.MailConfig">
+		UPDATE OP_MAIL_CONFIG SET
+			TEMPLATE_ID = #{templateId}, 
+			TITLE = #{title}, 
+			BUYER_SUBJECT = #{buyerSubject}, 
+			ADMIN_SUBJECT = #{adminSubject}, 
+			BUYER_CONTENT = #{buyerContent}, 
+			ADMIN_CONTENT = #{adminContent},
+			MOBILE_BUYER_SUBJECT = #{mobileBuyerSubject},
+			MOBILE_ADMIN_SUBJECT = #{mobileAdminSubject}, 
+			MOBILE_SELLER_SUBJECT = #{mobileSellerSubject},
+			MOBILE_BUYER_CONTENT = #{mobileBuyerContent},
+			MOBILE_ADMIN_CONTENT = #{mobileAdminContent},
+			MOBILE_SELLER_CONTENT = #{mobileSellerContent}, 
+			BUYER_SEND_FLAG = #{buyerSendFlag}, 
+			ADMIN_SEND_FLAG = #{adminSendFlag}
+		WHERE MAIL_CONFIG_ID = #{mailConfigId}
+	</update>
+	
+	<delete id="deleteMailConfigById" parameterType="saleson.shop.mailconfig.domain.MailConfig" >
+		DELETE FROM	OP_MAIL_CONFIG 
+		WHERE MAIL_CONFIG_ID = #{mailConfigId}
+	</delete>
+	
+	
+</mapper>

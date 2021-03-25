@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.banword.BanWordMapper">
+	<!-- 
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	 -->
+	
+	<resultMap id="BanWordResult" type="saleson.shop.banword.domain.BanWord">
+		<result property="banWordId" column="BAN_WORD_ID" />
+		<result property="banWord" column="BAN_WORD" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USERNAME" />
+		<result property="creationDate" column="CREATION_DATE" />
+	</resultMap>	
+	
+	<select id="getBanWordListAll" resultMap="BanWordResult">
+        SELECT * FROM OP_BAN_WORD
+	</select>
+	
+	<select id="getBanWordByBanWordId" parameterType="Integer" resultMap="BanWordResult">
+		SELECT * FROM OP_BAN_WORD 
+		WHERE BAN_WORD_ID = #{value}
+	</select>	
+	
+	
+	<select id="getBanWordCount" parameterType="SearchParam" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM OP_BAN_WORD 
+		
+		<where>
+			<if test="query != null and query != ''">
+				<if test="where == 'BAN_WORD'">
+					AND BAN_WORD LIKE CONCAT('%', #{query}, '%')
+				</if>
+			</if>
+		</where>
+	</select>	
+	
+	
+	<select id="getBanWordList" parameterType="SearchParam" resultMap="BanWordResult">
+		SELECT * 
+		FROM OP_BAN_WORD 
+		
+		<where>
+			<if test="query != null and query != ''">
+				<if test="where == 'BAN_WORD'">
+					AND BAN_WORD LIKE CONCAT('%', #{query}, '%')
+				</if>
+			</if>
+		</where>
+		ORDER BY BAN_WORD_ID DESC 
+		LIMIT #{pagination.startRownum}, #{pagination.endRownum}
+	</select>
+	
+	
+	<insert id="insertBanWord" parameterType="saleson.shop.banword.domain.BanWord">
+		INSERT INTO OP_BAN_WORD (BAN_WORD_ID, BAN_WORD, USER_ID, USERNAME, CREATION_DATE)
+		VALUES (#{banWordId}, #{banWord}, #{userId}, #{userName}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+
+	<update id="updateBanWord" parameterType="saleson.shop.banword.domain.BanWord">
+		UPDATE OP_BAN_WORD SET
+			BAN_WORD = #{banWord}
+		WHERE BAN_WORD_ID = #{banWordId}
+	</update>
+	
+	<delete id="deleteBanWordByBanWordId" parameterType="Integer">
+		DELETE FROM OP_BAN_WORD 
+		WHERE BAN_WORD_ID = #{value}
+	</delete>
+</mapper>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$/../../../saleson-web">
+		<excludeFolder url="file://$MODULE_DIR$/../../../saleson-web/.gradle"/>
+		<excludeFolder url="file://$MODULE_DIR$/../../../saleson-web/build"/>
+		<excludeFolder url="file://$MODULE_DIR$/../../../saleson-web/out"/>
+	</contentEntry>
+</component>

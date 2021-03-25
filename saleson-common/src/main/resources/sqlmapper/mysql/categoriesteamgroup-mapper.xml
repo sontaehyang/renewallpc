@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.categoriesteamgroup.CategoriesTeamGroupMapper">
+
+	<resultMap id="CategoriesTeamSeoAndRankResult" type="saleson.shop.categoriesteamgroup.domain.CategoriesTeam">
+		<result property="categoryTeamId" column="CATEGORY_TEAM_ID" />
+		<result property="name" column="NAME" />
+		<result property="code" column="CODE" />
+		<result property="categoryTeamFlag" column="CATEGORY_TEAM_FLAG" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="ordering" column="ORDERING" />
+		<result property="bestItemDisplayType" column="BEST_ITEM_DISPLAY_TYPE" />
+		
+		<association property="categoriesSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="TITLE" />
+			<result property="keywords" column="KEYWORDS" />
+			<result property="description" column="DESCRIPTION" />
+			<result property="headerContents1" column="HEADER_CONTENTS1" />
+			<result property="headerContents2" column="HEADER_CONTENTS2" />
+			<result property="headerContents3" column="HEADER_CONTENTS3" />
+			<result property="themawordTitle" column="THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="THEMAWORD_DESCRIPTION" />
+		</association>
+		
+		<association property="rankSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="RANK_TITLE" />
+			<result property="keywords" column="RANK_KEYWORDS" />
+			<result property="description" column="RANK_DESCRIPTION" />
+			<result property="headerContents1" column="RANK_HEADERCONTENTS1" />
+			<result property="themawordTitle" column="RANK_THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="RANK_THEMAWORD_DESCRIPTION" />
+		</association>
+		
+		<association property="reviewSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="REVIEW_TITLE" />
+			<result property="keywords" column="REVIEW_KEYWORDS" />
+			<result property="description" column="REVIEW_DESCRIPTION" />
+			<result property="headerContents1" column="REVIEW_HEADERCONTENTS1" />
+			<result property="themawordTitle" column="REVIEW_THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="REVIEW_THEMAWORD_DESCRIPTION" />
+		</association>
+	</resultMap>
+	
+	<resultMap id="CategoriesGroupSeoAndRankResult" type="saleson.shop.categoriesteamgroup.domain.CategoriesGroup">
+		<result property="categoryGroupId" column="CATEGORY_GROUP_ID" />
+		<result property="categoryTeamId" column="CATEGORY_TEAM_ID" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="name" column="NAME" />
+		<result property="code" column="GROUP_CODE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="categoryGroupFlag" column="CATEGORY_GROUP_FLAG" />
+		<result property="accessType" column="ACCESS_TYPE" />
+		<result property="defcate" column="DEFCATE" />
+		<result property="ordering" column="ORDERING" />
+		<result property="groupOrdering" column="GROUP_ORDERING" />
+		<result property="itemList" column="ITEM_LIST" />
+		
+		<association property="categoriesSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="TITLE" />
+			<result property="keywords" column="KEYWORDS" />
+			<result property="description" column="DESCRIPTION" />
+			<result property="headerContents1" column="HEADER_CONTENTS1" />
+			<result property="headerContents2" column="HEADER_CONTENTS2" />
+			<result property="headerContents3" column="HEADER_CONTENTS3" />
+			<result property="themawordTitle" column="THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="THEMAWORD_DESCRIPTION" />
+		</association>
+		
+		<association property="rankSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="RANK_TITLE" />
+			<result property="keywords" column="RANK_KEYWORDS" />
+			<result property="description" column="RANK_DESCRIPTION" />
+			<result property="headerContents1" column="RANK_HEADERCONTENTS1" />
+			<result property="themawordTitle" column="RANK_THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="RANK_THEMAWORD_DESCRIPTION" />
+		</association>
+		
+		<collection property="groupBanners" ofType="saleson.shop.groupbanner.domain.GroupBanner" resultMap="saleson.shop.groupbanner.GroupBannerMapper.GroupBannerResult" />
+		
+	</resultMap>
+	
+	<resultMap id="CategoriesTeamGroupSeoAndRankResult" type="saleson.shop.categoriesteamgroup.domain.CategoriesTeam" extends="CategoriesTeamSeoAndRankResult">
+		<collection property="categoriesGroupList" ofType="saleson.shop.categoriesteamgroup.domain.CategoriesGroup" resultMap="CategoriesGroupSeoAndRankResult" />
+	</resultMap>
+	
+	
+	<resultMap id="CategoryTeamItemResult" type="saleson.shop.categoriesteamgroup.domain.ItemCategoryTeam" extends="saleson.shop.item.ItemMapper.ItemBaseResult">
+		<result property="categoryTeamId" column="CATEGORY_TEAM_ID" />
+	</resultMap>
+	
+	<select id="getCategoryClass1ListByGroupCode" parameterType="String" resultType="String">
+		SELECT SUBSTRING(C.CATEGORY_CODE, 1, 3) AS CATEGORY_CLASS1 FROM OP_CATEGORY_GROUP G 
+		INNER JOIN OP_CATEGORY C ON G.CATEGORY_GROUP_ID = C.CATEGORY_GROUP_ID 
+		WHERE CODE = #{value} 
+		GROUP BY SUBSTRING(C.CATEGORY_CODE, 1, 3) 
+	</select>
+	
+	<select id="getCategoriesTeamGroupList" resultMap="CategoriesTeamGroupSeoAndRankResult" >
+	
+		SELECT  A.CATEGORY_TEAM_ID
+				, A.CODE
+				, A.NAME
+				, A.ORDERING
+				, A.CATEGORY_TEAM_FLAG
+				, B.CATEGORY_GROUP_ID
+				, B.CODE AS GROUP_CODE
+				, B.NAME AS GROUP_NAME
+				, B.CATEGORY_GROUP_FLAG
+				, B.ORDERING AS GROUP_ORDERING
+				, B.ITEM_LIST
+				, CGB.CATEGORY_GROUP_BANNER_ID
+				, CGB.CATEGORY_GROUP_ID AS BANNER_CATEGORY_GROUP_ID
+				, CGB.TITLE
+				, CGB.LINK_URL
+				, CGB.FILE_NAME
+				, CGB.DISPLAY_ORDER
+		FROM OP_CATEGORY_TEAM AS A 
+			LEFT JOIN OP_CATEGORY_GROUP AS B
+				ON A.CATEGORY_TEAM_ID = B.CATEGORY_TEAM_ID
+			LEFT JOIN OP_CATEGORY_GROUP_BANNER CGB
+				ON B.CATEGORY_GROUP_ID = CGB.CATEGORY_GROUP_ID
+		ORDER BY A.ORDERING ASC , B.ORDERING ASC, CGB.DISPLAY_ORDER ASC
+	</select>
+	
+	<select id="getCategoriesTeamList" resultMap="CategoriesTeamSeoAndRankResult" >
+	
+		SELECT  CATEGORY_TEAM_ID
+				, NAME
+				, CODE
+				, ORDERING
+				, CATEGORY_TEAM_FLAG
+		FROM OP_CATEGORY_TEAM 
+		ORDER BY ORDERING ASC
+		
+	</select>
+	
+	<select id="getCategoriesGroupList" resultMap="CategoriesGroupSeoAndRankResult" >
+	
+		SELECT  A.CATEGORY_GROUP_ID
+				, A.CODE AS GROUP_CODE
+				, A.NAME 
+				, A.CATEGORY_GROUP_FLAG
+				, A.ACCESS_TYPE
+				, A.ORDERING  
+		FROM OP_CATEGORY_GROUP AS A LEFT JOIN  OP_CATEGORY_TEAM AS B  
+		ON A.CATEGORY_TEAM_ID = B.CATEGORY_TEAM_ID
+		ORDER BY B.ORDERING ASC , A.ORDERING ASC
+		
+	</select>
+	
+	<select id="getCategoriesTeamById" parameterType="saleson.shop.categoriesteamgroup.support.CategoriesTeamGroupSearchParam" resultMap="CategoriesTeamSeoAndRankResult" >
+		SELECT 
+			CATEGORY_TEAM_ID
+			, NAME
+			, CODE
+			, CREATED_DATE
+			, UPDATED_DATE
+			, CATEGORY_TEAM_FLAG
+			, TITLE
+			, KEYWORDS
+			, DESCRIPTION
+			, HEADER_CONTENTS1
+			, HEADER_CONTENTS2
+			, HEADER_CONTENTS3
+			, THEMAWORD_TITLE
+			, THEMAWORD_DESCRIPTION
+			, RANK_TITLE
+			, RANK_KEYWORDS
+			, RANK_DESCRIPTION
+			, RANK_HEADERCONTENTS1
+			, RANK_THEMAWORD_TITLE
+			, RANK_THEMAWORD_DESCRIPTION
+			, REVIEW_TITLE 
+			, REVIEW_KEYWORDS 
+			, REVIEW_DESCRIPTION 
+			, REVIEW_HEADERCONTENTS1 
+			, REVIEW_THEMAWORD_TITLE
+			, REVIEW_THEMAWORD_DESCRIPTION
+			, ORDERING
+			, BEST_ITEM_DISPLAY_TYPE
+		FROM OP_CATEGORY_TEAM 
+		<where>
+			<if test="categoryTeamId != null and categoryTeamId !=''">
+			 	AND CATEGORY_TEAM_ID = #{categoryTeamId}
+			</if>
+			<if test="code != null and code !=''">
+			 	AND CODE = #{code}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getCategoriesGroupById" parameterType="saleson.shop.categoriesteamgroup.support.CategoriesTeamGroupSearchParam" resultMap="CategoriesGroupSeoAndRankResult" >
+		SELECT 
+			CATEGORY_GROUP_ID
+			, CATEGORY_TEAM_ID
+			, NAME
+			, CODE AS GROUP_CODE
+			, CREATED_DATE
+			, UPDATED_DATE
+			, CATEGORY_GROUP_FLAG
+			, ACCESS_TYPE
+			, DEFCATE
+			, TITLE
+			, KEYWORDS
+			, DESCRIPTION
+			, HEADER_CONTENTS1
+			, HEADER_CONTENTS2
+			, HEADER_CONTENTS3
+			, THEMAWORD_TITLE
+			, THEMAWORD_DESCRIPTION
+			, RANK_TITLE
+			, RANK_KEYWORDS
+			, RANK_DESCRIPTION
+			, RANK_HEADERCONTENTS1
+			, RANK_THEMAWORD_TITLE
+			, RANK_THEMAWORD_DESCRIPTION
+			, ORDERING
+			, ITEM_LIST
+		FROM OP_CATEGORY_GROUP 
+	 	<where>
+			<if test="categoryGroupId != null and categoryGroupId !=''">
+			 	AND CATEGORY_GROUP_ID = #{categoryGroupId}
+			</if>
+			<if test="code != null and code !=''">
+			 	AND CODE = #{code}
+			</if>
+		</where>
+	</select>
+
+	<select id="getCategoriesMaxOrdering" parameterType="map" resultType="Integer">
+		<choose>
+			<when test='dataBaseTable == "OP_CATEGORY_TEAM"'>
+				SELECT IFNULL(MAX(ORDERING),0)+1 FROM OP_CATEGORY_TEAM
+			</when>
+			<when test='dataBaseTable == "OP_CATEGORY_GROUP"'>
+				SELECT IFNULL(MAX(ORDERING),0)+1 FROM OP_CATEGORY_GROUP
+			</when>
+			<otherwise>
+				SELECT IFNULL(MAX(ORDERING),0)+1 FROM #{dataBaseTable}
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insertCategoriesTeam" parameterType="saleson.shop.categoriesteamgroup.domain.CategoriesTeam">
+		INSERT INTO OP_CATEGORY_TEAM (CATEGORY_TEAM_ID, NAME, CODE, CREATED_DATE, CATEGORY_TEAM_FLAG, TITLE, KEYWORDS, DESCRIPTION, HEADER_CONTENTS1, HEADER_CONTENTS2, HEADER_CONTENTS3, THEMAWORD_TITLE, THEMAWORD_DESCRIPTION, RANK_TITLE, RANK_KEYWORDS, RANK_DESCRIPTION, RANK_HEADERCONTENTS1, RANK_THEMAWORD_TITLE, RANK_THEMAWORD_DESCRIPTION, REVIEW_TITLE, REVIEW_KEYWORDS, REVIEW_DESCRIPTION, REVIEW_HEADERCONTENTS1, REVIEW_THEMAWORD_TITLE, REVIEW_THEMAWORD_DESCRIPTION, ORDERING)
+		VALUES (#{categoryTeamId}, #{name}, #{code}, DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'), 'Y', #{categoriesSeo.title}, #{categoriesSeo.keywords}, #{categoriesSeo.description}, #{categoriesSeo.headerContents1}, #{categoriesSeo.headerContents2}, #{categoriesSeo.headerContents3}, #{categoriesSeo.themawordTitle}, #{categoriesSeo.themawordDescription}, #{rankSeo.title}, #{rankSeo.keywords}, #{rankSeo.description}, #{rankSeo.headerContents1}, #{rankSeo.themawordTitle}, #{rankSeo.themawordDescription}, #{reviewSeo.title}, #{reviewSeo.keywords}, #{reviewSeo.description}, #{reviewSeo.headerContents1}, #{reviewSeo.themawordTitle}, #{reviewSeo.themawordDescription}, #{ordering} )
+	</insert>
+	
+	<update id="updateCategoriesTeamOrdering" parameterType="saleson.shop.categoriesteamgroup.domain.CategoriesTeam">
+		UPDATE OP_CATEGORY_TEAM SET
+			ORDERING = #{ordering}
+			, UPDATED_DATE = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+		WHERE CATEGORY_TEAM_ID = #{categoryTeamId}
+	</update>
+	
+	<update id="updateCategoriesGroupOrdering" parameterType="saleson.shop.categoriesteamgroup.domain.CategoriesGroup">
+		UPDATE OP_CATEGORY_GROUP SET
+			ORDERING = #{ordering}
+			, UPDATED_DATE = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+		WHERE CATEGORY_GROUP_ID = #{categoryGroupId}
+	</update>
+	
+	<insert id="insertCategoriesGroup" parameterType="saleson.shop.categoriesteamgroup.domain.CategoriesGroup">
+		INSERT INTO OP_CATEGORY_GROUP (CATEGORY_GROUP_ID, CATEGORY_TEAM_ID, NAME, CODE, 
+		                                    CREATED_DATE, CATEGORY_GROUP_FLAG, ACCESS_TYPE, 
+		                                    TITLE, KEYWORDS, DESCRIPTION, HEADER_CONTENTS1, 
+		                                    HEADER_CONTENTS2, HEADER_CONTENTS3, THEMAWORD_TITLE, 
+		                                    THEMAWORD_DESCRIPTION, RANK_TITLE, RANK_KEYWORDS, 
+		                                    RANK_DESCRIPTION, RANK_HEADERCONTENTS1, RANK_THEMAWORD_TITLE, 
+		                                    RANK_THEMAWORD_DESCRIPTION, ORDERING)
+		                           SELECT #{categoryGroupId}, #{categoryTeamId}, #{name}, #{code},
+		                                  DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), 'Y', #{accessType}, 
+								          #{categoriesSeo.title}, #{categoriesSeo.keywords}, #{categoriesSeo.description}, #{categoriesSeo.headerContents1}, 
+								          #{categoriesSeo.headerContents2}, #{categoriesSeo.headerContents3}, #{categoriesSeo.themawordTitle}, 
+								          #{categoriesSeo.themawordDescription}, #{rankSeo.title}, #{rankSeo.keywords}, 
+								          #{rankSeo.description}, #{rankSeo.headerContents1}, #{rankSeo.themawordTitle}, 
+								          #{rankSeo.themawordDescription}, IFNULL(MAX(ORDERING)+1,1)
+								     FROM OP_CATEGORY_GROUP
+								    WHERE CATEGORY_TEAM_ID = #{categoryTeamId}
+		                           
+		<!-- VALUES (#{categoryGroupId}, #{categoryTeamId}, #{name}, #{code}, 
+		        DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), 'Y', #{accessType}, 
+		        #{categoriesSeo.title}, #{categoriesSeo.keywords}, #{categoriesSeo.description}, #{categoriesSeo.headerContents1}, 
+		        #{categoriesSeo.headerContents2}, #{categoriesSeo.headerContents3}, #{categoriesSeo.themawordTitle}, 
+		        #{categoriesSeo.themawordDescription}, #{rankSeo.title}, #{rankSeo.keywords}, 
+		        #{rankSeo.description}, #{rankSeo.headerContents1}, #{rankSeo.themawordTitle}, 
+		        #{rankSeo.themawordDescription}, #{ordering}) -->
+	</insert>
+	
+	<update id="updateCategoriesGroupById" parameterType="saleson.shop.categoriesteamgroup.domain.CategoriesGroup">
+		UPDATE OP_CATEGORY_GROUP SET
+			CATEGORY_TEAM_ID = #{categoryTeamId}, 
+			NAME = #{name}, 
+			CODE = #{code},
+			CATEGORY_GROUP_FLAG = #{categoryGroupFlag},  
+			ACCESS_TYPE = #{accessType},  
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), 
+			TITLE = #{categoriesSeo.title}, 
+			KEYWORDS = #{categoriesSeo.keywords}, 
+			DESCRIPTION = #{categoriesSeo.description}, 
+			HEADER_CONTENTS1 = #{categoriesSeo.headerContents1}, 
+			HEADER_CONTENTS2 = #{categoriesSeo.headerContents2}, 
+			HEADER_CONTENTS3 = #{categoriesSeo.headerContents3}, 
+			THEMAWORD_TITLE = #{categoriesSeo.themawordTitle}, 
+			THEMAWORD_DESCRIPTION = #{categoriesSeo.themawordDescription}, 
+			RANK_TITLE = #{rankSeo.title}, 
+			RANK_KEYWORDS = #{rankSeo.keywords}, 
+			RANK_DESCRIPTION = #{rankSeo.description}, 
+			RANK_HEADERCONTENTS1 = #{rankSeo.headerContents1}, 
+			RANK_THEMAWORD_TITLE = #{rankSeo.themawordTitle}, 
+			RANK_THEMAWORD_DESCRIPTION = #{rankSeo.themawordDescription}
+		WHERE CATEGORY_GROUP_ID = #{categoryGroupId}
+	</update>
+	
+	<update id="updateCategoriesTeamById" parameterType="saleson.shop.categoriesteamgroup.domain.CategoriesTeam">
+		UPDATE OP_CATEGORY_TEAM SET
+			NAME = #{name}, 
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), 
+			TITLE = #{categoriesSeo.title}, 
+			KEYWORDS = #{categoriesSeo.keywords}, 
+			DESCRIPTION = #{categoriesSeo.description}, 
+			HEADER_CONTENTS1 = #{categoriesSeo.headerContents1}, 
+			HEADER_CONTENTS2 = #{categoriesSeo.headerContents2}, 
+			HEADER_CONTENTS3 = #{categoriesSeo.headerContents3}, 
+			THEMAWORD_TITLE = #{categoriesSeo.themawordTitle}, 
+			THEMAWORD_DESCRIPTION = #{categoriesSeo.themawordDescription}, 
+			RANK_TITLE = #{rankSeo.title}, 
+			RANK_KEYWORDS = #{rankSeo.keywords}, 
+			RANK_DESCRIPTION = #{rankSeo.description}, 
+			RANK_HEADERCONTENTS1 = #{rankSeo.headerContents1}, 
+			RANK_THEMAWORD_TITLE = #{rankSeo.themawordTitle}, 
+			RANK_THEMAWORD_DESCRIPTION = #{rankSeo.themawordDescription},
+			REVIEW_TITLE = #{reviewSeo.title}, 
+			REVIEW_KEYWORDS = #{reviewSeo.keywords}, 
+			REVIEW_DESCRIPTION = #{reviewSeo.description}, 
+			REVIEW_HEADERCONTENTS1 = #{reviewSeo.headerContents1}, 
+			REVIEW_THEMAWORD_TITLE = #{reviewSeo.themawordTitle}, 
+			REVIEW_THEMAWORD_DESCRIPTION = #{reviewSeo.themawordDescription}
+		WHERE CATEGORY_TEAM_ID = #{categoryTeamId}
+	</update>
+	
+	<delete id="deleteCategoryTeam" parameterType="saleson.shop.categoriesteamgroup.domain.CategoriesTeam">
+		DELETE FROM OP_CATEGORY_TEAM
+		WHERE CATEGORY_TEAM_ID = #{categoryTeamId}
+	</delete>
+	
+	<delete id="deleteCategoryGorup" parameterType="saleson.shop.categoriesteamgroup.domain.CategoriesGroup">
+		DELETE FROM OP_CATEGORY_GROUP
+		<if test="categoryGroupId != '' and categoryGroupId != null">
+		WHERE CATEGORY_GROUP_ID = #{categoryGroupId}
+		</if>
+		<if test="categoryTeamId != '' and categoryTeamId != null">
+		WHERE CATEGORY_TEAM_ID = #{categoryTeamId}
+		</if>
+	</delete>
+	
+	<insert id="insertCategoryTeamItem" parameterType="saleson.shop.categoriesteamgroup.domain.CategoryTeamItem">
+		INSERT INTO OP_CATEGORY_TEAM_ITEM (CATEGORY_TEAM_ITEM_ID, CATEGORY_TEAM_ID, ITEM_ID, CREATED_DATE)
+		VALUES (#{categoryTeamItemId}, #{categoryTeamId}, #{itemId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<delete id="deleteCategoryTeamItem" parameterType="Integer" >
+		DELETE FROM OP_CATEGORY_TEAM_ITEM 
+		WHERE CATEGORY_TEAM_ID = #{value}
+	</delete>
+	
+	<select id="getCategoryTeamItemListByParam" parameterType="saleson.shop.categoriesteamgroup.support.CategoriesTeamGroupSearchParam" resultMap="CategoryTeamItemResult" >
+		SELECT 
+			CTI.CATEGORY_TEAM_ID,
+		    I.ITEM_ID,
+			I.ITEM_USER_CODE,
+			I.ITEM_NAME,
+			I.NONMEMBER_ORDER_TYPE,
+			I.ITEM_PRICE,
+			I.SALE_PRICE,
+			I.ITEM_IMAGE,
+			I.ITEM_TYPE,
+			I.SEO_INDEX_FLAG
+		FROM 
+			OP_CATEGORY_TEAM_ITEM AS CTI INNER JOIN OP_ITEM I ON CTI.ITEM_ID = I.ITEM_ID
+		WHERE
+			CTI.CATEGORY_TEAM_ID = #{categoryTeamId}
+			AND I.DISPLAY_FLAG = 'Y'
+	</select>
+	
+	<select id="getCategoriesGroupListParam" parameterType="saleson.shop.categoriesteamgroup.support.CategoriesTeamGroupSearchParam" resultMap="CategoriesGroupSeoAndRankResult" >
+	
+		SELECT  
+			*
+		FROM 
+			OP_CATEGORY_GROUP   
+		WHERE
+			CATEGORY_TEAM_ID = #{categoryTeamId}
+	</select>
+	
+	
+	
+	<select id="getMaxCategoryLevelByGroupId" parameterType="int" resultType="int" >
+		SELECT MAX(CATEGORY_LEVEL) FROM (
+			SELECT 0 AS CATEGORY_LEVEL
+			UNION
+			SELECT MAX(CATEGORY_LEVEL)  AS CATEGORY_LEVEL 
+			FROM OP_CATEGORY
+			WHERE CATEGORY_CLASS1 IN (
+				SELECT CATEGORY_CLASS1 FROM OP_CATEGORY
+				WHERE CATEGORY_GROUP_ID = #{value} AND CATEGORY_LEVEL = '1'
+			
+			)
+		) T
+	</select>
+	
+	<!-- 그룹 삭제 -->
+	<delete id="deleteCategoryGorupById" parameterType="int">
+		DELETE FROM OP_CATEGORY_GROUP
+		WHERE CATEGORY_GROUP_ID = #{value}
+	</delete>
+	
+	
+	<update id="updateBestItemDisplayType" parameterType="saleson.shop.categoriesteamgroup.domain.CategoriesTeam">
+		UPDATE OP_CATEGORY_TEAM SET
+			BEST_ITEM_DISPLAY_TYPE = #{bestItemDisplayType}
+		WHERE
+			CODE = #{code}
+	</update>
+	
+	<update id="updateCategoriesGroupItemListById" parameterType="saleson.shop.categoriesteamgroup.domain.CategoriesGroup">
+		UPDATE OP_CATEGORY_GROUP SET
+			ITEM_LIST = #{itemList}
+		WHERE CATEGORY_GROUP_ID = #{categoryGroupId}
+	</update>
+	
+</mapper>

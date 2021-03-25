@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.access.AccessMapper">
+
+	<resultMap id="AllowIpResult" type="saleson.shop.access.domain.Access">
+		<id property="allowIpId" column="ALLOW_IP_ID" />
+		<result property="accessType" column="ACCESS_TYPE" />
+		<result property="remoteAddr" column="REMOTE_ADDR" />
+		<result property="displayFlag" column="DISPLAY_FLAG" />
+		<result property="createdUser" column="CREATED_USER" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="updatedUser" column="UPDATED_USER" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+	</resultMap>
+
+	<sql id="allowIpWhere">
+		<where>
+			<if test='(where != null and where != "") and (query != null and query != "")'>
+				<if test='where == "REMOTE_ADDR"'>
+					AND REMOTE_ADDR LIKE CONCAT('%', #{query}, '%')
+				</if>
+			</if>
+			<if test='accessType != null and accessType != ""'>
+				AND ACCESS_TYPE = #{accessType}
+			</if>
+			<if test='displayFlag != null and displayFlag != ""'>
+				AND DISPLAY_FLAG = #{displayFlag}
+			</if>
+			<if test='searchStartDate != null and searchStartDate != ""'>
+				AND CREATED_DATE >= CONCAT(#{searchStartDate}, "000000")
+			</if>
+			<if test='searchEndDate != null and searchEndDate != ""'>
+				AND CREATED_DATE <![CDATA[<=]]> CONCAT(#{searchEndDate}, "235959")
+			</if>
+		</where>
+	</sql>
+
+	<select id="getAllowIpCount" parameterType="saleson.shop.access.support.AccessParam" resultType="int">
+		SELECT COUNT(*)
+		FROM OP_ALLOW_IP
+		<include refid="allowIpWhere" />
+	</select>
+
+	<select id="getAllowIpList" parameterType="saleson.shop.access.support.AccessParam" resultMap="AllowIpResult">
+		SELECT
+			*
+		FROM OP_ALLOW_IP
+		<include refid="allowIpWhere" />
+		ORDER BY ALLOW_IP_ID DESC
+	</select>
+
+
+	<insert id="insertAllowIp" parameterType="saleson.shop.access.domain.Access">
+		INSERT INTO OP_ALLOW_IP (
+			ALLOW_IP_ID,
+			ACCESS_TYPE,
+			REMOTE_ADDR,
+			DISPLAY_FLAG,
+			CREATED_USER,
+			CREATED_DATE
+		) VALUES (
+			#{allowIpId},
+			#{accessType},
+			#{remoteAddr},
+			#{displayFlag},
+			#{createdUser},
+			DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		)
+	</insert>
+	
+	<update id="deleteAllowIp" parameterType="saleson.shop.access.support.AccessParam">
+		UPDATE OP_ALLOW_IP
+		SET
+			DISPLAY_FLAG = "N"
+		WHERE
+			ALLOW_IP_ID IN
+			<foreach item="allowIpId" collection="id" open="(" separator="," close=")">
+				#{allowIpId}
+			</foreach>
+	</update>
+
+	<update id="deleteAllowIpById" parameterType="hashMap">
+		UPDATE OP_ALLOW_IP
+		SET
+		DISPLAY_FLAG = 'N',
+		UPDATED_DATE =<include refid="CommonMapper.datetime"/>,
+		UPDATED_USER = #{managerId}
+		WHERE
+		ALLOW_IP_ID = #{allowIpId}
+	</update>
+	
+</mapper>

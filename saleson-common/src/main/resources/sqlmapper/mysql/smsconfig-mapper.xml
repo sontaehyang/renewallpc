@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.smsconfig.SmsConfigMapper">
+	
+	<resultMap id="SmsConfigResult" type="saleson.shop.smsconfig.domain.SmsConfig">
+		<result property="smsConfigId" column="SMS_CONFIG_ID" />
+		<result property="templateId" column="TEMPLATE_ID" />
+		<result property="smsType" column="SMS_TYPE" />
+		<result property="buyerTitle" column="BUYER_TITLE" />
+		<result property="buyerContent" column="BUYER_CONTENT" />
+		<result property="adminTitle" column="ADMIN_TITLE" />
+		<result property="adminContent" column="ADMIN_CONTENT" />
+		<result property="buyerSendFlag" column="BUYER_SEND_FLAG" />
+		<result property="adminSendFlag" column="ADMIN_SEND_FLAG" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<select id="getSmsConfigByTemplateId" parameterType="String" resultMap="SmsConfigResult">
+		SELECT * FROM OP_SMS_CONFIG
+		<where>
+			TEMPLATE_ID = #{templateId}
+		</where>
+	</select>
+	
+	<insert id="insertSmsConfig" parameterType="saleson.shop.smsconfig.domain.SmsConfig">
+		INSERT INTO OP_SMS_CONFIG (SMS_CONFIG_ID, TEMPLATE_ID, SMS_TYPE, BUYER_TITLE, BUYER_CONTENT, ADMIN_TITLE, ADMIN_CONTENT, BUYER_SEND_FLAG, ADMIN_SEND_FLAG, CREATED_DATE)
+		VALUES (#{smsConfigId}, #{templateId}, #{smsType}, #{buyerTitle}, #{buyerContent}, #{adminTitle}, #{adminContent}, #{buyerSendFlag}, #{adminSendFlag}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<update id="updateSmsConfig" parameterType="saleson.shop.smsconfig.domain.SmsConfig">
+		UPDATE OP_SMS_CONFIG SET
+			SMS_TYPE = #{smsType},
+			BUYER_TITLE = #{buyerTitle}, 
+			BUYER_CONTENT = #{buyerContent},
+			ADMIN_TITLE = #{adminTitle}, 
+			ADMIN_CONTENT = #{adminContent}, 
+			BUYER_SEND_FLAG = #{buyerSendFlag}, 
+			ADMIN_SEND_FLAG = #{adminSendFlag}
+		WHERE 
+			SMS_CONFIG_ID = #{smsConfigId}
+	</update>
+	
+</mapper>

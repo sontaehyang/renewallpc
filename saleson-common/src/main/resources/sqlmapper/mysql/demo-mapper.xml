@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.onlinepowers.demo.DemoMapper">
+
+	<resultMap id="SurveyResult" type="com.onlinepowers.demo.domain.Survey">
+		<result property="surveyId" column="SURVEY_ID" />
+		<result property="subject" column="SUBJECT" />
+		<result property="startDate" column="START_DATE" />
+		<result property="endDate" column="END_DATE" />
+		<result property="surveyType" column="SURVEY_TYPE" />
+		<result property="resultType" column="RESULT_TYPE" />
+		<result property="creationDate" column="CREATION_DATE" />
+	</resultMap>
+	
+	<resultMap id="SurveyBaseResult" type="com.onlinepowers.demo.domain.Survey" extends="SurveyResult">
+		<collection property="surveyContentList" ofType="com.onlinepowers.demo.domain.SurveyContent" resultMap="SurveyContentResult"/>
+	</resultMap>
+	
+	
+	<resultMap id="SurveyContentResult" type="com.onlinepowers.demo.domain.SurveyContent">
+		<result property="surveyContentId" column="SURVEY_CONTENT_ID" />
+		<result property="surveyId" column="SURVEY_ID" />
+		<result property="content" column="CONTENT" />
+		<result property="contentType" column="CONTENT_TYPE" />
+		<result property="ordering" column="ORDERING" />
+		<collection property="surveyItemList" ofType="com.onlinepowers.demo.domain.SurveyItem" resultMap="SurveyItemResult"/>
+	</resultMap>
+	
+	
+	<resultMap id="SurveyItemResult" type="com.onlinepowers.demo.domain.SurveyItem">
+		<result property="surveyItemId" column="SURVEY_ITEM_ID" />
+		<result property="surveyContentId" column="SURVEY_CONTENT_ID" />
+		<result property="itemContent" column="ITEM_CONTENT" />
+		<result property="ordering" column="ORDERING" />
+		<result property="surveyCount" column="SURVEY_COUNT" />
+	</resultMap>
+	
+	
+	<select id="getSurveyBySurveyId" parameterType="Integer" resultMap="SurveyBaseResult">
+        SELECT * 
+		FROM OP_SURVEY S 
+		INNER JOIN OP_SURVEY_CONTENT SC ON S.SURVEY_ID = SC.SURVEY_ID
+		LEFT JOIN OP_SURVEY_ITEM SI ON SC.SURVEY_CONTENT_ID = SI.SURVEY_CONTENT_ID
+		
+		WHERE S.SURVEY_ID = #{value}
+	</select>
+	
+	<select id="getMessage" parameterType="String" resultType="String">
+		SELECT ID FROM OP_COMMON_MESSAGE
+		WHERE REPLACE(MESSAGE, ' ', '') = REPLACE(#{value}, ' ', '')
+			AND ID NOT LIKE 'MENU%'
+		LIMIT 1
+	</select>
+	
+	
+	<insert id="insertMessage" parameterType="com.onlinepowers.demo.domain.Demo">
+	
+		INSERT INTO OP_COMMON_MESSAGE 
+		SELECT * FROM (
+			SELECT CONCAT('M', RIGHT(CONCAT('00000', SUBSTRING(MAX(ID), 2,5) + 1), 5)), 'ko', #{email} 
+			FROM OP_COMMON_MESSAGE
+			WHERE ID NOT LIKE 'MENU%'
+			
+			UNION
+			
+			SELECT CONCAT('M', RIGHT(CONCAT('00000', SUBSTRING(MAX(ID), 2,5) + 1), 5)), 'ja', #{email} 
+			FROM OP_COMMON_MESSAGE
+			WHERE ID NOT LIKE 'MENU%'
+		) T
+
+        <selectKey keyProperty="content" resultType="String" order="AFTER">
+	    	SELECT ID as content FROM OP_COMMON_MESSAGE 
+	    	WHERE MESSAGE = #{email} AND LANGUAGE = 'ko' AND ID NOT LIKE 'MENU%'
+	  	</selectKey>
+	</insert>
+	
+	<update id="updateUserAddress" parameterType="com.onlinepowers.demo.domain.UserAddress">
+		UPDATE OP_USER U INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		SET 
+			UD.ADDRESS_TEMP = UD.ADDRESS, UD.ADDRESS_DETAIL_TEMP = UD.ADDRESS_DETAIL,
+			UD.ADDRESS = #{address}, UD.ADDRESS_DETAIL = #{addressDetail}
+		WHERE 
+			U.EMAIL = #{email}
+	</update>
+
+	<insert id="insertAllowIp" parameterType="com.onlinepowers.demo.domain.CommonCode">
+		INSERT INTO OP_COMMON_CODE
+			(CODE_TYPE, LANGUAGE, ID, LABEL, DETAIL, ORDERING, USE_YN)
+		VALUES
+			(#{codeType}, #{language}, #{id}, #{label}, #{detail}, #{ordering}, #{useYn})
+	</insert>
+
+	<insert id="deleteAllowIp" parameterType="com.onlinepowers.demo.domain.CommonCode">
+		DELETE FROM OP_COMMON_CODE
+		WHERE CODE_TYPE = 'ALLOW_IP' AND LANGUAGE = 'ko' AND ID = #{id}
+	</insert>
+
+</mapper>

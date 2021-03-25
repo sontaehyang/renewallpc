@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="saleson.seller.menu.MenuMapper">
+	<!--  
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	-->
+    <resultMap id="FirstMenuResult" type="Menu" >
+        <id property="menuId" column="MENU_ID" />
+        <result property="menuParentId" column="MENU_PARENT_ID" />
+        <result property="menuType" column="MENU_TYPE" />
+        <result property="menuName" column="MENU_NAME" />
+        <result property="menuCode" column="MENU_CODE" />
+        <result property="menuSeq" column="MENU_SEQ" />
+        <result property="menuIcon" column="MENU_ICON" />
+        <result property="displayFlag" column="DISPLAY_FLAG" />
+        <result property="statusCode" column="STATUS_CODE" />
+        <!--        one to one     -->
+        <association property="menuUrl" column="{menuId=MENU_ID, authority=AUTHORITY}" javaType="Menu"
+            select="getFirstMenuUrl"/>
+    </resultMap>
+    
+    <resultMap id="MenuListResult" type="Menu" >
+        <id property="menuId" column="MENU_ID"/>
+        <result property="menuParentId" column="MENU_PARENT_ID" />
+        <result property="menuType" column="MENU_TYPE" />
+		<result property="menuName" column="MENU_NAME" />
+		<result property="menuCode" column="MENU_CODE" />
+		<result property="menuUrl" column="MENU_URL" />
+		<result property="menuSeq" column="MENU_SEQ" />
+        <result property="menuIcon" column="MENU_ICON" />
+        <result property="displayFlag" column="DISPLAY_FLAG" />
+        <result property="statusCode" column="STATUS_CODE" />
+    </resultMap>
+    
+    
+    
+    <resultMap id="SecondAndThirdMenuListResult" type="Menu" >
+        <id property="menuId" column="MENU_ID" />
+        <result property="menuParentId" column="MENU_PARENT_ID" />
+        <result property="menuType" column="MENU_TYPE" />
+		<result property="menuName" column="MENU_NAME" />
+		<result property="menuCode" column="MENU_CODE" />
+		<result property="menuUrl" column="MENU_URL" />
+		<result property="menuSeq" column="MENU_SEQ" />
+        <result property="menuIcon" column="MENU_ICON" />
+        <result property="displayFlag" column="DISPLAY_FLAG" />
+        <result property="statusCode" column="STATUS_CODE" />
+        <collection property="childMenu" resultMap="ChildMenuListResult" />
+		
+		<!-- 
+		<collection property="childMenu" column="{authority=AUTHORITY, menuId=MENU_ID, userId=USER_ID}" 
+            select="getChildMenuList"/>
+         -->
+    </resultMap>
+    
+    
+    <resultMap id="ChildMenuListResult" type="Menu" >
+        <id property="menuId" column="CHILD_MENU_ID"/>
+        <result property="menuParentId" column="CHILD_MENU_PARENT_ID" />
+        <result property="menuType" column="CHILD_MENU_TYPE" />
+		<result property="menuName" column="CHILD_MENU_NAME" />
+		<result property="menuCode" column="CHILD_MENU_CODE" />
+		<result property="menuUrl" column="CHILD_MENU_URL" />
+		<result property="menuSeq" column="CHILD_MENU_SEQ" />
+        <result property="menuIcon" column="MENU_ICON" />
+        <result property="displayFlag" column="DISPLAY_FLAG" />
+        <result property="statusCode" column="STATUS_CODE" />
+    </resultMap>
+    
+    
+<select id="getMenuCode" parameterType="java.util.HashMap" resultType="String">
+
+	SELECT MENU_CODE FROM (
+		SELECT MENU_CODE , LENGTH(MENU_CODE) as menuCodeLength FROM (
+			SELECT MENU_CODE FROM OP_MENU_SELLER WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+		)A WHERE MENU_CODE IN 
+		<foreach item="item" index="index" collection="menuCodes"
+	        open="(" separator="," close=")">
+	          #{item}
+	    </foreach>
+	    
+	     ) B
+	ORDER BY menuCodeLength DESC LIMIT 1
+    
+</select> 
+
+
+<select id="getFirstMenuList" parameterType="Menu" resultMap="MenuListResult">    
+
+	SELECT DISTINCT S.MENU_ID, S.MENU_PARENT_ID, S.MENU_TYPE, S.MENU_NAME, S.MENU_CODE, T.MENU_URL, S.MENU_SEQ, S.DISPLAY_FLAG, S.STATUS_CODE
+    FROM OP_MENU_SELLER S INNER JOIN (
+		SELECT Q.FIRST_MENU_ID, Q.MENU_URL FROM (
+			SELECT O.* FROM (
+				SELECT 
+					(SELECT MENU_PARENT_ID FROM OP_MENU_SELLER WHERE MENU_ID = A.MENU_PARENT_ID) AS FIRST_MENU_ID,	
+					(SELECT MENU_SEQ FROM OP_MENU_SELLER WHERE MENU_ID = A.MENU_PARENT_ID) AS SECOND_MENU_SEQ,
+					A.* 
+				FROM OP_MENU_SELLER A WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+			) O INNER JOIN (
+				SELECT MENU_PARENT_ID, MIN(MENU_SEQ) AS MENU_SEQ FROM OP_MENU_SELLER 
+				WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+				GROUP BY MENU_PARENT_ID
+			) P ON O.MENU_PARENT_ID = P.MENU_PARENT_ID AND O.MENU_SEQ = P.MENU_SEQ
+		) Q INNER JOIN(
+			SELECT O.FIRST_MENU_ID, MIN(SECOND_MENU_SEQ) AS SECOND_MENU_SEQ FROM (
+				SELECT 
+					(SELECT MENU_PARENT_ID FROM OP_MENU_SELLER WHERE MENU_ID = A.MENU_PARENT_ID) AS FIRST_MENU_ID,	
+					(SELECT MENU_SEQ FROM OP_MENU_SELLER WHERE MENU_ID = A.MENU_PARENT_ID) AS SECOND_MENU_SEQ,
+					A.* 
+				FROM OP_MENU_SELLER A WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+			) O INNER JOIN (
+				SELECT MENU_PARENT_ID, MIN(MENU_SEQ) AS MENU_SEQ FROM OP_MENU_SELLER 
+				WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+				GROUP BY MENU_PARENT_ID
+		  	) P ON O.MENU_PARENT_ID = P.MENU_PARENT_ID AND O.MENU_SEQ = P.MENU_SEQ	
+			GROUP BY O.FIRST_MENU_ID
+		) R ON Q.FIRST_MENU_ID = R.FIRST_MENU_ID AND Q.SECOND_MENU_SEQ = R.SECOND_MENU_SEQ
+	) T ON S.MENU_ID = T.FIRST_MENU_ID AND STATUS_CODE = '1'
+	ORDER BY S.MENU_SEQ
+</select>
+
+
+
+<select id="getFirstMenuList_" parameterType="Menu" resultMap="FirstMenuResult">
+
+		WITH
+		MY_MENU AS (
+		  SELECT * FROM OP_MENU_SELLER START WITH
+		  MENU_ID IN (
+
+			SELECT MENU_ID FROM OP_MENU_SELLER WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+		
+		  )
+		  CONNECT BY MENU_ID = prior MENU_PARENT_ID
+		)
+		
+		SELECT A.*, #{authority} AS AUTHORITY FROM (
+	      SELECT DISTINCT * FROM MY_MENU 
+	      WHERE MENU_TYPE = 1  AND STATUS_CODE = '1'
+	      ORDER BY MENU_SEQ
+	    ) A
+
+</select>
+
+<select id="getFirstMenuUrl" parameterType="Menu" resultType="String">
+
+	WITH
+	MY_MENU as (
+	  select * from OP_MENU_SELLER START WITH
+	  MENU_ID IN (  
+			SELECT MENU_ID FROM OP_MENU_SELLER WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+	    )
+	  CONNECT BY MENU_ID = prior MENU_PARENT_ID
+	),
+	MY_MENU2 AS (
+	  	SELECT distinct * FROM MY_MENU START WITH MENU_PARENT_ID = #{menuId}  AND STATUS_CODE = '1'
+	  	CONNECT BY PRIOR MENU_ID = MENU_PARENT_ID
+	)
+	SELECT MENU_URL FROM (
+	  	SELECT * FROM MY_MENU2 START WITH MENU_PARENT_ID = #{menuId}  AND STATUS_CODE = '1'
+	  	CONNECT BY PRIOR MENU_ID = MENU_PARENT_ID
+	  	ORDER SIBLINGS BY MENU_SEQ
+	) X 
+	WHERE MENU_URL IS NOT NULL and ROWNUM = 1
+
+</select>
+
+
+<select id="getSecondAndThirdMenuList" parameterType="Menu" resultMap="SecondAndThirdMenuListResult">
+	SELECT * FROM (
+		SELECT #{authority} AS AUTHORITY, #{userId} as USER_ID,  a.* FROM OP_MENU_SELLER a WHERE MENU_PARENT_ID = (
+			SELECT 
+				(SELECT MENU_PARENT_ID FROM OP_MENU_SELLER WHERE MENU_ID = H.MENU_PARENT_ID) AS FIRST_MENU_ID
+			FROM OP_MENU_SELLER H
+			WHERE H.MENU_TYPE = 3 AND H.STATUS_CODE = 1
+	
+			AND MENU_CODE = #{menuCode}
+			GROUP BY FIRST_MENU_ID
+			ORDER BY MENU_SEQ
+		) ORDER BY MENU_SEQ 
+	) P INNER JOIN (
+		SELECT 
+			H.MENU_ID AS CHILD_MENU_ID,
+			H.MENU_PARENT_ID AS CHILD_MENU_PARENT_ID,
+			H.MENU_TYPE AS CHILD_MENU_TYPE,
+			H.MENU_NAME AS CHILD_MENU_NAME,
+			H.MENU_CODE AS CHILD_MENU_CODE,
+			H.MENU_URL AS CHILD_MENU_URL,
+			H.MENU_SEQ AS CHILD_MENU_SEQ,
+            H.DISPLAY_FLAG AS CHILD_DISPLAY_FLAG,
+            H.STATUS_CODE AS CHILD_STATUS_CODE
+			
+	    FROM OP_MENU_SELLER H
+	        WHERE MENU_TYPE = 3 AND H.STATUS_CODE = 1
+	) C ON P.MENU_ID = C.CHILD_MENU_PARENT_ID
+	
+	ORDER BY P.MENU_SEQ, P.MENU_ID, C.CHILD_MENU_SEQ
+
+</select>
+
+
+<select id="getChildMenuList" parameterType="Menu" resultMap="MenuListResult">
+	SELECT DISTINCT
+		(SELECT MENU_PARENT_ID FROM OP_MENU_SELLER WHERE MENU_ID = H.MENU_PARENT_ID) AS FIRST_MENU_ID,	
+		(SELECT MENU_SEQ FROM OP_MENU_SELLER WHERE MENU_ID = H.MENU_PARENT_ID) AS SECOND_MENU_SEQ,	
+		H.* 
+
+       FROM OP_MENU_SELLER H
+       WHERE MENU_TYPE = 3 AND H.STATUS_CODE = 1
+	
+	AND MENU_PARENT_ID = #{menuId}
+	ORDER BY MENU_SEQ
+</select>
+
+
+
+<select id="getAllMenuList" resultMap="MenuListResult">
+	SELECT * FROM OP_MENU_SELLER START WITH MENU_PARENT_ID = 0  AND STATUS_CODE = '1'
+	CONNECT BY PRIOR MENU_ID =  MENU_PARENT_ID
+	ORDER SIBLINGS BY MENU_SEQ
+</select>
+
+
+</mapper>

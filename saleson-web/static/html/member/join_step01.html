@@ -1,0 +1,93 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?>  
+	<div class="inner join_wrap">
+		<div class="location_area">
+			<?include "../include/all_menu.html"?>
+			<div class="breadcrumbs">
+				<a href="/html/main.html" class="home"><span class="hide">home</span></a>
+				<span>회원가입</span> 
+			</div>
+		</div><!-- // location_area E -->
+		
+		<div class="content_title"> 
+			<h2 class="title">회원가입</h2>  
+		</div>
+		<div class="join_step step01">
+			<ul>
+				<li class="on"><span>01</span> 본인인증</li>
+				<li><span>02</span> 약관동의</li>
+				<li><span>03</span> 정보입력</li>
+				<li><span>04</span> 가입완료</li>
+			</ul>
+		</div> <!-- // join_step E -->
+		
+		<!-- sms 인증 -->
+		<div  class="box_list">
+			<ul>
+				<li>가입 여부 확인 및 개인정보 보호를 위하여 본인인증 확인 기관을 통해 실명을 확인하고 있습니다.</li>
+				<li>회원가입 완료 후 세일즈온 회원서비스를 이용하실 수 있습니다.</li>
+				<li>인증번호를 입력후 다음단계를 선택해 주세요.</li>
+			</ul>
+		</div> <!-- // box_list E -->
+		<h3 class="sub_title mt30">SMS인증</h3>
+		<div class="board_wrap">  
+	 		<table cellpadding="0" cellspacing="0" class="board-write"> 
+	 			<caption>SMS인증</caption>
+	 			<colgroup>
+	 				<col style="width:180px;">
+	 				<col style="width:auto;">	 				
+	 			</colgroup>
+	 			<tbody> 
+	 				<tr>
+	 					<th scope="row">이름</th>
+	 					<td>
+	 						<div class="input_wrap col-w-7">
+ 								<input type="text" title="이름"> 
+ 							</div>
+	 					</td>
+	 				</tr> 
+	 				<tr>
+	 					<th scope="row">휴대폰번호</th>
+	 					<td>
+	 						<div class="hp_area">
+	 							<div class="input_wrap col-w-10">
+	 								<select class="form-control">
+								        <option value="010">010</option> 
+								        <option value="011">011</option> 
+								        <option value="016">016</option> 
+								        <option value="017">017</option>
+								        <option value="018">018</option> 
+								        <option value="019">019</option>  
+								    </select>
+	 							</div>
+	 							<span class="connection"> - </span>
+	 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+	 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+	 							</div>
+	 							<span class="connection"> - </span>
+	 							<div class="input_wrap col-w-10">			 	 			 	 							 
+	 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+	 							</div>
+	 							<button type="button" onclick="sendAuthNumber()" class="btn btn-default btn-ms">인증번호 발송</button>		
+	 						</div><!-- // hp_area --> 
+	 					</td>
+	 				</tr> 
+	 				<tr>
+	 					<th scope="row">인증번호</th>
+	 					<td>
+	 						<div class="input_wrap col-w-7">
+ 								<input type="text" disabled="disabled" placeholder="인증번호를 입력해 주세요." class="_number" title="인증번호"> 
+ 							</div>
+ 							<p class="guide_txt">입력하신 번호로 인증번호가 발송되었습니다.</p> 
+	 					</td>
+	 				</tr>
+	 			</tbody>
+	 		</table>	 	
+		</div><!--// board_wrap E-->
+		<div class="btn_wrap">
+			<button type="button" class="btn btn-default btn-lg" title="가입취소">가입취소</button>
+			<a href="/html/member/join_step02.html" class="btn btn-success btn-lg" title="다음단계">다음단계</a>
+		</div>  		
+	</div><!-- // inner E-- -->	 
+<?include "../include/footer.html"?>	 
+ 

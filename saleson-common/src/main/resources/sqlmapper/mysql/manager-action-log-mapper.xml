@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.log.ActionLogMapper">
+
+    <resultMap id="ActionLogResult" type="saleson.shop.log.domain.ActionLog">
+        <result column="ACTION_LOG_ID" property="actionLogId"/>
+        <result column="LOGIN_ID" property="loginId"/>
+        <result column="LOGIN_TYPE" property="loginType"/>
+        <result column="REQUEST_URI" property="requestUri"/>
+        <result column="REQUEST_METHOD" property="requestMethod"/>
+        <result column="REMOTE_ADDR" property="remoteAddr"/>
+        <result column="CREATED_DATE" property="createdDate"/>
+    </resultMap>
+
+    <insert id="insertManagerActionLog" parameterType="saleson.shop.log.domain.ActionLog">
+        INSERT INTO OP_MANAGER_ACTION_LOG (
+            LOGIN_ID,
+            LOGIN_TYPE,
+            REQUEST_URI,
+            REQUEST_METHOD,
+            REMOTE_ADDR,
+            CREATED_DATE
+        ) VALUES (
+            #{loginId},
+            #{loginType},
+            #{requestUri},
+            #{requestMethod},
+            #{remoteAddr},
+            #{createdDate}
+        )
+    </insert>
+
+</mapper>

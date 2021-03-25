@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.mall.MallMapper">
+
+	<resultMap id="MallConfigResult" type="saleson.shop.mall.domain.MallConfig">
+		<result property="mallConfigId" column="MALL_CONFIG_ID" />
+		<result property="mallLoginId" column="MALL_LOGIN_ID" />
+		<result property="mallType" column="MALL_TYPE" />
+		<result property="mallApiKey" column="MALL_API_KEY" />
+		<result property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="statusCode" column="STATUS_CODE" />
+		<result property="lastDate" column="LAST_DATE" />
+		<result property="lastSearchStartDate" column="LAST_SEARCH_START_DATE" />
+		<result property="lastSearchEndDate" column="LAST_SEARCH_END_DATE" />
+		
+		<result property="claimStatusCode" column="CLAIM_STATUS_CODE" />
+		<result property="lastClaimDate" column="LAST_CLAIM_DATE" />
+		<result property="lastClaimSearchStartDate" column="LAST_CLAIM_SEARCH_START_DATE" />
+		<result property="lastClaimSearchEndDate" column="LAST_CLAIM_SEARCH_END_DATE" />
+		
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+
+	<resultMap id="MallOrderResult" type="saleson.shop.mall.domain.MallOrder">
+		<result property="mallOrderId" column="MALL_ORDER_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="matchedOptions" column="MATCHED_OPTIONS" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="mallConfigId" column="MALL_CONFIG_ID" />
+		<result property="mallApiKey" column="MALL_API_KEY" />
+		<result property="mallLoginId" column="MALL_LOGIN_ID" />
+		<result property="mallType" column="MALL_TYPE" />
+		<result property="mallType" column="MALL_TYPE" />
+		<result property="orderItemStatus" column="ORDER_ITEM_STATUS" />
+		<result property="orderItemStatusLabel" column="ORDER_ITEM_STATUS_LABEL" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="orderIndex" column="ORDER_INDEX" />
+		<result property="shippingGroupCode" column="SHIPPING_GROUP_CODE" />
+		<result property="shippingGroupFlag" column="SHIPPING_GROUP_FLAG" />
+		<result property="additionItemFlag" column="ADDITION_ITEM_FLAG" />
+		<result property="parentProductCode" column="PARENT_PRODUCT_CODE" />
+		<result property="shippingCode" column="SHIPPING_CODE" />
+		<result property="productCode" column="PRODUCT_CODE" />
+		<result property="optionCode" column="OPTION_CODE" />
+		<result property="productName" column="PRODUCT_NAME" />
+		<result property="optionName" column="OPTION_NAME" />
+		<result property="sellPrice" column="SELL_PRICE" />
+		<result property="optionAmount" column="OPTION_AMOUNT" />
+		<result property="quantity" column="QUANTITY" />
+		<result property="cancelQuantity" column="CANCEL_QUANTITY" />
+		<result property="sellerDiscountAmount" column="SELLER_DISCOUNT_AMOUNT" />
+		<result property="saleAmount" column="SALE_AMOUNT" />
+		<result property="payShipping" column="PAY_SHIPPING" />
+		<result property="payShippingType" column="PAY_SHIPPING_TYPE" />
+		<result property="islandPayShipping" column="ISLAND_PAY_SHIPPING" />
+		<result property="islandPayShippingType" column="ISLAND_PAY_SHIPPING_TYPE" />
+		<result property="mallProductCode" column="MALL_PRODUCT_CODE" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberType" column="MEMBER_TYPE" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="buyerName" column="BUYER_NAME" />
+		<result property="buyerTelephoneNumber" column="BUYER_TELEPHONE_NUMBER" />
+		<result property="buyerPhoneNumber" column="BUYER_PHONE_NUMBER" />
+		<result property="buyerZipcode" column="BUYER_ZIPCODE" />
+		<result property="buyerAddress" column="BUYER_ADDRESS" />
+		<result property="buyerAddressDetail" column="BUYER_ADDRESS_DETAIL" />
+		<result property="receiverName" column="RECEIVER_NAME" />
+		<result property="receiverTelephoneNumber" column="RECEIVER_TELEPHONE_NUMBER" />
+		<result property="receiverPhoneNumber" column="RECEIVER_PHONE_NUMBER" />
+		<result property="receiverZipcode" column="RECEIVER_ZIPCODE" />
+		<result property="receiverAddress" column="RECEIVER_ADDRESS" />
+		<result property="receiverAddressDetail" column="RECEIVER_ADDRESS_DETAIL" />
+		<result property="content" column="CONTENT" />
+		<result property="systemMessage" column="SYSTEM_MESSAGE" />
+		<result property="payDate" column="PAY_DATE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		
+		<association property="item" resultMap="saleson.shop.item.ItemMapper.ItemResult" />
+	</resultMap>
+	
+	<resultMap id="MallOrderCancelResult" type="saleson.shop.mall.domain.MallOrderCancel">
+		<result property="mallOrderId" column="MALL_ORDER_ID" />
+		<result property="claimQuantity" column="CLAIM_QUANTITY" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="claimCode" column="CLAIM_CODE" />
+		<result property="claimApplySubject" column="CLAIM_APPLY_SUBJECT" />
+		<result property="cancelReason" column="CANCEL_REASON" />
+		<result property="cancelReasonText" column="CANCEL_REASON_TEXT" />
+		<result property="cancelRefusalReson" column="CANCEL_REFUSAL_RESON" />
+		<result property="cancelRefusalResonText" column="CANCEL_REFUSAL_RESON_TEXT" />
+		<result property="cancelApplyDate" column="CANCEL_APPLY_DATE" />
+		
+		<association property="mallOrder" resultMap="MallOrderResult" />
+	</resultMap>
+	
+	<resultMap id="MallOrderReturnResult" type="saleson.shop.mall.domain.MallOrderReturn">
+		<result property="mallOrderId" column="MALL_ORDER_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="claimCode" column="CLAIM_CODE" />
+		<result property="claimStatus" column="CLAIM_STATUS" />
+		<result property="claimQuantity" column="CLAIM_QUANTITY" />
+		<result property="rtReason" column="RT_REASON" />
+		<result property="rtReasonText" column="RT_REASON_TEXT" />
+		<result property="rtCollectionName" column="RT_COLLECTION_NAME" />
+		<result property="rtCollectionTelNumber" column="RT_COLLECTION_TEL_NUMBER" />
+		<result property="rtCollectionPhoneNumber" column="RT_COLLECTION_PHONE_NUMBER" />
+		<result property="rtCollectionZipcode" column="RT_COLLECTION_ZIPCODE" />
+		<result property="rtCollectionZipcodeSeq" column="RT_COLLECTION_ZIPCODE_SEQ" />
+		<result property="rtCollectionAddress" column="RT_COLLECTION_ADDRESS" />
+		<result property="rtCollectionAddressDetail" column="RT_COLLECTION_ADDRESS_DETAIL" />
+		<result property="rtCollectionAddressType" column="RT_COLLECTION_ADDRESS_TYPE" />
+		<result property="rtCollectionAddressBilno" column="RT_COLLECTION_ADDRESS_BILNO" />
+		<result property="rtShippingType" column="RT_SHIPPING_TYPE" />
+		<result property="rtShippingAmount" column="RT_SHIPPING_AMOUNT" />
+		<result property="rtDefaultShippingAmount" column="RT_DEFAULT_SHIPPING_AMOUNT" />
+		<result property="rtShippingPaymentType" column="RT_SHIPPING_PAYMENT_TYPE" />
+		<result property="rtShippingNumber" column="RT_SHIPPING_NUMBER" />
+		<result property="rtShippingCompanyCode" column="RT_SHIPPING_COMPANY_CODE" />
+		<result property="rtApplyDate" column="RT_APPLY_DATE" />
+		
+		<association property="mallOrder" resultMap="MallOrderResult" />
+	</resultMap>
+	
+	<resultMap id="MallOrderExchangeResult" type="saleson.shop.mall.domain.MallOrderExchange">
+		<result property="mallOrderId" column="MALL_ORDER_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="claimCode" column="CLAIM_CODE" />
+		<result property="claimQuantity" column="CLAIM_QUANTITY" />
+		<result property="claimStatus" column="CLAIM_STATUS" />
+		<result property="exReason" column="EX_REASON" />
+		<result property="exReasonText" column="EX_REASON_TEXT" />
+		<result property="exCollectionName" column="EX_COLLECTION_NAME" />
+		<result property="exCollectionTelNumber" column="EX_COLLECTION_TEL_NUMBER" />
+		<result property="exCollectionPhoneNumber" column="EX_COLLECTION_PHONE_NUMBER" />
+		<result property="exCollectionZipcode" column="EX_COLLECTION_ZIPCODE" />
+		<result property="exCollectionZipcodeSeq" column="EX_COLLECTION_ZIPCODE_SEQ" />
+		<result property="exCollectionAddress" column="EX_COLLECTION_ADDRESS" />
+		<result property="exCollectionAddressDetail" column="EX_COLLECTION_ADDRESS_DETAIL" />
+		<result property="exCollectionAddressType" column="EX_COLLECTION_ADDRESS_TYPE" />
+		<result property="exCollectionAddressBilno" column="EX_COLLECTION_ADDRESS_BILNO" />
+		<result property="exShippingType" column="EX_SHIPPING_TYPE" />
+		<result property="exReceiverName" column="EX_RECEIVER_NAME" />
+		<result property="exReceiverTelNumber" column="EX_RECEIVER_TEL_NUMBER" />
+		<result property="exReceiverPhoneNumber" column="EX_RECEIVER_PHONE_NUMBER" />
+		<result property="exReceiverZipcode" column="EX_RECEIVER_ZIPCODE" />
+		<result property="exReceiverZipcodeSeq" column="EX_RECEIVER_ZIPCODE_SEQ" />
+		<result property="exReceiverAddress" column="EX_RECEIVER_ADDRESS" />
+		<result property="exReceiverAddressDetail" column="EX_RECEIVER_ADDRESS_DETAIL" />
+		<result property="exReceiverAddressType" column="EX_RECEIVER_ADDRESS_TYPE" />
+		<result property="exReceiverAddressBilno" column="EX_RECEIVER_ADDRESS_BILNO" />
+		<result property="exShippingAmount" column="EX_SHIPPING_AMOUNT" />
+		<result property="exAddShippingAmount" column="EX_ADD_SHIPPING_AMOUNT" />
+		<result property="exShippingPaymentType" column="EX_SHIPPING_PAYMENT_TYPE" />
+		<result property="exShippingNumber" column="EX_SHIPPING_NUMBER" />
+		<result property="exShippingCompanyCode" column="EX_SHIPPING_COMPANY_CODE" />
+		<result property="exApplyDate" column="EX_APPLY_DATE" />
+		<result property="exEndDate" column="EX_END_DATE" />
+		
+		<association property="mallOrder" resultMap="MallOrderResult" />
+	</resultMap>
+	
+	<select id="getItemByMallConfig" parameterType="saleson.shop.mall.support.MallOrderParam"
+		resultMap="saleson.shop.item.ItemMapper.ItemResult">
+		
+		SELECT I.* FROM OP_ITEM I
+			INNER JOIN OP_ITEM_MALL_CODE IMC ON I.ITEM_ID = IMC.ITEM_ID
+		<where>
+			MALL_CONFIG_ID = #{mallConfigId}
+			AND PRODUCT_CODE = #{productCode}
+		</where>		
+	</select>
+	
+	<select id="getMallOrderDetailByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderResult">
+		
+		SELECT 
+			MO.*, 
+			MC.MALL_API_KEY, 
+			MC.MALL_LOGIN_ID
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+
+		<where>
+			AND MO.MALL_ORDER_ID = #{mallOrderId}
+		</where>
+			
+	</select>
+	
+	<select id="getMallConfigListByParam" parameterType="saleson.shop.mall.support.MallConfigParam"
+		resultMap="MallConfigResult">
+		SELECT * FROM OP_MALL_CONFIG
+		<where>
+		
+			<if test="dataStatusCode != null and dataStatusCode != ''">
+				AND DATA_STATUS_CODE = #{dataStatusCode}
+			</if>
+			
+			<if test="id != null">
+				AND MALL_CONFIG_ID IN 
+				<foreach item="mallConfigId" index="index" collection="id" open="(" separator="," close=")"> 
+					#{mallConfigId}
+				</foreach>
+			</if>
+			
+		</where>
+		ORDER BY MALL_CONFIG_ID ASC
+	</select>
+		
+	
+	
+	<sql id="whereDefaultForNewOrder">
+		AND (
+			(MO.MALL_TYPE = '11st' AND MO.ORDER_ITEM_STATUS = '202')
+			OR (MO.MALL_TYPE = 'auction' AND MO.ORDER_ITEM_STATUS = '170')
+		)
+	</sql>
+	
+	<select id="getNewOrderCountByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+
+		<where>
+			<include refid="whereDefaultForNewOrder" />
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+			</if>
+		</where>
+			
+	</select>
+	
+	
+	
+	<select id="getNewOrderListByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderResult">
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				MO.*, 
+				MC.MALL_API_KEY, 
+				MC.MALL_LOGIN_ID,
+				I.*
+			FROM OP_MALL_ORDER MO 
+				INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+				LEFT JOIN OP_ITEM I ON MO.ITEM_ID = I.ITEM_ID
+			<where>
+				<include refid="whereDefaultForNewOrder" />
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+				</if>
+			</where>
+		
+		ORDER BY MO.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getNewOrderDetailByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderResult">
+		
+		SELECT 
+			MO.*, 
+			MC.MALL_API_KEY, 
+			MC.MALL_LOGIN_ID,
+			I.*
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			LEFT JOIN OP_ITEM I ON MO.ITEM_ID = I.ITEM_ID
+		<where>
+			<include refid="whereDefaultForNewOrder" />
+			AND MO.MALL_ORDER_ID = #{mallOrderId}
+		</where>
+		
+	</select>
+	
+	<sql id="whereDefaultForShippingReady">
+		AND (
+			(MO.MALL_TYPE = '11st' AND MO.ORDER_ITEM_STATUS = '301')
+			OR (MO.MALL_TYPE = 'auction' AND MO.ORDER_ITEM_STATUS = '201' AND (MOCA.CLAIM_CODE IS NULL OR IFNULL(MOCA.CLAIM_STATUS, '00') != 'Requested'))
+		)
+	</sql>
+	
+	<select id="getShippingReadyCountByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			LEFT JOIN OP_MALL_ORDER_CANCEL MOCA ON MO.MALL_ORDER_ID = MOCA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForShippingReady" />
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+			</if>
+		</where>
+			
+	</select>
+	
+	<select id="getShippingReadyListByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderResult">
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				MO.*, 
+				MC.MALL_API_KEY, 
+				MC.MALL_LOGIN_ID
+			FROM OP_MALL_ORDER MO 
+				INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+				LEFT JOIN OP_MALL_ORDER_CANCEL MOCA ON MO.MALL_ORDER_ID = MOCA.MALL_ORDER_ID
+			<where>
+				<include refid="whereDefaultForShippingReady" />
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+				</if>
+			</where>
+		
+		ORDER BY MO.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getShippingReadyDetailByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderResult">
+		
+		SELECT 
+			MO.*, 
+			MC.MALL_API_KEY, 
+			MC.MALL_LOGIN_ID
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			LEFT JOIN OP_MALL_ORDER_CANCEL MOCA ON MO.MALL_ORDER_ID = MOCA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForShippingReady" />
+			AND MO.MALL_ORDER_ID = #{mallOrderId}
+		</where>
+	</select>
+	
+	<sql id="whereDefaultForShipping">
+		AND (
+				(MO.MALL_TYPE = '11st' AND MO.ORDER_ITEM_STATUS = '301')
+				OR (MO.MALL_TYPE = 'auction' AND MO.ORDER_ITEM_STATUS = '205')
+			)
+	</sql>
+	
+	<select id="getShippingCountByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+
+		<where>
+			<include refid="whereDefaultForShipping" />
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+			</if>
+		</where>
+			
+	</select>
+	
+	<select id="getShippingListByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderResult">
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				MO.*, 
+				MC.MALL_API_KEY, 
+				MC.MALL_LOGIN_ID
+			FROM OP_MALL_ORDER MO 
+				INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+	
+			<where>
+				<include refid="whereDefaultForShipping" />
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+				</if>
+			</where>
+		
+		ORDER BY MO.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<sql id="whereDefaultForCancelRequest">
+		AND (
+			(MO.MALL_TYPE = '11st' AND MOCA.CLAIM_STATUS = '01')
+			OR (MO.MALL_TYPE = 'auction' AND MOCA.CLAIM_STATUS = 'Requested')
+		)
+	</sql>
+	
+	<select id="getCancelRequestCountByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			INNER JOIN OP_MALL_ORDER_CANCEL MOCA ON MO.MALL_ORDER_ID = MOCA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForCancelRequest" />
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+			</if>
+		</where>
+			
+	</select>
+	
+	<select id="getCancelRequestListByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderCancelResult">
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				MO.*, 
+				MC.MALL_API_KEY, 
+				MC.MALL_LOGIN_ID,
+				MOCA.CLAIM_CODE,
+				MOCA.CLAIM_QUANTITY,
+				MOCA.CLAIM_STATUS,
+				MOCA.CLAIM_APPLY_SUBJECT,
+				MOCA.CANCEL_REASON,
+				MOCA.CANCEL_REASON_TEXT,
+				MOCA.CANCEL_REFUSAL_RESON,
+				MOCA.CANCEL_REFUSAL_RESON_TEXT,
+				MOCA.CANCEL_APPLY_DATE
+			FROM OP_MALL_ORDER MO 
+				INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+				INNER JOIN OP_MALL_ORDER_CANCEL MOCA ON MO.MALL_ORDER_ID = MOCA.MALL_ORDER_ID
+			<where>
+				<include refid="whereDefaultForCancelRequest" />
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+				</if>
+			</where>
+		
+		ORDER BY MO.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getCancelRequestDetailByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderCancelResult">
+		
+		SELECT 
+			MO.*, 
+			MC.MALL_API_KEY, 
+			MC.MALL_LOGIN_ID,
+			MOCA.CLAIM_QUANTITY,
+			MOCA.CLAIM_STATUS,
+			MOCA.CLAIM_CODE,
+			MOCA.CLAIM_APPLY_SUBJECT,
+			MOCA.CANCEL_REASON,
+			MOCA.CANCEL_REASON_TEXT,
+			MOCA.CANCEL_REFUSAL_RESON,
+			MOCA.CANCEL_REFUSAL_RESON_TEXT,
+			MOCA.CANCEL_APPLY_DATE
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			INNER JOIN OP_MALL_ORDER_CANCEL MOCA ON MO.MALL_ORDER_ID = MOCA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForCancelRequest" />
+			AND MOCA.MALL_ORDER_ID = #{mallOrderId}
+			AND MOCA.CLAIM_CODE = #{claimCode}
+		</where>
+			
+	</select>
+
+	<sql id="whereDefaultForCancelFinish">
+		AND MOCA.CLAIM_STATUS = '02'
+	</sql>	
+
+	<select id="getCancelFinishCountByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			INNER JOIN OP_MALL_ORDER_CANCEL MOCA ON MO.MALL_ORDER_ID = MOCA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForCancelFinish" />
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+			</if>
+		</where>
+			
+	</select>
+	
+	<select id="getCancelFinishListByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderCancelResult">
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				MO.*, 
+				MC.MALL_API_KEY, 
+				MC.MALL_LOGIN_ID,
+				MOCA.CLAIM_QUANTITY,
+				MOCA.CLAIM_STATUS,
+				MOCA.CLAIM_CODE,
+				MOCA.CLAIM_APPLY_SUBJECT,
+				MOCA.CANCEL_REASON,
+				MOCA.CANCEL_REASON_TEXT,
+				MOCA.CANCEL_REFUSAL_RESON,
+				MOCA.CANCEL_REFUSAL_RESON_TEXT,
+				MOCA.CANCEL_APPLY_DATE
+			FROM OP_MALL_ORDER MO 
+				INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+				INNER JOIN OP_MALL_ORDER_CANCEL MOCA ON MO.MALL_ORDER_ID = MOCA.MALL_ORDER_ID
+			<where>
+				<include refid="whereDefaultForCancelFinish" />
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+				</if>
+			</where>
+		
+		ORDER BY MO.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<sql id="whereDefaultForReturnRequest">
+		AND (
+				(MO.MALL_TYPE = '11st' AND MORA.CLAIM_STATUS IN ('105', '104'))
+				OR (MO.MALL_TYPE = 'auction' AND MORA.CLAIM_STATUS IN ('Requested'))
+			)
+	</sql>	
+
+	<select id="getReturnRequestCountByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			INNER JOIN OP_MALL_ORDER_RETURN MORA ON MO.MALL_ORDER_ID = MORA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForReturnRequest" />
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+			</if>
+		</where>
+			
+	</select>
+	
+	<select id="getReturnRequestListByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderReturnResult">
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				MO.*, 
+				MC.MALL_API_KEY, 
+				MC.MALL_LOGIN_ID,
+				MORA.CLAIM_CODE,
+				MORA.CLAIM_STATUS,
+				MORA.CLAIM_QUANTITY, 
+				MORA.RT_REASON, 
+				MORA.RT_REASON_TEXT, 
+				MORA.RT_COLLECTION_NAME, 
+				MORA.RT_COLLECTION_TEL_NUMBER, 
+				MORA.RT_COLLECTION_PHONE_NUMBER, 
+				MORA.RT_COLLECTION_ZIPCODE, 
+				MORA.RT_COLLECTION_ZIPCODE_SEQ, 
+				MORA.RT_COLLECTION_ADDRESS, 
+				MORA.RT_COLLECTION_ADDRESS_DETAIL, 
+				MORA.RT_COLLECTION_ADDRESS_TYPE, 
+				MORA.RT_COLLECTION_ADDRESS_BILNO, 
+				MORA.RT_SHIPPING_TYPE, 
+				MORA.RT_SHIPPING_AMOUNT, 
+				MORA.RT_DEFAULT_SHIPPING_AMOUNT, 
+				MORA.RT_SHIPPING_PAYMENT_TYPE, 
+				MORA.RT_SHIPPING_NUMBER, 
+				MORA.RT_SHIPPING_COMPANY_CODE, 
+				MORA.RT_APPLY_DATE
+			FROM OP_MALL_ORDER MO 
+				INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+				INNER JOIN OP_MALL_ORDER_RETURN MORA ON MO.MALL_ORDER_ID = MORA.MALL_ORDER_ID
+			<where>
+				<include refid="whereDefaultForReturnRequest" />
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+				</if>
+			</where>
+		
+		ORDER BY MO.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<sql id="whereDefaultForReturnFinish">
+		AND (
+				(MO.MALL_TYPE = '11st' AND MORA.CLAIM_STATUS IN ('106'))
+				OR (MO.MALL_TYPE = 'auction' AND MORA.CLAIM_STATUS IN ('Finish'))
+			)
+	</sql>	
+
+	<select id="getReturnFinishCountByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			INNER JOIN OP_MALL_ORDER_RETURN MORA ON MO.MALL_ORDER_ID = MORA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForReturnFinish" />
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+			</if>
+		</where>
+			
+	</select>
+	
+	<select id="getReturnFinishListByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderReturnResult">
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				MO.*, 
+				MC.MALL_API_KEY, 
+				MC.MALL_LOGIN_ID,
+				MORA.CLAIM_CODE,
+				MORA.CLAIM_STATUS,
+				MORA.CLAIM_QUANTITY, 
+				MORA.RT_REASON, 
+				MORA.RT_REASON_TEXT, 
+				MORA.RT_COLLECTION_NAME, 
+				MORA.RT_COLLECTION_TEL_NUMBER, 
+				MORA.RT_COLLECTION_PHONE_NUMBER, 
+				MORA.RT_COLLECTION_ZIPCODE, 
+				MORA.RT_COLLECTION_ZIPCODE_SEQ, 
+				MORA.RT_COLLECTION_ADDRESS, 
+				MORA.RT_COLLECTION_ADDRESS_DETAIL, 
+				MORA.RT_COLLECTION_ADDRESS_TYPE, 
+				MORA.RT_COLLECTION_ADDRESS_BILNO, 
+				MORA.RT_SHIPPING_TYPE, 
+				MORA.RT_SHIPPING_AMOUNT, 
+				MORA.RT_DEFAULT_SHIPPING_AMOUNT, 
+				MORA.RT_SHIPPING_PAYMENT_TYPE, 
+				MORA.RT_SHIPPING_NUMBER, 
+				MORA.RT_SHIPPING_COMPANY_CODE, 
+				MORA.RT_APPLY_DATE
+			FROM OP_MALL_ORDER MO 
+				INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+				INNER JOIN OP_MALL_ORDER_RETURN MORA ON MO.MALL_ORDER_ID = MORA.MALL_ORDER_ID
+			<where>
+				<include refid="whereDefaultForReturnFinish" />
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+				</if>
+			</where>
+		
+		ORDER BY MO.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getReturnRequestDetailByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderReturnResult">
+			
+		SELECT 
+			MO.*, 
+			MC.MALL_API_KEY, 
+			MC.MALL_LOGIN_ID,
+			MORA.CLAIM_CODE,
+			MORA.CLAIM_STATUS,
+			MORA.CLAIM_QUANTITY, 
+			MORA.RT_REASON, 
+			MORA.RT_REASON_TEXT, 
+			MORA.RT_COLLECTION_NAME, 
+			MORA.RT_COLLECTION_TEL_NUMBER, 
+			MORA.RT_COLLECTION_PHONE_NUMBER, 
+			MORA.RT_COLLECTION_ZIPCODE, 
+			MORA.RT_COLLECTION_ZIPCODE_SEQ, 
+			MORA.RT_COLLECTION_ADDRESS, 
+			MORA.RT_COLLECTION_ADDRESS_DETAIL, 
+			MORA.RT_COLLECTION_ADDRESS_TYPE, 
+			MORA.RT_COLLECTION_ADDRESS_BILNO, 
+			MORA.RT_SHIPPING_TYPE, 
+			MORA.RT_SHIPPING_AMOUNT, 
+			MORA.RT_DEFAULT_SHIPPING_AMOUNT, 
+			MORA.RT_SHIPPING_PAYMENT_TYPE, 
+			MORA.RT_SHIPPING_NUMBER, 
+			MORA.RT_SHIPPING_COMPANY_CODE, 
+			MORA.RT_APPLY_DATE
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			INNER JOIN OP_MALL_ORDER_RETURN MORA ON MO.MALL_ORDER_ID = MORA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForReturnRequest" />
+			AND MORA.MALL_ORDER_ID = #{mallOrderId}
+			AND MORA.CLAIM_CODE = #{claimCode}
+		</where>
+	</select>
+
+	<sql id="whereDefaultForExchangeRequest">
+		AND (
+			(MO.MALL_TYPE = '11st' AND MOEA.CLAIM_STATUS IN ('201', '214'))
+			OR (MO.MALL_TYPE = 'auction' AND MOEA.CLAIM_STATUS IN ('Requested', 'Hold'))
+		) 
+	</sql>	
+
+	<select id="getExchangeRequestCountByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			INNER JOIN OP_MALL_ORDER_EXCHANGE MOEA ON MO.MALL_ORDER_ID = MOEA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForExchangeRequest" />
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+			</if>
+		</where>
+			
+	</select>
+	
+	<select id="getExchangeRequestListByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderExchangeResult">
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				MO.*, 
+				MC.MALL_API_KEY, 
+				MC.MALL_LOGIN_ID,
+				MOEA.CLAIM_CODE,
+				MOEA.CLAIM_STATUS,
+				MOEA.CLAIM_QUANTITY, 
+				MOEA.EX_REASON, 
+				MOEA.EX_REASON_TEXT, 
+				MOEA.EX_COLLECTION_NAME, 
+				MOEA.EX_COLLECTION_TEL_NUMBER, 
+				MOEA.EX_COLLECTION_PHONE_NUMBER, 
+				MOEA.EX_COLLECTION_ZIPCODE, 
+				MOEA.EX_COLLECTION_ZIPCODE_SEQ, 
+				MOEA.EX_COLLECTION_ADDRESS, 
+				MOEA.EX_COLLECTION_ADDRESS_DETAIL, 
+				MOEA.EX_COLLECTION_ADDRESS_TYPE, 
+				MOEA.EX_COLLECTION_ADDRESS_BILNO, 
+				MOEA.EX_SHIPPING_TYPE, 
+				MOEA.EX_RECEIVER_NAME, 
+				MOEA.EX_RECEIVER_TEL_NUMBER, 
+				MOEA.EX_RECEIVER_PHONE_NUMBER, 
+				MOEA.EX_RECEIVER_ZIPCODE, 
+				MOEA.EX_RECEIVER_ZIPCODE_SEQ, 
+				MOEA.EX_RECEIVER_ADDRESS, 
+				MOEA.EX_RECEIVER_ADDRESS_DETAIL, 
+				MOEA.EX_RECEIVER_ADDRESS_TYPE, 
+				MOEA.EX_RECEIVER_ADDRESS_BILNO, 
+				MOEA.EX_SHIPPING_AMOUNT, 
+				MOEA.EX_ADD_SHIPPING_AMOUNT, 
+				MOEA.EX_SHIPPING_PAYMENT_TYPE, 
+				MOEA.EX_SHIPPING_NUMBER, 
+				MOEA.EX_SHIPPING_COMPANY_CODE, 
+				MOEA.EX_APPLY_DATE, 
+				MOEA.EX_END_DATE
+			FROM OP_MALL_ORDER MO 
+				INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+				INNER JOIN OP_MALL_ORDER_EXCHANGE MOEA ON MO.MALL_ORDER_ID = MOEA.MALL_ORDER_ID
+			<where>
+				<include refid="whereDefaultForExchangeRequest" />
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+				</if>
+			</where>
+		
+		ORDER BY MO.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getExchangeRequestDetailByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderExchangeResult">
+			
+		SELECT 
+			MO.*, 
+			MC.MALL_API_KEY, 
+			MC.MALL_LOGIN_ID,
+			MOEA.CLAIM_CODE,
+			MOEA.CLAIM_STATUS,
+			MOEA.CLAIM_QUANTITY, 
+			MOEA.EX_REASON, 
+			MOEA.EX_REASON_TEXT, 
+			MOEA.EX_COLLECTION_NAME, 
+			MOEA.EX_COLLECTION_TEL_NUMBER, 
+			MOEA.EX_COLLECTION_PHONE_NUMBER, 
+			MOEA.EX_COLLECTION_ZIPCODE, 
+			MOEA.EX_COLLECTION_ZIPCODE_SEQ, 
+			MOEA.EX_COLLECTION_ADDRESS, 
+			MOEA.EX_COLLECTION_ADDRESS_DETAIL, 
+			MOEA.EX_COLLECTION_ADDRESS_TYPE, 
+			MOEA.EX_COLLECTION_ADDRESS_BILNO, 
+			MOEA.EX_SHIPPING_TYPE, 
+			MOEA.EX_RECEIVER_NAME, 
+			MOEA.EX_RECEIVER_TEL_NUMBER, 
+			MOEA.EX_RECEIVER_PHONE_NUMBER, 
+			MOEA.EX_RECEIVER_ZIPCODE, 
+			MOEA.EX_RECEIVER_ZIPCODE_SEQ, 
+			MOEA.EX_RECEIVER_ADDRESS, 
+			MOEA.EX_RECEIVER_ADDRESS_DETAIL, 
+			MOEA.EX_RECEIVER_ADDRESS_TYPE, 
+			MOEA.EX_RECEIVER_ADDRESS_BILNO, 
+			MOEA.EX_SHIPPING_AMOUNT, 
+			MOEA.EX_ADD_SHIPPING_AMOUNT, 
+			MOEA.EX_SHIPPING_PAYMENT_TYPE, 
+			MOEA.EX_SHIPPING_NUMBER, 
+			MOEA.EX_SHIPPING_COMPANY_CODE, 
+			MOEA.EX_APPLY_DATE, 
+			MOEA.EX_END_DATE
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			INNER JOIN OP_MALL_ORDER_EXCHANGE MOEA ON MO.MALL_ORDER_ID = MOEA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForExchangeRequest" />
+			AND MOEA.MALL_ORDER_ID = #{mallOrderId}
+			AND MOEA.CLAIM_CODE = #{claimCode}
+		</where>
+	</select>
+
+	<sql id="whereDefaultForExchangeFinish">
+		AND (
+			(MO.MALL_TYPE = '11st' AND MOEA.CLAIM_STATUS IN ('221'))
+			OR (MO.MALL_TYPE = 'auction' AND MOEA.CLAIM_STATUS IN ('Finish'))
+		) 
+	</sql>	
+
+	<select id="getExchangeFinishCountByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		FROM OP_MALL_ORDER MO 
+			INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+			INNER JOIN OP_MALL_ORDER_EXCHANGE MOEA ON MO.MALL_ORDER_ID = MOEA.MALL_ORDER_ID
+		<where>
+			<include refid="whereDefaultForExchangeFinish" />
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+			</if>
+		</where>
+			
+	</select>
+	
+	<select id="getExchangeFinishListByParam" parameterType="saleson.shop.mall.support.MallOrderParam" 
+		resultMap="MallOrderExchangeResult">
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				MO.*, 
+				MC.MALL_API_KEY, 
+				MC.MALL_LOGIN_ID,
+				MOEA.CLAIM_CODE,
+				MOEA.CLAIM_STATUS,
+				MOEA.CLAIM_QUANTITY, 
+				MOEA.EX_REASON, 
+				MOEA.EX_REASON_TEXT, 
+				MOEA.EX_COLLECTION_NAME, 
+				MOEA.EX_COLLECTION_TEL_NUMBER, 
+				MOEA.EX_COLLECTION_PHONE_NUMBER, 
+				MOEA.EX_COLLECTION_ZIPCODE, 
+				MOEA.EX_COLLECTION_ZIPCODE_SEQ, 
+				MOEA.EX_COLLECTION_ADDRESS, 
+				MOEA.EX_COLLECTION_ADDRESS_DETAIL, 
+				MOEA.EX_COLLECTION_ADDRESS_TYPE, 
+				MOEA.EX_COLLECTION_ADDRESS_BILNO, 
+				MOEA.EX_SHIPPING_TYPE, 
+				MOEA.EX_RECEIVER_NAME, 
+				MOEA.EX_RECEIVER_TEL_NUMBER, 
+				MOEA.EX_RECEIVER_PHONE_NUMBER, 
+				MOEA.EX_RECEIVER_ZIPCODE, 
+				MOEA.EX_RECEIVER_ZIPCODE_SEQ, 
+				MOEA.EX_RECEIVER_ADDRESS, 
+				MOEA.EX_RECEIVER_ADDRESS_DETAIL, 
+				MOEA.EX_RECEIVER_ADDRESS_TYPE, 
+				MOEA.EX_RECEIVER_ADDRESS_BILNO, 
+				MOEA.EX_SHIPPING_AMOUNT, 
+				MOEA.EX_ADD_SHIPPING_AMOUNT, 
+				MOEA.EX_SHIPPING_PAYMENT_TYPE, 
+				MOEA.EX_SHIPPING_NUMBER, 
+				MOEA.EX_SHIPPING_COMPANY_CODE, 
+				MOEA.EX_APPLY_DATE, 
+				MOEA.EX_END_DATE
+			FROM OP_MALL_ORDER MO 
+				INNER JOIN OP_MALL_CONFIG MC ON MO.MALL_CONFIG_ID = MC.MALL_CONFIG_ID
+				INNER JOIN OP_MALL_ORDER_EXCHANGE MOEA ON MO.MALL_ORDER_ID = MOEA.MALL_ORDER_ID
+			<where>
+				<include refid="whereDefaultForExchangeFinish" />
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND DATE_FORMAT(MO.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+				</if>
+			</where>
+		
+		ORDER BY MO.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<update id="updateMallConfig" parameterType="saleson.shop.mall.domain.MallConfig">
+		UPDATE OP_MALL_CONFIG
+		SET
+            LAST_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),
+			STATUS_CODE = #{statusCode}
+			<choose>
+				<when test="lastSearchStartDate != null and lastSearchStartDate != ''">
+					, LAST_SEARCH_START_DATE = CONCAT(#{lastSearchStartDate}, '00')
+				</when>
+				<otherwise>
+					, LAST_SEARCH_START_DATE = ''
+				</otherwise>
+			</choose>
+		
+			<choose>
+				<when test="lastSearchEndDate != null and lastSearchEndDate != ''">
+					, LAST_SEARCH_END_DATE = CONCAT(#{lastSearchEndDate}, '59')
+				</when>
+				<otherwise>
+					, LAST_SEARCH_END_DATE = ''
+				</otherwise>
+			</choose>
+			
+		WHERE
+			MALL_CONFIG_ID = #{mallConfigId}
+	</update>
+	
+	<update id="updateMallConfigForClaim" parameterType="saleson.shop.mall.domain.MallConfig">
+		UPDATE OP_MALL_CONFIG
+		SET 
+			LAST_CLAIM_COLLECT_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),
+			CLAIM_STATUS_CODE = #{claimStatusCode}
+			
+			<choose>
+				<when test="lastClaimCollectSearchStartDate != null and lastClaimCollectSearchStartDate != ''">
+					, LAST_CLAIM_SEARCH_START_DATE = CONCAT(#{lastClaimCollectSearchStartDate}, '00')
+				</when>
+				<otherwise>
+					, LAST_CLAIM_SEARCH_START_DATE = ''
+				</otherwise>
+			</choose>
+		
+			<choose>
+				<when test="lastClaimCollectSearchEndDate != null and lastClaimCollectSearchEndDate != ''">
+					, LAST_CLAIM_COLLECT_SEARCH_END_DATE = CONCAT(#{lastClaimCollectSearchEndDate}, '59')
+				</when>
+				<otherwise>
+					, LAST_CLAIM_COLLECT_SEARCH_END_DATE = ''
+				</otherwise>
+			</choose>
+			
+		WHERE
+			MALL_CONFIG_ID = #{mallConfigId}
+	</update>
+	
+	<update id="updateCollectStatusCode" parameterType="saleson.shop.mall.domain.MallConfig">
+		UPDATE OP_MALL_CONFIG
+		SET 
+			STATUS_CODE = #{statusCode}
+		WHERE
+			MALL_CONFIG_ID = #{mallConfigId}
+	</update>
+	
+	<update id="updateClaimCollectStatusCode" parameterType="saleson.shop.mall.domain.MallConfig">
+		UPDATE OP_MALL_CONFIG
+		SET 
+			CLAIM_STATUS_CODE = #{claimStatusCode}
+		WHERE
+			MALL_CONFIG_ID = #{mallConfigId}
+	</update>
+	
+	<update id="updateMallOrderMatchingItemUserCode" parameterType="saleson.shop.mall.support.MallOrderParam">
+		UPDATE OP_MALL_ORDER
+		SET 
+			ITEM_ID = (SELECT ITEM_ID FROM OP_ITEM WHERE ITEM_USER_CODE = #{itemUserCode}),
+			MATCHED_OPTIONS = #{matchedOptions}
+		WHERE MALL_ORDER_ID = #{mallOrderId}
+	</update>
+	
+</mapper>

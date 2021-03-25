@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+		<!-- 
+		<property name="mapperLocations" value="classpath*:sqlmapper/${config.database.vendor}/**/*-mapper.xml" />
+		 -->
+		<property name="mapperLocations">
+			<array>
+		   		<value>classpath*:sqlmapper/${config.database.vendor}/*-mapper.xml</value>
+		   		<value>classpath*:sqlmapper/${config.database.vendor}/seller/*-mapper.xml</value>
+		  	</array>
+		</property>
+	</bean>
+	
+	<bean id="sqlSessionBatchFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-config-batch.xml" />
+		
+		<property name="mapperLocations">
+			<array>
+		   		<value>classpath*:sqlmapper/${config.database.vendor}/common-mapper.xml</value>
+		   		<value>classpath*:sqlmapper/${config.database.vendor}/batch/**/*-mapper-batch.xml</value>
+		  	</array>
+		</property>
+		
+		<!-- <property name="mapperLocations" value="classpath*:sqlmapper/${config.database.vendor}/batch/**/*-mapper-batch.xml" /> -->
+	</bean>
+	
+	<bean class="com.onlinepowers.framework.orm.mybatis.MapperConfigurer">
+		<property name="basePackage" value="saleson,com.onlinepowers" />
+	</bean>
+	
+	<bean class="com.onlinepowers.framework.orm.mybatis.MapperBatchConfigurer">
+		<property name="basePackage" value="saleson,com.onlinepowers" />
+	</bean>
+	
+</beans>

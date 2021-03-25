@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"     
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"     
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+	
+    <tlib-version>2.0</tlib-version>    
+    <short-name>shop</short-name>    
+
+    <uri>/WEB-INF/tlds/shop</uri>
+
+	<function>
+    	<name>sellerId</name>
+		<function-class>saleson.common.utils.SellerUtils</function-class>
+		<function-signature>java.lang.Integer getSellerId()</function-signature>
+	</function>
+
+    <function>
+    	<name>catalogImage</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String catalogImage(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>listImage</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String listImage(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>topBannerImage</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String listImage(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>detailsImage</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String detailsImage(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>detailsBigImage</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String detailsBigImage(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>detailsThumbnail</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String detailsThumbnail(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>today</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String getToday()</function-signature>
+	</function>
+	<function>
+    	<name>todayTime</name>
+		<function-class>com.onlinepowers.framework.util.DateUtils</function-class>
+		<function-signature>java.lang.String getToday(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>openMarketOptionCode</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String getOpenMarketOptionCode(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>viewOptionText</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String viewOptionText(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+    	<name>viewOptionTextNoUl</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String viewOptionTextNoUl(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>getMallDeliveryCompanyListByMallType</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>com.onlinepowers.framework.repository.CodeInfo getMallDeliveryCompanyListByMallType(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>getBankListByKey</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>com.onlinepowers.framework.repository.CodeInfo getBankListByKey(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>buyViewOptionText</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>com.onlinepowers.framework.repository.CodeInfo buyViewOptionText(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>loadImage</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String loadImage(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+    	<name>loadImageBySrc</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String loadImage(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>monthString</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String getMonthString(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>makeOrderGiftItemText</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String makeOrderGiftItemText(java.util.List))</function-signature>
+	</function>
+
+	<function>
+		<name>viewOrderGiftItemList</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String viewOrderGiftItemList(java.util.List))</function-signature>
+	</function>
+
+	<function>
+		<name>viewAdditionItemList</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String viewAdditionItemList(java.util.List))</function-signature>
+	</function>
+	<function>
+		<name>viewAdditionOrderItemList</name>
+		<function-class>saleson.common.utils.ShopUtils</function-class>
+		<function-signature>java.lang.String viewAdditionOrderItemList(java.util.List))</function-signature>
+	</function>
+</taglib>

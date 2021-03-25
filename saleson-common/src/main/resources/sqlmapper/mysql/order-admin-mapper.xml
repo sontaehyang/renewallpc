@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.order.admin.OrderAdminMapper">
+
+	<resultMap id="OrderAdminResult" type="saleson.shop.order.admin.domain.OrderAdmin">
+		<result property="workDate" column="WORK_DATE" />
+		<result property="workSequence" column="WORK_SEQUENCE" />
+		<result property="insertManagerName" column="INSERT_MANAGER_NAME" />
+		<result property="createdDate" column="USE_COUPON_COUNT" />
+	</resultMap>
+
+	<resultMap id="OrderAdminDetailResult" type="saleson.shop.order.admin.domain.OrderAdminDetail">
+		<result property="workDate" column="WORK_DATE" />
+		<result property="workSequence" column="WORK_SEQUENCE" />
+		<result property="itemSequence" column="ITEM_SEQUENCE" />
+		<result property="orderGroupCode" column="ORDER_GROUP_CODE" />
+		<result property="templateVersion" column="TEMPLATE_VERSION" />
+		<result property="excelData" column="EXCEL_DATA" />
+		<result property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="salePrice" column="SALE_PRICE" />
+		<result property="updateManagerName" column="UPDATE_MANAGER_NAME" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+	<sql id="defaultWhereQuery">
+		<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+			AND DATE_FORMAT(OA.WORK_DATE, '%Y%m%d') BETWEEN #{startDate} AND #{endDate}
+		</if>
+		
+		<if test="workSequence != null and workSequence != ''">
+			AND OA.WORK_SEQUENCE = #{workSequence}
+		</if>
+		
+		<if test="dataStatusCode != null and dataStatusCode != ''">
+			AND OAD.DATA_STATUS_CODE = #{dataStatusCode}
+		</if>
+	</sql>
+
+	<select id="getOrderAdminCountByParam" parameterType="saleson.shop.order.admin.support.OrderAdminParam" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM OP_ORDER_ADMIN OA
+			INNER JOIN OP_ORDER_ADMIN_DETAIL OAD ON OA.WORK_DATE = OAD.WORK_DATE AND OA.WORK_SEQUENCE = OAD.WORK_SEQUENCE AND OA.DATA_STATUS_CODE = '1'
+		<where>
+			<include refid="defaultWhereQuery" />
+		</where>
+	</select>
+
+	<select id="getOrderAdminListByParam" parameterType="saleson.shop.order.admin.support.OrderAdminParam" resultMap="OrderAdminDetailResult">
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				OA.INSERT_MANAGER_NAME,
+				OAD.*
+			FROM OP_ORDER_ADMIN OA
+				INNER JOIN OP_ORDER_ADMIN_DETAIL OAD ON OA.WORK_DATE = OAD.WORK_DATE AND OA.WORK_SEQUENCE = OAD.WORK_SEQUENCE AND OA.DATA_STATUS_CODE = '1'
+			<where>
+				<include refid="defaultWhereQuery" />
+			</where>
+			
+			ORDER BY OAD.WORK_DATE DESC, OAD.WORK_SEQUENCE DESC, OAD.ITEM_SEQUENCE DESC
+				
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<insert id="insertOrderAdmin" parameterType="saleson.shop.order.admin.domain.OrderAdmin">
+		<selectKey keyProperty="workSequence" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(WORK_SEQUENCE), 0) + 1 
+			FROM OP_ORDER_ADMIN
+			WHERE
+				WORK_DATE = #{workDate}
+		</selectKey>
+		
+		INSERT INTO OP_ORDER_ADMIN (
+			WORK_DATE,
+			WORK_SEQUENCE,
+			INSERT_MANAGER_NAME,
+			DATA_STATUS_CODE,
+			CREATED_DATE
+		) VALUES (
+			#{workDate},
+			#{workSequence},
+			#{insertManagerName},
+			'1',
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+
+	<insert id="insertOrderAdminDetail" parameterType="saleson.shop.order.admin.domain.OrderAdminDetail">
+		INSERT INTO OP_ORDER_ADMIN_DETAIL (
+			WORK_DATE,
+			WORK_SEQUENCE,
+			ITEM_SEQUENCE,
+			ORDER_GROUP_CODE,
+			TEMPLATE_VERSION,
+			EXCEL_DATA,
+			DATA_STATUS_CODE,
+			CREATED_DATE
+		) VALUES (
+			#{workDate},
+			#{workSequence},
+			#{itemSequence},
+			#{orderGroupCode},
+			#{templateVersion},
+			#{excelData},
+			'1',
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+
+	<insert id="insertOrder" parameterType="saleson.shop.order.admin.domain.BuyAdmin">
+		
+		INSERT INTO OP_ORDER (
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			ORDER_TOTAL_AMOUNT,
+			PAY_AMOUNT,
+			USER_ID,
+			LOGIN_ID,
+			BUYER_NAME,
+			PHONE,
+			MOBILE,
+			EMAIL,
+			ZIPCODE,
+			NEW_ZIPCODE,
+			SIDO,
+			SIGUNGU,
+			EUPMYEONDONG,
+			ADDRESS,
+			ADDRESS_DETAIL,
+			DATA_STATUS_CODE,
+			IP,
+			CREATED_DATE
+		) VALUES (
+			#{orderCode},
+			#{orderSequence},
+			#{orderPrice.orderPayAmountTotal},
+			#{orderPrice.payAmount},
+			#{userId},
+			#{loginId},
+			#{buyer.userName},
+			#{buyer.phone},
+			#{buyer.mobile},
+			#{buyer.email},
+			#{buyer.zipcode},
+			#{buyer.newZipcode},
+			#{buyer.sido},
+			#{buyer.sigungu},
+			#{buyer.eupmyeondong},
+			#{buyer.address},
+			#{buyer.addressDetail},
+			'1',
+			#{ip},
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+
+	<insert id="insertOrderShippingInfo" parameterType="saleson.shop.order.admin.domain.BuyAdminReceiver">
+		INSERT INTO OP_ORDER_SHIPPING_INFO 
+		(
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			SHIPPING_INFO_SEQUENCE, 
+			RECEIVE_NEW_ZIPCODE,  
+			RECEIVE_ZIPCODE, 
+			RECEIVE_SIDO, 
+			RECEIVE_SIGUNGU, 
+			RECEIVE_EUPMYEONDONG, 
+			RECEIVE_ADDRESS, 
+			RECEIVE_ADDRESS_DETAIL, 
+			RECEIVE_NAME, 
+			RECEIVE_PHONE, 
+			RECEIVE_MOBILE, 
+			MEMO,
+			CREATED_DATE
+		) VALUES (
+			#{orderCode}, 
+			#{orderSequence}, 
+			#{shippingInfoSequence}, 
+			#{receiveNewZipcode},
+			#{receiveZipcode}, 
+			#{receiveSido}, 
+			#{receiveSigungu}, 
+			#{receiveEupmyeondong},
+			#{receiveAddress}, 
+			#{receiveAddressDetail}, 
+			#{receiveName}, 
+			#{receivePhone}, 
+			#{receiveMobile}, 
+			#{content},
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+
+	<insert id="insertOrderShipping" parameterType="saleson.shop.order.admin.domain.BuyAdminShipping">
+		INSERT INTO OP_ORDER_SHIPPING
+		(
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			SHIPPING_SEQUENCE,
+			SELLER_ID,
+			SHIPPING_TYPE,
+			SHIPMENT_GROUP_CODE,
+			SHIPPING_GROUP_CODE,
+			ISLAND_TYPE,
+			SHIPPING_ITEM_COUNT,
+			SHIPPING,
+			SHIPPING_EXTRA_CHARGE1,
+			SHIPPING_EXTRA_CHARGE2,
+			SHIPPING_FREE_AMOUNT,
+			REAL_SHIPPING,
+			SHIPPING_PAYMENT_TYPE, 
+			PAY_SHIPPING,
+			DISCOUNT_SHIPPING,
+			SHIPPING_COUPON_COUNT,
+			REMITTANCE_AMOUNT
+		) VALUES (
+			#{orderCode},
+			#{orderSequence},
+			#{shippingSequence},
+			#{sellerId},
+			#{shippingType},
+			#{shipmentGroupCode},
+			#{shippingGroupCode},
+			#{islandType},
+			#{shippingItemCount},
+			#{shipping},
+			#{shippingExtraCharge1},
+			#{shippingExtraCharge2},
+			#{shippingFreeAmount},
+			#{realShipping},
+			#{shippingPaymentType},
+			#{payShipping},
+			#{discountShipping},
+			#{shippingCouponCount},
+			#{remittanceAmount}
+		)
+	</insert>
+
+	<insert id="insertOrderItem" parameterType="saleson.shop.order.admin.domain.BuyAdminItem">
+		INSERT INTO OP_ORDER_ITEM 
+		(
+			ORDER_CODE, 
+			ORDER_SEQUENCE,
+			ITEM_SEQUENCE,
+			ORDER_STATUS,
+			SHIPPING_SEQUENCE,
+			SHIPPING_INFO_SEQUENCE,
+			ADDITION_ITEM_FLAG,
+			PARENT_ITEM_SEQUENCE,
+			USER_ID, 
+			GUEST_FLAG, 
+			SELLER_ID, 
+			CATEGORY_TEAM_ID, 
+			CATEGORY_GROUP_ID, 
+			CATEGORY_ID, 
+			SHIPMENT_ID,
+			SHIPMENT_RETURN_ID,  
+			ITEM_ID,  
+			ITEM_CODE, 
+			ITEM_USER_CODE, 
+			ITEM_NAME, 
+			FREE_GIFT_NAME,
+			IMAGE_SRC,
+			DEVICE_TYPE,
+			DELIVERY_TYPE,
+			SHIPMENT_GROUP_CODE,
+			SHIPPING_RETURN,
+			SHIPMENT_RETURN_TYPE,
+			PURCHASE_PRICE, 
+			COST_PRICE,
+			PRICE,
+			OPTION_PRICE,
+			SALE_PRICE,
+			QUANTITY,
+			ORDER_QUANTITY,
+			COUPON_DISCOUNT_PRICE, 
+			SPOT_SALE_FLAG, 
+			SPOT_TYPE,
+			SPOT_DISCOUNT_PRICE,
+			TAX_TYPE,
+			COMMISSION_BASE_PRICE,
+			COMMISSION_RATE,
+			COMMISSION_PRICE,
+			SUPPLY_PRICE,
+			SELLER_DISCOUNT_PRICE,
+			SELLER_DISCOUNT_DETAIL,
+			ADMIN_DISCOUNT_PRICE,
+			ADMIN_DISCOUNT_DETAIL,
+			BRAND, 
+			OPTIONS, 
+			DELIVERY_COMPANY_ID, 
+			POINT_CONFIG_TYPE, 
+			POINT_TYPE, 
+			POINT, 
+			POINT_LOG, 
+			EARN_POINT,
+			EARN_POINT_FLAG,
+			SELLER_POINT,
+			REVENUE_SALES_STATUS,
+			PAY_DATE,
+			SHIPPING_READY_DATE,
+			SHIPPING_DATE,
+			CANCEL_REQUEST_DATE,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			SALES_DATE, 
+			CREATED_DATE, 
+			RETURN_POINT_FLAG,
+			DELIVERY_COMPANY_NAME,
+			ITEM_RETURN_FLAG
+		) VALUES (
+			#{orderCode}, 
+			#{orderSequence},
+			#{itemSequence},
+			'0',
+			#{shippingSequence},
+			#{shippingInfoSequence},
+			#{item.itemAdditionFlag},
+			#{parentItemSequence},
+			#{userId}, 
+			#{guestFlag}, 
+			#{item.sellerId}, 
+			#{categoryTeamId}, 
+			#{categoryGroupId}, 
+			#{categoryId}, 
+			#{item.shipmentId}, 
+			#{item.shipmentReturnId},
+			#{item.itemId},  
+			#{item.itemCode}, 
+			#{item.itemUserCode}, 
+			#{item.itemName}, 
+			#{item.freeGiftName},
+			#{item.imageSrc},
+			#{deviceType},
+			#{item.deliveryType},
+			#{item.shipmentGroupCode},
+			#{item.shippingReturn},
+			#{item.shipmentReturnType},
+			#{itemPrice.purchasePrice}, 
+			#{itemPrice.costPrice}, 
+			#{itemPrice.price},
+			#{itemPrice.optionPrice},
+			#{itemPrice.salePrice},
+			#{itemPrice.quantity},
+			#{itemPrice.quantity},
+			#{itemPrice.couponDiscountPrice},
+			#{itemPrice.spotSaleFlag},
+			#{item.spotType},
+			#{item.spotDiscountAmount},
+			#{item.taxType},
+			#{itemPrice.commissionBasePrice},
+			#{item.commissionRate},
+			#{itemPrice.commissionPrice},
+			#{itemPrice.supplyPrice},
+			#{itemPrice.sellerDiscountPrice}, 
+			#{itemPrice.sellerDiscountDetail},
+			#{itemPrice.adminDiscountPrice},
+			#{itemPrice.adminDiscountDetail},
+			#{item.brand}, 
+			#{options}, 
+			#{item.deliveryCompanyId}, 
+			#{pointPolicy.configType}, 
+			#{pointPolicy.pointType}, 
+			#{pointPolicy.point}, 
+			#{pointPolicy.pointLog}, 
+			#{itemPrice.earnPoint}, 
+			#{itemPrice.earnPointFlag},
+			#{itemPrice.sellerPoint},
+			#{revenueSalesStatus},
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			#{salesDate}, 
+			<include refid="CommonMapper.datetime" />, 
+			'N',
+			#{item.deliveryCompanyName},
+			#{item.itemReturnFlag}
+		)
+	</insert>
+	
+	<insert id="insertOrderPayment" parameterType="saleson.shop.order.admin.domain.BuyAdminPayment">
+		INSERT INTO OP_ORDER_PAYMENT 
+		(
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			PAYMENT_SEQUENCE,
+			PAYMENT_TYPE,
+			APPROVAL_TYPE,
+			DEVICE_TYPE,
+			AMOUNT,
+			TAX_FREE_AMOUNT,
+			NOW_PAYMENT_FLAG,
+			CREATED_DATE
+		) VALUES (
+			#{orderCode},
+			#{orderSequence},
+			#{paymentSequence},
+			#{paymentType},
+			#{approvalType},
+			#{deviceType},
+			#{amount},
+			#{taxFreeAmount},
+			'N',
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+
+	<select id="getOrderAdminDetailCheckedStatus" resultType="Integer" parameterType="saleson.shop.order.admin.support.OrderAdminData">
+		SELECT COUNT(*) FROM OP_ORDER_ADMIN_DETAIL
+		<where>
+			WORK_DATE = #{workDate}
+			AND WORK_SEQUENCE = #{workSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+			AND DATA_STATUS_CODE = '1'
+		</where>
+	</select>
+
+	<update id="updateOrderAdminDetailStatus" parameterType="saleson.shop.order.admin.support.OrderAdminData">
+		UPDATE OP_ORDER_ADMIN_DETAIL SET
+			DATA_STATUS_CODE = '2',
+			UPDATE_MANAGER_NAME = #{updateManagerName},
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />,
+			SALE_PRICE = #{salePrice}
+		<where>
+			WORK_DATE = #{workDate}
+			AND WORK_SEQUENCE = #{workSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+			AND DATA_STATUS_CODE = '1'
+		</where>
+	</update>
+
+</mapper>

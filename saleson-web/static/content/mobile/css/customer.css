@@ -1,0 +1,88 @@
+@charset "utf-8";
+/* ONLINEPOWERS FED */
+
+/*==================
+	고객센터
+==================*/
+.customer_wrap {}
+.notice_list .list ul li {border-bottom:1px solid #e4e4e4; padding:15px 15px 20px 15px; background:url(../images/common/notice_list_arr.gif) no-repeat 96.5% center; background-size:7px 13px; }
+.notice_list .list ul li a {width:100%; height:100%; }
+.notice_list .list ul li .tit {width:92%; font-size:14px; font-weight:600; color:#1a1a1a; line-height:16px; }
+.notice_list .list ul li .info {height:11px; overflow:hidden; margin-top:8px; }
+.notice_list .list ul li .info span {display:inline-block; font-size:10px; font-weight:600; color:#999; vertical-align:top; }
+.notice_list .list li ul .info .hit {border-left:1px solid #dcdcdc; margin-left:5px; padding-left:6px; }
+.notice_view .content {padding:27px 15px 15px 15px; }
+.notice_view .content .tit_wrap {margin-bottom:26px; }
+.notice_view .content .tit_wrap .tit {width:92%; font-size:14px; font-weight:800; color:#1a1a1a; line-height:17px; }
+.notice_view .content .tit_wrap .info {height:11px; overflow:hidden; margin-top:10px; }
+.notice_view .content .tit_wrap .info span {display:inline-block; font-size:10px; font-weight:600; color:#999; vertical-align:top; }
+.notice_view .content .tit_wrap .info .hit {border-left:1px solid #dcdcdc; margin-left:5px; padding-left:6px; }
+.notice_view .content .con p {width:92%; font-size:14px; font-weight:800; color:#808080; line-height:17px; }
+/*.notice_view .content .con img {margin:15px 0; }*/
+.notice_view .btn_wrap {border-top:1px solid #e4e4e4; text-align:center; padding:15px 0; }
+
+/* 공지사항 댓글 영역 */
+/*.notice_view .comment_wrap {border-top:1px solid #b2b2b2; }
+.notice_view .comment_wrap .comment_write {padding:19px 15px; border-bottom:1px solid #f2f2f2; }
+.notice_view .comment_wrap .comment_write .comment_total {font-size:11px; font-weight:600; color:#999; margin-bottom:10px; }
+.notice_view .comment_wrap .comment_write .comment_total span {font-size:11px; font-weight:800; color:#23ade3; vertical-align:bottom; }
+.notice_view .comment_wrap .write_wrap {position:relative; background:#fff; border:1px solid #d7d7d7; border-radius:3px; }
+.notice_view .comment_wrap .write_wrap .comment_profile_area {display:none; position:relative; padding:15px 82px 0 15px; background:#fff; }
+.notice_view .comment_wrap .write_wrap .comment_profile_area .comment_write_name {display:block; font-size:11px; font-weight:800; color:#666; padding-bottom:2px; }
+.notice_view .comment_wrap .write_wrap .comment_write_area {overflow:hidden; max-width:100%; }
+.notice_view .comment_wrap .write_wrap .comment_write_area .comment_inbox {position:relative; margin-right:69px; padding:9px 15px 8px; background:#fff; }
+.notice_view .comment_wrap .write_wrap.focus .comment_write_area .comment_inbox {margin-right:0; }
+.notice_view .comment_wrap .write_wrap .comment_inbox .comment_text {
+	display: block; position:relative; z-index:1; width:100%; height:20px; border:none; background-color:transparent;
+	font-size:13px; color:#1a1a1a; line-height:20px; -webkit-appearance:none; resize:none; 
+}
+.notice_view .comment_wrap .write_wrap.focus .comment_inbox .comment_text {z-index:20; height:53px; }
+.notice_view .comment_wrap .write_wrap .comment_inbox .comment_guide {
+	overflow:hidden; position:absolute; top:7px; right:10px; bottom:13px; left:15px; z-index:10; border:none;
+    font-size:13px; color:#999; line-height:20px;
+}
+.notice_view .comment_wrap .write_wrap .comment_count_area {display:none; position:absolute; bottom:13px; right:67px; }
+.notice_view .comment_wrap .write_wrap .comment_count {text-align:right; }
+.notice_view .comment_wrap .write_wrap .comment_count_area .comment_count {display:inline-block; font-size:11px; color:#b7b7b7; font-weight:600; letter-spacing:0; }
+.notice_view .comment_wrap .write_wrap .comment_count_area .comment_count span {display:inline-block; font-size:11px; color:#b7b7b7; font-weight:600; vertical-align:bottom; letter-spacing:0; }
+.notice_view .comment_wrap .write_wrap .comment_btn .comment_addition {display:none; width:100%; height:43px; }
+.notice_view .comment_wrap .write_wrap .comment_btn .comment_btn_submit {
+	display:block; position:absolute; top:-1px; bottom:-1px; right:-1px; width:58px; height:39px; background:#23ade3; border-radius:3px; font-size:13px;
+    line-height:100%; font-weight:600; text-align:center; color:#fff; 
+}
+.notice_view .comment_wrap .write_wrap .comment_btn .comment_btn_reset {
+	display:none; position:absolute; bottom:0px; left:0px; width:58px; height:37px; font-size:13px;
+    line-height:100%; font-weight:600; text-align:center; color:#b7b7b7; 
+}
+.notice_view .comment_wrap .write_wrap.focus .comment_btn {height:38px; border-top:1px solid #f2f2f2; }
+.notice_view .comment_wrap .write_wrap.focus .comment_btn .comment_btn_submit {top:auto; }
+.notice_view .comment_wrap .write_wrap.focus .comment_profile_area, .notice_view .comment_wrap .write_wrap.focus .comment_count_area,
+.notice_view .comment_wrap .write_wrap.focus .comment_count_area, .notice_view .comment_wrap .write_wrap.focus .comment_btn .comment_addition,
+.notice_view .comment_wrap .write_wrap.focus .comment_btn .comment_btn_reset {display:block; }
+
+.notice_view .comment_wrap .comment_list ul li {padding:15px 15px 10px; border-top:1px solid #f2f2f2; }
+.notice_view .comment_wrap .comment_list ul li:first-child {border-top:0; }
+.notice_view .comment_wrap .comment_list ul li .comment_info_area {font-size:0; margin-bottom:10px; }
+.notice_view .comment_wrap .comment_list ul li .comment_info_area .comment_info_name {display:inline-block; max-width:170px; height:12px; font-size:11px; font-weight:800; color:#666; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; }
+.notice_view .comment_wrap .comment_list ul li .comment_info_area .comment_info_date {display:inline-block; font-size:0; margin-left:7px; }
+.notice_view .comment_wrap .comment_list ul li .comment_info_area .comment_info_date span {display:inline-block; font-size:11px; font-weight:600; color:#999; }
+.notice_view .comment_wrap .comment_list ul li .comment_info_area .comment_info_date .time {background:url(../images/common/comment_list_line.gif) repeat-y 0 0; background-size:1px 8px; margin-left:6px; padding-left:8px; }
+.notice_view .comment_wrap .comment_list ul li .comment_con_area p {font-size:13px; font-weight:600; color:#1a1a1a; line-height:16px; }
+.notice_view .comment_wrap .comment_list ul li .comment_btn {text-align:right; margin-top:10px; }
+.notice_view .comment_wrap .comment_list ul li .comment_btn button {width:40px; }
+.notice_view .comment_wrap .comment_list .load_more {border-top:1px solid #f2f2f2; }*/ 
+
+.faq_list .select {padding:9px 10px; border-bottom:1px solid #e4e4e4; }
+.faq_list .list {margin-bottom:15px; }
+.faq_list .list ul li {border-bottom:1px solid #e4e4e4; }
+.faq_list .list ul > li a.oneDepth {display:block; background-size:14px 13px; overflow:hidden; margin:0 15px; padding: 15px 0; }
+.faq_list .list ul > li a.oneDepth p {float:left; display:block; width:94%; font-size:14px; font-weight:600; color:#666; line-height:17px; background:url(../images/common/faq_tit_b.gif) no-repeat left 3px; background-size:14px 13px; overflow:hidden; padding-left:20px; }
+.faq_list .list ul > li a.oneDepth .arr {float:right; display:inline-block; width:11px; height:7px; background:url(../images/common/faq_tit_arr.gif) no-repeat 0 0; background-size:cover; margin-top:6px; }
+.faq_list .list ul > li a.on .arr {background-position:0 -7px; }
+.faq_list .list ul .twoDepthBox {display:none; width:100%; padding:15px; border-top:1px dotted #e4e4e4; background:#f9faff; }
+.faq_list .list ul .twoDepthBox p {font-size:12px; font-weight:600; color:#808080; line-height:17px; }
+
+.customer_wrap .btn_wrap {padding:15px 10px; text-align:center; font-size:0; }
+.customer_wrap .btn_wrap a, .customer_wrap .btn_wrap button {display:inline-block; width:49.5%; margin-left:3px; }
+.customer_wrap .btn_wrap a:first-child, .customer_wrap .btn_wrap button:first-child {margin-left:0; }
+

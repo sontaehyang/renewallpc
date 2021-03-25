@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.policy.PolicyMapper">
+
+    <resultMap id="PolicyResult" type="saleson.shop.policy.domain.Policy">
+        <result column="POLICY_ID" property="policyId"/>
+        <result column="POLICY_TYPE" property="policyType"/>
+        <result column="CONTENT" property="content"/>
+        <result column="CREATED_DATE" property="createdDate"/>
+        <result column="CREATED_USER_ID" property="createdUserId"/>
+        <result column="TITLE" property="title"/>
+        <result column="EXHIBITION_STATUS" property="exhibitionStatus"/>
+        <result column="UPDATED_DATE" property="updatedDate"/>
+        <result column="UPDATED_LOGIN_ID" property="updatedLoginId"/>
+    </resultMap>
+
+    <sql id="policyVO">
+		OP.POLICY_ID,
+		OP.POLICY_TYPE,
+		OP.CONTENT,
+		OP.CREATED_DATE,
+		OP.CREATED_USER_ID,
+		OP.TITLE,
+		OP.EXHIBITION_STATUS,
+		OP.UPDATED_DATE,
+		OP.UPDATED_LOGIN_ID
+	</sql>
+
+    <sql id="sqlSearchWhere">
+        <where>
+            <if test='query != null and query != ""'>
+                <choose>
+                    <when test='where == "TITLE"'>
+                        AND OP.TITLE LIKE CONCAT('%', #{query}, '%')
+                    </when>
+
+
+                </choose>
+            </if>
+
+            <if test="policyType != null and policyType != ''">
+                AND POLICY_TYPE = #{policyType}
+            </if>
+
+            <if test="exhibitionStatus != null and exhibitionStatus != ''">
+                AND EXHIBITION_STATUS = #{exhibitionStatus}
+            </if>
+
+        </where>
+    </sql>
+
+    <insert id="insertPolicy" parameterType="saleson.shop.policy.domain.Policy">
+        INSERT INTO OP_POLICY (
+        POLICY_ID,
+        POLICY_TYPE,
+        CONTENT,
+        CREATED_DATE,
+        CREATED_USER_ID
+        ) VALUES (
+        #{policyId},
+        #{policyType},
+        #{content},
+        <include refid="CommonMapper.datetime" />,
+        #{createdUserId}
+        )
+    </insert>
+
+
+    <select id="getCountPolicyListByParam" parameterType="saleson.shop.policy.support.PolicyParam" resultType="Integer" >
+        <include refid="CommonMapper.paginationHeader" />
+        SELECT
+        COUNT(*)
+        FROM OP_POLICY OP
+        <include refid="sqlSearchWhere" />
+        ORDER BY CREATED_DATE DESC
+        <include refid="CommonMapper.paginationFooter" />
+    </select>
+
+    <select id="getPolicyListByParam" parameterType="saleson.shop.policy.support.PolicyParam" resultMap="PolicyResult" >
+        <include refid="CommonMapper.paginationHeader" />
+        SELECT
+        <include refid="policyVO" />
+        FROM OP_POLICY OP
+        <include refid="sqlSearchWhere" />
+        ORDER BY CREATED_DATE DESC
+        <include refid="CommonMapper.paginationFooter" />
+    </select>
+
+    <select id="getPolicyByParam" parameterType="saleson.shop.policy.support.PolicyParam" resultMap="PolicyResult" >
+        SELECT
+        <include refid="policyVO"/>
+        FROM (SELECT * FROM OP_POLICY WHERE POLICY_TYPE = '1' AND EXHIBITION_STATUS = 'Y' ORDER BY CREATED_DATE DESC ) OP
+        LIMIT 1
+
+    </select>
+
+
+    <select id="getCurrentPolicyByType" parameterType="String" resultMap="PolicyResult">
+        SELECT
+            POLICY_ID,
+            POLICY_TYPE,
+            CONTENT,
+            CREATED_DATE,
+            TITLE
+        FROM OP_POLICY
+        WHERE POLICY_TYPE = #{policyType}
+        AND EXHIBITION_STATUS = 'Y'
+        ORDER BY CREATED_DATE DESC
+        LIMIT 1
+	</select>
+
+    <select id="getPolicyByPolicyId" parameterType="Integer" resultMap="PolicyResult" >
+        SELECT
+        <include refid="policyVO"/>
+        FROM OP_POLICY OP
+        WHERE POLICY_ID = #{policyId}
+    </select>
+
+    <update id="updatePolicy" parameterType="saleson.shop.policy.domain.Policy">
+        UPDATE
+        OP_POLICY
+        SET
+        POLICY_TYPE = #{policyType},
+        TITLE = #{title},
+        CONTENT = #{content},
+        UPDATED_DATE = <include refid="CommonMapper.datetime"/>,
+        UPDATED_LOGIN_ID = #{updatedLoginId},
+        EXHIBITION_STATUS = #{exhibitionStatus}
+        WHERE
+        POLICY_ID = #{policyId}
+    </update>
+
+    <insert id="createPolicy" parameterType="saleson.shop.policy.domain.Policy">
+        INSERT INTO OP_POLICY (
+        POLICY_ID,
+        POLICY_TYPE,
+        CONTENT,
+        CREATED_DATE,
+        CREATED_USER_ID,
+        TITLE,
+        EXHIBITION_STATUS
+        ) VALUES (
+        #{policyId},
+        #{policyType},
+        #{content},
+        <include refid="CommonMapper.datetime" />,
+        #{createdUserId},
+        #{title},
+        #{exhibitionStatus}
+        )
+    </insert>
+
+    <select id="getPeriodListByParam" parameterType="saleson.shop.policy.domain.Policy" resultMap="PolicyResult">
+		SELECT
+			*
+		FROM
+			OP_POLICY
+		WHERE
+			POLICY_TYPE = #{policyType}
+        AND EXHIBITION_STATUS = 'Y'
+		ORDER BY CREATED_DATE DESC
+	</select>
+
+</mapper>

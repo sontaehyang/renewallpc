@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.featured.FeaturedMapper">
+
+	<resultMap id="FeaturedResult" type="saleson.shop.featured.domain.Featured">
+		<result property="featuredId" column="FEATURED_ID" />
+		<result property="featuredClass" column="FEATURED_CLASS" />
+		<result property="featuredType" column="FEATURED_TYPE" />
+		<result property="featuredUrl" column="FEATURED_URL" />
+		<result property="featuredCode" column="FEATURED_CODE" />
+		<result property="featuredName" column="FEATURED_NAME" />
+		<result property="featuredSimpleContent" column="FEATURED_SIMPLE_CONTENT" />
+		<result property="featuredContent" column="FEATURED_CONTENT" />
+		<result property="featuredImage" column="FEATURED_IMAGE" />
+		<result property="featuredImageMobile" column="FEATURED_IMAGE_MOBILE" />
+		<result property="thumbnailImage" column="THUMBNAIL_IMAGE" />
+		<result property="thumbnailImageMobile" column="THUMBNAIL_IMAGE_MOBILE" />
+		<result property="featuredFlag" column="FEATURED_FLAG" />
+		<result property="displayListFlag" column="DISPLAY_LIST_FLAG" />
+		<result property="accessType" column="ACCESS_TYPE" />
+		<result property="link" column="LINK" />
+		<result property="linkTargetFlag" column="LINK_TARGET_FLAG" />
+		<result property="linkRelFlag" column="LINK_REL_FLAG" />
+		<result property="ordering" column="ORDERING" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="listType" column="LIST_TYPE" />
+		<result property="prodState" column="PROD_STATE" />
+		<result property="privateType" column="PRIVATE_TYPE" />
+		<result property="startDate" column="START_DATE" />
+		<result property="endDate" column="END_DATE" />
+		<result property="startTime" column="START_TIME" />
+		<result property="endTime" column="END_TIME" />
+		<result property="progression" column="PROGRESSION" />
+		<result property="replyUsedFlag" column="REPLY_USED_FLAG" />
+		<result property="eventCode" column="EVENT_CODE" />
+
+		<association property="seo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="TITLE" />
+			<result property="keywords" column="KEYWORDS" />
+			<result property="description" column="DESCRIPTION" />
+			<result property="headerContents1" column="HEADER_CONTENTS1" />
+			<result property="headerContents2" column="HEADER_CONTENTS2" />
+			<result property="headerContents3" column="HEADER_CONTENTS3" />
+			<result property="themawordTitle" column="THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="THEMAWORD_DESCRIPTION" />
+		</association>
+	</resultMap>
+
+	<resultMap id="FeaturedAndItemResult" type="saleson.shop.featured.domain.Featured" extends="FeaturedResult">
+		<collection property="featuredItems" resultMap="FeaturedItemResult" />
+	</resultMap>
+
+	<resultMap id="FeaturedItemResult" type="saleson.shop.featured.support.FeaturedItem" extends="saleson.shop.item.ItemMapper.ItemResult">
+		<result property="featuredId" column="FEATURED_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="displayOrder" column="DISPLAY_ORDER" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="userDefGroup" column="USER_DEF_GROUP" />
+		<result property="userDefGroupOrder" column="USER_DEF_GROUP_ORDER" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+	</resultMap>
+
+	<resultMap id="FeaturedReplyResult" type="saleson.shop.featured.domain.FeaturedReply">
+		<id property="id" column="ID" />
+		<result property="featuredId" column="FEATURED_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="replyContent" column="REPLY_CONTENT" />
+		<result property="dataStatus" column="DATA_STATUS" />
+		<result property="created" column="CREATED" />
+		<result property="updated" column="UPDATED" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="updatedBy" column="UPDATED_BY" />
+	</resultMap>
+
+	<sql id="sqlFeaturedWhere">
+		<where>
+			<if test='featuredType != null and featuredType != ""'>
+				AND FEATURED_TYPE = #{featuredType}
+			</if>
+
+			<if test='featuredClass != null and featuredClass != ""'>
+				AND FEATURED_CLASS = #{featuredClass}
+			</if>
+
+			<if test='(query != null and query != "")'>
+				<choose>
+					<when test='where == "FEATURED_NAME"'>
+						AND FEATURED_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<when test='where == "FEATURED_URL"'>
+						AND FEATURED_URL LIKE CONCAT('%', #{query}, '%')
+					</when>
+				</choose>
+			</if>
+
+			<if test="featuredCodeChecked != '' and featuredCodeChecked != null">
+				AND ( FEATURED_CODE LIKE CONCAT('%', #{featuredCodeChecked}, '%') OR FEATURED_CODE = 'all' )
+			</if>
+
+			<if test='featuredUrl != null and featuredUrl != ""'>
+				AND FEATURED_URL = #{featuredUrl}
+			</if>
+
+			<if test='featuredFlag != null and featuredFlag != ""'>
+				AND FEATURED_FLAG = #{featuredFlag}
+			</if>
+
+			<if test='displayListFlag != null and displayListFlag != ""'>
+				AND DISPLAY_LIST_FLAG = #{displayListFlag}
+			</if>
+
+			<if test='progression != null and progression != ""'>
+				<if test='progression == "1"'>
+					AND (START_DATE IS NOT NULL OR START_DATE != '') AND CONCAT(START_DATE,START_TIME) > DATE_FORMAT(NOW(), '%Y%m%d%H')
+				</if>
+				<if test='progression == "2"'>
+					AND
+						(
+							(
+								(START_DATE IS NULL OR START_DATE = '') AND (END_DATE IS NULL OR END_DATE = '')
+							)
+
+							OR
+
+							(
+								START_DATE IS NOT NULL AND START_DATE != '' AND END_DATE IS NOT NULL AND END_DATE != ''
+								AND CONCAT(START_DATE,START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H') AND CONCAT(END_DATE,END_TIME) >= DATE_FORMAT(NOW(), '%Y%m%d%H')
+							)
+
+							OR
+
+							(
+								START_DATE IS NOT NULL AND START_DATE != '' AND END_DATE IS NULL OR END_DATE = '' AND CONCAT(START_DATE,START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+							)
+						)
+				</if>
+				<if test='progression == "3"'>
+					AND (END_DATE IS NOT NULL AND END_DATE != '') AND CONCAT(END_DATE,END_TIME) <![CDATA[<]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+				</if>
+			</if>
+
+			<if test='conditionType != null and conditionType != ""'>
+				<if test='conditionType == "FRONT_FEATURED"'>
+					AND
+					(
+	            		(
+	            			(START_DATE IS NULL OR START_DATE = '') AND (END_DATE IS NULL OR END_DATE = '')
+	            		)
+
+						OR
+
+						(
+							START_DATE IS NOT NULL AND START_DATE != '' AND END_DATE IS NOT NULL AND END_DATE != ''
+							AND CONCAT(START_DATE,START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H') AND CONCAT(END_DATE,END_TIME) >= DATE_FORMAT(NOW(), '%Y%m%d%H')
+						)
+
+						OR
+
+						(
+							START_DATE IS NOT NULL AND START_DATE != '' AND END_DATE IS NULL OR END_DATE = '' AND CONCAT(START_DATE,START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+						)
+					)
+				</if>
+				<if test='conditionType == "FRONT_EVENT"'>
+					AND CONCAT(START_DATE,START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+				</if>
+			</if>
+
+			<if test='privateTypes != null'>
+				AND PRIVATE_TYPE IN (
+					<foreach collection="privateTypes" item="privateType" index="i" open="" separator="," close="">
+						#{privateType}
+					</foreach>
+				)
+			</if>
+		</where>
+	</sql>
+
+	<select id="getFeaturedCountByParamForFront" parameterType="saleson.shop.featured.support.FeaturedParam" resultType="Integer">
+		SELECT COUNT(*)
+			FROM OP_FEATURED
+		<include refid="sqlFeaturedWhere" />
+	</select>
+
+	<select id="getFeaturedListByParamForFront" parameterType="saleson.shop.featured.support.FeaturedParam" resultMap="FeaturedResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT * FROM (
+				SELECT *
+					, CASE
+					WHEN
+						(START_DATE IS NOT NULL OR START_DATE != '') AND CONCAT(START_DATE,START_TIME) > DATE_FORMAT(NOW(), '%Y%m%d%H')
+					THEN '1'
+					WHEN
+						(
+							(
+								(START_DATE IS NULL OR START_DATE = '') AND (END_DATE IS NULL OR END_DATE = '')
+							)
+							OR
+							(
+								START_DATE IS NOT NULL AND START_DATE != '' AND END_DATE IS NOT NULL AND END_DATE != ''
+								AND CONCAT(START_DATE,START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H') AND CONCAT(END_DATE,END_TIME) >= DATE_FORMAT(NOW(), '%Y%m%d%H')
+							)
+							OR
+							(
+								START_DATE IS NOT NULL AND START_DATE != '' AND END_DATE IS NULL OR END_DATE = '' AND CONCAT(START_DATE,START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+							)
+						)
+					THEN '2'
+					WHEN
+						(END_DATE IS NOT NULL AND END_DATE != '') AND CONCAT(END_DATE,END_TIME) <![CDATA[<]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+					THEN '3'
+				END AS PROGRESSION
+				FROM OP_FEATURED
+				<include refid="sqlFeaturedWhere" />
+			) OP_FEATURED
+			ORDER BY
+				<if test='conditionType == "FRONT_EVENT"'>
+					PROGRESSION ASC,
+				</if>
+				ORDERING ASC, FEATURED_ID DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getFeaturedCountByParam" parameterType="saleson.shop.featured.support.FeaturedParam" resultType="Integer">
+		SELECT COUNT(*)	FROM OP_FEATURED
+		<include refid="sqlFeaturedWhere" />
+	</select>
+
+	<select id="getFeaturedListByParam" parameterType="saleson.shop.featured.support.FeaturedParam" resultMap="FeaturedResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT *
+			     , CASE
+			     		WHEN
+			     			(START_DATE IS NOT NULL OR START_DATE != '') AND CONCAT(START_DATE,START_TIME) > DATE_FORMAT(NOW(), '%Y%m%d%H')
+			     		THEN '1'
+			            WHEN
+			            	(
+			            		(
+			            			(START_DATE IS NULL OR START_DATE = '') AND (END_DATE IS NULL OR END_DATE = '')
+			            		)
+								OR
+								(
+									START_DATE IS NOT NULL AND START_DATE != '' AND END_DATE IS NOT NULL AND END_DATE != ''
+									AND CONCAT(START_DATE,START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H') AND CONCAT(END_DATE,END_TIME) >= DATE_FORMAT(NOW(), '%Y%m%d%H')
+								)
+								OR
+								(
+									START_DATE IS NOT NULL AND START_DATE != '' AND END_DATE IS NULL OR END_DATE = '' AND CONCAT(START_DATE,START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+								)
+							)
+						THEN '2'
+			            WHEN
+			            	(END_DATE IS NOT NULL AND END_DATE != '') AND CONCAT(END_DATE,END_TIME) <![CDATA[<]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+			            THEN '3'
+			       END AS PROGRESSION
+			FROM OP_FEATURED
+			<include refid="sqlFeaturedWhere" />
+
+			ORDER BY ORDERING ASC, FEATURED_ID DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getFeaturedById" parameterType="saleson.shop.featured.support.FeaturedParam" resultMap="FeaturedResult" >
+		SELECT *
+		FROM OP_FEATURED
+		<where>
+			<if test="featuredType !='' and featuredType != null">
+				AND FEATURED_TYPE = #{featuredType}
+			</if>
+			<if test="featuredId !='' and featuredId != null">
+		 		AND FEATURED_ID = #{featuredId}
+			</if>
+			<if test="featuredUrl !='' and featuredUrl != null">
+				AND FEATURED_URL = #{featuredUrl}
+			</if>
+			<if test='featuredFlag != null and featuredFlag != ""'>
+				AND FEATURED_FLAG = #{featuredFlag}
+			</if>
+			<if test='displayListFlag != null and displayListFlag != ""'>
+				AND DISPLAY_LIST_FLAG = #{displayListFlag}
+			</if>
+			<if test='privateTypes != null'>
+				AND PRIVATE_TYPE IN (
+					<foreach collection="privateTypes" item="privateType" index="i" open="" separator="," close="">
+						#{privateType}
+					</foreach>
+				)
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteFeaturedsById" parameterType="saleson.shop.featured.domain.Featured" >
+		DELETE FROM OP_FEATURED
+		WHERE FEATURED_ID IN
+		<foreach collection="featuredIds" item="ids" open="(" close=")" separator=",">
+			#{ids}
+		</foreach>
+	</delete>
+
+	<insert id="insertFeatured" parameterType="saleson.shop.featured.domain.Featured">
+		INSERT INTO OP_FEATURED (FEATURED_ID, FEATURED_CLASS, FEATURED_TYPE, FEATURED_URL, FEATURED_CODE, FEATURED_NAME, FEATURED_SIMPLE_CONTENT, FEATURED_CONTENT, FEATURED_IMAGE, FEATURED_IMAGE_MOBILE, THUMBNAIL_IMAGE, THUMBNAIL_IMAGE_MOBILE, FEATURED_FLAG, DISPLAY_LIST_FLAG, LINK, LINK_TARGET_FLAG, LINK_REL_FLAG, ORDERING, TITLE, KEYWORDS, DESCRIPTION, HEADER_CONTENTS1, THEMAWORD_TITLE, THEMAWORD_DESCRIPTION, CREATED_DATE, LIST_TYPE, PROD_STATE, PRIVATE_TYPE, START_DATE, START_TIME, END_DATE, END_TIME, REPLY_USED_FLAG)
+		VALUES (#{featuredId}, #{featuredClass}, #{featuredType}, #{featuredUrl}, #{featuredCode}, #{featuredName}, #{featuredSimpleContent}, #{featuredContent}, #{featuredImage}, #{featuredImageMobile}, #{thumbnailImage}, #{thumbnailImageMobile}, #{featuredFlag}, #{displayListFlag}, #{link}, #{linkTargetFlag}, #{linkRelFlag}, #{ordering}, #{seo.title}, #{seo.keywords}, #{seo.description}, #{seo.headerContents1}, #{seo.themawordTitle}, #{seo.themawordDescription}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{listType}, #{prodState}, #{privateType}, #{startDate}, #{startTime}, #{endDate}, #{endTime}, #{replyUsedFlag})
+	</insert>
+
+	<update id="updateFeaturedById" parameterType="saleson.shop.featured.domain.Featured">
+		UPDATE OP_FEATURED SET
+			FEATURED_CLASS = #{featuredClass},
+			FEATURED_CODE = #{featuredCode},
+			FEATURED_NAME = #{featuredName},
+			FEATURED_SIMPLE_CONTENT = #{featuredSimpleContent},
+			FEATURED_CONTENT = #{featuredContent},
+			FEATURED_FLAG = #{featuredFlag},
+			DISPLAY_LIST_FLAG = #{displayListFlag},
+			FEATURED_URL = #{featuredUrl},
+
+			<if test="featuredImage != null and featuredImage != ''">
+				FEATURED_IMAGE = #{featuredImage},
+			</if>
+
+			<if test="featuredImageMobile != null and featuredImageMobile != ''">
+				FEATURED_IMAGE_MOBILE = #{featuredImageMobile},
+			</if>
+
+			LINK = #{link},
+			LINK_TARGET_FLAG = #{linkTargetFlag},
+			LINK_REL_FLAG = #{linkRelFlag},
+
+			TITLE = #{seo.title},
+			KEYWORDS = #{seo.keywords},
+			DESCRIPTION = #{seo.description},
+			HEADER_CONTENTS1 = #{seo.headerContents1},
+			THEMAWORD_TITLE = #{seo.themawordTitle},
+			THEMAWORD_DESCRIPTION = #{seo.themawordDescription},
+			START_DATE = #{startDate},
+			START_TIME = #{startTime},
+			END_DATE = #{endDate},
+			END_TIME = #{endTime},
+			PROD_STATE = #{prodState},
+			PRIVATE_TYPE = #{privateType},
+			REPLY_USED_FLAG = #{replyUsedFlag}
+		WHERE FEATURED_ID = #{featuredId}
+	</update>
+
+	<update id="updateFeaturedImageById" parameterType="saleson.shop.featured.domain.Featured">
+		UPDATE OP_FEATURED SET
+			FEATURED_IMAGE = ''
+		WHERE FEATURED_ID = #{featuredId}
+	</update>
+
+	<update id="updateFeaturedOrderingAll">
+		UPDATE OP_FEATURED SET
+			ORDERING = ORDERING + 1
+	</update>
+
+	<select id="getFeaturedCountByUrl" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)	FROM OP_FEATURED
+		WHERE FEATURED_URL = #{featuredUrl}
+	</select>
+
+	<insert id="insertFeaturedItem" parameterType="saleson.shop.featured.support.FeaturedItem">
+		INSERT INTO OP_FEATURED_ITEM (FEATURED_ID, ITEM_ID, DISPLAY_ORDER, CREATED_DATE, USER_DEF_GROUP, USER_DEF_GROUP_ORDER)
+		VALUES (#{featuredId}, #{itemId}, #{displayOrder}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{userDefGroup}, #{userDefGroupOrder})
+	</insert>
+
+	<select id="getFeaturedItemListByParam" parameterType="saleson.shop.featured.support.FeaturedParam" resultMap="FeaturedItemResult">
+		SELECT
+			IC.CATEGORY_ID,
+			IC.CATEGORY_NAME,
+			<include refid="saleson.shop.item.ItemMapper.defaultItemColumns" />,
+			<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />,
+			FI.FEATURED_ID,
+			FI.DISPLAY_ORDER,
+			FI.USER_DEF_GROUP
+		FROM OP_FEATURED F
+			INNER JOIN OP_FEATURED_ITEM FI ON F.FEATURED_ID = FI.FEATURED_ID
+				AND F.FEATURED_ID = #{featuredId}
+			INNER JOIN OP_ITEM I ON FI.ITEM_ID = I.ITEM_ID
+			INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+			<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+
+			<!-- 카테고리 매핑이 두개이상일 경우 ORDERING으로 정렬 후 LIMIT 1 출력 2017-05-22_seungil.lee  -->
+			LEFT JOIN ( SELECT
+					IC.ITEM_ID, IC.CATEGORY_ID, C.CATEGORY_NAME
+					FROM OP_CATEGORY C
+					INNER JOIN OP_ITEM_CATEGORY IC ON C.CATEGORY_ID = IC.CATEGORY_ID AND C.CATEGORY_FLAG = 'Y'
+					ORDER BY IC.ORDERING ASC ) IC ON I.ITEM_ID = IC.ITEM_ID
+			<!-- LEFT JOIN (
+				SELECT IC.ITEM_ID, IC.CATEGORY_ID, C.CATEGORY_NAME
+				FROM OP_CATEGORY C
+					INNER JOIN OP_ITEM_CATEGORY IC ON C.CATEGORY_ID = IC.CATEGORY_ID AND C.CATEGORY_FLAG = 'Y' GROUP BY ITEM_ID
+			) IC ON I.ITEM_ID = IC.ITEM_ID -->
+
+		<where>
+			<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+			AND I.FRONT_DISPLAY_FLAG = 'Y'
+			AND S.STATUS_CODE = '2'
+		</where>
+		GROUP BY I.ITEM_ID
+		ORDER BY FI.DISPLAY_ORDER ASC
+	</select>
+
+	<select id="getUserDefGroupById" parameterType="saleson.shop.featured.support.FeaturedParam" resultType="string">
+		SELECT FI.USER_DEF_GROUP
+		FROM OP_FEATURED F
+			INNER JOIN OP_FEATURED_ITEM FI ON F.FEATURED_ID = FI.FEATURED_ID
+		<where>
+	 		F.FEATURED_ID = #{featuredId}
+			AND FI.USER_DEF_GROUP IS NOT NULL
+		</where>
+		GROUP BY FI.USER_DEF_GROUP
+		ORDER BY USER_DEF_GROUP_ORDER
+	</select>
+
+	<delete id="deleteFeaturedItemById" parameterType="saleson.shop.featured.domain.Featured">
+		DELETE FROM OP_FEATURED_ITEM
+		<where>
+			FEATURED_ID = #{featuredId}
+		</where>
+	</delete>
+
+	<select id="getItemCategoriesByParam" parameterType="saleson.shop.featured.support.FeaturedParam" resultMap="FeaturedItemResult">
+		SELECT
+			IFNULL(C.CATEGORY_NAME, '분류없음') CATEGORY_NAME, IFNULL(C.CATEGORY_ID, '-1') CATEGORY_ID
+		FROM OP_FEATURED_ITEM FI
+			INNER JOIN OP_ITEM I ON FI.FEATURED_ID=#{featuredId} AND FI.ITEM_ID = I.ITEM_ID
+			<!-- 카테고리 매핑이 두개이상일 경우 ORDERING으로 정렬 후 LIMIT 1 출력 2017-05-22_seungil.lee  -->
+			 LEFT JOIN (SELECT
+					IC.ITEM_ID, IC.CATEGORY_ID, C.CATEGORY_NAME
+					FROM OP_CATEGORY C
+					INNER JOIN OP_ITEM_CATEGORY IC ON C.CATEGORY_ID = IC.CATEGORY_ID AND C.CATEGORY_FLAG = 'Y'
+					ORDER BY IC.ORDERING ASC ) C ON C.ITEM_ID = I.ITEM_ID
+
+		<!-- LEFT JOIN OP_ITEM_CATEGORY IC ON I.ITEM_ID = IC.ITEM_ID
+		INNER JOIN OP_CATEGORY C ON IC.CATEGORY_ID = C.CATEGORY_ID -->
+		<!-- 카테고리 매핑이 두개이상일때 ITEM_ID 로 정렬 2017-05-26 yulsun.yoo -->
+		<!-- GROUP BY C.CATEGORY_ID -->
+		GROUP BY I.ITEM_ID
+	</select>
+
+	<select id="getThemeList" resultMap="FeaturedAndItemResult">
+		SELECT
+			F.FEATURED_ID,
+			F.FEATURED_NAME,
+			F.FEATURED_IMAGE,
+			F.FEATURED_IMAGE_MOBILE,
+			F.THUMBNAIL_IMAGE,
+			F.THUMBNAIL_IMAGE_MOBILE,
+			F.FEATURED_URL,
+			F.LINK,
+			I.ITEM_ID,
+			I.ITEM_USER_CODE,
+			I.ITEM_NAME,
+			I.SALE_PRICE,
+			I.ITEM_IMAGE,
+			<!-- I.ITEM_PREFIX -->
+		FROM OP_FEATURED F
+			INNER JOIN OP_FEATURED_ITEM FI ON F.FEATURED_ID = FI.FEATURED_ID
+			INNER JOIN OP_ITEM I ON FI.ITEM_ID = I.ITEM_ID
+			INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+		WHERE F.FEATURED_TYPE = '3'
+			AND F.DISPLAY_LIST_FLAG = 'Y'
+			AND F.FEATURED_FLAG = 'Y'
+			AND I.DISPLAY_FLAG = 'Y'
+			AND I.DATA_STATUS_CODE = '1'
+			AND S.STATUS_CODE = '2'
+		ORDER BY F.ORDERING ASC, FI.DISPLAY_ORDER ASC
+	</select>
+
+	<insert id="mergeEvent" parameterType="saleson.shop.featured.domain.Featured">
+		INSERT INTO
+			OP_FEATURED (FEATURED_ID, FEATURED_TYPE, FEATURED_URL, FEATURED_CODE, FEATURED_NAME, FEATURED_SIMPLE_CONTENT, FEATURED_CONTENT, FEATURED_IMAGE, THUMBNAIL_IMAGE, THUMBNAIL_IMAGE_MOBILE, FEATURED_FLAG, DISPLAY_LIST_FLAG, LINK, LINK_TARGET_FLAG, LINK_REL_FLAG, ORDERING, TITLE, KEYWORDS, DESCRIPTION, HEADER_CONTENTS1, THEMAWORD_TITLE, THEMAWORD_DESCRIPTION, CREATED_DATE, LIST_TYPE, PROD_STATE, PRIVATE_TYPE)
+		VALUES
+			(#{featuredId}, #{featuredType}, #{featuredUrl}, #{featuredCode}, #{featuredName}, #{featuredSimpleContent}, #{featuredContent}, #{featuredImage}, #{thumbnailImage}, #{thumbnailImageMobile}, #{featuredFlag}, #{displayListFlag}, #{link}, #{linkTargetFlag}, #{linkRelFlag}, #{ordering}, #{seo.title}, #{seo.keywords}, #{seo.description}, #{seo.headerContents1}, #{seo.themawordTitle}, #{seo.themawordDescription}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{listType}, #{prodState}, #{privateType})
+		ON DUPLICATE KEY
+			UPDATE
+			FEATURED_CODE = #{featuredCode},
+			FEATURED_NAME = #{featuredName},
+			FEATURED_SIMPLE_CONTENT = #{featuredSimpleContent},
+			FEATURED_CONTENT = #{featuredContent},
+			FEATURED_FLAG = #{featuredFlag},
+			DISPLAY_LIST_FLAG = #{displayListFlag},
+			FEATURED_URL = #{featuredUrl},
+			<if test="featuredImage != null and featuredImage != ''">
+				FEATURED_IMAGE = #{featuredImage},
+			</if>
+			<if test="thumbnailImage != null and thumbnailImage != ''">
+				THUMBNAIL_IMAGE = #{thumbnailImage},
+			</if>
+			<if test="featuredImageMobile != null and featuredImageMobile != ''">
+				FEATURED_IMAGE_MOBILE = #{featuredImageMobile},
+			</if>
+			<if test="thumbnailImageMobile != null and thumbnailImageMobile != ''">
+				THUMBNAIL_IMAGE_MOBILE = #{thumbnailImageMobile},
+			</if>
+			LINK = #{link},
+			LINK_TARGET_FLAG = #{linkTargetFlag},
+			LINK_REL_FLAG = #{linkRelFlag},
+			TITLE = #{seo.title},
+			KEYWORDS = #{seo.keywords},
+			DESCRIPTION = #{seo.description},
+			HEADER_CONTENTS1 = #{seo.headerContents1},
+			THEMAWORD_TITLE = #{seo.themawordTitle},
+			THEMAWORD_DESCRIPTION = #{seo.themawordDescription},
+			LIST_TYPE = #{listType},
+			PROD_STATE = #{prodState},
+			PRIVATE_TYPE = #{privateType}
+	</insert>
+
+	<select id="getFeaturedCntByType" parameterType="saleson.shop.featured.domain.Featured" resultType="int">
+		SELECT COUNT(*) cnt FROM OP_FEATURED WHERE FEATURED_TYPE =
+	</select>
+
+	<select id="getFeaturedReplyCountByParam" parameterType="saleson.shop.featured.support.FeaturedReplyParam" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			OP_FEATURED_REPLY
+	  	<include refid="featuredReplyWhere" />
+	</select>
+
+	<select id="getFeaturedReplyByParam" parameterType="saleson.shop.featured.support.FeaturedReplyParam" resultMap="FeaturedReplyResult">
+		<include refid="CommonMapper.paginationHeader" />
+		SELECT
+			ID,
+			FEATURED_ID,
+			USER_ID,
+			USER_NAME,
+			REPLY_CONTENT,
+			DATA_STATUS,
+			CREATED,
+			UPDATED,
+			CREATED_BY,
+			UPDATED_BY
+		FROM
+			OP_FEATURED_REPLY
+		<include refid="featuredReplyWhere" />
+		ORDER BY CREATED DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+
+	<sql id="featuredReplyWhere">
+		<where>
+			<if test="featuredId > 0">
+				FEATURED_ID = #{featuredId}
+			</if>
+			<if test="dataStatus != null and dataStatus != ''">
+				AND DATA_STATUS = #{dataStatus}
+			</if>
+			<if test="(query != null and  query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'USER_NAME'">
+						AND USER_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+
+					<when test="where == 'REPLY_CONTENT'">
+						AND REPLY_CONTENT LIKE CONCAT('%', #{query}, '%')
+					</when>
+				</choose>
+			</if>
+			<if test="id > 0">
+				AND id = #{id}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="insertFeaturedReply">
+		INSERT INTO OP_FEATURED_REPLY (ID, FEATURED_ID, USER_ID, USER_NAME, REPLY_CONTENT, DATA_STATUS, CREATED, CREATED_BY)
+		VALUES (#{id}, #{featuredId}, #{userId}, #{userName}, #{replyContent}, #{dataStatus}, <include refid="CommonMapper.datetime" /> ,#{createdBy})
+	</insert>
+
+	<update id="updateDisplayReply" parameterType="saleson.shop.featured.domain.FeaturedReply">
+		UPDATE
+			OP_FEATURED_REPLY
+		SET
+			DATA_STATUS = #{dataStatus},
+			UPDATED = <include refid="CommonMapper.datetime" />,
+			UPDATED_BY = #{updatedBy}
+
+	  	WHERE
+			ID IN
+			<foreach collection="ids" item="id" separator="," open="(" close=")">
+				#{id}
+			</foreach>
+	</update>
+
+	<update id="updateEventCode" parameterType="saleson.shop.featured.domain.Featured">
+		UPDATE OP_FEATURED
+		SET
+			EVENT_CODE = #{eventCode}
+		WHERE FEATURED_ID = #{featuredId}
+	</update>
+</mapper>

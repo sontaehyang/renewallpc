@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<title>세일즈온 모바일</title>
+	<link rel="shortcut icon" href="/content/mobile/images/favicon.ico">
+	<link rel="stylesheet" href="/content/mobile/css/reset.css">
+	<link rel="stylesheet" href="/content/mobile/css/swiper.css">
+	<link rel="stylesheet" href="/content/mobile/css/common.css">
+	<link rel="stylesheet" href="/content/mobile/css/category.css">
+	<link rel="stylesheet" href="/content/mobile/css/product.css">
+	<link rel="stylesheet" href="/content/mobile/css/event.css">
+	<link rel="stylesheet" href="/content/mobile/css/customer.css">
+	<link rel="stylesheet" href="/content/mobile/css/member.css">
+	<link rel="stylesheet" href="/content/mobile/css/order.css">
+	<link rel="stylesheet" href="/content/mobile/css/mypage.css">
+	<link rel="stylesheet" href="/content/mobile/css/info.css">
+	<link rel="stylesheet" href="/content/mobile/css/popup.css">
+	<link rel="stylesheet" href="/content/mobile/css/main.css">	
+	<link rel="stylesheet" href="../css/mc_guide.css">	
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<script src="/content/mobile/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/browserDetect.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/swiper.jquery.min.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/jquery.combostars.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/jquery.sticky.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/front.js" type="text/javascript"></script>    
+</head>
+<body>
+
+	<div id="wrap">
+		<div id="header">
+			<h1>세일즈온 모바일 HTML GUIDE</h1>
+			<div class="gnb">
+				<ul>
+					<li><a href="mc_button.html">버튼, 링크</a></li>
+					<li class="on"><a href="mc_label.html">라벨</a></li>
+					<li><a href="mc_form.html">폼</a></li>
+					<li><a href="mc_tab.html">탭</a></li>
+					<li><a href="mc_text.html">텍스트</a></li>
+					<li><a href="mc_accodian.html">아코디언</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- //header -->
+
+		<div id="container">
+			<div class="bs-docs-section">
+
+				<h2>상품라벨</h2>
+				<form class="bs-example">
+					<span class="label_basic"><img src="/content/mobile/images/common/label_basic.gif" alt="기본상품"></span>
+					<span class="label_push"><img src="/content/mobile/images/common/label_push.gif" alt="추천상품"></span>
+					<span class="label_new"><img src="/content/mobile/images/common/label_new.gif" alt="신상품"></span>
+					<span class="label_best"><img src="/content/mobile/images/common/label_best.gif" alt="BEST상품"></span>
+					<span class="label_popular"><img src="/content/mobile/images/common/label_popular.gif" alt="인기상품"></span>
+					<span class="soldout_ico"><img src="/content/mobile/images/common/product_soldout_ico.png" alt="SOLD OUT"></span>
+				</form>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"label_basic"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/mobile/images/common/label_basic.gif"</span> <span class="na">alt=</span><span class="s">"기본상품"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"label_push"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/mobile/images/common/label_push.gif"</span> <span class="na">alt=</span><span class="s">"추천상품"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"label_new"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/mobile/images/common/label_new.gif"</span> <span class="na">alt=</span><span class="s">"신상품"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"label_best"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/mobile/images/common/label_best.gif"</span> <span class="na">alt=</span><span class="s">"BEST상품"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"label_popular"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/mobile/images/common/label_popular.gif"</span> <span class="na">alt=</span><span class="s">"인기상품"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"soldout_ico"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/mobile/images/common/product_soldout_ico.png"</span> <span class="na">alt=</span><span class="s">"SOLD OUT"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+					</code></pre>
+				</figure>
+
+				<h2>일반라벨</h2>
+				<div class="bs-example">
+					<span class="status_off">답변대기</span>
+					<span class="status_on">답변완료</span>
+				</div>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"status_off"</span><span class="nt">&gt;</span>답변대기<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"status_on"</span><span class="nt">&gt;</span>답변완료<span class="nt">&lt;/span&gt;</span>
+					</code></pre>
+				</figure>
+
+			</div>
+			<!-- //bs-docs-section -->
+		</div>
+		<!-- //#container -->
+
+	</div>
+	<!-- //#wrap -->
+
+</body>
+</html>

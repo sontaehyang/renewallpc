@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.zipcode.ZipcodeMapper">
+	
+	<resultMap id="ZipcodeResult" type="saleson.shop.zipcode.domain.Zipcode">
+		<result property="uid" column="uid" />
+		<result property="zipcode" column="zipcode" />
+		<result property="c1" column="c1" />
+		<result property="c2" column="c2" />
+		<result property="c3" column="c3" />
+		<result property="c4" column="c4" />
+		<result property="c5" column="c5" />
+		<result property="c6" column="c6" />
+		<result property="c7" column="c7" />
+		<result property="c8" column="c8" />
+		<result property="c9" column="c9" />
+		<result property="c10" column="c10" />
+		<result property="c11" column="c11" />
+		<result property="c12" column="c12" />
+	</resultMap>
+	
+	
+	<select id="getZipcode" parameterType="saleson.shop.zipcode.domain.Zipcode" resultMap="ZipcodeResult" >
+		SELECT 
+			uid, 
+			zipcode, 
+			c1, 
+			c2, 
+			c3, 
+			c4, 
+			c5, 
+			c6, 
+			c7, 
+			c8, 
+			c9, 
+			c10, 
+			c11, 
+			c12
+		FROM OP_ZIPCODE 
+ 		WHERE zipcode = #{zipcode}
+	</select>
+
+	<select id="getDodobuhyunList" resultType="String">
+		SELECT DISTINCT c4 FROM OP_ZIPCODE
+	</select>
+</mapper>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jp.worldjb.web.starpoint.StarPointMapper">
+
+	<resultMap id="StarPointResult" type="jp.worldjb.web.starpoint.domain.StarPoint">
+		<result property="starPointId" column="STAR_POINT_ID" />
+		<result property="savedType" column="SAVED_TYPE" />
+		<result property="savedYear" column="SAVED_YEAR" />
+		<result property="savedMonth" column="SAVED_MONTH" />
+		<result property="savedStarPoint" column="SAVED_STAR_POINT" />
+		<result property="starPoint" column="STAR_POINT" />
+		<result property="reason" column="REASON" />
+		<result property="userId" column="USER_ID" />
+		<result property="managerUserId" column="MANAGER_USER_ID" />
+		<result property="creationDate" column="CREATION_DATE" />
+	</resultMap>
+	
+	<resultMap id="StarPointRegularResult" type="jp.worldjb.web.starpoint.domain.StarPoint">
+		<result property="savedYear" column="SAVED_YEAR" />
+		<result property="savedMonth" column="SAVED_MONTH" />
+		<result property="savedStarPoint" column="SAVED_STAR_POINT" />
+	</resultMap>
+	
+	
+	<resultMap id="StarPointUsedResult" type="jp.worldjb.web.starpoint.domain.StarPointUsed">
+		<result property="starPointUsedId" column="STAR_POINT_USED_ID" />
+		<result property="starPointId" column="STAR_POINT_ID" />
+		<result property="usedType" column="USED_TYPE" />
+		<result property="starPoint" column="STAR_POINT" />
+		<result property="details" column="DETAILS" />
+		<result property="creationDate" column="CREATION_DATE" />
+	</resultMap>
+	
+	
+	<resultMap id="StarPointPriceResult" type="jp.worldjb.web.starpoint.domain.StarPointPrice">
+		<result property="starPointPriceId" column="STAR_POINT_PRICE_ID" />
+		<result property="unitPrice" column="UNIT_PRICE" />
+		<result property="userId" column="USER_ID" />
+		<result property="username" column="USERNAME" />
+		<result property="creationDate" column="CREATION_DATE" />
+	</resultMap>
+	
+	
+	<select id="getStarPointUseAble" parameterType="Integer" resultType="Integer" >
+		SELECT IFNULL(SUM(STAR_POINT),0) AS STAR_POINT FROM OP_STAR_POINT
+		WHERE USER_ID = #{userId}
+		<![CDATA[
+			AND STAR_POINT > 0
+		]]>	
+	</select>
+	
+	
+	<select id="getStarPoint" parameterType="Integer" resultMap="StarPointResult" >
+		SELECT * FROM OP_STAR_POINT
+		WHERE USER_ID = #{userId}
+		<![CDATA[
+			AND STAR_POINT > 0
+		]]>	
+			
+	</select>
+	
+	<select id="getCurrentYearUseStarPointByUserId" parameterType="Integer" resultType="Integer" >
+		SELECT IFNULL(SUM(SPU.STAR_POINT),0) AS STAR_POINT FROM OP_STAR_POINT SP
+		  INNER JOIN OP_STAR_POINT_USED SPU ON SP.STAR_POINT_ID = SPU.STAR_POINT_ID
+		WHERE SP.USER_ID = #{userId}
+		  AND SPU.USED_TYPE = 1
+		  AND YEAR(SPU.CREATION_DATE) = YEAR(NOW())
+	</select>
+	
+	<select id="getExtinctionExpectingStarPointByUserId" parameterType="Integer" resultMap="StarPointRegularResult">
+	
+		SELECT 
+		    IFNULL(SUM(STAR_POINT),0) SAVED_STAR_POINT, 
+		    MONTH(LAST_DAY(NOW())) SAVED_MONTH, 
+		    YEAR(DATE_ADD(LAST_DAY(NOW()), INTERVAL '-1' YEAR)) SAVED_YEAR 
+		FROM OP_STAR_POINT 
+		WHERE USER_ID = #{userId} 
+			<![CDATA[
+			    AND STAR_POINT > 0 
+			    AND SAVED_YEAR < YEAR(NOW()) 
+			    AND SAVED_MONTH <= MONTH(NOW())
+			    AND DATE_FORMAT(CREATION_DATE,'%Y-%m-%d') <= DATE_FORMAT(LAST_DAY(DATE_ADD(NOW(), INTERVAL '-1' YEAR)),'%Y-%m-%d')
+		    ]]>	
+	</select>
+	
+	<select id="getStarPointReqularList" parameterType="Integer" resultMap="StarPointRegularResult" >
+		SELECT #{savedYear} AS SAVED_YEAR, MON.SAVED_MONTH, IFNULL(SUM_POINT, 0) AS SAVED_STAR_POINT FROM (
+		    SELECT '01' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '02' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '03' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '04' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '05' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '06' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '07' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '08' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '09' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '10' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '11' AS SAVED_MONTH
+		    UNION ALL
+		    SELECT '12' AS SAVED_MONTH
+		) MON LEFT JOIN (
+		    SELECT SAVED_MONTH, SUM(SAVED_STAR_POINT) AS SUM_POINT FROM OP_STAR_POINT
+		    WHERE SAVED_YEAR = #{savedYear} AND SAVED_TYPE = 1
+		    GROUP BY SAVED_YEAR, SAVED_MONTH
+		) SP ON MON.SAVED_MONTH = SP.SAVED_MONTH
+	</select>
+	
+	
+	
+	
+	
+	
+	<insert id="insertStarPoint" parameterType="jp.worldjb.web.starpoint.domain.StarPoint">
+		INSERT INTO OP_STAR_POINT (STAR_POINT_ID, SAVED_TYPE, SAVED_YEAR, SAVED_MONTH, SAVED_STAR_POINT, STAR_POINT, REASON, USER_ID, MANAGER_USER_ID, CREATION_DATE)
+		VALUES (#{starPointId}, #{savedType}, #{savedYear}, #{savedMonth}, #{savedStarPoint}, #{starPoint}, #{reason}, #{userId}, #{managerUserId}, NOW())
+	</insert>
+	
+	
+	<insert id="insertStarPointRegular">
+		INSERT INTO OP_STAR_POINT (STAR_POINT_ID, SAVED_TYPE, SAVED_YEAR, SAVED_MONTH, SAVED_STAR_POINT, STAR_POINT, REASON, USER_ID, MANAGER_USER_ID, CREATION_DATE)
+		
+		SELECT 
+			(ROWNUM + STAR_POINT_ID) AS STAR_POINT_ID,  
+		  	SAVED_TYPE,
+		  	SAVED_YEAR, 
+		  	SAVED_MONTH,
+		  	SAVED_STAR_POINT,
+		  	STAR_POINT,
+		  	REASON,
+		  	USER_ID,
+		  	MANAGER_USER_ID,
+		  	CREATION_DATE 
+		
+		FROM (
+			  	SELECT @RNUM := @RNUM + 1 AS ROWNUM, B.*, A.* FROM (
+			    	SELECT 1 as SAVED_TYPE, #{savedYear} AS SAVED_YEAR, #{savedMonth} AS SAVED_MONTH, 1 as SAVED_STAR_POINT, 1 as STAR_POINT, CONCAT(#{savedYear}, '년 ', #{savedMonth}, '월 희망 일괄지급') AS REASON, u.USER_ID, #{managerUserId} AS MANAGER_USER_ID, NOW() AS CREATION_DATE
+			    	FROM OP_USER u INNER JOIN OP_USER_ROLE ur ON u.USER_ID = ur.USER_ID
+			    	WHERE 
+			      		(ur.AUTHORITY = 'ROLE_KB' OR ur.AUTHORITY = 'ROLE_KB_MANAGER' OR ur.AUTHORITY = 'ROLE_KB_SUPERVISOR') 
+			      		AND u.STATUS_CODE = '9'
+			      	GROUP BY USER_ID
+			  	) A, 
+			  	(SELECT IFNULL(MAX(STAR_POINT_ID),0) AS STAR_POINT_ID FROM OP_STAR_POINT) B,   
+			  	(SELECT @RNUM := 0 ) R
+			) Z
+			
+		<selectKey resultType="int" keyProperty="starPointId" order="AFTER">  
+			SELECT MAX(STAR_POINT_ID) AS starPointId FROM OP_STAR_POINT
+		</selectKey>
+	</insert>
+	
+	
+	
+	<update id="updateStarPoint" parameterType="jp.worldjb.web.starpoint.domain.StarPoint">
+		UPDATE OP_STAR_POINT SET
+			SAVED_TYPE = #{savedType}, 
+			SAVED_STAR_POINT = #{savedStarPoint}, 
+			STAR_POINT = #{starPoint}, 
+			REASON = #{reason}, 
+			USER_ID = #{userId}, 
+			MANAGER_USER_ID = #{managerUserId}, 
+			CREATION_DATE = #{creationDate}
+		WHERE STAR_POINT_ID = ${starPointId}
+	</update>	
+	
+	
+	<!-- KB_USER 테이블에 사용 가능한 별포인트(STAR_POINT)를 업데이트 한다. -->
+	<update id="updateStarPointInKbUser" parameterType="String">
+		UPDATE 
+		OP_KB_USER KU 
+		    INNER JOIN OP_USER U ON KU.EMPNUM = U.LOGIN_ID
+		    INNER JOIN (
+		      SELECT USER_ID, SUM(STAR_POINT) AS AVAILABLE_STAR_POINT 
+		      FROM OP_STAR_POINT GROUP BY USER_ID 
+		    ) SP ON U.USER_ID = SP.USER_ID
+		
+		SET
+		    KU.AVAILABLE_STAR_POINT = SP.AVAILABLE_STAR_POINT
+		
+		<if test="value > 0">
+		WHERE U.USER_ID = #{value}
+		</if>    
+	</update>
+	
+	
+	
+	
+	
+	<update id="updateStarPointUsedSubtraction" parameterType="jp.worldjb.web.starpoint.domain.StarPointUsed">
+		UPDATE OP_STAR_POINT SET
+			STAR_POINT = #{starPoint} 
+		WHERE STAR_POINT_ID = ${starPointId}
+	</update>
+	
+	
+	<update id="updateExpiredStarPoint">
+		UPDATE OP_STAR_POINT
+		SET STAR_POINT = 0
+		<![CDATA[
+			WHERE CREATION_DATE < DATE_ADD(NOW(), INTERVAL '-1' YEAR)
+		 ]]>
+	</update>
+	
+	<update id="updateStarPointUsed" parameterType="jp.worldjb.web.starpoint.domain.StarPointUsed">
+		UPDATE OP_STAR_POINT_USED SET
+			STAR_POINT_ID = #{starPointId}, 
+			USED_TYPE = #{usedType}, 
+			STAR_POINT = #{starPoint}, 
+			DETAILS = #{details}, 
+			CREATION_DATE = #{creationDate}
+		WHERE STAR_POINT_USED_ID = ${starPointUsedId}
+	</update>
+	
+	<update id="updateExpiredStarPointUsedSequence">
+		UPDATE OP_SEQUENCE 
+		SET SEQUENCE_ID = (SELECT IFNULL(MAX(STAR_POINT_USED_ID), 0) + 1 FROM OP_STAR_POINT_USED) 
+		WHERE SEQUENCE_KEY = 'OP_STAR_POINT_USED'
+	</update>
+	
+	
+	<insert id="insertStarPointUsed" parameterType="jp.worldjb.web.starpoint.domain.StarPointUsed">
+		INSERT INTO OP_STAR_POINT_USED (STAR_POINT_USED_ID, STAR_POINT_ID, USED_TYPE, STAR_POINT, DETAILS, CREATION_DATE)
+		VALUES (#{starPointUsedId}, #{starPointId}, #{usedType}, #{starPoint}, #{details}, #{creationDate})
+	</insert>
+	
+	<insert id="insertExpiredStarPoint">
+		INSERT INTO OP_STAR_POINT_USED (STAR_POINT_USED_ID, STAR_POINT_ID, USED_TYPE, STAR_POINT, DETAILS, CREATION_DATE)
+		
+		SELECT 
+		    ROWNUM + MAX_ID AS STAR_POINT_USED_ID, 
+		    STAR_POINT_ID, 
+		    '2' AS USED_TYPE,
+		    STAR_POINT,
+		    '별포인트 사용기한(1년) 만료로 인한 소멸' AS DETAILS,
+		    NOW() CREATION_DATE
+		FROM (
+		    SELECT @RNUM := @RNUM + 1 ROWNUM, S.MAX_ID,  T.* FROM (
+		      	SELECT * FROM OP_STAR_POINT
+		      	<![CDATA[
+		        	WHERE CREATION_DATE < DATE_ADD(NOW(), INTERVAL '-1' YEAR)
+				]]>
+						AND STAR_POINT > 0
+		    ) T,(SELECT @RNUM :=0) R, (SELECT MAX(SEQUENCE_ID) AS MAX_ID FROM OP_SEQUENCE WHERE SEQUENCE_KEY = 'OP_STAR_POINT_USED') AS S
+		) Z
+	</insert>
+
+
+	<!-- 희망별 단가 조회 -->
+	<select id="getCurrentStarPointPrice" resultMap="StarPointPriceResult">
+		SELECT * FROM OP_STAR_POINT_PRICE
+		ORDER BY STAR_POINT_PRICE_ID DESC LIMIT 1
+	
+	</select>
+	
+	
+	<!-- 희망별 단가 카운트 -->
+	<select id="getStarPointPriceCount" parameterType="SearchParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_STAR_POINT_PRICE
+		ORDER BY STAR_POINT_PRICE_ID DESC LIMIT 1
+	</select>
+	
+	
+	<!-- 희망별 단가 목록 -->
+	<select id="getStarPointPriceList" parameterType="SearchParam" resultMap="StarPointPriceResult">
+		SELECT * FROM OP_STAR_POINT_PRICE
+		ORDER BY STAR_POINT_PRICE_ID DESC LIMIT #{pagination.startRownum}, #{pagination.endRownum}
+	</select>
+	
+
+	<!-- 희망별 단가 등록 -->
+	<insert id="insertStarPointPrice" parameterType="jp.worldjb.web.starpoint.domain.StarPointPrice">
+		INSERT INTO OP_STAR_POINT_PRICE (STAR_POINT_PRICE_ID, UNIT_PRICE, USER_ID, USERNAME, CREATION_DATE)
+		VALUES (#{starPointPriceId}, #{unitPrice}, #{userId}, #{username}, NOW())
+	</insert>
+	
+</mapper>

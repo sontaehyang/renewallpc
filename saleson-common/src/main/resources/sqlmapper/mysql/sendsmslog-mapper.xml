@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.sendsmslog.SendSmsLogMapper">
+	<resultMap id="SendSmsLogResult" type="saleson.shop.sendsmslog.domain.SendSmsLog">
+		<result property="sendSmsLogId" column="SEND_SMS_LOG_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="sendTelNumber" column="SEND_TEL_NUMBER" />
+		<result property="receiveTelNumber" column="RECEIVE_TEL_NUMBER" />
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="content" column="CONTENT" />
+		<result property="sendType" column="SEND_TYPE" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<sql id="sqlSendSmsLogWhere">
+		<where>
+		
+			<if test="sendType != null and sendType != ''">
+				AND (OSSL.SEND_TYPE = #{sendType} OR OSSL.SEND_TYPE = CONCAT('hpmail-', #{sendType}))
+			</if>
+			
+			<if test="userId != null and userId != ''">
+				AND OSSL.USER_ID = #{userId}
+			</if>
+			
+			<if test="orderStatus != null and orderStatus != ''">
+				AND OSSL.ORDER_STATUS = #{orderStatus}
+			</if>
+		
+			<if test='searchStartDate != null and searchStartDate != ""'>
+				AND OSSL.CREATED_DATE >= CONCAT(#{searchStartDate}, "000000") 
+			</if>
+			
+			<if test='searchEndDate != null and searchEndDate != ""'>
+				AND OSSL.CREATED_DATE <![CDATA[<=]]> CONCAT(#{searchEndDate}, "235959") 
+			</if>
+		
+			<if test="(query != null and query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'CONTENT'">
+						AND OSSL.CONTENT LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<otherwise>
+						AND OSSL.ORDER_CODE = #{query}
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<insert id="insertSendSmsLog" parameterType="saleson.shop.sendsmslog.domain.SendSmsLog">
+		INSERT INTO OP_SEND_SMS_LOG (ORDER_CODE, USER_ID, SEND_TEL_NUMBER, RECEIVE_TEL_NUMBER, ORDER_STATUS, CONTENT, SEND_TYPE, CREATED_DATE)
+		VALUES (#{orderCode}, #{userId}, #{sendTelNumber}, #{receiveTelNumber}, #{orderStatus}, #{content}, #{sendType}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<select id="getSendSmsLogCount" parameterType="saleson.shop.sendsmslog.support.SendSmsLogParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_SEND_SMS_LOG OSSL
+		<include refid="sqlSendSmsLogWhere" />
+	</select>
+	
+	<select id="getSendSmsLogById" parameterType="Integer" resultMap="SendSmsLogResult">
+		SELECT *
+		FROM OP_SEND_SMS_LOG
+		WHERE SEND_SMS_LOG_ID = #{value} 
+	</select>
+	
+	<select id="getSendSmsLogList" parameterType="saleson.shop.sendsmslog.support.SendSmsLogParam" resultMap="SendSmsLogResult">
+		SELECT PAGING.*, U.LOGIN_ID AS USER_LOGIN_ID FROM (
+			<include refid="CommonMapper.paginationHeader" />
+			SELECT *
+			FROM OP_SEND_SMS_LOG OSSL
+			<include refid="sqlSendSmsLogWhere" />
+			ORDER BY OSSL.SEND_SMS_LOG_ID DESC
+			<include refid="CommonMapper.paginationFooter" />
+		) PAGING LEFT JOIN OP_USER U ON PAGING.USER_ID = U.USER_ID
+	</select>
+	
+</mapper>

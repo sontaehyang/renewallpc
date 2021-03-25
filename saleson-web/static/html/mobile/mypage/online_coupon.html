@@ -1,0 +1,202 @@
+<? include "../include/headHtml.html" ?>
+<body>
+	<div id="wrap">	
+		<!-- header : s -->
+		<? include "../include/header.html" ?>
+		<div class="title">
+			<h2>쿠폰 조회</h2>
+			<span class="his_back"><a href="#" class="ir_pm">뒤로가기</a></span>
+		</div>
+		<!-- //title -->		
+		<!-- 내용 : s -->
+		<div class="con onCoupon_wrap">
+			<!-- 사용가능 쿠폰 : s -->				
+			<div class="mypage_wrap">
+				<div class="tab_area">
+					<ul class="tab_list02">
+						<li class="on"><a href="#">사용가능 쿠폰(<span>12</span>)</a></li>
+						<li><a href="#">사용한 쿠폰(<span>5</span>)</a></li>
+					</ul>
+				</div>
+				<!-- //tab_area -->
+				<div class="tab_container">
+					<!-- 쿠폰이 없을때 : s -->
+					<div class="tab_con down_list">
+						<div class="coupon_none">
+							<p>사용가능 쿠폰이 없습니다.</p>
+						</div>
+					</div>
+					<!-- 쿠폰이 없을때 : e -->
+					<!-- 쿠폰이 있을때 : s -->
+					<div class="tab_con down_list">
+						<ul class="coupon_list">
+							<li>
+								<div class="img">
+									<p class="coupon coupon_blue"><span>5</span>%</p>
+									<a href="#" class="btn_st6"><span>쿠폰다운</span></a>
+								</div>
+								<div class="txt">
+									<p class="coupon_desc">1만원 이상 상품 사용가능</p>
+									<p class="coupon_name">세일즈온 5% 더블쿠폰</p>
+									<p class="coupon_date">유효기간 없음</p>
+								</div>
+							</li>
+							<li>
+								<div class="img">
+									<p class="coupon coupon_blue"><span>100,000</span></p>
+									<a href="#" class="btn_st6"><span>쿠폰다운</span></a>
+								</div>
+								<div class="txt">
+									<p class="coupon_desc">적용대상 제한없음</p>
+									<p class="coupon_name">첫! 구매 고객 1만원 할인 특별 감사쿠폰(11월)</p>
+									<p class="coupon_date">2016.02.09~2016.12.31</p>
+								</div>
+							</li>
+							<li>
+								<div class="img">
+									<p class="coupon coupon_blue"><span>5,000</span></p>
+									<a href="#" class="btn_st6"><span>쿠폰다운</span></a>
+								</div>
+								<div class="txt">
+									<p class="coupon_desc">10원 이상 상품 사용가능</p>
+									<p class="coupon_name">세일즈온 앱 설치 감사 쿠폰</p>
+									<p class="coupon_date">2016.02.09~2016.12.31</p>
+								</div>
+							</li>
+							<li>
+								<div class="img">
+									<p class="coupon coupon_green"><span>15</span>%</p>
+									<a href="#" class="btn_st6"><span>쿠폰다운</span></a>
+								</div>
+								<div class="txt">
+									<p class="coupon_desc">적용대상 제한없음</p>
+									<p class="coupon_name">매일매일 출첵쿠폰</p>
+									<p class="coupon_date">2016.11.14</p>
+								</div>
+							</li>
+							<li>
+								<div class="img">
+									<p class="coupon coupon_red"><span>무료배송</span></p>
+									<a href="#" class="btn_st6"><span>쿠폰다운</span></a>
+								</div>
+								<div class="txt">
+									<p class="coupon_desc">핫딜 상품 사용가능</p>
+									<p class="coupon_name">장바구니 전용 쿠폰(11월)</p>
+									<p class="coupon_date">2016.11.01~2016.11.30</p>
+								</div>
+							</li>
+						</ul>
+						<dl class="caution">
+							<dt>쿠폰 이용안내</dt>
+							<dd>쿠폰은 다운받은 직후에 사용가능합니다.</dd>
+							<dd>결제 시 쿠폰적용을 확인하신 후 바로 결제하실 수 있습니다.</dd>
+						</dl>
+						<div class="load_more"><button type="button" class="btn_st2"><span>더보기</span></button></div>
+					</div>
+					<!-- //down_list -->	
+					<!-- 쿠폰이 있을때 : e -->			
+				</div>
+				<!-- //tab_container -->				
+			</div>
+			<!-- 사용가능 쿠폰 : e -->
+			<!-- 사용한 쿠폰 : s -->
+			<div class="mypage_wrap">
+				<div class="tab_area">
+					<ul class="tab_list02">
+						<li><a href="#">사용가능 쿠폰(<span>12</span>)</a></li>
+						<li class="on"><a href="#">사용한 쿠폰(<span>5</span>)</a></li>
+					</ul>
+				</div>
+				<!-- //tab_area -->
+				<div class="tab_container">
+					<!-- 쿠폰이 없을 때 : s -->
+					<div class="tab_con use_list">
+						<div class="coupon_none">
+							<p>사용한 쿠폰이 없습니다.</p>
+						</div>
+					</div>
+					<!-- 쿠폰이 없을 때 : e -->
+					<!-- 쿠폰이 있을 때 : s -->
+					<div class="tab_con use_list">
+						<ul class="coupon_list">
+							<li>
+								<div class="img">
+									<p class="coupon coupon_blue"><span>5</span>%</p>
+								</div>
+								<div class="txt">
+									<p class="coupon_desc">1만원 이상 상품 사용가능</p>
+									<p class="coupon_name">세일즈온 5% 더블쿠폰</p>
+									<p class="coupon_date">유효기간 없음</p>
+									<span class="all">전체상품</span>
+								</div>
+							</li>
+							<li>
+								<div class="img">
+									<p class="coupon coupon_blue"><span>100,000</span></p>
+								</div>
+								<div class="txt">
+									<p class="coupon_desc">적용대상 제한없음</p>
+									<p class="coupon_name">첫! 구매 고객 1만원 할인 특별 감사쿠폰(11월)</p>
+									<p class="coupon_date">2016.02.09~2016.12.31</p>
+									<span class="all">전체상품</span>
+								</div>
+							</li>
+							<li>
+								<div class="img">
+									<p class="coupon coupon_blue"><span>5,000</span></p>
+								</div>
+								<div class="txt">
+									<p class="coupon_desc">10원 이상 상품 사용가능</p>
+									<p class="coupon_name">세일즈온 앱 설치 감사 쿠폰</p>
+									<p class="coupon_date">2016.02.09~2016.12.31</p>
+									<a href="#" class="part">적용상품보기</a>
+								</div>
+							</li>
+							<li>
+								<div class="img">
+									<p class="coupon coupon_green"><span>15</span>%</p>
+								</div>
+								<div class="txt">
+									<p class="coupon_desc">적용대상 제한없음</p>
+									<p class="coupon_name">매일매일 출첵쿠폰</p>
+									<p class="coupon_date">2016.11.14</p>
+									<span class="all">전체상품</span>
+								</div>
+							</li>
+							<li>
+								<div class="img">
+									<p class="coupon coupon_red"><span>무료배송</span></p>
+								</div>
+								<div class="txt">
+									<p class="coupon_desc">핫딜 상품 사용가능</p>
+									<p class="coupon_name">장바구니 전용 쿠폰(11월)</p>
+									<p class="coupon_date">2016.11.01~2016.11.30</p>
+									<a href="#" class="part">적용상품보기</a>
+								</div>
+							</li>
+						</ul>
+						<dl class="caution">
+							<dt>쿠폰 이용안내</dt>
+							<dd>쿠폰은 다운받은 직후에 사용가능합니다.</dd>
+							<dd>결제 시 쿠폰적용을 확인하신 후 바로 결제하실 수 있습니다.</dd>
+						</dl>
+						<div class="load_more"><button type="button" class="btn_st2"><span>더보기</span></button></div>
+					</div>
+					<!-- //use_list -->		
+					<!-- 쿠폰이 있을 때 : e -->						
+				</div>
+				<!-- //tab_container -->				
+			</div>
+			<!-- 사용한 쿠폰 : e -->
+		</div>
+		<!-- 내용 : e -->		
+	</div>
+	<!-- //#container -->
+	<!-- container : e -->	
+	<!-- footer : s -->
+	<? include "../include/footer.html" ?>
+	<!-- footer : e -->	
+</div>
+<!-- //#wrap -->
+</body>
+</html>

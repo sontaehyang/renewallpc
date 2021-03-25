@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.batch.BatchExecutionMapper">
+    <insert id="mergeBatchExecution" parameterType="saleson.common.scheduling.domain.BatchExecution">
+
+		WITH UPSERT AS (
+		    UPDATE OP_BATCH_EXECUTION
+		    SET
+		        START_TIME = #{startTime},
+		        END_TIME = #{endTime},
+		        RESULT = #{result},
+		        MESSAGE = #{message}
+		    WHERE BATCH_TYPE = #{batchType}
+		    AND EXECUTION_DATE = #{executionDate}
+
+		    RETURNING *
+		)
+		INSERT INTO OP_BATCH_EXECUTION (BATCH_TYPE, EXECUTION_DATE, START_TIME, END_TIME, RESULT, MESSAGE)
+		SELECT
+			#{batchType}, #{executionDate}, #{startTime}, #{endTime}, #{result}, #{message}
+		WHERE NOT EXISTS (SELECT * FROM UPSERT)
+
+	</insert>
+</mapper>

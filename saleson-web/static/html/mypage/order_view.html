@@ -1,0 +1,372 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?>  
+<div class="inner orderView_wrap">
+	<div class="location_area">
+		<?include "../include/all_menu.html"?>
+		<div class="breadcrumbs">
+			<a href="#" class="home"><span class="hide">home</span></a>
+			<a href="#">마이페이지</a> 
+			<a href="#">쇼핑내역</a> 
+			<span>주문/배송조회</span> 
+		</div>
+	</div><!-- // location_area E -->  
+	<!-- 주문/배송조회 정보 박스 -->	
+	<div class="order_info">
+		<div class="member_level">
+			<p class="level"><img src="/content/images/icon/icon_gold.png" alt="등급"></p>
+			<p class="name"><span>홍길동</span>님</p>
+			<p class="rating">일반등급</p>
+			<a href="#" class="btn_benefit" title="혜택보기">혜택보기</a>
+		</div><!--// member_level E-->
+		<div class="info_list">
+			<ul class="info">
+				<li>
+					<p class="item point">포인트</p>
+					<p class="remainder"><span>9,999,999</span>P</p>
+				</li>
+				<li>
+					<p class="item coupons">쿠폰 <a href="#" class="btn_down_confirm">다운가능쿠폰</a></p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item delivery">배송비 쿠폰</p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item cash">캐시</p>
+					<p class="remainder"><span>9,999,999</span>원</p>
+				</li>
+			</ul>
+			<div class="condition_wrap">
+				<div class="order_condition">
+					<span class="title">주문/배송</span>
+					<ol>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step01.gif" alt="order"></span>
+							<p>주문접수 <span><a href="#">30</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"> </li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step02.gif" alt="order"></span>
+							<p>결제완료  <span><a href="#">10</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step03.gif" alt="order"></span>
+							<p>상품준비중 <span><a href="#">0</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step04.gif" alt="order"></span>
+							<p>배송중 <span><a href="#" class="ing">1</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step05.gif" alt="order"></span>
+							<p>배송완료 <span><a href="#">5</a>건</span></p> 
+						</li>
+					</ol>
+				</div> <!--// order_condition E--> 
+				<div class="order_refund">
+					<p class="title">취소/교환/반품</p>
+					<ul>
+						<li>취소 <span><a href="#">110</a>건</span></li>  
+						<li>교환 <span><a href="#" class="ing">112</a>건</span></li>  
+						<li>반품 <span><a href="#">110</a>건</span></li>  
+					</ul>
+				</div><!--// order_refund E--> 
+			</div><!--// condition_wrap E--> 
+		</div><!--// info_list E-->
+	</div><!--// order_info E-->
+
+	<div id="contents" class="pt0"> 
+		<?include "../include/mypage_lnb.html"?>
+		<div class="contents_inner"> 	
+			<h2>주문/배송 상세조회</h2>  
+			<div class="order_numberBox">
+				<p>주문번호: <strong>K1000011651</strong></p>
+				<p>주문일자: <strong>2016-10-28 11:13:35</strong></p>	
+			</div> <!--// order_numberBox E-->   
+
+			<h3>배송지 1</h3> 
+			<div class="board_wrap">  
+				<table cellpadding="0" cellspacing="0"  class="order_view">
+					<caption>배송지 1</caption>
+					<colgroup>
+						<col style="width:128px;"> 
+						<col style="width:315px;">	
+						<col style="width:128px;"> 
+						<col style="width:auto;">	 				
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="row">주문하시는 분</th>
+							<td>홍길동</td> 
+							<th scope="row">휴대폰번호</th>
+							<td>010-1234-5678</td> 
+						</tr> 
+						<tr>
+							<th scope="row">전화번호</th>
+							<td>-</td> 
+							<th scope="row">이메일</th>
+							<td>test@naver.com</td> 	
+						</tr>  
+					</tbody>
+				</table> 
+			</div><!--//board_wrap E--> 
+			<div class="board_wrap">  
+				<table cellpadding="0" cellspacing="0"  class="order_list">
+					<caption>주문 정보</caption>
+					<colgroup> 
+						
+						<col style="width:auto;">  
+						<col style="width:70px;"> 
+						<col style="width:110px;"> 
+						<col style="width:70px;"> 
+						<col style="width:135px;">  
+					</colgroup>
+					<thead>
+						<tr> 
+							<th scope="col" class="tleft">상품정보</th>
+							<th scope="col">적립포인트</th>
+							<th scope="col">상품합계</th> 
+							<th scope="col">배송비</th> 
+							<th scope="col">주문/배송상태</th> 
+						</tr>
+					</thead>
+					<tbody>
+						<tr>  
+							<td class="tleft">
+								<div class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</div><!--// item_info E-->
+							</td>
+							<td><span>350</span>P</td>
+							<td> 
+								<strong><span>10,305,000</span>원 </strong>
+							</td>
+							<td> 
+								<span>3,000</span>원   
+							</td>  
+							<td class="order_num"> 
+								<div class="order_number"> 	
+									<p class="delivery">로젠택배</p>
+									<a href="#">1052-1009568</a> 
+								</div>   
+							</td>
+						</tr> 	
+						<tr>
+							<td colspan="5" class="delivery_info"><p><strong>배송지 정보</strong> : [12345] 서울시 구로구 디지털로27길 24  장동건(010-2345-8956)</p> </td>
+						</tr>	 
+					</tbody>
+				</table> <!--// order_list E-->	  		 
+			</div>	<!--// board_wrap E--> 	 
+
+			<h3>배송지 2</h3> 
+			<div class="board_wrap">  
+				<table cellpadding="0" cellspacing="0"  class="order_view">
+					<caption>배송지 1</caption>
+					<colgroup>
+						<col style="width:128px;"> 
+						<col style="width:315px;">	
+						<col style="width:128px;"> 
+						<col style="width:auto;">	 				
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="row">주문하시는 분</th>
+							<td>홍길동</td> 
+							<th scope="row">휴대폰번호</th>
+							<td>010-1234-5678</td> 
+						</tr> 
+						<tr>
+							<th scope="row">전화번호</th>
+							<td>-</td> 
+							<th scope="row">이메일</th>
+							<td>test@naver.com</td> 	
+						</tr>  
+					</tbody>
+				</table><!--//view E-->	 	
+			</div><!--//board_wrap E-->
+			
+			<div class="board_wrap">  
+				<table cellpadding="0" cellspacing="0"  class="order_list">
+					<caption>주문 정보</caption>
+					<colgroup> 
+						
+						<col style="width:auto;">  
+						<col style="width:70px;"> 
+						<col style="width:110px;"> 
+						<col style="width:70px;"> 
+						<col style="width:135px;">  
+					</colgroup>
+					<thead>
+						<tr> 
+							<th scope="col" class="tleft">상품정보</th>
+							<th scope="col">적립포인트</th>
+							<th scope="col">상품합계</th> 
+							<th scope="col">배송비</th> 
+							<th scope="col">주문/배송상태</th> 
+						</tr>
+					</thead>
+					<tbody>
+						<tr>  
+							<td class="tleft line">
+								<div class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</div><!--// item_info E-->
+							</td>
+							<td><span>350</span>P</td>
+							<td> 
+								<strong><span>10,305,000</span>원 </strong>
+							</td>
+							<td> 
+								<span>3,000</span>원   
+							</td>  
+							<td class="order_num"> 
+								<div class="order_number"> 	
+									<p class="delivery">로젠택배</p>
+									<a href="#">1052-1009568</a> 
+								</div>   
+							</td>
+						</tr> 	
+						<tr>
+							<td colspan="5" class="delivery_info"><p><strong>배송지 정보</strong> : [12345] 서울시 구로구 디지털로27길 24  장동건(010-2345-8956)</p> </td>
+						</tr>	 
+					</tbody>
+				</table> <!--// order_list E-->	  		 
+			</div>	<!--// board_wrap E--> 	 
+			
+			<h3>결제정보</h3>
+			<div class="board_wrap">  
+				<table cellpadding="0" cellspacing="0" class="order_view">
+					<caption>결제정보</caption>
+					<colgroup>
+						<col style="width:160px;"> 
+						<col style="width:auto;">	 				
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="row">상품금액</th>
+							<td>10,305,000원</td> 
+						</tr> 
+						<tr>
+							<th scope="row">배송비</th>
+							<td>3,000원</td> 
+						</tr>
+						<tr>
+							<th scope="row">결제금액</th>
+							<td>10,308,000</td> 
+						</tr>
+						<tr>
+							<th scope="row">결제완료</th>
+							<td>2016-12-20 19:22:20</td> 
+						</tr>
+					</tbody>
+				</table> 	 	
+			</div><!--// board_view E-->			
+			<h3>결제내역</h3>
+			<div class="board_wrap">  
+				<table cellpadding="0" cellspacing="0" class="order_view">
+					<caption>결제내역</caption>
+					<colgroup>
+						<col style="width:160px;"> 
+						<col style="width:auto;">	 				
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="row">결제방식</th>
+							<td>신용카드</td> 
+						</tr> 
+						<tr>
+							<th scope="row">결제금액</th>
+							<td>10,308,000원</td> 
+						</tr>
+						<tr>
+							<th scope="row">결제상태</th>
+							<td>결제완료</td> 
+						</tr>
+						<tr>
+							<th scope="row">결제일</th>
+							<td>2016-12-20 19:22:20</td> 
+						</tr>
+					</tbody>
+				</table> 	 	
+			</div><!--// board_view E--> 
+			<h3>결제수단</h3>
+			<div class="board_wrap">  
+		 		<table cellpadding="0" cellspacing="0" class="order_list">
+					<thead>
+						<tr>
+							<th scope="col">결제방식</th>
+							<th scope="col">결제금액</th>
+							<th scope="col">결제상태</th>
+							<th scope="col">결제일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>은행 입금</td>
+							<td class="tright" style="float:none">63,500원</td>
+							<td>미결<br></td>
+							<td><p><strong>2019-12-10</strong>까지 입금 필요<br>(입금계좌 : <strong>국민은행 계좌번호： 999-669-666-43 ((주)온라인파워스)&nbsp;손영균</strong>)</p></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="btn_wrap">
+				<a href="#" class="btn btn-success btn-lg" title="홈으로">홈으로</a>
+				<!--<button type="button" class="btn btn-success btn-lg">이전으로 </button>
+				<button type="button" class="btn btn-default btn-lg">주문취소</button> 
+				<button type="button" class="btn btn-submit btn-lg">교환신청</button> 
+				<button type="button" class="btn btn-submit btn-lg">반품신청</button> -->
+			</div>  
+		</div> 
+	</div>	<!-- // contents E -->	
+</div> <!--// inner E-->
+	
+			
+ 	
+<?include "../include/footer.html"?>	 
+ 

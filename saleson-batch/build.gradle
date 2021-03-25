@@ -1,0 +1,17 @@
+bootRun{
+    enabled = false
+
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
+}
+
+dependencies {
+    compile project(':saleson-common')
+
+    //implementation 'org.springframework.boot:spring-boot-starter-actuator'
+}
+sonarqube {
+    properties {
+        property "sonar.branch", "saleson-batch"
+    }
+}

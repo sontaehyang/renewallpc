@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.onlinepowers.framework.web.opmanager.menu.MenuMapper">
+	<!--  
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	-->
+    <resultMap id="FirstMenuResult" type="Menu" >
+        <id property="menuId" column="MENU_ID" />
+        <result property="menuParentId" column="MENU_PARENT_ID" />
+        <result property="menuType" column="MENU_TYPE" />
+		<result property="menuName" column="MENU_NAME" />
+		<result property="menuCode" column="MENU_CODE" />
+		<result property="menuSeq" column="MENU_SEQ" />
+		<result property="menuIcon" column="MENU_ICON" />    
+		<result property="displayFlag" column="DISPLAY_FLAG" />    
+		<result property="statusCode" column="STATUS_CODE" />    
+        <!--        one to one     -->
+        <association property="menuUrl" column="{menuId=MENU_ID, authority=AUTHORITY}" javaType="Menu"
+            select="getFirstMenuUrl"/>
+    </resultMap>
+    
+    <resultMap id="MenuResult" type="Menu" >
+        <id property="menuId" column="MENU_ID"/>
+        <result property="menuParentId" column="MENU_PARENT_ID" />
+        <result property="menuType" column="MENU_TYPE" />
+		<result property="menuName" column="MENU_NAME" />
+		<result property="menuCode" column="MENU_CODE" />
+		<result property="menuUrl" column="MENU_URL" />
+		<result property="menuSeq" column="MENU_SEQ" />
+		<result property="menuIcon" column="MENU_ICON" />    
+		<result property="displayFlag" column="DISPLAY_FLAG" />    
+		<result property="statusCode" column="STATUS_CODE" /> 
+    </resultMap>
+    
+    
+    
+    <resultMap id="SecondAndThirdMenuListResult" type="Menu" >
+        <id property="menuId" column="MENU_ID" />
+        <result property="menuParentId" column="MENU_PARENT_ID" />
+        <result property="menuType" column="MENU_TYPE" />
+		<result property="menuName" column="MENU_NAME" />
+		<result property="menuCode" column="MENU_CODE" />
+		<result property="menuUrl" column="MENU_URL" />
+		<result property="menuSeq" column="MENU_SEQ" />
+		<result property="menuIcon" column="MENU_ICON" />    
+		<result property="displayFlag" column="DISPLAY_FLAG" />    
+		<result property="statusCode" column="STATUS_CODE" /> 
+		<collection property="childMenu" resultMap="ChildMenuListResult" />
+		
+		<!-- 
+		<collection property="childMenu" column="{authority=AUTHORITY, menuId=MENU_ID, userId=USER_ID}" 
+            select="getChildMenuList"/>
+         -->
+    </resultMap>
+    
+    
+    <resultMap id="ChildMenuListResult" type="Menu" >
+        <id property="menuId" column="CHILD_MENU_ID"/>
+        <result property="menuParentId" column="CHILD_MENU_PARENT_ID" />
+        <result property="menuType" column="CHILD_MENU_TYPE" />
+		<result property="menuName" column="CHILD_MENU_NAME" />
+		<result property="menuCode" column="CHILD_MENU_CODE" />
+		<result property="menuUrl" column="CHILD_MENU_URL" />
+		<result property="menuSeq" column="CHILD_MENU_SEQ" />
+		<result property="menuIcon" column="CHILD_MENU_ICON" />    
+		<result property="displayFlag" column="CHILD_DISPLAY_FLAG" />    
+		<result property="statusCode" column="CHILD_STATUS_CODE" /> 
+    </resultMap>
+    
+    
+    <resultMap id="AllMenuListResult" type="Menu" extends="MenuResult" >
+    	<result property="menuId" column="MENU_ID"/>
+		<result property="menuName" column="MENU_NAME" />
+		
+		<collection property="childMenu" ofType="Menu" >
+			<result property="menuId" column="M2_MENU_ID"/>
+			<result property="menuName" column="M2_MENU_NAME" />
+			
+			<collection property="childMenu" ofType="Menu" >
+				<result property="menuId" column="M3_MENU_ID"/>
+				<result property="menuName" column="M3_MENU_NAME" />
+			</collection>
+		</collection>
+    </resultMap>
+    
+    <select id="getAllMenuList" parameterType="Menu" resultMap="AllMenuListResult">  
+    	SELECT 
+			M1.MENU_ID, 
+			M1.MENU_NAME, 
+			M2.MENU_ID AS M2_MENU_ID, 
+			M2.MENU_NAME AS M2_MENU_NAME, 
+			M3.MENU_ID AS M3_MENU_ID, 
+			M3.MENU_NAME AS M3_MENU_NAME
+		FROM OP_MENU M1
+			INNER JOIN OP_MENU M2 ON M1.MENU_ID = M2.MENU_PARENT_ID 
+				AND M1.MENU_TYPE = '1' AND M1.STATUS_CODE = '1'
+				AND M2.MENU_TYPE = '2' AND M2.STATUS_CODE = '1'
+			INNER JOIN OP_MENU M3 ON M2.MENU_ID = M3.MENU_PARENT_ID 
+				AND M2.MENU_TYPE = '2' AND M2.STATUS_CODE = '1'
+				AND M3.MENU_TYPE = '3' AND M3.STATUS_CODE = '1'
+				
+		ORDER BY
+			M1.MENU_SEQ ASC, M2.MENU_SEQ ASC, M3.MENU_SEQ ASC
+    
+    </select>
+    
+    
+<select id="getMenuCode" parameterType="java.util.HashMap" resultType="String">
+
+	SELECT MENU_CODE FROM (
+		SELECT MENU_CODE , LENGTH(MENU_CODE) as menuCodeLength FROM (
+		 	<choose>
+			<when test="authority == 'ROLE_SUPERVISOR'">
+				SELECT MENU_CODE FROM OP_MENU 
+				WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+			</when>
+			<otherwise>
+				SELECT OM.MENU_CODE 
+				FROM OP_MENU OM 
+					INNER JOIN OP_MENU_RIGHT omr ON OM.MENU_ID = omr.MENU_ID AND OM.STATUS_CODE = '1'
+	    		WHERE omr.AUTHORITY IN (
+	    			SELECT AUTHORITY FROM OP_USER_ROLE
+	    			WHERE USER_ID = #{userId}
+	    		)
+			</otherwise>
+	  		</choose>
+		)A WHERE MENU_CODE IN 
+		<foreach item="item" index="index" collection="menuCodes"
+	        open="(" separator="," close=")">
+	          #{item}
+	    </foreach>
+	    
+	     ) B
+	ORDER BY menuCodeLength DESC LIMIT 1
+    
+</select> 
+
+
+<select id="getFirstMenuList" parameterType="Menu" resultMap="MenuResult">    
+
+	SELECT DISTINCT S.MENU_ID, S.MENU_PARENT_ID, S.MENU_TYPE, S.MENU_NAME, S.MENU_CODE, T.MENU_URL, S.MENU_SEQ, S.MENU_ICON, S.DISPLAY_FLAG, S.STATUS_CODE 
+	FROM OP_MENU S INNER JOIN (
+		SELECT Q.FIRST_MENU_ID, Q.MENU_URL FROM (
+			SELECT O.* FROM (
+				<choose>
+				<when test="authority == 'ROLE_SUPERVISOR'">
+					SELECT 
+						(SELECT MENU_PARENT_ID FROM OP_MENU WHERE MENU_ID = A.MENU_PARENT_ID AND STATUS_CODE = '1') AS FIRST_MENU_ID,	
+						(SELECT MENU_SEQ FROM OP_MENU WHERE MENU_ID = A.MENU_PARENT_ID AND STATUS_CODE = '1') AS SECOND_MENU_SEQ,
+						A.* 
+					FROM OP_MENU A WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+				</when>
+				<otherwise>
+					SELECT 
+						(SELECT MENU_PARENT_ID FROM OP_MENU WHERE MENU_ID = H.MENU_PARENT_ID AND STATUS_CODE = '1') AS FIRST_MENU_ID,	
+						(SELECT MENU_SEQ FROM OP_MENU WHERE MENU_ID = H.MENU_PARENT_ID AND STATUS_CODE = '1') AS SECOND_MENU_SEQ,	
+					H.* FROM OP_MENU H, OP_MENU_RIGHT I
+					WHERE H.MENU_ID = I.MENU_ID AND I.AUTHORITY IN (
+		    			SELECT AUTHORITY FROM OP_USER_ROLE
+		    			WHERE USER_ID = #{userId}
+		    		) AND H.STATUS_CODE = '1'
+				</otherwise>
+		  		</choose>
+			
+				
+			) O INNER JOIN (
+				<choose>
+				<when test="authority == 'ROLE_SUPERVISOR'">
+					SELECT MENU_PARENT_ID, MIN(MENU_SEQ) AS MENU_SEQ FROM OP_MENU 
+					WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+					GROUP BY MENU_PARENT_ID
+				</when>
+				<otherwise>
+					SELECT M.MENU_PARENT_ID, MIN(MENU_SEQ) AS MENU_SEQ 
+					FROM OP_MENU M, OP_MENU_RIGHT MR
+					WHERE M.MENU_ID = MR.MENU_ID  AND MR.AUTHORITY IN (
+		    			SELECT AUTHORITY FROM OP_USER_ROLE
+		    			WHERE USER_ID = #{userId}
+		    		) AND M.STATUS_CODE = '1'
+					GROUP BY M.MENU_PARENT_ID
+				</otherwise>
+		  		</choose>
+			) P ON O.MENU_PARENT_ID = P.MENU_PARENT_ID AND O.MENU_SEQ = P.MENU_SEQ
+		) Q INNER JOIN(
+			SELECT O.FIRST_MENU_ID, MIN(SECOND_MENU_SEQ) AS SECOND_MENU_SEQ FROM (
+				<choose>
+				<when test="authority == 'ROLE_SUPERVISOR'">
+					SELECT 
+						(SELECT MENU_PARENT_ID FROM OP_MENU WHERE MENU_ID = A.MENU_PARENT_ID AND STATUS_CODE = '1') AS FIRST_MENU_ID,	
+						(SELECT MENU_SEQ FROM OP_MENU WHERE MENU_ID = A.MENU_PARENT_ID AND STATUS_CODE = '1') AS SECOND_MENU_SEQ,
+						A.* 
+					FROM OP_MENU A WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+				</when>
+				<otherwise>
+					SELECT 
+						(SELECT MENU_PARENT_ID FROM OP_MENU WHERE MENU_ID = H.MENU_PARENT_ID AND STATUS_CODE = '1') AS FIRST_MENU_ID,	
+						(SELECT MENU_SEQ FROM OP_MENU WHERE MENU_ID = H.MENU_PARENT_ID AND STATUS_CODE = '1') AS SECOND_MENU_SEQ,	
+					H.* FROM OP_MENU H, OP_MENU_RIGHT I
+					WHERE H.MENU_ID = I.MENU_ID AND I.AUTHORITY IN (
+		    			SELECT AUTHORITY FROM OP_USER_ROLE
+		    			WHERE USER_ID = #{userId}
+		    		) AND H.STATUS_CODE = '1'
+				</otherwise>
+		  		</choose>
+			) O INNER JOIN (
+				<choose>
+				<when test="authority == 'ROLE_SUPERVISOR'">
+					SELECT MENU_PARENT_ID, MIN(MENU_SEQ) AS MENU_SEQ FROM OP_MENU 
+					WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+					GROUP BY MENU_PARENT_ID
+				</when>
+				<otherwise>
+					SELECT M.MENU_PARENT_ID, MIN(MENU_SEQ) AS MENU_SEQ FROM OP_MENU M, OP_MENU_RIGHT MR
+					WHERE M.MENU_ID = MR.MENU_ID  AND MR.AUTHORITY IN (
+		    			SELECT AUTHORITY FROM OP_USER_ROLE
+		    			WHERE USER_ID = #{userId}
+		    		) AND STATUS_CODE = '1'
+					GROUP BY M.MENU_PARENT_ID
+				</otherwise>
+		  		</choose>
+		  	) P ON O.MENU_PARENT_ID = P.MENU_PARENT_ID AND O.MENU_SEQ = P.MENU_SEQ	
+			GROUP BY O.FIRST_MENU_ID
+		) R ON Q.FIRST_MENU_ID = R.FIRST_MENU_ID AND Q.SECOND_MENU_SEQ = R.SECOND_MENU_SEQ
+	) T ON S.MENU_ID = T.FIRST_MENU_ID AND S.STATUS_CODE = '1'
+	ORDER BY S.MENU_SEQ
+</select>
+
+
+
+<select id="getFirstMenuList_" parameterType="Menu" resultMap="FirstMenuResult">
+
+		WITH
+		MY_MENU AS (
+		  SELECT * FROM OP_MENU START WITH
+		  MENU_ID IN (
+		<choose>
+		<when test="authority == 'ROLE_SUPERVISOR'">
+			SELECT MENU_ID FROM OP_MENU WHERE MENU_TYPE = 3
+		</when>
+		<otherwise>
+			SELECT om.MENU_ID FROM OP_MENU om INNER JOIN OP_MENU_RIGHT omr ON om.MENU_ID = omr.MENU_ID
+    		WHERE omr.AUTHORITY IN (
+	    			SELECT AUTHORITY FROM OP_USER_ROLE
+	    			WHERE USER_ID = #{userId}
+	    		)
+		</otherwise>
+  		</choose>
+		  )
+		  CONNECT BY MENU_ID = prior MENU_PARENT_ID
+		)
+		
+		SELECT A.*, #{authority} AS AUTHORITY FROM (
+	      SELECT DISTINCT * FROM MY_MENU 
+	      WHERE MENU_TYPE = 1 
+	      ORDER BY MENU_SEQ
+	    ) A
+
+</select>
+
+<select id="getFirstMenuUrl" parameterType="Menu" resultType="String">
+
+	WITH
+	MY_MENU as (
+	  select * from OP_MENU START WITH
+	  MENU_ID IN (  
+	  	 <choose>
+		<when test="authority == 'ROLE_SUPERVISOR'">
+			SELECT MENU_ID FROM OP_MENU WHERE MENU_TYPE = 3
+		</when>
+		<otherwise>
+			SELECT om.MENU_ID FROM OP_MENU om INNER JOIN OP_MENU_RIGHT omr ON om.MENU_ID = omr.MENU_ID
+    		WHERE omr.AUTHORITY IN (
+	    			SELECT AUTHORITY FROM OP_USER_ROLE
+	    			WHERE USER_ID = #{userId}
+	    		)
+		</otherwise>
+  		</choose>
+	    )
+	  CONNECT BY MENU_ID = prior MENU_PARENT_ID
+	),
+	MY_MENU2 AS (
+	  	SELECT distinct * FROM MY_MENU START WITH MENU_PARENT_ID = #{menuId} 
+	  	CONNECT BY PRIOR MENU_ID = MENU_PARENT_ID
+	)
+	SELECT MENU_URL FROM (
+	  	SELECT * FROM MY_MENU2 START WITH MENU_PARENT_ID = #{menuId} 
+	  	CONNECT BY PRIOR MENU_ID = MENU_PARENT_ID
+	  	ORDER SIBLINGS BY MENU_SEQ
+	) X 
+	WHERE MENU_URL IS NOT NULL and ROWNUM = 1
+
+</select>
+
+
+<select id="getSecondAndThirdMenuList" parameterType="Menu" resultMap="SecondAndThirdMenuListResult">
+	SELECT * FROM (
+		SELECT #{authority} AS AUTHORITY, #{userId} as USER_ID,  a.* 
+		FROM OP_MENU a 
+		WHERE  a.STATUS_CODE = '1'
+			AND MENU_PARENT_ID = (
+			SELECT 
+				(SELECT MENU_PARENT_ID FROM OP_MENU WHERE MENU_ID = H.MENU_PARENT_ID AND STATUS_CODE = '1') AS FIRST_MENU_ID
+			<choose>
+			<when test="authority == 'ROLE_SUPERVISOR'">
+				FROM OP_MENU H
+				WHERE H.MENU_TYPE = 3 AND H.STATUS_CODE = '1'
+			</when>
+			<otherwise>
+				FROM OP_MENU H, OP_MENU_RIGHT I
+				WHERE H.MENU_ID = I.MENU_ID AND I.AUTHORITY IN (
+		    			SELECT AUTHORITY FROM OP_USER_ROLE
+		    			WHERE USER_ID = #{userId}
+		    		) AND H.STATUS_CODE = '1'
+			</otherwise>
+	  		</choose>
+	
+			AND MENU_CODE = #{menuCode}
+			GROUP BY FIRST_MENU_ID
+			ORDER BY MENU_SEQ
+		) ORDER BY MENU_SEQ 
+	) P INNER JOIN (
+		SELECT 
+			H.MENU_ID AS CHILD_MENU_ID,
+			H.MENU_PARENT_ID AS CHILD_MENU_PARENT_ID,
+			H.MENU_TYPE AS CHILD_MENU_TYPE,
+			H.MENU_NAME AS CHILD_MENU_NAME,
+			H.MENU_CODE AS CHILD_MENU_CODE,
+			H.MENU_URL AS CHILD_MENU_URL,
+			H.MENU_SEQ AS CHILD_MENU_SEQ,
+			H.MENU_ICON AS CHILD_MENU_ICON,
+			H.DISPLAY_FLAG AS CHILD_DISPLAY_FLAG,
+			H.STATUS_CODE AS CHILD_STATUS_CODE
+		<choose>
+		<when test="authority == 'ROLE_SUPERVISOR'">
+	        FROM OP_MENU H
+	        WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+		</when>
+		<otherwise>
+			FROM OP_MENU H, OP_MENU_RIGHT I
+			WHERE H.MENU_ID = I.MENU_ID AND I.AUTHORITY IN (
+		    			SELECT AUTHORITY FROM OP_USER_ROLE
+		    			WHERE USER_ID = #{userId}
+		    		) AND H.STATUS_CODE = '1'
+		</otherwise>
+		</choose>	
+	) C ON P.MENU_ID = C.CHILD_MENU_PARENT_ID
+	
+	ORDER BY P.MENU_SEQ, P.MENU_ID, C.CHILD_MENU_SEQ
+
+</select>
+
+
+<select id="getChildMenuList" parameterType="Menu" resultMap="MenuResult">
+	SELECT DISTINCT
+		(SELECT MENU_PARENT_ID FROM OP_MENU WHERE MENU_ID = H.MENU_PARENT_ID AND STATUS_CODE = '1') AS FIRST_MENU_ID,	
+		(SELECT MENU_SEQ FROM OP_MENU WHERE MENU_ID = H.MENU_PARENT_ID AND STATUS_CODE = '1') AS SECOND_MENU_SEQ,	
+		H.* 
+	<choose>
+	<when test="authority == 'ROLE_SUPERVISOR'">
+        FROM OP_MENU H
+        WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+	</when>
+	<otherwise>
+		FROM OP_MENU H, OP_MENU_RIGHT I
+		WHERE H.MENU_ID = I.MENU_ID AND I.AUTHORITY IN (
+	    			SELECT AUTHORITY FROM OP_USER_ROLE
+	    			WHERE USER_ID = #{userId}
+	    		) AND H.STATUS_CODE = '1'
+	</otherwise>
+	</choose>	
+	AND MENU_PARENT_ID = #{menuId}
+	ORDER BY MENU_SEQ
+</select>
+
+
+<insert id="insertMenu" parameterType="Menu">
+	INSERT INTO OP_MENU (MENU_ID, MENU_PARENT_ID, MENU_TYPE, MENU_NAME, MENU_CODE, MENU_URL, MENU_SEQ, MENU_ICON)
+	VALUES (#{menuId}, #{menuParentId}, #{menuType}, #{menuName}, #{menuCode}, #{menuUrl}, #{menuSeq}, #{menuIcon})
+</insert>
+
+<update id="updateMenu" parameterType="Menu">
+	UPDATE OP_MENU 
+		
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="menuName != null">MENU_NAME=#{menuName},</if>
+			<if test="menuIcon != null">MENU_ICON=#{menuIcon},</if>
+			<if test="menuCode != null">MENU_CODE=#{menuCode},</if>
+			<if test="menuUrl != null">MENU_URL=#{menuUrl},</if>
+		</trim>
+	
+	WHERE MENU_ID = #{menuId}
+</update>
+
+<update id="updateSequence" parameterType="Menu">
+	UPDATE OP_MENU SET MENU_SEQ = #{menuSeq} 
+	WHERE MENU_ID = #{menuId}
+</update>
+
+<delete id="delete" parameterType="Integer">
+	DELETE FROM OP_MENU
+	WHERE MENU_ID = #{value}
+</delete>
+
+<delete id="deleteSecondMenu" parameterType="Integer">
+	DELETE FROM OP_MENU 
+	WHERE MENU_PARENT_ID = #{value}
+</delete>
+
+<delete id="deleteThirdMenu" parameterType="Integer">
+	DELETE FROM OP_MENU 
+	WHERE MENU_PARENT_ID IN (
+		SELECT MENU_ID FROM OP_MENU 
+		WHERE MENU_PARENT_ID = #{value}
+	)
+</delete>
+
+<!-- 메뉴관리에서 메뉴 삭제시 권한정보도 삭제 -->
+<delete id="deleteMenuRightByMenuId" parameterType="Integer">
+	DELETE FROM OP_MENU_RIGHT WHERE MENU_ID IN (   
+	    SELECT MENU_ID FROM (
+	      SELECT * FROM OP_MENU START WITH MENU_ID = #{value}
+	      CONNECT BY PRIOR MENU_ID =  MENU_PARENT_ID 
+	    ) WHERE MENU_TYPE=3
+	)
+</delete>
+
+<delete id="deleteMenuRightByAuthority" parameterType="String">
+	DELETE FROM OP_MENU_RIGHT
+	WHERE AUTHORITY = #{value}
+</delete>
+
+<insert id="insertMenuRight" parameterType="MenuRight">
+	INSERT INTO OP_MENU_RIGHT (MENU_ID, MENU_RIGHT_ID, AUTHORITY)
+	VALUES (#{menuId}, #{menuRightId}, #{authority})
+
+</insert>
+
+<insert id="insertMenuRightByRole" parameterType="Role">
+	INSERT INTO OP_MENU_RIGHT (AUTHORITY, MENU_ID)
+	VALUES
+	<foreach item="menuId" index="index" collection="menuIds" open="" separator="," close=""> 
+		(#{authority}, #{menuId})
+	</foreach>
+	
+</insert>
+
+
+
+<select id="getMenuRightListByAuthority" parameterType="String" resultType="MenuRight">
+	SELECT MENU_RIGHT_ID menuRightId, AUTHORITY authority, MENU_ID menuId
+	FROM OP_MENU_RIGHT
+	WHERE AUTHORITY = #{value}
+</select>
+
+
+<select id="getFisrtMenuUrl" parameterType="String" resultType="String">
+	SELECT MENU_URL FROM (
+		  SELECT DISTINCT * FROM OP_MENU START WITH
+		  MENU_ID IN (
+		  	<choose>
+			<when test="authority == 'ROLE_SUPERVISOR'">
+				SELECT MENU_ID FROM OP_MENU WHERE MENU_TYPE = 3 AND STATUS_CODE = '1'
+			</when>
+			<otherwise>
+				SELECT om.MENU_ID 
+					FROM OP_MENU om 
+					INNER JOIN OP_MENU_RIGHT omr ON om.MENU_ID = omr.MENU_ID
+	    		WHERE omr.AUTHORITY = #{value} AND om.STATUS_CODE = '1'
+			</otherwise>
+	  		</choose>
+		  )
+		  CONNECT BY MENU_ID = prior MENU_PARENT_ID
+      ORDER SIBLINGS BY MENU_SEQ
+    
+    ) WHERE MENU_TYPE=3  AND STATUS_CODE = '1' AND ROWNUM = 1
+</select>
+</mapper>

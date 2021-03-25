@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.inquiry.InquiryMapper">
+
+    <resultMap id="InquiryResult" type="saleson.shop.inquiry.domain.Inquiry">
+        <result property="inquiryId" column="INQUIRY_ID" />
+        <result property="inquiryType" column="INQUIRY_TYPE"/>
+        <result property="itemCode" column="ITEM_CODE"/>
+        <result property="itemName" column="ITEM_NAME" />
+        <result property="userName" column="USER_NAME" />
+        <result property="userEmail" column="USER_EMAIL" />
+        <result property="telNumber" column="TEL_NUMBER" />
+        <result property="inquirySubject" column="INQUIRY_SUBJECT" />
+        <result property="inquiryContent" column="INQUIRY_CONTENT" />
+        <result property="answerFlag" column="ANSWER_FLAG" />
+        <result property="createdDate" column="CREATED_DATE" />
+        <result property="inquiryImgName" column="INQUIRY_IMG" />
+    </resultMap>
+
+    <sql id="sqlInquiryWhere">
+        <where>
+            <if test="answerFlag == 1">
+                AND I.ANSWER_FLAG = 1
+            </if>
+            <if test="answerFlag == 0">
+                AND I.ANSWER_FLAG = 0
+            </if>
+            <if test="searchStartDate != '' and searchStartDate != null">
+                AND substr(I.CREATED_DATE, 1, 8) >= #{searchStartDate}
+            </if>
+            <if test="searchEndDate != '' and searchEndDate != null">
+                AND substr(I.CREATED_DATE, 1, 8) <![CDATA[<=]]> #{searchEndDate}
+            </if>
+
+            <if test='inquiryType != null and inquiryType != ""'>
+                AND I.INQUIRY_TYPE LIKE CONCAT('%', #{inquiryType} , '%')
+            </if>
+            <if test='query != null and query != ""'>
+                <choose>
+                    <when test='where == "userEmail"'>
+                        AND I.USER_EMAIL LIKE CONCAT('%', #{query} , '%')
+                    </when>
+                    <when test='where == "userName"'>
+                        AND I.USER_NAME LIKE CONCAT('%', #{query} , '%')
+                    </when>
+                    <when test='where == "inquirySubject"'>
+                        AND I.INQUIRY_SUBJECT LIKE CONCAT('%', #{query} ,  '%')
+                    </when>
+                    <when test='where == "inquiryContent"'>
+                        AND I.INQUIRY_CONTENT LIKE CONCAT('%', #{query} , '%')
+                    </when>
+                    <when test='where == "telNumber"'>
+                        AND I.TEL_NUMBER LIKE CONCAT('%', #{query} , '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+
+    <insert id="insertInquiry" parameterType="saleson.shop.inquiry.domain.Inquiry">
+        INSERT INTO OP_SHOP_INQUIRY (INQUIRY_ID, USER_EMAIL, INQUIRY_IMG, INQUIRY_TYPE, ITEM_CODE, ITEM_NAME, TEL_NUMBER, INQUIRY_CONTENT, CREATED_DATE)
+        VALUES (#{inquiryId}, #{userEmail}, #{inquiryImgName}, #{inquiryType}, #{itemCode}, #{itemName}, #{telNumber}, #{inquiryContent}, #{createdDate})
+    </insert>
+
+    <select id="getInquiryCount" parameterType="saleson.shop.inquiry.support.InquiryParam" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM OP_SHOP_INQUIRY I
+        <include refid="sqlInquiryWhere"/>
+    </select>
+
+    <select id="getInquiryList" parameterType="saleson.shop.inquiry.support.InquiryParam" resultMap="InquiryResult">
+        <include refid="CommonMapper.paginationHeader" />
+        SELECT *
+        FROM OP_SHOP_INQUIRY I
+        <include refid="sqlInquiryWhere"/>
+        ORDER BY INQUIRY_ID DESC
+        <include refid="CommonMapper.paginationFooter" />
+    </select>
+
+    <delete id="deleteSelectInquiry" parameterType="saleson.shop.inquiry.support.InquiryParam">
+        DELETE FROM OP_SHOP_INQUIRY
+        WHERE
+        <foreach collection="inquiryIds" item="inquiryId" separator="or">
+            INQUIRY_ID = ${inquiryId }
+        </foreach>
+    </delete>
+
+    <select id="getInquiryViewById" parameterType="Integer" resultMap="InquiryResult">
+        SELECT *
+        FROM OP_SHOP_INQUIRY I
+        WHERE inquiry_ID = #{value }
+    </select>
+
+    <update id="editAnswerFlag" parameterType="saleson.shop.inquiry.domain.Inquiry">
+        UPDATE OP_SHOP_INQUIRY
+        <set>
+            ANSWER_FLAG = ${answerFlag }
+        </set>
+        WHERE INQUIRY_ID = ${inquiryId }
+    </update>
+
+</mapper>

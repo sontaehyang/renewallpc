@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<title>세일즈온 모바일</title>
+	<link rel="shortcut icon" href="/content/mobile/images/favicon.ico">
+	<link rel="stylesheet" href="/content/mobile/css/reset.css">
+	<link rel="stylesheet" href="/content/mobile/css/swiper.css">
+	<link rel="stylesheet" href="/content/mobile/css/common.css">
+	<link rel="stylesheet" href="/content/mobile/css/category.css">
+	<link rel="stylesheet" href="/content/mobile/css/product.css">
+	<link rel="stylesheet" href="/content/mobile/css/event.css">
+	<link rel="stylesheet" href="/content/mobile/css/customer.css">
+	<link rel="stylesheet" href="/content/mobile/css/member.css">
+	<link rel="stylesheet" href="/content/mobile/css/order.css">
+	<link rel="stylesheet" href="/content/mobile/css/mypage.css">
+	<link rel="stylesheet" href="/content/mobile/css/info.css">
+	<link rel="stylesheet" href="/content/mobile/css/popup.css">
+	<link rel="stylesheet" href="/content/mobile/css/main.css">	
+	<link rel="stylesheet" href="../css/mc_guide.css">	
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<script src="/content/mobile/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/browserDetect.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/swiper.jquery.min.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/jquery.combostars.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/jquery.sticky.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/front.js" type="text/javascript"></script>    
+</head>
+<body>
+
+	<div id="wrap">
+		<div id="header">
+			<h1>세일즈온 모바일 HTML GUIDE</h1>
+			<div class="gnb">
+				<ul>
+					<li><a href="mc_button.html">버튼, 링크</a></li>
+					<li><a href="mc_label.html">라벨</a></li>
+					<li class="on"><a href="mc_form.html">폼</a></li>
+					<li><a href="mc_tab.html">탭</a></li>
+					<li><a href="mc_text.html">텍스트</a></li>
+					<li><a href="mc_accodian.html">아코디언</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- //header -->
+
+		<div id="container">
+			<div class="bs-docs-section">
+
+				<h2>셀렉트 박스<span>(basic)</span></h2>
+				<form class="bs-example">
+					<div class="shipping_pl">
+						<select name="" id="">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
+					</div>
+				</form>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"shipping_pl"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">" "</span> <span class="na">id=</span><span class="s">" "</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"1"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"3"</span><span class="nt">&gt;</span>3<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;/select&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+					</code></pre>
+				</figure>
+
+				<h2>수량 체크</h2>
+				<div class="bs-example">
+					<div class="cacul">
+						<button type="button" class="minus">감소</button>
+						<input type="text" class="num" value="1">
+						<button type="button" class="plus">증가</button>
+					</div>
+				</div>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"cacul"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span>  <span class="na">class=</span><span class="s">"minus"</span><span class="nt">&gt;</span>감소<span class="nt">&lt;/button&gt;</span>
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"num"</span> <span class="na">value=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span>  <span class="na">class=</span><span class="s">"plus"</span><span class="nt">&gt;</span>증가<span class="nt">&lt;/button&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+					</code></pre>
+				</figure>
+
+				<h2>체크박스</h2>
+				<div class="bs-example">
+					<input id="check01" type="checkbox" name="checkbox">
+					<label for="check01">체크박스</label>
+				</div>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"check01"</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"checkbox"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"check01"</span><span class="nt">&gt;</span>체크박스<span class="nt">&lt;/label&gt;</span>
+					</code></pre>
+				</figure>
+
+				<h2>라디오버튼</h2>
+				<div class="bs-example">
+					<input id="radio01" type="radio" name="radio" checked="checked">
+					<label for="radio01"><span><span></span></span>선택01</label>
+					<input id="radio02" type="radio" name="radio">
+					<label for="radio02"><span><span></span></span>선택02</label>
+				</div>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"radio01"</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"radio"</span> <span class="na">checked=</span><span class="s">"checked"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"radio01"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span><span class="nt">&lt;span&gt;</span><span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/span&gt;</span>선택01<span class="nt">&lt;/label&gt;</span>
+						<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"radio02"</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"radio"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"radio02"</span><span class="nt">&gt;</span><span class="nt">&lt;span&gt;</span><span class="nt">&lt;span&gt;</span><span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/span&gt;</span>선택02<span class="nt">&lt;/label&gt;</span>
+					</code></pre>
+				</figure>
+
+				<h2>기간설정</h2>
+				<div class="bs-example">
+					<div class="date_search">
+						<div class="date_search_info">
+							<p class="txt">찾아보고 싶은 날짜를 설정해 주세요.</p>
+							<button type="button" class="date_search_btn">기간검색</button>
+						</div>
+						<div class="date_search_con">
+							<ul>
+								<li>
+									<span class="del_tit t_black">주문기간</span>
+									<div class="date_area">
+										<select name="" id="">
+											<option value="최근 1주일">최근 1주일</option>
+											<option value="최근 1주일">최근 1주일</option>
+											<option value="최근 1주일">최근 1주일</option>
+										</select>
+									</div>
+									<div class="date_area last">
+										<select name="" id="">
+											<option value="전체(주문상태)">전체(주문상태)</option>
+											<option value="전체(주문상태)">전체(주문상태)</option>
+											<option value="전체(주문상태)">전체(주문상태)</option>
+										</select>
+									</div>
+								</li>
+								<li>
+									<span class="del_tit t_black">상품명</span>
+									<div class="input_search">
+										<input type="text">
+									</div>
+									<p class="desc">최근 1년까지의 주문내역이 제공되며, 한번 조회기간은 6개월 이내로 선택하셔야 됩니다.</p>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"date_search"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"date_search_info"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"txt"<span class="nt">&gt;</span></span>찾아보고 싶은 날짜를 설정해 주세요.<span class="nt">&lt;/p&gt;</span>
+						<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"date_search_btn"</span><span class="nt">&gt;</span>기간검색<span class="nt">&lt;/button&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"date_search_con"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;ul&gt;</span>
+						<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"del_tit t_black"</span><span class="nt">&gt;</span>주문기간<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"date_area"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">" "</span> <span class="na">id=</span><span class="s">" "</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"최근 1주일"</span><span class="nt">&gt;</span>최근 1주일<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"최근 1주일"</span><span class="nt">&gt;</span>최근 1주일<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"최근 1주일"</span><span class="nt">&gt;</span>최근 1주일<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;/select&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"date_area last"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">" "</span> <span class="na">id=</span><span class="s">" "</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"전체(주문상태)"</span><span class="nt">&gt;</span>전체(주문상태)<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"전체(주문상태)"</span><span class="nt">&gt;</span>전체(주문상태)<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"전체(주문상태)"</span><span class="nt">&gt;</span>전체(주문상태)<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;/select&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"del_tit t_black"</span><span class="nt">&gt;</span>상품명<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_search"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"desc"</span><span class="nt">&gt;</span>최근 1년까지의 주문내역이 제공되며, 한번 조회기간은 6개월 이내로 선택하셔야 됩니다.<span class="nt">&lt;/p&gt;</span>
+						<span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;/ul&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+					</code></pre>
+				</figure>
+
+			</div>
+			<!-- //bs-docs-section -->
+		</div>
+		<!-- //#container -->
+
+	</div>
+	<!-- //#wrap -->
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.featuredbanner.FeaturedBannerMapper">
+	<resultMap id="FeaturedBannerResult" type="saleson.shop.featuredbanner.domain.FeaturedBanner">
+		<result property="featuredBannerId" column="FEATURED_BANNER_ID" />
+		<result property="featuredBannerColor" column="FEATURED_BANNER_COLOR" />
+		<result property="bannerLeftTopTitle" column="BANNER_LEFT_TOP_TITLE" />
+		<result property="bannerLeftTopLink" column="BANNER_LEFT_TOP_LINK" />
+		<result property="bannerLeftTopImage" column="BANNER_LEFT_TOP_IMAGE" />
+		<result property="bannerLeftBottom1Title" column="BANNER_LEFT_BOTTOM1_TITLE" />
+		<result property="bannerLeftBottom1Link" column="BANNER_LEFT_BOTTOM1_LINK" />
+		<result property="bannerLeftBottom1Image" column="BANNER_LEFT_BOTTOM1_IMAGE" />
+		<result property="bannerLeftBottom2Title" column="BANNER_LEFT_BOTTOM2_TITLE" />
+		<result property="bannerLeftBottom2Link" column="BANNER_LEFT_BOTTOM2_LINK" />
+		<result property="bannerLeftBottom2Image" column="BANNER_LEFT_BOTTOM2_IMAGE" />
+		<result property="bannerCenterTitle" column="BANNER_CENTER_TITLE" />
+		<result property="bannerCenterLink" column="BANNER_CENTER_LINK" />
+		<result property="bannerCenterImage" column="BANNER_CENTER_IMAGE" />
+		<result property="bannerRightTopTitle" column="BANNER_RIGHT_TOP_TITLE" />
+		<result property="bannerRightTopLink" column="BANNER_RIGHT_TOP_LINK" />
+		<result property="bannerRightTopImage" column="BANNER_RIGHT_TOP_IMAGE" />
+		<result property="bannerRightBottom1Title" column="BANNER_RIGHT_BOTTOM1_TITLE" />
+		<result property="bannerRightBottom1Link" column="BANNER_RIGHT_BOTTOM1_LINK" />
+		<result property="bannerRightBottom1Image" column="BANNER_RIGHT_BOTTOM1_IMAGE" />
+		<result property="bannerRightBottom2Title" column="BANNER_RIGHT_BOTTOM2_TITLE" />
+		<result property="bannerRightBottom2Link" column="BANNER_RIGHT_BOTTOM2_LINK" />
+		<result property="bannerRightBottom2Image" column="BANNER_RIGHT_BOTTOM2_IMAGE" />
+		<result property="createdUserId" column="CREATED_USER_ID" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+	<!-- 기획전 배너조회 -->
+	<select id="getFeaturedBanner" parameterType="Integer" resultMap="FeaturedBannerResult" >
+		SELECT *
+		FROM OP_FEATURED_BANNER 
+		WHERE FEATURED_BANNER_ID = #{value}
+	</select>
+	
+	<!-- 기획전 배너수정 -->
+	<update id="updateFeaturedBanner" parameterType="saleson.shop.featuredbanner.domain.FeaturedBanner">
+		UPDATE OP_FEATURED_BANNER SET
+			FEATURED_BANNER_COLOR = #{featuredBannerColor}, 
+			BANNER_LEFT_TOP_TITLE = #{bannerLeftTopTitle}, 
+			BANNER_LEFT_TOP_LINK = #{bannerLeftTopLink}, 
+			BANNER_LEFT_BOTTOM1_TITLE = #{bannerLeftBottom1Title}, 
+			BANNER_LEFT_BOTTOM1_LINK = #{bannerLeftBottom1Link}, 
+			BANNER_LEFT_BOTTOM2_TITLE = #{bannerLeftBottom2Title}, 
+			BANNER_LEFT_BOTTOM2_LINK = #{bannerLeftBottom2Link}, 
+			BANNER_CENTER_TITLE = #{bannerCenterTitle}, 
+			BANNER_CENTER_LINK = #{bannerCenterLink}, 
+			BANNER_RIGHT_TOP_TITLE = #{bannerRightTopTitle}, 
+			BANNER_RIGHT_TOP_LINK = #{bannerRightTopLink}, 
+			BANNER_RIGHT_BOTTOM1_TITLE = #{bannerRightBottom1Title}, 
+			BANNER_RIGHT_BOTTOM1_LINK = #{bannerRightBottom1Link}, 
+			BANNER_RIGHT_BOTTOM2_TITLE = #{bannerRightBottom2Title}, 
+			BANNER_RIGHT_BOTTOM2_LINK = #{bannerRightBottom2Link},
+			<if test="bannerLeftTopImage != null and bannerLeftTopImage != ''">
+				BANNER_LEFT_TOP_IMAGE = #{bannerLeftTopImage},
+			</if> 
+			<if test="bannerLeftBottom1Image != null and bannerLeftBottom1Image != ''">
+				BANNER_LEFT_BOTTOM1_IMAGE = #{bannerLeftBottom1Image},
+			</if>
+			<if test="bannerLeftBottom2Image != null and bannerLeftBottom2Image != ''">
+				BANNER_LEFT_BOTTOM2_IMAGE = #{bannerLeftBottom2Image},
+			</if>
+			<if test="bannerCenterImage != null and bannerCenterImage != ''">
+				BANNER_CENTER_IMAGE = #{bannerCenterImage},
+			</if>
+			<if test="bannerRightTopImage != null and bannerRightTopImage != ''">
+				BANNER_RIGHT_TOP_IMAGE = #{bannerRightTopImage},
+			</if>
+			<if test="bannerRightBottom1Image != null and bannerRightBottom1Image != ''">
+				BANNER_RIGHT_BOTTOM1_IMAGE = #{bannerRightBottom1Image},
+			</if>
+			<if test="bannerRightBottom2Image != null and bannerRightBottom2Image != ''">
+				BANNER_RIGHT_BOTTOM2_IMAGE = #{bannerRightBottom2Image},  			
+			</if>
+			CREATED_USER_ID = #{createdUserId}, 
+			CREATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE FEATURED_BANNER_ID = #{featuredBannerId}
+	</update>
+
+	<!-- 배너이미지 삭제수정 -->
+	<update id="updateBannerImage" parameterType="saleson.shop.featuredbanner.domain.FeaturedBanner">
+		UPDATE OP_FEATURED_BANNER SET
+			BANNER_LEFT_TOP_IMAGE = #{bannerLeftTopImage},
+			BANNER_LEFT_BOTTOM1_IMAGE = #{bannerLeftBottom1Image},
+			BANNER_LEFT_BOTTOM2_IMAGE = #{bannerLeftBottom2Image},
+			BANNER_CENTER_IMAGE = #{bannerCenterImage},
+			BANNER_RIGHT_TOP_IMAGE = #{bannerRightTopImage},
+			BANNER_RIGHT_BOTTOM1_IMAGE = #{bannerRightBottom1Image},
+			BANNER_RIGHT_BOTTOM2_IMAGE = #{bannerRightBottom2Image},  			
+			CREATED_USER_ID = #{createdUserId}, 
+			CREATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE FEATURED_BANNER_ID = #{featuredBannerId}
+	</update>
+</mapper>

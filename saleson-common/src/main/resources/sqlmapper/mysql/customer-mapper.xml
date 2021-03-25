@@ -1,0 +1,322 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.customer.CustomerMapper">
+	
+	<resultMap id="CustomerResult" type="saleson.shop.customer.domain.Customer">
+		<result property="customerCode" column="CUSTOMER_CODE" />
+		<result property="customerName" column="CUSTOMER_NAME" />
+		<result property="userId" column="USER_ID" />
+		<result property="customerType" column="CUSTOMER_TYPE" />
+		<result property="customerGroup" column="CUSTOMER_GROUP" />
+		<result property="businessNumber" column="BUSINESS_NUMBER" />
+		<result property="telNumber" column="TEL_NUMBER" />
+		<result property="bossName" column="BOSS_NAME" />
+		<result property="category" column="CATEGORY" />
+		<result property="event" column="EVENT" />
+		<result property="zipcode" column="ZIPCODE" />
+		<result property="address" column="ADDRESS" />
+		<result property="addressDetail" column="ADDRESS_DETAIL" />
+		<result property="memo" column="MEMO" />
+		<result property="staffName" column="STAFF_NAME" />
+		<result property="staffDepartment" column="STAFF_DEPARTMENT" />
+		<result property="staffTelNumber" column="STAFF_TEL_NUMBER" />
+		<result property="staffPhoneNumber" column="STAFF_PHONE_NUMBER" />
+		<result property="bankNumber" column="BANK_NUMBER" />
+		<result property="bankName" column="BANK_NAME" />
+		<result property="bankInName" column="BANK_IN_NAME" />
+		<result property="bankCmsCode" column="BANK_CMS_CODE" />
+		<result property="customerStaffName" column="CUSTOMER_STAFF_NAME" />
+		<result property="customerStaffPosition" column="CUSTOMER_STAFF_POSITION" />
+		<result property="customerStaffTelNumber" column="CUSTOMER_STAFF_TEL_NUMBER" />
+		<result property="customerStaffPhoneNumber" column="CUSTOMER_STAFF_PHONE_NUMBER" />
+		<result property="customerStaffEmail" column="CUSTOMER_STAFF_EMAIL" />
+		<result property="dmZipcode" column="DM_ZIPCODE" />
+		<result property="dmAddress" column="DM_ADDRESS" />
+		<result property="dmAddressDetail" column="DM_ADDRESS_DETAIL" />
+		<result property="businessNumberCode" column="BUSINESS_NUMBER_CODE" />
+		<result property="businessType" column="BUSINESS_TYPE" />
+		<result property="phoneNumber" column="PHONE_NUMBER" />
+		<result property="email" column="EMAIL" />
+		
+		<result property="faxGroup" column="FAX_GROUP" />
+		<result property="faxNumber" column="FAX_NUMBER" />
+		<result property="homepage" column="HOMEPAGE" />
+
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="updateDate" column="UPDATE_DATE" />
+		
+	</resultMap>
+	
+	<select id="getCustomerListByParamForCall" parameterType="saleson.shop.customer.support.CustomerParam" resultMap="CustomerResult">
+		
+		SELECT 
+			T.*,
+			(CASE WHEN T.USER_ID > 0 THEN IFNULL(UD.PHONE_NUMBER, '') ELSE STAFF_PHONE_NUMBER END) AS PHONE_NUMBER,
+			UD.BUSINESS_TYPE
+		FROM (
+			SELECT 
+				C.CUSTOMER_CODE,
+				IFNULL(U.USER_NAME, C.CUSTOMER_NAME) AS CUSTOMER_NAME,
+				U.USER_ID,
+				C.CUSTOMER_TYPE,
+				C.CUSTOMER_GROUP,
+				C.BUSINESS_NUMBER,
+				C.TEL_NUMBER,
+				C.BOSS_NAME,
+				C.CATEGORY,
+				C.EVENT,
+				C.ZIPCODE,
+				C.ADDRESS,
+				C.ADDRESS_DETAIL,
+				C.MEMO,
+				C.STAFF_NAME,
+				C.STAFF_DEPARTMENT,
+				C.STAFF_TEL_NUMBER,
+				C.STAFF_PHONE_NUMBER,
+				C.BANK_NUMBER,
+				C.BANK_NAME,
+				C.BANK_IN_NAME,
+				C.BANK_CMS_CODE,
+				C.CUSTOMER_STAFF_NAME,
+				C.CUSTOMER_STAFF_POSITION,
+				C.CUSTOMER_STAFF_TEL_NUMBER,
+				C.CUSTOMER_STAFF_PHONE_NUMBER,
+				C.CUSTOMER_STAFF_EMAIL,
+				C.DM_ZIPCODE,
+				C.DM_ADDRESS,
+				C.DM_ADDRESS_DETAIL,
+				C.BUSINESS_NUMBER_CODE,
+				U.AUTHORITY,
+				U.EMAIL,
+				C.CREATE_DATE,
+				C.UPDATE_DATE
+			FROM OP_CUSTOMER C 
+			LEFT JOIN (
+				SELECT U.*, UR.AUTHORITY
+				FROM OP_USER U INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID
+				<where>
+					<if test='userName != null and userName != ""'>
+						AND U.USER_NAME LIKE CONCAT('%', #{userName}, '%')
+					</if>
+					
+					<if test='email != null and email != ""'>
+						AND U.EMAIL LIKE CONCAT(#{email}, '%')
+					</if>
+					
+					AND UR.AUTHORITY = 'ROLE_USER'
+				</where>
+			) U ON C.USER_ID = U.USER_ID
+			<where>
+				(U.AUTHORITY = 'ROLE_USER' OR U.AUTHORITY IS NULL)
+				AND (U.STATUS_CODE = '9' OR U.STATUS_CODE IS NULL)
+				<if test='email != null and email != ""'>
+					AND (C.CUSTOMER_STAFF_EMAIL LIKE CONCAT(#{email}, '%') OR U.EMAIL LIKE CONCAT(#{email}, '%'))
+				</if>
+				
+				<if test='userName != null and userName != ""'>
+					AND (C.CUSTOMER_NAME LIKE CONCAT('%', #{userName}, '%') OR U.USER_NAME LIKE CONCAT('%', #{userName}, '%'))
+				</if>
+				
+				<if test='customerCode != null and customerCode != ""'>
+					AND C.CUSTOMER_CODE = #{customerCode}
+				</if>
+				
+			</where>
+		) T LEFT JOIN OP_USER_DETAIL UD ON T.USER_ID = UD.USER_ID
+		<where>
+		
+			<if test='telNumber != null and telNumber != ""'>
+				AND (
+					REPLACE(T.TEL_NUMBER, '-', '') LIKE CONCAT(REPLACE(#{telNumber}, '-', ''), '%')
+					OR REPLACE(UD.TEL_NUMBER, '-', '') LIKE CONCAT(REPLACE(#{telNumber}, '-', ''), '%')
+					OR REPLACE(UD.PHONE_NUMBER, '-', '') LIKE CONCAT(REPLACE(#{telNumber}, '-', ''), '%')
+				)
+			</if>
+			
+			<if test='businessNumber != null and businessNumber != ""'>
+				AND (
+					REPLACE(T.BUSINESS_NUMBER, '-', '') LIKE CONCAT(REPLACE(#{businessNumber}, '-', ''), '%')
+					OR REPLACE(UD.BUSINESS_NUMBER, '-', '') LIKE CONCAT(REPLACE(#{businessNumber}, '-', ''), '%')
+				)
+			</if>
+			
+		</where> 
+	</select>
+	
+	<sql id="sqlCustomerWhere">
+		<where>
+			<if test='query != null and query != "" '>
+				<choose>
+					<when test='where == "CUSTOMER_NAME"'>
+						AND C.CUSTOMER_NAME LIKE CONCAT('%', #{query} , '%')
+					</when>
+					<when test='where == "BUSINESS_NUMBER"'>
+						AND C.BUSINESS_NUMBER LIKE CONCAT('%', #{query} , '%')
+					</when>
+					<when test='where == "TEL_NUMBER"'>
+						AND C.TEL_NUMBER LIKE CONCAT('%', #{query} , '%')
+					</when>
+				</choose>
+			</if>
+			
+			<if test='(searchStartDate != null and searchStartDate != "") and (searchEndDate != null and searchEndDate != "") and (newCustomerFlag == null )'>
+				
+				
+				<choose>
+					<when test="(searchStartDateTime != null and searchStartDateTime != '') and (searchEndDateTime != null and searchEndDateTime != '')">
+						AND substr(C.CREATE_DATE, 1, 10) BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+					</when>
+					<otherwise>
+						AND substr(C.CREATE_DATE, 1, 8) BETWEEN #{searchStartDate} AND #{searchEndDate}
+					</otherwise>
+				</choose>
+				
+			</if>
+			
+			<if test='newCustomerFlag == "Y" '>
+				AND C.CREATE_DATE BETWEEN CONCAT( DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 DAY),'%Y%m%d') ,'150100') AND DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+			</if>
+			
+		</where>
+	</sql>
+
+	<select id="getCustomerId" resultType="String" parameterType="saleson.shop.customer.domain.Customer">
+		SELECT CUSTOMER_CODE FROM OP_CUSTOMER
+		<where>
+			<choose>
+				<when test="userId > 0 and userId != null">
+					USER_ID = #{userId}
+					AND CUSTOMER_NAME = #{customerName}
+				</when>
+				<otherwise>
+					CUSTOMER_NAME = #{customerName}
+					AND TEL_NUMBER = #{telNumber}
+				</otherwise>
+			</choose>
+		</where>
+		LIMIT 0, 1
+	</select>
+
+	<select id="getUserByParam" parameterType="saleson.shop.customer.support.CustomerParam" resultMap="saleson.shop.user.UserMapper.UserResult">
+		SELECT 
+			U.*, 
+			UD.* 
+		FROM OP_USER U INNER JOIN OP_USER_DETAIL UD 
+			ON U.USER_ID = UD.USER_ID
+		WHERE
+			<choose>
+				<when test='email != null and email != ""'>
+					(U.EMAIL = #{email})
+				</when>
+				<otherwise>
+					(UD.TEL_NUMBER = #{telNumber} OR UD.PHONE_NUMBER = #{telNumber})
+				</otherwise>
+			</choose>
+			AND U.USER_NAME = #{userName}
+			AND U.STATUS_CODE = 9
+	</select>
+
+	<insert id="insertCustomerForExcel">
+		INSERT INTO OP_CUSTOMER (CUSTOMER_CODE, CUSTOMER_NAME, USER_ID, CUSTOMER_GROUP, CUSTOMER_TYPE, BUSINESS_NUMBER, TEL_NUMBER, BOSS_NAME, CATEGORY, EVENT, ZIPCODE, ADDRESS, ADDRESS_DETAIL, MEMO, STAFF_NAME, STAFF_DEPARTMENT, STAFF_TEL_NUMBER, STAFF_PHONE_NUMBER, BANK_NUMBER, BANK_NAME, BANK_IN_NAME, BANK_CMS_CODE, CUSTOMER_STAFF_NAME, CUSTOMER_STAFF_POSITION, CUSTOMER_STAFF_TEL_NUMBER, CUSTOMER_STAFF_PHONE_NUMBER, CUSTOMER_STAFF_EMAIL, DM_ZIPCODE, DM_ADDRESS, DM_ADDRESS_DETAIL, BUSINESS_NUMBER_CODE, CREATE_DATE, UPDATE_DATE)
+		
+		VALUES
+		<foreach item="item" index="index" collection="list" open="" separator="," close=""> 
+			(#{item.customerCode}, #{item.customerName}, #{item.userId}, #{item.customerGroup}, #{item.customerType}, #{item.businessNumber}, #{item.telNumber}, #{item.bossName}, #{item.category}, #{item.event}, #{item.zipcode}, #{item.address}, #{item.addressDetail}, #{item.memo}, #{item.staffName}, #{item.staffDepartment}, #{item.staffTelNumber}, #{item.staffPhoneNumber}, #{item.bankNumber}, #{item.bankName}, #{item.bankInName}, #{item.bankCmsCode}, #{item.customerStaffName}, #{item.customerStaffPosition}, #{item.customerStaffTelNumber}, #{item.customerStaffPhoneNumber}, #{item.customerStaffEmail}, #{item.dmZipcode}, #{item.dmAddress}, #{item.dmAddressDetail}, #{item.businessNumberCode}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+
+	<insert id="insertCustomer" parameterType="saleson.shop.customer.domain.Customer">
+		INSERT INTO OP_CUSTOMER (CUSTOMER_CODE, CUSTOMER_NAME, USER_ID, CUSTOMER_GROUP, CUSTOMER_TYPE, BUSINESS_NUMBER, TEL_NUMBER, BOSS_NAME, CATEGORY, EVENT, ZIPCODE, ADDRESS, ADDRESS_DETAIL, MEMO, STAFF_NAME, STAFF_DEPARTMENT, STAFF_TEL_NUMBER, STAFF_PHONE_NUMBER, BANK_NUMBER, BANK_NAME, BANK_IN_NAME, BANK_CMS_CODE, CUSTOMER_STAFF_NAME, CUSTOMER_STAFF_POSITION, CUSTOMER_STAFF_TEL_NUMBER, CUSTOMER_STAFF_PHONE_NUMBER, CUSTOMER_STAFF_EMAIL, DM_ZIPCODE, DM_ADDRESS, DM_ADDRESS_DETAIL, BUSINESS_NUMBER_CODE, CREATE_DATE, UPDATE_DATE, FAX_GROUP, FAX_NUMBER, HOMEPAGE)
+		VALUES (#{customerCode}, #{customerName}, #{userId}, #{customerGroup}, #{customerType}, #{businessNumber}, #{telNumber}, #{bossName}, #{category}, #{event}, #{zipcode}, #{address}, #{addressDetail}, #{memo}, #{staffName}, #{staffDepartment}, #{staffTelNumber}, #{staffPhoneNumber}, #{bankNumber}, #{bankName}, #{bankInName}, #{bankCmsCode}, #{customerStaffName}, #{customerStaffPosition}, #{customerStaffTelNumber}, #{customerStaffPhoneNumber}, #{customerStaffEmail}, #{dmZipcode}, #{dmAddress}, #{dmAddressDetail}, #{businessNumberCode}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{faxGroup}, #{faxNumber}, #{homepage})
+	</insert>
+
+	<update id="updateCustomer" parameterType="saleson.shop.customer.domain.Customer">
+		UPDATE OP_CUSTOMER SET
+			CUSTOMER_NAME = #{customerName}, 
+			USER_ID = #{userId}, 
+			CUSTOMER_GROUP = #{customerGroup},
+			CUSTOMER_TYPE = #{customerType}, 
+			BUSINESS_NUMBER = #{businessNumber}, 
+			TEL_NUMBER = #{telNumber}, 
+			BOSS_NAME = #{bossName}, 
+			CATEGORY = #{category}, 
+			EVENT = #{event}, 
+			ZIPCODE = #{zipcode}, 
+			ADDRESS = #{address}, 
+			ADDRESS_DETAIL = #{addressDetail}, 
+			MEMO = #{memo}, 
+			STAFF_NAME = #{staffName}, 
+			STAFF_DEPARTMENT = #{staffDepartment}, 
+			STAFF_TEL_NUMBER = #{staffTelNumber}, 
+			STAFF_PHONE_NUMBER = #{staffPhoneNumber}, 
+			BANK_NUMBER = #{bankNumber}, 
+			BANK_NAME = #{bankName}, 
+			BANK_IN_NAME = #{bankInName}, 
+			BANK_CMS_CODE = #{bankCmsCode}, 
+			CUSTOMER_STAFF_NAME = #{customerStaffName}, 
+			CUSTOMER_STAFF_POSITION = #{customerStaffPosition}, 
+			CUSTOMER_STAFF_TEL_NUMBER = #{customerStaffTelNumber}, 
+			CUSTOMER_STAFF_PHONE_NUMBER = #{customerStaffPhoneNumber}, 
+			CUSTOMER_STAFF_EMAIL = #{customerStaffEmail}, 
+			DM_ZIPCODE = #{dmZipcode}, 
+			DM_ADDRESS = #{dmAddress}, 
+			DM_ADDRESS_DETAIL = #{dmAddressDetail}, 
+			BUSINESS_NUMBER_CODE = #{businessNumberCode},
+			UPDATE_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),
+			HOMEPAGE = #{homepage},
+			FAX_GROUP = #{faxGroup},
+			FAX_NUMBER = #{faxNumber}
+		WHERE CUSTOMER_CODE = #{customerCode}
+	</update>
+	
+	<select id="getCustomerCountByParam" parameterType="saleson.shop.customer.support.CustomerParam" resultType="Integer">
+			SELECT COUNT(*) FROM OP_CUSTOMER C
+			<include refid="sqlCustomerWhere" />
+	</select>
+	
+	<select id="getCustomerList" parameterType="saleson.shop.customer.support.CustomerParam" resultMap="CustomerResult" >
+		<include refid="CommonMapper.paginationHeader" />
+		SELECT 
+			C.*, 
+			UD.BUSINESS_TYPE 
+		FROM OP_CUSTOMER C 
+		LEFT JOIN OP_USER_DETAIL UD ON C.USER_ID = UD.USER_ID
+		<include refid="sqlCustomerWhere" />
+		ORDER BY C.CREATE_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getCustomerById" parameterType="String" resultMap="CustomerResult">
+		SELECT * FROM OP_CUSTOMER
+		WHERE CUSTOMER_CODE = #{customerCode}
+	</select>
+	
+	<update id="updateCustomerDefaultInfo" parameterType="saleson.shop.customer.domain.Customer">
+		UPDATE OP_CUSTOMER SET
+			CUSTOMER_NAME = #{customerName},
+			UPDATE_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+			<if test="zipcode != null and zipcode != ''">
+				, ZIPCODE = #{zipcode} 
+			</if>
+			<if test="address != null and address != ''">
+				, ADDRESS = #{address}
+			</if>
+			<if test="addressDetail != null and addressDetail != ''">
+				, ADDRESS_DETAIL = #{addressDetail}
+			</if>
+			<if test="addressDetail != null and addressDetail != ''">
+				, TEL_NUMBER = #{telNumber}
+			</if>
+			<if test="userId != null">
+				<if test="userId > 0">
+				, USER_ID = #{userId}
+				</if>
+			</if>
+		WHERE	
+			CUSTOMER_CODE = #{customerCode} 
+	</update>
+	
+	
+</mapper>

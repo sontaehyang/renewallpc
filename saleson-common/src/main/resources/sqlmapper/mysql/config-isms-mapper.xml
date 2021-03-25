@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.onlinepowers.framework.isms.ConfigIsmsMapper">
+
+	<resultMap id="IsmsResult" type="com.onlinepowers.framework.isms.domain.Isms">
+		<result column="KEY" property="key"/>
+		<result column="VALUE" property="value"/>
+		<result column="DESCRIPTION" property="description"/>
+		<result column="USE_YN" property="useYn"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+		<result column="ORDERING" property="ordering"/>
+		<result column="ISMS_TYPE" property="ismsType"/>
+	</resultMap>
+
+	<select id="getIsmsList" parameterType="SearchParam"
+			resultMap="IsmsResult">
+		SELECT
+			`KEY`,
+			`VALUE`,
+			DESCRIPTION,
+			USE_YN,
+			UPDATE_DATE,
+			ORDERING,
+			ISMS_TYPE
+		  FROM OP_CONFIG_ISMS
+		<where>
+			<if test="key != null and key != ''">
+				AND `KEY` = #{key}
+			</if>
+		</where>
+		ORDER BY ISMS_TYPE, ORDERING
+	</select>
+
+	<update id="updateIsmsConfig" parameterType="com.onlinepowers.framework.isms.domain.Isms">
+		UPDATE OP_CONFIG_ISMS
+		SET
+			VALUE = #{value},
+			<if test="useYn != null and useYn != ''">
+				USE_YN = #{useYn},
+			</if>
+			UPDATE_DATE = <include refid="CommonMapper.datetime" />
+		WHERE
+            `KEY` = #{key}
+	</update>
+
+	<select id="getIsmsConfigValueByKey" parameterType="String" resultType="String">
+		SELECT
+			`VALUE`
+		FROM OP_CONFIG_ISMS
+		WHERE `KEY` = #{key}
+		AND USE_YN = 'Y'
+	</select>
+
+</mapper>

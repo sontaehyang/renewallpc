@@ -1,0 +1,287 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?> 
+<div class="inner qna_wrap">
+	<div class="location_area">
+		<?include "../include/all_menu.html"?>
+		<div class="breadcrumbs">
+			<a href="#" class="home"><span class="hide">home</span></a>
+			<a href="#">마이페이지</a> 
+			<a href="#">쇼핑내역</a> 
+			<span>주문/배송조회</span> 
+		</div>
+	</div><!-- // location_area E --> 
+	
+	<!-- 주문/배송조회 정보 박스 -->	
+	<div class="order_info">
+		<div class="member_level">
+			<p class="level"><img src="/content/images/icon/icon_gold.png" alt="등급"></p>
+			<p class="name"><span>홍길동</span>님</p>
+			<p class="rating">일반등급</p>
+			<a href="#" class="btn_benefit" title="혜택보기">혜택보기</a>
+		</div><!--// member_level E-->
+		<div class="info_list">
+			<ul class="info">
+				<li>
+					<p class="item point">포인트</p>
+					<p class="remainder"><span>9,999,999</span>P</p>
+				</li>
+				<li>
+					<p class="item coupons">쿠폰 <a href="#" class="btn_down_confirm">다운가능쿠폰</a></p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item delivery">배송비 쿠폰</p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item cash">캐시</p>
+					<p class="remainder"><span>9,999,999</span>원</p>
+				</li>
+			</ul>
+			<div class="condition_wrap">
+				<div class="order_condition">
+					<span class="title">주문/배송</span>
+					<ol>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step01.gif" alt="order"></span>
+							<p>주문접수 <span><a href="#">30</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"> </li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step02.gif" alt="order"></span>
+							<p>결제완료  <span><a href="#">10</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step03.gif" alt="order"></span>
+							<p>상품준비중 <span><a href="#">0</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step04.gif" alt="order"></span>
+							<p>배송중 <span><a href="#" class="ing">1</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step05.gif" alt="order"></span>
+							<p>배송완료 <span><a href="#">5</a>건</span></p> 
+						</li>
+					</ol>
+				</div> <!--// order_condition E--> 
+				<div class="order_refund">
+					<p class="title">취소/교환/반품</p>
+					<ul>
+						<li>취소 <span><a href="#">0</a>건</span></li>  
+						<li>교환 <span><a href="#" class="ing">2</a>건</span></li>  
+						<li>반품 <span><a href="#">0</a>건</span></li>  
+					</ul>
+				</div><!--// order_refund E--> 
+			</div><!--// condition_wrap E--> 
+		</div><!--// info_list E-->
+	</div><!--// order_info E-->
+	
+	<div id="contents" class="pt0"> 
+		<?include "../include/mypage_lnb.html"?>
+		<div class="contents_inner"> 	   
+			<h2>상품Q&amp;A</h2>
+			<div class="mypage_search_area"> 
+				<fieldset>
+					<dl>
+						<dt>기간별 조회</dt>
+						<dd>
+							<div class="date_box">
+								<span><input type="text" id="datepicker"></span>
+								<span>~</span>
+								<span><input type="text" id="datepicker2"></span>
+							</div>
+							<div class="search_term">
+								<button type="button" class="btn date_search" title="1주일">1주일</button> 
+								<button type="button" class="btn date_search" title="1개월">1개월</button> 
+								<button type="button" class="btn date_search" title="3개월">3개월</button> 
+								<button type="button" class="btn date_search"   title="6개월">6개월</button> 
+							</div>
+						</dd>
+						<dt class="mt5">상품명 조회</dt>
+						<dd class="mt5">
+							<div class="col-w-0 search_write">
+								<input type="text" title="상품명조회" placeholder="의자">
+								<button type="button" class="btn btn_search_min" title="조회">조회</button>
+							</div>
+						</dd>
+					</dl> 
+				</fieldset>	 
+			</div> <!-- // mypage_search_area E -->
+			<div class="btn_wrap pt10">
+				<div class="btn_left">
+					<button type="button" class="btn btn-m btn-default"><img src="/content/images/icon/icon_reset.png" alt="초기화">초기화</button>
+				</div> 
+			</div><!--// btn_wrap E-->
+			<div class="list_info clear">
+				<p>상품Q&amp;A 총 <span>24</span>건</p>
+			</div><!--// list_info E-->
+			<!-- qna가 없을때 S -->
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-list mypage_qna">
+		 			<caption>상품Q&amp;A</caption>
+		 			<colgroup>
+		 				<col style="width:50px;">
+		 				<col style="width:257px;">
+		 				<col style="width:auto;">
+		 				<col style="width:125px;">
+		 				<col style="width:92px;">
+		 				<col style="width:88px;">
+		 			</colgroup>
+		 			<thead>
+		 				<tr>
+		 					<th scope="col">번호</th>
+		 					<th scope="col">상품</th>
+		 					<th scope="col">내용</th>
+		 					<th scope="col">작성일</th>
+		 					<th scope="col">답변유무</th>
+		 					<th scope="col">수정</th>
+		 				</tr>
+		 			</thead>
+		 			<tbody>
+		 				<tr>
+		 					<td colspan="6">
+		 						<div class="coupon_not">‘등록된 글이 없습니다.’</div>
+		 					</td> 
+		 				</tr> 
+		 			</tbody>
+		 		</table><!--//view E-->	
+		 	</div><!--//board_wrap E-->
+			<!-- qna가 없을때 E -->
+			<!-- qna가 있을때 S -->
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-list mypage_qna">
+		 			<caption>상품Q&amp;A</caption>
+		 			<colgroup>
+		 				<col style="width:50px;">
+		 				<col style="width:257px;">
+		 				<col style="width:auto;">
+		 				<col style="width:125px;">
+		 				<col style="width:92px;">
+		 				<col style="width:88px;">
+		 			</colgroup>
+		 			<thead>
+		 				<tr>
+		 					<th scope="col">번호</th>
+		 					<th scope="col">상품</th>
+		 					<th scope="col">내용</th>
+		 					<th scope="col">작성일</th>
+		 					<th scope="col">답변유무</th>
+		 					<th scope="col">수정</th>
+		 				</tr>
+		 			</thead>
+		 			<tbody>
+		 				<tr>
+		 					<td>6</td>
+		 					<td class="tleft item_name">	 						 
+		 						<div class="item"><img src="/content/images/common/wish_item.gif" alt="item"></div>
+		 						<div class="cont">
+		 							<a href="#">
+			 							<p class="code">[10395]</p> 
+										<p class="name">[SALE] 저 반발 접이식 나무 마사지 베 도바니</p>
+									</a>
+		 						</div>	 						 
+		 					</td>
+		 					<td class="tleft"><a href="#">물랑스파 세트 그린 상품 환불은 어떻게 되나요?</a></td>
+		 					<td>2014-12-31</td>
+		 					<td><strong class="plus">답변대기</strong></td>
+		 					<td class="qa_btn">
+		 						<button type="button" class="btn btn-s btn-default mt5" title="삭제">삭제</button>
+		 					</td>
+		 				</tr>
+		 				<tr id="questTit11" class="tit-off">
+		 					<td>5</td>
+		 					<td class="tleft item_name">	 						 
+		 						<div class="item"><img src="/content/images/common/wish_item.gif" alt="item"></div>
+		 						<div class="cont">
+		 							<a href="#">
+			 							<p class="code">[10395]</p> 
+										<p class="name">[SALE] 저 반발 접이식 나무 마사지 베 도바니</p>
+									</a>
+		 						</div>	 						 
+		 					</td>
+		 					<td class="tleft"><a href="#quest11" onclick="javascript:showQnA(11)">상품 재입고는 언제되나여?</a></td>
+		 					<td>2014-12-31</td>
+		 					<td><strong>답변완료</strong></td>
+		 					<td class="qa_btn">-</td>
+		 				</tr>
+		 				<!-- Q&A답변 -->
+		 				<tr id="quest11" class="view-off">
+							<td colspan="6" class="question-open tleft">
+								<div class="qna-q clear">
+									<p>상품 재입고는 언제되나여?</p>				 
+									<button type="button" class="btn btn-s btn-default" title="삭제">삭제</button>		 
+								</div> 	 
+								<div class="qna-a">
+									<p>고객님이 주문하신 상품은 담당자 확인후 환불 신청일로부터 1주일 이내 환불처리가 됩니다.<br>
+										최대한 빠른 기간에 환불처리를 진행하도록 하겠습니다.<br>
+										감사합니다.  <br>
+									</p>
+									<span class="date">(답변일 : 2014.12.02)</span>
+									<br> 
+								</div>								
+							</td>
+						</tr>
+		
+		 				<tr id="questTit12" class="tit-off">
+		 					<td>4</td>
+		 					<td class="tleft item_name">	 						 
+		 						<div class="item"><img src="/content/images/common/wish_item.gif" alt="item"></div>
+		 						<div class="cont">
+		 							<a href="#">
+			 							<p class="code">[10395]</p> 
+										<p class="name">[SALE] 저 반발 접이식 나무 마사지 베 도바니</p>
+									</a>
+		 						</div>	 						 
+		 					</td>
+		 					<td class="tleft"><a href="#quest12" onclick="javascript:showQnA(12)">상품 재입고는 언제되나여?</a></td>
+		 					<td>2014-12-31</td>
+		 					<td><strong>답변완료</strong></td>
+		 					<td class="qa_btn">-</td>
+		 				</tr>
+		 				<!-- Q&A답변 -->
+		 				<tr id="quest12" class="view-off">
+							<td colspan="6" class="question-open tleft">
+								<div class="qna-q clear">
+									<p>상품 재입고는 언제되나여?</p>				 
+									<button type="button" class="btn btn-s btn-default" title="삭제">삭제</button>		 
+								</div> 	 
+								<div class="qna-a">
+									<p>고객님이 주문하신 상품은 담당자 확인후 환불 신청일로부터 1주일 이내 환불처리가 됩니다.<br>
+										최대한 빠른 기간에 환불처리를 진행하도록 하겠습니다.<br>
+										감사합니다.  <br>
+									</p>
+									<span class="date">(답변일 : 2014.12.02)</span>
+									<br> 
+								</div>								
+							</td>
+						</tr>
+		 			</tbody>
+		 		</table><!--//view E-->	
+		 	</div><!--//board_wrap E-->
+		 	<!-- qna가 있을때 E -->
+	 		<p class="pagination">
+				<a href="#" class="first"><img src="/content/images/btn/btn_first.gif" alt="처음페이지"></a>
+				<a href="#" class="first"><img src="/content/images/btn/btn_prev.gif" alt="이전페이지"></a>
+				<a href="#">1</a>
+				<a href="#">2</a>
+				<a href="#">3</a>
+				<a href="#">4</a>
+				<a href="#">5</a>
+				<strong>6</strong>
+				<a href="#">7</a>
+				<a href="#">8</a>
+				<a href="#">9</a>
+				<a href="#">10</a>
+				<a href="#" class="next"><img src="/content/images/btn/btn_next.gif" alt="다음페이지"></a>
+				<a href="#" class="last"><img src="/content/images/btn/btn_last.gif" alt="마지막페이지"></a>
+			</p><!--//pagination E-->
+
+		</div>
+	</div><!-- // contents E -->	
+</div><!--// inner E-->
+<?include "../include/footer.html"?>	 
+ 

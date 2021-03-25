@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.maindisplayitem.MainDisplayItemMapper">
+	
+	<resultMap id="MainDisplayItemResult" type="saleson.shop.maindisplayitem.domain.MainDisplayItem" extends="saleson.shop.item.ItemMapper.ItemBaseResult">
+		<result property="templateId" column="TEMPLATE_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="displayOrder" column="DISPLAY_ORDER" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+	<select id="getMainDisplayItemListByParam" parameterType="saleson.shop.maindisplayitem.support.MainDisplayItemParam" resultMap="MainDisplayItemResult">
+		SELECT 
+			I.*, 
+			MDI.TEMPLATE_ID, 
+			MDI.DISPLAY_ORDER
+		FROM OP_MAIN_DISPLAY_ITEM MDI INNER JOIN OP_ITEM I 
+			ON MDI.ITEM_ID = I.ITEM_ID
+		WHERE 
+			MDI.TEMPLATE_ID = #{templateId}
+		ORDER BY MDI.DISPLAY_ORDER ASC
+	</select>
+
+	<insert id="insertMainDisplayItem" parameterType="saleson.shop.maindisplayitem.domain.MainDisplayItem">
+		INSERT INTO OP_MAIN_DISPLAY_ITEM (TEMPLATE_ID, ITEM_ID, DISPLAY_ORDER, CREATED_DATE)
+		VALUES (#{templateId}, #{itemId}, #{displayOrder}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+
+	<delete id="deleteMainDisplayItemByTemplateId" parameterType="String">
+		DELETE FROM OP_MAIN_DISPLAY_ITEM
+		<where>
+			TEMPLATE_ID = #{value}
+		</where>
+	</delete>
+
+</mapper>

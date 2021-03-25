@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.ranking.RankingMapperBatch">
+	
+	<insert id="insertRankingByParam"  parameterType="saleson.shop.ranking.support.RankingParam">
+		
+		INSERT INTO OP_RANKING (RANKING_ID, CATEGORY_URL, ITEM_ID, ORDERING)
+		VALUES  (#{rankingId}, #{categoryCode}, #{itemId}, #{ordering})
+	
+	</insert>
+
+</mapper>

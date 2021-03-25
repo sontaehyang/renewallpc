@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.message.MessageMapper">
+	<resultMap id="MessageResult" type="saleson.shop.message.domain.Message">
+		<result property="id" column="ID" />
+		<result property="language" column="LANGUAGE" />
+		<result property="kMessage" column="KMESSAGE" />
+		<result property="jMessage" column="JMESSAGE" />
+	</resultMap>
+	
+
+	
+	<sql id="sqlMessageWhere">
+		<where>
+			<if test='query != null or query != ""'>
+				<choose>
+					<when test='where == "ID"'>
+						AND A.ID LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<when test='where == "MESSAGE"'>
+						AND (
+						     KO.MESSAGE  LIKE CONCAT('%', #{query}, '%')
+							 OR
+							 JA.MESSAGE LIKE CONCAT('%', #{query}, '%')
+						)
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="getMessageMaxid" parameterType="saleson.shop.message.support.MessageParam" resultType="Integer">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT CAST(REPLACE(MAX(ID),'M','') AS UNSIGNED) + 1 AS MAXID
+  			FROM OP_COMMON_MESSAGE
+ 			WHERE ID LIKE 'M%'
+				AND ID NOT LIKE 'MENU%'
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getMessageCount" parameterType="saleson.shop.message.support.MessageParam" resultType="Integer">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT COUNT(*)
+			FROM (
+				SELECT ID
+				FROM OP_COMMON_MESSAGE
+				<where>
+					<if test='query != null or query != ""'>
+						<choose>
+							<when test='where == "ID"'>
+								AND ID       LIKE CONCAT('%', #{query}, '%')
+							</when>
+							<when test='where == "MESSAGE"'>
+								AND MESSAGE  LIKE CONCAT('%', #{query}, '%')
+							</when>
+						</choose>
+					</if>
+				</where>
+				GROUP BY ID
+			) A
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+
+	<select id="getMessageList" parameterType="saleson.shop.message.support.MessageParam" resultMap="MessageResult">
+		<include refid="CommonMapper.paginationHeader" />
+		   	SELECT A.ID,
+			          KO.MESSAGE AS KMESSAGE, 
+			          JA.MESSAGE AS JMESSAGE
+		  	FROM OP_COMMON_MESSAGE A
+			LEFT JOIN OP_COMMON_MESSAGE KO
+				   ON A.ID = KO.ID AND KO.LANGUAGE = 'ko'
+			LEFT JOIN OP_COMMON_MESSAGE JA
+				   ON A.ID = JA.ID AND JA.LANGUAGE = 'ja'
+			<include refid="sqlMessageWhere" />
+			GROUP BY A.ID, KO.MESSAGE, JA.MESSAGE
+			ORDER BY A.ID DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+
+	<select id="getMessageById" parameterType="String" resultMap="MessageResult">
+		  SELECT A.ID,
+			          KO.MESSAGE AS KMESSAGE, 
+			          JA.MESSAGE AS JMESSAGE
+		  FROM OP_COMMON_MESSAGE A
+			  LEFT JOIN OP_COMMON_MESSAGE KO ON A.ID = KO.ID AND KO.LANGUAGE = 'ko'
+			  LEFT JOIN OP_COMMON_MESSAGE JA ON A.ID = JA.ID AND JA.LANGUAGE = 'ja'
+ 		  WHERE A.ID = #{value}
+		  GROUP BY A.ID, KO.MESSAGE, JA.MESSAGE
+	</select>
+
+
+	<insert id="insertMessage1" parameterType="saleson.shop.message.domain.Message">
+		INSERT INTO OP_COMMON_MESSAGE (ID, LANGUAGE, MESSAGE)
+		SELECT * FROM (
+			SELECT #{id}, 'ko', #{kMessage} FROM DUAL
+			UNION
+			SELECT #{id}, 'ja', #{jMessage} FROM DUAL
+		) T
+	</insert>
+
+	<insert id="insertMessage2" parameterType="saleson.shop.message.domain.Message">
+		INSERT INTO OP_COMMON_MESSAGE
+		SELECT * FROM (
+			SELECT CONCAT('M', SUBSTR(CONCAT('00000', SUBSTR(MAX(ID), 2,5) + 1), -5)), 'ko', trim(#{kMessage})
+			FROM OP_COMMON_MESSAGE
+			WHERE ID NOT LIKE 'MENU%'
+			
+			UNION
+			
+			SELECT CONCAT('M', SUBSTR(CONCAT('00000', SUBSTR(MAX(ID), 2,5) + 1), -5)), 'ja', trim(#{jMessage})
+			FROM OP_COMMON_MESSAGE
+			WHERE ID NOT LIKE 'MENU%'
+		) T
+	</insert>
+
+	<update id="updatekMessage" parameterType="saleson.shop.message.domain.Message">
+		UPDATE OP_COMMON_MESSAGE
+		SET MESSAGE = #{kMessage}
+		WHERE ID = #{id} AND LANGUAGE = 'ko'
+	</update>
+
+	<update id="updatejMessage" parameterType="saleson.shop.message.domain.Message">
+		UPDATE OP_COMMON_MESSAGE
+		SET MESSAGE = #{jMessage}
+		WHERE ID = #{id} AND LANGUAGE = 'ja'
+	</update>
+
+	<delete id="deleteMessage" parameterType="String">
+		DELETE FROM OP_COMMON_MESSAGE 
+		WHERE ID = #{value}
+	</delete>
+	
+</mapper>

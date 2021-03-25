@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.attendance.AttendanceMapper">
+
+    <resultMap id="AttendanceResult" type="saleson.shop.attendance.domain.Attendance">
+        <result property="attendanceId" column="ATTENDANCE_ID" />
+        <result property="year" column="YEAR" />
+        <result property="month" column="MONTH" />
+        <result property="contentTop" column="CONTENT_TOP" />
+        <result property="contentBottom" column="CONTENT_BOTTOM" />
+        <result property="updatedBy" column="UPDATED_BY" />
+        <result property="updatedDate" column="UPDATED_DATE" />
+        <result property="createdBy" column="CREATED_BY" />
+        <result property="createdDate" column="CREATED_DATE" />
+
+        <collection property="attendanceConfigs" resultMap="AttendanceConfigResult" />
+    </resultMap>
+
+	<resultMap id="AttendanceConfigResult" type="saleson.shop.attendance.domain.AttendanceConfig">
+		<result property="attendanceConfigId" column="ATTENDANCE_CONFIG_ID" />
+        <result property="attendanceId" column="ATTENDANCE_ID" />
+		<result property="eventCode" column="EVENT_CODE" />
+		<result property="continueYn" column="CONTINUE_YN" />
+		<result property="days" column="DAYS" />
+		<result property="updatedBy" column="UPDATED_BY" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+        <result property="createdBy" column="CREATED_BY" />
+        <result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+    <resultMap id="AttendanceCheckResult" type="saleson.shop.attendance.domain.AttendanceCheck">
+        <result property="attendanceCheckId" column="ATTENDANCE_CHECK_ID" />
+        <result property="attendanceId" column="ATTENDANCE_ID" />
+        <result property="userId" column="USER_ID" />
+        <result property="checkedDate" column="CHECKED_DATE" />
+        <result property="checkedTime" column="CHECKED_TIME" />
+    </resultMap>
+
+    <resultMap id="AttendanceEventResult" type="saleson.shop.attendance.domain.AttendanceEvent">
+        <result property="attendanceEventId" column="ATTENDANCE_EVENT_ID" />
+        <result property="attendanceId" column="ATTENDANCE_ID" />
+        <result property="userId" column="USER_ID" />
+        <result property="eventCode" column="EVENT_CODE" />
+        <result property="continueYn" column="CONTINUE_YN" />
+        <result property="days" column="DAYS" />
+        <result property="checkedDays" column="CHECKED_DAYS" />
+        <result property="successYn" column="SUCCESS_YN" />
+        <result property="updatedDate" column="UPDATED_DATE" />
+    </resultMap>
+
+
+    <sql id="sqlAttendanceWhere">
+        <where>
+            <if test="attendanceId != null and attendanceId != ''">
+                AND ATTENDANCE_ID = #{attendanceId}
+            </if>
+            <if test="year != null and year != ''">
+                AND YEAR = #{year}
+            </if>
+            <if test="month != null and month != ''">
+                AND MONTH = #{month}
+            </if>
+        </where>
+    </sql>
+	<select id="getAttendanceCountByParam" parameterType="saleson.shop.attendance.support.AttendanceParam" resultType="Integer">
+        SELECT COUNT(*) FROM (
+            <include refid="CommonMapper.paginationHeader" />
+                SELECT *
+                FROM OP_ATTENDANCE A
+                <include refid="sqlAttendanceWhere" />
+                ORDER BY ATTENDANCE_ID DESC
+            <include refid="CommonMapper.paginationFooter" />
+        ) A
+        INNER JOIN OP_ATTENDANCE_CONFIG AC ON AC.ATTENDANCE_ID = A.ATTENDANCE_ID
+        <where>
+            <if test='eventCode != null and  eventCode != ""'>
+                AND AC.EVENT_CODE LIKE CONCAT('%', #{eventCode},'%')
+            </if>
+            <if test='continueYn != null and continueYn != ""'>
+                AND AC.CONTINUE_YN = #{continueYn}
+            </if>
+            <if test='startYear != null and startYear != "" and startMonth != null and startMonth != "" and endYear != null and endYear != "" and endMonth != null and endMonth != ""'>
+                AND CONCAT(A.YEAR,A.MONTH) BETWEEN CONCAT(#{startYear},#{startMonth}) AND CONCAT(#{endYear},#{endMonth})
+            </if>
+        </where>
+	</select>
+
+	<select id="getAttendanceListByParam" parameterType="saleson.shop.attendance.support.AttendanceParam" resultMap="AttendanceResult" >
+        SELECT * FROM (
+            <include refid="CommonMapper.paginationHeader" />
+                SELECT *
+                FROM OP_ATTENDANCE A
+                <include refid="sqlAttendanceWhere" />
+                ORDER BY ATTENDANCE_ID DESC
+            <include refid="CommonMapper.paginationFooter" />
+        ) A
+        INNER JOIN OP_ATTENDANCE_CONFIG AC ON AC.ATTENDANCE_ID = A.ATTENDANCE_ID
+        <where>
+            <if test='eventCode != null and  eventCode != ""'>
+                AND AC.EVENT_CODE LIKE CONCAT('%', #{eventCode},'%')
+            </if>
+            <if test='continueYn != null and continueYn != ""'>
+                AND AC.CONTINUE_YN = #{continueYn}
+            </if>
+            <if test='startYear != null and startYear != "" and startMonth != null and startMonth != "" and endYear != null and endYear != "" and endMonth != null and endMonth != ""'>
+                AND CONCAT(A.YEAR,A.MONTH) BETWEEN CONCAT(#{startYear},#{startMonth}) AND CONCAT(#{endYear},#{endMonth})
+            </if>
+        </where>
+	</select>
+
+    <!--<insert id="insertAttendance" parameterType="saleson.shop.attendance.domain.Attendance" useGeneratedKeys="true" keyProperty="attendanceId">-->
+    <insert id="insertAttendance" parameterType="saleson.shop.attendance.domain.Attendance">
+        INSERT INTO OP_ATTENDANCE (ATTENDANCE_ID, YEAR, MONTH, CONTENT_TOP, CONTENT_BOTTOM, UPDATED_BY, UPDATED_DATE, CREATED_BY, CREATED_DATE)
+        VALUES (#{attendanceId}, #{year}, #{month}, #{contentTop}, #{contentBottom}, #{updatedBy}, #{updatedDate}, #{createdBy}, <include refid="CommonMapper.datetime" />)
+    </insert>
+
+    <insert id="insertAttendanceConfig" parameterType="saleson.shop.attendance.domain.AttendanceConfig">
+        INSERT INTO OP_ATTENDANCE_CONFIG (ATTENDANCE_CONFIG_ID, ATTENDANCE_ID, EVENT_CODE, CONTINUE_YN, DAYS, UPDATED_BY, UPDATED_DATE, CREATED_BY, CREATED_DATE)
+        VALUES (#{attendanceConfigId}, #{attendanceId}, #{eventCode}, #{continueYn}, #{days}, #{updatedBy}, #{updatedDate}, #{createdBy}, <include refid="CommonMapper.datetime" />)
+    </insert>
+
+    <select id="getAttendanceCountForDuplication" parameterType="saleson.shop.attendance.domain.Attendance" resultType="Integer">
+        SELECT COUNT(*)
+        FROM OP_ATTENDANCE A
+        INNER JOIN OP_ATTENDANCE_CONFIG AC ON AC.ATTENDANCE_ID = A.ATTENDANCE_ID
+        WHERE A.YEAR = #{year}
+          AND A.MONTH = #{month}
+    </select>
+
+    <delete id="deleteAttendanceById" parameterType="saleson.shop.attendance.domain.Attendance" >
+        DELETE FROM OP_ATTENDANCE
+        WHERE ATTENDANCE_ID IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getAttendanceByParam" parameterType="saleson.shop.attendance.support.AttendanceParam" resultMap="AttendanceResult">
+        SELECT * FROM (
+            SELECT * FROM OP_ATTENDANCE A
+            <include refid="sqlAttendanceWhere"/>
+            ORDER BY A.ATTENDANCE_ID
+            LIMIT 1
+        ) A
+            INNER JOIN OP_ATTENDANCE_CONFIG AC ON AC.ATTENDANCE_ID = A.ATTENDANCE_ID
+    </select>
+
+
+    <sql id="sqlAttendanceCheckWhere">
+        <where>
+            <if test='userId != null'>
+                AND USER_ID = #{userId}
+            </if>
+            <if test='yearMonth != null'>
+                AND CHECKED_DATE LIKE CONCAT(#{yearMonth}, '%')
+            </if>
+            <if test='checkedDate != null'>
+                AND CHECKED_DATE = #{checkedDate}
+            </if>
+            <if test='attendanceId != null'>
+                AND ATTENDANCE_ID = #{attendanceId}
+            </if>
+        </where>
+
+    </sql>
+    <select id="getAttendanceCheckedListByParam" parameterType="saleson.shop.attendance.support.AttendanceParam" resultMap="AttendanceCheckResult">
+        SELECT *
+        FROM OP_ATTENDANCE_CHECK
+        <include refid="sqlAttendanceCheckWhere" />
+        ORDER BY ATTENDANCE_CHECK_ID DESC
+    </select>
+
+    <!-- 출석 체크 카운트 -->
+    <select id="getAttendanceCheckedCountByParam" parameterType="saleson.shop.attendance.support.AttendanceParam" resultType="int">
+        SELECT COUNT(*)
+        FROM OP_ATTENDANCE_CHECK
+        <include refid="sqlAttendanceCheckWhere" />
+    </select>
+
+    <update id="updateAttendance" parameterType="saleson.shop.attendance.domain.Attendance">
+        UPDATE
+          OP_ATTENDANCE
+        SET
+          CONTENT_TOP = #{contentTop},
+          CONTENT_BOTTOM = #{contentBottom},
+          UPDATED_BY = #{updatedBy},
+          UPDATED_DATE = #{updatedDate}
+        WHERE
+          ATTENDANCE_ID = #{attendanceId}
+    </update>
+
+    <insert id="insertAttendanceCheck" parameterType="saleson.shop.attendance.domain.AttendanceCheck">
+        INSERT INTO OP_ATTENDANCE_CHECK (
+            ATTENDANCE_CHECK_ID,
+            ATTENDANCE_ID,
+            USER_ID,
+            CHECKED_DATE,
+            CHECKED_TIME
+        ) VALUES (
+            #{attendanceCheckId},
+            #{attendanceId},
+            #{userId},
+            #{checkedDate},
+            #{checkedTime}
+        )
+    </insert>
+
+    <select id="getAttendanceEventListByParam" parameterType="saleson.shop.attendance.support.AttendanceParam" resultMap="AttendanceEventResult">
+        SELECT *
+        FROM OP_ATTENDANCE_EVENT
+        <where>
+            <if test='userId != null'>
+                AND USER_ID = #{userId}
+            </if>
+            <if test='attendanceId != null'>
+                AND ATTENDANCE_ID = #{attendanceId}
+            </if>
+
+            <if test='successYn != null'>
+                AND SUCCESS_YN = #{successYn}
+            </if>
+
+        </where>
+    </select>
+
+    <!-- 출석 이벤트 정보 일괄 등록 -->
+    <insert id="insertAttendanceEventBy">
+        INSERT INTO OP_ATTENDANCE_EVENT (
+            ATTENDANCE_EVENT_ID,
+            ATTENDANCE_ID,
+            USER_ID,
+            EVENT_CODE,
+            CONTINUE_YN,
+            DAYS,
+            CHECKED_DAYS,
+            SUCCESS_YN,
+            UPDATED_DATE
+        ) VALUES
+
+        <foreach item="item" index="index" collection="list" open="" separator="," close="">
+            (
+                #{item.attendanceEventId},
+                #{item.attendanceId},
+                #{item.userId},
+                #{item.eventCode},
+                #{item.continueYn},
+                #{item.days},
+                #{item.checkedDays},
+                #{item.successYn},
+                #{item.updatedDate}
+            )
+        </foreach>
+
+    </insert>
+
+
+    <update id="updateAttendanceEventByIds" parameterType="saleson.shop.attendance.domain.EventData">
+        UPDATE OP_ATTENDANCE_EVENT
+        <set>
+            UPDATED_DATE = #{updatedDate},
+
+            <if test='type == "reset"'>
+                CHECKED_DAYS = 1,
+            </if>
+            <if test='type == "update"'>
+                CHECKED_DAYS = CHECKED_DAYS + 1,
+            </if>
+            <if test='type == "success"'>
+                CHECKED_DAYS = CHECKED_DAYS + 1,
+                SUCCESS_YN = 'Y',
+            </if>
+        </set>
+        WHERE ATTENDANCE_EVENT_ID IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <delete id="deleteAllAttendanceConfigByAttendanceId" parameterType="saleson.shop.attendance.domain.Attendance" >
+        DELETE FROM OP_ATTENDANCE_CONFIG
+        WHERE ATTENDANCE_ID = #{attendanceId}
+    </delete>
+</mapper>

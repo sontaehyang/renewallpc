@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.accountnumber.AccountNumberMapper">
+
+	<resultMap id="accountNumberResult" type="saleson.shop.accountnumber.domain.AccountNumber">
+		<result property="shopConfigId" column="SHOP_CONFIG_ID" />
+		<result property="accountNumberId" column="ACCOUNT_NUMBER_ID" />
+		<result property="bankName" column="BANK_NAME" />
+		<result property="accountNumber" column="ACCOUNT_NUMBER" />
+		<result property="accountHolder" column="ACCOUNT_HOLDER" />
+		<result property="useFlag" column="USE_FLAG" />
+		<result property="userId" column="USER_ID" />
+		<result property="created" column="CREATED" />
+	</resultMap>
+	
+	<select id="getAccountNumberCount" parameterType="saleson.shop.accountnumber.support.AccountNumberParam" resultType="Integer">
+			SELECT COUNT(*)
+			FROM OP_ACCOUNT_NUMBER 
+			WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</select>
+	
+	<select id="getAccountNumberList" parameterType="saleson.shop.accountnumber.support.AccountNumberParam" resultMap="accountNumberResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+				SHOP_CONFIG_ID, 
+				ACCOUNT_NUMBER_ID, 
+				BANK_NAME, 
+				ACCOUNT_NUMBER, 
+				ACCOUNT_HOLDER, 
+				USE_FLAG, 
+				USER_ID, 
+				CREATED
+			FROM OP_ACCOUNT_NUMBER 
+			WHERE SHOP_CONFIG_ID = #{shopConfigId}
+			ORDER BY CREATED DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getUseAccountNumberListAll" parameterType="saleson.shop.accountnumber.support.AccountNumberParam" resultMap="accountNumberResult">
+		SELECT 
+			SHOP_CONFIG_ID, 
+			ACCOUNT_NUMBER_ID, 
+			BANK_NAME, 
+			ACCOUNT_NUMBER, 
+			ACCOUNT_HOLDER, 
+			USE_FLAG, 
+			USER_ID, 
+			CREATED
+		FROM OP_ACCOUNT_NUMBER 
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+		AND USE_FLAG = 'Y'
+	</select>
+	
+	<select id="getAccountNumber" parameterType="saleson.shop.accountnumber.support.AccountNumberParam" resultMap="accountNumberResult" >
+		SELECT 
+			SHOP_CONFIG_ID, 
+			ACCOUNT_NUMBER_ID, 
+			BANK_NAME, 
+			ACCOUNT_NUMBER, 
+			ACCOUNT_HOLDER, 
+			USE_FLAG, 
+			USER_ID, 
+			CREATED
+		FROM OP_ACCOUNT_NUMBER 
+ 		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+			AND ACCOUNT_NUMBER_ID = #{accountNumberId}
+	</select>
+	
+	<insert id="insertAccountNumber" parameterType="saleson.shop.accountnumber.domain.AccountNumber">
+		INSERT INTO OP_ACCOUNT_NUMBER (SHOP_CONFIG_ID, ACCOUNT_NUMBER_ID, BANK_NAME, ACCOUNT_NUMBER, ACCOUNT_HOLDER, USE_FLAG, USER_ID, CREATED)
+		VALUES (#{shopConfigId}, #{accountNumberId}, #{bankName}, #{accountNumber}, #{accountHolder}, #{useFlag}, #{userId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<update id="updateAccountNumber" parameterType="saleson.shop.accountnumber.domain.AccountNumber">
+		UPDATE OP_ACCOUNT_NUMBER SET
+			ACCOUNT_NUMBER_ID = #{accountNumberId}, 
+			BANK_NAME = #{bankName}, 
+			ACCOUNT_NUMBER = #{accountNumber}, 
+			ACCOUNT_HOLDER = #{accountHolder}, 
+			USE_FLAG = #{useFlag}, 
+			USER_ID = #{userId}, 
+			CREATED = #{created}
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+			AND ACCOUNT_NUMBER_ID = #{accountNumberId}
+	</update>
+	
+	<delete id="deleteAccountNumber" parameterType="saleson.shop.accountnumber.support.AccountNumberParam" >
+		DELETE FROM OP_ACCOUNT_NUMBER 
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+			AND ACCOUNT_NUMBER_ID = #{accountNumberId}
+	</delete>
+	
+</mapper>

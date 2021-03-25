@@ -1,0 +1,3943 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.order.OrderMapper">
+	
+	<resultMap id="ShippingCouponResult" type="saleson.shop.order.domain.ShippingCoupon">
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="userId" column="USER_ID" />
+		<result property="shippingGroupCode" column="SHIPPING_GROUP_CODE" />
+		<result property="useCouponCount" column="USE_COUPON_COUNT" />
+		<result property="discountAmount" column="DISCOUNT_AMOUNT" />
+	</resultMap>
+	
+	<resultMap id="OrderResult" type="saleson.shop.order.domain.Order">
+		<id property="orderCode" column="ORDER_CODE" />
+		<id property="orderSequence" column="ORDER_SEQUENCE" />
+		
+		<id property="itemTotalAmount" column="ITEM_TOTAL_AMOUNT" />
+		<id property="shippingTotalAmount" column="SHIPPING_TOTAL_AMOUNT" />
+		<id property="orderTotalAmount" column="ORDER_TOTAL_AMOUNT" />
+		<id property="payAmount" column="PAY_AMOUNT" />
+		
+		<result property="userId" column="USER_ID" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="buyerName" column="BUYER_NAME" />
+		<result property="phone" column="PHONE" />
+		<result property="mobile" column="MOBILE" />
+		<result property="email" column="EMAIL" />
+		<result property="newZipcode" column="NEW_ZIPCODE" />
+		<result property="zipcode" column="ZIPCODE" />
+		<result property="sido" column="SIDO" />
+		<result property="sigungu" column="SIGUNGU" />
+		<result property="eupmyeondong" column="EUPMYEONDONG" />
+		<result property="address" column="ADDRESS" />
+		<result property="addressDetail" column="ADDRESS_DETAIL" />
+		<result property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="ip" column="IP" />
+		
+		<result property="returnBankName" column="RETURN_BANK_NAME" />
+		<result property="returnBankInName" column="RETURN_BANK_IN_NAME" />
+		<result property="returnVirtualNo" column="RETURN_VIRTUAL_NO" />
+		
+		<result property="orderAdminMemo" column="ORDER_ADMIN_MEMO" />
+		<result property="createdDate" column="ORDER_DATE" />
+		<collection property="orderShippingInfos" resultMap="OrderShippingInfoResult" />
+	</resultMap>
+	
+	<resultMap id="BuyPaymentResult" type="saleson.shop.order.domain.BuyPayment">
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="approvalType" column="APPROVAL_TYPE" />
+		<result property="serviceType" column="SERVICE_TYPE" />
+		<result property="amount" column="AMOUNT" />
+		<result property="taxFreeAmount" column="TAX_FREE_AMOUNT" />
+		<result property="bankVirtualNo" column="BANK_VIRTUAL_NO" />
+		<result property="bankInName" column="BANK_IN_NAME" />
+		<result property="bankExpirationDate" column="BANK_DATE" />
+		<result property="mid" column="SERVICE_MID" />
+		<result property="key" column="SERVICE_KEY" />
+	</resultMap>
+	
+	<resultMap id="BuyResult" type="saleson.shop.order.domain.Buy">
+		<result property="userId" column="USER_ID" />
+		<result property="sessionId" column="SESSION_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="content" column="CONTENT" />
+		<result property="shippingPaymentType" column="SHIPPING_PAYMENT_TYPE" />
+		<result property="saveDeliveryFlag" column="SAVE_DELIVERY_FLAG" />
+		<result property="saveDeliveryName" column="SAVE_DELIVERY_NAME" />
+		<result property="deviceType" column="DEVICE_TYPE" />
+
+		<association property="orderPrice" javaType="saleson.shop.order.domain.OrderPrice">
+			<result property="totalPointDiscountAmount" column="POINT_DISCOUNT_AMOUNT" />
+			<result property="totalShippingCouponUseCount" column="SHIPPING_COUPON_USE_COUNT" />
+			<result property="totalShippingCouponDiscountAmount" column="SHIPPING_COUPON_DISCOUNT_AMT" />
+			<result property="totalItemCouponDiscountAmount" column="ITEM_COUPON_DISCOUNT_AMOUNT" />
+			<result property="totalCartCouponDiscountAmount" column="CART_COUPON_DISCOUNT_AMOUNT" />
+			<result property="orderPayAmount" column="ORDER_PAY_AMOUNT" />
+		</association>
+		
+		<collection property="buyer" resultMap="BuyerResult" />
+        <collection property="cashbill" resultMap="CashbillResult" />
+	</resultMap>
+	
+	<resultMap id="BuyerResult" type="saleson.shop.order.domain.Buyer">
+		<result property="userName" column="USER_NAME" />
+		<result property="phone" column="PHONE" />
+		<result property="mobile" column="MOBILE" />
+		<result property="email" column="EMAIL" />
+		<result property="newZipcode" column="NEW_ZIPCODE" />
+		<result property="zipcode" column="ZIPCODE" />
+		<result property="sido" column="SIDO" />
+		<result property="sigungu" column="SIGUNGU" />
+		<result property="eupmyeondong" column="EUPMYEONDONG" />
+		<result property="address" column="ADDRESS" />
+		<result property="addressDetail" column="ADDRESS_DETAIL" />
+	</resultMap>
+
+    <resultMap id="CashbillResult" type="saleson.model.Cashbill">
+        <result property="cashbillCode" column="CASHBILL_CODE" />
+        <result property="cashbillType" column="CASHBILL_TYPE" />
+        <result property="customerName" column="CUSTOMER_NAME" />
+        <result property="orderCode" column="ORDER_CODE" />
+        <result property="createdDate" column="CREATED_DATE" />
+    </resultMap>
+	
+	<resultMap id="OrderShippingInfoResult" type="saleson.shop.order.domain.OrderShippingInfo">
+		<id property="orderCode" column="ORDER_CODE" />
+		<id property="orderSequence" column="ORDER_SEQUENCE" />
+		<id property="shippingInfoSequence" column="SHIPPING_INFO_SEQUENCE" />
+		
+		<result property="receiveNewZipcode" column="RECEIVE_NEW_ZIPCODE" />
+		<result property="receiveZipcode" column="RECEIVE_ZIPCODE" />
+		<result property="receiveSido" column="RECEIVE_SIDO" />
+		<result property="receiveSigungu" column="RECEIVE_SIGUNGU" />
+		<result property="receiveEupmyeondong" column="RECEIVE_EUPMYEONDONG" />
+		<result property="receiveAddress" column="RECEIVE_ADDRESS" />
+		<result property="receiveAddressDetail" column="RECEIVE_ADDRESS_DETAIL" />
+		<result property="receiveName" column="RECEIVE_NAME" />
+		<result property="receivePhone" column="RECEIVE_PHONE" />
+		<result property="receiveMobile" column="RECEIVE_MOBILE" />
+		
+		<result property="memo" column="MEMO" />
+		
+		<result property="createdDate" column="ORDER_INFO_CREATED_DATE" />
+		<result property="updatedDate" column="ORDER_INFO_UPDATED_DATE" />
+		
+		<collection property="orderItems" resultMap="OrderItemResult" />
+	</resultMap>
+
+	<resultMap id="OrderPgDataResult" type="saleson.shop.order.domain.OrderPgData">
+		<id property="orderPgDataId" column="ORDER_PG_DATA_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		
+		<result property="pgServiceType" column="PG_SERVICE_TYPE" />
+		<result property="pgServiceMid" column="PG_SERVICE_MID" />
+		<result property="pgServiceKey" column="PG_SERVICE_KEY" />
+		<result property="pgPaymentType" column="PG_PAYMENT_TYPE" />
+		<result property="pgKey" column="PG_KEY" />
+		<result property="pgAuthCode" column="PG_AUTH_CODE" />
+		<result property="pgProcInfo" column="PG_PROC_INFO" />
+		
+		<result property="partCancelFlag" column="PART_CANCEL_FLAG" />
+		<result property="partCancelDetail" column="PART_CANCEL_DETAIL" />
+		<result property="pgAmount" column="PG_AMOUNT" />
+		<result property="escrowStatus" column="ESCROW_STATUS" />
+	</resultMap>
+
+	<resultMap id="OrderPaymentResult" type="saleson.shop.order.domain.OrderPayment">
+		<id property="orderCode" column="ORDER_CODE" />
+		<id property="orderSequence" column="ORDER_SEQUENCE" />
+		<id property="paymentSequence" column="PAYMENT_SEQUENCE" />
+		<result property="deviceType" column="DEVICE_TYPE" />
+		<result property="paymentType" column="PAYMENT_TYPE" />
+		<result property="orderPgDataId" column="ORDER_PG_DATA_ID" />
+		<result property="approvalType" column="APPROVAL_TYPE" />
+		<result property="bankVirtualNo" column="BANK_VIRTUAL_NO" />
+		<result property="bankInName" column="BANK_IN_NAME" />
+		<result property="bankDate" column="BANK_DATE" />
+		<result property="amount" column="AMOUNT" />
+		<result property="taxFreeAmount" column="TAX_FREE_AMOUNT" />
+		
+		<result property="cancelAmount" column="CANCEL_AMOUNT" />
+		<result property="remainingAmount" column="REMAINING_AMOUNT" />
+		
+		<result property="totalPaymentAmount" column="TOTAL_PAY_AMOUNT" />
+		<result property="totalCancelAmount" column="TOTAL_CANCEL_AMOUNT" />
+		
+		<result property="payDate" column="PAY_DATE" />
+        <result property="nowPaymentFlag" column="NOW_PAYMENT_FLAG" />
+
+        <result property="refundFlag" column="REFUND_FLAG" />
+        <result property="paymentSummary" column="PAYMENT_SUMMARY" />
+
+        <result property="createdDate" column="CREATED_DATE" />
+
+		<result property="delayDay" column="DELAY_DAY" />
+		<result property="changeOrderStatusCount" column="CHANGE_ORDER_STATUS_COUNT" />
+		
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="escrowStatus" column="ESCROW_STATUS" />
+
+		<collection property="cashbill" resultMap="CashbillResult" />
+		<collection property="orderPgData" resultMap="OrderPgDataResult" />
+	</resultMap>
+
+	<resultMap id="BaseOrderItemResult" type="saleson.shop.order.domain.OrderItem">
+		<id property="orderCode" column="ORDER_CODE" />
+		<id property="orderSequence" column="ORDER_SEQUENCE" />
+		<id property="itemSequence" column="ITEM_SEQUENCE" />
+		
+		<result property="itemCount" column="ITEM_COUNT" />
+		<result property="cancelCount" column="CANCEL_COUNT" />
+		
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="shippingSequence" column="SHIPPING_SEQUENCE" />
+		<result property="shippingInfoSequence" column="SHIPPING_INFO_SEQUENCE" />
+		
+		<result property="additionItemFlag" column="ADDITION_ITEM_FLAG" />
+		<result property="parentItemSequence" column="PARENT_ITEM_SEQUENCE" />
+		
+		<result property="deviceType" column="DEVICE_TYPE" />
+		<result property="userId" column="USER_ID" />
+		<result property="guestFlag" column="GUEST_FLAG" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="categoryTeamId" column="CATEGORY_TEAM_ID" />
+		<result property="categoryGroupId" column="CATEGORY_GROUP_ID" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="shipmentId" column="SHIPMENT_ID" />
+		<result property="couponUserId" column="COUPON_USER_ID" />
+		<result property="addCouponUserId" column="ADD_COUPON_USER_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemCode" column="ITEM_CODE" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="freeGiftName" column="FREE_GIFT_NAME" />
+		<result property="imageSrc" column="IMAGE_SRC" />
+		<result property="shippingReturn" column="SHIPPING_RETURN" />
+		
+		<result property="purchasePrice" column="PURCHASE_PRICE" />
+		<result property="costPrice" column="COST_PRICE" />
+		<result property="price" column="PRICE" />
+		<result property="optionPrice" column="OPTION_PRICE" />
+		<result property="salePrice" column="SALE_PRICE" />
+		
+		<result property="quantity" column="QUANTITY" />
+		<result property="claimQuantity" column="CLAIM_QUANTITY" />
+		<result property="orderQuantity" column="ORDER_QUANTITY" />
+		
+		<result property="couponDiscountPrice" column="COUPON_DISCOUNT_PRICE" />
+		<result property="spotSaleFlag" column="SPOT_SALE_FLAG" />
+		<result property="spotType" column="SPOT_TYPE" />
+		<result property="spotDiscountPrice" column="SPOT_DISCOUNT_PRICE" />
+		<result property="taxType" column="TAX_TYPE" />
+		<result property="commissionType" column="COMMISSION_TYPE" />
+		<result property="commissionRate" column="COMMISSION_RATE" />
+		
+		<result property="commissionBasePrice" column="COMMISSION_BASE_PRICE" />
+		<result property="commissionPrice" column="COMMISSION_PRICE" />
+		
+		<result property="supplyPrice" column="SUPPLY_PRICE" />
+		
+		<result property="sellerDiscountFlag" column="SELLER_DISCOUNT_FLAG" />
+		<result property="sellerDiscountType" column="SELLER_DISCOUNT_TYPE" />
+		<result property="sellerDiscountPrice" column="SELLER_DISCOUNT_PRICE" />
+		<result property="sellerDiscountDetail" column="SELLER_DISCOUNT_DETAIL" />
+		<result property="adminDiscountPrice" column="ADMIN_DISCOUNT_PRICE" />
+		<result property="adminDiscountDetail" column="ADMIN_DISCOUNT_DETAIL" />
+		
+		<result property="brand" column="BRAND" />
+		<result property="options" column="OPTIONS" />
+		
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="orderItemStatus" column="ORDER_ITEM_STATUS" />
+		<result property="deliveryCompanyId" column="DELIVERY_COMPANY_ID" />
+		<result property="deliveryCompanyName" column="DELIVERY_COMPANY_NAME" />
+		<result property="deliveryCompanyUrl" column="DELIVERY_COMPANY_URL" />
+		<result property="deliveryNumber" column="DELIVERY_NUMBER" />
+		
+		<result property="shipmentReturnType" column="SHIPMENT_RETURN_TYPE" />
+		
+		<result property="pointType" column="POINT_TYPE" />
+		<result property="pointConfigType" column="POINT_CONFIG_TYPE" />
+		<result property="point" column="POINT" />
+		<result property="pointLog" column="POINT_LOG" />
+		<result property="earnPoint" column="EARN_POINT" />
+		<result property="earnPointFlag" column="EARN_POINT_FLAG" />
+		
+		<result property="sellerPoint" column="SELLER_POINT" />
+		
+		<result property="payDate" column="PAY_DATE" />
+		<result property="shippingReadyDate" column="SHIPPING_READY_DATE" />
+		<result property="shippingDate" column="SHIPPING_DATE" />
+		<result property="shippingFinishDate" column="SHIPPING_FINISH_DATE" />
+		
+		<result property="cancelRequestDate" column="CANCEL_REQUEST_DATE" />
+		<result property="cancelRequestFinishDate" column="CANCEL_REQUEST_FINISH_DATE" />
+		
+		<result property="salesDate" column="SALES_DATE" />
+		<result property="salesCancelDate" column="SALES_CANCEL_DATE" />
+		
+		<result property="confirmDate" column="CONFIRM_DATE" />
+		<result property="returnRequestDate" column="RETURN_REQUEST_DATE" />
+		<result property="exchangeRequestDate" column="EXCHANGE_REQUEST_DATE" />
+		<result property="returnRequestFinishDate" column="RETURN_REQUEST_FINISH_DATE" />
+		<result property="exchangeRequestFinishDate" column="EXCHANGE_REQUEST_FINISH_DATE" />
+				
+		<result property="returnPointFlag" column="RETURN_POINT_FLAG" />
+		<result property="delayDay" column="DELAY_DAY" />
+		<result property="createdDate" column="CREATED_DATE" />
+
+		<result property="shipmentReturnId" column="SHIPMENT_RETURN_ID" />
+		<result property="cancelFlag" column="CANCEL_FLAG" />
+		<result property="refundStatus" column="REFUND_STATUS" />
+		<result property="itemReturnFlag" column="ITEM_RETURN_FLAG" />
+		<result property="sellerName" column="SELLER_NAME" />
+		<result property="isShippingView" column="IS_SHIPPING_VIEW" />
+		
+		<result property="deliveryType" column="DELIVERY_TYPE" />
+		<result property="shipmentGroupCode" column="SHIPMENT_GROUP_CODE" />
+		
+		<result property="remittanceId" column="REMITTANCE_ID" />
+		<result property="remittanceType" column="REMITTANCE_TYPE" />
+		<result property="remittanceDay" column="REMITTANCE_DAY" />
+		<result property="remittanceExpectedDate" column="REMITTANCE_EXPECTED_DATE" />
+		<result property="remittanceDate" column="REMITTANCE_DATE" />
+		<result property="remittanceStatusCode" column="REMITTANCE_STATUS_CODE" />
+		<result property="escrowStatus" column="ESCROW_STATUS" />
+		<result property="levelId" column="LEVEL_ID" />
+		<result property="levelName" column="LEVEL_NAME" />
+		<result property="userLevelDiscountRate" column="USER_LEVEL_DISCOUNT_RATE" />
+		<result property="userLevelDiscountPrice" column="USER_LEVEL_DISCOUNT_PRICE" />
+		<result property="approvalType" column="APPROVAL_TYPE" />
+
+		<result property="parentItemId" column="PARENT_ITEM_ID" />
+		<result property="parentItemOptions" column="PARENT_ITEM_OPTIONS" />
+		<result property="quickDeliveryFlag" column="QUICK_DELIVERY_FLAG" />
+		<result property="erpOriginUnique" column="ERP_ORIGIN_UNIQUE" />
+	</resultMap>
+
+	<resultMap id="OrderItemResult" type="saleson.shop.order.domain.OrderItem" extends="BaseOrderItemResult">
+		<association property="orderShipping" resultMap="OrderShippingResult" />
+	</resultMap>
+
+	<resultMap id="OrderListResult" type="saleson.shop.order.domain.OrderList" extends="BaseOrderItemResult">
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="mobile" column="MOBILE" />
+
+		<result property="buyerName" column="BUYER_NAME" />
+
+		<result property="receiveName" column="RECEIVE_NAME" />
+		<result property="receiveMobile" column="RECEIVE_MOBILE" />
+		<result property="receiveZipcode" column="RECEIVE_ZIPCODE" />
+		<result property="receiveNewZipcode" column="RECEIVE_NEW_ZIPCODE" />
+		<result property="receiveAddress" column="RECEIVE_ADDRESS" />
+		<result property="receiveAddressDetail" column="RECEIVE_ADDRESS_DETAIL" />
+        <result property="isPoint" column="IS_POINT" />
+		<result property="memo" column="MEMO" />
+
+		<result property="additionItemFlag" column="ADDITION_ITEM_FLAG" />
+	</resultMap>
+
+	<resultMap id="OrderShippingResult" type="saleson.shop.order.domain.OrderShipping">
+		<id property="orderCode" column="ORDER_CODE" />
+		<id property="orderSequence" column="ORDER_SEQUENCE" />
+		<id property="shippingSequence" column="SHIPPING_SEQUENCE" />
+		<result property="sellerId" column="SHIPPING_SELLER_ID" />
+		<result property="shippingType" column="SHIPPING_TYPE" />
+		<result property="shipmentGroupCode" column="SHIPMENT_GROUP_CODE" />
+		<result property="shippingGroupCode" column="SHIPPING_GROUP_CODE" />
+		
+		<result property="islandType" column="ISLAND_TYPE" />
+
+		<result property="shippingItemCount" column="SHIPPING_ITEM_COUNT" />
+		<result property="shipping" column="SHIPPING" />
+		<result property="shippingExtraCharge1" column="SHIPPING_EXTRA_CHARGE1" />
+		<result property="shippingExtraCharge2" column="SHIPPING_EXTRA_CHARGE2" />
+		
+		<result property="shippingFreeAmount" column="SHIPPING_FREE_AMOUNT" />
+		<result property="realShipping" column="REAL_SHIPPING" />
+		<result property="shippingPaymentType" column="SHIPPING_PAYMENT_TYPE" />
+		<result property="discountShipping" column="DISCOUNT_SHIPPING" />
+		<result property="shippingCouponCount" column="SHIPPING_COUPON_COUNT" />
+		
+		<result property="shippingPaymentType" column="SHIPPING_PAYMENT_TYPE" />
+		<result property="payShipping" column="PAY_SHIPPING" />
+		<result property="returnShipping" column="RETURN_SHIPPING" />
+		
+		<result property="returnFlag" column="RETURN_FLAG" />
+		<result property="remittanceId" column="REMITTANCE_ID" />
+		<result property="remittanceAmount" column="REMITTANCE_AMOUNT" />
+		<result property="remittanceExpectedDate" column="REMITTANCE_EXPECTED_DATE" />
+		<result property="remittanceStatusCode" column="REMITTANCE_STATUS_CODE" />
+		<result property="remittanceDate" column="REMITTANCE_DATE" />
+
+        <result property="previousRealShipping" column="PREVIOUS_REAL_SHIPPING" />
+        <result property="previousPayShipping" column="PREVIOUS_PAY_SHIPPING" />
+        <result property="previousReturnShipping" column="PREVIOUS_RETURN_SHIPPING" />
+        <result property="previousRemittanceAmount" column="PREVIOUS_REMITTANCE_AMOUNT" />
+	</resultMap>
+
+	<resultMap id="OrderCancelApplyResult" type="saleson.shop.order.domain.OrderCancelApply">
+		<result property="orderCancelApplyId" column="ORDER_CANCEL_APPLY_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="applyQuantity" column="APPLY_QUANTITY" />
+		<result property="orderShippingId" column="ORDER_SHIPPING_ID" />
+		<result property="cancelBankName" column="CANCEL_BANK_NAME" />
+		<result property="cancelVirtualNo" column="CANCEL_VIRTUAL_NO" />
+		<result property="cancelBankInName" column="CANCEL_BANK_IN_NAME" />
+		<result property="cancelReason" column="CANCEL_REASON" />
+		<result property="cancelReasonText" column="CANCEL_REASON_TEXT" />
+		<result property="cancelRefusalReasonText" column="CANCEL_REFUSAL_REASON_TEXT" />
+		
+		<result property="cancelMemo" column="CANCEL_MEMO" />
+		<collection property="orderItem" resultMap="OrderItemResult" />
+	</resultMap>
+
+	<resultMap id="OrderReturnApplyResult" type="saleson.shop.order.domain.OrderReturnApply">
+		<result property="orderReturnApplyId" column="ORDER_RETURN_APPLY_ID" />
+		<result property="orderItemId" column="ORDER_ITEM_ID" />
+		<result property="applyQuantity" column="APPLY_QUANTITY" />
+		
+		<result property="returnShippingStartFlag" column="RETURN_SHIPPING_START_FLAG" />
+		<result property="returnShippingNumber" column="RETURN_SHIPPING_NUMBER" />
+		<result property="returnShippingCompanyName" column="RETURN_SHIPPING_COMPANY_NAME" />
+		<result property="returnShippingCompanyUrl" column="RETURN_SHIPPING_COMPANY_URL" />
+		<result property="returnShippingStartDate" column="RETURN_SHIPPING_START_DATE" />
+		<result property="returnRealShipping" column="RETURN_REAL_SHIPPING" />
+		<result property="returnReason" column="RETURN_REASON" />
+		<result property="returnReasonText" column="RETURN_REASON_TEXT" />
+		<result property="returnMemo" column="RETURN_MEMO" />
+		<result property="returnBankName" column="RETURN_BANK_NAME" />
+		<result property="returnVirtualNo" column="RETURN_VIRTUAL_NO" />
+		<result property="returnBankInName" column="RETURN_BANK_IN_NAME" />
+		
+		<collection property="orderItem" resultMap="OrderItemResult" />
+	</resultMap>
+
+	<resultMap id="OrderExchangeApplyResult" type="saleson.shop.order.domain.OrderExchangeApply">
+		<result property="orderExchangeApplyId" column="ORDER_EXCHANGE_APPLY_ID" />
+		<result property="orderItemId" column="ORDER_ITEM_ID" />
+		<result property="exchangeReceiveName" column="EXCHANGE_RECEIVE_NAME" />
+		<result property="exchangeReceivePhone" column="EXCHANGE_RECEIVE_PHONE" />
+		<result property="exchangeReceiveMobile" column="EXCHANGE_RECEIVE_MOBILE" />
+		<result property="exchangeReceiveZipcode" column="EXCHANGE_RECEIVE_ZIPCODE" />
+		<result property="exchangeReceiveAddress" column="EXCHANGE_RECEIVE_ADDRESS" />
+		<result property="exchangeReceiveAddress2" column="EXCHANGE_RECEIVE_ADDRESS2" />
+		
+		<result property="exchangeDeliveryDate" column="EXCHANGE_DELIVERY_DATE" />
+		<result property="exchangeDeliveryCompanyId" column="EXCHANGE_DELIVERY_COMPANY_ID" />
+		<result property="exchangeDeliveryCompanyName" column="EXCHANGE_DELIVERY_COMPANY_NAME" />
+		<result property="exchangeDeliveryCompanyUrl" column="EXCHANGE_DELIVERY_COMPANY_URL" />
+		<result property="exchangeDeliveryNumber" column="EXCHANGE_DELIVERY_NUMBER" />
+		
+		<result property="exchangeShippingStartFlag" column="EXCHANGE_SHIPPING_START_FALG" />
+		<result property="exchangeShippingNumber" column="EXCHANGE_SHIPPING_NUMBER" />
+		<result property="exchangeShippingCompanyName" column="EXCHANGE_SHIPPING_COMPANY_NAME" />
+		<result property="exchangeShippingCompanyUrl" column="EXCHANGE_SHIPPING_COMPANY_URL" />
+		<result property="exchangeShippingStartDate" column="EXCHANGE_SHIPPING_START_DATE" />
+		<result property="exchangeRealShipping" column="EXCHANGE_REAL_SHIPPING" />
+		<result property="exchangeReason" column="EXCHANGE_REASON" />
+		<result property="exchangeReasonText" column="EXCHANGE_REASON_TEXT" />
+		<result property="exchangeMemo" column="EXCHANGE_MEMO" />
+	</resultMap>
+
+	
+	<resultMap id="BuyReceiverResult" type="saleson.shop.order.domain.Receiver">
+		
+		<result property="shippingIndex" column="SHIPPING_INDEX" />
+		<result property="receiveName" column="RECEIVE_NAME" />
+		<result property="receiveMobile" column="RECEIVE_MOBILE" />
+		<result property="receivePhone" column="RECEIVE_PHONE" />
+		<result property="receiveZipcode" column="RECEIVE_ZIPCODE" />
+		<result property="receiveNewZipcode" column="RECEIVE_NEW_ZIPCODE" />
+		<result property="receiveSido" column="RECEIVE_SIDO" />
+		<result property="receiveSigungu" column="RECEIVE_SIGUNGU" />
+		<result property="receiveEupmyeondong" column="RECEIVE_EUPMYEONDONG" />
+		<result property="receiveAddress" column="RECEIVE_ADDRESS" />
+		<result property="receiveAddressDetail" column="RECEIVE_ADDRESS_DETAIL" />
+		<result property="content" column="CONTENT" />
+		
+		<collection property="buyQuantitys" resultMap="BuyQuantityResult" />
+		<collection property="items" resultMap="BuyItemResult" />
+		
+	</resultMap>
+	
+	<resultMap id="BuyQuantityResult" type="saleson.shop.order.domain.BuyQuantity">
+		<result property="shippingIndex" column="SHIPPING_INDEX" />
+		<result property="itemSequence" column="ITEM_SEQUENCE" />
+		<result property="quantity" column="QUANTITY" />
+	</resultMap>
+	
+	<resultMap id="BuyItemResult" type="saleson.shop.order.domain.BuyItem">
+		
+		<result property="itemSequence" column="ITEM_SEQUENCE" />
+		<result property="shippingIndex" column="SHIPPING_INDEX" />
+		<result property="orderItemId" column="ORDER_ITEM_ID" />
+		<result property="shippingPaymentType" column="SHIPPING_PAYMENT_TYPE" />
+		<result property="orderInfoId" column="ORDER_INFO_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="userId" column="USER_ID" />
+		<result property="sessionId" column="SESSION_ID" />
+		<result property="guestFlag" column="GUEST_FLAG" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="sellerName" column="SELLER_NAME" />
+		<result property="categoryTeamId" column="CATEGORY_TEAM_ID" />
+		<result property="categoryGroupId" column="CATEGORY_GROUP_ID" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="shipmentId" column="SHIPMENT_ID" />
+		<result property="deliveryType" column="DELIVERY_TYPE" />
+		<result property="shipmentGroupCode" column="SHIPMENT_GROUP_CODE" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="addCouponUserId" column="ADD_COUPON_USER_ID" />
+		<result property="couponUserId" column="COUPON_USER_ID" />
+		<result property="couponDiscountAmount" column="COUPON_DISCOUNT_AMOUNT" />
+		<result property="itemCode" column="ITEM_CODE" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="brand" column="BRAND" />
+		<result property="options" column="OPTIONS" />
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="deliveryCompanyId" column="DELIVERY_COMPANY_ID" />
+		<result property="deliveryNumber" column="DELIVERY_NUMBER" />
+		<result property="pointType" column="POINT_TYPE" />
+		<result property="point" column="POINT" />
+		<result property="pointLog" column="POINT_LOG" />
+		<result property="earnPoints" column="EARN_POINTS" />
+		<result property="earnPointFlag" column="EARN_POINT_FLAG" />
+		<result property="salesDate" column="SALES_DATE" />
+		<result property="salesCancelDate" column="SALES_CANCEL_DATE" />
+		<result property="deliveryDate" column="DELIVERY_DATE" />
+		<result property="confirmDate" column="CONFIRM_DATE" />
+		<result property="returnRequestDate" column="RETURN_REQUEST_DATE" />
+		<result property="returnRequestFinishDate" column="RETURN_REQUEST_FINISH_DATE" />
+		<result property="exchangeRequestFinishDate" column="EXCHANGE_REQUEST_FINISH_DATE" />
+		<result property="additionItemFlag" column="ADDITION_ITEM_FLAG" />
+		<result property="parentItemSequence" column="PARENT_ITEM_SEQUENCE" />
+		<result property="parentItemId" column="PARENT_ITEM_ID" />
+		<result property="parentItemOptions" column="PARENT_ITEM_OPTIONS" />
+		<result property="campaignCode" column="CAMPAIGN_CODE" />
+		<result property="quickDeliveryExtraChargeFlag" column="QUICK_DELIVERY_EXTRA_CHARGE_FLAG" />
+		<result property="quickDeliveryFlag" column="QUICK_DELIVERY_FLAG" />
+		<result property="cashDiscountFlag" column="CASH_DISCOUNT_FLAG" />
+
+		<association property="itemPrice" javaType="saleson.shop.order.domain.ItemPrice">
+			<result property="purchasePrice" column="PURCHASE_PRICE" />
+			<result property="costPrice" column="COST_PRICE" />
+			<result property="price" column="PRICE" />
+			<result property="quantity" column="QUANTITY" />
+			<result property="saleAmount" column="SALE_AMOUNT" />
+			
+			<result property="spotSaleFlag" column="SPOT_SALE_FLAG" />
+			
+			<result property="excise" column="EXCISE" />
+			<result property="excisePrice" column="EXCISE_PRICE" />
+		</association>
+
+		<collection property="item" resultMap="saleson.shop.item.ItemMapper.ItemResult" />
+
+
+	</resultMap>
+
+	<resultMap id="OrderStatusLogResult" type="saleson.shop.order.domain.OrderStatusLog">
+		<result property="orderStatusLogId" column="ORDER_STATUS_LOG_ID" />
+		<result property="vendorId" column="VENDOR_ID" />
+		<result property="orderId" column="ORDER_ID" />
+		<result property="orderItemId" column="ORDER_ITEM_ID" />
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="userId" column="USER_ID" />
+		<result property="regIp" column="REG_IP" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<resultMap id="SearchOrderStatusLogResult" type="saleson.shop.order.domain.OrderStatusLog" extends="OrderStatusLogResult">
+		<result property="userName" column="USERNAME" />
+	</resultMap>
+	
+	<resultMap id="OrderPrintLogResult" type="saleson.shop.order.domain.OrderPrintLog">
+		<result property="orderPrintLogId" column="ORDER_PRINT_LOG_ID" />
+		<result property="vendorId" column="VENDOR_ID" />
+		<result property="orderId" column="ORDER_ID" />
+		<result property="title" column="TITLE" />
+		<result property="userId" column="USER_ID" />
+		<result property="action" column="ACTION" />
+		<result property="regIp" column="REG_IP" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<resultMap id="SearchOrderPrintLogResult" type="saleson.shop.order.domain.OrderPrintLog" extends="OrderPrintLogResult">
+		<result property="userName" column="USERNAME" />
+	</resultMap>
+
+	<resultMap id="OrderCountResult" type="saleson.shop.order.domain.OrderCount">
+		<result property="key" column="ID" />
+		<result property="label" column="LABEL" />
+		<result property="count" column="COUNT" />
+		
+		<result property="waitingDeposit" column="WAITING_DEPOSIT" />
+		<result property="pay" column="PAY" />
+		<result property="waitingShipping" column="WAITING_SHPPING" />
+		<result property="shipping" column="SHIPPING" />
+		<result property="confirmShipping" column="CONFIRM_SHIPPING" />
+		<result property="confirm" column="CONFIRM" />
+		<result property="exchange" column="EXCHANGE" />
+		<result property="cancel" column="CANCEL" />
+		<result property="refund" column="REFUND" />
+	</resultMap>
+	
+	<resultMap id="WaitingDepositDetailResult" type="saleson.shop.order.domain.WaitingDepositDetail">
+		<result property="sellerId" column="SELLER_ID" />
+		<association property="sellerInfo" javaType="saleson.seller.main.domain.Seller">
+			<result property="sellerName" column="SELLER_NAME" />
+			<result property="userName" column="SELLER_USER_NAME" />
+			<result property="telephoneNumber" column="SELLER_TELEPHONE_NUMBER" />
+			<result property="phoneNumber" column="SELLER_PHONE_NUMBER" />
+			<result property="companyName" column="SELLER_COMPANY_NAME" />
+		</association>
+		<collection property="orderItems" resultMap="OrderItemResult" />
+	</resultMap>
+	
+	<resultMap id="OrderLogResult" type="saleson.shop.order.domain.OrderLog">
+		<result property="logId" column="LOG_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="orderItemId" column="ORDER_ITEM_ID" />
+		<result property="orderItemStatus" column="ORDER_ITEM_STATUS" />
+		<result property="userName" column="USER_NAME" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<resultMap id="ShippingDelayCountResult" type="saleson.common.opmanager.count.OpmanagerCount">
+		<id property="id" column="ID"/>
+		<result property="label" column="LABEL"/>
+		<result property="count" column="COUNT"/>
+	</resultMap>
+
+	<!-- 신규주문 (결제완료/출고지시전) -->
+	<sql id="defaultNewOrderWhereQuery">
+		OI.ORDER_STATUS = '10'
+		AND OI.CANCEL_FLAG = 'N'
+	</sql>
+
+	<!-- 배송준비중 (상품준비) -->
+	<sql id="defaultShippingReadyOrderWhereQuery">
+		OI.ORDER_STATUS = '20'
+		AND OI.CANCEL_FLAG = 'N'
+	</sql>
+
+	<!-- 배송중 / 배송완료 / 교환 배송시작 -->
+	<sql id="defaultShippingOrderWhereQuery">
+		
+		<choose>
+			<when test="shippingStatus != null and shippingStatus.length > 0">
+				OI.ORDER_STATUS IN 							
+				<foreach collection="shippingStatus" item="shippingStatus" index="i" open="(" separator="," close=")">
+					#{shippingStatus}
+				</foreach>
+			</when>
+			<otherwise>
+				OI.ORDER_STATUS IN ('30', '35', '55')
+			</otherwise>
+		</choose>
+	
+		AND OI.CANCEL_FLAG = 'N'
+	</sql>
+
+	<!-- 구매확정 -->
+	<sql id="defaultConfirmOrderWhereQuery">
+		OI.ORDER_STATUS IN ('40')
+		AND OI.CANCEL_FLAG = 'N'
+	</sql>
+
+	<sql id="defaultOrderItemColumnForCopy">
+		ORDER_CODE, 
+		ORDER_SEQUENCE,
+		SHIPPING_SEQUENCE,
+		SHIPPING_INFO_SEQUENCE,
+		DEVICE_TYPE,
+		ADDITION_ITEM_FLAG,
+		PARENT_ITEM_SEQUENCE,
+		USER_ID, 
+		GUEST_FLAG, 
+		SELLER_ID, 
+		CATEGORY_TEAM_ID, 
+		CATEGORY_GROUP_ID, 
+		CATEGORY_ID, 
+		SHIPMENT_ID,
+		SHIPMENT_RETURN_ID,  
+		COUPON_USER_ID, 
+		ITEM_ID,  
+		ITEM_CODE, 
+		ITEM_USER_CODE, 
+		ITEM_NAME, 
+		FREE_GIFT_NAME,
+		IMAGE_SRC,
+		SHIPMENT_GROUP_CODE,
+		SHIPPING_RETURN,
+		PURCHASE_PRICE, 
+		COST_PRICE,
+		PRICE,
+		OPTION_PRICE,
+		SALE_PRICE,
+		COUPON_DISCOUNT_PRICE, 
+		SPOT_SALE_FLAG, 
+		SPOT_TYPE,
+		SPOT_DISCOUNT_PRICE,
+		TAX_TYPE,
+		COMMISSION_BASE_PRICE,
+		COMMISSION_RATE,
+		COMMISSION_PRICE,
+		SUPPLY_PRICE,
+		REMITTANCE_TYPE,
+		REMITTANCE_DAY,
+		REMITTANCE_EXPECTED_DATE,
+		REMITTANCE_DATE,
+		REMITTANCE_STATUS_CODE,
+		SELLER_DISCOUNT_PRICE,
+		SELLER_DISCOUNT_DETAIL,
+		ADMIN_DISCOUNT_PRICE,
+		ADMIN_DISCOUNT_DETAIL,
+		BRAND, 
+		OPTIONS, 
+		DELIVERY_COMPANY_ID, 
+		DELIVERY_COMPANY_NAME,
+		DELIVERY_NUMBER,
+		DELIVERY_COMPANY_URL,
+		SHIPMENT_RETURN_TYPE,
+		POINT_CONFIG_TYPE, 
+		POINT_TYPE, 
+		POINT, 
+		POINT_LOG, 
+		EARN_POINT, 
+		EARN_POINT_FLAG,
+		SELLER_POINT,
+		RETURN_POINT_FLAG,
+		ITEM_RETURN_FLAG,
+		REVENUE_SALES_STATUS,
+		DELIVERY_TYPE,
+		ESCROW_STATUS,
+		LEVEL_ID,
+		LEVEL_NAME,
+		USER_LEVEL_DISCOUNT_RATE,
+		USER_LEVEL_DISCOUNT_PRICE
+	</sql>
+
+	<sql id="sqlOrderItemTempUserWhere">
+		I.DATA_STATUS_CODE = '1'
+		AND I.DISPLAY_FLAG = 'Y'
+		AND OIT.USER_ID = #{userId}
+	</sql>
+	
+	<sql id="sqlOrderItemTempGuestWhere">
+		I.DATA_STATUS_CODE = '1'
+		AND I.DISPLAY_FLAG = 'Y'
+		AND NONMEMBER_ORDER_TYPE = '1'
+		AND OIT.SESSION_ID = #{sessionId}
+	</sql>	
+
+	<sql id="sqlOrderWhereQuery">
+		<choose>
+			<when test='conditionType == "ORDER-DETAIL-EXCEL"'>
+				<if test="orderCodes != null and orderCodes.isEmpty()">
+					AND OI.ORDER_CODE IN
+					<foreach item="orderCode" index="index" collection="orderCodes" open="(" separator="," close=")"> 
+						#{orderCode}
+					</foreach>
+				</if>
+			</when>
+			<otherwise>
+				<if test="orderCode != null and orderCode != ''">
+					AND OI.ORDER_CODE = #{orderCode}
+				</if>
+			</otherwise>
+		</choose>
+		
+		<if test="orderSequence != null and orderSequence != ''">
+			AND OI.ORDER_SEQUENCE = #{orderSequence}
+		</if>
+		
+		<if test="itemSequence > 0">
+			AND OI.ITEM_SEQUENCE = #{itemSequence}
+		</if>
+		
+		<if test="orderStatusList != null and !orderStatusList.isEmpty()">
+			AND OI.ORDER_STATUS IN
+			<foreach item="orderStatus" index="index" collection="orderStatusList" open="(" separator="," close=")"> 
+				#{orderStatus}
+			</foreach>
+		</if>
+		
+		<if test='cancelFlag != null and cancelFlag != ""'>
+			AND OI.CANCEL_FLAG = #{cancelFlag}
+		</if>
+		
+		<if test="userId > 0">
+			AND OI.USER_ID = #{userId}
+			AND OI.GUEST_FLAG = 'N'
+		</if>
+		
+		<if test="guestUserName != null and guestUserName != ''">
+			AND OI.GUEST_FLAG = 'Y'
+			AND O.BUYER_NAME = #{guestUserName}
+			AND O.MOBILE = #{guestPhoneNumber}
+		</if>
+		
+		
+		
+		<if test="searchDateType != null and searchDateType != ''">
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				<choose>
+					<when test="(searchStartDateTime != null and searchStartDateTime != '') and (searchEndDateTime != null and searchEndDateTime != '')">
+						AND DATE_FORMAT(${searchDateType}, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+					</when>
+					<otherwise>
+						AND DATE_FORMAT(${searchDateType}, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+					</otherwise>
+				</choose>
+			</if>
+		</if>
+		
+		<if test="(query != null and query != '') and (where != null and where != '')">
+			<choose>
+				<when test="where == 'USER_NAME'">
+					AND O.BUYER_NAME LIKE CONCAT('%', #{query}, '%')
+				</when>
+				<when test="where == 'USER_ID'">
+					AND OI.USER_ID IN (
+						SELECT USER_ID FROM OP_USER
+						WHERE LOGIN_ID LIKE CONCAT('%', #{query},'%')
+					)
+				</when>
+				<when test="where == 'PHONE'">
+					AND (
+						REPLACE(OSI.PHONE, '-', '') LIKE CONCAT(REPLACE(#{query}, '-', ''), '%')
+						OR REPLACE(OSI.MOBILE, '-', '') LIKE CONCAT(REPLACE(#{query}, '-', ''), '%')
+					)
+				</when>
+				<when test="where == 'RECEIVE_NAME'">
+					AND OSI.RECEIVE_NAME LIKE CONCAT('%', #{query},'%')
+				</when>
+				<when test="where == 'ITEM_NAME'">
+					AND OI.ITEM_NAME LIKE CONCAT('%', #{query},'%')
+				</when>
+				<when test="where == 'ITEM_CODE'">
+					AND (OI.ITEM_CODE = #{query} OR OI.ITEM_USER_CODE = #{query})
+				</when>
+				<when test="where == 'EMAIL'">
+					AND OSI.EMAIL LIKE CONCAT(#{query}, '%') 
+				</when>
+				<when test="where == 'ORDER_CODE'">
+					AND OI.ORDER_CODE LIKE CONCAT('%', #{query} , '%')
+				</when>
+			</choose>
+		</if>
+
+		<if test="additionItemFlag != null and additionItemFlag != ''">
+			AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+		</if>
+	</sql>
+	
+	<!-- 환불정보 -->
+	<select id="getOrderReturnInfo" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderResult">
+		SELECT
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			RETURN_BANK_NAME,
+			RETURN_BANK_IN_NAME,
+			RETURN_VIRTUAL_NO
+		FROM OP_ORDER
+		<where>
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+		</where>
+	</select>
+	
+	<update id="updateOrderReturnInfo" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE
+			OP_ORDER
+		SET
+			RETURN_BANK_NAME = #{returnBankName},
+			RETURN_BANK_IN_NAME = #{returnBankInName},
+			RETURN_VIRTUAL_NO = #{returnVirtualNo}
+		<where>
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+		</where>
+	</update>
+
+	<!-- 도서산간, 제주 지역을 검색함 -->
+	<select id="getIslandTypeByZipcode" parameterType="String" resultType="String">
+		SELECT ISLAND_TYPE 
+		FROM OP_ISLAND 
+		WHERE 
+			REPLACE(ZIPCODE, '-', '') = REPLACE(#{value}, '-', '')
+		ORDER BY ID DESC
+		LIMIT 0, 1
+	</select> 
+	
+	
+	<sql id="sqlDefaultColumnForOrderList">
+		
+		
+		(
+			SELECT SUM(SALE_PRICE * QUANTITY) 
+			FROM OP_ORDER_ITEM
+			WHERE
+				ORDER_CODE = O.ORDER_CODE
+				AND ORDER_SEQUENCE = O.ORDER_SEQUENCE
+		) AS ITEM_TOTAL_AMOUNT,
+		(
+			SELECT SUM(IFNULL(PAY_SHIPPING, 0) + IFNULL(RETURN_SHIPPING, 0)) 
+			FROM OP_ORDER_SHIPPING
+			WHERE
+				ORDER_CODE = O.ORDER_CODE
+				AND ORDER_SEQUENCE = O.ORDER_SEQUENCE
+		) AS SHIPPING_TOTAL_AMOUNT,
+		O.ORDER_TOTAL_AMOUNT,
+		O.PAY_AMOUNT,
+		O.USER_ID,
+		O.LOGIN_ID,
+		O.BUYER_NAME,
+		(
+			CASE WHEN O.USER_ID > 0 THEN 
+				(SELECT USER_NAME FROM OP_USER WHERE USER_ID = O.USER_ID)
+			ELSE
+				''
+			END 
+		) AS USER_NAME,
+		O.PHONE,
+		O.MOBILE,
+		O.EMAIL,
+		O.IP,
+		O.ORDER_ADMIN_MEMO,
+		O.CREATED_DATE AS ORDER_DATE,
+
+		OI.ORDER_CODE,
+		OI.ORDER_SEQUENCE,
+		OI.ITEM_SEQUENCE,
+		OI.ORDER_STATUS,
+		OI.SHIPPING_SEQUENCE,
+		OI.ADDITION_ITEM_FLAG,
+		OI.PARENT_ITEM_SEQUENCE,
+		OI.DEVICE_TYPE,
+		OI.GUEST_FLAG,
+		OI.SELLER_ID,
+		OI.CATEGORY_TEAM_ID,
+		OI.CATEGORY_GROUP_ID,
+		OI.CATEGORY_ID,
+		OI.SHIPMENT_ID,
+		OI.COUPON_USER_ID,
+		OI.ADD_COUPON_USER_ID,
+		OI.ITEM_ID,
+		OI.ITEM_CODE,
+		OI.ITEM_USER_CODE,
+		OI.ITEM_NAME,
+		OI.FREE_GIFT_NAME,
+		OI.IMAGE_SRC,
+		OI.SHIPPING_RETURN,
+		OI.PURCHASE_PRICE,
+		OI.COST_PRICE,
+		OI.PRICE,
+		OI.OPTION_PRICE,
+		OI.SALE_PRICE,
+		OI.QUANTITY,
+		OI.CLAIM_QUANTITY,
+		OI.ORDER_QUANTITY,
+		OI.COUPON_DISCOUNT_PRICE,
+		OI.SPOT_SALE_FLAG,
+		OI.SPOT_TYPE,
+		OI.SPOT_DISCOUNT_PRICE,
+		OI.TAX_TYPE,
+		OI.COMMISSION_RATE,
+		OI.COMMISSION_BASE_PRICE,
+		OI.COMMISSION_PRICE,
+		OI.SUPPLY_PRICE,
+		OI.SELLER_DISCOUNT_PRICE,
+		OI.SELLER_DISCOUNT_DETAIL,
+		OI.ADMIN_DISCOUNT_PRICE,
+		OI.ADMIN_DISCOUNT_DETAIL,
+		OI.BRAND,
+		OI.OPTIONS,
+		OI.DELIVERY_COMPANY_ID,
+		OI.DELIVERY_COMPANY_NAME,
+		OI.DELIVERY_COMPANY_URL,
+		OI.DELIVERY_NUMBER,
+		OI.SHIPMENT_RETURN_TYPE,
+		OI.POINT_TYPE,
+		OI.POINT_CONFIG_TYPE,
+		OI.POINT,
+		OI.POINT_LOG,
+		OI.EARN_POINT,
+		OI.EARN_POINT_FLAG,
+		OI.SELLER_POINT,
+		OI.PAY_DATE,
+		OI.SHIPPING_READY_DATE,
+		OI.SHIPPING_DATE,
+		OI.SHIPPING_FINISH_DATE,
+		OI.CANCEL_REQUEST_DATE,
+		OI.CANCEL_REQUEST_FINISH_DATE,
+		OI.SALES_DATE,
+		OI.SALES_CANCEL_DATE,
+		OI.CONFIRM_DATE,
+		OI.RETURN_REQUEST_DATE,
+		OI.EXCHANGE_REQUEST_DATE,
+		OI.RETURN_REQUEST_FINISH_DATE,
+		OI.RETURN_POINT_FLAG,
+		OI.CREATED_DATE,
+		OI.SHIPMENT_RETURN_ID,
+		OI.CANCEL_FLAG,
+		OI.REFUND_STATUS,
+		OI.ITEM_RETURN_FLAG,
+		OI.DELIVERY_TYPE,
+		OI.REMITTANCE_ID,
+		OI.REMITTANCE_TYPE,
+		OI.REMITTANCE_DAY,
+		OI.REMITTANCE_EXPECTED_DATE,
+		OI.REMITTANCE_STATUS_CODE,
+		OI.ESCROW_STATUS,
+		OI.LEVEL_ID,
+		OI.LEVEL_NAME,
+		OI.USER_LEVEL_DISCOUNT_RATE,
+		OI.USER_LEVEL_DISCOUNT_PRICE,
+		OI.PARENT_ITEM_ID,
+		OI.PARENT_ITEM_OPTIONS,
+		OI.QUICK_DELIVERY_FLAG,
+		OI.ERP_ORIGIN_UNIQUE,
+		
+		OSI.SHIPPING_INFO_SEQUENCE,
+		OSI.RECEIVE_ZIPCODE,
+		OSI.RECEIVE_NEW_ZIPCODE,
+		OSI.RECEIVE_SIDO,
+		OSI.RECEIVE_SIGUNGU,
+		OSI.RECEIVE_EUPMYEONDONG,
+		OSI.RECEIVE_ADDRESS,
+		OSI.RECEIVE_ADDRESS_DETAIL,
+		OSI.RECEIVE_NAME,
+		OSI.RECEIVE_PHONE,
+		OSI.RECEIVE_MOBILE,
+		OSI.MEMO,
+		
+		OS.SELLER_ID AS SHIPPING_SELLER_ID,
+		OS.SHIPPING_TYPE,
+		OS.SHIPMENT_GROUP_CODE,
+		OS.SHIPPING_GROUP_CODE,
+		OS.ISLAND_TYPE,
+		OS.SHIPPING_ITEM_COUNT,
+		OS.SHIPPING,
+		OS.SHIPPING_EXTRA_CHARGE1,
+		OS.SHIPPING_EXTRA_CHARGE2,
+		OS.SHIPPING_FREE_AMOUNT,
+		OS.REAL_SHIPPING,
+		OS.DISCOUNT_SHIPPING,
+		OS.SHIPPING_COUPON_COUNT,
+		OS.SHIPPING_PAYMENT_TYPE,
+		OS.PAY_SHIPPING,
+		OS.RETURN_SHIPPING,
+		OS.REMITTANCE_AMOUNT,
+		OS.REMITTANCE_DATE,
+		(
+	  		CASE WHEN (
+	  			SELECT MIN(ITEM_SEQUENCE) FROM 
+	  				OP_ORDER_ITEM 
+	  			WHERE 
+	  				ORDER_CODE = OI.ORDER_CODE
+	  				AND ORDER_SEQUENCE = OI.ORDER_SEQUENCE
+	  				AND SHIPPING_SEQUENCE = OI.SHIPPING_SEQUENCE
+	  		) = OI.ITEM_SEQUENCE THEN
+	  			'Y'
+	  		ELSE 
+	  			'N'
+	  		END
+	  	) AS IS_SHIPPING_VIEW,
+		S.SELLER_NAME
+	</sql>
+	
+	<sql id="sqlDefaultFormForOrder">
+		FROM OP_ORDER_ITEM OI
+			INNER JOIN OP_ORDER O 
+				ON OI.ORDER_CODE = O.ORDER_CODE 
+				AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE 
+				AND O.DATA_STATUS_CODE = '1'
+				
+			INNER JOIN OP_ORDER_SHIPPING_INFO OSI 
+				ON OI.ORDER_CODE = OSI.ORDER_CODE 
+				AND OI.ORDER_SEQUENCE = OSI.ORDER_SEQUENCE 
+				AND OI.SHIPPING_INFO_SEQUENCE = OSI.SHIPPING_INFO_SEQUENCE
+				
+			INNER JOIN OP_ORDER_SHIPPING OS 
+				ON OI.ORDER_CODE = OS.ORDER_CODE 
+				AND OI.ORDER_SEQUENCE = OS.ORDER_SEQUENCE 
+				AND OI.SHIPPING_SEQUENCE = OS.SHIPPING_SEQUENCE
+				
+			LEFT JOIN OP_SELLER S ON OI.SELLER_ID = S.SELLER_ID
+	</sql>
+	
+	<sql id="sqlDefaultWhereQuery">
+		<if test="(query != null and query != '') and (where != null and where != '')">
+			<choose>
+				<when test="where == 'USER_NAME'">
+					AND O.BUYER_NAME LIKE CONCAT('%', #{query}, '%')
+				</when>
+				<when test="where == 'RECEIVE_NAME'">
+					AND OSI.RECEIVE_NAME LIKE CONCAT('%', #{query}, '%')
+				</when>
+				<otherwise>
+					AND #{where} LIKE CONCAT('%', #{query}, '%')
+				</otherwise>
+			</choose>
+		</if>
+		
+		<if test="searchDateType != null and searchDateType != ''">
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				<choose>
+					<when test="(searchStartDateTime != null and searchStartDateTime != '') and (searchEndDateTime != null and searchEndDateTime != '')">
+						<choose>
+							<when test='searchDateType == "OI.DELIVERY_DATE"'>
+								AND (
+									DATE_FORMAT(OI.DELIVERY_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+									OR DATE_FORMAT(OEA.EXCHANGE_DELIVERY_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+								)
+							</when>
+							<otherwise>
+								AND DATE_FORMAT(${searchDateType}, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+							</otherwise>
+						</choose>
+					</when>
+					<otherwise>
+						<choose>
+							<when test='searchDateType == "OI.DELIVERY_DATE"'>
+								AND (
+									DATE_FORMAT(OI.DELIVERY_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+									OR DATE_FORMAT(OEA.EXCHANGE_DELIVERY_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+								)
+							</when>
+							<otherwise>
+								AND DATE_FORMAT(${searchDateType}, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+							</otherwise>
+						</choose>
+					</otherwise>
+				</choose>
+			</if>
+		</if>
+		<choose>
+			<when test='conditionType == "ORDER-DETAIL-EXCEL"'>
+				<if test="orderCodes != null and orderCodes.size() > 0">
+					AND OI.ORDER_CODE IN
+					<foreach item="orderCode" index="index" collection="orderCodes" open="(" separator="," close=")"> 
+						#{orderCode}
+					</foreach>
+				</if>
+				<if test="orderItems != null and orderItems.size() > 0">
+					AND
+					<foreach item="orderItem" index="index" collection="orderItems" open="(" separator="OR" close=")">
+						(OI.ORDER_CODE = #{orderItem.orderCode} AND OI.ITEM_SEQUENCE = #{orderItem.itemSequence})
+					</foreach>
+				</if>
+			</when>
+			<otherwise>
+				<if test="orderCode != null and orderCode != ''">
+					AND OI.ORDER_CODE = #{orderCode}
+				</if>
+			</otherwise>
+		</choose>
+	</sql>
+
+	
+	
+	
+	<!-- 주문 내역 카운트 - 주문별 그룹 -->
+	<select id="getOrderCountByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultType="Integer">
+		SELECT 
+			COUNT(DISTINCT OI.ORDER_CODE)
+		
+		<include refid="sqlDefaultFormForOrder" />
+		<where>
+			<include refid="sqlOrderWhereQuery" />
+		</where>
+	</select>
+
+	<select id="getActiveItemsByParam" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderResult">
+		SELECT 
+			<include refid="sqlDefaultColumnForOrderList" />, 
+			DATE_FORMAT(OI.CREATED_DATE, '%Y%m%d') AS ORDER_DATE,
+			OSI.CREATED_DATE AS ORDER_INFO_CREATED_DATE,
+			OSI.UPDATED_DATE AS ORDER_INFO_UPDATED_DATE
+		
+		<include refid="sqlDefaultFormForOrder" />
+		<where>
+			OI.ORDER_CODE = #{orderCode}
+			AND OI.ORDER_SHIPPING_ID = #{orderShippingId}
+			AND OI.CANCEL_FLAG = 'N'
+		</where>
+	</select>
+
+	<!-- 주문 내역 리스트 - 주문별 그룹 -->
+	<select id="getOrderListByParam" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderResult">
+		
+		SELECT 
+			<include refid="sqlDefaultColumnForOrderList" />, 
+			O.CREATED_DATE AS ORDER_DATE,
+			OSI.CREATED_DATE AS ORDER_INFO_CREATED_DATE,
+			OSI.UPDATED_DATE AS ORDER_INFO_UPDATED_DATE
+		
+		<include refid="sqlDefaultFormForOrder" />
+			INNER JOIN (
+
+				<include refid="CommonMapper.paginationHeader" />
+					
+					SELECT 
+						DISTINCT OI.ORDER_CODE
+						
+					<include refid="sqlDefaultFormForOrder" />
+					<where>
+						<include refid="sqlOrderWhereQuery" />
+					</where>
+					
+					ORDER BY OI.ORDER_CODE DESC, OI.ORDER_SEQUENCE ASC, OI.SHIPPING_INFO_SEQUENCE ASC, OI.ITEM_SEQUENCE ASC
+					
+				<include refid="CommonMapper.paginationFooter" />
+
+			) PAGING ON OI.ORDER_CODE = PAGING.ORDER_CODE
+		<where>
+			<include refid="sqlOrderWhereQuery" />
+		</where>
+		
+		ORDER BY OI.ORDER_CODE DESC, OI.ORDER_SEQUENCE ASC, OI.SHIPPING_INFO_SEQUENCE ASC, OI.ITEM_SEQUENCE ASC
+	</select>
+
+	<!-- 주문 내역 카운트 - 주문별 그룹 -->
+	<select id="getOrderCountByParamForManager" parameterType="saleson.shop.order.support.OrderParam"
+		resultType="Integer">
+		SELECT COUNT(OI.ORDER_CODE)
+		
+		<include refid="sqlDefaultFormForOrder" />
+		<where>
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+					
+					<if test="status != null and status.length > 0">
+						AND OI.ORDER_STATUS IN 							
+						<foreach collection="status" item="status" index="i" open="(" separator="," close=")">
+							#{status}
+						</foreach>
+					</if>
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+					
+					<if test="sellerId > 0">
+						AND OI.SELLER_ID = #{sellerId}
+					</if>
+					
+					<if test="deliveryType != null and deliveryType != ''">
+						<if test="sellerId == 0">
+							AND OI.SELLER_ID > #{sellerId}
+						</if>
+						
+						AND OI.DELIVERY_TYPE = #{deliveryType}
+					</if>
+				
+					<if test="status != null and status.length > 0">
+						AND OI.ORDER_STATUS IN 							
+						<foreach collection="status" item="status" index="i" open="(" separator="," close=")">
+							#{status}
+						</foreach>
+					</if>
+				
+				</when>
+			</choose>
+			<include refid="sqlOrderWhereQuery" />
+		</where>
+	</select>
+
+	<!-- 주문 내역 리스트 - 주문별 그룹 -->
+	<select id="getOrderListByParamForManager" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderListResult">
+		
+		<include refid="CommonMapper.paginationHeader" />
+					
+			SELECT 
+				<include refid="sqlDefaultColumnForOrderList" /> 
+			<include refid="sqlDefaultFormForOrder" />
+			<where>
+				<choose>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+						
+						<if test="status != null and status.length > 0">
+							AND OI.ORDER_STATUS IN 							
+							<foreach collection="status" item="status" index="i" open="(" separator="," close=")">
+								#{status}
+							</foreach>
+						</if>
+					</when>
+					<when test='conditionType == "OPMANAGER"'>
+						
+						<if test="sellerId > 0">
+							AND OI.SELLER_ID = #{sellerId}
+						</if>
+						
+						<if test="deliveryType != null and deliveryType != ''">
+							<if test="sellerId == 0">
+								AND OI.SELLER_ID > #{sellerId}
+							</if>
+							
+							AND OI.DELIVERY_TYPE = #{deliveryType}
+						</if>
+					
+						<if test="status != null and status.length > 0">
+							AND OI.ORDER_STATUS IN 							
+							<foreach collection="status" item="status" index="i" open="(" separator="," close=")">
+								#{status}
+							</foreach>
+						</if>
+					
+					</when>
+				</choose>
+			
+				<include refid="sqlOrderWhereQuery" />
+			</where>
+			
+			ORDER BY OI.ORDER_CODE DESC, OI.ORDER_SEQUENCE ASC, OI.SHIPPING_INFO_SEQUENCE ASC, OI.ITEM_SEQUENCE ASC
+			
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getOrderByParam" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderResult">
+		SELECT 
+			<include refid="sqlDefaultColumnForOrderList" />, 
+			OSI.CREATED_DATE AS ORDER_INFO_CREATED_DATE,
+			OSI.UPDATED_DATE AS ORDER_INFO_UPDATED_DATE
+		<include refid="sqlDefaultFormForOrder" />
+
+		<where>
+			OI.ORDER_CODE = #{orderCode}
+			AND OI.ORDER_SEQUENCE = #{orderSequence}
+			<choose>
+				<when test='conditionType == "OPMANAGER"'>
+					<if test='sellerId != null and sellerId > 0'>
+						AND OI.SELLER_ID = #{sellerId}
+					</if>
+				</when>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+				</when>
+				<otherwise>
+					<choose>
+						<when test="isLogin == true">
+							AND OI.USER_ID = #{userId}
+							AND OI.GUEST_FLAG = 'N'
+						</when>
+						<otherwise>
+							<if test="sessionId != null and sessionId != ''">
+								AND OI.SESSION_ID = #{sessionId}
+							</if>
+							AND OI.GUEST_FLAG = 'Y'
+						</otherwise>
+					</choose>
+				</otherwise>
+			</choose>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+			
+		</where>
+		ORDER BY OI.ORDER_SEQUENCE ASC, OI.SHIPPING_INFO_SEQUENCE ASC, OI.ITEM_SEQUENCE ASC
+	</select>
+
+	<select id="getOrderPaymentByParam" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderPaymentResult">
+		SELECT 
+			OP.*,
+			OPD.PG_SERVICE_TYPE,
+			OPD.PG_SERVICE_MID,
+			OPD.PG_SERVICE_KEY,
+			OPD.PG_PAYMENT_TYPE,
+			OPD.PG_KEY,
+			OPD.PG_AUTH_CODE,
+			OPD.PG_PROC_INFO
+		FROM OP_ORDER_PAYMENT OP
+			LEFT JOIN OP_ORDER_PG_DATA OPD ON OP.ORDER_PG_DATA_ID = OPD.ORDER_PG_DATA_ID
+		WHERE
+			OP.ORDER_CODE = #{orderCode}
+			AND OP.ORDER_SEQUENCE = #{orderSequence}
+			AND OP.PAYMENT_SEQUENCE = #{paymentSequence}
+	</select>
+
+	<select id="getOrderPaymentListByParam" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderPaymentResult">
+			
+		SELECT 
+			OP.*,
+			OPD.PG_SERVICE_TYPE,
+			OPD.PG_SERVICE_MID,
+			OPD.PG_SERVICE_KEY,
+			OPD.PG_PAYMENT_TYPE,
+			OPD.PG_KEY,
+			OPD.PG_AUTH_CODE,
+			OPD.PG_PROC_INFO,
+			OPD.PART_CANCEL_FLAG,
+			OPD.PART_CANCEL_DETAIL,
+			OPD.PG_AMOUNT,
+			OI.ORDER_STATUS,
+			OI.ESCROW_STATUS
+		FROM OP_ORDER_PAYMENT OP
+			LEFT JOIN OP_ORDER_PG_DATA OPD ON OP.ORDER_PG_DATA_ID = OPD.ORDER_PG_DATA_ID
+			INNER JOIN OP_ORDER_ITEM OI ON OP.ORDER_CODE = OI.ORDER_CODE AND OP.ORDER_SEQUENCE = OI.ORDER_SEQUENCE
+		WHERE
+			OP.ORDER_CODE = #{orderCode}
+			AND OP.ORDER_SEQUENCE = #{orderSequence}
+		ORDER BY OP.PAYMENT_SEQUENCE ASC
+		
+	</select>
+	
+	
+	<select id="getOrderShippingInfoByParam" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderShippingInfoResult">
+		SELECT * FROM OP_ORDER_SHIPPING_INFO
+		<where>
+			AND ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND SHIPPING_INFO_SEQUENCE = #{shippingInfoSequence}
+		</where>
+	</select>
+	
+	<select id="getOrderItemByParam" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderItemResult">
+		SELECT 
+			OI.*,
+			OSI.RECEIVE_NEW_ZIPCODE,
+			OSI.RECEIVE_ZIPCODE,
+			OSI.RECEIVE_SIDO,
+			OSI.RECEIVE_SIGUNGU,
+			OSI.RECEIVE_EUPMYEONDONG,
+			OSI.RECEIVE_ADDRESS,
+			OSI.RECEIVE_ADDRESS_DETAIL,
+			OSI.RECEIVE_NAME,
+			OSI.RECEIVE_PHONE,
+			OSI.RECEIVE_MOBILE
+		<include refid="sqlDefaultFormForOrder" />
+		<where>
+			AND OI.ORDER_CODE = #{orderCode}
+			AND OI.ORDER_SEQUENCE = #{orderSequence}
+			AND OI.ITEM_SEQUENCE = #{itemSequence}
+			<choose>
+				<when test='conditionType == "OPMANAGER"'>
+					<if test="sellerId != null and sellerId > 0">
+						AND OI.SELLER_ID = #{sellerId}
+					</if>
+				</when>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+				</when>
+				<otherwise>
+					<choose>
+						<when test="isLogin == true">
+							AND OI.USER_ID = #{userId}
+							AND OI.GUEST_FLAG = 'N'
+						</when>
+						<otherwise>
+							AND OI.GUEST_FLAG = 'Y'
+						</otherwise>
+					</choose>
+				</otherwise>
+			</choose>
+			
+		</where>
+	</select>
+
+	<select id="getOrderTemp" parameterType="saleson.shop.order.support.OrderParam" resultMap="BuyResult">
+		SELECT 
+			USER_ID, 
+			SESSION_ID, 
+			ORDER_CODE,
+			USER_NAME, 
+			POINT_DISCOUNT_AMOUNT, 
+			SHIPPING_COUPON_USE_COUNT,
+			SHIPPING_COUPON_DISCOUNT_AMT,     
+			ITEM_COUPON_DISCOUNT_AMOUNT,
+			CART_COUPON_DISCOUNT_AMOUNT, 
+			ORDER_PAY_AMOUNT, 
+			EMAIL, 
+			MOBILE, 
+			PHONE, 
+			ZIPCODE,
+			NEW_ZIPCODE, 
+			SIDO,
+			SIGUNGU,
+			EUPMYEONDONG,
+			ADDRESS, 
+			ADDRESS_DETAIL, 
+			DELIVERY_REQ_DAY, 
+			DELIVERY_REQ_HOUR,
+			CART_COUPON_USE_DATA,
+			RECEIPT_NAME,
+            CASHBILL_TYPE,
+            CASHBILL_CODE,
+			SAVE_DELIVERY_FLAG,
+			SAVE_DELIVERY_NAME,
+			DEVICE_TYPE
+		FROM OP_ORDER_TEMP
+ 		<where>
+			<choose>
+				<when test="isLogin == true">
+					USER_ID = #{userId}
+				</when>
+				<otherwise>
+					SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="orderCode != null and orderCode != ''">
+					AND ORDER_CODE = #{orderCode}
+				</when>
+				<otherwise>
+					AND (ORDER_CODE IS NULL OR ORDER_CODE = '')
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
+	<select id="getOrderPaymentBuyTempList" parameterType="saleson.shop.order.support.OrderParam" resultMap="BuyPaymentResult">
+		SELECT
+			ORDER_CODE,
+			APPROVAL_TYPE,
+			SERVICE_TYPE,
+			AMOUNT,
+			TAX_FREE_AMOUNT,
+			BANK_VIRTUAL_NO,
+			BANK_IN_NAME,
+			BANK_DATE,
+			SERVICE_MID,
+			SERVICE_KEY,
+			(CASE WHEN APPROVAL_TYPE = 'point' THEN 1 ELSE 2 END) AS PAYMENT_SEQUENCE
+		FROM 
+			OP_ORDER_PAYMENT_BUY_TEMP
+		WHERE
+			ORDER_CODE = #{orderCode}
+		ORDER BY PAYMENT_SEQUENCE;
+	</select>
+
+	<select id="getOrderItemTempList" parameterType="saleson.shop.order.support.OrderParam" resultMap="BuyItemResult">
+		SELECT
+			<include refid="saleson.shop.item.ItemMapper.defaultItemColumns" />,
+			<include refid="saleson.shop.item.ItemMapper.defaultItemShippingColumns" />,
+			<if test="isLogin == true">
+				IFNULL((
+					SELECT UL.DISCOUNT_RATE 
+					FROM OP_USER_DETAIL UD 
+						INNER JOIN OP_USER_LEVEL UL ON UD.LEVEL_ID = UL.LEVEL_ID
+					WHERE
+						UD.USER_ID = #{userId} 
+				), 0) AS USER_LEVEL_DISCOUNT_RATE,
+			</if>
+			OIT.SESSION_ID,
+			OIT.USER_ID,
+			OIT.ITEM_SEQUENCE,
+			OIT.ITEM_ID,
+			OIT.QUANTITY,
+			OIT.OPTIONS,
+			OIT.COUPON_USER_ID,
+			OIT.SHIPPING_PAYMENT_TYPE,
+			OIT.ADDITION_ITEM_FLAG,
+			OIT.PARENT_ITEM_SEQUENCE,
+			OIT.PARENT_ITEM_ID,
+			OIT.PARENT_ITEM_OPTIONS,
+			OIT.CREATED_DATE AS ORDER_ITEM_TEMP_CREATED_DATE,
+			IO.OPTION_TYPE,
+			IO.OPTION_NAME1 AS OPTION_TITLE,
+			IO.*, 
+			IO.OPTION_STOCK_QUANTITY, 
+			IO.OPTION_STOCK_SCHEDULE_TEXT,
+			IO.OPTION_STOCK_SCHEDULE_DATE,
+			S.SELLER_NAME
+		FROM OP_ORDER_ITEM_TEMP OIT
+			INNER JOIN OP_ITEM I ON OIT.ITEM_ID = I.ITEM_ID
+			INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+			LEFT JOIN OP_ITEM_OPTION IO ON I.ITEM_ID = IO.ITEM_ID AND IO.OPTION_DISPLAY_FLAG = 'Y' AND IO.OPTION_HIDE_FLAG = 'Y'
+		<where>
+			<choose>
+				<when test="isLogin == true"><include refid="sqlOrderItemTempUserWhere" /></when>
+				<otherwise><include refid="sqlOrderItemTempGuestWhere" /></otherwise>
+			</choose>
+		</where>
+
+		<if test="additionItemFlag != null and additionItemFlag != ''">
+			AND OIT.ADDITION_ITEM_FLAG = #{additionItemFlag}
+		</if>
+		
+		ORDER BY OIT.ITEM_SEQUENCE ASC
+	</select>
+
+	<select id="getOrderBuyItemTempList" parameterType="saleson.shop.order.support.OrderParam" resultMap="BuyItemResult">
+		SELECT
+			<include refid="saleson.shop.item.ItemMapper.defaultItemColumns" />,
+			<include refid="saleson.shop.item.ItemMapper.defaultItemShippingColumns" />,
+			<if test="isLogin == true">
+				IFNULL((
+					SELECT UL.DISCOUNT_RATE 
+					FROM OP_USER_DETAIL UD 
+						INNER JOIN OP_USER_LEVEL UL ON UD.LEVEL_ID = UL.LEVEL_ID
+					WHERE
+						UD.USER_ID = #{userId} 
+				), 0) AS USER_LEVEL_DISCOUNT_RATE,
+			</if>
+			OIT.SESSION_ID,
+			OIT.USER_ID,
+			OIT.ITEM_SEQUENCE,
+			OIT.SHIPPING_INDEX,
+			OIT.ITEM_ID,
+			OIT.QUANTITY,
+			OIT.OPTIONS,
+			OIT.COUPON_USER_ID,
+			OIT.ADD_COUPON_USER_ID,
+			OIT.SHIPPING_PAYMENT_TYPE,
+			OIT.ADDITION_ITEM_FLAG,
+			OIT.PARENT_ITEM_SEQUENCE,
+			OIT.PARENT_ITEM_ID,
+			OIT.CREATED_DATE AS ORDER_ITEM_TEMP_CREATED_DATE,
+			S.SELLER_NAME,
+			OIT.CAMPAIGN_CODE,
+			OIT.QUICK_DELIVERY_FLAG
+		FROM
+			OP_ORDER_ITEM_BUY_TEMP OIT
+				INNER JOIN OP_ITEM I ON OIT.ITEM_ID = I.ITEM_ID
+				INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+		<where>
+			<choose>
+				<when test="isLogin == true">
+					I.DATA_STATUS_CODE = '1'
+					AND I.DISPLAY_FLAG = 'Y'
+					AND OIT.USER_ID = #{userId}
+				</when>
+				<otherwise>
+					I.DATA_STATUS_CODE = '1'
+					AND I.DISPLAY_FLAG = 'Y'
+					AND NONMEMBER_ORDER_TYPE = '1'
+					AND OIT.SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+			AND OIT.SHIPPING_INDEX = #{shippingIndex}
+			AND OIT.ORDER_CODE = #{orderCode}
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OIT.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+		
+		ORDER BY OIT.ITEM_SEQUENCE ASC
+	</select>
+
+	<select id="getOrderShippingBuyTempList" parameterType="saleson.shop.order.support.OrderParam" resultMap="BuyReceiverResult">
+		SELECT
+			OSBT.SHIPPING_INDEX,
+			OSBT.RECEIVE_NAME,
+			OSBT.RECEIVE_MOBILE,
+			OSBT.RECEIVE_PHONE,
+			OSBT.RECEIVE_ZIPCODE,
+			OSBT.RECEIVE_NEW_ZIPCODE,
+			OSBT.RECEIVE_SIDO,
+			OSBT.RECEIVE_SIGUNGU,
+			OSBT.RECEIVE_EUPMYEONDONG,
+			OSBT.RECEIVE_ADDRESS,
+			OSBT.RECEIVE_ADDRESS_DETAIL,
+			OSBT.CONTENT
+		FROM
+			OP_ORDER_SHIPPING_BUY_TEMP OSBT 
+		<where>
+			<choose>
+				<when test="isLogin == true">
+					AND OSBT.USER_ID = #{userId}
+				</when>
+				<otherwise>
+					AND OSBT.SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+			AND OSBT.ORDER_CODE = #{orderCode}
+		</where>
+		
+		ORDER BY OSBT.SHIPPING_INDEX ASC
+	</select>
+
+	<select id="getOrderCountListByParam" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderCountResult">
+		<trim prefix="" suffixOverrides="UNION ALL">
+			<if test='conditionType != "SELLER" and conditionType != "FRONT"'>
+				<!-- 입금대기 COUNT -->
+				SELECT 'waiting-deposit' AS ID, '입금대기' AS LABEL, COUNT(OP.PAYMENT_SEQUENCE) AS COUNT
+				FROM OP_ORDER_PAYMENT OP 
+				<where>
+					OP.PAYMENT_TYPE = '1'
+					AND OP.NOW_PAYMENT_FLAG = 'N'
+					AND OP.CANCEL_AMOUNT = 0
+					AND (
+						((OP.PAY_DATE = '' OR OP.PAY_DATE IS NULL) AND OP.REMAINING_AMOUNT = 0)
+						<!-- OR DATE_FORMAT(OP.PAY_DATE, '%Y%m%d') = DATE_FORMAT(NOW(), '%Y%m%d') -->
+					)
+					AND OP.CREATED_DATE LIKE CONCAT(DATE_FORMAT(NOW(),'%Y%m%d'), '%')
+				</where>
+				
+				UNION ALL
+			</if>
+			
+			<if test='conditionType == "FRONT"'>
+				<!-- 입금대기 COUNT -->
+				SELECT 'waiting-deposit' AS ID, '입금대기' AS LABEL, COUNT(OP.PAYMENT_SEQUENCE) AS COUNT
+				FROM OP_ORDER_PAYMENT OP 
+					INNER JOIN OP_ORDER_ITEM OI ON OP.ORDER_CODE = OI.ORDER_CODE
+				<where>
+					OP.PAYMENT_TYPE = '1'
+					AND OP.NOW_PAYMENT_FLAG = 'N'
+					AND OP.CANCEL_AMOUNT = 0
+					AND OI.ORDER_STATUS = '0' 
+					AND OI.USER_ID = #{userId}
+				</where>
+				
+				UNION ALL
+			</if>
+			
+			<!-- 신규주문 COUNT - 주문번호 건수로 변경 -->
+			SELECT 'new-order' AS ID, '신규주문' AS LABEL, COUNT(OI.ORDER_CODE) AS COUNT
+			FROM OP_ORDER_ITEM OI 
+			<where>
+				<include refid="defaultNewOrderWhereQuery" />
+			
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND OI.CREATED_DATE BETWEEN CONCAT(#{searchStartDate} , '000000') AND CONCAT(#{searchEndDate} , '235959')
+				</if>
+
+			</where>
+			
+			UNION ALL
+
+			<!-- 배송준비중 COUNT -->
+			SELECT 'shipping-ready' AS ID, '배송준비중' AS LABEL, COUNT(OI.ORDER_CODE) AS COUNT
+			FROM OP_ORDER_ITEM OI 
+			<where>
+				<include refid="defaultShippingReadyOrderWhereQuery" />
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+			</where>
+			
+			UNION ALL
+			
+			<!-- 배송중 COUNT -->
+			SELECT 'shipping' AS ID, '배송중' AS LABEL, COUNT(OI.ORDER_CODE) AS COUNT
+			FROM OP_ORDER_ITEM OI 
+			<where>
+				<include refid="defaultShippingOrderWhereQuery" />
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND OI.CREATED_DATE BETWEEN CONCAT(#{searchStartDate} , '000000') AND CONCAT(#{searchEndDate} , '235959')
+				</if>
+
+			</where>
+				
+			UNION ALL
+			
+			<!-- 구매확정 COUNT -->
+			SELECT 'confirm' AS ID, '구매확정' AS LABEL, COUNT(OI.ORDER_CODE) AS COUNT
+			FROM OP_ORDER_ITEM OI 
+			<where>
+				<include refid="defaultConfirmOrderWhereQuery" />
+				<if test='conditionType == "SELLER"'>				
+					AND LEFT(OI.CONFIRM_DATE, 8) = DATE_FORMAT(NOW(),'%Y%m%d')
+				</if>
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+
+
+				<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+					AND OI.CREATED_DATE BETWEEN CONCAT(#{searchStartDate} , '000000') AND CONCAT(#{searchEndDate} , '235959')
+				</if>
+
+			</where>
+			
+			UNION ALL
+			
+			<!-- 반품 신청 COUNT -->
+			SELECT 'return-request' AS ID, '반품요청' AS LABEL, COUNT(ORA.CLAIM_CODE) AS COUNT
+			FROM OP_ORDER_RETURN_APPLY ORA
+				INNER JOIN OP_ORDER_ITEM OI ON ORA.ORDER_CODE = OI.ORDER_CODE AND ORA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE AND ORA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE 
+			<where>
+				ORA.CLAIM_STATUS = '01'
+				AND OI.ORDER_STATUS = '60'
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+			</where>
+
+			<!-- 반품 처리 COUNT -->
+			<!--
+			UNION ALL
+	
+			SELECT 'return-finish' AS ID, '반품처리' AS LABEL, COUNT(ORA.CLAIM_CODE) AS COUNT
+			FROM OP_ORDER_RETURN_APPLY ORA
+				INNER JOIN OP_ORDER_ITEM OI ON ORA.ORDER_CODE = OI.ORDER_CODE AND ORA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE AND ORA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE 
+			<where>
+				ORA.CLAIM_STATUS != '01'
+				AND LEFT(OI.RETURN_REQUEST_FINISH_DATE, 8) = DATE_FORMAT(NOW(),'%Y%m%d')
+				AND OI.ORDER_STATUS = '65'
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+			</where>
+			-->
+			
+			UNION ALL
+	
+			<!-- 교환 요청 COUNT -->
+			SELECT 'exchange-request' AS ID, '교환요청' AS LABEL, COUNT(OEA.CLAIM_CODE) AS COUNT
+			FROM OP_ORDER_EXCHANGE_APPLY OEA
+				INNER JOIN OP_ORDER_ITEM OI ON OEA.ORDER_CODE = OI.ORDER_CODE AND OEA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE AND OEA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE 
+			<where>
+				OEA.CLAIM_STATUS = '01'
+				AND OI.ORDER_STATUS = '50'
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+			</where>
+				
+			UNION ALL
+	
+			<!-- 취소 신청 COUNT -->
+			SELECT 'cancel-request' AS ID, '취소요청' AS LABEL, COUNT(OCA.CLAIM_CODE) AS COUNT
+			FROM OP_ORDER_CANCEL_APPLY OCA
+				INNER JOIN OP_ORDER_ITEM OI ON OCA.ORDER_CODE = OI.ORDER_CODE AND OCA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE AND OCA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE 
+			<where>
+				OCA.CLAIM_STATUS = '01'
+				AND OI.ORDER_STATUS = '70'
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+			</where>
+
+			<!-- 취소 처리 COUNT -->
+			<!--
+			UNION ALL
+	
+			SELECT 'cancel-finish' AS ID, '취소처리' AS LABEL, COUNT(OCA.CLAIM_CODE) AS COUNT
+			FROM OP_ORDER_CANCEL_APPLY OCA
+				INNER JOIN OP_ORDER_ITEM OI ON OCA.ORDER_CODE = OI.ORDER_CODE AND OCA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE AND OCA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE 
+			<where>
+				OCA.CLAIM_STATUS != '01'
+				AND LEFT(OI.CANCEL_REQUEST_FINISH_DATE, 8) = DATE_FORMAT(NOW(),'%Y%m%d')
+				AND OI.ORDER_STATUS = '75'
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+			</where>
+			-->
+
+			<!-- 환불요청 COUNT -->
+			<!--
+			UNION ALL
+	
+			<if test='conditionType == "OPMANAGER"'>
+				SELECT 'refund-apply' AS ID, '환불요청' AS LABEL, COUNT(R.REFUND_CODE) AS COUNT
+				FROM OP_ORDER_REFUND R 
+				WHERE
+					R.REFUND_STATUS_CODE = '1'
+			</if>
+			-->
+			UNION ALL
+
+			<!-- 반품 처리 COUNT -->
+			SELECT 'return-process' AS ID, '반품처리' AS LABEL, COUNT(OI.ORDER_CODE) AS COUNT
+			FROM OP_ORDER_ITEM OI
+			<where>
+				AND OI.ORDER_STATUS IN ('60','65','69')
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+			</where>
+
+			UNION ALL
+
+			<!-- 교환 처리 COUNT -->
+			SELECT 'exchange-process' AS ID, '교환처리' AS LABEL, COUNT(OI.ORDER_CODE) AS COUNT
+			FROM OP_ORDER_ITEM OI
+			<where>
+				AND OI.ORDER_STATUS IN ('50','59')
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+			</where>
+
+			UNION ALL
+
+			<!-- 취소 처리 COUNT -->
+			SELECT 'cancel-process' AS ID, '취소처리' AS LABEL, COUNT(OI.ORDER_CODE) AS COUNT
+			FROM OP_ORDER_ITEM OI
+			<where>
+				AND OI.ORDER_STATUS IN ('70','75','79')
+				<choose>
+					<when test='conditionType == "FRONT"'>
+						AND OI.USER_ID = #{userId}
+					</when>
+					<when test='conditionType == "SELLER"'>
+						AND OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</when>
+				</choose>
+			</where>
+
+		</trim>
+	</select>
+		
+	<!-- 주문취소 대기목록 가져오기 -Batch -->	
+	<select id="getOrderCancelBatchTargetByBatchKey" parameterType="String" resultMap="OrderCancelApplyResult">
+		SELECT 
+			OI.*,
+			OCA.APPLY_QUANTITY,
+			OCA.CANCEL_BANK_NAME,
+			OCA.CANCEL_VIRTUAL_NO,
+			OCA.CANCEL_BANK_IN_NAME,
+			OCA.CANCEL_REASON,
+			OCA.CANCEL_REASON_TEXT,
+			OCA.CANCEL_MEMO,
+			OCA.CANCEL_REFUSAL_REASON_TEXT
+		FROM OP_ORDER_ITEM OI
+			INNER JOIN OP_ORDER_CANCEL_APPLY OCA ON OI.ORDER_ITEM_ID = OCA.ORDER_ITEM_ID
+			INNER JOIN OP_ORDER_BATCH_TARGET OBT ON OCA.ORDER_CANCEL_APPLY_ID = OBT.TARGET_INDEX AND OI.ORDER_CODE = OBT.ORDER_CODE
+		WHERE
+			OI.ORDER_STATUS = '95'
+			AND OBT.BATCH_KEY = #{value}
+	</select>
+	
+	<!-- 환불 대기상품 가져오기 -Batch -->	
+	<select id="getOrderReturnBatchTargetByBatchKey" parameterType="String" resultMap="OrderReturnApplyResult">
+		SELECT 
+			OI.*,
+			ORA.APPLY_QUANTITY,
+			ORA.RETURN_SHIPPING_START_FALG,
+			ORA.RETURN_SHIPPING_NUMBER,
+			ORA.RETURN_SHIPPING_COMPANY_NAME,
+			ORA.RETURN_SHIPPING_COMPANY_URL,
+			ORA.RETURN_SHIPPING_START_DATE,
+			ORA.RETURN_REASON,
+			ORA.RETURN_REASON_TEXT,
+			ORA.RETURN_REAL_SHIPPING,
+			ORA.RETURN_MEMO
+		FROM OP_ORDER_ITEM OI
+			INNER JOIN OP_ORDER_RETURN_APPLY ORA ON OI.ORDER_RETURN_APPLY_ID = ORA.ORDER_RETURN_APPLY_ID
+			INNER JOIN OP_ORDER_BATCH_TARGET OBT ON OI.ORDER_RETURN_APPLY_ID = OBT.TARGET_INDEX AND OI.ORDER_CODE = OBT.ORDER_CODE
+		WHERE
+			OI.ORDER_ITEM_STATUS = '45'
+			AND OBT.BATCH_KEY = #{value}
+	</select>
+	
+	<insert id="insertOrderShipping" parameterType="saleson.shop.order.domain.Shipping">
+		INSERT INTO OP_ORDER_SHIPPING
+		(
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			SHIPPING_SEQUENCE,
+			SELLER_ID,
+			SHIPPING_TYPE,
+			SHIPMENT_GROUP_CODE,
+			SHIPPING_GROUP_CODE,
+			ISLAND_TYPE,
+			SHIPPING_ITEM_COUNT,
+			SHIPPING,
+			SHIPPING_EXTRA_CHARGE1,
+			SHIPPING_EXTRA_CHARGE2,
+			SHIPPING_FREE_AMOUNT,
+			REAL_SHIPPING,
+			SHIPPING_PAYMENT_TYPE, 
+			PAY_SHIPPING,
+			DISCOUNT_SHIPPING,
+			SHIPPING_COUPON_COUNT,
+			REMITTANCE_AMOUNT,
+			PREVIOUS_REAL_SHIPPING,
+			PREVIOUS_PAY_SHIPPING,
+			PREVIOUS_REMITTANCE_AMOUNT,
+			QUICK_DELIVERY_FLAG
+		) VALUES (
+			#{orderCode},
+			#{orderSequence},
+			#{shippingSequence},
+			#{sellerId},
+			#{shippingType},
+			#{shipmentGroupCode},
+			#{shippingGroupCode},
+			#{islandType},
+			#{shippingItemCount},
+			#{shipping},
+			#{shippingExtraCharge1},
+			#{shippingExtraCharge2},
+			#{shippingFreeAmount},
+			#{realShipping},
+			#{shippingPaymentType},
+			#{payShipping},
+			#{discountShipping},
+			#{shippingCouponCount},
+			#{remittanceAmount},
+			#{realShipping},
+			#{payShipping},
+			#{remittanceAmount},
+			#{quickDeliveryFlag}
+		)
+	</insert>
+	
+	<insert id="insertOrderShippingInfo" parameterType="saleson.shop.order.domain.OrderShippingInfo">
+		INSERT INTO OP_ORDER_SHIPPING_INFO 
+		(
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			SHIPPING_INFO_SEQUENCE, 
+			RECEIVE_NEW_ZIPCODE,  
+			RECEIVE_ZIPCODE, 
+<!--			RECEIVE_COMPANY_NAME, -->
+			RECEIVE_SIDO, 
+			RECEIVE_SIGUNGU, 
+			RECEIVE_EUPMYEONDONG, 
+			RECEIVE_ADDRESS, 
+			RECEIVE_ADDRESS_DETAIL, 
+			RECEIVE_NAME, 
+			RECEIVE_PHONE, 
+			RECEIVE_MOBILE, 
+			MEMO,
+			CREATED_DATE
+		) VALUES (
+			#{orderCode}, 
+			#{orderSequence}, 
+			#{shippingInfoSequence}, 
+			#{receiveNewZipcode},
+			#{fullReceiveZipcode}, 
+			#{receiveSido}, 
+			#{receiveSigungu}, 
+			#{receiveEupmyeondong},
+			#{receiveAddress}, 
+			#{receiveAddressDetail}, 
+			#{receiveName}, 
+			#{fullReceivePhone}, 
+			#{fullReceiveMobile}, 
+			#{memo},
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+	
+	
+	
+	<!-- 주문 수량 수정 -->
+	<update id="updateOrderItemQuantity" parameterType="saleson.shop.order.domain.OrderItem">
+		UPDATE OP_ORDER_ITEM
+		SET
+			QUANTITY = QUANTITY - #{quantity},
+			ORDER_QUANTITY = ORDER_QUANTITY - #{quantity}
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<!-- 주문 마스터 저장 -->
+	<insert id="insertOrder" parameterType="saleson.shop.order.domain.Buyer">
+		<selectKey keyProperty="orderSequence" resultType="Integer" order="BEFORE">
+			SELECT IFNULL(MAX(ORDER_SEQUENCE), 0) FROM OP_ORDER WHERE ORDER_CODE = #{orderCode}
+		</selectKey>
+		
+		INSERT INTO OP_ORDER (
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			ORDER_TOTAL_AMOUNT,
+			PAY_AMOUNT,
+			USER_ID,
+			LOGIN_ID,
+			BUYER_NAME,
+			PHONE,
+			MOBILE,
+			EMAIL,
+			ZIPCODE,
+			NEW_ZIPCODE,
+			SIDO,
+			SIGUNGU,
+			EUPMYEONDONG,
+			ADDRESS,
+			ADDRESS_DETAIL,
+			DATA_STATUS_CODE,
+			IP,
+			CREATED_DATE
+		) VALUES (
+			#{orderCode},
+			#{orderSequence},
+			#{orderPrice.orderPayAmountTotal},
+			#{orderPrice.payAmount},
+			#{userId},
+			#{loginId},
+			#{userName},
+			#{fullPhone},
+			#{fullMobile},
+			#{email},
+			#{zipcode},
+			#{newZipcode},
+			#{sido},
+			#{sigungu},
+			#{eupmyeondong},
+			#{address},
+			#{addressDetail},
+			'1',
+			#{ip},
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+	
+	<insert id="insertOrderItem" parameterType="saleson.shop.order.domain.BuyItem">
+		INSERT INTO OP_ORDER_ITEM 
+		(
+			ORDER_CODE, 
+			ORDER_SEQUENCE,
+			ITEM_SEQUENCE,
+			ORDER_STATUS,
+			SHIPPING_SEQUENCE,
+			SHIPPING_INFO_SEQUENCE,
+			ADDITION_ITEM_FLAG,
+			PARENT_ITEM_SEQUENCE,
+			USER_ID, 
+			GUEST_FLAG, 
+			SELLER_ID, 
+			CATEGORY_TEAM_ID, 
+			CATEGORY_GROUP_ID, 
+			CATEGORY_ID, 
+			SHIPMENT_ID,
+			SHIPMENT_RETURN_ID,  
+			COUPON_USER_ID, 
+			ADD_COUPON_USER_ID,
+			ITEM_ID,  
+			ITEM_CODE, 
+			ITEM_USER_CODE, 
+			ITEM_NAME, 
+			FREE_GIFT_NAME,
+			IMAGE_SRC,
+			DEVICE_TYPE,
+			DELIVERY_TYPE,
+			SHIPMENT_GROUP_CODE,
+			SHIPPING_RETURN,
+			SHIPMENT_RETURN_TYPE,
+			PURCHASE_PRICE, 
+			COST_PRICE,
+			PRICE,
+			OPTION_PRICE,
+			SALE_PRICE,
+			QUANTITY,
+			ORDER_QUANTITY,
+			COUPON_DISCOUNT_PRICE, 
+			SPOT_SALE_FLAG, 
+			SPOT_TYPE,
+			SPOT_DISCOUNT_PRICE,
+			TAX_TYPE,
+			COMMISSION_BASE_PRICE,
+			COMMISSION_RATE,
+			COMMISSION_PRICE,
+			COMMISSION_TYPE,
+			SUPPLY_PRICE,
+			SELLER_DISCOUNT_PRICE,
+			SELLER_DISCOUNT_DETAIL,
+			ADMIN_DISCOUNT_PRICE,
+			ADMIN_DISCOUNT_DETAIL,
+			BRAND, 
+			OPTIONS, 
+			DELIVERY_COMPANY_ID, 
+			DELIVERY_NUMBER,
+			POINT_CONFIG_TYPE, 
+			POINT_TYPE, 
+			POINT, 
+			POINT_LOG, 
+			EARN_POINT,
+			EARN_POINT_FLAG,
+			SELLER_POINT,
+			REVENUE_SALES_STATUS,
+			PAY_DATE,
+			SHIPPING_READY_DATE,
+			SHIPPING_DATE,
+			SHIPPING_FINISH_DATE,
+			CANCEL_REQUEST_DATE,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			CREATED_DATE, 
+			RETURN_POINT_FLAG,
+			DELIVERY_COMPANY_NAME,
+			ITEM_RETURN_FLAG,
+			ESCROW_STATUS,
+
+			LEVEL_ID,
+			LEVEL_NAME,
+			USER_LEVEL_DISCOUNT_RATE,
+			USER_LEVEL_DISCOUNT_PRICE,
+			CAMPAIGN_CODE,
+			PARENT_ITEM_ID,
+			PARENT_ITEM_OPTIONS,
+			QUICK_DELIVERY_FLAG,
+			ERP_ORIGIN_UNIQUE
+		) VALUES (
+			#{orderCode}, 
+			#{orderSequence},
+			#{itemSequence},
+			#{orderStatus},
+			#{shippingSequence},
+			#{shippingInfoSequence},
+			#{additionItemFlag},
+			#{parentItemSequence},
+			#{userId}, 
+			#{guestFlag}, 
+			#{sellerId}, 
+			#{categoryTeamId}, 
+			#{categoryGroupId}, 
+			#{categoryId}, 
+			#{shipmentId}, 
+			#{shipmentReturnId},
+			#{couponUserId},
+			#{addCouponUserId},
+			#{item.itemId},  
+			#{item.itemCode}, 
+			#{item.itemUserCode}, 
+			#{item.itemName}, 
+			#{freeGiftName},
+			#{item.imageSrc},
+			#{deviceType},
+			#{deliveryType},
+			#{shipmentGroupCode},
+			#{shippingReturn},
+			#{item.shipmentReturnType},
+			#{itemPrice.purchasePrice}, 
+			#{itemPrice.costPrice}, 
+			#{itemPrice.price},
+			#{itemPrice.optionPrice},
+			#{itemPrice.salePrice},
+			#{itemPrice.quantity},
+			#{itemPrice.quantity},
+			#{itemPrice.couponDiscountPrice},
+			#{itemPrice.spotSaleFlag},
+			#{item.spotType},
+			#{item.spotDiscountAmount},
+			#{item.taxType},
+			#{itemPrice.commissionBasePrice},
+			#{item.commissionRate},
+			#{itemPrice.commissionPrice},
+			#{item.commissionType},
+			#{itemPrice.supplyPrice},
+			#{itemPrice.sellerDiscountPrice}, 
+			#{itemPrice.sellerDiscountDetail},
+			#{itemPrice.adminDiscountPrice},
+			#{itemPrice.adminDiscountDetail},
+			#{brand}, 
+			#{options}, 
+			#{deliveryCompanyId}, 
+			#{deliveryNumber}, 
+			#{pointPolicy.configType}, 
+			#{pointPolicy.pointType}, 
+			#{pointPolicy.point}, 
+			#{pointPolicy.pointLog}, 
+			#{itemPrice.earnPoint}, 
+			#{itemPrice.earnPointFlag},
+			#{itemPrice.sellerPoint},
+			#{revenueSalesStatus},
+			#{payDate},
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			'00000000000000',
+			#{salesDate}, 
+			#{salesCancelDate},
+			<include refid="CommonMapper.datetime" />, 
+			#{returnPointFlag},
+			#{deliveryCompanyName},
+			#{item.itemReturnFlag},
+			#{escrowStatus},
+			#{userLevel.levelId},
+			#{userLevel.levelName},
+			#{userLevel.discountRate},
+			#{item.userLevelDiscountAmount},
+			#{campaignCode},
+			#{parentItemId},
+			#{parentItemOptions},
+		    #{quickDeliveryFlag},
+			#{erpOriginUnique}
+		)
+	</insert>
+	
+	<insert id="insertOrderPayment" parameterType="saleson.shop.order.domain.OrderPayment">
+		INSERT INTO OP_ORDER_PAYMENT 
+		(
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			PAYMENT_SEQUENCE,
+			PAYMENT_TYPE,
+			ORDER_PG_DATA_ID, 
+			APPROVAL_TYPE,
+			DEVICE_TYPE,
+			BANK_VIRTUAL_NO,
+			BANK_IN_NAME,
+			BANK_DATE,
+			AMOUNT,
+			TAX_FREE_AMOUNT,
+			CANCEL_AMOUNT,
+			REMAINING_AMOUNT,
+			PAY_DATE,
+			NOW_PAYMENT_FLAG,
+			REFUND_FLAG,
+			PAYMENT_SUMMARY,
+			CREATED_DATE
+		) VALUES (
+			#{orderCode},
+			#{orderSequence},
+			#{paymentSequence},
+			#{paymentType},
+			#{orderPgDataId},
+			#{approvalType},
+			#{deviceType},
+			#{bankVirtualNo},
+			#{bankInName},
+			#{bankDate},
+			#{amount},
+			#{taxFreeAmount},
+			#{cancelAmount},
+			#{remainingAmount},
+			#{payDate},
+			#{nowPaymentFlag},
+			#{refundFlag},
+			#{paymentSummary},
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+	
+	<insert id="insertOrderPgData" parameterType="saleson.shop.order.domain.OrderPgData">
+		INSERT INTO OP_ORDER_PG_DATA 
+		(
+			ORDER_PG_DATA_ID,
+		  	ORDER_CODE,
+			PG_SERVICE_TYPE,
+			PG_SERVICE_MID,
+			PG_SERVICE_KEY,
+			PG_PAYMENT_TYPE,
+			PG_KEY, 
+			PG_AUTH_CODE, 
+			PG_PROC_INFO,
+			PART_CANCEL_FLAG,
+			PART_CANCEL_DETAIL,
+			PG_AMOUNT,
+			CREATED_DATE
+		) VALUES (
+			#{orderPgDataId},
+			#{orderCode},
+			#{pgServiceType}, 
+			#{pgServiceMid},
+			#{pgServiceKey},
+			#{pgPaymentType},
+			#{pgKey}, 
+			#{pgAuthCode}, 
+			#{pgProcInfo},
+			#{partCancelFlag},
+			#{partCancelDetail},
+			#{pgAmount},
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+		
+	<insert id="insertOrderItemTemp" parameterType="saleson.shop.order.domain.BuyItem">
+		INSERT INTO OP_ORDER_ITEM_TEMP (USER_ID, SESSION_ID, ITEM_SEQUENCE, ITEM_ID, QUANTITY, OPTIONS, SHIPPING_PAYMENT_TYPE, ADDITION_ITEM_FLAG, PARENT_ITEM_SEQUENCE, PARENT_ITEM_ID, PARENT_ITEM_OPTIONS, CREATED_DATE, CAMPAIGN_CODE)
+		VALUES(#{userId}, #{sessionId}, #{itemSequence}, #{itemId}, #{itemPrice.quantity}, #{options}, #{shippingPaymentType}, #{additionItemFlag}, #{parentItemSequence}, #{parentItemId}, #{parentItemOptions}, <include refid="CommonMapper.datetime" />, #{campaignCode})
+</insert>
+
+	<insert id="insertOrderTemp" parameterType="saleson.shop.order.domain.Buy">
+		INSERT INTO OP_ORDER_TEMP (
+			USER_ID, 
+			SESSION_ID, 
+			ORDER_CODE,
+			USER_NAME, 
+			EMAIL, 
+			MOBILE, 
+			PHONE, 
+			ZIPCODE,
+			NEW_ZIPCODE,
+			SIDO,
+			SIGUNGU,
+			EUPMYEONDONG, 
+			ADDRESS, 
+			ADDRESS_DETAIL, 
+			POINT_DISCOUNT_AMOUNT, 
+			SHIPPING_COUPON_USE_COUNT,
+			SHIPPING_COUPON_DISCOUNT_AMT,
+			ITEM_COUPON_DISCOUNT_AMOUNT,
+			CART_COUPON_DISCOUNT_AMOUNT, 
+			ORDER_PAY_AMOUNT, 
+			DELIVERY_REQ_DAY, 
+			DELIVERY_REQ_HOUR, 
+			CART_COUPON_USE_DATA,
+            CASHBILL_TYPE,
+            CASHBILL_CODE,
+			SAVE_DELIVERY_FLAG,
+			SAVE_DELIVERY_NAME,
+			DEVICE_TYPE,
+			CREATED_DATE
+		) VALUES (
+			#{userId}, 
+			#{sessionId}, 
+			#{orderCode},
+			#{buyer.userName}, 
+			#{buyer.email}, 
+			#{buyer.fullMobile}, 
+			#{buyer.fullPhone}, 
+			#{buyer.fullZipcode},
+			#{buyer.newZipcode},  
+			#{buyer.sido},
+			#{buyer.sigungu},
+			#{buyer.eupmyeondong},
+			#{buyer.address}, 
+			#{buyer.addressDetail}, 
+			#{orderPrice.totalPointDiscountAmount}, 
+			#{orderPrice.totalShippingCouponUseCount},  
+			#{orderPrice.totalShippingCouponDiscountAmount}, 
+			#{orderPrice.totalItemCouponDiscountAmount},
+			#{orderPrice.totalCartCouponDiscountAmount}, 
+			#{orderPrice.orderPayAmount}, 
+			#{deliveryReqDay}, 
+			#{deliveryReqHour}, 
+			#{orderPrice.cartCouponUseData},
+            #{cashbill.cashbillType},
+            #{cashbill.cashbillCode},
+			#{saveDeliveryFlag},
+			#{saveDeliveryName},
+			#{deviceType},
+			#{createdDate}
+		)
+	</insert>
+	
+	<insert id="insertOrderPaymentBuyTemp" parameterType="saleson.shop.order.domain.BuyPayment">
+		INSERT INTO OP_ORDER_PAYMENT_BUY_TEMP (
+			ORDER_CODE,
+			APPROVAL_TYPE,
+			SERVICE_TYPE,
+			AMOUNT,
+			TAX_FREE_AMOUNT,
+			BANK_VIRTUAL_NO,
+			BANK_IN_NAME,
+			BANK_DATE,
+			SERVICE_MID,
+			SERVICE_KEY,
+			CREATED_DATE
+		) VALUES (
+			#{orderCode},
+			#{approvalType},
+			#{serviceType},
+			#{amount},
+			#{taxFreeAmount},
+			#{bankVirtualNo},
+			#{bankInName},
+			#{bankExpirationDate},
+			#{mid},
+			#{key},
+			#{createdDate}
+		)
+	</insert>
+	
+	<insert id="insertOrderShippingBuyTemp" parameterType="saleson.shop.order.domain.Receiver">
+		INSERT INTO OP_ORDER_SHIPPING_BUY_TEMP (
+			USER_ID, 
+			SESSION_ID, 
+			ORDER_CODE, 
+			SHIPPING_INDEX,
+<!--			RECEIVE_COMPANY_NAME, -->
+			RECEIVE_NAME, 
+			RECEIVE_MOBILE, 
+			RECEIVE_PHONE, 
+			RECEIVE_ZIPCODE, 
+			RECEIVE_NEW_ZIPCODE,
+			RECEIVE_SIDO,
+			RECEIVE_SIGUNGU,
+			RECEIVE_EUPMYEONDONG,
+			RECEIVE_ADDRESS,
+			RECEIVE_ADDRESS_DETAIL,
+			CONTENT,
+			CREATED_DATE
+		) VALUES (
+			#{userId}, 
+			#{sessionId}, 
+			#{orderCode}, 
+			#{shippingIndex}, 
+			#{receiveName}, 
+			#{fullReceiveMobile}, 
+			#{fullReceivePhone}, 
+			#{fullReceiveZipcode}, 
+			#{receiveNewZipcode}, 
+			#{receiveSido},
+			#{receiveSigungu},
+			#{receiveEupmyeondong},
+			#{receiveAddress},
+			#{receiveAddressDetail},
+			#{content},
+            #{createdDate}
+		)
+	</insert>
+	
+	<insert id="insertOrderItemBuyTemp" parameterType="saleson.shop.order.domain.BuyItem">
+		INSERT INTO OP_ORDER_ITEM_BUY_TEMP (USER_ID, SESSION_ID, ORDER_CODE, ITEM_SEQUENCE, SHIPPING_INDEX, ITEM_ID, QUANTITY, OPTIONS, COUPON_USER_ID, ADD_COUPON_USER_ID, SHIPPING_PAYMENT_TYPE, ADDITION_ITEM_FLAG, PARENT_ITEM_SEQUENCE, PARENT_ITEM_ID, PARENT_ITEM_OPTIONS, ESCROW_STATUS, CREATED_DATE, CAMPAIGN_CODE, QUICK_DELIVERY_FLAG)
+		VALUES(#{userId}, #{sessionId}, #{orderCode}, #{itemSequence}, #{shippingIndex}, #{itemId}, #{itemPrice.quantity}, #{options}, #{couponUserId}, #{addCouponUserId}, #{shippingPaymentType}, #{additionItemFlag}, #{parentItemSequence}, #{parentItemId}, #{parentItemOptions}, 'N', #{createdDate}, #{campaignCode}, #{quickDeliveryFlag})
+	</insert>
+	
+	<insert id="insertOrderItemBuyTempForEscrow" parameterType="saleson.shop.order.domain.BuyItem">
+		INSERT INTO OP_ORDER_ITEM_BUY_TEMP (USER_ID, SESSION_ID, ORDER_CODE, ITEM_SEQUENCE, SHIPPING_INDEX, ITEM_ID, QUANTITY, OPTIONS, COUPON_USER_ID, ADD_COUPON_USER_ID, SHIPPING_PAYMENT_TYPE, ADDITION_ITEM_FLAG, PARENT_ITEM_SEQUENCE, PARENT_ITEM_ID, ESCROW_STATUS, CREATED_DATE)
+		VALUES(#{userId}, #{sessionId}, #{orderCode}, #{itemSequence}, #{shippingIndex}, #{itemId}, #{itemPrice.quantity}, #{options}, #{couponUserId}, #{addCouponUserId}, #{shippingPaymentType}, #{additionItemFlag}, #{parentItemSequence}, #{parentItemId}, '0', #{createdDate})
+	</insert>
+	
+	<!-- 주문취소 배치 등록 - Batch -->
+	<insert id="insertOrderCancelTarget" parameterType="String">
+		INSERT OP_ORDER_BATCH_TARGET (
+			BATCH_KEY,
+			ORDER_CODE,
+			START_DATE,
+			BATCH_TYPE,
+			TARGET_INDEX,
+			TARGET_CODE,
+			ERROR_MESSAGE
+		) 
+		SELECT
+			#{value},
+			OI.ORDER_CODE,
+			<include refid="CommonMapper.datetime" />,
+			'CANCEL',
+			OCA.ORDER_CANCEL_APPLY_ID,
+			'',
+			'' 
+		FROM 
+			OP_ORDER_ITEM OI
+				INNER JOIN OP_ORDER_CANCEL_APPLY OCA ON OI.ORDER_CANCEL_APPLY_ID = OCA.ORDER_CANCEL_APPLY_ID
+				LEFT JOIN OP_ORDER_BATCH_TARGET OBT ON OI.ORDER_CANCEL_APPLY_ID = OBT.TARGET_INDEX AND OI.ORDER_CODE = OBT.ORDER_CODE
+				LEFT JOIN OP_ORDER_BATCH_TARGET NON_TARGET ON OI.ORDER_CODE = NON_TARGET.ORDER_CODE
+		WHERE 
+			OI.ORDER_STATUS = '95'
+			AND OBT.BATCH_KEY IS NULL
+			AND NON_TARGET.ORDER_CODE IS NULL
+		GROUP BY OI.ORDER_CODE
+		ORDER BY OI.CANCEL_REQUEST_DATE ASC
+		LIMIT 0, 1 
+	</insert>
+	
+	<!-- 환불 배치 등록 - Batch -->
+	<insert id="insertOrderReturnTarget" parameterType="String">
+		INSERT OP_ORDER_BATCH_TARGET (
+			BATCH_KEY,
+			ORDER_CODE,
+			START_DATE,
+			BATCH_TYPE,
+			TARGET_INDEX,
+			TARGET_CODE,
+			ERROR_MESSAGE
+		) 
+		SELECT
+			#{value},
+			OI.ORDER_CODE,
+			<include refid="CommonMapper.datetime" />,
+			'RETURN',
+			ORA.ORDER_RETURN_APPLY_ID,
+			'',
+			'' 
+		FROM 
+			OP_ORDER_ITEM OI
+				INNER JOIN OP_ORDER_RETURN_APPLY ORA ON OI.ORDER_RETURN_APPLY_ID = ORA.ORDER_RETURN_APPLY_ID
+				LEFT JOIN OP_ORDER_BATCH_TARGET OBT ON OI.ORDER_ITEM_ID = OBT.TARGET_INDEX AND OI.ORDER_CODE = OBT.ORDER_CODE
+				LEFT JOIN OP_ORDER_BATCH_TARGET NON_TARGET ON OI.ORDER_CODE = NON_TARGET.ORDER_CODE
+		WHERE 
+			OI.ORDER_ITEM_STATUS = '45'
+			AND OBT.BATCH_KEY IS NULL
+			AND NON_TARGET.ORDER_CODE IS NULL
+		GROUP BY OI.ORDER_CODE
+		ORDER BY OI.RETURN_REQUEST_DATE ASC
+		LIMIT 0, 1 
+	</insert>
+	
+	<!-- 환불정보 기록 OP_ORDER_PAYMENT - Batch -->
+	<update id="updateOrderPayment" parameterType="saleson.shop.order.domain.OrderPayment">
+		UPDATE OP_ORDER_PAYMENT
+		SET 
+			CANCEL_AMOUNT = CANCEL_AMOUNT + #{cancelAmount},
+			REMAINING_AMOUNT = REMAINING_AMOUNT - #{cancelAmount}
+		WHERE
+			ORDER_PAYMENT_ID = #{orderPaymentId}
+			AND #{remainingAmount} = (AMOUNT - CANCEL_AMOUNT) - #{cancelAmount}
+	</update>
+	
+	<!-- 주문취소 완료 정보 기록 - Batch -->
+	<update id="updateCancelStatus" parameterType="saleson.shop.order.domain.Order">
+		UPDATE OP_ORDER_ITEM OI
+		SET
+			OI.ORDER_STATUS = '99',
+			OI.CANCEL_REQUEST_FINISH_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),
+			OI.SALES_CANCEL_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE
+			OI.ORDER_CODE = #{orderCode}
+			AND OI.SHIPPING_GROUP_CODE = #{shippingGroupCode}
+			AND OI.ORDER_STATUS = '95'
+	</update>
+	
+	<!-- 환불 완료 정보 기록 - Batch -->
+	<update id="updateReturnStatus" parameterType="saleson.shop.order.domain.OrderItem">
+		UPDATE OP_ORDER_ITEM OI
+		SET
+			OI.ORDER_ITEM_STATUS = '49',
+			OI.RETURN_REQUEST_FINISH_DATE = <include refid="CommonMapper.datetime" />,
+			OI.SALES_CANCEL_DATE = <include refid="CommonMapper.datetime" />
+		WHERE
+			OI.ORDER_ITEM_ID = #{orderItemId}
+			AND OI.ORDER_ITEM_STATUS = '45'
+	</update>
+	
+	<!-- 주문취소 처리 실패 메시지 등록 - Batch -->
+	<update id="updateBatchTargetErrorMessage" parameterType="HashMap">
+		UPDATE OP_ORDER_BATCH_TARGET
+		SET
+			ERROR_MESSAGE = #{errorMessage}
+		WHERE
+			BATCH_KEY = #{batchKey}
+	</update>
+	
+	<update id="updateEarnPoint" parameterType="saleson.shop.point.domain.OrderPoint">
+		UPDATE OP_ORDER_ITEM
+		SET EARN_POINT_FLAG = 'Y'
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+			AND EARN_POINT > 0
+			AND (RETURN_POINT_FLAG != 'Y' OR RETURN_POINT_FLAG IS NULL)
+	</update>
+	
+	<!-- 입금확인 취소 1단계 -->
+	<update id="updateConfirmationOfPaymentCancelStep1" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE OP_ORDER_PAYMENT
+		SET
+			PAY_DATE = '',
+			REMAINING_AMOUNT = 0
+		<where>
+			AND ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+            AND APPROVAL_TYPE = 'bank'
+		</where>
+	</update>
+	
+	<!-- 입금확인 취소 2단계 -->
+	<update id="updateConfirmationOfPaymentCancelStep2" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE OP_ORDER 
+		SET
+			PAY_AMOUNT = IFNULL((
+				SELECT SUM(CASE WHEN PAYMENT_TYPE = '1' THEN AMOUNT ELSE -AMOUNT END) 
+				FROM OP_ORDER_PAYMENT
+				<where>
+					AND ORDER_CODE = #{orderCode}
+					AND ORDER_SEQUENCE = #{orderSequence}
+					AND (PAY_DATE != '' AND PAY_DATE IS NOT NULL)
+				</where>
+			), 0)
+		<where>
+			AND ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+		</where>
+	</update>
+	
+	<!-- 2017.05.16 Jun-Eu Son 입금확인 취소 3단계 -->
+	<update id="updateConfirmationOfPaymentCancelStep3" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE OP_ORDER_ITEM
+		SET
+			ORDER_STATUS = '0',
+			PAY_DATE = '00000000000000',
+			SALES_DATE = NULL,
+			UPDATED_ADMIN_USER_NAME = NULL
+		<where>
+			AND ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+		</where>
+	</update>
+	
+	<delete id="deleteOrderItemTemp" parameterType="saleson.shop.order.support.OrderParam">
+		DELETE FROM OP_ORDER_ITEM_TEMP
+		<where>
+			<choose>
+				<when test="isLogin == true">
+					AND USER_ID = #{userId}
+				</when>
+				<otherwise>
+					AND SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+	
+	<delete id="deleteOrderPaymentBuyTemp" parameterType="saleson.shop.order.domain.Buy">
+		DELETE FROM OP_ORDER_PAYMENT_BUY_TEMP
+		<where>
+			ORDER_CODE = #{orderCode}
+		</where> 
+	</delete>
+	
+	<delete id="deleteOrderTemp" parameterType="saleson.shop.order.domain.Buy">
+		DELETE FROM OP_ORDER_TEMP
+		<where>
+			<choose>
+				<when test="isLogin == true">
+					USER_ID = #{userId}
+				</when>
+				<otherwise>
+					SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+			
+			<choose>
+				<when test="orderCode != null and orderCode != ''">
+					AND ORDER_CODE = #{orderCode}
+				</when>
+				<otherwise>
+					AND (ORDER_CODE IS NULL OR ORDER_CODE = '')
+				</otherwise>
+			</choose>
+		</where> 
+	</delete>
+	
+	<delete id="deleteOrderShippingBuyTemp" parameterType="saleson.shop.order.domain.Buy">
+		DELETE FROM OP_ORDER_SHIPPING_BUY_TEMP
+		<where>
+			<choose>
+				<when test="isLogin == true">
+					USER_ID = #{userId}
+				</when>
+				<otherwise>
+					SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+			
+			<choose>
+				<when test="orderCode != null and orderCode != ''">
+					AND ORDER_CODE = #{orderCode}
+				</when>
+				<otherwise>
+					AND (ORDER_CODE IS NULL OR ORDER_CODE = '')
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+	
+	<delete id="deleteOrderItemBuyTemp" parameterType="saleson.shop.order.domain.Buy">
+		DELETE FROM OP_ORDER_ITEM_BUY_TEMP
+		<where>
+			<choose>
+				<when test="isLogin == true">
+					USER_ID = #{userId}
+				</when>
+				<otherwise>
+					SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+			
+			<choose>
+				<when test="orderCode != null and orderCode != ''">
+					AND ORDER_CODE = #{orderCode}
+				</when>
+				<otherwise>
+					AND (ORDER_CODE IS NULL OR ORDER_CODE = '')
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+
+	<!--  배치정보 삭제 - Batch -->
+	<delete id="deleteBatchTarget" parameterType="String">
+		DELETE FROM OP_ORDER_BATCH_TARGET
+		WHERE
+			BATCH_KEY = #{value}
+	</delete>
+	
+	
+	<sql id="whereOrderRefund">
+		WHERE CANCEL.RETURN_APPROVAL_TYPE IN('bank', 'vbank')
+		
+		<if test="(query != null and query != '') and (where != null and where != '')">
+			<choose>
+				<when test="where == 'ORDER_CODE'">
+					AND CANCEL.ORDER_CODE = #{query}
+				</when>
+			</choose>
+		</if>
+		AND CANCEL.STATUS_CODE = #{refundStatusCode}
+	</sql>
+	
+	<!-- 상품재고 차감 (item) -->
+	<update id="updateStockDeductionForItem" parameterType="saleson.shop.order.support.StockDeduction">
+		UPDATE OP_ITEM
+		SET STOCK_QUANTITY = IF(STOCK_QUANTITY - #{quantity} <![CDATA[<=]]> 0, 0, STOCK_QUANTITY - #{quantity})
+		<where>
+			STOCK_FLAG = 'Y'
+			<choose>
+				<when test='stockDeductionType == "STOCK"'>
+					AND STOCK_CODE = #{stockCode}
+					AND SELLER_ID = #{sellerId}
+				</when>
+				<otherwise>
+					AND ITEM_ID = #{itemId}
+				</otherwise>
+			</choose>
+			AND STOCK_QUANTITY != -1
+		</where>
+	</update>
+	
+	<!-- 상품재고 차감 (ItemOption) -->
+	<update id="updateStockDeductionForOption" parameterType="saleson.shop.order.support.StockDeduction">
+		
+		UPDATE OP_ITEM_OPTION IO
+			INNER JOIN OP_ITEM I ON IO.ITEM_ID = I.ITEM_ID
+		SET IO.OPTION_STOCK_QUANTITY = IF(IO.OPTION_STOCK_QUANTITY - #{quantity} <![CDATA[<=]]> 0, 0, IO.OPTION_STOCK_QUANTITY - #{quantity})
+		<where>
+			IO.OPTION_STOCK_FLAG = 'Y'
+			<choose>
+				<when test='stockDeductionType == "STOCK"'>
+					AND IO.OPTION_STOCK_CODE = #{stockCode}
+					AND I.SELLER_ID = #{sellerId}
+				</when>
+				<otherwise>
+					AND IO.ITEM_OPTION_ID = #{itemOptionId}
+				</otherwise>
+			</choose>
+			AND IO.OPTION_STOCK_QUANTITY != -1
+		</where>
+
+	</update>
+	
+	<!-- 상품재고 복구 (item) -->
+	<update id="updateStockRestorationForItem" parameterType="saleson.shop.order.support.StockRestoration">
+		UPDATE OP_ITEM
+		SET STOCK_QUANTITY = STOCK_QUANTITY + #{quantity}
+		<where>
+			STOCK_FLAG = 'Y'
+			<choose>
+				<when test='stockRestorationType == "STOCK"'>
+					AND STOCK_CODE = #{stockCode}
+					AND SELLER_ID = #{sellerId}
+				</when>
+				<otherwise>
+					AND ITEM_ID = #{itemId}
+				</otherwise>
+			</choose>
+			AND STOCK_QUANTITY != -1
+		</where>
+	</update>
+	
+	<!-- 상품재고 복구 (ItemOption) -->
+	<update id="updateStockRestorationForOption" parameterType="saleson.shop.order.support.StockRestoration">
+		
+		UPDATE OP_ITEM_OPTION IO
+			INNER JOIN OP_ITEM I ON IO.ITEM_ID = I.ITEM_ID
+		SET IO.OPTION_STOCK_QUANTITY = IO.OPTION_STOCK_QUANTITY + #{quantity}
+		<where>
+			IO.OPTION_STOCK_FLAG = 'Y'
+			<choose>
+				<when test='stockRestorationType == "STOCK"'>
+					AND IO.OPTION_STOCK_CODE = #{stockCode}
+					AND I.SELLER_ID = #{sellerId}
+				</when>
+				<otherwise>
+					AND IO.ITEM_OPTION_ID = #{itemOptionId}
+				</otherwise>
+			</choose>
+			AND IO.OPTION_STOCK_QUANTITY != -1
+		</where>
+
+	</update>
+
+	<insert id="insertOrderShippingForCancelBatch" parameterType="saleson.shop.order.domain.ReCalculationForShipping">
+		INSERT INTO OP_ORDER_SHIPPING
+		(
+			ORDER_SHIPPING_ID,
+			SELLER_ID,
+			ORDER_CODE,
+			SHIPPING_TYPE,
+			SHIPPING_GROUP_CODE,
+			ISLAND_TYPE,
+			SHIPPING,
+			SHIPPING_EXTRA_CHARGE1,
+			SHIPPING_EXTRA_CHARGE2,
+			SHIPPING_FREE_AMOUNT,
+			REAL_SHIPPING,
+			SHIPPING_PAYMENT_TYPE,
+			PAY_SHIPPING
+		) 
+		SELECT 
+			#{orderShippingId},
+			SELLER_ID,
+			ORDER_CODE,
+			SHIPPING_TYPE,
+			SHIPPING_GROUP_CODE,
+			ISLAND_TYPE,
+			SHIPPING,
+			SHIPPING_EXTRA_CHARGE1,
+			SHIPPING_EXTRA_CHARGE2,
+			SHIPPING_FREE_AMOUNT,
+			#{realShipping},
+			#{shippingPaymentType},
+			#{payShipping}
+		FROM OP_ORDER_SHIPPING
+		WHERE
+			ORDER_SHIPPING_ID = #{copyTargetOrderShippingId}
+	</insert>
+
+	<update id="updateOrderShippingForCancelBatch" parameterType="saleson.shop.order.domain.ReCalculationForShipping">
+		UPDATE OP_ORDER_SHIPPING SET
+			REAL_SHIPPING = #{realShipping},
+			SHIPPING_PAYMENT_TYPE = #{shippingPaymentType},
+			PAY_SHIPPING = #{payShipping}
+		WHERE
+			ORDER_SHIPPING_ID = #{orderShippingId}
+	</update>
+
+	<insert id="insertOrderItemForCancelBatch" parameterType="saleson.shop.order.domain.ReCalculationForItem">
+		INSERT INTO OP_ORDER_ITEM 
+		(
+			ORDER_ITEM_ID, 
+			DEVICE_TYPE,
+			ORDER_SHIPPING_ID,
+			ORDER_SHIPPING_INFO_ID,
+			ORDER_PAYMENT_ID,
+			ORDER_CODE, 
+			USER_ID, 
+			GUEST_FLAG, 
+			SELLER_ID, 
+			CATEGORY_TEAM_ID, 
+			CATEGORY_GROUP_ID, 
+			CATEGORY_ID, 
+			SHIPMENT_ID,
+			SHIPMENT_RETURN_ID,  
+			COUPON_USER_ID, 
+			ITEM_ID,  
+			ITEM_CODE, 
+			ITEM_USER_CODE, 
+			ITEM_NAME, 
+			FREE_GIFT_NAME,
+			IMAGE_SRC,
+			SHIPPING_RETURN,
+			ORDER_STATUS,
+			PURCHASE_PRICE, 
+			COST_PRICE,
+			PRICE,
+			OPTION_PRICE,
+			QUANTITY,
+			COUPON_DISCOUNT_PRICE, 
+			COUPON_DISCOUNT_AMOUNT,
+			SALE_AMOUNT,
+			SPOT_SALE_FLAG, 
+			SPOT_TYPE,
+			SPOT_DISCOUNT_PRICE,
+			TAX_TYPE,
+			COMMISSION_BASE_PRICE,
+			COMMISSION_RATE,
+			COMMISSION_PRICE,
+			SELLER_DISCOUNT_PRICE,
+			SELLER_DISCOUNT_AMOUNT,
+			SELLER_DISCOUNT_DETAIL,
+			ADMIN_DISCOUNT_PRICE,
+			ADMIN_DISCOUNT_AMOUNT,
+			ADMIN_DISCOUNT_DETAIL,
+			SUPPLY_PRICE,
+			BRAND, 
+			OPTIONS, 
+			ORDER_ITEM_STATUS, 
+			DELIVERY_COMPANY_ID, 
+			DELIVERY_NUMBER,
+			POINT_CONFIG_TYPE, 
+			POINT_TYPE, 
+			POINT, 
+			POINT_LOG, 
+			EARN_POINT, 
+			EARN_POINT_FLAG,
+			REVENUE_SALES_STATUS,
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			CREATED_DATE, 
+			RETURN_POINT_FLAG,
+			DELIVERY_COMPANY_NAME
+		)
+		SELECT 
+			#{orderItemId}, 
+			DEVICE_TYPE,
+			#{orderShippingId},
+			ORDER_SHIPPING_INFO_ID,
+			ORDER_PAYMENT_ID,
+			ORDER_CODE, 
+			USER_ID, 
+			GUEST_FLAG, 
+			SELLER_ID, 
+			CATEGORY_TEAM_ID, 
+			CATEGORY_GROUP_ID, 
+			CATEGORY_ID, 
+			SHIPMENT_ID,
+			SHIPMENT_RETURN_ID,  
+			COUPON_USER_ID, 
+			ITEM_ID,  
+			ITEM_CODE, 
+			ITEM_USER_CODE, 
+			ITEM_NAME, 
+			FREE_GIFT_NAME,
+			IMAGE_SRC,
+			SHIPPING_RETURN,
+			#{orderStatus},
+			PURCHASE_PRICE, 
+			COST_PRICE,
+			PRICE,
+			OPTION_PRICE,
+			#{quantity},
+			COUPON_DISCOUNT_PRICE, 
+			#{couponDiscountAmount},
+			#{saleAmount},
+			SPOT_SALE_FLAG, 
+			SPOT_TYPE,
+			SPOT_DISCOUNT_PRICE,
+			TAX_TYPE,
+			#{commissionBasePrice},
+			COMMISSION_RATE,
+			#{commissionPrice},
+			SELLER_DISCOUNT_PRICE,
+			#{sellerDiscountAmount},
+			#{sellerDiscountDetail},
+			ADMIN_DISCOUNT_PRICE,
+			#{adminDiscountAmount},
+			#{adminDiscountDetail},
+			#{supplyPrice},
+			BRAND, 
+			OPTIONS, 
+			ORDER_ITEM_STATUS, 
+			DELIVERY_COMPANY_ID, 
+			DELIVERY_NUMBER,
+			POINT_CONFIG_TYPE, 
+			POINT_TYPE, 
+			POINT, 
+			POINT_LOG, 
+			#{earnPoint}, 
+			EARN_POINT_FLAG,
+			REVENUE_SALES_STATUS,
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			CREATED_DATE, 
+			RETURN_POINT_FLAG,
+			DELIVERY_COMPANY_NAME
+		FROM OP_ORDER_ITEM
+		WHERE
+			ORDER_ITEM_ID = #{copyTargetOrderItemId}
+	</insert>
+
+	<update id="updateOrderItemForCancelBatch" parameterType="saleson.shop.order.domain.ReCalculationForItem">
+		UPDATE OP_ORDER_ITEM SET
+			ORDER_SHIPPING_ID = #{orderShippingId},
+			ORDER_STATUS = #{orderStatus},
+			QUANTITY = #{quantity},
+			COUPON_DISCOUNT_AMOUNT = #{couponDiscountAmount},
+			COMMISSION_BASE_PRICE = #{commissionBasePrice},
+			COMMISSION_PRICE = #{commissionPrice},
+			ADMIN_DISCOUNT_AMOUNT = #{adminDiscountAmount},
+			ADMIN_DISCOUNT_DETAIL = #{adminDiscountDetail},
+			SELLER_DISCOUNT_AMOUNT = #{sellerDiscountAmount},
+			SELLER_DISCOUNT_DETAIL = #{sellerDiscountDetail},
+			SUPPLY_PRICE = #{supplyPrice},
+			SALE_AMOUNT = #{saleAmount},
+			EARN_POINT = #{earnPoint}
+			
+			<if test='orderStatus == "99"'>
+				, CANCEL_FLAG = 'Y'
+				, CANCEL_REQUEST_FINISH_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+				, SALES_CANCEL_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+			</if>
+		WHERE
+			ORDER_ITEM_ID = #{orderItemId}
+	</update>
+	
+	<insert id="insertOrderItemForReturnBatch" parameterType="saleson.shop.order.domain.ReCalculationForItem">
+		INSERT INTO OP_ORDER_ITEM 
+		(
+			ORDER_ITEM_ID, 
+			DEVICE_TYPE,
+			ORDER_SHIPPING_ID,
+			ORDER_SHIPPING_INFO_ID,
+			ORDER_PAYMENT_ID,
+			ORDER_CODE, 
+			USER_ID, 
+			GUEST_FLAG, 
+			SELLER_ID, 
+			CATEGORY_TEAM_ID, 
+			CATEGORY_GROUP_ID, 
+			CATEGORY_ID, 
+			SHIPMENT_ID,
+			SHIPMENT_RETURN_ID,  
+			COUPON_USER_ID, 
+			ITEM_ID,  
+			ITEM_CODE, 
+			ITEM_USER_CODE, 
+			ITEM_NAME, 
+			FREE_GIFT_NAME,
+			IMAGE_SRC,
+			SHIPPING_RETURN,
+			ORDER_STATUS,
+			PURCHASE_PRICE, 
+			COST_PRICE,
+			PRICE,
+			OPTION_PRICE,
+			QUANTITY,
+			COUPON_DISCOUNT_PRICE, 
+			COUPON_DISCOUNT_AMOUNT,
+			SALE_AMOUNT,
+			SPOT_SALE_FLAG, 
+			SPOT_TYPE,
+			SPOT_DISCOUNT_PRICE,
+			TAX_TYPE,
+			COMMISSION_BASE_PRICE,
+			COMMISSION_RATE,
+			COMMISSION_PRICE,
+			SELLER_DISCOUNT_PRICE,
+			SELLER_DISCOUNT_AMOUNT,
+			SELLER_DISCOUNT_DETAIL,
+			ADMIN_DISCOUNT_PRICE,
+			ADMIN_DISCOUNT_AMOUNT,
+			ADMIN_DISCOUNT_DETAIL,
+			SUPPLY_PRICE,
+			BRAND, 
+			OPTIONS, 
+			ORDER_ITEM_STATUS, 
+			DELIVERY_COMPANY_ID, 
+			DELIVERY_NUMBER,
+			POINT_CONFIG_TYPE, 
+			POINT_TYPE, 
+			POINT, 
+			POINT_LOG, 
+			EARN_POINT, 
+			EARN_POINT_FLAG,
+			REVENUE_SALES_STATUS,
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			CREATED_DATE, 
+			RETURN_POINT_FLAG,
+			DELIVERY_COMPANY_NAME
+		)
+		SELECT 
+			#{orderItemId}, 
+			DEVICE_TYPE,
+			#{orderShippingId},
+			ORDER_SHIPPING_INFO_ID,
+			ORDER_PAYMENT_ID,
+			ORDER_CODE, 
+			USER_ID, 
+			GUEST_FLAG, 
+			SELLER_ID, 
+			CATEGORY_TEAM_ID, 
+			CATEGORY_GROUP_ID, 
+			CATEGORY_ID, 
+			SHIPMENT_ID,
+			SHIPMENT_RETURN_ID,  
+			COUPON_USER_ID, 
+			ITEM_ID,  
+			ITEM_CODE, 
+			ITEM_USER_CODE, 
+			ITEM_NAME, 
+			FREE_GIFT_NAME,
+			IMAGE_SRC,
+			SHIPPING_RETURN,
+			#{orderStatus},
+			PURCHASE_PRICE, 
+			COST_PRICE,
+			PRICE,
+			OPTION_PRICE,
+			#{quantity},
+			COUPON_DISCOUNT_PRICE, 
+			#{couponDiscountAmount},
+			#{saleAmount},
+			SPOT_SALE_FLAG, 
+			SPOT_TYPE,
+			SPOT_DISCOUNT_PRICE,
+			TAX_TYPE,
+			#{commissionBasePrice},
+			COMMISSION_RATE,
+			#{commissionPrice},
+			SELLER_DISCOUNT_PRICE,
+			#{sellerDiscountAmount},
+			#{sellerDiscountDetail},
+			ADMIN_DISCOUNT_PRICE,
+			#{adminDiscountAmount},
+			#{adminDiscountDetail},
+			#{supplyPrice},
+			BRAND, 
+			OPTIONS, 
+			ORDER_ITEM_STATUS, 
+			DELIVERY_COMPANY_ID, 
+			DELIVERY_NUMBER,
+			POINT_CONFIG_TYPE, 
+			POINT_TYPE, 
+			POINT, 
+			POINT_LOG, 
+			#{earnPoint}, 
+			EARN_POINT_FLAG,
+			REVENUE_SALES_STATUS,
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			CREATED_DATE, 
+			RETURN_POINT_FLAG,
+			DELIVERY_COMPANY_NAME
+		FROM OP_ORDER_ITEM
+		WHERE
+			ORDER_ITEM_ID = #{copyTargetOrderItemId}
+	</insert>
+	
+	<update id="updateOrderItemForReturnBatch" parameterType="saleson.shop.order.domain.ReCalculationForItem">
+		UPDATE OP_ORDER_ITEM SET
+			ORDER_ITEM_STATUS = #{orderStatus},
+			QUANTITY = #{quantity},
+			COUPON_DISCOUNT_AMOUNT = #{couponDiscountAmount},
+			COMMISSION_BASE_PRICE = #{commissionBasePrice},
+			COMMISSION_PRICE = #{commissionPrice},
+			ADMIN_DISCOUNT_AMOUNT = #{adminDiscountAmount},
+			ADMIN_DISCOUNT_DETAIL = #{adminDiscountDetail},
+			SELLER_DISCOUNT_AMOUNT = #{sellerDiscountAmount},
+			SELLER_DISCOUNT_DETAIL = #{sellerDiscountDetail},
+			SUPPLY_PRICE = #{supplyPrice},
+			SALE_AMOUNT = #{saleAmount},
+			EARN_POINT = #{earnPoint}
+
+			<if test='orderStatus == "49"'>
+				, CANCEL_FLAG = 'Y'
+				, RETURN_REQUEST_FINISH_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+				, SALES_CANCEL_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+			</if>
+		WHERE
+			ORDER_ITEM_ID = #{orderItemId}
+	</update>
+	
+	
+	<select id="getOrderExchangeApplyByOrderItemId" parameterType="java.util.HashMap" resultMap="OrderExchangeApplyResult">
+		SELECT OEA.* 
+		FROM 
+			OP_ORDER_EXCHANGE_APPLY OEA
+			INNER JOIN OP_ORDER_ITEM OI 
+			ON OI.ORDER_ITEM_ID = OEA.ORDER_ITEM_ID
+		WHERE OEA.ORDER_EXCHANGE_APPLY_ID = #{orderExchangeApplyId}
+		AND OI.ORDER_ITEM_ID = #{orderItemId}
+	</select>
+	
+	
+	<update id="updateOrderShippingInfo" parameterType="saleson.shop.order.domain.OrderShippingInfo">
+		UPDATE OP_ORDER_SHIPPING_INFO SET
+			RECEIVE_NEW_ZIPCODE = #{receiveNewZipcode},
+			RECEIVE_ZIPCODE = #{receiveZipcode},
+			RECEIVE_SIDO = #{receiveSido},
+			RECEIVE_SIGUNGU = #{receiveSigungu},
+			RECEIVE_EUPMYEONDONG = #{receiveEupmyeondong},
+			RECEIVE_ADDRESS = #{receiveAddress},
+			RECEIVE_ADDRESS_DETAIL = #{receiveAddressDetail},
+			RECEIVE_NAME = #{receiveName},
+			RECEIVE_PHONE = #{fullReceivePhone},
+			RECEIVE_MOBILE = #{fullReceiveMobile},
+			MEMO = #{memo},
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND SHIPPING_INFO_SEQUENCE = #{shippingInfoSequence}
+	</update>
+	
+	<update id="updateAdminMemo" parameterType="saleson.shop.order.domain.Order">
+		UPDATE OP_ORDER SET
+			ORDER_ADMIN_MEMO = #{orderAdminMemo}
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+	</update>
+	
+	<!-- 주문관련 메시지(메일/SMS) 발송된적 있는지 확인용 -->
+	<insert id="insertOrderSendMessageLog" parameterType="saleson.shop.order.domain.OrderSendMessageLog">
+		INSERT INTO OP_ORDER_SEND_MESSAGE_LOG (
+			ORDER_CODE, TEMPLATE_ID, DELIVERY_NUMBER, CREATED_DATE
+		) VALUES (
+			#{orderCode}, #{templateId}, #{deliveryNumber}, <include refid="CommonMapper.datetime" />
+		)
+	</insert> 
+	
+	<!-- 주문관련 메시지(메일/SMS) 발송된적 있는지 확인용 -->
+	<select id="getOrderSendMessageLogCount" parameterType="saleson.shop.order.domain.OrderSendMessageLog" resultType="Integer">
+		SELECT COUNT(*) FROM OP_ORDER_SEND_MESSAGE_LOG
+		<where>
+			
+			ORDER_CODE = #{orderCode}
+			AND TEMPLATE_ID = #{templateId}
+			<if test='templateId == "order_delivering"'>
+				AND DELIVERY_NUMBER = #{deliveryNumber}
+			</if>
+			
+		</where>
+	</select>
+	
+	<select id="getOrderShippingCouponBuyTemp" resultMap="ShippingCouponResult" parameterType="saleson.shop.order.support.OrderParam">
+		SELECT 
+			ORDER_CODE,
+			USER_ID,
+			SHIPPING_GROUP_CODE,
+			USE_COUPON_COUNT,
+			DISCOUNT_AMOUNT,
+			CREATED_DATE
+		FROM 
+			OP_ORDER_SHIPPING_CP_BUY_TEMP
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND USER_ID = #{userId}
+	</select>
+	
+	<insert id="insertOrderShippingCouponBuyTemp" parameterType="saleson.shop.order.domain.ShippingCoupon">
+		INSERT INTO OP_ORDER_SHIPPING_CP_BUY_TEMP
+		(
+			ORDER_CODE,
+			USER_ID,
+			SHIPPING_GROUP_CODE,
+			USE_COUPON_COUNT,
+			DISCOUNT_AMOUNT,
+			CREATED_DATE
+		) VALUES (
+			#{orderCode},
+			#{userId},
+			#{shippingGroupCode},
+			#{useCouponCount},
+			#{discountAmount},
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+	
+	<select id="getOrderItemCntForReview" parameterType="saleson.shop.order.domain.OrderItem" resultType="Integer">
+		SELECT COUNT(USER_ID)
+		FROM OP_ORDER_ITEM
+		WHERE USER_ID = #{userId} AND ITEM_USER_CODE = #{itemUserCode} AND (CONFIRM_DATE IS NOT NULL OR CONFIRM_DATE <![CDATA[<>]]> '')
+	</select>
+	
+	<update id="updateOrderCancelAll" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE OP_ORDER_ITEM SET
+			CANCEL_FLAG = 'Y',
+			SALES_CANCEL_DATE = <include refid="CommonMapper.datetime" />, 
+			CANCEL_REQUEST_FINISH_DATE = <include refid="CommonMapper.datetime" />,
+			ORDER_STATUS = '75'
+		<where>
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+		</where>
+	</update>
+	
+	<!-- 포인트 회수 -->
+	<update id="updateReturnPointFlag" parameterType="saleson.shop.order.domain.OrderItem">
+		UPDATE OP_ORDER_ITEM SET
+			RETURN_POINT_FLAG = 'Y'
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<select id="getOpmanagerShippingDelayCountAll" parameterType="map" resultMap="ShippingDelayCountResult">
+		SELECT 
+			'shipping-delay' AS ID,
+			'배송출고 지연' AS LABEL,
+			count(*) AS COUNT
+		FROM OP_ORDER_ITEM
+		<where>
+			ORDER_STATUS IN ('20', '10')
+			AND CANCEL_FLAG != 'Y'
+			AND SHIPPING_DATE = '00000000000000'
+			AND (
+					CASE WHEN ORDER_STATUS = '20'
+					THEN  DATE_FORMAT(SHIPPING_READY_DATE, '%y-%m-%d')
+					ELSE  DATE_FORMAT(PAY_DATE, '%y-%m-%d')
+					END
+			) <![CDATA[<]]>= CURDATE() - INTERVAL #{shippingDelay} DAY
+			<if test='sellerId != 0 and sellerId != null'>
+				AND SELLER_ID = #{sellerId}
+			</if>
+		</where>
+		
+		UNION ALL
+		
+		SELECT
+			'exchange-delay' AS ID,
+			'교환 지연' AS LABEL,
+			count(*) AS COUNT
+		FROM OP_ORDER_ITEM OI 
+			INNER JOIN OP_ORDER_EXCHANGE_APPLY OEA ON OI.ORDER_CODE = OEA.ORDER_CODE AND OI.ORDER_SEQUENCE = OEA.ORDER_SEQUENCE AND OI.ITEM_SEQUENCE = OEA.ITEM_SEQUENCE
+		<where>
+			DATE_FORMAT(OEA.EXCHANGE_APPLY_DATE, '%y-%m-%d') <![CDATA[<]]>= CURDATE() - INTERVAL #{exchangeDelay} DAY
+			AND ORDER_STATUS = '50'
+			AND OI.CANCEL_FLAG != 'Y'
+			AND OEA.CLAIM_STATUS IN ('01', '02')
+			<if test='sellerId != 0 and sellerId != null'>
+				AND OI.SELLER_ID = #{sellerId}
+			</if>
+		</where>
+		
+		UNION ALL
+		
+		SELECT
+			'return-delay' AS ID,
+			'반품 지연' AS LABEL,
+			count(*) AS COUNT
+		FROM OP_ORDER_ITEM OI 
+			INNER JOIN OP_ORDER_RETURN_APPLY ORA ON OI.ORDER_CODE = ORA.ORDER_CODE AND OI.ORDER_SEQUENCE = ORA.ORDER_SEQUENCE AND OI.ITEM_SEQUENCE = ORA.ITEM_SEQUENCE
+		<where>
+			DATE_FORMAT(ORA.RETURN_APPLY_DATE, '%y-%m-%d') <![CDATA[<]]>= CURDATE() - INTERVAL #{returnDelay} DAY
+			AND ORDER_STATUS = '60'
+			AND OI.CANCEL_FLAG != 'Y'
+			AND ORA.CLAIM_STATUS IN ('01', '02')
+			<if test='sellerId != 0 and sellerId != null'>
+				AND OI.SELLER_ID = #{sellerId}
+			</if>
+		</where>
+	</select> 
+	
+	<!-- 부분취소 상세정보 갱신 2017-05-25 Son Jun-Eu-->
+	<update id="updateOrderPgData" parameterType="saleson.shop.order.domain.OrderPgData">
+		UPDATE OP_ORDER_PG_DATA
+		SET 
+			PART_CANCEL_DETAIL = #{partCancelDetail}
+		WHERE
+			ORDER_PG_DATA_ID = #{orderPgDataId}			
+	</update>
+	
+	<!-- 에스크로 사용여부 가져오기 2017-06-23 Son Jun-Eu -->
+	<select id="getOrderItemTempByEscrow" parameterType="String" resultType="String">
+		SELECT ESCROW_STATUS FROM OP_ORDER_ITEM_BUY_TEMP WHERE ORDER_CODE = #{orderCode} GROUP BY ORDER_CODE
+	</select>
+	
+	<select id="getOrderItemByEscrow" parameterType="String" resultType="String">
+		SELECT ESCROW_STATUS FROM OP_ORDER_ITEM WHERE ORDER_CODE = #{orderCode} GROUP BY ORDER_CODE
+	</select>
+	
+	<!-- 이니시스 배송등록 요청을 위한 정보 가져오기 2017-06-26 Son Jun-Eu -->
+	<select id="getInicisDeliveryInfoByParam" parameterType="saleson.shop.order.support.OrderParam" resultType="java.util.HashMap">
+		SELECT OI.*,
+			   PD.PG_KEY AS TID,
+			   OS.SELLER_NAME,
+			   REPLACE(OS.POST,'-','') AS SEND_ZIPCODE,
+			   OS.ADDRESS AS SEND_ADDRESS,
+			   OS.ADDRESS_DETAIL AS SEND_ADDRESS_DETAIL,
+			   OS.TELEPHONE_NUMBER,
+			   O.BUYER_NAME,
+			   REPLACE(O.ZIPCODE,'-','') AS RECEIVE_ZIPCODE,
+			   O.ADDRESS AS RECEIVE_ADDRESS,
+			   O.ADDRESS_DETAIL AS RECEIVE_ADDRESS_DETAIL,
+			   O.PHONE,
+			   O.MOBILE,
+			   OSP.PAY_SHIPPING
+		 FROM OP_ORDER_ITEM OI
+		 INNER JOIN OP_ORDER_PAYMENT OP ON OI.ORDER_CODE = OP.ORDER_CODE AND OI.ORDER_SEQUENCE = OP.ORDER_SEQUENCE
+		 INNER JOIN OP_ORDER_PG_DATA PD ON OP.ORDER_PG_DATA_ID = PD.ORDER_PG_DATA_ID
+		 INNER JOIN OP_SELLER OS ON OI.SELLER_ID = OS.SELLER_ID
+		 INNER JOIN OP_ORDER O ON OI.ORDER_CODE = O.ORDER_CODE AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE
+		 INNER JOIN OP_ORDER_SHIPPING OSP ON OI.ORDER_CODE = OSP.ORDER_CODE AND OI.ORDER_SEQUENCE = OSP.ORDER_SEQUENCE AND OI.SHIPPING_SEQUENCE = OSP.SHIPPING_SEQUENCE
+		 WHERE OI.ORDER_CODE = #{orderCode}
+		 AND OI.ORDER_SEQUENCE = #{orderSequence}
+		 AND OI.ITEM_SEQUENCE = #{itemSequence}
+	</select>
+	
+	<!-- PG거래번호  2017-06-27 Son Jun-Eu -->
+	<select id="getTidByParam" parameterType="String" resultType="String">
+		SELECT PG_KEY FROM OP_ORDER_PG_DATA PD
+		INNER JOIN OP_ORDER_PAYMENT OP ON PD.ORDER_PG_DATA_ID = OP.ORDER_PG_DATA_ID
+		WHERE OP.ORDER_CODE = #{orderCode}
+		GROUP BY OP.ORDER_CODE
+	</select>
+	
+	<!-- 에스크로 상태 갱신  2017-07-05 Son Jun-Eu -->
+	<update id="updateEscrowStatus" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE
+			OP_ORDER_ITEM
+		SET
+			ESCROW_STATUS = #{escrowStatus}			
+		<where>
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+		</where>
+	</update>
+	
+	<select id="getOrderItemListByParam" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderItemResult">
+		SELECT 
+			OI.*,
+			OSI.RECEIVE_NEW_ZIPCODE,
+			OSI.RECEIVE_ZIPCODE,
+			OSI.RECEIVE_SIDO,
+			OSI.RECEIVE_SIGUNGU,
+			OSI.RECEIVE_EUPMYEONDONG,
+			OSI.RECEIVE_ADDRESS,
+			OSI.RECEIVE_ADDRESS_DETAIL,
+			OSI.RECEIVE_NAME,
+			OSI.RECEIVE_PHONE,
+			OSI.RECEIVE_MOBILE
+		<include refid="sqlDefaultFormForOrder" />
+		<where>
+			AND OI.ORDER_CODE = #{orderCode}
+
+			<if test="orderSequence > 0">
+				AND OI.ORDER_SEQUENCE = #{orderSequence}
+			</if>
+
+			<choose>
+				<when test='conditionType == "OPMANAGER"'>
+					<if test="sellerId != null and sellerId > 0">
+						AND OI.SELLER_ID = #{sellerId}
+					</if>
+				</when>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+				</when>
+				<otherwise>
+					<choose>
+						<when test="isLogin == true">
+							AND OI.USER_ID = #{userId}
+							AND OI.GUEST_FLAG = 'N'
+						</when>
+						<otherwise>
+							AND OI.GUEST_FLAG = 'Y'
+						</otherwise>
+					</choose>
+				</otherwise>
+			</choose>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+
+			<if test="parentItemId > 0">
+				AND OI.PARENT_ITEM_ID = #{parentItemId}
+				AND OI.PARENT_ITEM_OPTIONS = #{parentItemOptions}
+			</if>
+
+		</where>
+	</select>
+	
+	<!-- 주문번호로 Email정보 가져오기  2019-03-28 Son Jun-Eu -->
+	<select id="getEmailByOrderCode" parameterType="saleson.shop.order.support.OrderParam" resultType="String">
+		SELECT O.EMAIL
+		FROM OP_USER U
+		LEFT JOIN OP_ORDER O ON O.USER_ID = U.USER_ID
+		WHERE O.ORDER_CODE = #{orderCode}
+	</select>
+
+	<sql id="sqlFormOrderListForManager">
+        FROM OP_ORDER_ITEM OI
+        INNER JOIN OP_ORDER O
+            ON OI.ORDER_CODE = O.ORDER_CODE
+            AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE
+            AND O.DATA_STATUS_CODE = '1'
+
+        INNER JOIN OP_ORDER_SHIPPING_INFO OSI
+            ON OI.ORDER_CODE = OSI.ORDER_CODE
+            AND OI.ORDER_SEQUENCE = OSI.ORDER_SEQUENCE
+            AND OI.SHIPPING_INFO_SEQUENCE = OSI.SHIPPING_INFO_SEQUENCE
+    </sql>
+	<sql id="sqlWhereOrderListForManager">
+		<where>
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+
+					<if test="status != null and status.length > 0">
+						AND OI.ORDER_STATUS IN
+						<foreach collection="status" item="status" index="i" open="(" separator="," close=")">
+							#{status}
+						</foreach>
+					</if>
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+
+					<if test="sellerId > 0">
+						AND OI.SELLER_ID = #{sellerId}
+					</if>
+
+					<if test="deliveryType != null and deliveryType != ''">
+						<if test="sellerId == 0">
+							AND OI.SELLER_ID > #{sellerId}
+						</if>
+
+						AND OI.DELIVERY_TYPE = #{deliveryType}
+					</if>
+
+					<if test="status != null and status.length > 0">
+						AND OI.ORDER_STATUS IN
+						<foreach collection="status" item="status" index="i" open="(" separator="," close=")">
+							#{status}
+						</foreach>
+					</if>
+
+					<if test="additionItemFlag != null and additionItemFlag != ''">
+						AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+					</if>
+
+				</when>
+			</choose>
+			<include refid="sqlOrderWhereQuery" />
+		</where>
+	</sql>
+
+	<select id="getAllOrderCountByParamForManager" parameterType="saleson.shop.order.support.OrderParam"
+	        resultType="Integer">
+		SELECT COUNT(*)
+
+		<include refid="sqlFormOrderListForManager" />
+		<include refid="sqlWhereOrderListForManager"/>
+	</select>
+
+	<!-- 주문 내역 리스트 - 주문별 그룹 -->
+	<select id="getAllOrderListByParamForManager" parameterType="saleson.shop.order.support.OrderParam" resultMap="OrderListResult">
+
+		SELECT
+			OI.*,
+			IFNULL(U.USER_NAME,'') AS USER_NAME,
+			IFNULL(S.SELLER_NAME, '') AS SELLER_NAME
+		FROM (
+			<include refid="CommonMapper.paginationHeader" />
+
+			SELECT
+				O.LOGIN_ID,
+				O.BUYER_NAME,
+				OI.*,
+				OSI.RECEIVE_NAME
+
+			<include refid="sqlFormOrderListForManager" />
+			<include refid="sqlWhereOrderListForManager"/>
+
+			<include refid="CommonMapper.paginationFooter" />
+		) OI
+		LEFT JOIN OP_USER U ON OI.USER_ID = U.USER_ID
+		LEFT JOIN OP_SELLER S ON OI.SELLER_ID = S.SELLER_ID
+
+		ORDER BY OI.ORDER_CODE DESC, OI.ORDER_SEQUENCE ASC, OI.SHIPPING_INFO_SEQUENCE ASC, OI.ITEM_SEQUENCE ASC
+	</select>
+
+	<select id="getOrderCodeCountForOrderTemp" parameterType="String" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM OP_ORDER_TEMP
+		WHERE ORDER_CODE = #{orderCode}
+	</select>
+
+    <select id="getOrderItemCountForCancel" parameterType="saleson.shop.order.claimapply.domain.OrderCancelApply" resultType="Integer">
+		SELECT
+		    COUNT(*)
+        FROM
+            OP_ORDER_ITEM
+        WHERE
+            ORDER_CODE = #{orderCode}
+            AND SHIPPING_SEQUENCE = #{shippingSequence}
+            AND REFUND_STATUS = 0
+	</select>
+
+	<select id="getOrderPgDataByOrderCode" parameterType="String" resultMap="OrderPgDataResult">
+		SELECT
+			ORDER_PG_DATA_ID,
+			ORDER_CODE,
+			PG_SERVICE_TYPE,
+			PG_SERVICE_MID,
+			PG_SERVICE_KEY,
+			PG_PAYMENT_tYPE,
+			PG_KEY,
+			PG_AUTH_CODE,
+			PG_PROC_INFO,
+			PART_CANCEL_FLAG,
+			PART_CANCEL_DETAIL,
+			PG_AMOUNT,
+			CREATED_DATE
+		FROM
+			OP_ORDER_PG_DATA
+		WHERE
+			ORDER_CODE = #{orderCode}
+	</select>
+
+	<resultMap id="CampaignStatisticsResult" type="saleson.common.notification.domain.CampaignStatistics">
+		<result property="key" column="CAMPAIGN_CODE" />
+		<result property="orderAmount" column="ORDER_AMOUNT" />
+		<result property="orderCount" column="ORDER_COUNT" />
+		<result property="userId" column="USER_ID" />
+	</resultMap>
+
+	<select id="getCampaignOrderStatisticsListByParam" parameterType="saleson.common.notification.support.StatisticsParam" resultMap="CampaignStatisticsResult">
+		SELECT
+			CAMPAIGN_CODE,
+			SUM(OI.SALE_PRICE) AS ORDER_AMOUNT,
+			COUNT(*) AS ORDER_COUNT
+		FROM OP_ORDER_ITEM OI
+		<where>
+			PAY_DATE >= #{beginSearchDate}
+			AND ORDER_STATUS NOT IN ('0','65','75')
+			AND CAMPAIGN_CODE IS NOT NULL
+		</where>
+		GROUP BY CAMPAIGN_CODE
+	</select>
+
+	<select id="getCampaignOrderStatisticsListByParamForUser" parameterType="saleson.common.notification.support.StatisticsParam" resultMap="CampaignStatisticsResult">
+		SELECT
+			CAMPAIGN_CODE,
+			USER_ID,
+			SUM(OI.SALE_PRICE) AS ORDER_AMOUNT,
+			COUNT(*) AS ORDER_COUNT
+		FROM OP_ORDER_ITEM OI
+		<where>
+			PAY_DATE >= #{beginSearchDate}
+			AND ORDER_STATUS NOT IN ('0','65','75')
+			AND CAMPAIGN_CODE IS NOT NULL
+		</where>
+		GROUP BY CAMPAIGN_CODE, USER_ID
+	</select>
+
+    <delete id="deleteOrderPaymentBuyTempForBatch" parameterType="int">
+        DELETE FROM OP_ORDER_PAYMENT_BUY_TEMP
+        WHERE DATEDIFF(CURRENT_DATE, DATE_FORMAT(CREATED_DATE,'%Y-%m-%d')) <![CDATA[>]]> #{retentionPeriod}
+    </delete>
+
+    <delete id="deleteOrderTempForBatch" parameterType="int">
+        DELETE FROM OP_ORDER_TEMP
+        WHERE DATEDIFF(CURRENT_DATE, DATE_FORMAT(CREATED_DATE,'%Y-%m-%d')) <![CDATA[>]]> #{retentionPeriod}
+    </delete>
+
+    <delete id="deleteOrderItemBuyTempForBatch" parameterType="int">
+        DELETE FROM OP_ORDER_ITEM_BUY_TEMP
+        WHERE DATEDIFF(CURRENT_DATE, DATE_FORMAT(CREATED_DATE,'%Y-%m-%d')) <![CDATA[>]]> #{retentionPeriod}
+    </delete>
+
+    <delete id="deleteOrderShippingBuyTempForBatch" parameterType="int">
+        DELETE FROM OP_ORDER_SHIPPING_BUY_TEMP
+        WHERE DATEDIFF(CURRENT_DATE, DATE_FORMAT(CREATED_DATE,'%Y-%m-%d')) <![CDATA[>]]> #{retentionPeriod}
+    </delete>
+
+	<select id="getMobileByOrderCode" parameterType="saleson.shop.order.support.OrderParam" resultType="String">
+		SELECT MOBILE
+		FROM OP_ORDER
+		WHERE ORDER_CODE = #{orderCode}
+	</select>
+
+	<select id="getOrderAdditionItemListByOrderCodes" parameterType="saleson.shop.order.support.OrderParam" resultType="String">
+
+
+
+		<if test="orderCodes != null and orderCodes.size() > 0">
+			AND OP.ORDER_CODE IN
+			<foreach collection="orderCodes" item="orderCode" index="i" open="(" close=")" separator=",">
+				#{orderCode}
+			</foreach>
+		</if>
+	</select>
+
+	<select id="getMaxParentOrderItemSequence" parameterType="saleson.shop.order.support.OrderParam" resultType="Integer">
+		SELECT MAX(ITEM_SEQUENCE) ITEM_SEQUENCE
+		FROM OP_ORDER_ITEM
+		WHERE ORDER_CODE = #{orderCode}
+		AND ORDER_SEQUENCE = #{orderSequence}
+		AND ORDER_STATUS = #{orderStatus}
+		AND ITEM_ID = #{itemId}
+		AND OPTIONS = #{options}
+	</select>
+
+    <!-- ERP 주문 상태 연동을 위한 데이터 조회 -->
+    <select id="getOrderItemListForErpBatch" resultMap="BaseOrderItemResult">
+        SELECT * FROM OP_ORDER_ITEM
+        WHERE ORDER_STATUS IN ('10', '20', '50')
+    </select>
+
+
+    <!-- ERP 주문 상태 코드 연동을 위함 임시 테이블 데이터 저장. -->
+    <insert id="saveErpOrderItems" parameterType="saleson.shop.order.support.BatchKey">
+        INSERT ERP_ORDER_ITEM (BATCH_KEY, ORDER_CODE, ORDER_SEQUENCE, ITEM_SEQUENCE, ORDER_STATUS, SHIPPING_SEQUENCE, SHIPPING_INFO_SEQUENCE, DELIVERY_TYPE, DELIVERY_COMPANY_ID, DELIVERY_COMPANY_NAME, DELIVERY_NUMBER, SHIPPING_READY_DATE, SHIPPING_DATE)
+        VALUES
+        <foreach collection="orderItems" item="oi" index="i" open="" separator="," close="">
+            (#{batchKey}, #{oi.orderCode}, #{oi.orderSequence}, #{oi.itemSequence}, #{oi.orderStatus}, #{oi.shippingSequence}, #{oi.shippingInfoSequence}, #{oi.deliveryType}, #{oi.deliveryCompanyId}, #{oi.deliveryCompanyName}, #{oi.deliveryNumber}, #{oi.shippingReadyDate}, #{oi.shippingDate})
+        </foreach>
+    </insert>
+
+
+    <!-- ERP 주문 상태 임시 테이블과 맵핑하여 ORDER_ITEM 테이블의 주문 상태 코드를 업데이트 한다. -->
+    <update id="updateOrderItemStatusWithErpTempTable" parameterType="saleson.shop.order.support.BatchKey">
+        <choose>
+            <when test='orderStatus == "20"'>
+                UPDATE OP_ORDER_ITEM OI
+                    INNER JOIN ERP_ORDER_ITEM EOI ON OI.ORDER_CODE = EOI.ORDER_CODE
+                        AND OI.ORDER_SEQUENCE = EOI.ORDER_SEQUENCE
+                        AND OI.ITEM_SEQUENCE = EOI.ITEM_SEQUENCE
+                SET
+                    OI.ORDER_STATUS = EOI.ORDER_STATUS,
+                    OI.SHIPPING_READY_DATE = <include refid="CommonMapper.datetime"/>
+                WHERE
+                    EOI.BATCH_KEY = #{batchKey} AND EOI.ORDER_STATUS = #{orderStatus}
+            </when>
+            <when test='orderStatus == "30"'>
+                UPDATE OP_ORDER_ITEM OI
+                    INNER JOIN ERP_ORDER_ITEM EOI ON OI.ORDER_CODE = EOI.ORDER_CODE
+                        AND OI.ORDER_SEQUENCE = EOI.ORDER_SEQUENCE
+                        AND OI.ITEM_SEQUENCE = EOI.ITEM_SEQUENCE
+                SET
+                    OI.ORDER_STATUS = EOI.ORDER_STATUS,
+                    OI.SHIPPING_DATE = <include refid="CommonMapper.datetime"/>,
+                    OI.DELIVERY_COMPANY_ID = EOI.DELIVERY_COMPANY_ID,
+                    OI.DELIVERY_COMPANY_NAME = EOI.DELIVERY_COMPANY_NAME,
+                    OI.DELIVERY_NUMBER = EOI.DELIVERY_NUMBER
+                WHERE
+                    EOI.BATCH_KEY = #{batchKey} AND EOI.ORDER_STATUS = #{orderStatus}
+            </when>
+            <when test='orderStatus == "55"'>
+                UPDATE OP_ORDER_ITEM OI
+                    INNER JOIN ERP_ORDER_ITEM EOI ON OI.ORDER_CODE = EOI.ORDER_CODE
+                        AND OI.ORDER_SEQUENCE = EOI.ORDER_SEQUENCE
+                        AND OI.ITEM_SEQUENCE = EOI.ITEM_SEQUENCE
+                SET
+                    OI.ORDER_STATUS = EOI.ORDER_STATUS,
+                    OI.SHIPPING_DATE = <include refid="CommonMapper.datetime"/>,
+                    OI.DELIVERY_COMPANY_ID = EOI.DELIVERY_COMPANY_ID,
+                    OI.DELIVERY_COMPANY_NAME = EOI.DELIVERY_COMPANY_NAME,
+                    OI.DELIVERY_NUMBER = EOI.DELIVERY_NUMBER,
+					OI.CLAIM_QUANTITY = 0,
+					OI.EXCHANGE_REQUEST_DATE = '00000000000000'
+                WHERE
+                    EOI.BATCH_KEY = #{batchKey} AND EOI.ORDER_STATUS = #{orderStatus}
+            </when>
+        </choose>
+
+
+    </update>
+
+	<update id="updateOrderItemByIfOrderListPutData" parameterType="saleson.erp.domain.OrderLineStatus">
+		UPDATE OP_ORDER_ITEM
+		<set>
+			ORDER_STATUS = #{orderStatus},
+		    <if test='orderStatus == "30" or orderStatus == "55"'>
+				SHIPPING_DATE = <include refid="CommonMapper.datetime"/>,
+				DELIVERY_COMPANY_ID = #{carrNo},
+				DELIVERY_COMPANY_NAME = #{carrName},
+				DELIVERY_NUMBER = #{invoiceNo},
+				DELIVERY_COMPANY_URL = #{deliveryCompanyUrl}
+			</if>
+		</set>
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ITEM_SEQUENCE = #{itemSequence}
+			AND ORDER_STATUS IN ('10', '20', '50')
+	</update>
+
+	<select id="getOrderItemListForErpBatchStatus" parameterType="saleson.erp.domain.OrderLineStatus" resultMap="BaseOrderItemResult">
+		SELECT * FROM OP_ORDER_ITEM
+		WHERE ERP_ORIGIN_UNIQUE IN
+		<foreach collection="list" item="orderLineStatus" index="i" open="(" separator="," close=")">
+			#{orderLineStatus.uniq}
+		</foreach>
+
+		OR
+
+		ERP_ORIGIN_UNIQUE IN
+		<foreach collection="list" item="orderLineStatus" index="i" open="(" separator="," close=")">
+			#{orderLineStatus.oriUniq}
+		</foreach>
+	</select>
+
+	<insert id="saveErpOrderStatus" parameterType="saleson.erp.domain.OrderLineStatus">
+		INSERT INTO erp_order_status_log
+		(
+			ORDER_CODE,
+			ITEM_SEQUENCE,
+			ORG_ORDER_STATUS,
+			ORDER_STATUS,
+			CREATED_DATE
+		)
+		VALUES
+		(
+		 	#{orderCode},
+			#{itemSequence},
+			#{originStatus},
+			#{orderStatus},
+			<include refid="CommonMapper.datetime"/>
+	   )
+	</insert>
+
+</mapper>

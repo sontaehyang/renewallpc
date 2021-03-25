@@ -1,0 +1,108 @@
+<?include "../include/head.html"?>
+		<!-- 본문 -->
+		<!-- 팝업사이즈 660*553-->
+		<div class="popup_wrap">
+			<h1 class="popup_title">배송지 추가/수정</h1>
+			<div class="popup_contents"> 
+				 <div class="board_wrap">	   
+			 		<table cellpadding="0" cellspacing="0"  class="board-write">
+			 			<caption>배송지 추가/수정</caption>
+			 			<colgroup>		 			  
+			 				<col style="width:150px;"> 
+			 				<col style="width:auto;"> 
+			 			</colgroup> 
+			 			<tbody>
+			 				<tr>
+			 					<th scope="row">배송지 이름 <span class="necessary"></span></th> 
+			 					<td>
+			 						<div class="input_wrap col-w-7">
+			 							<input type="text" title="배송지 이름" disabled="disabled">
+			 						</div> 
+			 						<span class="address_basic"><input type="checkbox" id="aa"> <label for="aa">이 주소를 기본으로 설정함</label></span>
+			 					</td>  
+			 				</tr>  
+			 				<tr>
+			 					<th scope="row">받으시는 분 <span class="necessary"></span></th> 
+			 					<td>
+			 						<div class="input_wrap col-w-7">
+			 							<input type="text" title="받으시는 분" disabled="disabled">
+			 						</div>  
+			 					</td>  
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">전화번호</th> 
+			 					<td>
+			 						<div class="hp_area">
+			 							<div class="input_wrap col-w-10">
+			 								<select class="form-control">
+										        <option value="02">02</option> 
+										        <option value="031">031</option> 
+										        <option value="032">032</option>  
+										    </select>
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							<div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+			 							</div> 	
+			 						</div>
+			 					</td>  
+			 				</tr> 
+			 				<tr>
+			 					<th scope="row">휴대전화번호 <span class="necessary"></span></th> 
+			 					<td>
+			 						<div class="hp_area">
+			 							<div class="input_wrap col-w-10">
+			 								<select class="form-control">
+										        <option value="010">010</option> 
+										        <option value="011">011</option> 
+										        <option value="016">016</option> 
+										        <option value="017">017</option>
+										        <option value="018">018</option> 
+										        <option value="019">019</option>  
+										    </select>
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							<div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+			 							</div> 		
+			 						</div> 
+			 					</td>  
+			 				</tr>
+			 				<tr>
+			 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+			 					<td>
+			 						<div> 
+			 							<div class="input_wrap col-w-10">
+			 								<input type="text" title="우편번호"> 
+			 							</div>	 
+			 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default">검색</button></div>  
+			 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+			 								<input type="text" title="주소" class="full"> 
+			 							</div>			 	 				  			 
+			 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+			 								<input type="text" title="주소" class="full"> 
+			 							</div>		 							 
+			 						</div>
+			 					</td>
+			 				</tr>   
+			 			</tbody>
+			 		</table>   
+			 	</div> <!-- // board_wrap E -->
+			 	<div class="btn_wrap pt30">
+					<button type="button" class="btn btn-success btn-lg" title="확인하기">확인하기</button> 
+					<button type="button" class="btn btn-default btn-lg" title="취소하기">취소하기</button> 
+				</div>  
+			</div><!--//popup_contents E--> 
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+
+ </body>
+</html>

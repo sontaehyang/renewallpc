@@ -1,0 +1,302 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?> 
+<div class="inner infoModi_wrap">
+	<div class="location_area">
+		<?include "../include/all_menu.html"?>
+		<div class="breadcrumbs">
+			<a href="#" class="home"><span class="hide">home</span></a>
+			<a href="#">마이페이지</a> 
+			<a href="#">쇼핑내역</a> 
+			<span>주문/배송조회</span> 
+		</div>
+	</div><!-- // location_area E --> 	
+	<!-- 주문/배송조회 정보 박스 -->	
+	<div class="order_info">
+		<div class="member_level">
+			<p class="level"><img src="/content/images/icon/icon_gold.png" alt="등급"></p>
+			<p class="name"><span>홍길동</span>님</p>
+			<p class="rating">일반등급</p>
+			<a href="#" class="btn_benefit" title="혜택보기">혜택보기</a>
+		</div><!--// member_level E-->
+		<div class="info_list">
+			<ul class="info">
+				<li>
+					<p class="item point">포인트</p>
+					<p class="remainder"><span>9,999,999</span>P</p>
+				</li>
+				<li>
+					<p class="item coupons">쿠폰 <a href="#" class="btn_down_confirm">다운가능쿠폰</a></p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item delivery">배송비 쿠폰</p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item cash">캐시</p>
+					<p class="remainder"><span>9,999,999</span>원</p>
+				</li>
+			</ul>
+			<div class="condition_wrap">
+				<div class="order_condition">
+					<span class="title">주문/배송</span>
+					<ol>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step01.gif" alt="order"></span>
+							<p>주문접수 <span><a href="#">30</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"> </li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step02.gif" alt="order"></span>
+							<p>결제완료  <span><a href="#">10</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step03.gif" alt="order"></span>
+							<p>상품준비중 <span><a href="#">0</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step04.gif" alt="order"></span>
+							<p>배송중 <span><a href="#" class="ing">1</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step05.gif" alt="order"></span>
+							<p>배송완료 <span><a href="#">5</a>건</span></p> 
+						</li>
+					</ol>
+				</div> <!--// order_condition E--> 
+				<div class="order_refund">
+					<p class="title">취소/교환/반품</p>
+					<ul>
+						<li>취소 <span><a href="#">0</a>건</span></li>  
+						<li>교환 <span><a href="#" class="ing">2</a>건</span></li>  
+						<li>반품 <span><a href="#">0</a>건</span></li>  
+					</ul>
+				</div><!--// order_refund E--> 
+			</div><!--// condition_wrap E--> 
+		</div><!--// info_list E-->
+	</div><!--// order_info E-->
+	
+	<div id="contents" class="pt0"> 
+		<?include "../include/mypage_lnb.html"?>
+		<!-- 1단계 회원 정보 수정 S -->
+		<div class="contents_inner"> 	   
+			<h2>회원정보수정</h2>
+			<p class="table_top">회원정보를 안전하게 보호하기 위해 비밀번호를 다시 한 번 확인 합니다.<br/>항상 비밀번호는 타인에 노출되지 않도록 주의해 주세요.</p>
+			<div class="input_info clear">
+		 		<dl class="clear">
+		 			<dt>회원아이디</dt>
+		 			<dd><input type="text" disabled></dd>
+		 			<dt class="mt10">비밀번호</dt>
+		 			<dd class="mt10"><input type="password"></dd>
+		 		</dl>
+		 		<button type="submit" class="btn" title="확인">확인</button>
+	 		</div><!-- // input_info E -->	
+		</div>
+		<!-- 1단계 회원 정보 수정 E -->
+		<!-- 2단계 회원 정보 수정 S -->
+		<div class="contents_inner"> 	   
+			<h2>회원정보수정</h2>
+			<h3 class="sub_title mt20">정보입력 <span>표시가 있는 부분은 필수 입력사항입니다.</span></h3>
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-write">
+		 			<caption>회원정보수정</caption>
+		 			<colgroup>
+		 				<col style="width:190px;">
+		 				<col style="width:auto;">	 				
+		 			</colgroup>
+		 			<tbody>
+		 				<tr>
+		 					<th scope="row">회원구분 <span class="necessary"></span></th>
+		 					<td>일반회원</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">아이디 <span class="necessary"></span></th>
+		 					<td>
+		 						<div class="input_wrap col-w-7">
+		 							<input type="text" title="아이디">
+		 						</div>&nbsp;&nbsp;
+		 						<div class="input_wrap">
+		 							<button type="button" class="btn btn-ms btn-default" title="중복확인">중복확인</button>
+		 						</div>
+		 						<span class="coment">영문 및 숫자를 사용하여 4자 이상 입력하세요.</span> 
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">비밀번호 <span class="necessary"></span></th>
+		 					<td>
+		 						<div class="input_wrap col-w-7">
+		 							<input type="password" title="비밀번호">
+		 						</div> 
+		 						<span class="coment">영문/숫자를 혼합하여 4자 이상 20자 이하로 입력하세요. </span>
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">비밀번호 확인<span class="necessary"></span></th>
+		 					<td>
+		 						<div class="input_wrap col-w-7">
+		 							<input type="password" title="비밀번호 확인">
+		 						</div> 
+		 						<span class="coment">비밀번호 확인을 위하여 다시 한번 입력하세요. </span>
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row">이름 <span class="necessary"></span></th>
+		 					<td>
+		 						<div class="input_wrap col-w-7">
+		 							<input type="text" class="disabled" value="홍길동" title="이름" disabled="">
+		 						</div> 
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">생년월일</th>
+		 					<td>
+		 						<div class="input_wrap col-w-9"> 
+		 							<select class="form-control">
+								        <option value="">선택</option> 
+								  	</select>  
+								</div> 
+								<span class="connection"> 년 </span> &nbsp;&nbsp; 
+								<div class="input_wrap col-w-9">
+								    <select class="form-control">
+								        <option value="">선택</option> 
+								  	</select>  
+		 						</div> 	
+		 						<span class="connection"> 월 </span>&nbsp;&nbsp; 
+		 						<div class="input_wrap col-w-9">	
+		 							<select class="form-control">
+								        <option value="">선택</option> 
+								  	</select>  
+								 </div> 
+								 <span class="connection"> 일 </span>&nbsp;&nbsp;  
+								 <div class="input_wrap">	
+								  	<input type="radio" id="age122" name="radio_btn2"> <label for="age122">양력</label>&nbsp;&nbsp;
+		 							<input type="radio" id="age123" name="radio_btn2"> <label for="age123">음력</label>				 
+		 						</div>
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">성별</th>
+		 					<td>
+		 						 <div class="input_wrap">	
+								  	<input type="radio" id="man" name="radio_btn2"> <label for="man">남성</label>&nbsp;&nbsp;
+		 							<input type="radio" id="woman" name="radio_btn2"> <label for="woman">여성</label>				 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row">전화번호</th>
+		 					<td>
+		 						<div class="hp_area">
+		 							<div class="input_wrap col-w-9">
+		 								<select class="form-control">
+									        <option value="02">02</option> 
+									        <option value="031">031</option> 
+									        <option value="032">032</option>  
+									    </select>
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							 <div class="input_wrap col-w-9">			 	 			 	 							 
+		 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							<div class="input_wrap col-w-9">			 	 			 	 							 
+		 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+		 							</div> 	
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+		 					<td>
+		 						<div class="hp_area">
+		 							<div class="input_wrap col-w-9">
+		 								<select class="form-control">
+									        <option value="010">010</option> 
+									        <option value="011">011</option> 
+									        <option value="016">016</option> 
+									        <option value="017">017</option>
+									        <option value="018">018</option> 
+									        <option value="019">019</option>  
+									    </select>
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							 <div class="input_wrap col-w-9">			 	 			 	 							 
+		 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							<div class="input_wrap col-w-9">			 	 			 	 							 
+		 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+		 							</div> 		
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row" valign="top">주소 <span class="necessary"></span></th>
+		 					<td>
+		 						<div> 
+		 							<div class="input_wrap col-w-10">
+		 								<input type="text" title="우편번호"> 
+		 							</div>	 
+		 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default" title="우편번호">우편번호</button></div>  
+		 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+		 								<input type="text" title="주소" class="full"> 
+		 							</div>			 	 				  			 
+		 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+		 								<input type="text" title="주소" class="full"> 
+		 							</div>		 							 
+		 						</div>
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">이메일 주소 <span class="necessary"></span></th>
+		 					<td>
+		 						<div class="hp_area"> 
+		 							 <div class="input_wrap col-w-9">			 	 			 	 							 
+		 								<input type="text" title="이메일 주소" class="full" placeholder="abscs"> 
+		 							</div>
+		 							<span class="connection">@</span> 
+		 							<div class="input_wrap col-w-8">
+		 								<select class="form-control">
+									        <option value="naver.com">naver.com</option>  
+									        <option value="daum.net">daum.net</option> 
+									        <option value="nate.com">nate.com</option> 
+									        <option value="gmail.com">gmail.com</option> 
+									    </select> 
+		 							</div>
+		 							<div class="input_wrap col-w-8">			 	 			 	 							 
+		 								<input type="text" title="이메일주소 직접입력" class="full" placeholder="직접입력"> 
+		 							</div> 	
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr> 
+		 				
+		 				<tr>
+		 					<th scope="row" valign="top">SMS/E-mail 수신동의 <span class="necessary"></span></th>
+		 					<td>
+		 						<p>
+		 							<input type="radio" id="age10" name="radio_btn"> <label for="age10">수신동의</label>&nbsp;&nbsp;
+		 							<input type="radio" id="age11" name="radio_btn"> <label for="age11">수신거부</label>  
+		 						</p>	
+	 							<p class="coment mt5">
+	 								수신동의시 쇼핑몰에서 제공하는 이벤트 및 다양한 정보를 SMS/E-mail로 받아볼 수 있습니다.  <br>
+									단, 회원가입, 거래정보-결제/배송/교환/환불 등과 같은 운영정보는 수신동의 여부와 관계없이 발송됩니다.)
+	
+	 							</p> 
+		 					</td>
+		 				</tr>   
+		 			</tbody>
+		 		</table>  
+		 	</div><!-- // board_wrap E -->
+		 	<div class="btn_wrap">
+				<button type="button" class="btn btn-success btn-lg" title="회원정보수정">회원정보수정</button>
+				<button type="button" class="btn btn-lg btn-default" title="취소하기">취소하기</button>
+			</div>
+		</div>
+		<!-- 2단계 회원 정보 수정 E -->
+	</div><!-- // contents E -->	
+</div><!--// inner E-->
+<?include "../include/footer.html"?>	 
+ 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Hikari -->
+    <!--
+    <bean id="umsDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg>
+            <bean class="com.zaxxer.hikari.HikariConfig">
+                <constructor-arg>
+                    <props>
+                        <prop key="jdbcUrl">${dataSource.ums.url}</prop>
+                        <prop key="username">${dataSource.ums.username}</prop>
+                        <prop key="password">${dataSource.ums.password}</prop>
+                    </props>
+                </constructor-arg>
+                <property name="driverClassName" value="${dataSource.ums.driverClassName}"/>
+                <property name="minimumIdle" value="10" />
+                <property name="maximumPoolSize" value="10" />
+                <property name="connectionTestQuery" value="${ums.config.query.connection.test.query}" />
+                <property name="connectionTimeout"  value="10000" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="unifiedMessagingSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="umsDataSource"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath*:sqlmapper/ums/*-mapper.xml"/>
+    </bean>
+
+    <bean class="saleson.common.mapper.UnifiedMessagingMapperConfigurer">
+        <property name="basePackage" value="saleson"/>
+    </bean>
+    -->
+</beans>

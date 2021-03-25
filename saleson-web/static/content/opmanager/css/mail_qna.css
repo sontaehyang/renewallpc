@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+#mailing{width:780px; border:5px solid #f8bc5c; margin:10px; font-size:12px; } 
+#mailing table.mail_form{width:780px !important;}
+#mailing h1 span.name{font-size:15px; font-family:"Dotum",sans-serif; color:#2a2a2a; font-weight:bold;}	
+#mailing thead a{display:block;}
+#mailing tbody td.mail_cont{
+	padding:0 51px;
+}
+/* 문의답변 */
+#mailing tbody td div.member_info{width:678px;}
+.mail_qna h1{
+	padding-left:20px;
+	line-height:24px;
+	background:url('/content/images/mail/title_blet.gif') no-repeat 0 9px;
+}
+.mail_qna h1.type02{margin-top:40px;}
+.mail_qna h1 span img{position:relative; top:2px;}
+.mail_qna .mail_board_01{margin:13px 0 0 0; }
+.mail_qna .mail_board_01 table{border-top:1px solid #333; border-bottom:1px solid #999;}
+.mail_qna .mail_board_01 th{
+	padding:10px 0 10px 30px;
+	background:#f8f8f8;
+	color:#333; 
+	text-align:left;
+	border-top:1px solid #c9c9c9;
+}
+.mail_qna .mail_board_01 td{
+	padding:10px 0 10px 20px; 
+	color:#333; 
+	text-align:left;
+	border-top:1px solid #c9c9c9;
+}
+.mail_qna .mail_board_01 td div{line-height:18px;}
+.mail_qna .mail_board_01 tr:first-child th,
+.mail_qna .mail_board_01 tr:first-child td{border-top:0;}
+.mail_qna .btn_qna{display:block; margin-top:30px; text-align:center;} 

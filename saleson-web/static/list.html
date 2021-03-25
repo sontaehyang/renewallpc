@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>리뉴올PC HTML 리스트</title>
+	<link rel="shortcut icon" href="common/img/shortcut.ico">
+	<link rel="stylesheet" href="common/css/reset.css">
+	<link rel="stylesheet" href="common/css/jquery.treeview.css">
+	<link rel="stylesheet" href="common/css/font-awesome.min.css">
+	<link rel="stylesheet" href="common/css/style.css">
+	<style type="text/css">
+		.noti {margin-top:10px;font-size:12px;line-height:20px;}
+		.noti > span {display:inline-block;padding:0 5px;background:mediumpurple;font-size:14px;font-weight:700;vertical-align:top;}
+		.noti + p {font-size:12px;line-height:20px;}
+		.modi {padding:0 5px;background:mediumpurple;font-weight:500;color:#fff !important;}
+	</style>
+</head>
+<body>
+<div id="bodyWrap">
+	<div id="header">
+		<h1>리뉴올PC HTML - 201112</h1>
+	</div>
+	<!-- 리스트 시작 : s -->
+	<div id="side">
+		<h2>
+			<i class="fa fa-desktop"></i>
+			<span id="page_title2">WEB</span><br />
+			<span id="page_leng"></span>
+			<span id="complete_leng"></span>
+			<p class="noti">수정페이지는 <span>PURPLE</span></p>
+			<p>- 전반적인 페이지 검수완료(11-20) <br>- 크로스브라우징 : Chrome(기본), Firefox, IE Edge, IE 11, IE 10</p>
+		</h2>
+		<div id="urls" class="links">
+			<ul id="navigation">
+				<li><strong>가이드</strong>
+					<ul>
+						<li><a href="guide/pc/pc_button.html">스타일가이드 <span class="ok">20-11-26</span></a></li>
+					</ul>
+				</li>
+				<li><strong>메인</strong>
+					<ul>
+						<li><a href="html/main.html" class="modi">메인</a> <span class="ok">21-03-02</span></li>
+						<li><a href="html/404.html">404에러(페이지에러)</a> <span class="ok">20-12-29</span></li>
+						<li><a href="html/intro.html" class="modi">중지안내</a> <span class="ok">21-03-02</span></li>
+					</ul>
+				</li>
+				<li><strong>카테고리</strong>
+					<ul>
+						<li><a href="html/category/thumb_list.html">상품 리스트 thumb</a><span class="ok">20-12-28</span></li>
+						<li><a href="html/category/basic_list.html">상품 리스트 basic</a><span class="ok">20-12-28</span></li>
+					</ul>
+				</li>
+				<li><strong>상품</strong>
+					<ul>
+						<li><a href="html/product/view.html" class="modi">상품상세(view) </a> <span class="ok">21-03-22</span></li>
+						<li><a href="html/product/print.html">견적서 출력</a><span class="ok">20-12-17</span></li>
+						<li><a href="html/product/popup_product.html">상품상세_팝업 :<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;상품Q&amp;A<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장바구니담기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;관심상품담기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;쿠폰다운<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;카드혜택<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이미지확대보기</a> <span class="ok">20-11-18</span></li>
+					</ul>
+				</li>
+				<li><strong>통합검색</strong>
+					<ul>
+						<li><a href="html/product/search.html">검색결과_유/무</a><span class="ok">20-11-26</span></li>
+					</ul>
+				</li>
+				<li><strong>이벤트</strong>
+					<ul>
+						<li><a href="html/event/best.html">BEST상품</a></li>
+						<li><a href="html/event/new.html">신상품</a><span class="ok">20-11-26</span></li>
+						<li><a href="html/event/rank.html">히트상품들랭킹</a></li>
+						<li><a href="html/event/rank_more.html">히트상품랭킹 자세히보기</a></li>
+						<li><a href="html/event/exhibitions_list.html">기획전_목록</a></li>
+						<li><a href="html/event/exhibitions_view.html">기획전_상세</a></li>
+						<li><a href="html/event/special.html">특가세일</a></li>
+					</ul>
+				</li>
+				<li><strong>고객센터</strong>
+					<ul>
+						<li><a href="html/customer/notice_list.html">공지사항 list </a></li>
+						<li><a href="html/customer/notice_view.html">공지사항 view </a></li>
+						<li><a href="html/customer/inquiry.html">1:1 문의</a></li>
+						<li><a href="html/customer/faq.html">FAQ </a></li>
+						<li><a href="html/customer/nomember_order.html">비회원_주문/배송조회</a></li>
+						<li><a href="html/customer/nomember_order_view.html">비회원_주문/배송조회_상세보기</a></li>
+					</ul>
+				</li>
+				<li><strong>회원가입</strong>
+					<ul>
+						<li><a href="html/member/login.html">로그인</a></li>
+						<li><a href="html/member/choice_join.html">인증선택(SNS인증/본인인증)</a></li>
+						<li><a href="html/member/sns_join.html">SNS인증-약관동의/가입완료</a></li>
+						<li><a href="html/member/join_step01.html">회원가입_01.본인인증</a></li>
+						<li><a href="html/member/join_step02.html">회원가입_02.약관동의</a></li>
+						<li><a href="html/member/join_step03.html">회원가입_03.정보입력</a></li>
+						<li><a href="html/member/join_step04.html">회원가입_04.가입완료</a></li>
+						<li><a href="html/member/change_pw.html">90일경과 비밀번호 변경</a></li>
+						<li><a href="html/member/popup_member.html">회원가입_팝업 :<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디찾기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디찾기_결과<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호찾기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호찾기_결과</a></li>
+					</ul>
+				</li>
+				<li><strong>장바구니/주문/결제</strong>
+					<ul>
+						<li><a href="html/order/cart.html">장바구니</a> <span class="ok">20-12-28</span></li>
+						<li><a href="html/order/nomember_agree.html">비회원 약관동의</a></li>
+						<li><a href="html/order/payment.html">주문결제(회원/비회원)</a> <span class="ok">20-11-20</span></li>
+						<li><a href="html/order/confirm.html">주문완료(회원/비회원)</a> <span class="ok">20-11-20</span></li>
+						<li><a href="html/order/popup_order.html">장바구니/주문/결제_팝업 :<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;회원/비회원 로그인<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;실시간 계좌이체 안내<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;무통장 입금안내<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;현금영수증 안내<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;쿠폰적용<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배송지 목록<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배송지 추가수정<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;복수 배송지 등록</a></li>
+					</ul>
+				</li>
+				<li><strong>마이페이지</strong>
+					<ul>
+						<li><a href="html/mypage/order_list.html">쇼핑내역_주문/배송조회_목록</a></li>
+						<li><a href="html/mypage/order_view.html">쇼핑내역_주문/배송조회_상세</a></li>
+						<li><a href="html/mypage/online_coupon.html">쇼핑혜택_온라인쿠폰</a></li>
+						<li><a href="html/mypage/offline_coupon.html">쇼핑혜택_오프라인쿠폰</a></li>
+						<li><a href="html/mypage/delivery_coupon.html">쇼핑혜택_배송비쿠폰</a></li>
+						<li><a href="html/mypage/point.html">쇼핑혜택_포인트</a></li>
+						<li><a href="html/mypage/cash.html">쇼핑혜택_캐시</a></li>
+						<li><a href="html/mypage/wish_list.html">활동정보_관심상품</a></li>
+						<li><a href="html/mypage/review.html">활동정보_이용후기</a></li>
+						<li><a href="html/mypage/qna.html">활동정보_상품Q&amp;A</a></li>
+						<li><a href="html/mypage/inquiry_list.html">활동정보_1대1문의</a></li>
+						<li><a href="html/mypage/delivery.html">회원정보_배송주소록관리</a> </li>
+						<li><a href="html/mypage/info_modify.html">회원정보_회원정보수정</a> </li>
+						<li><a href="html/mypage/sns_login.html">회원정보_SNS계정연동</a></li>
+						<li><a href="html/mypage/unattached.html">휴면계정안내</a></li>
+						<li><a href="html/mypage/out.html">회원정보_회원탈퇴</a> </li>
+						<li><a href="html/mypage/popup_mypage.html">마이페이지_팝업 :<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이용후기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;쿠폰적용상품<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등급 및 혜택 안내<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;취소 신청<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;교환 신청<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;반품 신청<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;쿠폰적용상품</a></li>
+					</ul>
+				</li>
+				<li><strong>푸터</strong>
+					<ul>
+						<li><a href="html/info/company.html" class="modi">회사소개</a> <span class="ok">21-03-02</span></li>
+						<li><a href="html/member/use_guide.html">이용약관</a></li>
+						<li><a href="html/member/individual.html">개인정보보호정책</a></li>
+						<li><a href="html/info/popup_store.html">[팝업]입점문의 </a></li>
+					</ul>
+				</li>
+				<li><strong>메일링 - 작업X</strong>
+					<ul>
+						<li><a href="html/mail/mail_01.html">01. 회원가입</a></li>
+						<li><a href="html/mail/mail_02.html">02. 회원가입 - 정보수정</a></li>
+						<li><a href="html/mail/mail_03.html">03. 임시비밀번호</a></li>
+						<li><a href="html/mail/mail_04.html">04. 문의답변</a></li>
+						<li><a href="html/mail/mail_05.html">05. 주문완료 - 가상계좌</a></li>
+						<li><a href="html/mail/mail_06.html">06. 결제완료 - 가상계좌</a></li>
+						<li><a href="html/mail/mail_07.html">07. 결제완료 - 신용카드</a></li>
+						<li><a href="html/mail/mail_08.html">08. 배송중</a></li>
+						<li><a href="html/mail/mail_09.html">09. 배송완료</a></li>
+						<li><a href="html/mail/mail_10.html">10. 포인트소멸</a></li>
+						<li><a href="html/mail/mail_11.html">11. 휴면전환</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<h2>
+			<i class="fa fa-mobile"></i>
+			<span id="page_title3">MOBILE</span><br>
+			<span id="page_leng_m"></span>
+			<span id="complete_leng_m"></span>
+			<p class="noti">수정페이지는 <span>PURPLE</span></p>
+			<p>- 전반적인 페이지 검수완료(11-24) <br>- 크로스브라우징 : Chrome(기본)</p>
+		</h2>
+		<div id="urls_m" class="links">
+			<ul id="navigation_m">
+				<li><strong>모바일 - 가이드</strong>
+					<ul>
+						<li><a href="guide/mc/mc_button.html">스타일 가이드</a><span class="ok">20-11-24</span></li>
+					</ul>
+				</li>
+				<li><strong>모바일 - 메인</strong>
+					<ul>
+						<li><a href="html/mobile/main.html" class="modi">메인</a><span class="ok">21-03-02</span></li>
+						<li><a href="html/mobile/404.html">404에러(페이지에러)</a></li>
+						<li><a href="html/mobile/intro.html" class="modi">중지안내</a><span class="ok">21-03-02</span></li>
+					</ul>
+				</li>
+				<li><strong>모바일 - 카테고리</strong>
+					<ul>
+						<li><a href="html/mobile/category/main_list.html">상품 전체보기</a></li>
+						<li><a href="html/mobile/category/basic_list.html">상품 리스트 basic</a></li>
+						<li><a href="html/mobile/category/popup_filter.html">상품 리스트 필터</a></li>
+					</ul>
+				</li>
+				<li><strong>모바일 - 상품</strong>
+					<ul>
+
+						<li><a href="html/mobile/product/view.html">상세페이지</a><span class="ok">20-12-28</span></li>
+						<li><a href="html/mobile/product/popup_product.html">상품상세_팝업 :<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이미지 상세보기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;도서산간지역<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;쿠폰 다운로드<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;카드 혜택 안내<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q&amp;A 문의하기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장바구니담기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;관심상품담기</a></li>
+					</ul>
+				</li>
+				<li><strong>모바일 - 통합검색</strong>
+					<ul>
+						<li><a href="html/mobile/product/search.html">검색결과</a></li>
+					</ul>
+				</li>
+				<li><strong>모바일 - 이벤트</strong>
+					<ul>
+						<li><a href="html/mobile/event/exhibitions_list.html">기획전 - 리스트</a></li>
+						<li><a href="html/mobile/event/exhibitions_view.html">기획전 - 상세</a></li>
+						<li><a href="html/mobile/event/new.html">신상품</a></li>
+						<li><a href="html/mobile/event/best.html">베스트</a></li>
+						<li><a href="html/mobile/event/special.html">특가세일</a></li>
+						<li><a href="html/mobile/event/ranking.html">히트상품랭킹</a></li>
+					</ul>
+				</li>
+				<li><strong>모바일 - 고객센터</strong>
+					<ul>
+						<li><a href="html/mobile/customer/notice_list.html">공지사항 list</a></li>
+						<li><a href="html/mobile/customer/notice_view.html">공지사항 view</a></li>
+						<li><a href="html/mobile/customer/inquiry.html">1:1문의</a></li>
+						<li><a href="html/mobile/customer/faq.html">FAQ</a></li>
+					</ul>
+				</li>
+				<li><strong>모바일 - 로그인 및 회원</strong>
+					<ul>
+						<li><a href="html/mobile/member/login.html">로그인</a></li>
+						<li><a href="html/mobile/member/choice_join.html">인증선택(SNS인증/본인인증_</a></li>
+						<li><a href="html/mobile/member/sns_join.html">SNS인증-약관동의/가입완료</a></li>
+						<li><a href="html/mobile/member/join_step01.html">회원가입 - 본인인증</a></li>
+						<li><a href="html/mobile/member/join_step02.html">회원가입 - 약관동의</a></li>
+						<li><a href="html/mobile/member/join_step03.html">회원가입 - 정보입력</a></li>
+						<li><a href="html/mobile/member/join_step04.html">회원가입 - 가입완료</a></li>
+						<li><a href="html/mobile/member/change_pw.html">90일경과 비밀번호 변경</a></li>
+						<li><a href="html/mobile/member/popup_member.html">회원가입_팝업 :<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디찾기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디찾기결과<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호찾기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 재설정</a></li>
+					</ul>
+				</li>
+
+				<li><strong>모바일 - 주문결제</strong>
+					<ul>
+						<li><a href="html/mobile/order/cart.html">장바구니(무료배송/조건부무료배송 팝업포함)</a><span class="ok">21-02-19</span></li>
+						<li><a href="html/mobile/order/payment.html">주문결제</a><span class="ok">21-02-19</span></li>
+						<li><a href="html/mobile/order/confirm.html">주문완료</a><span class="ok">20-11-24</span></li>
+						<li><a href="html/mobile/order/nomember_agree.html">비회원 - 약관동의</a></li>
+						<li><a href="html/mobile/order/nomember_payment.html">비회원 - 주문결제</a></li>
+						<li><a href="html/mobile/order/nomember_confirm.html">비회원 - 주문완료</a></li>
+						<li><a href="html/mobile/order/popup_order.html">장바구니/주문/결제_팝업 :<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;회원/비회원 로그인<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;실시간 계좌이체 안내<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;무통장 입금안내<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;현금영수증 안내<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;쿠폰적용<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배송지 목록<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배송지 추가<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;복수 배송지 등록</a></li>
+					</ul>
+				</li>
+
+				<li><strong>모바일 - 마이페이지</strong>
+					<ul>
+						<li><a href="html/mobile/mypage/mypage.html">마이페이지</a></li>
+						<li><a href="html/mobile/mypage/order_list.html">쇼핑내역 - 주문/배송 조회</a><span class="ok">20-12-22</span></li>
+						<li><a href="html/mobile/mypage/order_view.html">쇼핑내역 - 주문/배송 상세</a></li>
+						<li><a href="html/mobile/mypage/online_coupon.html">혜택정보 - 01.온라인쿠폰</a></li>
+						<li><a href="html/mobile/mypage/offline_coupon.html">혜택정보 - 02.오프라인쿠폰</a></li>
+						<li><a href="html/mobile/mypage/delivery_coupon.html">혜택정보 - 03.배송비쿠폰</a></li>
+						<li><a href="html/mobile/mypage/point.html">혜택정보 - 04.포인트 조회</a></li>
+						<li><a href="html/mobile/mypage/wish_list.html">활동정보 - 01.관심상품 목록</a></li>
+						<li><a href="html/mobile/mypage/review.html">활동정보 - 02.이용후기</a></li>
+						<li><a href="html/mobile/mypage/qna.html">활동정보 - 03.상품Q&amp;A</a></li>
+						<li><a href="html/mobile/mypage/inquiry_list.html">활동정보 - 04.1:1문의</a></li>
+						<li><a href="html/mobile/mypage/info_modify.html">회원정보 - 01.회원정보수정</a></li>
+						<li><a href="html/mobile/mypage/delivery.html">회원정보 - 02.배송주소록 관리</a></li>
+						<li><a href="html/mobile/mypage/sns_login.html">회원정보 - 03.SNS연동설정</a></li>
+						<li><a href="html/mobile/mypage/out.html">회원정보 - 04.회원탈퇴</a></li>
+						<li><a href="html/mobile/mypage/unattached.html">회원정보 - 05.휴먼계정 해제 안내</a></li>
+						<li><a href="html/mobile/mypage/popup_mypage.html">마이페이지_팝업 :<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배송지추가<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배송지수정<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;취소신청<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;교환신청<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;반품신청<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이용후기작성<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;회원등급안내<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;쿠폰적용가능대상</a></li>
+					</ul>
+				</li>
+				<li><strong>모바일 - 푸터</strong>
+					<ul>
+						<li><a href="html/mobile/info/company.html" class="modi">01.회사소개 - 안내페이지</a><span class="ok">21-03-02</span></li>
+						<li><a href="html/mobile/member/use_guide.html">02.이용약관</a></li>
+						<li><a href="html/mobile/member/individual.html">03.개인정보보호정책</a></li>
+						<li><a href="html/mobile/info/popup_store.html">04.팝업 - 입점문의</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- 리스트 끝 : e -->
+
+	<div id="frame">
+		<div class="ctrl">
+			<button type="button" id="btn_reload" class="btn_ctrl" title="새로고침"><i class="fa fa-refresh"></i></button>
+			<span class="pageurl_box">
+					<input type="text" name="url" id="page_url" value="페이지 주소" class="pageurl" readonly>
+					<span id="page_size"></span>
+					<span id="page_title"></span>
+				</span>
+			<button type="button" id="btn_external" class="btn_ctrl" title="새창열기"><i class="fa fa-external-link"></i></button>
+			<button type="button" id="btn_mobile" class="btn_ctrl" title="모바일보기"><i class="fa fa-mobile"></i></button>
+			<button type="button" id="btn_desktop" class="btn_ctrl" title="PC보기"><i class="fa fa-desktop"></i></button>
+		</div>
+		<div class="iframe_wrap">
+			<iframe id="page_show"></iframe>
+			<button type="button" class="rotate">회전</button>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="common/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="common/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="common/js/jquery.treeview.js"></script>
+<script type="text/javascript" src="common/js/front.js"></script>
+<script type="text/javascript">
+	var mobile = false;
+</script>
+</body>
+
+</html>

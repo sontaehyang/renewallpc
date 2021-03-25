@@ -1,0 +1,270 @@
+<? include "../include/headHtml.html" ?>
+<body>
+	<div id="wrap">	
+		<!-- header : s -->
+		<? include "../include/header.html" ?>
+			<div class="title">
+				<h2>회원정보</h2>
+				<span class="his_back"><a href="#" class="ir_pm">뒤로가기</a></span>
+				<ul class="tab_list01 four_tab letter">
+					<li class="on"><a href="#">회원정보수정</a></li>
+					<li><a href="#">배송주소록 관리</a></li>
+					<li><a href="#">SNS 연동설정</a></li>
+					<li><a href="#">회원탈퇴</a></li>
+				</ul>
+			</div>
+			<!-- //title -->
+			<!-- 내용 : s -->
+			<div class="con infoModi_wrap">
+				<div class="mypage_wrap">
+					<!-- 1단계 비번확인 : s -->
+					<div class="info_modi">
+					<p class="txt">안전한 회원정보 보호를 위해<br><span>비밀번호를 다시 한번 확인</span>합니다.</p>
+					<div class="bd_table">
+						<ul class="del_info">
+							<li>
+								<span class="del_tit t_gray">아이디</span>
+								<span class="del_detail">홍길동</span>
+							</li>
+							<li>
+								<span class="del_tit t_gray">비밀번호</span>
+								<div class="input_area">
+									<input type="password" placeholder="비밀번호를 입력해주세요.">
+								</div>
+							</li>
+						</ul>
+					</div>
+					<!-- //bd_table -->
+					
+					<div class="btn_wrap">
+						<button type="reset" class="btn_st1 reset">취소</button>
+						<button type="submit" class="btn_st1 decision">확인</button>
+					</div>
+					<!-- //btn_wrap -->
+				</div>
+					<!-- 1단계 비번확인 : e -->
+					<!-- 2단계 정보수정 : s -->
+					<div class="member_con">
+						<div class="bd_table typeB">
+							<ul class="del_info">
+								<li>
+									<span class="del_tit t_gray">구분</span>
+									<div class="num">
+										<p>일반회원</p>
+									</div>
+								</li>
+								<li>
+									<label for="a1" class="del_tit t_gray star">아이디</label>
+									<div class="input_area">
+										<input id="a1" type="text">
+										<span class="e-info ok">사용가능한 아이디입니다.</span>
+									</div>
+								</li>
+								<li>
+									<label for="a2" class="del_tit t_gray star">비밀번호</label>
+									<div class="input_area">
+										<input id="a2" type="text">
+										<span class="e-info">영문/숫자를 혼합하여 4자 이상 20자 이하로 입력하세요.</span>
+									</div>
+								</li>
+								<li>
+									<label for="a3" class="del_tit t_gray star">비밀번호<br>(확인)</label>
+									<div class="input_area">
+										<input id="a3" type="text">
+										<span class="e-info">비밀번호를 한번 더 입력하세요.</span>
+									</div>
+								</li>
+								<li>
+									<label for="a4" class="del_tit t_gray star">이름</label>
+									<div class="input_area">
+										<input id="a4" type="text">
+									</div>
+								</li>
+								<li class="chunk">
+									<label for="a5" class="del_tit t_gray star">생년월일</label>
+									<div class="user_info">
+										<div class="num">
+											<div class="in_sel">
+												<div class="input_area w32p none">
+													<select name="" id="">
+														<option value="1990">1990</option>
+														<option value="1991">1991</option>
+													</select>
+												</div>
+												<div class="input_area w22p none">
+													<select name="" id="">
+														<option value="01">01</option>
+														<option value="02">02</option>
+													</select>
+												</div>
+												<div class="input_area w22p none">
+													<select name="" id="">
+														<option value="01">01</option>
+														<option value="02">02</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="radio_wrap">
+										<ul>
+											<li>
+												<input id="birth_agree" type="radio" name="birth" checked="checked">
+												<label for="birth_agree"><span><span></span></span>양력</label>
+											</li>
+											<li>
+												<input id="birth_disagree" type="radio" name="birth">
+												<label for="birth_disagree"><span><span></span></span>음력</label>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li>
+									<label for="a6" class="del_tit t_gray star">휴대폰</label>
+									<div class="num">
+										<div class="in_td">
+											<div class="input_area">
+												<select name="" id="">
+													<option value="010">010</option>
+													<option value="010">010</option>
+													<option value="010">010</option>
+												</select>
+											</div>
+											<div class="in_td dash"></div>
+											<div class="input_area">
+												<input type="text" maxlength="4">
+											</div>
+											<div class="in_td dash"></div>
+											<div class="input_area">
+												<input type="text" maxlength="4">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<label for="a7" class="del_tit t_gray star">전화번호</label>
+									<div class="num">
+										<div class="in_td">
+											<div class="input_area">
+												<select name="" id="">
+													<option value="010">010</option>
+													<option value="010">010</option>
+													<option value="010">010</option>
+												</select>
+											</div>
+											<div class="in_td dash"></div>
+											<div class="input_area">
+												<input type="text" maxlength="4">
+											</div>
+											<div class="in_td dash"></div>
+											<div class="input_area">
+												<input type="text" maxlength="4">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li class="chunk">
+									<label for="a8" class="del_tit t_gray star">주소</label>
+									<div class="user_info">
+										<div class="in_td">
+											<input id="a8" type="text">
+										</div>
+										<div class="in_td address">
+											<button type="button" class="btn_st3 t_lgray02 static">우편번호</button>
+										</div>
+									</div>
+									<div class="input_area">
+										<input type="text">
+									</div>
+								</li>
+								<li>
+									<span class="del_tit t_gray star">상세주소</span>
+									<input type="text">
+								</li>
+								<li>
+									<label for="a9" class="del_tit t_gray star">이메일</label>
+									<div class="in_td cf">
+										<div class="input_area02">
+											<input type="text">
+										</div>
+										<span class="mail">@</span>
+										<div class="input_area02">
+											<select name="" id="">
+												<option>&nbsp;</option>
+												<option>naver.com</option>
+												<option>daum.net</option>
+											</select>
+										</div>
+									</div>
+								</li>
+								<li>
+									<label for="a10" class="del_tit t_gray">추천인</label>
+									<div class="user_info">
+										<div class="in_td">
+											<div class="input_area">
+												<input id="a8" type="text">
+											</div>
+										</div>
+										<div class="in_td bar"></div>
+										<div class="in_td address none">
+											<button type="button" class="btn_st3 t_lgray02 static">추천인 검색</button>
+										</div>
+									</div>
+								</li>
+								<li>
+									<span class="del_tit t_gray">SMS<br>수신여부</span>
+									<p class="sms_txt">세일즈온에서 제공하는 이벤트 및 다양한 정보의 SMS를 받아보실 수 있습니다.</p>
+									<p class="sms_desc">(거래정보-결제/교환/환불 등과 관련된 내용은 고객님의 거래안전을 위하여 수신동의 여부와 관계없이 발송됩니다.)</p>
+									<div class="radio_wrap">
+										<ul>
+											<li>
+												<input id="sms_agree" type="radio" name="sms" checked="checked">
+												<label for="sms_agree"><span><span></span></span>수신동의</label>
+											</li>
+											<li>
+												<input id="sms_disagree" type="radio" name="sms">
+												<label for="sms_disagree"><span><span></span></span>수신거부</label>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li>
+									<span class="del_tit t_gray">E-MAIL<br>수신여부</span>
+									<p class="sms_txt">세일즈온에서 제공하는 이벤트 및 다양한 정보의 SMS를 받아보실 수 있습니다.</p>
+									<p class="sms_desc">(거래정보-결제/교환/환불 등과 관련된 내용은 고객님의 거래안전을 위하여 수신동의 여부와 관계없이 발송됩니다.)</p>
+									<div class="radio_wrap">
+										<ul>
+											<li>
+												<input id="email_agree" type="radio" name="email" checked="checked">
+												<label for="email_agree"><span><span></span></span>수신동의</label>
+											</li>
+											<li>
+												<input id="email_disagree" type="radio" name="email">
+												<label for="email_disagree"><span><span></span></span>수신거부</label>
+											</li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>	
+						<div class="btn_wrap cf">
+							<button type="reset" class="btn_st1 reset" title="취소">취소</button>
+							<button type="submit" class="btn_st1 decision" title="수정">수정</button>
+						</div>
+					</div>
+					<!-- 2단계 정보수정 : e -->
+					<!-- //member_con -->
+				</div>
+				<!-- //mypage_wrap -->
+			</div>
+			<!-- 내용 : e -->
+		</div>
+		<!-- //#container -->
+		<!-- container : e -->
+		<!-- footer : s -->
+		<? include "../include/footer.html" ?>
+		<!-- footer : e -->
+	</div>
+	<!-- //#wrap -->
+</body>
+</html>

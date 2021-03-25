@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.stats.StatsMapper">
+	
+	<resultMap id="MonthStatsResult" type="saleson.shop.stats.domain.MonthStats">
+		<result property="yearMonth" column="YEARMONTH" />
+		<result property="title" column="TITLE" />
+		<result property="monthCount" column="MONTH_COUNT" />
+		<result property="percent" column="PERCENT" />
+		<result property="kbLoginCount" column="KB_LOGIN_COUNT" />
+		<result property="custLoginCount" column="CUST_LOGIN_COUNT" />
+	</resultMap>
+	
+	<resultMap id="DayStatsResult" type="saleson.shop.stats.domain.DayStats">
+		<result property="visitDay" column="VISIT_DAY" />
+		<result property="visitCount" column="VISIT_COUNT" />
+		<result property="totalCount" column="TOTAL_COUNT" />
+		<result property="percent" column="PERCENT" />
+	</resultMap>
+
+
+	<select id="getVisitSummary" resultType="java.util.HashMap">
+        SELECT
+		    IFNULL((SELECT SUM(VISIT_COUNT) FROM OP_VISIT_COUNT), 0) AS TOTAL,
+		    IFNULL((SELECT SUM(VISIT_COUNT) FROM OP_VISIT_COUNT WHERE VISIT_DATE = DATE_FORMAT(SYSDATE(),'%Y%m%d')), 0) AS TODAY,
+		    IFNULL((SELECT SUM(VISIT_COUNT) FROM OP_VISIT_COUNT WHERE VISIT_DATE = DATE_FORMAT(SYSDATE() - INTERVAL 1 DAY, '%Y%m%d')), 0) AS YESTERDAY,
+		    IFNULL((
+		        SELECT MAX(CNT) AS MONTH_MAX FROM (
+		            SELECT SUBSTRING(VISIT_DATE, 1, 6), SUM(VISIT_COUNT) AS CNT
+		            FROM OP_VISIT_COUNT
+		            GROUP BY SUBSTRING(VISIT_DATE, 1, 6)
+		        ) A
+		    ), 0) AS MONTH_MAX,
+		    IFNULL((
+		    	SELECT MAX(CNT) FROM (
+	              	SELECT SUM(VISIT_COUNT) CNT FROM OP_VISIT_COUNT
+	              	GROUP BY VISIT_DATE
+            	) B)
+            , 0) AS DAY_MAX,
+		    IFNULL((
+		    	SELECT MIN(CNT) FROM (
+	              	SELECT SUM(VISIT_COUNT) CNT FROM OP_VISIT_COUNT
+	              	GROUP BY VISIT_DATE
+            	) C)
+            , 0) AS DAY_MIN
+		FROM DUAL
+	</select>
+	
+	<select id="getMonthStatsList" parameterType="saleson.shop.stats.support.StatsSearchParam" resultMap="MonthStatsResult">
+		SELECT 
+			VC.YEARMONTH,
+		    VC.TITLE, 
+		    VC.MONTH_COUNT, 
+		    ROUND(VC.MONTH_COUNT / T.TOTAL_COUNT * 100, 1) AS PERCENT
+		FROM (
+		    SELECT 
+		        SUBSTRING(VISIT_DATE, 1, 6) AS YEARMONTH,
+		        CONCAT(SUBSTRING(VISIT_DATE, 1, 4), '년 ', SUBSTRING(VISIT_DATE, 5, 2), '월') TITLE,
+		        SUM(VISIT_COUNT) AS MONTH_COUNT
+		    FROM
+		        OP_VISIT_COUNT
+		    WHERE
+		        SUBSTRING(VISIT_DATE, 1, 4) BETWEEN #{startDate} AND #{endDate}
+		    GROUP BY  
+		        SUBSTRING(VISIT_DATE, 1, 6)
+		) VC 
+		INNER JOIN (
+		    SELECT COALESCE(SUM(VISIT_COUNT), 0) AS TOTAL_COUNT
+		    FROM OP_VISIT_COUNT
+		    WHERE SUBSTRING(VISIT_DATE, 1, 4) BETWEEN #{startDate} AND #{endDate}
+		) T
+	</select>
+	
+	<select id="getDayStatsList" parameterType="String" resultMap="DayStatsResult">
+	<![CDATA[
+		SELECT SUBSTRING(VC.VISIT_DATE, 7, 2) AS VISIT_DAY, VC.VISIT_COUNT, T.TOTAL_COUNT, ROUND(VC.VISIT_COUNT / T.TOTAL_COUNT * 100, 1) AS PERCENT
+		FROM (
+		    SELECT * FROM OP_VISIT_COUNT
+		    WHERE VISIT_DATE LIKE CONCAT(#{value}, '%')
+		) VC 
+		INNER JOIN (
+		    SELECT COALESCE(SUM(VISIT_COUNT), 0) AS TOTAL_COUNT
+		    FROM OP_VISIT_COUNT
+		    WHERE VISIT_DATE LIKE CONCAT(#{value}, '%')
+		) T 
+	]]>
+	</select>
+	
+	<!-- DOMAIN -->
+	<select id="getVisitCountByDomain" parameterType="saleson.shop.stats.support.StatsSearchParam" resultType="java.util.HashMap">
+        SELECT 
+		    V.TITLE, 
+		    V.VISIT_COUNT, 
+		    T.TOTAL_COUNT,
+		    ROUND(V.VISIT_COUNT / T.TOTAL_COUNT * 100, 1) AS PERCENT
+		FROM (    
+			SELECT 
+				DOMAIN_NAME AS TITLE, 
+				COUNT(*)  AS VISIT_COUNT 
+			FROM OP_VISIT WHERE VISIT_DATE BETWEEN #{startDate} AND #{endDate}
+			GROUP BY DOMAIN_NAME
+		) V
+		INNER JOIN (
+		  SELECT COUNT(*) AS TOTAL_COUNT
+		  FROM OP_VISIT
+		  WHERE VISIT_DATE BETWEEN #{startDate} AND #{endDate}
+		) T    
+		ORDER BY  V.VISIT_COUNT DESC LIMIT 10
+	</select>
+
+	<!-- OS -->
+	<select id="getVisitCountByOS" parameterType="saleson.shop.stats.support.StatsSearchParam" resultType="java.util.HashMap">
+	    SELECT 
+		    V.TITLE, 
+		    V.VISIT_COUNT, 
+		    T.TOTAL_COUNT,
+		    ROUND(V.VISIT_COUNT / T.TOTAL_COUNT * 100, 1) AS PERCENT
+		FROM (    
+		    SELECT 
+		       	OS AS TITLE, 
+		        COUNT(*)  AS VISIT_COUNT 
+		    FROM OP_VISIT WHERE VISIT_DATE BETWEEN #{startDate} AND #{endDate}
+		    GROUP BY OS
+		) V
+		INNER JOIN (
+		    SELECT COUNT(*) AS TOTAL_COUNT
+		    FROM OP_VISIT
+		    WHERE VISIT_DATE BETWEEN #{startDate} AND #{endDate}
+		) T    
+		ORDER BY V.VISIT_COUNT DESC
+	</select>
+		
+	<!-- BROWSER -->
+	<select id="getVisitCountByBrowser" parameterType="saleson.shop.stats.support.StatsSearchParam" resultType="java.util.HashMap">
+	    SELECT 
+		    V.TITLE, 
+		    V.VISIT_COUNT, 
+		    T.TOTAL_COUNT,
+		    ROUND(V.VISIT_COUNT / T.TOTAL_COUNT * 100, 1) AS PERCENT
+		FROM (    
+		    SELECT 
+		        BROWSER AS TITLE, 
+		        COUNT(*)  AS VISIT_COUNT 
+		    FROM OP_VISIT WHERE VISIT_DATE BETWEEN #{startDate} AND #{endDate}
+		    GROUP BY BROWSER
+		) V
+		INNER JOIN (
+		    SELECT COUNT(*) AS TOTAL_COUNT
+		    FROM OP_VISIT
+		    WHERE VISIT_DATE BETWEEN #{startDate} AND #{endDate}
+		) T    
+		ORDER BY V.VISIT_COUNT DESC
+	</select>
+	
+	<!-- TIME -->
+	<select id="getVisitCountByTime" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<![CDATA[
+		SELECT VISIT_DATE, CAST(SUM(VISIT_COUNT) AS CHAR) AS VISIT_COUNT FROM ( 
+	        SELECT
+	            SUBSTR(VISIT_TIME, 1,2) AS VISIT_DATE,
+	            COUNT(*) AS VISIT_COUNT
+	        FROM OP_VISIT WHERE VISIT_DATE BETWEEN #{startDate} AND #{endDate}
+	        GROUP BY SUBSTR(VISIT_TIME, 1,2)
+	        
+	        UNION
+	        
+	        SELECT LPAD(CAST(ROWNUM-1 AS CHAR), 2, '0') AS VISIT_DATE, 0 AS VISIT_COUNT
+	        FROM OP_USER WHERE ROWNUM < 25
+		) Z GROUP BY VISIT_DATE ORDER BY VISIT_DATE
+	]]>
+	</select>	
+
+	
+	<select id="getVisitCountByWeekday" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<![CDATA[
+		SELECT
+		    (
+		        CASE WHEN VISIT_DATE = 1 THEN
+		            '일요일'
+		        WHEN VISIT_DATE = 2 THEN
+		            '월요일'
+		        WHEN VISIT_DATE = 3 THEN
+		            '화요일'
+		        WHEN VISIT_DATE = 4 THEN
+		            '수요일'
+		        WHEN VISIT_DATE = 5 THEN
+		            '목요일'
+		        WHEN VISIT_DATE = 6 THEN
+		            '금요일'
+		        WHEN VISIT_DATE = 7 THEN
+		            '토요일'
+		        END
+		    ) AS VISIT_DATE,
+		    CAST(VISIT_COUNT AS CHAR) AS VISIT_COUNT
+		FROM (
+		    SELECT VISIT_DATE, SUM(VISIT_COUNT) AS VISIT_COUNT FROM (
+		
+		        SELECT DAYOFWEEK(VISIT_DATE) AS VISIT_DATE, VISIT_COUNT FROM OP_VISIT_COUNT WHERE VISIT_DATE BETWEEN #{startDate} AND #{endDate}
+		        UNION ALL
+		        SELECT ID AS VISIT_DATE, 0 AS VISIT_COUNT FROM OP_COMMON_CODE WHERE CODE_TYPE='DAY' AND ID < 8
+		        
+		    ) B GROUP BY VISIT_DATE ORDER BY VISIT_DATE
+		) Z
+	]]>
+	</select>
+	
+	<select id="getVisitCount" parameterType="SearchParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_VISIT
+	</select>
+	
+	<!-- Refer 리스트 -->
+	<select id="getVisitList" parameterType="SearchParam" resultType="Visit">
+
+
+		SELECT
+			VISIT_DATE AS visitDate,
+			VISIT_TIME AS visitTime,
+			REMOTE_ADDR AS remoteAddr,
+			REFERER AS referer,
+			AGENT AS agent, 
+			DOMAIN AS domain, 
+			DOMAIN_NAME AS domainName, 
+			BROWSER AS browser, 
+			OS AS os, 
+			WEEKDAY AS weekday
+		FROM OP_VISIT 
+		ORDER BY VISIT_DATE DESC
+		LIMIT #{pagination.startRownum}, #{pagination.endRownum}
+
+	</select>
+	
+	
+	
+	<!-- 로그인 통계 로그 -->
+	<insert id="insertLoginCount" parameterType="String">
+		
+		INSERT INTO OP_LOGIN_COUNT (LOGIN_DATE, LOGIN_TYPE, LOGIN_COUNT)
+		VALUES (DATE_FORMAT(NOW(),'%Y%m%d'), #{value}, 1)
+
+		ON DUPLICATE KEY 
+		UPDATE 
+
+			LOGIN_COUNT = LOGIN_COUNT + 1
+	</insert>
+	
+	
+	<select id="selectVisitCountToday" parameterType="Visit" resultType="Integer">
+		SELECT COUNT(*) FROM OP_VISIT
+		WHERE VISIT_DATE = #{visitDate} AND REMOTE_ADDR = #{remoteAddr}
+	</select>
+	
+	<insert id="insertVisit" parameterType="Visit">
+		INSERT INTO OP_VISIT (VISIT_DATE, VISIT_TIME, LANGUAGE, REMOTE_ADDR, REFERER, AGENT, DOMAIN, DOMAIN_NAME, BROWSER, OS, WEEKDAY)
+		VALUES (#{visitDate}, #{visitTime}, 'ko', #{remoteAddr}, #{referer}, #{agent}, #{domain}, #{domainName}, #{browser}, #{os}, #{weekday})
+	</insert>	
+
+	<insert id="updateVisitCount" parameterType="Visit">
+		INSERT INTO OP_VISIT_COUNT 
+		VALUES (#{visitDate}, 'ko', 1)
+		ON DUPLICATE KEY 
+		UPDATE VISIT_COUNT = VISIT_COUNT + 1
+	</insert>	
+</mapper>

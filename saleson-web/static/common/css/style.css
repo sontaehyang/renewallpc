@@ -1,0 +1,75 @@
+@charset "UTF-8";
+/*
+Name: D2W 퍼블리싱 리스트(D2W Html List)
+Version: 1.0
+Last Update: 19th Jan, 2016
+License: MIT License(https://opensource.org/licenses/MIT)
+Description: 자세한 설명은 readme.md 파일을 참조하세요 :)
+Author: 여준혁(Jun H Yeo)
+Author Email: iyakiggun@gmail.com
+Author Kakao: iyakiggun
+Author Twitter: https://twitter.com/d2wmaster
+*/
+#bodyWrap{position:fixed;top:0;right:0;bottom:0;left:0;background:lightgray}
+#frame{position:fixed;top:45px;left:390px;right:5px;bottom:5px;min-width:640px;background:#fff}
+.mobile #frame{overflow:hidden;background:#6d6d6d;background:url("../img/bg_mob.png");background-size:cover}
+.mobile #page_size{display:none}
+#header,#side,#frame{-webkit-box-shadow:0 0 3px rgba(0,0,0,.1);box-shadow:0 0 3px rgba(0,0,0,.1)}
+.iframe_wrap{position:absolute;top:31px;left:0;right:0;bottom:0}
+#page_show{position:absolute;top:0;left:0;width:100%;height:100%}
+#header{overflow:hidden;height:39px;line-height:36px;margin:0 5px;border-bottom:1px solid #c9c9c9;background:#fff; /* background:-moz-linear-gradient(left,rgba(255,255,255,1) 75%,rgba(74,183,240,1) 91%);background:-webkit-linear-gradient(left,rgba(255,255,255,1) 75%,rgba(74,183,240,1) 91%);background:linear-gradient(to right,rgba(255,255,255,1) 75%,rgba(74,183,240,1) 91%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#4ab7f0',GradientType=1) */}
+#header h1{float:left;height:40px;padding-left:10px;font-size:24px;font-weight:600;letter-spacing:.05em;color:#333}
+#header h1 span{font-weight:200}
+#side{position:fixed;top:45px;left:5px;bottom:5px;width:380px;background:#fff;overflow-y:scroll;overflow-x:hidden;}
+#side h2{margin-bottom:5px;padding:10px 10px;border-bottom:1px solid #E2F5FF;font-size:20px;font-weight:200;background-color:#4ab7f0;color:#fff}
+/* #side h2 .fa-mobile,.mobile #side h2 .fa-desktop{display:none} */
+.mobile #side h2 .fa-mobile{display:inline-block}
+#page_leng{font-size:12px;font-weight:200;}
+#complete_leng{font-size:12px;font-weight:200;}
+#page_leng_m{font-size:12px;font-weight:200;}
+#complete_leng_m{font-size:12px;font-weight:200;}
+.author-profile{display:inline-block;width:32px;height:32px;overflow:hidden;border-radius:50%}
+.author-profile img{width:100%;vertical-align:top}
+.author-name{margin-right:20px;margin-left:6px;text-decoration:none;color:#fff}
+.author-name:hover{border-bottom:1px dotted #fff}
+.author-email{position:relative;top:7px}
+.ctrl{position:relative;z-index:100;height:26px;padding:3px 0 1px;border-bottom:1px solid #c9c9c9;text-align:center;background:#f2f2f2;background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#f2f2f2),color-stop(100%,#fff));background:linear-gradient(to bottom,#f2f2f2 0%,#fff 100%)}
+.pageurl_box{position:relative;display:inline-block;vertical-align:middle}
+.pageurl_box span{position:absolute;top:.35em;font-size:.75em;font-weight:300;color:#ccc}
+.pageurl_box #page_size{right:.5em}
+.pageurl_box #page_title{left:.5em}
+.pageurl{width:480px;height:22px;padding:0;border:1px solid #c9c9c9;border-radius:2px;-webkit-box-shadow:0 1px 2px rgba(255,255,255,1);box-shadow:0 1px 2px rgba(255,255,255,1);text-align:center;vertical-align:middle;font-size:12px;font-weight:200}
+.btn_ctrl{vertical-align:middle;width:24px;height:24px;padding:0;border:1px solid #c9c9c9;border-radius:2px;-webkit-box-shadow:0 1px 2px rgba(255,255,255,1);box-shadow:0 1px 2px rgba(255,255,255,1);color:#666;background:#fff;cursor:pointer}
+.btn_ctrl.on{background-color:#00aeef;color:#fff;border-color:#00aeef}
+.links {padding-bottom:20px;}
+.links ul{padding-left:15px;font-size:13px}
+.links li{line-height:1;color:#3e3e3e;white-space:nowrap;letter-spacing:-1px;}
+.links li strong{color:#000;font-weight:800;}
+.links li span{color:#f00;}
+.links li span.ok{color:#5cbc55;}
+.links li span.bd{color:orange;}
+.links a{margin-right:5px;text-decoration:none;color:#00aeef;cursor:pointer}
+.links a:hover,.links a:focus{border-bottom:1px dotted #00aeef;background:#E2F5FF;-webkit-transition:all .3s;-o-transition:all .3s;transition:all .3s}
+.links a:before{content:"\f1c9";position:relative;top:-1px;display:inline-block;margin-right:5px;vertical-align:middle;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.links a[href='']{margin-left:-7px;color:#333;cursor:default}
+.links a[href='']:hover,.links a[href='']:focus{border:none;background-color:transparent}
+.links a[href='']:before{content:"\f107";top:-2px}
+.links a.on {color:red}
+.mobile .iframe_wrap{position:absolute;top:30px;right:0;bottom:0;left:0;margin:auto;padding-top:30px;border:2px solid #fff;border-radius:20px;background:rgba(255,255,255,0.5);box-shadow:0 10px 30px rgba(0,0,10,0.6)}
+.mobile #page_show{position:static;box-shadow:0 0 10px rgba(255,255,255,0.5),0 0 4px rgba(0,0,0,0.3);background:#fff}
+.mobile #page_show::-webkit-scrollbar{width:8px;height:8px;border:3px solid #fff}
+.mobile #page_show::-webkit-scrollbar-track{background:rgba(0,0,0,.2);-webkit-border-radius:10px;border-radius:10px}
+.mobile #page_show::-webkit-scrollbar-thumb{height:30px;width:8px;background:rgba(0,0,0,.5);-webkit-border-radius:8px;border-radius:8px}
+.mobile .iframe_wrap,.mobile #page_show{-webkit-transition:all .3s ease;-moz-transition:all .3s ease;-ms-transition:all .3s ease;-o-transition:all .3s ease;transition:all .3s ease}
+/*.portrait{width:390px;height:660px;text-align:center}*/
+.portrait{width:410px;height:700px;text-align:center}
+.landscape{width:700px;height:390px;padding-left:30px}
+/*.portrait #page_show{width:340px;height:600px}*/
+.portrait #page_show{width:360px;height:640px}
+.landscape #page_show{width:640px;height:360px}
+.rotate{display:none;position:absolute;width:40px;height:40px;margin-top:5px;border:2px solid #fff;border-radius:50%;outline:none;white-space:nowrap;color:transparent;font-weight:700;font-size:12px;cursor:pointer;background-color:rgba(0,0,0,.5);background-repeat:no-repeat;background-position:center;-webkit-transition:all .15s;-o-transition:all .15s;transition:all .15s}
+.mobile .rotate{display:block}
+.rotate:hover{border-color:#00aeef}
+.rotate:active{border-color:#FF4141}
+.portrait .rotate{left:50%;bottom:10px;margin-left:-21px;background-image:url("../img/btn_rotate_landscape.png")}
+.landscape .rotate{top:50%;right:10px;margin-top:-21px;background-image:url("../img/btn_rotate_portrait.png")}

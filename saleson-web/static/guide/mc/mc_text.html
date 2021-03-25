@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<title>세일즈온 모바일</title>
+	<link rel="shortcut icon" href="/content/mobile/images/favicon.ico">
+	<link rel="stylesheet" href="/content/mobile/css/reset.css">
+	<link rel="stylesheet" href="/content/mobile/css/swiper.css">
+	<link rel="stylesheet" href="/content/mobile/css/common.css">
+	<link rel="stylesheet" href="/content/mobile/css/category.css">
+	<link rel="stylesheet" href="/content/mobile/css/product.css">
+	<link rel="stylesheet" href="/content/mobile/css/event.css">
+	<link rel="stylesheet" href="/content/mobile/css/customer.css">
+	<link rel="stylesheet" href="/content/mobile/css/member.css">
+	<link rel="stylesheet" href="/content/mobile/css/order.css">
+	<link rel="stylesheet" href="/content/mobile/css/mypage.css">
+	<link rel="stylesheet" href="/content/mobile/css/info.css">
+	<link rel="stylesheet" href="/content/mobile/css/popup.css">
+	<link rel="stylesheet" href="/content/mobile/css/main.css">	
+	<link rel="stylesheet" href="../css/mc_guide.css">	
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<script src="/content/mobile/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/browserDetect.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/swiper.jquery.min.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/jquery.combostars.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/jquery.sticky.js" type="text/javascript"></script>
+	<script src="/content/mobile/js/front.js" type="text/javascript"></script>    
+</head>
+<body>
+
+	<div id="wrap">
+		<div id="header">
+			<h1>세일즈온 모바일 HTML GUIDE</h1>
+			<div class="gnb">
+				<ul>
+					<li><a href="mc_button.html">버튼, 링크</a></li>
+					<li><a href="mc_label.html">라벨</a></li>
+					<li><a href="mc_form.html">폼</a></li>
+					<li><a href="mc_tab.html">탭</a></li>
+					<li class="on"><a href="mc_text.html">텍스트</a></li>
+					<li><a href="mc_accodian.html">아코디언</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- //header -->
+
+		<div id="container">
+			<div class="bs-docs-section">
+
+				<h2>텍스트색상</h2>
+				<form class="bs-example">
+					<span class="t_black t_bold">기본색상1 : #1a1a1a</span><br>
+					<span class="t_gray t_bold">기본색상2 : #666666</span><br>
+					<span class="t_lgray t_bold">기본색상3 : #999999</span><br>
+					<span class="t_wgray t_bold">기본색상4 : #b7b7b7</span><br><br>
+					<span class="t_point1 t_bold">포인트색상1 : #fb5020</span><br>
+					<span class="t_point2 t_bold">포인트색상2 : #23ade3</span><br>
+					<span class="t_point3 t_bold">포인트색상3 : #1c2957</span><br>
+				</form>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"t_black"</span> <span class="nt">&gt;</span>기본색상1 : #1a1a1a<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"t_gray"</span> <span class="nt">&gt;</span>기본색상2 : #666666<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"t_lgray"</span> <span class="nt">&gt;</span>기본색상3 : #999999<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"t_wgray"</span> <span class="nt">&gt;</span>기본색상4 : #b7b7b7<span class="nt">&lt;/span&gt;</span>
+
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"t_point1"</span> <span class="nt">&gt;</span>포인트색상1 : #fb5020<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"t_point2"</span> <span class="nt">&gt;</span>포인트색상2 : #23ade3<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"t_point3"</span> <span class="nt">&gt;</span>포인트색상3 : #1c2957<span class="nt">&lt;/span&gt;</span>
+					</code></pre>
+				</figure>
+
+				<h2>텍스트굵기</h2>
+				<form class="bs-example">
+					<span class="t_bold">텍스트굵기1 : bold</span><br>
+					<span class="t_medium">텍스트굵기2 : medium</span><br>
+					<span class="t_light">텍스트굵기3 : light</span>
+				</form>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"t_bold"</span> <span class="nt">&gt;</span>bold<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"t_medium"</span> <span class="nt">&gt;</span>medium<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"t_light"</span> <span class="nt">&gt;</span>light<span class="nt">&lt;/span&gt;</span>
+					</code></pre>
+				</figure>
+
+				<h2>텍스트사이즈</h2>
+				<form class="bs-example">
+					<span class="ts_large">텍스트사이즈1 : large</span><br>
+					<span class="ts_medium">텍스트사이즈2 : medium</span><br>
+					<span class="ts_small">텍스트사이즈3 : small</span>
+				</form>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"ts_large"</span> <span class="nt">&gt;</span>large<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"ts_medium"</span> <span class="nt">&gt;</span>medium<span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"ts_small"</span> <span class="nt">&gt;</span>small<span class="nt">&lt;/span&gt;</span>
+					</code></pre>
+				</figure>
+
+				<h2>필수입력</h2>
+				<form class="bs-example">
+					<span class="star">필수입력</span>
+				</form>
+				<figure class="highlight">
+					<pre><code class="language-html">
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"star"</span> <span class="nt">&gt;</span>필수입력<span class="nt">&lt;/span&gt;</span>
+					</code></pre>
+				</figure>
+
+			</div>
+			<!-- //bs-docs-section -->
+		</div>
+		<!-- //#container -->
+
+	</div>
+	<!-- //#wrap -->
+
+</body>
+</html>

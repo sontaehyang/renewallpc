@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.notice.NoticeMapper">
+
+	<resultMap id="NoticeResult" type="saleson.shop.notice.domain.Notice">
+		<result property="noticeId" column="NOTICE_ID" />
+		<result property="subject" column="SUBJECT" />
+		<result property="url" column="URL" />
+		<result property="categoryTeam" column="CATEGORY_TEAM" />
+		<result property="userName" column="USER_NAME" />
+		<result property="password" column="PASSWORD" />
+		<result property="email" column="EMAIL" />
+		<result property="content" column="CONTENT" />
+		<result property="hits" column="HITS" />
+		<result property="boardCode" column="BOARD_CODE" />
+		<result property="subCategory" column="SUB_CATEGORY" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="targetOption" column="TARGET_OPTION" />
+		<result property="relOption" column="REL_OPTION" />
+		<result property="urlType" column="URL_TYPE" />
+		<result property="noticeFlag" column="NOTICE_FLAG" />
+		<result property="visibleType" column="VISIBLE_TYPE" />
+		<result property="sellerSelectFlag" column="SELLER_SELECT_FLAG" />
+		<result property="newFlag" column="NEW_FLAG" />
+	</resultMap>
+	
+	<resultMap id="NoticeSellerResult" type="saleson.shop.notice.domain.NoticeSeller">
+		<result property="noticeSellerId" column="NOTICE_SELLER_ID" />
+		<result property="noticeId" column="NOTICE_ID" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="sellerName" column="SELLER_NAME" />
+	</resultMap>
+	
+	<select id="getNoticeCount" parameterType="saleson.shop.notice.support.NoticeParam" resultType="Integer" >
+			SELECT COUNT(*)
+			FROM OP_NOTICE N 
+			<if test="visibleType == 3">
+				LEFT JOIN OP_NOTICE_SELLER S ON N.NOTICE_ID=S.NOTICE_ID
+			</if>
+			<where>
+				<if test="subCategory != null and subCategory != ''">
+					AND SUB_CATEGORY = #{subCategory} 
+				</if>
+				<if test="categoryTeam != null and categoryTeam != ''">
+					AND CATEGORY_TEAM LIKE CONCAT('%', #{categoryTeam}, '%')
+				</if>
+				<if test="query != null and query != ''">
+					<if test="where == 'SUBJECT'">
+						AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+					</if>
+				</if>
+				<if test="noticeFlag != null and noticeFlag != ''">
+					AND NOTICE_FLAG = #{noticeFlag}
+				</if>
+				<if test="visibleType != null and visibleType != ''">
+					AND (VISIBLE_TYPE = #{visibleType} OR VISIBLE_TYPE = 1)
+				</if>
+				<if test="visibleType == 3">
+					AND (S.SELLER_ID=#{sellerId} OR N.SELLER_SELECT_FLAG = 'N')
+				</if>
+				
+			</where>
+	</select>
+	
+	<select id="getNoticeList" parameterType="saleson.shop.notice.support.NoticeParam" resultMap="NoticeResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+				N.NOTICE_ID, 
+				N.SUBJECT, 
+				N.URL, 
+				N.CATEGORY_TEAM, 
+				N.USER_NAME, 
+				N.PASSWORD, 
+				N.EMAIL, 
+				N.CONTENT, 
+				N.HITS, 
+				N.BOARD_CODE, 
+				N.SUB_CATEGORY, 
+				N.CREATED_DATE,
+				N.TARGET_OPTION,
+				N.REL_OPTION,
+				N.NOTICE_FLAG,
+				N.VISIBLE_TYPE,
+				N.SELLER_SELECT_FLAG,
+				CASE WHEN DATE_FORMAT(DATE_ADD(STR_TO_DATE(N.CREATED_DATE,'%Y%m%d%H%i%s'), INTERVAL 3 DAY),'%Y%m%d%H%i%s') >= DATE_FORMAT(NOW(),'%Y%m%d%H%i%s') THEN 'Y'
+				ELSE 'N'
+				END AS NEW_FLAG
+			FROM OP_NOTICE N
+			<if test="visibleType == 3">
+				LEFT JOIN OP_NOTICE_SELLER S ON N.NOTICE_ID=S.NOTICE_ID
+			</if>
+			<where>
+				<if test="visibleType != null and visibleType != ''">
+					AND (VISIBLE_TYPE = #{visibleType} OR VISIBLE_TYPE = 1)
+				</if>
+				<if test="subCategory != null and subCategory != ''">
+					AND SUB_CATEGORY = #{subCategory} 
+				</if>
+				<if test="categoryTeam != null and categoryTeam != ''">
+					AND CATEGORY_TEAM LIKE CONCAT('%', #{categoryTeam}, '%')
+				</if>
+				<if test="noticeFlag != null and noticeFlag != ''">
+					AND NOTICE_FLAG = #{noticeFlag}
+				</if>
+				<if test="query != null and query != ''">
+					<if test="where == 'SUBJECT'">
+						AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+					</if>
+					<if test="where == 'CONTENT'">
+						AND CONTENT LIKE CONCAT('%', #{query}, '%')
+					</if>
+				</if>
+				<if test="visibleType == 3">
+					AND (S.SELLER_ID=#{sellerId} OR N.SELLER_SELECT_FLAG = 'N')
+				</if>
+			</where> 
+			GROUP BY N.NOTICE_ID
+			ORDER BY N.NOTICE_FLAG DESC, N.NOTICE_ID DESC	<!-- 2017.04.24 Jun-Eu Son 상단공지 우선 정렬 추가 -->
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getNotice" parameterType="Integer" resultMap="NoticeResult" >
+		SELECT 
+			NOTICE_ID, 
+			SUBJECT, 
+			URL, 
+			CATEGORY_TEAM, 
+			USER_NAME, 
+			PASSWORD, 
+			EMAIL, 
+			CONTENT, 
+			HITS, 
+			BOARD_CODE, 
+			SUB_CATEGORY, 
+			CREATED_DATE,
+			TARGET_OPTION,
+			REL_OPTION,
+			NOTICE_FLAG,
+			VISIBLE_TYPE,
+			SELLER_SELECT_FLAG
+		FROM OP_NOTICE 
+ 		WHERE NOTICE_ID = #{value}
+	</select>
+	
+	<select id="getSellerNotice" parameterType="saleson.shop.notice.support.NoticeParam" resultMap="NoticeResult" >
+		SELECT 
+			N.NOTICE_ID, 
+			N.SUBJECT, 
+			N.URL, 
+			N.CATEGORY_TEAM, 
+			N.USER_NAME, 
+			N.PASSWORD, 
+			N.EMAIL, 
+			N.CONTENT, 
+			N.HITS, 
+			N.BOARD_CODE, 
+			N.SUB_CATEGORY, 
+			N.CREATED_DATE,
+			N.TARGET_OPTION,
+			N.REL_OPTION,
+			N.NOTICE_FLAG,
+			N.VISIBLE_TYPE,
+			N.SELLER_SELECT_FLAG
+		FROM OP_NOTICE N
+			LEFT JOIN OP_NOTICE_SELLER S ON N.NOTICE_ID=S.NOTICE_ID
+ 		WHERE N.NOTICE_ID = #{noticeId}
+ 		AND (S.SELLER_ID=#{sellerId} OR N.SELLER_SELECT_FLAG = 'N')
+	</select>
+	
+	<insert id="insertNotice" parameterType="saleson.shop.notice.domain.Notice">
+		INSERT INTO OP_NOTICE (NOTICE_ID, SUBJECT, URL, CATEGORY_TEAM, USER_NAME, PASSWORD, EMAIL, CONTENT, HITS, BOARD_CODE, SUB_CATEGORY, CREATED_DATE, TARGET_OPTION, REL_OPTION, NOTICE_FLAG, VISIBLE_TYPE, SELLER_SELECT_FLAG)
+		VALUES (#{noticeId}, #{subject}, #{url}, #{categoryTeam}, #{userName}, #{password}, #{email}, #{content}, #{hits}, #{boardCode}, #{subCategory},  DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{targetOption}, #{relOption}, #{noticeFlag}, #{visibleType}, #{sellerSelectFlag})
+	</insert>
+	
+	
+	<insert id="insertNoticeSeller" parameterType="saleson.shop.notice.domain.NoticeSeller">
+		INSERT INTO OP_NOTICE_SELLER (NOTICE_SELLER_ID, NOTICE_ID, SELLER_ID, CREATED_DATE)
+		VALUES (#{noticeSellerId}, #{noticeId}, #{sellerId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<update id="updateNotice" parameterType="saleson.shop.notice.domain.Notice">
+		UPDATE OP_NOTICE SET
+			SUBJECT = #{subject}, 
+			URL = #{url}, 
+			USER_NAME = #{userName}, 
+			CONTENT = #{content}, 
+			TARGET_OPTION = #{targetOption},
+			REL_OPTION = #{relOption},
+			NOTICE_FLAG = #{noticeFlag},
+			VISIBLE_TYPE = #{visibleType},
+			SELLER_SELECT_FLAG = #{sellerSelectFlag}
+		WHERE NOTICE_ID = #{noticeId}
+	</update>
+	
+	<update id="addHitCount" parameterType="Integer">
+		UPDATE OP_NOTICE
+		SET HITS = HITS + 1
+		WHERE NOTICE_ID = #{value}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="Integer" >
+		DELETE FROM OP_NOTICE 
+		WHERE NOTICE_ID = #{value}
+	</delete>
+	
+	<sql id="whereFrontNotice">
+		
+		<where>
+			<if test="subCategory != null and subCategory != ''">
+				AND SUB_CATEGORY = #{subCategory} 
+			</if>
+			<if test="categoryTeam != null and categoryTeam != ''">
+				AND CATEGORY_TEAM LIKE CONCAT('%', #{categoryTeam}, '%')
+			</if>
+			<if test="query != null and query != ''">
+				<if test="where == 'SUBJECT'">
+					AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+				</if>
+			</if>
+			AND (VISIBLE_TYPE = 2 OR VISIBLE_TYPE = 1)
+		</where> 
+		
+	</sql>
+	
+	<select id="getFrontNoticeListCount" parameterType="saleson.shop.notice.support.NoticeParam" resultType="int" >
+		
+			SELECT 
+			    COUNT(*)
+			FROM OP_NOTICE
+			<include refid="whereFrontNotice"/>
+		
+	</select>
+	
+	<select id="getFrontNoticeList" parameterType="saleson.shop.notice.support.NoticeParam" resultMap="NoticeResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+			    NOTICE_ID, 
+			    SUBJECT, 
+			    CASE WHEN URL IS NULL OR URL = '' THEN CONCAT('/notice/view/',NOTICE_ID)
+			    	ELSE TRIM(URL)
+			    END AS URL , 
+			    CASE WHEN URL IS NULL OR URL = '' THEN 0
+			    	ELSE 1
+			    END AS URL_TYPE ,
+			    CATEGORY_TEAM, 
+			    TARGET_OPTION,
+				REL_OPTION,
+			    SUB_CATEGORY,
+			    NOTICE_FLAG, 
+				
+				<if test='conditionType != "main"'>
+			    USER_NAME, 
+			    PASSWORD, 
+			    EMAIL, 
+			    CONTENT, 
+			    HITS, 
+			    BOARD_CODE, 
+			    </if>
+			    CREATED_DATE
+			FROM OP_NOTICE
+			<include refid="whereFrontNotice"/>
+			ORDER BY NOTICE_FLAG DESC, NOTICE_ID DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	
+	<select id="getFrontNoticeListByTeamCodes" parameterType="saleson.shop.notice.support.NoticeParam" resultMap="NoticeResult" >
+			SELECT 
+			    NOTICE_ID, 
+			    SUBJECT, 
+			    CASE WHEN URL IS NULL OR URL = '' THEN CONCAT('/board/view/',NOTICE_ID)
+			    	ELSE TRIM(URL)
+			    END AS URL , 
+			    CASE WHEN URL IS NULL OR URL = '' THEN 0
+			    	ELSE 1
+			    END AS URL_TYPE ,
+			    CATEGORY_TEAM, 
+			    TARGET_OPTION,
+				REL_OPTION,
+			    SUB_CATEGORY,
+			    CREATED_DATE
+			FROM (
+				<foreach item="teamCode" index="index" collection="teamCodes" open="" separator="UNION" close="">
+					SELECT * FROM (
+						SELECT 
+							NOTICE_ID, SUBJECT, URL, #{teamCode} AS CATEGORY_TEAM, TARGET_OPTION, REL_OPTION, SUB_CATEGORY, CREATED_DATE 
+						FROM OP_NOTICE 
+						WHERE CATEGORY_TEAM LIKE CONCAT('%', #{teamCode}, '%') ORDER BY NOTICE_ID DESC LIMIT 5 
+					) T#{index}
+		    	</foreach>
+			) T
+	</select>
+	
+	
+	<delete id="deleteNoticeSeller" parameterType="Integer" >
+		DELETE FROM OP_NOTICE_SELLER
+		WHERE NOTICE_SELLER_ID = #{value}
+	</delete>	
+	
+	<select id="getNoticeSellerList" parameterType="Integer" resultMap="NoticeSellerResult" >
+		SELECT NS.*, S.SELLER_NAME FROM OP_NOTICE_SELLER NS
+		INNER JOIN OP_SELLER S ON NS.SELLER_ID = S.SELLER_ID
+		
+		WHERE NOTICE_ID = #{value}
+	</select>
+	
+</mapper>

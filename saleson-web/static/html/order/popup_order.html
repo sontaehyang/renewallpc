@@ -1,0 +1,769 @@
+<?include "../include/head.html"?>	
+	<style>
+		.guideLine{border:1px solid #262626; width: 600px;margin:10px 0;}
+		.guideLine_large{border:1px solid #262626; width: 846px;margin:10px 0;}
+	</style>
+	<div class="guideLine">
+		<!-- 로그인 팝업 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">로그인</h1>
+			<div class="popup_contents"> 
+				<div class="login_tab">
+					<ul>
+						<li><a href="#" class="on">회원</a></li>
+						<li><a href="#">비회원</a></li>	
+					</ul>
+				</div><!--//login_tab E-->
+				<!-- 회원 로그인 S -->
+				<div class="login_wrap">
+					<div class="login">
+						<dl>
+							<dt>회원아이디</dt>
+							<dd><input type="text" title="회원아이디"></dd>
+							<dt class="mt10">비밀번호</dt>
+							<dd class="mt10"><input type="password" title="비밀번호"></dd>
+						</dl>
+						<button type="submit" class="btn btn-submit btn-login" title="로그인">로그인</button>
+					</div>
+					<div class="login_check">
+						<span><input type="checkbox" id="id"> <label for="id">아이디 저장</label></span>
+						<span><a href="">아이디 찾기</a></span>
+						<span><a href="">비밀번호 찾기</a></span>
+					</div>
+					<div class="login_bottom">
+						<p>
+							아직도 회원이 아니세요?<br>
+							회원가입을 하시면 더 많은 혜택을 만나보실 수 있습니다.
+						</p>
+						<a href="#" class="btn btn-default btn-join" title="회원가입">회원가입</a>
+					</div>
+				</div><!--//login_wrap E-->	
+				<!-- 회원 로그인 E -->
+				<hr>
+				<!-- 비회원 로그인 S -->	
+				<div class="login_wrap no_member">
+					<div class="login">
+						<dl>
+							<dt>주문자명</dt>
+							<dd><input type="text" title="주문자명"></dd>
+							<dt class="mt8">휴대폰번호</dt>
+							<dd class="mt8">
+								<ul class="login_hp">
+									<li><input type="text" title="휴대폰번호" class="hpbox"></li>
+									<li class="connect">-</li>
+									<li><input type="text" title="휴대폰번호" class="hpbox"></li>
+									<li class="connect">-</li>
+									<li><input type="text" title="휴대폰번호" class="hpbox"></li>
+								</ul>
+								<a href="#" class="btn btn-w102 btn-success" title="인증번호 전송">인증번호 전송</a>
+							</dd>
+							<dt class="mt10">인증번호</dt>
+							<dd class="mt10"><input type="text" title="인증번호">
+								<button type="submit" class="btn btn-w102 btn-default" title="확인하기">확인하기</button>
+							</dd>
+						</dl> 
+					</div>
+					<div class="login_bottom">
+						<p>
+							비회원 주문시 입력한 이름과 휴대폰번호로 로그인해 주세요.<br>
+							세일즈온 고객센터 : <span>02-6737-9200 (내선 101)</span>
+						</p> 
+					</div>
+				</div><!--//login_wrap E-->				
+				<!-- 비회원 로그인 E -->
+				<hr>
+				<!-- 비회원 로그인 약관이동 S -->
+				<div class="login_wrap" style="display:block;">
+					<div class="nomember">
+						<p> 비회원으로 구매서비스를 이용하시려면 비회원구매 약관동의하셔야 합니다. </p>
+						<p>	다음 단계로 이동 버튼을 클릭해 주십시오.</p>
+						<p>비회원 주문 시에는 쿠폰할인 및 포인트적립 혜택을 받으실 수 없습니다.  </p>
+						<a href="">다음단계로 이동</a>
+					</div> 
+					<div class="login_bottom">
+						<p>
+							비회원 주문시 입력한 이름과 휴대폰번호로 로그인해 주세요.<br>
+							세일즈온 고객센터 : <span>02-6737-9200 (내선 101)</span>
+						</p> 
+					</div>
+				</div><!--//login_wrap E-->
+				<!-- 비회원 로그인 약관이동 E -->
+				<a href="#" class="popup_close">창 닫기</a>
+			</div>
+		</div>
+		<!-- 로그인 팝업 E -->
+		<!-- 실시간 계좌 이체 안내 팝업 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">실시간 계좌이체 안내</h1>
+			<div class="popup_contents"> 
+				<div class="payment_pop">
+					<ul>
+						<li>실시간 계좌이체는 세일즈온몰에 결제액이 바로 입금되는 방식으로 별도의 서비스 가입절차가 필요없이 실시간으로 고객님의 통장에서 결제처리가 되는 방식으로 수수료는 세일즈온몰에서 부담합니다.</li>
+						<li>대금청구서는 가맹점란에 "㈜LG데이콤 가맹점"으로 표기됩니다.</li> 
+						<li>실시간 계좌이체는 10분이내 입금내역이 확인됩니다. </li> 
+					</ul>
+				</div> 
+			</div><!--//popup_contents E--> 
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 실시간 계좌 이체 안내 팝업 E -->
+		<!-- 무통장 입금 안내 팝업 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">무통장 입금 이용안내</h1>
+			<div class="popup_contents"> 
+				<div class="payment_pop">
+					<ul>
+						<li>고객님의 편리를 위하여 무통장 입금하시는 고객님께 우리은행 가상전용 계좌(1인1구좌)를 부여해 드리고 있습니다. 부여된 전용계좌로 상품금액을 입금해주시면 주문이 완료됩니다. 무통장 입금 시 입금자명은 주문 시 입력한 입금자명과 일치해야 정상 확인이 가능합니다.</li>
+						<li>입금확인은 5분 단위로 자동 전산 확인이 됩니다. 단, 10분 이후에도 입금확인이 완료되지 않으면 고객센터로 연락하시기 바랍니다. 수신자부담 무료전화 080-700-7200</li>
+						<li>주문에 대한 고유의 무통장 입금 계좌번호는 다음단계인 [주문완료] 페이지에서 확인할 수 있으며 고객님의 핸드폰 SMS로 전송됩니다.
+							<br>※ 무통장입금 오류 발생의 대부분은 전용계좌번호 및 입금금액(주문금액)이 다른 경우에 발생할 때가 많습니다. 입금 오류일 경우[나의 쇼핑정보] 주문내역에서 입금계좌번호, 입금액을 확인 후 재시도를 부탁드립니다.</li>
+							<li>주문을 위한 무통장 입금 계좌번호는 주문 별로 각각 다른 계좌번호가 자동생성 되고 해당 주문에만 유효합니다. </li>
+					</ul>
+				</div> 
+			</div><!--//popup_contents E--> 
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 무통장 입금 안내 팝업 E -->		
+		<!-- 현금영수증 안내 팝업 S -->		
+		<div class="popup_wrap">
+			<h1 class="popup_title">현금영수증 안내</h1>
+			<div class="popup_contents"> 
+				<div class="payment_pop">
+					<h2>현금영수증 종류</h2>
+					<dl>
+						<dt>소득공제용(개인용)</dt>
+						<dd>개인이 1년 동안 현금을 사용한 금액에 대해 소득공제를 받을 수 있는 영수증</dd>
+						<dt>지출증빙용(사업자)</dt>
+						<dd>세금계산서처럼 기업이 지정된 기간 내에 현금을 사용한 부분에 대해서 세액공제를 받을 수 있는 영수증</dd>
+					</dl>
+					<ul>
+						<li>정보통신망 이용촉진 및 정보보호 등에 관한 법률 개정으로 인해 2012년 8월 18일부터 주민등록번호 사용이 제한됩니다.</li>
+						<li>현금영수증을 신청하지 않으신 경우 현금영수증이 자동발급 되며 자진발급 된 현금영수증은 국세청 현금영수증 사이트 (www.taxsave.go.kr)에서 사용자등록 후 고객님(본인)의 것으로 전환등록 하실 수 있습니다.</li>
+						<li>세금계산서와 현금영수증은 모두 지출증빙이 가능하고 현금영수증 자진 발급 제 시행에 따라 세금계산서는 발급 되지 않습니다. 지출증빙용 현금영수증은 세금계산서와 동일하게 부가세 환급을 받으실 수 있습니다.</li>
+					</ul>
+				</div>
+			</div><!--//popup_contents E--> 
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 현금영수증 안내 팝업 E -->		
+	</div>	
+	<div class="guideLine_large">		
+		<!-- 쿠폰적용 팝업 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">쿠폰적용</h1>
+			<div class="popup_contents">
+				<div class="offline_coupon_area">
+					<button type="button" class="offline_collapse" data-toggle="collapse" data-target=".offline_area">오프라인 쿠폰 등록하기</button>
+					<div class="collapse offline_area">
+						<input type="number" class="form-control box" placeholder="'-'없이 발급받은 쿠폰번호를 입력해주세요." title="'-'없이 발급받은 쿠폰번호를 입력해주세요.">
+						<div class="row no-gutters btn-group right">
+							<div class="col col-md-3 col-lg-2"><button type="button" class="btn btn_lg btn_light">취소</button></div>
+							<div class="col col-md-3 col-lg-2"><button type="button" class="btn btn_lg btn_primary">등록</button></div>
+						</div>
+					</div>
+				</div>
+				<h2>상품쿠폰 적용<span>사용 가능한 쿠폰만 보여집니다.</span> </h2>
+				<div class="board_wrap">
+					<table cellpadding="0" cellspacing="0" class="board-list">
+						<caption>상품쿠폰 적용</caption>
+						<colgroup>
+							<col style="width:auto;">
+							<col style="width:13%;">
+							<col style="width:10%;">
+							<col style="width:13%;"> 
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">상품명</th>
+								<th scope="col">상품금액</th>
+								<th scope="col">수량</th>
+								<th scope="col">상품합계</th> 
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="tleft">	 						 
+									<div class="item_info">
+										<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+										<div class="order_option">
+											<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+											<ul class="option">
+												<li>
+													<span class="choice">옵션1 :</span>
+													<span>아일랜드썬라이즈</span>	
+												</li>
+												<li>
+													<span class="choice">LED 네일 라이트 : </span>
+													<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+												</li>
+												<li>
+													<span class="choice">조립 / 설치 서비스 : </span>
+													<span>조립 / 설치 서비스 이용</span>	
+												</li>
+											</ul>
+											<div class="item_price">
+												<span>10,500</span>원/ <span>3</span>개
+											</div>
+										</div>
+									</div>
+								</td>
+								<td><span class="price">12,500원</span></td>
+								<td>1</td>  
+								<td><span class="price">20,000원</span></td>
+							</tr> 
+							<tr>
+								<td colspan="4" class="tleft"> 
+									<div class="input_wrap col-w-9"><strong>쿠폰적용</strong></div>  
+									<div class="input_wrap col-w-2"> 
+										<select>
+											<option>쿠폰을 선택하세요</option>
+										</select> 
+									</div>   
+								</td>	
+							</tr>
+							<tr>
+								<td colspan="4" class="tleft">  
+									<!--  쿠폰이 없을 경우 -->
+									<p>사용가능한 쿠폰이 없습니다.</p>
+									<p style="display:none">중복 쿠폰 사용 가능한 쿠폰이 없습니다.</p>
+								</td>	
+							</tr>
+						</tbody>
+					</table><!--// board_wrap E--> 
+					<div class="boadr_total">
+						<div>
+							<span class="txt">일반쿠폰 할인금액</span>	
+							<span class="delivery_total"><span>750원</span></span>					  
+						</div>
+					</div>
+					<div class="boadr_total">
+						<div>
+							<span class="txt">중복쿠폰 할인금액</span>	
+							<span class="delivery_total"><span>0원</span></span>					  
+						</div>
+					</div> <!-- // boadr_total E -->
+					<div class="price_box">
+						<div class="price_inner">
+							<div class="money">
+								<p class="txt01">총 상품합계 금액</p>
+								<p class="prices"><span>12,190,000</span>원</p>
+							</div>
+							<span class="icons"><img src="/content/images/icon/icon_plus.png" alt="더하기"></span>
+							<div class="money">
+								<p class="txt01">배송비</p>
+								<p class="prices"><span>2,500</span>원</p>
+							</div>
+							<span class="icons"><img src="/content/images/icon/icon_minus.png" alt="더하기"></span>
+							<div class="money">
+								<p class="txt01">쿠폰할인</p>
+								<p class="prices"><span>5,000</span>원</p>
+							</div>
+							<span class="icons"><img src="/content/images/icon/icon_sum.png" alt="더하기"></span>
+							<div class="money">
+								<p class="txt01"><strong>결제예정금액</strong></p>
+								<p class="prices total"><span>187,500</span>원</p>
+							</div>
+						</div> <!-- // price_inner E -->
+						<div class="add_point">
+							<p>적립예정 포인트 : <span>3,500 P</span> </p>
+						</div>
+					</div>
+				</div> <!-- // board_wrap E --> 
+			</div><!--//popup_contents E-->
+
+			<div class="btn_wrap  pt0">
+				<button type="button" class="btn btn-success btn-lg" title="적용하기">적용하기</button>
+				<button type="button" class="btn btn-default btn-lg" title="취소하기">취소하기</button>
+			</div>
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 쿠폰적용 팝업 E -->
+		<!-- 배송지 목록 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">배송지 목록</h1>
+			<div class="popup_contents"> 
+				<div class="board_wrap">
+					<table cellpadding="0" cellspacing="0" class="board-list">
+						<caption>배송비쿠폰 조회</caption>
+						<colgroup> 
+							<col style="width:auto;"> 
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">선택</th>
+								<th scope="col">배송지</th>
+								<th scope="col">주소</th>
+								<th scope="col">회사명</th>
+								<th scope="col">받는사람</th>
+								<th scope="col">전화번호</th>
+								<th scope="col">휴대전화번호</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="radio"></td>
+								<td>기본주소<p class="color_23ade3">(기본)</p></td>
+								<td class="tleft">서울시 구로구 구로3동 벽산디지털밸리 1차 405호</td>
+								<td>온라인파워스</td>
+								<td>홍길동</td>
+								<td>02-1234-5678</td>
+								<td>010-1234-5678</td>
+							</tr>
+							<tr>
+								<td><input type="radio"></td>
+								<td>기본주소</td>
+								<td class="tleft">서울시 구로구 구로3동 벽산디지털밸리 1차 405호</td>
+								<td>온라인파워스</td>
+								<td>홍길동</td>
+								<td>02-1234-5678</td>
+								<td>010-1234-5678</td>
+							</tr>
+						</tbody>
+					</table> 
+				</div> <!-- // board_wrap E --> 
+
+				<div class="btn_wrap pt10"> 
+					<div class="btn_left">
+						<button type="button" class="btn btn-default btn-m" title="배송지로 선택">배송지로 선택</button>  
+					</div> <!-- // btn_left E --> 
+					<div class="btn_right">
+						<button type="button" class="btn btn-success btn-m" title="배송지 추가">배송지 추가</button> 
+					</div> <!-- // btn_left E -->  
+				</div>
+			</div><!--//popup_contents E--> 
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 배송지 목록 E -->
+		<!-- 배송지 추가/수정 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">배송지 추가/수정</h1>
+			<div class="popup_contents"> 
+				 <div class="board_wrap">	   
+			 		<table cellpadding="0" cellspacing="0"  class="board-write">
+			 			<caption>배송지 추가/수정</caption>
+			 			<colgroup>		 			  
+			 				<col style="width:150px;"> 
+			 				<col style="width:auto;"> 
+			 			</colgroup> 
+			 			<tbody>
+			 				<tr>
+			 					<th scope="row">배송지 이름 <span class="necessary"></span></th> 
+			 					<td>
+			 						<div class="input_wrap col-w-7">
+			 							<input type="text" title="배송지 이름" disabled="disabled">
+			 						</div> 
+			 						<span class="address_basic"><input type="checkbox" id="aa"> <label for="aa">이 주소를 기본으로 설정함</label></span>
+			 					</td>  
+			 				</tr>  
+			 				<tr>
+			 					<th scope="row">받으시는 분 <span class="necessary"></span></th> 
+			 					<td>
+			 						<div class="input_wrap col-w-7">
+			 							<input type="text" title="받으시는 분" disabled="disabled">
+			 						</div>  
+			 					</td>  
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">전화번호</th> 
+			 					<td>
+			 						<div class="hp_area">
+			 							<div class="input_wrap col-w-10">
+			 								<select class="form-control">
+										        <option value="02">02</option> 
+										        <option value="031">031</option> 
+										        <option value="032">032</option>  
+										    </select>
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							<div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+			 							</div> 	
+			 						</div>
+			 					</td>  
+			 				</tr> 
+			 				<tr>
+			 					<th scope="row">휴대전화번호 <span class="necessary"></span></th> 
+			 					<td>
+			 						<div class="hp_area">
+			 							<div class="input_wrap col-w-10">
+			 								<select class="form-control">
+										        <option value="010">010</option> 
+										        <option value="011">011</option> 
+										        <option value="016">016</option> 
+										        <option value="017">017</option>
+										        <option value="018">018</option> 
+										        <option value="019">019</option>  
+										    </select>
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							<div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+			 							</div> 		
+			 						</div> 
+			 					</td>  
+			 				</tr>
+			 				<tr>
+			 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+			 					<td>
+			 						<div> 
+			 							<div class="input_wrap col-w-10">
+			 								<input type="text" title="우편번호"> 
+			 							</div>	 
+			 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default">검색</button></div>  
+			 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+			 								<input type="text" title="주소" class="full"> 
+			 							</div>			 	 				  			 
+			 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+			 								<input type="text" title="주소" class="full"> 
+			 							</div>		 							 
+			 						</div>
+			 					</td>
+			 				</tr>   
+			 			</tbody>
+			 		</table>   
+			 	</div> <!-- // board_wrap E -->
+			 	<div class="btn_wrap pt30">
+					<button type="button" class="btn btn-success btn-lg" title="확인하기">확인하기</button> 
+					<button type="button" class="btn btn-default btn-lg" title="취소하기">취소하기</button> 
+				</div>  
+			</div><!--//popup_contents E--> 
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 배송지 추가/수정 E -->
+		<!-- 복수배송지 등록 S -->
+		<div class="popup_wrap">
+		<h1 class="popup_title">복수배송지 등록</h1>
+		<div class="popup_contents"> 
+			<h2>배송지1</h2>
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-write">
+		 			<caption>복수배송지 등록</caption>
+		 			<colgroup> 
+			 			<col style="width:160px;"> 
+			 			<col style="width:auto;"> 
+			 			<col style="width:130px;"> 
+		 			</colgroup>
+		 			<tbody>
+		 				<tr>
+		 					<th scope="row">배송지 선택</th>
+		 					<td colspan="2"> 
+			 					<div class="input_wrap col-w-0"> 
+				 					<input type="radio" id="op-new-0" name="infoCopy" value="clear"> <label for="op-new-0">새로운 배송지</label>&nbsp;&nbsp; 		 					
+				 					<input type="radio" id="op-same-0" name="infoCopy" value="copy"> <label for="op-same-0">주문자정보와 동일</label> &nbsp;&nbsp; 
+				 					<button type="button" class="btn btn-ms btn-default" title="배송지 목록">배송지 목록</button>  
+			 					</div>
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">받으시는 분</th>
+		 					<td colspan="2">
+		 						<div class="input_wrap col-w-7">
+		 							<input type="text" title="받으시는 분" placeholder="받으시는 분">
+		 						</div> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row">전화번호</th>
+		 					<td colspan="2">
+		 						<div class="hp_area">
+		 							<div class="input_wrap col-w-10">
+		 								<select class="form-control">
+									        <option value="02">02</option> 
+									        <option value="031">031</option> 
+									        <option value="032">032</option>  
+									    </select>
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							<div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+		 							</div> 	
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+		 					<td colspan="2">
+		 						<div class="hp_area">
+		 							<div class="input_wrap col-w-10">
+		 								<select class="form-control">
+									        <option value="010">010</option> 
+									        <option value="011">011</option> 
+									        <option value="016">016</option> 
+									        <option value="017">017</option>
+									        <option value="018">018</option> 
+									        <option value="019">019</option>  
+									    </select>
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							<div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+		 							</div> 		
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+		 					<td colspan="2">
+		 						<div> 
+		 							<div class="input_wrap col-w-10">
+		 								<input type="text" title="우편번호"> 
+		 							</div>	 
+		 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default" title="우편번호">우편번호</button></div>  
+		 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+		 								<input type="text" title="주소" class="full"> 
+		 							</div>			 	 				  			 
+		 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+		 								<input type="text" title="주소" class="full"> 
+		 							</div>		 							 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row">배송시 요구사항</th>
+		 					<td colspan="2">
+		 						<div class="input_wrap col-w-0">
+		 							<input type="text" title="배송시 요구사항" placeholder="ex)부재 시 경비실에 맡겨주세요.">
+		 						</div> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row" rowspan="2" valign="top" class="noline_bottom">배송<br>상품선택</th>
+		 					<td class="address_add">
+		 						 <div class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</div>  
+		 					</td>
+		 					<td>
+		 						<div class="input_wrap col-w-0"> 
+			 						<select title="수량 선택" name="buyQuantity" itemsequence="0" receverindex="0"> 
+			 							<option value="0">0개</option> 
+			 							<option value="1" selected="selected">1개</option> 
+			 						</select> 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 				<tr> 
+		 					<td class="address_add">
+		 						 <div class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</div>  
+		 					</td>
+		 					<td>
+		 						<div class="input_wrap col-w-0"> 
+			 						<select title="수량 선택" name="buyQuantity" itemsequence="0" receverindex="0"> 
+			 							<option value="0">0개</option> 
+			 							<option value="1" selected="selected">1개</option> 
+			 						</select> 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 			</tbody>
+		 		</table>  
+		 	</div> <!-- // board_wrap E -->
+		 	<h2 class="mt30">배송지2</h2>
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-write">
+		 			<caption>복수배송지 등록</caption>
+		 			<colgroup> 
+			 			<col style="width:160px;"> 
+			 			<col style="width:auto;"> 
+			 			<col style="width:130px;"> 
+		 			</colgroup>
+		 			<tbody>
+		 				<tr>
+		 					<th scope="row">배송지 선택</th>
+		 					<td colspan="2"> 
+			 					<div class="input_wrap col-w-0"> 
+				 					<input type="radio" id="op-new-0" name="infoCopy" value="clear"> <label for="op-new-0">새로운 배송지</label>&nbsp;&nbsp; 		 					
+				 					<input type="radio" id="op-same-0" name="infoCopy" value="copy"> <label for="op-same-0">주문자정보와 동일</label> &nbsp;&nbsp; 
+				 					<button type="button" class="btn btn-ms btn-default" title="배송지 목록">배송지 목록</button>  
+			 					</div>
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">받으시는 분</th>
+		 					<td colspan="2">
+		 						<div class="input_wrap col-w-7">
+		 							<input type="text" title="받으시는 분" placeholder="받으시는 분">
+		 						</div> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row">전화번호</th>
+		 					<td colspan="2">
+		 						<div class="hp_area">
+		 							<div class="input_wrap col-w-10">
+		 								<select class="form-control">
+									        <option value="02">02</option> 
+									        <option value="031">031</option> 
+									        <option value="032">032</option>  
+									    </select>
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							<div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+		 							</div> 	
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+		 					<td colspan="2">
+		 						<div class="hp_area">
+		 							<div class="input_wrap col-w-10">
+		 								<select class="form-control">
+									        <option value="010">010</option> 
+									        <option value="011">011</option> 
+									        <option value="016">016</option> 
+									        <option value="017">017</option>
+									        <option value="018">018</option> 
+									        <option value="019">019</option>  
+									    </select>
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							<div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+		 							</div> 		
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+		 					<td colspan="2">
+		 						<div> 
+		 							<div class="input_wrap col-w-10">
+		 								<input type="text" title="우편번호"> 
+		 							</div>	 
+		 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default" title="우편번호">우편번호</button></div>  
+		 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+		 								<input type="text" title="주소" class="full"> 
+		 							</div>			 	 				  			 
+		 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+		 								<input type="text" title="주소" class="full"> 
+		 							</div>		 							 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row">배송시 요구사항</th>
+		 					<td colspan="2">
+		 						<div class="input_wrap col-w-0">
+		 							<input type="text" title="배송시 요구사항" placeholder="ex)부재 시 경비실에 맡겨주세요.">
+		 						</div> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row" valign="top">배송<br>상품선택</th>
+		 					<td class="address_add">
+		 						 <div class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</div>  
+		 					</td>
+		 					<td>
+		 						<div class="input_wrap col-w-0"> 
+			 						<select title="수량 선택" name="buyQuantity" itemsequence="0" receverindex="0"> 
+			 							<option value="0">0개</option> 
+			 							<option value="1" selected="selected">1개</option> 
+			 						</select> 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 			</tbody>
+		 		</table>  
+		 	</div> <!-- // board_wrap E -->
+		 	
+		 	<div class="btn_wrap pt30">  
+ 				<button type="button" class="btn btn-success btn-lg" title="적용하기">적용하기</button>   
+ 				<button type="button" class="btn btn-default btn-lg" title="취소하기">취소하기</button>  
+			</div>
+		</div><!--//popup_contents E--> 
+		<a href="#" class="popup_close">창 닫기</a>
+	</div>
+		<!-- 복수배송지 등록 E -->
+	</div><!-- GuideLine E -->	
+</body>
+</html> 

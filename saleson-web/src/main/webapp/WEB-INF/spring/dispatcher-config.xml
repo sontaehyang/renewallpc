@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util	http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+	<!-- Component Scan : only @Controller Bean -->
+	<context:component-scan base-package="saleson,com.onlinepowers">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+    
+
+
+	<!-- Application Message Bundle -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/config/messages/messages" />
+		<property name="cacheSeconds" value="0" />
+	</bean>
+	
+	
+	
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/favicon.ico" location="/content/images/favicon.ico" />
+	<mvc:resources mapping="/content/**" location="/content/" />
+	<mvc:resources mapping="/upload/**" location="/upload/" />
+
+	
+	<!-- Configures Spring MVC -->
+	<!-- Configures the @Controller programming model 
+	<mvc:annotation-driven />
+	-->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+		<property name="order" value="0" />
+	</bean>
+
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.OptionalValidatorFactoryBean" />
+    <!--<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />-->
+
+    <!-- 
+    <bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
+     -->
+    <bean id="conversionService" class="com.onlinepowers.framework.format.support.EncodeFormattingConversionServiceFactoryBean" />
+
+
+	<!-- <mvc:message-converters> 태그의 messageConverter와 통합 -->
+	
+	<!-- jackson 라이브러리 존재시 -->
+	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+	        <list>
+			  <bean class="org.springframework.http.MediaType">
+			     <constructor-arg value="application" />
+			     <constructor-arg value="json" />
+			   </bean> 
+	           <bean class="org.springframework.http.MediaType">
+	              <constructor-arg value="application" />
+	              <constructor-arg value="*+json" />
+	           </bean>
+	           <bean class="org.springframework.http.MediaType">
+	              <constructor-arg value="text" />
+	              <constructor-arg value="json" />
+	           </bean>
+	           <bean class="org.springframework.http.MediaType">
+	              <constructor-arg value="text" />
+	              <constructor-arg value="plain" />
+	           </bean>
+	           
+	        </list>
+	     </property>
+	</bean>
+
+	<util:list id="messageConverters">
+		<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+		<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+			<property name="writeAcceptCharset" value="false" />
+		</bean>
+
+		<bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+		<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+
+		<!-- jackson 라이브러리 존재시 -->
+		<ref bean="mappingJackson2HttpMessageConverter" />
+
+
+		<!-- jaxb2라이브러리 존재시 
+			<bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
+		-->
+
+		<!-- rome 라이브러리 존재시 
+			<bean class="org.springframework.http.converter.feed.AtomFeedHttpMessageConverter" />
+			<bean class="org.springframework.http.converter.feed.RssChannelHttpMessageConverter" />
+		-->
+
+	</util:list>
+
+     <!-- 
+	Json view 설정 - [skc-2016-03-16]
+	기존 JsonViewUtils를 이용한 json 데이터 리턴 시 
+	스프링 4.x 버전 적용 후 기존 json형태에 요청에 모든 Model 정보가 json으로 변환되는 이슈를 해결
+	기존 ModelAndJsonViewResolver를 제거하고 JsonViewResponseMethodProcessor로 변경
+	RequestMappingHandlerAdapter에 customReturnValueHandlers로 추가 등록하여
+	리턴 타입이 JsonView인 경우 @ResponseBody를 적용하지 않고 json으로 리턴되도록 처리.
+	
+	기존 modelAndJsonViewResolver, modelAndViewResolverMethodReturnValueHandler를 설정에서 삭제됨.
+	-->
+	<bean id="jsonViewResponseMethodProcessor" class="com.onlinepowers.framework.web.servlet.handler.JsonViewResponseMethodProcessor">
+	<constructor-arg>
+	   	<list>
+	   	<ref bean="mappingJackson2HttpMessageConverter" />
+	   	</list>
+	   	</constructor-arg>
+	</bean>
+    
+    <!-- <bean id="modelAndViewResolverMethodReturnValueHandler" 
+    class="org.springframework.web.servlet.mvc.method.annotation.ModelAndViewResolverMethodReturnValueHandler">
+    	<constructor-arg>
+    		<list>
+
+	            <bean class="com.onlinepowers.framework.web.servlet.handler.ModelAndJsonViewResolver">
+	                <property name="defaultJsonViewName" value="mappingJacksonJsonView"/>
+	                <property name="ajaxHeaderName" value="AJAX"/>
+	                <property name="clearKey" value="__CLEAR__"/>
+	            </bean>
+	
+    		
+    		</list>
+    	</constructor-arg>
+    </bean> -->
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="webBindingInitializer">
+            <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+                <property name="validator" ref="validator" />
+                <property name="conversionService" ref="conversionService"/>
+            </bean>
+        </property>
+        <!--  
+        <property name="customModelAndViewResolvers">
+        	<list>
+	            <bean class="com.onlinepowers.framework.web.servlet.handler.ModelAndJsonViewResolver">
+	                <property name="defaultJsonViewName" value="mappingJacksonJsonView"/>
+	                <property name="ajaxHeaderName" value="AJAX"/>
+	                <property name="clearKey" value="__CLEAR__"/>
+	            </bean>
+            </list>
+        </property>
+        -->
+        <property name="messageConverters" ref="messageConverters" />
+            
+
+        
+        <property name="customArgumentResolvers">
+	        <list>
+	            <bean class="com.onlinepowers.framework.web.bind.support.RequestContextArgumentResolver" />
+	            <bean class="com.onlinepowers.board.bind.BoardContextArgumentResolver" />
+	            <bean class="com.onlinepowers.framework.web.bind.support.TokenCheckResultArgumentResolver" />
+	            <bean class="org.springframework.data.web.querydsl.QuerydslPredicateArgumentResolver">
+                    <constructor-arg>
+                        <bean class="org.springframework.data.querydsl.binding.QuerydslBindingsFactory">
+                            <constructor-arg>
+                                <value type="org.springframework.data.querydsl.SimpleEntityPathResolver">INSTANCE</value>
+                            </constructor-arg>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg ref="conversionService"/>
+                </bean>
+
+                <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+                    <property name="oneIndexedParameters" value="true"/>
+                    <property name="fallbackPageable">
+                        <bean class="org.springframework.data.domain.PageRequest">
+                            <constructor-arg name="page" value="1" />
+                            <constructor-arg name="size" value="10" />
+                        </bean>
+                    </property>
+                </bean>
+	            
+	            <!-- Spring mobile argumentResolver
+	            <bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
+	            <bean class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
+	             -->
+	        </list>
+	    </property>    
+	    
+	    <property name="customReturnValueHandlers">
+        	<list>
+        		<ref bean="jsonViewResponseMethodProcessor" />
+            </list>
+        </property>
+    </bean>
+    
+    
+    <!-- ============================================================= -->
+	<!--  스프링 3.0 컨텐츠 네고                                         -->
+	<!-- ============================================================= -->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="contentNegotiationManager">  
+	        <bean class="org.springframework.web.accept.ContentNegotiationManager">  
+	            <constructor-arg>  
+	            <bean  
+	                class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">  
+	                <constructor-arg>  
+	                    <map>  
+	                    	<entry key="atom" value="application/atom+xml" />
+							<entry key="html" value="text/html" />
+							<entry key="json" value="text/json" />
+							<entry key="xml" value="application/xml" />
+	                    </map>  
+	                </constructor-arg>  
+	            </bean>  
+	            </constructor-arg>  
+	        </bean>  
+	    </property>
+		
+		<property name="viewResolvers">
+			<list>
+				<!-- org.springframework.web.servlet.view.UrlBasedViewResolver -->
+				<bean id="viewResolver" class="com.onlinepowers.framework.web.servlet.view.OpUrlBasedViewResolver" >
+				   <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+				   <property name="order" value="0" />
+				</bean>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+					<property name="order" value="1" />
+				</bean>
+				<bean
+					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="prefix" value="/WEB-INF/views/" />
+					<property name="suffix" value=".jsp" />
+					<property name="order" value="3" />
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+                <ref bean="mappingJacksonJsonView"/>
+                <!-- 
+				<ref bean="validationJsonView"/>
+				-->
+			</list>
+		</property>
+	</bean>
+
+<!-- 				
+				<bean id="xmlViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+				    <property name="order" value="2"/>
+				    <property name="location" value="/WEB-INF/config/xml_view/views.xml"/>
+				</bean>
+ -->	
+
+    <!-- //<mvc:annotation-driven />  -->
+
+
+
+	<!-- Forwards requests to the "/" resource to the "welcome" view
+	<mvc:view-controller path="/" view-name="/welcome/index"/>
+ -->
+ 
+	<!-- Configures Handler Interceptors -->	
+	<mvc:interceptors>
+		<!-- Changes the locale when a 'locale' request parameter is sent; e.g. /?locale=de -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+				<property name="paramName" value="lang"></property>
+			</bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/content/**" />
+			<bean class="com.onlinepowers.framework.web.interceptor.WebLogInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/content/**" />
+			<bean class="com.onlinepowers.framework.web.interceptor.RequestContextHandlerInterceptor" />
+		</mvc:interceptor>
+		 
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/content/**" />
+			<bean class="saleson.common.interceptor.ShopHandlerInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/content/**" />
+			<bean id="boardHandlerInterceptor" class="com.onlinepowers.board.interceptor.BoardHandlerInterceptor">
+				<property name="boardPrefixUri" value="board" />
+			</bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/opmanager/**" />
+			<mvc:exclude-mapping path="/content/**" />
+			<bean class="com.onlinepowers.framework.web.interceptor.ManagerAccessPortCheckInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/opmanager/**" />
+			<mvc:exclude-mapping path="/content/**" />
+			<bean class="saleson.common.interceptor.OpmanagerIpAuthenticationHandlerInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/opmanager/**" />
+			<mvc:exclude-mapping path="/content/**" />
+			<!--<bean class="com.onlinepowers.framework.web.interceptor.OpmanagerHandlerInterceptor" />-->
+			<bean class="saleson.common.interceptor.OpmanagerHandlerInterceptor" />
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/opmanager/**"/>
+			<mvc:exclude-mapping path="/content/**"/>
+			<bean class="saleson.common.interceptor.ActionLogHandlerInterceptor"/>
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/seller/**" />
+			<mvc:exclude-mapping path="/content/**" />
+			<bean class="saleson.common.interceptor.SellerHandlerInterceptor" />
+		</mvc:interceptor>
+
+
+		<mvc:interceptor>
+			<mvc:mapping path="/seller/**"/>
+			<mvc:exclude-mapping path="/content/**"/>
+			<bean class="saleson.common.interceptor.ActionLogHandlerInterceptor"/>
+		</mvc:interceptor>
+
+		<!-- spring mobile interceptor
+		<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+		<bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="urlPath">
+        	<constructor-arg value="/mobile" />
+        </bean>
+		 -->
+	</mvc:interceptors>
+	
+
+	
+	
+
+	<!-- Saves a locale change using a Session
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+	 -->
+	 
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="ko" />
+		<property name="cookieMaxAge" value="100000000"/>
+	</bean>
+	<!--
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieMaxAge" value="100000000"/>
+	</bean>
+	
+	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
+		<property name="defaultLocale" value="ko"/>
+	</bean>
+	-->
+
+	 
+	<!-- Exception Handler -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+		<property name="messageConverters" ref="messageConverters"/>
+		<property name="order" value="0"/>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver">
+		<property name="order" value="1"/>
+	</bean>
+
+	<bean class="com.onlinepowers.framework.web.servlet.handler.OpHandlerExceptionResolver">
+		<property name="order" value="2"/>
+		<property name="licenseErrorPage" value="/content/error/license.html" />
+	</bean>
+	
+	
+<!-- 
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="order" value="0" />
+        <property name="defaultErrorView" value="error/bizError"/>
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.sql.SQLException">error/dataAccessFailure</prop>
+                <prop key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop>
+                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">cmmn/bizError</prop>
+                <prop key="org.springframework.security.AccessDeniedException">cmmn/accessDenied</prop>
+                <prop key="org.springframework.web.HttpSessionRequiredException">cmmn/accessDenied</prop>
+                <prop key="com.lottecard.framework.exception.NoServiceException">cmmn/error</prop>
+            </props>
+        </property>
+    </bean>
+ -->
+ 
+ 	<!-- Tiles Configurer -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/views/layouts/layouts.xml</value>
+				<!-- Scan views directory for Tiles configurations
+				<value>/WEB-INF/views/**/views.xml</value>
+				 -->
+			</list>
+		</property>
+	</bean>
+
+	<!-- View -->
+	<bean id="mappingJacksonJsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+	
+ 
+
+
+</beans>

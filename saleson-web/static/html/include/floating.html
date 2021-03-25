@@ -1,0 +1,55 @@
+		<div id="floating"> 
+			<div id="quick-menu" class="quick_menu"> 
+					<div class="quick_menu_inner">
+						<a href="#">
+							<div class="quick_cp">
+								<p>쿠폰</p>
+								<p class="num" id="">5<span>장</span></p> 			
+							</div> 
+						</a>
+						<a href="#">
+							<div class="quick_point">
+								<p>포인트</p>
+								<p class="num" id="">13,000<span>P</span></p> 			
+							</div> 
+						</a>
+						<a href="#">
+							<div class="quick_cart">
+								<p>장바구니</p>
+								<p class="num" id="aside_cart_quantity">5</p> 			
+							</div> 
+						</a>
+						<a href="#">
+							<div class="quick_like">
+								<p>찜</p>
+								<p class="num" id="">17</p> 			
+							</div> 
+						</a>
+						<div class="quick_latest">
+							<p>오늘본상품</p>
+						</div>
+						<div class="recency-item">  					
+							<div class="item_area" style="height:58px; overflow:hidden; position: relative;">
+								<ul>
+									<c:forEach items="${shopContext.todayItems}" var="item">
+										<li><a href="${item.link}"><img src="/content/images/common/no-image-gray.gif" width="58" height="58" alt="item1" /></a></li>
+									</c:forEach>
+								</ul>
+							</div>
+							<div class="item_area" style="height:58px; overflow:hidden; position: relative;">
+								<ul>
+									<c:forEach items="${shopContext.todayItems}" var="item">
+										<li><a href="${item.link}"><img src="/content/images/common/no-image-gray.gif" width="58" height="58" alt="item1" /></a></li>
+									</c:forEach>
+								</ul>
+							</div>			
+							<div class="page">
+								<a href="#" class="prev"><img src="/content/images/btn/btn_quick_prev.gif" alt="이전상품"></a> 
+								<p><strong>1</strong>/<span>0</span></p> 
+								<a href="#" class="next"><img src="/content/images/btn/btn_quick_next.gif" alt="다음상품"></a>
+							</div>
+						</div><!--/recency-item E-->
+					</div><!--//quick_menu_inner E-->
+					<p class="quick-top"><a href="#" title="TOP"><img src="/content/images/btn/quick_btn.png" alt="TOP버튼"></a></p>
+				</div><!--//quick_menu E-->			
+		</div><!--//floating E--> 				

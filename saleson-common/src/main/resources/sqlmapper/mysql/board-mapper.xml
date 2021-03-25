@@ -1,0 +1,989 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.onlinepowers.board.BoardMapper">
+	<resultMap id="BoardCfgResult" type="BoardCfg">
+		<result property="boardCode" column="BOARD_CODE" />
+		<result property="groupCode" column="GROUP_CODE" />
+		<result property="subject" column="SUBJECT" />
+		<result property="boardAdmin" column="BOARD_ADMIN" />
+		<result property="boardTemplate" column="BOARD_TEMPLATE" />
+		<result property="boardLayout" column="BOARD_LAYOUT" />
+		<result property="boardSkin" column="BOARD_SKIN" />
+		<result property="boardHeader" column="BOARD_HEADER" />
+		<result property="boardFooter" column="BOARD_FOOTER" />
+		<result property="listAuthority" column="LIST_AUTHORITY" />
+		<result property="readAuthority" column="READ_AUTHORITY" />
+		<result property="writeAuthority" column="WRITE_AUTHORITY" />
+		<result property="replyAuthority" column="REPLY_AUTHORITY" />
+		<result property="answerAuthority" column="ANSWER_AUTHORITY" />
+		<result property="commentAuthority" column="COMMENT_AUTHORITY" />
+		<result property="uploadAuthority" column="UPLOAD_AUTHORITY" />
+		<result property="downloadAuthority" column="DOWNLOAD_AUTHORITY" />
+		<result property="approvalAuthority" column="APPROVAL_AUTHORITY" />
+		<result property="sortField" column="SORT_FIELD" />
+		<result property="pageSize" column="PAGE_SIZE" />
+		<result property="blockSize" column="BLOCK_SIZE" />
+		<result property="subjectLength" column="SUBJECT_LENGTH" />
+		<result property="contentLength" column="CONTENT_LENGTH" />
+		<result property="uploadCount" column="UPLOAD_COUNT" />
+		<result property="uploadSize" column="UPLOAD_SIZE" />
+		<result property="uploadExtension" column="UPLOAD_EXTENSION" />
+		<result property="uploadThumbnail" column="UPLOAD_THUMBNAIL" />
+		<result property="uploadEncrypt" column="UPLOAD_ENCRYPT" />
+		<result property="pointRead" column="POINT_READ" />
+		<result property="pointWrite" column="POINT_WRITE" />
+		<result property="pointComment" column="POINT_COMMENT" />
+		<result property="pointDownload" column="POINT_DOWNLOAD" />
+		<result property="disableTags" column="DISABLE_TAGS" />
+		<result property="showNewIcon" column="SHOW_NEW_ICON" />
+		<result property="showHotIcon" column="SHOW_HOT_ICON" />
+		<result property="noticeBoardId" column="NOTICE_BOARD_ID" />
+		<result property="categoryList" column="CATEGORY_LIST" />		
+		<result property="useCategory" column="USE_CATEGORY" />
+		<result property="useCalendar" column="USE_CALENDAR" />
+		<result property="useNotice" column="USE_NOTICE" />
+		<result property="useReply" column="USE_REPLY" />
+		<result property="useAnswer" column="USE_ANSWER" />
+		<result property="useSearch" column="USE_SEARCH" />
+		<result property="useEmail" column="USE_EMAIL" />
+		<result property="useTag" column="USE_TAG" />
+		<result property="useSecret" column="USE_SECRET" />
+		<result property="useEditor" column="USE_EDITOR" />
+		<result property="useSwfupload" column="USE_SWFUPLOAD" />
+		<result property="useRss" column="USE_RSS" />
+		<result property="useComment" column="USE_COMMENT" />
+		<result property="useGood" column="USE_GOOD" />
+		<result property="useNoGood" column="USE_NO_GOOD" />
+		<result property="useSocial" column="USE_SOCIAL" />
+		<result property="useApproval" column="USE_APPROVAL" />		
+		<result property="useViewList" column="USE_VIEW_LIST" />
+		<result property="useViewImage" column="USE_VIEW_IMAGE" />
+		<result property="useViewMovie" column="USE_VIEW_MOVIE" />
+		<result property="useViewFlv" column="USE_VIEW_FLV" />
+		<result property="etcTitle1" column="ETC_TITLE1" />
+		<result property="etcTitle2" column="ETC_TITLE2" />
+		<result property="etcTitle3" column="ETC_TITLE3" />
+		<result property="etcTitle4" column="ETC_TITLE4" />
+		<result property="etcTitle5" column="ETC_TITLE5" />
+		<result property="etcTitle6" column="ETC_TITLE6" />
+		<result property="etcTitle7" column="ETC_TITLE7" />
+		<result property="etcTitle8" column="ETC_TITLE8" />
+		<result property="etcTitle9" column="ETC_TITLE9" />
+		<result property="etcTitle10" column="ETC_TITLE10" />
+		<result property="etc1" column="ETC1" />
+		<result property="etc2" column="ETC2" />
+		<result property="etc3" column="ETC3" />
+		<result property="etc4" column="ETC4" />
+		<result property="etc5" column="ETC5" />
+		<result property="etc6" column="ETC6" />
+		<result property="etc7" column="ETC7" />
+		<result property="etc8" column="ETC8" />
+		<result property="etc9" column="ETC9" />
+		<result property="etc10" column="ETC10" />
+		<result property="creationDate" column="CREATION_DATE" />
+		<result property="newIconDate" column="NEW_ICON_DATE" />
+	</resultMap>	
+	
+	<resultMap id="BoardResult" type="Board">
+		<result property="boardCode" column="BOARD_CODE" />
+		<result property="boardId" column="BOARD_ID" />
+		<result property="groupId" column="GROUP_ID" />
+		<result property="step" column="STEP" />
+		<result property="depth" column="DEPTH" />
+		<result property="parentId" column="PARENT_ID" />
+		<result property="category" column="CATEGORY" />
+		<result property="subject" column="SUBJECT" />
+		<result property="content" column="CONTENT" />
+		<result property="answer" column="ANSWER" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="password" column="PASSWORD" />
+		<result property="email" column="EMAIL" />
+		<result property="homepage" column="HOMEPAGE" />
+		<result property="tag" column="TAG" />
+		<result property="scheduleDate" column="SCHEDULE_DATE" />	
+		<result property="hit" column="HIT" />
+		<result property="fileCount" column="FILE_COUNT" />
+		<result property="commentCount" column="COMMENT_COUNT" />
+		<result property="html" column="HTML" />
+		<result property="notice" column="NOTICE" />
+		<result property="secret" column="SECRET" />
+		<result property="statusCode" column="STATUS_CODE" />
+		<result property="answerStatusCode" column="ANSWER_STATUS_CODE" />
+		<result property="remoteAddr" column="REMOTE_ADDR" />
+		<result property="updatedUserId" column="UPDATED_USER_ID" />
+		<result property="updatedUsername" column="UPDATED_USER_NAME" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="creationDate" column="CREATION_DATE" />
+		<result property="creationTimestamp" column="CREATION_TIMESTAMP" />
+		<result property="etc1" column="ETC1" />
+		<result property="etc2" column="ETC2" />
+		<result property="etc3" column="ETC3" />
+		<result property="etc4" column="ETC4" />
+		<result property="etc5" column="ETC5" />
+		<result property="etc6" column="ETC6" />
+		<result property="etc7" column="ETC7" />
+		<result property="etc8" column="ETC8" />
+		<result property="etc9" column="ETC9" />
+		<result property="etc10" column="ETC10" />
+		<result property="managerId" column="MANAGER_ID" />
+	</resultMap>	
+	
+	
+	<resultMap id="BoardAndBoardFileResult" type="Board" extends="BoardResult">
+		<collection property="boardFiles" ofType="com.onlinepowers.framework.file.domain.UploadFile" resultMap="FileResult"/>
+		<collection property="boardCfg" ofType="BoardCfg" resultMap="BoardCfgResult"/>
+	</resultMap>
+	
+	<resultMap id="BoardCommentResult" type="BoardComment">
+		<result property="boardCode" column="BOARD_CODE" />
+		<result property="boardId" column="BOARD_ID" />
+		<result property="boardCommentId" column="BOARD_COMMENT_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="password" column="PASSWORD" />
+		<result property="comments" column="COMMENTS" />
+		<result property="creationDate" column="CREATION_DATE" />
+		<result property="createdTimestamp" column="CREATED_TIMESTAMP" />
+		<result property="managerId" column="MANAGER_ID" />
+	</resultMap>	
+	
+	<resultMap id="FileResult" type="com.onlinepowers.framework.file.domain.UploadFile">
+		<result property="refCode" 			column="REF_CODE"  />	
+		<result property="refId" 			column="REF_ID" 	/>
+		<result property="fileId" 			column="FILE_ID"  />
+		<result property="fileName" 		column="FILE_NAME"  />
+		<result property="fileSize" 		column="FILE_SIZE"  />
+		<result property="fileType" 		column="FILE_TYPE"  />
+		<result property="fileDescription" 	column="FILE_DESCRIPTION"  />
+		<result property="uploadType" 		column="UPLOAD_TYPE"  />
+		<result property="useEncrypt" 		column="USE_ENCRYPT"  />
+		<result property="downloadCount" 	column="DOWNLOAD_COUNT"  />
+		<result property="ordering" 		column="ORDERING"  />
+		<result property="statusCode" 		column="STATUS_CODE"  />
+		<result property="createdDate" 	column="CREATED_DATE"  />
+	</resultMap>
+	
+	<select id="getFileList" parameterType="Board" resultMap="FileResult">
+  		WHERE REF_CODE = #{boardCode} AND REF_ID = #{boardId} AND STATUS_CODE = '1'
+	</select>
+	
+	<select id="getBoardCfg" parameterType="String" resultMap="BoardCfgResult">
+		SELECT * FROM OP_BOARD_CFG
+		WHERE BOARD_CODE = #{value}
+	</select>
+	
+	<select id="getBoardCfgList" resultMap="BoardCfgResult">
+		SELECT * FROM OP_BOARD_CFG WHERE STATUS_CODE = '1' ORDER BY CREATION_DATE DESC
+	</select>
+
+	<update id="updateBoardCfgNoticeBoardId" parameterType="BoardCfg">
+		UPDATE OP_BOARD_CFG SET
+			NOTICE_BOARD_ID = #{noticeBoardId}
+		WHERE BOARD_CODE = #{boardCode}			
+	</update>
+
+	<select id="getBoardCount" parameterType="BoardSearchParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_BOARD_DATA_#{boardTable}
+		<where>
+			BOARD_CODE = #{boardCode}
+			<if test="category != null and category != ''">
+				AND CATEGORY = #{category}
+			</if>
+			<if test="query != null and query != ''">
+				<if test="where == 'SUBJECT'">
+					AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'USER_NAME'">
+					AND USER_NAME LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'CONTENT'">
+					AND CONTENT LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'SUBJECT_CONTENT'">
+					AND (SUBJECT LIKE CONCAT('%', #{query}, '%') OR CONTENT LIKE CONCAT('%', #{query}, '%'))
+				</if>
+			</if>
+			AND STATUS_CODE = '9'
+		</where>
+	</select>
+	
+	<select id="getBoardList" parameterType="BoardSearchParam" resultMap="BoardAndBoardFileResult">
+		SELECT
+			b.*,
+			f.*,
+			c.SHOW_HOT_ICON,
+			m.USER_ID AS MANAGER_ID,
+			IFNULL(DATE_FORMAT(DATE_ADD(b.CREATION_DATE, interval c.SHOW_NEW_ICON day), '%Y%m%d%H%i%s'), 0) AS NEW_ICON_DATE
+		FROM OP_BOARD_CFG c INNER JOIN OP_BOARD_DATA_#{boardTable} b ON c.BOARD_CODE = b.BOARD_CODE
+		LEFT JOIN (
+			SELECT * FROM OP_FILE 
+			WHERE REF_CODE = #{boardCode} AND FILE_TYPE IN ('jpg', 'png', 'gif', 'jpeg', 'bmp')
+			GROUP BY REF_CODE, REF_ID
+		) f ON b.BOARD_ID = f.REF_ID
+		LEFT JOIN OP_MANAGER m ON b.USER_ID = m.USER_ID 
+		<where>
+			b.BOARD_CODE = #{boardCode} 
+			<if test="category != null and category != ''">
+				AND b.CATEGORY = #{category}
+			</if>
+			<if test="query != null and query != ''">
+				<if test="where == 'SUBJECT'">
+					AND b.SUBJECT LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'USER_NAME'">
+					AND b.USER_NAME LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'CONTENT'">
+					AND b.CONTENT LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'SUBJECT_CONTENT'">
+					AND (b.SUBJECT LIKE CONCAT('%', #{query}, '%') OR b.CONTENT LIKE CONCAT('%', #{query}, '%'))
+				</if>
+			</if>
+			AND b.STATUS_CODE = '9'
+		</where>
+		<choose>
+			<when test="sortField != null and sortField != ''">
+				ORDER BY #{sortField} LIMIT #{pagination.startRownum}, #{pagination.endRownum}
+			</when>
+			<otherwise>
+				ORDER BY STEP ASC LIMIT #{pagination.startRownum}, #{pagination.endRownum}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getBoardByContext" parameterType="BoardContext" resultMap="BoardAndBoardFileResult">
+		SELECT b.*, f.* 
+		FROM 
+			OP_BOARD_DATA_#{boardTable} b LEFT JOIN OP_FILE f
+			ON b.BOARD_ID = f.REF_ID AND b.BOARD_CODE = f.REF_CODE AND f.STATUS_CODE = '1'
+		WHERE b.BOARD_ID = #{boardId}
+	</select>
+	
+	<select id="getBoard" parameterType="Board" resultMap="BoardAndBoardFileResult">
+		SELECT b.*, f.* 
+		FROM 
+			OP_BOARD_DATA_#{boardTable} b LEFT JOIN OP_FILE f
+			ON b.BOARD_ID = f.REF_ID AND b.BOARD_CODE = f.REF_CODE AND f.STATUS_CODE = '1'
+		WHERE b.BOARD_ID = #{boardId}
+	</select>
+	
+	<select id="getBoardPrev" parameterType="BoardSearchParam" resultMap="BoardResult">
+	
+		SELECT * FROM OP_BOARD_DATA_#{boardTable}
+		<where>
+			BOARD_CODE = #{boardCode}
+			
+			AND #{step} > STEP
+			
+			 <if test="statusCode != null and statusCode != ''">
+				AND STATUS_CODE = #{statusCode}
+			</if>
+			<if test="etc1 != null and etc1 != ''">
+				AND ETC1 = #{etc1}
+			</if>
+			<if test="category != null and category != ''">
+				AND CATEGORY = #{category}
+			</if>
+			<if test="query != null and query != ''">
+				<if test="where == 'SUBJECT'">
+					AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'USER_NAME'">
+					AND USER_NAME LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'CONTENT'">
+					AND CONTENT LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'SUBJECT_CONTENT'">
+					AND (SUBJECT LIKE CONCAT('%', #{query}, '%') OR CONTENT LIKE CONCAT('%', #{query}, '%'))
+				</if>
+			</if>
+		</where>
+
+		<choose>
+			<when test="orderBy != null and orderBy != '' and orderBy == 'ETC4' and (sort == 'DESC' or sort == 'ASC' or sort == '')">
+				<choose>
+					<when test="sort == ''">
+						ORDER BY #{orderBy} DESC LIMIT #{pagination.startRownum}, #{pagination.endRownum}
+					</when>
+					<otherwise>
+						ORDER BY #{orderBy} #{sort} LIMIT #{pagination.startRownum}, #{pagination.endRownum}
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				ORDER BY STEP DESC
+			</otherwise>
+		</choose>
+
+		LIMIT 1
+	</select>
+	
+	<select id="getBoardPrevBySortField" parameterType="BoardSearchParam" resultMap="BoardResult">
+
+		SELECT * FROM (
+    		SELECT @RNUM := @RNUM + 1 AS ROWNUM, T.* FROM (
+    			SELECT * FROM OP_BOARD_DATA_#{boardTable}
+    			<where>
+    				<if test="statusCode != null and statusCode != ''">
+						AND STATUS_CODE = #{statusCode}
+					</if>
+					<if test="category != null and category != ''">
+						AND CATEGORY = #{category}
+					</if>
+					<if test="query != null and query != ''">
+						<if test="where == 'SUBJECT'">
+							AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+						</if>
+						<if test="where == 'USER_NAME'">
+							AND USER_NAME LIKE CONCAT('%', #{query}, '%')
+						</if>
+						<if test="where == 'CONTENT'">
+							AND CONTENT LIKE CONCAT('%', #{query}, '%')
+						</if>
+						<if test="where == 'SUBJECT_CONTENT'">
+							AND (SUBJECT LIKE CONCAT('%', #{query}, '%') OR CONTENT LIKE CONCAT('%', #{query}, '%'))
+						</if>
+					</if>
+				</where>
+    			ORDER BY #{sortField}
+    		) T, (SELECT @RNUM := 0) R
+  		)B
+  		WHERE ROWNUM = (
+    		SELECT ROWNUM - 1 FROM (
+      			SELECT @RNUM := @RNUM + 1 AS ROWNUM, T.* FROM (
+      				SELECT * FROM OP_BOARD_DATA_#{boardTable}
+      				<where>
+      					<if test="statusCode != null and statusCode != ''">
+							AND STATUS_CODE = #{statusCode}
+						</if>
+						<if test="category != null and category != ''">
+							AND CATEGORY = #{category}
+						</if>
+						<if test="query != null and query != ''">
+							<if test="where == 'SUBJECT'">
+								AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+							</if>
+							<if test="where == 'USER_NAME'">
+								AND USER_NAME LIKE CONCAT('%', #{query}, '%')
+							</if>
+							<if test="where == 'CONTENT'">
+								AND CONTENT LIKE CONCAT('%', #{query}, '%')
+							</if>
+							<if test="where == 'SUBJECT_CONTENT'">
+								AND (SUBJECT LIKE CONCAT('%', #{query}, '%') OR CONTENT LIKE CONCAT('%', #{query}, '%'))
+							</if>
+						</if>
+					</where>
+      				ORDER BY #{sortField}
+      			) T,(SELECT @RNUM :=0) R
+    		) A WHERE BOARD_ID = #{boardId}
+  		)
+
+			
+	</select>
+	
+	
+	
+		
+	<select id="getBoardNext" parameterType="BoardSearchParam" resultMap="BoardResult">
+		SELECT * FROM OP_BOARD_DATA_#{boardTable}
+		<where>
+			BOARD_CODE = #{boardCode}
+			
+			AND STEP > #{step}
+			<if test="statusCode != null and statusCode != ''">
+				AND STATUS_CODE = #{statusCode}
+			</if>
+			<if test="etc1 != null and etc1 != ''">
+				AND ETC1 = #{etc1}
+			</if>
+			<if test="category != null and category != ''">
+				AND CATEGORY = #{category}
+			</if>
+			<if test="query != null and query != ''">
+				<if test="where == 'SUBJECT'">
+					AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'USER_NAME'">
+					AND USER_NAME LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'CONTENT'">
+					AND CONTENT LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'SUBJECT_CONTENT'">
+					AND (SUBJECT LIKE CONCAT('%', #{query}, '%') OR CONTENT LIKE CONCAT('%', #{query}, '%'))
+				</if>
+			</if>
+		</where>
+
+		ORDER BY STEP ASC
+		LIMIT 1
+
+	</select>
+	
+	<select id="getBoardNextBySortField" parameterType="BoardSearchParam" resultMap="BoardResult">
+
+		SELECT * FROM (
+    		SELECT @RNUM := @RNUM + 1 AS ROWNUM, T.* FROM (
+    			SELECT * FROM OP_BOARD_DATA_#{boardTable}
+    			<where>
+    				<if test="statusCode != null and statusCode != ''">
+						AND STATUS_CODE = #{statusCode}
+					</if>
+					<if test="category != null and category != ''">
+						AND CATEGORY = #{category}
+					</if>
+					<if test="query != null and query != ''">
+						<if test="where == 'SUBJECT'">
+							AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+						</if>
+						<if test="where == 'USER_NAME'">
+							AND USER_NAME LIKE CONCAT('%', #{query}, '%')
+						</if>
+						<if test="where == 'CONTENT'">
+							AND CONTENT LIKE CONCAT('%', #{query}, '%')
+						</if>
+						<if test="where == 'SUBJECT_CONTENT'">
+							AND (SUBJECT LIKE CONCAT('%', #{query}, '%') OR CONTENT LIKE CONCAT('%', #{query}, '%'))
+						</if>
+					</if>
+				</where>
+    			ORDER BY #{sortField}
+    		) T, (SELECT @RNUM := 0) R
+  		)B
+  		WHERE ROWNUM = (
+    		SELECT ROWNUM + 1 FROM (
+      			SELECT @RNUM := @RNUM + 1 AS ROWNUM, T.* FROM (
+      				SELECT * FROM OP_BOARD_DATA_#{boardTable}
+      				<where>
+      					<if test="statusCode != null and statusCode != ''">
+							AND STATUS_CODE = #{statusCode}
+						</if>
+						<if test="category != null and category != ''">
+							AND CATEGORY = #{category}
+						</if>
+						<if test="query != null and query != ''">
+							<if test="where == 'SUBJECT'">
+								AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+							</if>
+							<if test="where == 'USER_NAME'">
+								AND USER_NAME LIKE CONCAT('%', #{query}, '%')
+							</if>
+							<if test="where == 'CONTENT'">
+								AND CONTENT LIKE CONCAT('%', #{query}, '%')
+							</if>
+							<if test="where == 'SUBJECT_CONTENT'">
+								AND (SUBJECT LIKE CONCAT('%', #{query}, '%') OR CONTENT LIKE CONCAT('%', #{query}, '%'))
+							</if>
+						</if>
+					</where>
+      				ORDER BY #{sortField}
+      			) T,(SELECT @RNUM :=0) R
+    		) A WHERE BOARD_ID = #{boardId}
+  		)
+	</select>
+	
+	
+	<select id="getNewGroupId" parameterType="Board" resultType="Integer">
+		SELECT IFNULL(MIN(GROUP_ID), 1000000100) - 100 
+		FROM OP_BOARD_DATA_#{boardTable}
+		WHERE BOARD_CODE = #{boardCode}
+	</select>
+	
+	
+	<select id="getNoticeBoardIdList" parameterType="Board" resultType="String">
+		SELECT BOARD_ID FROM OP_BOARD_DATA_#{boardTable}
+		WHERE BOARD_CODE = #{boardCode} AND NOTICE = 1
+			<if test="statusCode != null and statusCode != ''">
+				AND STATUS_CODE = #{statusCode}
+			</if>
+	</select>
+	
+	<select id="getBoardCountByParentId" parameterType="Board" resultType="Integer">
+		SELECT COUNT(*) FROM OP_BOARD_DATA_#{boardTable}
+		WHERE PARENT_ID = #{boardId}
+			<if test="statusCode != null and statusCode != ''">
+				AND STATUS_CODE = #{statusCode}
+			</if>
+	</select>
+	
+	
+	<select id="getBoardCommentCount" parameterType="BoardSearchParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_BOARD_COMMENT 
+		WHERE BOARD_CODE = #{boardCode} AND BOARD_ID = #{boardId}
+	</select>
+	
+	<select id="getBoardCommentList" parameterType="BoardSearchParam" resultMap="BoardCommentResult">
+		SELECT *, M.USER_ID AS MANAGER_ID
+		FROM
+			OP_BOARD_COMMENT C LEFT JOIN OP_MANAGER M ON C.USER_ID = M.USER_ID
+		WHERE BOARD_CODE = #{boardCode} AND BOARD_ID = #{boardId}
+		ORDER BY BOARD_COMMENT_ID DESC LIMIT #{pagination.startRownum}, #{pagination.endRownum}
+	</select>
+	
+	<select id="getBoardComment" parameterType="BoardComment" resultMap="BoardCommentResult">
+		SELECT * FROM OP_BOARD_COMMENT 
+		WHERE BOARD_COMMENT_ID = #{boardCommentId}
+	</select>
+	
+	<!-- 게시판 최신 글 목록 -->
+	<select id="getLatestList" parameterType="BoardSearchParam" resultMap="BoardResult">
+		SELECT * FROM OP_BOARD_DATA_#{boardTable}
+		ORDER BY STEP ASC 
+		<where>
+			<if test="statusCode != null and statusCode != ''">
+				AND STATUS_CODE = #{statusCode}
+			</if>
+		</where>
+		LIMIT #{limit}
+	</select>
+	
+	
+	<!-- 게시판 공지 목록 -->
+	<select id="getNoticeList" parameterType="BoardCfg" resultMap="BoardResult">
+		SELECT * FROM OP_BOARD_DATA_#{boardTable}
+		<where>
+			<if test="statusCode != null and statusCode != ''">
+				AND STATUS_CODE = #{statusCode}
+			</if>
+			AND NOTICE = '1' AND BOARD_CODE = #{boardCode}
+		</where>
+		
+		ORDER BY STEP ASC
+	</select>
+	
+	
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO OP_BOARD_DATA_#{boardTable} (BOARD_ID, BOARD_CODE, GROUP_ID, STEP, DEPTH, PARENT_ID, CATEGORY, SUBJECT, CONTENT, USER_ID, PASSWORD, USER_NAME, EMAIL, HOMEPAGE, TAG, SCHEDULE_DATE, FILE_COUNT, NOTICE, SECRET, STATUS_CODE, REMOTE_ADDR, UPDATED_USER_ID, UPDATED_USER_NAME, UPDATED_DATE, CREATION_DATE, CREATION_TIMESTAMP, ETC1, ETC2, ETC3, ETC4, ETC5, ETC6, ETC7, ETC8, ETC9, ETC10)
+		VALUES (#{boardId}, #{boardCode}, #{groupId}, #{step}, #{depth}, #{parentId}, #{category}, #{subject}, #{content}, #{userId}, #{encryptPassword}, #{userName}, #{email}, #{homepage}, #{tag}, #{scheduleDate}, #{fileCount}, #{notice}, #{secret}, #{statusCode}, #{remoteAddr}, #{updatedUserId}, #{updatedUsername}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), CONCAT(UNIX_TIMESTAMP(SYSDATE()), '000'), #{etc1}, #{etc2}, #{etc3}, #{etc4}, #{etc5}, #{etc6}, #{etc7}, #{etc8}, #{etc9}, #{etc10})
+	</insert>
+	
+	<insert id="insertBoardNew" parameterType="BoardNew">
+		INSERT INTO OP_BOARD_NEW (BOARD_ID, BOARD_NEW_ID, GROUP_CODE, BOARD_CODE, USER_ID, SUBJECT, CONTENT, TAG, SECRET, CREATION_DATE)
+		VALUES (#{boardId}, #{boardNewId}, #{groupCode}, #{boardCode}, #{userId}, #{subject}, #{content}, #{tag}, #{secret}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')) 
+	</insert>	
+	
+	<insert id="insertComment" parameterType="BoardComment">
+		INSERT INTO OP_BOARD_COMMENT (BOARD_ID, BOARD_COMMENT_ID, BOARD_CODE, USER_ID, USER_NAME, COMMENTS, PASSWORD, REMOTE_ADDR, CREATION_DATE, CREATION_TIMESTAMP)
+		VALUES (#{boardId}, #{boardCommentId}, #{boardCode}, #{userId}, #{userName}, #{comments}, #{encryptPassword}, #{remoteAddr}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), CONCAT(UNIX_TIMESTAMP(SYSDATE()), '000')) 
+	</insert>
+	
+	<update id="updateCommentCount" parameterType="BoardComment">
+		UPDATE OP_BOARD_DATA_#{boardTable}
+		SET 
+			COMMENT_COUNT = (SELECT COUNT(*) FROM OP_BOARD_COMMENT WHERE BOARD_CODE = #{boardCode} AND BOARD_ID = #{boardId})
+		WHERE 
+			BOARD_ID = #{boardId}
+	</update>
+	
+	<update id="addHitCount" parameterType="BoardContext">
+		UPDATE OP_BOARD_DATA_#{boardTable}
+		SET HIT = HIT + 1
+		WHERE BOARD_ID = #{boardId}
+	</update>
+	
+	<update id="updateBoard" parameterType="Board">
+		UPDATE OP_BOARD_DATA_#{boardTable}
+		<set>
+			<if test="category != null">CATEGORY = #{category},</if>
+			<if test="subject != null">SUBJECT = #{subject},</if>
+			<if test="content != null">CONTENT = #{content},</if>
+			<if test="email != null">EMAIL = #{email},</if>
+			<if test="homepage != null">HOMEPAGE = #{homepage},</if>
+			<if test="tag != null">TAG = #{tag},</if>
+			<if test="scheduleDate != null">SCHEDULE_DATE = #{scheduleDate},</if>
+			<if test="notice != null">NOTICE = #{notice},</if>
+			<if test="secret != null">SECRET = #{secret},</if>
+			<if test="statusCode != null">STATUS_CODE = #{statusCode},</if>
+			<if test="fileCount != null">FILE_COUNT = #{fileCount},</if>
+			<if test="etc1 != null">ETC1 = #{etc1},</if>
+			<if test="etc2 != null">ETC2 = #{etc2},</if>
+			<if test="etc3 != null">ETC3 = #{etc3},</if>
+			<if test="etc4 != null">ETC4 = #{etc4},</if>
+			<if test="etc5 != null">ETC5 = #{etc5},</if>
+			<if test="etc6 != null">ETC6 = #{etc6},</if>
+			<if test="etc7 != null">ETC7 = #{etc7},</if>
+			<if test="etc8 != null">ETC8 = #{etc8},</if>
+			<if test="etc9 != null">ETC9 = #{etc9},</if>
+			<if test="etc10 != null">ETC10 = #{etc10},</if>
+			
+			UPDATED_USER_ID = #{updatedUserId},
+			UPDATED_USER_NAME = #{updatedUsername},
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		</set>
+
+		WHERE
+			BOARD_ID = #{boardId}	
+	</update>
+	
+	<update id="updateBoardNew" parameterType="Board">
+		UPDATE OP_BOARD_NEW 
+		SET 
+			SUBJECT = #{subject},
+			CONTENT = #{content},
+			TAG = #{tag},
+			SECRET = #{secret}
+		WHERE
+			BOARD_CODE = #{boardCode} AND
+			BOARD_ID = #{boardId}
+	</update>
+	
+	
+	<update id="updateBoardStep" parameterType="Board">
+		UPDATE OP_BOARD_DATA_#{boardTable}
+		SET STEP = STEP + 1 
+		WHERE GROUP_ID = #{groupId} AND STEP > #{step}
+	</update>
+	
+	<delete id="deleteBoardRecommend" parameterType="Board">
+		DELETE FROM OP_BOARD_RECOMMEND
+		WHERE BOARD_CODE = #{boardCode} AND BOARD_ID = #{boardId}
+	</delete>
+	
+	<delete id="deleteBoardComment" parameterType="Board">
+		DELETE FROM OP_BOARD_COMMENT
+		WHERE BOARD_CODE = #{boardCode} AND BOARD_ID = #{boardId}
+	</delete>
+	
+	<delete id="deleteBoardNew" parameterType="Board">
+		DELETE FROM OP_BOARD_NEW
+		WHERE BOARD_CODE = #{boardCode} AND BOARD_ID = #{boardId}
+	</delete>
+	
+	<delete id="deleteBoardTag" parameterType="Board">
+		DELETE FROM OP_BOARD_TAG
+		WHERE BOARD_CODE = #{boardCode} AND BOARD_ID = #{boardId}
+	</delete>
+	
+	<delete id="deleteBoard" parameterType="Board">
+		DELETE FROM OP_BOARD_DATA_#{boardTable}
+		WHERE BOARD_ID = #{boardId}
+	</delete>
+	
+	<delete id="deleteComment" parameterType="BoardComment">
+		DELETE FROM OP_BOARD_COMMENT
+		WHERE BOARD_COMMENT_ID = #{boardCommentId}
+	</delete>	
+	
+	<!-- (관리자) 게시판 설정값 삽입 -->
+	<insert id="insertBoardCfg" parameterType="BoardCfg">
+		INSERT INTO OP_BOARD_CFG (BOARD_CODE, GROUP_CODE, LANGUAGE, SUBJECT, BOARD_ADMIN, BOARD_TEMPLATE, BOARD_LAYOUT, BOARD_SKIN, BOARD_HEADER, BOARD_FOOTER, LIST_AUTHORITY, READ_AUTHORITY, WRITE_AUTHORITY, REPLY_AUTHORITY, ANSWER_AUTHORITY, COMMENT_AUTHORITY, UPLOAD_AUTHORITY, DOWNLOAD_AUTHORITY, APPROVAL_AUTHORITY, SORT_FIELD, PAGE_SIZE, BLOCK_SIZE, SUBJECT_LENGTH, CONTENT_LENGTH, UPLOAD_COUNT, UPLOAD_SIZE, UPLOAD_EXTENSION, UPLOAD_THUMBNAIL, UPLOAD_ENCRYPT, MODIFY_COMMENT_COUNT, POINT_READ, POINT_WRITE, POINT_COMMENT, POINT_DOWNLOAD, SHOW_NEW_ICON, SHOW_HOT_ICON, DISABLE_TAGS, NOTICE_BOARD_ID, CATEGORY_LIST, USE_CATEGORY, USE_CALENDAR, USE_NOTICE, USE_REPLY, USE_ANSWER, USE_SEARCH, USE_EMAIL, USE_TAG, USE_SECRET, USE_EDITOR, USE_SWFUPLOAD, USE_RSS, USE_COMMENT, USE_GOOD, USE_NO_GOOD, USE_SOCIAL, USE_APPROVAL, USE_VIEW_LIST, USE_VIEW_IMAGE, USE_VIEW_MOVIE, USE_VIEW_FLV, ETC_TITLE1, ETC_TITLE2, ETC_TITLE3, ETC_TITLE4, ETC_TITLE5, ETC_TITLE6, ETC_TITLE7, ETC_TITLE8, ETC_TITLE9, ETC_TITLE10, ETC1, ETC2, ETC3, ETC4, ETC5, ETC6, ETC7, ETC8, ETC9, ETC10, STATUS_CODE, CREATION_DATE)
+		VALUES (#{boardCode}, #{groupCode}, #{language}, #{subject}, #{boardAdmin}, #{boardTemplate}, #{boardLayout}, #{boardSkin}, #{boardHeader}, #{boardFooter}, #{listAuthority}, #{readAuthority}, #{writeAuthority}, #{replyAuthority}, #{answerAuthority}, #{commentAuthority}, #{uploadAuthority}, #{downloadAuthority}, #{approvalAuthority}, #{sortField}, #{pageSize}, #{blockSize}, #{subjectLength}, #{contentLength}, #{uploadCount}, #{uploadSize}, #{uploadExtension}, #{uploadThumbnail}, #{uploadEncrypt}, #{modifyCommentCount}, #{pointRead}, #{pointWrite}, #{pointComment}, #{pointDownload}, #{showNewIcon}, #{showHotIcon}, #{disableTags}, #{noticeBoardId}, #{categoryList}, #{useCategory}, '0', #{useNotice}, #{useReply}, '0', #{useSearch}, '0', '0', '0', '1', '0', #{useComment}, '0', '0', '0', '0', '0', '0', '0', '0', '0', #{etcTitle1}, #{etcTitle2}, #{etcTitle3}, #{etcTitle4}, #{etcTitle5}, #{etcTitle6}, #{etcTitle7}, #{etcTitle8}, #{etcTitle9}, #{etcTitle10}, #{etc1}, #{etc2}, #{etc3}, #{etc4}, #{etc5}, #{etc6}, #{etc7}, #{etc8}, #{etc9}, #{etc10}, #{statusCode}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<!-- (관리자) 게시판 설정 데이터 수정 -->
+	<update id="updateBoardCfg" parameterType="BoardCfg">
+		UPDATE OP_BOARD_CFG
+		<set>
+			<if test="groupCode != null and groupCode != ''">
+				GROUP_CODE = #{groupCode},
+			</if>
+			<if test="language != null and language != ''">
+				LANGUAGE = #{language},
+			</if>
+			<if test="subject != null and subject != ''">
+				SUBJECT = #{subject},
+			</if>
+			<if test="boardAdmin != null and boardAdmin != ''">
+				BOARD_ADMIN = #{boardAdmin},
+			</if>
+			<if test="boardTemplate != null and boardTemplate != ''">
+				BOARD_TEMPLATE = #{boardTemplate},
+			</if>
+			<if test="boardLayout != null and boardLayout != ''">
+				BOARD_LAYOUT = #{boardLayout},
+			</if>
+			<if test="boardSkin != null and boardSkin != ''">
+				BOARD_SKIN = #{boardSkin},
+			</if>
+			<if test="boardHeader != null">
+				BOARD_HEADER = #{boardHeader},
+			</if>
+			<if test="boardFooter != null">
+				BOARD_FOOTER = #{boardFooter},
+			</if>
+			<if test="listAuthority != null and listAuthority != ''">
+				LIST_AUTHORITY = #{listAuthority},
+			</if>
+			<if test="readAuthority != null and readAuthority != ''">
+				READ_AUTHORITY = #{readAuthority},
+			</if>
+			<if test="writeAuthority != null and writeAuthority != ''">
+				WRITE_AUTHORITY = #{writeAuthority},
+			</if>
+			<if test="replyAuthority != null and replyAuthority != ''">
+				REPLY_AUTHORITY = #{replyAuthority},
+			</if>
+			<if test="answerAuthority != null and answerAuthority != ''">
+				ANSWER_AUTHORITY = #{answerAuthority},
+			</if>
+			<if test="commentAuthority != null and commentAuthority != ''">
+				COMMENT_AUTHORITY = #{commentAuthority},
+			</if>
+			<if test="uploadAuthority != null and uploadAuthority != ''">
+				UPLOAD_AUTHORITY = #{uploadAuthority},
+			</if>
+			<if test="downloadAuthority != null and downloadAuthority != ''">
+				DOWNLOAD_AUTHORITY = #{downloadAuthority},
+			</if>
+			<if test="approvalAuthority != null and approvalAuthority != ''">
+				APPROVAL_AUTHORITY = #{approvalAuthority},
+			</if>
+			<if test="sortField != null and sortField != ''">
+				SORT_FIELD = #{sortField},
+			</if>
+			<if test="pageSize != null and pageSize != ''">
+				PAGE_SIZE = #{pageSize},
+			</if>
+			<if test="blockSize != null and blockSize != ''">
+				BLOCK_SIZE = #{blockSize},
+			</if>
+			<if test="subjectLength != null and subjectLength != ''">
+				SUBJECT_LENGTH = #{subjectLength},
+			</if>
+			<if test="contentLength != null and contentLength != ''">
+				CONTENT_LENGTH = #{contentLength},
+			</if>
+			<if test="uploadCount != null">
+				UPLOAD_COUNT = #{uploadCount},
+			</if>
+			<if test="uploadSize != null and uploadSize != ''">
+				UPLOAD_SIZE = #{uploadSize},
+			</if>
+			<if test="uploadExtension != null and uploadExtension != ''">
+				UPLOAD_EXTENSION = #{uploadExtension},
+			</if>
+			<if test="uploadThumbnail != null and uploadThumbnail != ''">
+				UPLOAD_THUMBNAIL = #{uploadThumbnail},
+			</if>
+			<if test="uploadEncrypt != null and uploadEncrypt != ''">
+				UPLOAD_ENCRYPT = #{uploadEncrypt},
+			</if>
+			<if test="modifyCommentCount != null and modifyCommentCount != ''">
+				MODIFY_COMMENT_COUNT = #{modifyCommentCount},
+			</if>
+			<if test="pointRead != null and pointRead != ''">
+				POINT_READ = #{pointRead},
+			</if>
+			<if test="pointWrite != null and pointWrite != ''">
+				POINT_WRITE = #{pointWrite},
+			</if>
+			<if test="pointComment != null and pointComment != ''">
+				POINT_COMMENT = #{pointComment},
+			</if>
+			<if test="pointDownload != null and pointDownload != ''">
+				POINT_DOWNLOAD = #{pointDownload},
+			</if>
+			<if test="showNewIcon != null and showNewIcon != ''">
+				SHOW_NEW_ICON = #{showNewIcon},
+			</if>
+			<if test="showHotIcon != null and showHotIcon != ''">
+				SHOW_HOT_ICON = #{showHotIcon},
+			</if>
+			<if test="disableTags != null and disableTags != ''">
+				DISABLE_TAGS = #{disableTags},
+			</if>
+			<if test="noticeBoardId != null and noticeBoardId != ''">
+				NOTICE_BOARD_ID = #{noticeBoardId},
+			</if>
+			<if test="categoryList != null and categoryList != ''">
+				CATEGORY_LIST = #{categoryList},
+			</if>
+			<if test="useCategory != null and useCategory != ''">
+				USE_CATEGORY = #{useCategory},
+			</if>
+			<if test="useCalendar != null and useCalendar != ''">
+				USE_CALENDAR = #{useCalendar},
+			</if>
+			<if test="useNotice != null and useNotice != ''">
+				USE_NOTICE = #{useNotice},
+			</if>
+			<if test="useReply != null and useReply != ''">
+				USE_REPLY = #{useReply},
+			</if>
+			<if test="useAnswer != null and useAnswer != ''">
+				USE_ANSWER = #{useAnswer},
+			</if>
+			<if test="useSearch != null and useSearch != ''">
+				USE_SEARCH = #{useSearch},
+			</if>
+			<if test="useEmail != null and useEmail != ''">
+				USE_EMAIL = #{useEmail},
+			</if>
+			<if test="useTag != null and useTag != ''">
+				USE_TAG = #{useTag},
+			</if>
+			<if test="useSecret != null and useSecret != ''">
+				USE_SECRET = #{useSecret},
+			</if>
+			<if test="useEditor != null and useEditor != ''">
+				USE_EDITOR = #{useEditor},
+			</if>
+			<if test="useSwfupload != null and useSwfupload != ''">
+				USE_SWFUPLOAD = #{useSwfupload},
+			</if>
+			<if test="useRss != null and useRss != ''">
+				USE_RSS = #{useRss},
+			</if>
+			<if test="useComment != null and useComment != ''">
+				USE_COMMENT = #{useComment},
+			</if>
+			<if test="useGood != null and useGood != ''">
+				USE_GOOD = #{useGood},
+			</if>
+			<if test="useNoGood != null and useNoGood != ''">
+				USE_NO_GOOD = #{useNoGood},
+			</if>
+			<if test="useSocial != null and useSocial != ''">
+				USE_SOCIAL = #{useSocial},
+			</if>
+			<if test="useApproval != null and useApproval != ''">
+				USE_APPROVAL = #{useApproval},
+			</if>
+			<if test="useViewList != null and useViewList != ''">
+				USE_VIEW_LIST = #{useViewList},
+			</if>
+			<if test="useViewImage != null and useViewImage != ''">
+				USE_VIEW_IMAGE = #{useViewImage},
+			</if>
+			<if test="useViewMovie != null and useViewMovie != ''">
+				USE_VIEW_MOVIE = #{useViewMovie},
+			</if>
+			<if test="useViewFlv != null and useViewFlv != ''">
+				USE_VIEW_FLV = #{useViewFlv},
+			</if>
+			<if test="etcTitle1 != null and etcTitle1 != ''">
+				ETC_TITLE1 = #{etcTitle1},
+			</if>
+			<if test="etcTitle2 != null and etcTitle2 != ''">
+				ETC_TITLE2 = #{etcTitle2},
+			</if>
+			<if test="etcTitle3 != null and etcTitle3 != ''">
+				ETC_TITLE3 = #{etcTitle3},
+			</if>
+			<if test="etcTitle4 != null and etcTitle4 != ''">
+				ETC_TITLE4 = #{etcTitle4},
+			</if>
+			<if test="etcTitle5 != null and etcTitle5 != ''">
+				ETC_TITLE5 = #{etcTitle5},
+			</if>
+			<if test="etcTitle6 != null and etcTitle6 != ''">
+				ETC_TITLE6 = #{etcTitle6},
+			</if>
+			<if test="etcTitle7 != null and etcTitle7 != ''">
+				ETC_TITLE7 = #{etcTitle7},
+			</if>
+			<if test="etcTitle8 != null and etcTitle8 != ''">
+				ETC_TITLE8 = #{etcTitle8},
+			</if>
+			<if test="etcTitle9 != null and etcTitle9 != ''">
+				ETC_TITLE9 = #{etcTitle9},
+			</if>
+			<if test="etcTitle10 != null and etcTitle10 != ''">
+				ETC_TITLE10 = #{etcTitle10},
+			</if>
+			<if test="etc1 != null and etc1 != ''">
+				ETC1 = #{etc1},
+			</if>
+			<if test="etc2 != null and etc2 != ''">
+				ETC2 = #{etc2},
+			</if>
+			<if test="etc3 != null and etc3 != ''">
+				ETC3 = #{etc3},
+			</if>
+			<if test="etc4 != null and etc4 != ''">
+				ETC4 = #{etc4},
+			</if>
+			<if test="etc5 != null and etc5 != ''">
+				ETC5 = #{etc5},
+			</if>
+			<if test="etc6 != null and etc6 != ''">
+				ETC6 = #{etc6},
+			</if>
+			<if test="etc7 != null and etc7 != ''">
+				ETC7 = #{etc7},
+			</if>
+			<if test="etc8 != null and etc8 != ''">
+				ETC8 = #{etc8},
+			</if>
+			<if test="etc9 != null and etc9 != ''">
+				ETC9 = #{etc9},
+			</if>
+			<if test="etc10 != null and etc10 != ''">
+				ETC10 = #{etc10},
+			</if>
+			<if test="statusCode != null and statusCode != ''">
+				STATUS_CODE = #{statusCode},
+			</if>	
+		</set>
+		WHERE BOARD_CODE = #{boardCode}
+	</update>
+	
+	<!-- (관리자) 게시판 코드 중복여부 체크 -->
+	<select id="getBoardCfgCountByBoardCode" parameterType="String" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			OP_BOARD_CFG
+		WHERE
+			BOARD_CODE = #{value}
+	</select>
+	
+	<!-- (관리자) 게시판 설정 글 개수 조회 -->
+	<select id="getBoardCfgCount" parameterType="String" resultType="Integer">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT
+				COUNT(*)
+			FROM
+				OP_BOARD_CFG
+			WHERE
+				STATUS_CODE = '1'
+				<if test="(query != null and query != '') and (where == 'BOARD_CODE' or where == 'SUBJECT')">
+					AND #{where} LIKE CONCAT('%', #{query}, '%')
+				</if>
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<!-- (관리자) 게시판 설정 글 목록 조회 -->
+	<select id="getBoardCfgListByParam" parameterType="String" resultMap="BoardCfgResult">
+		<include refid="CommonMapper.paginationHeader" /> 
+			SELECT *
+			FROM
+				OP_BOARD_CFG
+			WHERE
+				STATUS_CODE = '1'
+				<if test="(query != null and query != '') and (where == 'BOARD_CODE' or where == 'SUBJECT')">
+					AND #{where} LIKE CONCAT('%', #{query}, '%')
+				</if>
+			ORDER BY CREATION_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<!-- (관리자) 게시판 설정 글 상세 조회 -->
+	<select id="getBoardCfgByBoardCode" parameterType="String" resultMap="BoardCfgResult">
+		SELECT
+			*
+		FROM
+			OP_BOARD_CFG
+		WHERE
+			BOARD_CODE = #{value}
+	</select>
+
+	<!-- (관리자) 게시판 설정 데이터 삭제 (STATUS_CODE) -->
+	<update id="updateBoardCfgStatusCode" parameterType="String">
+		UPDATE
+			OP_BOARD_CFG
+		SET
+			STATUS_CODE = '2'
+		WHERE
+			BOARD_CODE = #{value}
+	</update>
+	
+	
+</mapper>

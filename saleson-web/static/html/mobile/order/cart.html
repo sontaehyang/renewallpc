@@ -1,0 +1,264 @@
+<? include "../include/headHtml.html" ?>
+<body>
+<div id="wrap">
+	<!-- header : s -->
+	<? include "../include/header.html" ?>
+	<div class="title">
+		<h2>장바구니</h2>
+		<span class="his_back"><a href="#" class="ir_pm">뒤로가기</a></span>
+	</div>
+	<!-- //title -->
+	<!-- 내용 : s -->
+	<div class="con cart_wrap">
+		<!-- 장바구니 내용이 없을때 s -->
+		<div class="cart_wrap">
+			<div class="cart_list">
+				<div class="cart_none">
+					<p>장바구니에 담겨있는<br>상품이 없습니다. </p>
+				</div>
+			</div>
+			<!-- //cart_list -->
+		</div>
+		<!-- 장바구니 내용이 없을때 e -->
+		<!-- 장바구니 내용이 있을때 s -->
+		<div class="cart_wrap">
+			<div class="cart_top">
+				<p class="total">장바구니(<span class="num">3</span>)</p>
+				<button type="button" class="btn_st3">전체삭제</button>
+			</div>
+			<!-- //cart_top -->
+			<div class="cart_list">
+				<ul class="list">
+					<li>
+							<span class="check">
+								<input id="checkbox1" type="checkbox" name="checkbox" value="">
+								<label for="checkbox1">선택</label>
+							</span>
+						<div class="inner">
+							<a href="/html/mobile/product/view.html" class="con_top cf">
+								<div class="cart_img">
+									<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+								</div>
+								<div class="cart_name">
+									<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+									<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+								</div>
+							</a>
+							<div class="con_bot">
+								<div class="cacul">
+									<a href="#" class="minus">감소</a>
+									<input type="text" class="num" value="1">
+									<a href="#" class="plus">증가</a>
+									<button type="button" class="btn_st3">변경</button>
+								</div>
+								<div class="price -nobp">
+									<p class="sale_price"><span>45,000</span>원</p>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="shipping_wrap">
+					<span class="tit">배송비</span>
+					<div class="delivery_wrap">
+						<a href="#" class="btn_st4 t_blue delv_btn">무료배송</a>
+						<span class="delievery_tip">
+								<p class="title">무료배송 </p>
+								<p>조건없이 무료배송 상품입니다.</p>
+								<b class="delievery_close"><img src="/content/images/btn/btn_tooltip_close.gif" alt="close"></b>
+							</span>
+					</div><!--// delivery_wrap -->
+					<p class="shipping_price"><span>45,000</span>원</p>
+				</div>
+			</div>
+			<!-- //cart_list -->
+			<div class="cart_list">
+				<ul class="list">
+					<li>
+							<span class="check">
+								<input id="checkbox2" type="checkbox" name="checkbox" value="">
+								<label for="checkbox2">선택</label>
+							</span>
+						<div class="inner">
+							<a href="/html/mobile/product/view.html" class="con_top cf">
+								<div class="cart_img">
+									<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+								</div>
+								<div class="cart_name">
+									<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+									<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+								</div>
+							</a>
+							<div class="con_bot">
+								<div class="cacul">
+									<a href="#" class="minus">감소</a>
+									<input type="text" class="num" value="1">
+									<a href="#" class="plus">증가</a>
+									<button type="button" class="btn_st3">변경</button>
+								</div>
+								<div class="price">
+									<p class="per_price"><span>52,000</span>원</p>
+									<p class="sale_price"><span>45,000</span>원</p>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+							<span class="check">
+								<input id="checkbox3" type="checkbox" name="checkbox" value="">
+								<label for="checkbox3">선택</label>
+							</span>
+						<div class="inner">
+							<a href="/html/mobile/product/view.html" class="con_top cf">
+								<div class="cart_img">
+									<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+								</div>
+								<div class="cart_name">
+									<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+									<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+								</div>
+							</a>
+							<div class="con_bot">
+								<div class="cacul">
+									<a href="#" class="minus">감소</a>
+									<input type="text" class="num" value="1">
+									<a href="#" class="plus">증가</a>
+									<button type="button" class="btn_st3">변경</button>
+								</div>
+								<div class="price">
+									<p class="per_price"><span>52,000</span>원</p>
+									<p class="sale_price"><span>45,000</span>원</p>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="shipping_wrap">
+					<span class="tit">배송비</span>
+					<div class="delivery_wrap">
+						<a href="#" class="btn_st4 t_blue delv_btn">판매자 조건부 무료배송</a>
+						<span class="delievery_tip">
+								<p class="title">판매자 조건부 무료배송 </p>
+								<p>판매자 상품 50,000원 이상 구매 시 무료,<br>미만 구매시 2,500원 부과</p>
+								<p><strong>제주/도서산간</strong><br>제주 5,000원 추가 / 도서산간 5,000원 추가</p>
+								<b class="delievery_close"><img src="/content/images/btn/btn_tooltip_close.gif" alt="close"></b>
+							</span>
+					</div><!--// delivery_wrap -->
+					<p class="shipping_price"><span>45,000</span>원</p>
+				</div>
+			</div>
+			<!-- //cart_list -->
+			<div class="cart_order">
+				<div class="txt_wrap">
+					<div class="order total">
+						<span class="tit">상품금액</span>
+						<p class="total_price"><span>21,344,000</span>원</p>
+					</div>
+					<div class="sale total">
+						<span class="tit">할인혜택</span>
+						<p class="total_price"><span>-0</span>원</p>
+					</div>
+					<div class="shipping total">
+						<span class="tit">배송비</span>
+						<p class="total_price"><span>2,500</span>원</p>
+					</div>
+					<div class="sum">
+						<span class="tit">결제 예정 금액</span>
+						<p class="total_price"><span>21,346,500</span>원</p>
+					</div>
+					<dl class="caution">
+						<dt>장바구니 주의사항</dt>
+						<dd>장바구니에 담긴 상품은 30일 동안 보관됩니다. 30일이 초과된 상품은 자동으로 삭제됩니다.</dd>
+						<dd>더 오래 보관하고 싶은 상품은 관심상품으로 저아하시기 바랍니다.</dd>
+					</dl>
+				</div>
+				<!-- //txt_wrap -->
+				<div class="cart_btn_wrap">
+					<a href="#" class="btn_st1 b_gray">선택삭제</a>
+					<a href="#" class="btn_st1 b_blue">선택주문</a>
+					<a href="#" class="btn_st1 b_pink">전체주문</a>
+				</div>
+				<!-- //btn_wrap -->
+			</div>
+			<!-- //cart_order -->
+			<div class="btn_area">
+				<div class="sale" style="display:inline-block;margin-bottom: 20px">
+					<link id="NAVER_PAY_STYLE" type="text/css" rel="stylesheet" href="https://img.pay.naver.net/static/css/button/button2.css?437911">
+					<div class="naver_pay">
+						<div id="NC_ID_157647843702871" class="npay_storebtn_bx npay_type_A_0">
+							<div id="NPAY_BUTTON_BOX_ID" class="npay_button_box ">
+								<div class="npay_button">
+									<div class="npay_text"><span class="npay_blind">NAVER 네이버 ID로 간편구매 네이버페이</span></div>
+									<table class="npay_btn_list" cellspacing="0" cellpadding="0">
+										<tbody>
+										<tr>
+											<td class="npay_btn_item">
+												<a id="NPAY_BUY_LINK_IDNC_ID_157647843702871" href="#" class="npay_btn_link npay_btn_pay btn_green" style="box-sizing:content-box; " title="새창">
+													<span class="npay_blind">네이버페이 구매하기</span>
+												</a>
+											</td>
+											<td class="npay_btn_item btn_width">
+												<a id="NPAY_TALK_LINK_IDNC_ID_157647843702871" href="#" class="npay_btn_link npay_btn_talk " style="box-sizing:content-box; " title="새창">
+													<span class="npay_blind">톡톡</span>
+												</a>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</div>
+								<div id="NPAY_EVENT_ID" class="npay_event">
+									<a id="NPAY_PROMOTION_PREV_IDNC_ID_157647843702871" href="#" class="npay_more npay_more_prev">
+										<span class="npay_blind">이전</span>
+									</a>
+									<p id="NPAY_PROMOTION_IDNC_ID_157647843702871" class="npay_event_text">
+										<strong class="event_title">충전혜택</strong>
+										<a class="event_link" href="https://m-campaign.naver.com/event/pointadd2_01" target="_blank" title="새창">5만원 이상 충전 시 1.5%적립!</a>
+									</p>
+									<a id="NPAY_PROMOTION_NEXT_IDNC_ID_157647843702871" href="#" class="npay_more npay_more_next">
+										<span class="npay_blind">다음</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 장바구니 내용이 있을때 e -->
+		<!-- //cart_wrap -->
+		<div class="btn_layer02 pop_shipping01">
+			<div class="title">
+					<span class="tit">무료배송</p>
+						<button type="button" class="layer02_close">닫기</button>
+			</div>
+			<div class="con">
+				<p>조건없이 무료배송 상품입니다.</p>
+			</div>
+		</div>
+		<!-- //pop_shipping01 -->
+		<div class="btn_layer02 pop_shipping02">
+			<div class="title">
+						<span class="tit">무료배송</p>
+							<button type="button" class="layer02_close">닫기</button>
+			</div>
+			<div class="con">
+				<p>판매자 상품 30,000원 이상 구매 시 무료,<br>
+					미만 구매시 2,500원 부과<br><br>
+					제주/도서산간<br>
+					(제주 4,000 /도서산간 4,000 추가)
+				</p>
+			</div>
+		</div>
+		<!-- //pop_shipping02 -->
+	</div>
+	<!-- 내용 : e -->
+</div>
+<!-- //#container -->
+<!-- container : e -->
+<!-- footer : s -->
+<? include "../include/footer.html" ?>
+<!-- footer : e -->
+</div>
+<!-- //#wrap -->
+</body>
+</html>

@@ -1,0 +1,105 @@
+<? include "../include/headHtml.html" ?>
+<body>
+	<div id="wrap">	
+		<!-- header : s -->
+		<? include "../include/header.html" ?>
+		<div class="title">
+			<h2>회원정보</h2>
+			<span class="his_back"><a href="#" class="ir_pm">뒤로가기</a></span>
+			<ul class="tab_list01 four_tab letter">
+				<li><a href="#">회원정보수정</a></li>
+				<li class="on"><a href="#">배송주소록 관리</a></li>
+				<li><a href="#">SNS 연동설정</a></li>
+				<li><a href="#">회원탈퇴</a></li>
+			</ul>
+		</div>
+		<!-- //title -->		
+		<!-- 내용 : s -->
+		<div class="con delivery_wrap">
+			<div class="mypage_wrap">
+				<div class="address_manage">
+					<div class="cart_top">
+						<p class="txt">배송지를 등록 및 관리 하실 수 있습니다.</p>
+						<a href="#" type="button" class="btn_st3">배송지 추가</a>
+					</div>
+					<!-- //cart_top -->
+					<div class="address_list">
+						<!-- 배송주소가 없을때 : s -->
+						<ul>
+							<li>
+								<div class="common_none">
+									<p>등록된 배송지가 없습니다.</p>
+								</div>
+							</li>
+						</ul>
+						<!-- 배송주소가 없을때 : e -->
+						<!-- 배송주소가 있을때 : s -->
+						<div class="list_info">
+							<div class="list nm">
+								<p class="lct">기본배송지</p>
+								<p class="name">김길동</p>
+								<p class="number">
+									<span>010-1234-5678</span>
+									<span>/</span>
+									<span>02-1234-5678</span>
+								</p>
+								<p class="address">(08381) 서울시 구로구 디지털로27길 24 405호</p>
+								<div class="btn_area cf">
+									<button type="button" class="btn_st3 b_white">수정</button>
+									<button type="button" class="btn_st3 b_white">삭제</button>
+								</div>
+							</div>
+							<div class="list">
+								<p class="lct">회사</p>
+								<p class="name">김길동</p>
+								<p class="number">
+									<span>010-1234-5678</span>
+									<span>/</span>
+									<span>02-1234-5678</span>
+								</p>
+								<p class="address">(08381) 서울시 구로구 디지털로27길 24 405호</p>
+								<div class="btn_area cf">
+									<button type="button" class="btn_st3 bd_blue decision">기본배송지 선택</button>
+									<button type="button" class="btn_st3 b_white">수정</button>
+									<button type="button" class="btn_st3 b_white">삭제</button>
+								</div>
+							</div>
+							<div class="list">
+								<p class="lct">온라인파워스</p>
+								<p class="name">김길동</p>
+								<p class="number">
+									<span>010-1234-5678</span>
+									<span>/</span>
+									<span>02-1234-5678</span>
+								</p>
+								<p class="address">(08381) 서울시 구로구 디지털로27길 24 405호</p>
+								<div class="btn_area cf">
+									<button type="button" class="btn_st3 bd_blue decision">기본배송지 선택</button>
+									<button type="button" class="btn_st3 b_white">수정</button>
+									<button type="button" class="btn_st3 b_white">삭제</button>
+								</div>
+							</div>
+						</div>
+						<!-- 배송주소가 있을때 : e -->
+						<!-- //list_info -->
+					</div>
+					<!-- //address_list -->
+
+				</div>
+				<!-- //address_manage -->
+
+			</div>
+			<!-- //mypage_wrap -->
+		</div>
+		<!-- 내용 : e -->
+	</div>
+	<!-- //#container -->
+	<!-- container : e -->
+
+	<!-- footer : s -->
+	<? include "../include/footer.html" ?>
+	<!-- footer : e -->
+</div>
+<!-- //#wrap -->
+</body>
+</html>

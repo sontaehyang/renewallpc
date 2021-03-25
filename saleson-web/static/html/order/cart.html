@@ -1,0 +1,326 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?> 
+<div class="inner cart_wrap">  
+	<div class="location_area">
+		<?include "../include/all_menu.html"?>
+		<div class="breadcrumbs">
+			<a href="/html/main.html" class="home"><span class="hide">home</span></a> 
+			<span>장바구니</span> 
+		</div>
+	</div><!-- // location_area E --> 
+	<div class="content_title">
+		<h2 class="title">장바구니</h2>
+	</div><!--//content_title E-->	 
+
+	<div class="order_step">
+		<ul>
+			<li class="on"><span class="number">01</span> 장바구니 </li> 
+			<li><span class="number">02</span> 주문결제</li>
+			<li><span class="number">03</span> 주문완료</li> 
+		</ul>
+	</div> 
+	<!-- 상품이 없을때 S -->
+	<div class="cart_none">
+		<p>장바구니에 담겨있는 상품이 없습니다. </p>
+	</div> 
+	<!-- 상품이 없을때 E -->
+	<!-- 상품이 있을때 S -->
+	<div class="box_list pt0">
+		<ul>
+			<li>장바구니상품은 30일간 보관됩니다. 더 오래 보관하시려면 [관심상품]으로 등록하세요.</li>
+			<li>장바구니상품이 품절되면 자동으로 목록에서 삭제됩니다.</li> 
+		</ul>
+	</div>
+		
+	<h3 class="order_title mt40">장바구니 선택상품 <span>(5)</span></h3>	
+	<form id="listForm">
+		<div class="board_wrap mt15"> 				  
+			<table cellpadding="0" cellspacing="0" class="mypage_list op-cart-item-table">
+				<caption>장바구니 list</caption>
+				<colgroup>
+					<col style="width:40px;">
+					<col style="width:auto;">
+					<col style="width:72px;">
+					<col style="width:108px;">
+					<col style="width:108px;">
+					<col style="width:120px;">
+					<col style="width:135px;">
+					<col style="width:100px;">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col"><input type="checkbox" name="" id="op-item-select-all" title="체크박스"></th>
+						<th scope="col" class="none_left">상품명/옵션정보</th>
+						<th scope="col">수량</th>
+						<th scope="col">상품금액</th>
+						<th scope="col">할인금액</th>
+						<th scope="col">할인적용금액</th>
+						<th scope="col">배송정보</th>
+						<th scope="col">주문</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="checkbox" name="id" value="14287"title="옵션상품테스트01 체크박스" class="op-available-item"></td>
+						<td class="tleft">
+							<div class="item_info">
+								<a href="/html/product/view.html">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+								</a>
+								<div class="order_option noline">
+									<p class="item_name line2"><a href="/html/product/view.html">옵션상품테스트01</a></p>
+									<ul class="option">
+										<li><span class="choice">A옵션 : </span><span>B옵션</span> (+2,000원)</li>
+									</ul>
+									<ul class="option">
+										<li><span class="choice">사은품 : </span><span>테스트</span></li>
+									</ul>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="input_wrap col-w-10 num_input">
+								<input type="hidden" name="stockFlag" id="stockFlag-14287" value="N">
+								<input type="hidden" name="stockQuantity" id="stockQuantity-14287" value="-1">
+								<input type="hidden" name="orderMinQuantity" id="orderMinQuantity-14287" value="1">
+								<input type="hidden" name="orderMaxQuantity" id="orderMaxQuantity-14287" value="-1">
+								<input type="hidden" name="shippingGroupCode" id="shippingGroupCode-14287" value="">
+								<input type="text" name="quantity" id="quantity-14287" class="_number" value="5" maxlength="3">
+								<button type="button" class="btn btn-default btn-s" onclick="editQuantity('14287')">변경</button>
+							</div>
+						</td>
+						<td>
+							<p class="price_01">50,000원 </p>
+						</td>
+						<td>
+							<p class="price_01 itemDiscountAmountText-0">0원</p>
+							<p class="op-used-coupon itemCouponUsedArea-0"></p>
+						</td>
+						<td>
+							<div class="sum"><span class="itemPayAmountText-0">50,000</span>원</div>
+						</td>
+						<td rowspan="2">
+							<p class="delivery_price"></p>
+							<p class="price op-shipping-text-0">
+								<select id="op-shipping-payment-type-14287" name="shippingPaymentType">
+									<option value="1" selected="selected">2,500원 선불</option>
+									<option value="2">2,500원 착불</option>
+								</select>
+							</p>
+							<p class="where_buy">본사</p>
+						</td>
+						<td>
+							<div class="order_btnList">
+								<button type="button" class="btn btn-s btn-submit" title="바로구매" onclick="buyNow(14287)">바로구매</button>
+								<button type="button" class="btn btn-s btn-default" title="삭제하기" onclick="deleteItem(14287)">삭제하기</button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="checkbox" name="id" value="14316" data-item-id="482067" data-parent-item-id="0" title="옵션상품테스트01 체크박스" class="op-available-item">
+						</td>
+						<td class="tleft">
+							<div class="item_info">
+								<a href="/html/product/view.html">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+								</a>
+								<div class="order_option noline">
+									<p class="item_name line2">
+										<a href="/html/product/view.html">옵션상품테스트01</a>
+									</p>
+									<ul class="option">
+										<li><span class="choice">A옵션 : </span><span>C옵션</span> (+3,000원)</li>
+									</ul>
+									<ul class="option">
+										<li>
+											<span class="choice">사은품 : </span><span>테스트</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="input_wrap col-w-10 num_input">
+								<input type="hidden" name="stockFlag" id="stockFlag-14316" value="N">
+								<input type="hidden" name="stockQuantity" id="stockQuantity-14316" value="-1">
+								<input type="hidden" name="orderMinQuantity" id="orderMinQuantity-14316" value="1">
+								<input type="hidden" name="orderMaxQuantity" id="orderMaxQuantity-14316" value="-1">
+								<input type="hidden" name="shippingGroupCode" id="shippingGroupCode-14316" value="">
+								<input type="text" name="quantity" id="quantity-14316" class="_number" value="1" maxlength="3">
+								<button type="button" class="btn btn-default btn-s" onclick="editQuantity('14316')">변경</button>
+							</div>
+						</td>
+						<td>
+							<p class="price_01">11,000원 </p>
+						</td>
+						<td>
+							<p class="price_01 itemDiscountAmountText-0">0원</p>
+							<p class="op-used-coupon itemCouponUsedArea-0"></p>
+						</td>
+						<td>
+							<div class="sum"><span class="itemPayAmountText-0">11,000</span>원</div>
+						</td>
+						<td>
+							<div class="order_btnList">
+								<button type="button" class="btn btn-s btn-submit" title="바로구매" onclick="buyNow(14316)">바로구매</button>
+								<button type="button" class="btn btn-s btn-default" title="삭제하기" onclick="deleteItem(14316)">삭제하기</button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="id" value="14308" data-item-id="482009" data-parent-item-id="0" title="노트북 9 Always [NT900X5N-K58L] 체크박스" class="op-available-item"></td>
+						<td class="tleft">
+							<div class="item_info">
+								<a href="/products/view/G2000482009">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+								</a>
+								<div class="order_option noline">
+									<p class="item_name line2">
+										<a href="/products/view/G2000482009">노트북 9 Always [NT900X5N-K58L]</a>
+									</p>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="input_wrap col-w-10 num_input">
+								<input type="hidden" name="stockFlag" id="stockFlag-14308" value="N">
+								<input type="hidden" name="stockQuantity" id="stockQuantity-14308" value="-1">
+								<input type="hidden" name="orderMinQuantity" id="orderMinQuantity-14308" value="1">
+								<input type="hidden" name="orderMaxQuantity" id="orderMaxQuantity-14308" value="-1">
+								<input type="hidden" name="shippingGroupCode" id="shippingGroupCode-14308" value="single-0">
+								<input type="text" name="quantity" id="quantity-14308" class="_number" value="1" maxlength="3">
+								<button type="button" class="btn btn-default btn-s" onclick="editQuantity('14308')">변경</button>
+							</div>
+						</td>
+						<td>
+							<p class="price_01">1,940,000원 </p>
+						</td>
+						<td>
+							<p class="price_01 itemDiscountAmountText-0">17,500원</p>
+							<p class="op-used-coupon itemCouponUsedArea-0"></p>
+						</td>
+						<td>
+							<div class="sum"><span class="itemPayAmountText-0">1,922,500</span>원</div>
+							<button type="button" class="btn btn-normal btn-s" title="쿠폰다운">쿠폰다운</button>
+						</td>
+						<td rowspan="1">
+							<p class="delivery_price"></p>
+							<p class="price op-shipping-text-1">
+								<select id="op-shipping-payment-type-14308" name="shippingPaymentType">
+									<option value="1">2,500원 선불</option>
+									<option value="2" selected="selected">2,500원 착불</option>
+								</select>
+							</p>
+							<p class="where_buy">본사</p>
+						</td>
+						<td>
+							<div class="order_btnList">
+								<button type="button" class="btn btn-s btn-submit" title="바로구매" onclick="buyNow(14308)">바로구매</button>
+								<button type="button" class="btn btn-s btn-default" title="삭제하기" onclick="deleteItem(14308)">삭제하기</button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="id" value="14319" data-item-id="481961" data-parent-item-id="0" title="모노스윗 워싱 침구 SS이불세트 체크박스" class="op-available-item"></td>
+						<td class="tleft">
+							<div class="item_info">
+								<a href="/products/view/G2000481961">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+								</a>
+								<div class="order_option noline">
+									<p class="item_name line2">
+										<a href="/products/view/G2000481961">모노스윗 워싱 침구 SS이불세트</a>
+									</p>
+									<div class="delivery_wrap">
+										<a href="#" class="delivery_type">판매자 조건부 무료배송▶</a>
+										<div class="delievery_tip">
+											<p class="title">판매자 조건부 무료배송 </p>
+											<p>판매자 상품 50,000원 이상 구매 시 무료,<br>미만 구매시 2,500원 부과</p>
+											<p><strong>제주/도서산간</strong><br>제주 5,000원 추가 / 도서산간 5,000원 추가</p>
+											<a href="#" class="delievery_close"><img src="/content/images/btn/btn_tooltip_close.gif" alt="close"></a>
+										</div>
+									</div> <!-- // delivery_wrap E -->
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="input_wrap col-w-10 num_input">
+								<input type="hidden" name="stockFlag" id="stockFlag-14319" value="N">
+								<input type="hidden" name="stockQuantity" id="stockQuantity-14319" value="-1">
+								<input type="hidden" name="orderMinQuantity" id="orderMinQuantity-14319" value="4">
+								<input type="hidden" name="orderMaxQuantity" id="orderMaxQuantity-14319" value="10">
+								<input type="hidden" name="shippingGroupCode" id="shippingGroupCode-14319" value="single-0">
+								<input type="text" name="quantity" id="quantity-14319" class="_number" value="4" maxlength="3">
+								<button type="button" class="btn btn-default btn-s" onclick="editQuantity('14319')">변경</button>
+							</div>
+						</td>
+						<td>
+							<p class="price_01">372,000원 </p>
+						</td>
+						<td>
+							<p class="price_01 itemDiscountAmountText-0">12,000원</p>
+							<p class="op-used-coupon itemCouponUsedArea-0"></p>
+						</td>
+						<td>
+							<div class="sum"><span class="itemPayAmountText-0">360,000</span>원</div>
+						</td>
+						<td rowspan="1">
+							<p class="delivery_price"></p>
+							<p class="price op-shipping-text-4">무료배송</p>
+							<p class="where_buy">본사</p>
+						</td>
+						<td>
+							<div class="order_btnList">
+								<button type="button" class="btn btn-s btn-submit" title="바로구매" onclick="buyNow(14319)">바로구매</button>
+								<button type="button" class="btn btn-s btn-default" title="삭제하기" onclick="deleteItem(14319)">삭제하기</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>	 		 
+		</div>	<!-- // board_view E -->	
+	</form> 
+	<div class="clear btn_wrap pt10"> 
+		<div class="btn_left"> 
+			<button type="button" class="btn btn-default btn-m" id="delete_list_data" title="선택상품 삭제">선택상품 삭제</button> 
+		</div> 
+		<p class="order_guide">※ 실 결제금액은 쿠폰할인 적용에 따라 달라집니다.</p>
+	</div><!--//btn_wrap E-->
+	
+	<div class="price_box">
+		<div class="price_inner">
+			<div class="money">
+				<p class="txt01">총 상품합계 금액</p>
+				<p class="prices"><span>12,190,000</span>원</p>
+			</div>
+			<span class="icons"><img src="/content/images/icon/icon_plus.png" alt="더하기"></span>
+			<div class="money">
+				<p class="txt01">배송비</p>
+				<p class="prices"><span>2,500</span>원</p>
+			</div>
+			<span class="icons"><img src="/content/images/icon/icon_minus.png" alt="더하기"></span>
+			<div class="money">
+				<p class="txt01">쿠폰할인</p>
+				<p class="prices"><span>5,000</span>원</p>
+			</div>
+			<span class="icons"><img src="/content/images/icon/icon_sum.png" alt="더하기"></span>
+			<div class="money">
+				<p class="txt01"><strong>결제예정금액</strong></p>
+				<p class="prices total"><span>187,500</span>원</p>
+			</div>
+		</div> <!-- // price_inner E -->
+		<div class="add_point">
+			<p>적립예정 포인트 : <span>3,500 P</span> </p>
+		</div>
+	</div><!--// price_box E-->
+		
+	<div class="btn_wrap pt30"> 
+		<button type="button" class="btn btn-success btn-lg" id="order_select" title="선택 상품주문">선택 상품주문</button> 
+		<button type="button" class="btn btn-submit btn-lg" id="order_all" title="전체 상품주문">전체 상품주문</button> 
+		<button type="button" class="npay" id="order_naver" title="Npay">네이버 페이</button> 
+	</div>
+	<!-- 상품이 있을때 E --> 	
+</div><!--// inner E--> 
+<?include "../include/footer.html"?>	 
+ 

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.categoriesedit.CategoriesEditMapper">
+	
+	<resultMap id="CategoryEditResult" type="saleson.shop.categoriesedit.domain.CategoriesEdit">
+		<result property="categoryEditId" column="CATEGORY_EDIT_ID" />
+		<result property="code" column="CODE" />
+		<result property="editKind" column="EDIT_KIND" />
+		<result property="editPosition" column="EDIT_POSITION" />
+		<result property="editContent" column="EDIT_CONTENT" />
+		<result property="editImage" column="EDIT_IMAGE" />
+		<result property="editUrl" column="EDIT_URL" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+	</resultMap>
+	
+	<select id="getCategoryListById" parameterType="saleson.shop.categoriesedit.support.CategoriesEditParam" resultMap="CategoryEditResult" >
+		SELECT 
+			CATEGORY_EDIT_ID, 
+			CODE, 
+			EDIT_KIND, 
+			EDIT_POSITION, 
+			EDIT_CONTENT, 
+			EDIT_IMAGE, 
+			EDIT_URL, 
+			CREATED_DATE, 
+			UPDATED_DATE
+		FROM OP_CATEGORY_EDIT 
+		<where>
+			CODE = #{code}
+			
+			<if test='editKind != null and editKind != ""'>
+				AND EDIT_KIND = #{editKind}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getCategoryByParam" parameterType="saleson.shop.categoriesedit.support.CategoriesEditParam" resultMap="CategoryEditResult" >
+		SELECT 
+			CATEGORY_EDIT_ID, 
+			CODE, 
+			EDIT_KIND, 
+			EDIT_POSITION, 
+			EDIT_CONTENT, 
+			EDIT_IMAGE, 
+			EDIT_URL, 
+			CREATED_DATE, 
+			UPDATED_DATE
+		FROM 
+			OP_CATEGORY_EDIT 
+ 		WHERE 
+ 			CODE = #{code}
+ 		AND 
+ 			EDIT_KIND = #{editKind}
+ 		AND 
+ 			EDIT_POSITION = #{editPosition}
+	</select>
+	
+	<select id="getCategoryById" parameterType="saleson.shop.categoriesedit.support.CategoriesEditParam" resultMap="CategoryEditResult" >
+		SELECT 
+			CATEGORY_EDIT_ID, 
+			CODE, 
+			EDIT_KIND, 
+			EDIT_POSITION, 
+			EDIT_CONTENT, 
+			EDIT_IMAGE, 
+			EDIT_URL, 
+			CREATED_DATE, 
+			UPDATED_DATE
+		FROM 
+			OP_CATEGORY_EDIT 
+ 		WHERE 
+ 			CATEGORY_EDIT_ID = #{categoryEditId}
+	</select>
+	
+	<select id="getCategoryPromotionListByParam" parameterType="saleson.shop.categoriesedit.support.CategoriesEditParam" resultMap="CategoryEditResult" >
+		SELECT 
+			CATEGORY_EDIT_ID, 
+			CODE, 
+			EDIT_KIND, 
+			EDIT_POSITION, 
+			EDIT_CONTENT, 
+			EDIT_IMAGE, 
+			EDIT_URL, 
+			CREATED_DATE, 
+			UPDATED_DATE
+		FROM 
+			OP_CATEGORY_EDIT 
+ 		WHERE 
+ 			CODE = #{code}
+ 		AND 
+ 			EDIT_KIND = #{editKind}
+ 		AND 
+ 			EDIT_POSITION = 'promotion'
+ 		ORDER BY CATEGORY_EDIT_ID ASC 
+	</select>
+	
+	<insert id="insertCategoryEdit" parameterType="saleson.shop.categoriesedit.domain.CategoriesEdit">
+		INSERT INTO OP_CATEGORY_EDIT (CATEGORY_EDIT_ID, CODE, EDIT_KIND, EDIT_POSITION, EDIT_CONTENT, EDIT_IMAGE, EDIT_URL, CREATED_DATE)
+		VALUES (#{categoryEditId}, #{code}, #{editKind}, #{editPosition}, #{editContent}, #{editImage}, #{editUrl}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+	<update id="updateCategoryEdit" parameterType="saleson.shop.categoriesedit.domain.CategoriesEdit">
+		UPDATE OP_CATEGORY_EDIT SET
+			EDIT_CONTENT = #{editContent}, 
+			EDIT_IMAGE = #{editImage}, 
+			EDIT_URL = #{editUrl}, 
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE CATEGORY_EDIT_ID = #{categoryEditId}
+	</update>
+	
+	<update id="updateCategoryEditFile" parameterType="saleson.shop.categoriesedit.domain.CategoriesEdit">
+		UPDATE OP_CATEGORY_EDIT SET
+			EDIT_IMAGE = ''
+		WHERE CATEGORY_EDIT_ID = #{categoryEditId}
+	</update>
+	
+	<delete id="deleteCategoryEdit" parameterType="saleson.shop.categoriesedit.domain.CategoriesEdit" >
+		DELETE FROM OP_CATEGORY_EDIT 
+		WHERE CODE = #{code}
+		AND EDIT_POSITION = #{editPosition}
+	</delete>
+	
+	<select id="loginCountCategoryEdit" parameterType="saleson.shop.categoriesedit.domain.CategoriesEdit" resultType="int">
+		SELECT COUNT(*) 
+		FROM OP_CATEGORY_EDIT
+		WHERE CODE = #{code}
+	</select>
+	
+	<select id="getCountCategoryEdit" parameterType="String" resultMap="CategoryEditResult">
+		SELECT *
+		FROM OP_CATEGORY_EDIT
+		WHERE CATEGORY_EDIT_ID = #{categoryEditId}
+	</select>
+	
+	<update id="deleteLoginBannerImage" parameterType="saleson.shop.categoriesedit.domain.CategoriesEdit">
+		UPDATE OP_CATEGORY_EDIT
+		SET EDIT_IMAGE = #{editImage}
+		WHERE CATEGORY_EDIT_ID = #{categoryEditId}
+	</update>
+	
+	<update id="updateLoginCategoryEdit" parameterType="saleson.shop.categoriesedit.domain.CategoriesEdit">
+		UPDATE OP_CATEGORY_EDIT
+		SET
+			<if test="editImage != null and editImage != ''">
+			EDIT_IMAGE = #{editImage},
+			</if> 
+			EDIT_URL = #{editUrl}, 
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE CATEGORY_EDIT_ID = #{categoryEditId}
+	</update>
+	
+	<select id="getCategoryLeftBanner" parameterType="saleson.shop.categoriesedit.support.CategoriesEditParam" resultMap="CategoryEditResult" >
+		SELECT 
+			CATEGORY_EDIT_ID, 
+			CODE, 
+			EDIT_KIND, 
+			EDIT_POSITION, 
+			EDIT_CONTENT, 
+			EDIT_IMAGE, 
+			EDIT_URL, 
+			CREATED_DATE, 
+			UPDATED_DATE
+		FROM 
+			OP_CATEGORY_EDIT 
+ 		WHERE 
+ 			CODE = 'left-banner'
+ 		AND 
+ 			EDIT_KIND = '6'
+ 		AND 
+ 			EDIT_POSITION = 'banner'
+ 		ORDER BY CATEGORY_EDIT_ID ASC 
+	</select>
+</mapper>

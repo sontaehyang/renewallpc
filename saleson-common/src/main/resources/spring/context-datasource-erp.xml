@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="erpOrderDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+
+        <property name="driverClassName" value="${erp.dataSource.driverClassName}"/>
+        <property name="url" value="${erp.dataSource.url}" />
+
+        <property name="username" value="${erp.dataSource.username}"/>
+        <property name="password" value="${erp.dataSource.password}"/>
+
+        <property name="maxTotal" value="${erp.dataSource.minimumIdle}"/>
+
+        <property name="maxWaitMillis" value="10000"/>
+        <property name="validationQuery" value="${erp.dataSource.connectionTestQuery}"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="testWhileIdle" value="false"/>
+    </bean>
+
+
+    <bean id="erpSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="erpOrderDataSource" />
+        <property name="configLocation" value="classpath:mybatis/mybatis-config-renewallpc.xml" />
+        <property name="mapperLocations">
+            <array>
+                <value>classpath*:sqlmapper/erp/*-mapper.xml</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean class="saleson.erp.configuration.ErpMapperConfigurer">
+        <property name="basePackage" value="saleson" />
+    </bean>
+
+</beans>

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.item.ItemMapperBatch">
+	
+	<insert id="insertItemOrdering" parameterType="saleson.shop.item.domain.ItemOrdering">
+		INSERT INTO OP_ITEM_ORDERING (ITEM_ORDERING_ID, ITEM_ID, CATEGORY_ID, ORDERING, CREATED_DATE)
+		VALUES (#{itemOrderingId}, #{itemId}, #{categoryId}, #{ordering}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	
+	<insert id="insertItemOrderingByListParam" parameterType="saleson.shop.item.support.ItemListParam">
+		INSERT INTO OP_ITEM_ORDERING (ITEM_ID, CATEGORY_ID, ORDERING, CREATED_DATE)
+		VALUES 
+		<foreach item="itemId" index="index" collection="id" open="" separator="," close=""> 
+			(#{itemId}, #{categoryId}, #{index}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+	
+	<delete id="deleteItemOrderingByCategoryId" parameterType="Integer" >
+		DELETE FROM OP_ITEM_ORDERING 
+		WHERE CATEGORY_ID = #{value}
+	</delete>
+	
+	
+	<delete id="deleteItemCategoryByListParam" parameterType="saleson.shop.item.support.ItemListParam">
+		DELETE FROM OP_ITEM_CATEGORY
+		WHERE CATEGORY_ID = #{categoryId} AND ITEM_ID IN (
+			
+		<foreach item="itemId" index="index" collection="id" open="" separator="UNION" close=""> 
+			SELECT #{itemId} AS ITEM_ID FROM DUAL
+		</foreach>
+		)
+	</delete>
+	
+
+	<insert id="insertItemCategoryByListParam" parameterType="saleson.shop.item.support.ItemListParam">
+		<selectKey keyProperty="selectKey" resultType="int" order="BEFORE">
+			SELECT SEQUENCE_ID FROM OP_SEQUENCE
+			WHERE SEQUENCE_KEY = 'OP_ITEM_CATEGORY'
+		</selectKey>
+		
+		INSERT INTO OP_ITEM_CATEGORY (ITEM_CATEGORY_ID, ITEM_ID, CATEGORY_ID, ORDERING, CREATED_DATE)
+		VALUES 
+		<foreach item="itemId" index="index" collection="id" open="" separator="," close=""> 
+			(#{selectKey} + #{index} + 1, #{itemId}, #{categoryId}, #{index}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+	
+	
+	<!-- 상품 입하예정일 수정 -->
+	<update id="updateItemStockScheduleDate" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM SET
+			OPTION_STOCK_SCHEDULE_DATE = #{optionStockScheduleDate}
+		WHERE ITEM_ID = #{itemId}
+	</update>
+	
+	
+	<!-- 상품 옵션 입하예정일 수정 -->
+	<update id="updateItemOptionStockScheduleDate" parameterType="saleson.shop.item.domain.ItemOption">
+		UPDATE OP_ITEM_OPTION SET
+			OPTION_STOCK_SCHEDULE_DATE = #{optionStockScheduleDate}
+		WHERE 
+			ITEM_ID = #{itemId}
+			AND OPTION_STOCK_CODE = #{optionStockCode}
+	</update>
+
+
+	<!-- 엑셀 업로드 : 상품 삭제 
+	<update id="deleteItemByItemUserCode" parameterType="String">
+		UPDATE OP_ITEM SET
+			DATA_STATUS_CODE = '2'
+		WHERE
+			ITEM_USER_CODE = #{value}
+	</update>
+	-->
+	<!-- 엑셀 업로드 : 상품 삭제 -->
+	<update id="deleteItemByItemUserCode" parameterType="saleson.shop.item.domain.Item">
+		DELETE FROM OP_ITEM
+		WHERE
+			ITEM_USER_CODE = #{itemUserCode}
+			AND SELLER_ID = #{sellerId}
+	</update>
+	
+	
+	
+	<!-- [엑셀업로드] 상품리스트로 일괄등록 -->
+	<insert id="insertItemListForExcel">
+		INSERT INTO OP_ITEM (ITEM_ID, VENDOR_ID, SHIPMENT_ID, DELIVERY_ID, DELIVERY_CHARGE_ID, ITEM_CODE, ITEM_USER_CODE, ITEM_NAME, ITEM_TYPE, ITEM_LABEL, SOLD_OUT, ITEM_TYPE1, ITEM_TYPE2, ITEM_TYPE3, ITEM_TYPE4, ITEM_TYPE5, ITEM_NEW_FLAG, DISPLAY_FLAG, ORIGIN_COUNTRY, MANUFACTURER, BRAND, COLOR, NONMEMBER_ORDER_TYPE, TAX_TYPE, ITEM_PRICE, SALE_PRICE, SALE_PRICE_NONMEMBER, SALE_POINT, SUPPLY_PRICE, VENDOR_DISCOUNT_FLAG, VENDOR_DISCOUNT_TYPE, VENDOR_DISCOUNT_AMOUNT, SALE_FEE_TYPE, SALE_FEE_RATE, STOCK_FLAG, STOCK_QUANTITY, STOCK_SCHEDULE_AUTO_FLAG, STOCK_SCHEDULE_TYPE, OPTION_STOCK_SCHEDULE_DATE, STOCK_SCHEDULE_TEXT, ORDER_MIN_QUANTITY, ORDER_MAX_QUANTITY, SALE_QUANTITY, ITEM_OPTION_FLAG, ITEM_OPTION_TITLE1, ITEM_OPTION_TITLE2, ITEM_OPTION_TITLE3, ITEM_ADDITION_FLAG, FREE_GIFT_FLAG, FREE_GIFT_NAME, ITEM_KEYWORD, SIMPLE_CONTENT, LIST_CONTENT, DETAIL_CONTENT, DETAIL_CONTENT_MOBILE, USE_MANUAL, MAKE_MANUAL, ITEM_IMAGE, TEAM, OPENTIME, BASE_ITEM, OTHER_FLAG, RECOMMEND_FLAG, RELATION_ITEM_DISPLAY_TYPE, DELIVERY_INFO, HITS, SEO_TITLE, SEO_NO_INDEX_DISPLAY_FLAG, SEO_KEYWORDS, SEO_DESCRIPTION, SEO_HEADER_CONTENTS1, SEO_THEMAWORD_TITLE, SEO_THEMAWORD_DESCRIPTION, DATA_STATUS_CODE, UPDATED_USER_ID, UPDATED_DATE, CREATED_USER_ID, CREATED_DATE)
+		VALUES 
+	
+		<foreach item="item" index="index" collection="list" open="" separator="," close=""> 
+			(#{item.itemId}, #{item.vendorId}, #{item.shipmentId}, #{item.deliveryId}, #{item.deliveryChargeId}, #{item.itemCode}, #{item.itemUserCode}, #{item.itemName}, #{item.itemType}, #{item.itemLabel}, #{item.soldOut},  #{item.itemType1}, #{item.itemType2}, #{item.itemType3}, #{item.itemType4}, #{item.itemType5}, #{item.itemNewFlag}, #{item.displayFlag}, #{item.originCountry}, #{item.manufacturer}, #{item.brand}, #{item.color}, #{item.nonmemberOrderType}, #{item.taxType}, #{item.itemPrice}, #{item.salePrice}, #{item.salePriceNonmember}, #{item.salePoint}, #{item.supplyPrice}, #{item.vendorDiscountFlag}, #{item.vendorDiscountType}, #{item.vendorDiscountAmount}, #{item.saleFeeType}, #{item.saleFeeRate}, #{item.stockFlag}, #{item.stockQuantity}, #{item.stockScheduleAutoFlag}, #{item.stockScheduleType}, #{item.stockScheduleDate}, #{item.stockScheduleText}, #{item.orderMinQuantity}, #{item.orderMaxQuantity}, #{item.saleQuantity}, #{item.itemOptionFlag}, #{item.itemOptionTitle1}, #{item.itemOptionTitle2}, #{item.itemOptionTitle3}, #{item.itemAdditionFlag}, #{item.freeGiftFlag}, #{item.freeGiftName}, #{item.itemKeyword}, #{item.simpleContent}, #{item.listContent}, #{item.detailContent}, #{item.detailContentMobile}, #{item.useManual}, #{item.makeManual}, #{item.itemImage}, #{item.team}, #{item.opentime}, #{item.baseItem}, #{item.otherFlag}, #{item.recommendFlag}, #{item.relationItemDisplayType}, #{item.deliveryInfo}, #{item.hits}, #{item.seo.title}, #{item.seo.noIndexDisplayFlag}, #{item.seo.keywords}, #{item.seo.description}, #{item.seo.headerContents1}, #{item.seo.themawordTitle}, #{item.seo.themawordDescription}, #{item.dataStatusCode}, #{item.updatedUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{item.createdUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+	
+	<!-- [엑셀업로드] 상품수정 -->
+	<update id="updateItemForExcel" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM 
+		<set>
+			ITEM_NAME = #{itemName}, 
+			SELLER_ID = #{sellerId},
+			MANUFACTURER = #{manufacturer},
+			BRAND_ID = #{brandId},
+			BRAND = #{brand},
+			ORIGIN_COUNTRY = #{originCountry},
+			WEIGHT = #{weight},
+			DISPLAY_QUANTITY = #{displayQuantity},
+			TAX_TYPE = #{taxType},
+			FREE_GIFT_FLAG = #{freeGiftFlag},
+			FREE_GIFT_NAME = #{freeGiftName},
+			ITEM_SUMMARY = #{itemSummary},
+			ITEM_KEYWORD = #{itemKeyword},
+			SALE_PRICE = #{salePrice},
+			COMMISSION_TYPE = #{commissionType},
+			COMMISSION_RATE = #{commissionRate},
+			ITEM_PRICE = #{itemPrice},
+			COST_PRICE = #{costPrice},
+			STOCK_FLAG = #{stockFlag},
+			SOLD_OUT = #{soldOut},
+			ORDER_MIN_QUANTITY = #{orderMinQuantity},
+			ORDER_MAX_QUANTITY = #{orderMaxQuantity},
+			COUPON_USE_FLAG = #{couponUseFlag},
+			SELLER_DISCOUNT_FLAG = #{sellerDiscountFlag},
+			SELLER_DISCOUNT_AMOUNT = #{sellerDiscountAmount},
+			SELLER_DISCOUNT_TYPE = #{sellerDiscountType},
+			SELLER_POINT_FLAG = #{sellerPointFlag},
+			DISPLAY_FLAG = #{displayFlag},
+			DELIVERY_TYPE = #{deliveryType},
+			DELIVERY_COMPANY_ID = #{deliveryCompanyId},
+			SHIPMENT_ID = #{shipmentId},
+			SHIPPING_TYPE = #{shippingType},
+			SHIPPING = #{shipping},
+			SHIPPING_FREE_AMOUNT = #{shippingFreeAmount},
+			SHIPPING_ITEM_COUNT = #{shippingItemCount},
+			SHIPPING_EXTRA_CHARGE1 = #{shippingExtraCharge1},
+			SHIPPING_EXTRA_CHARGE2 = #{shippingExtraCharge2},
+			QUICK_DELIVERY_EXTRA_CHARGE_FLAG = #{quickDeliveryExtraChargeFlag},
+			ITEM_RETURN_FLAG = #{itemReturnFlag},
+			SHIPMENT_RETURN_ID = #{shipmentReturnId},
+			SHIPPING_RETURN = #{shippingReturn},
+			HEADER_CONTENT_FLAG = #{headerContentFlag},
+			FOOTER_CONTENT_FLAG = #{footerContentFlag},
+			DETAIL_CONTENT = #{detailContent},
+			DETAIL_CONTENT_MOBILE = #{detailContentMobile},
+			UPDATED_USER_ID = #{updatedUserId}, 
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		</set>
+		WHERE ITEM_USER_CODE = #{itemUserCode}
+	</update>
+	
+	<!-- [엑셀업로드] 상품수정 (SUB) -->
+	<update id="updateItemSubForExcel" parameterType="saleson.shop.item.domain.ExcelItemSub">
+	
+		UPDATE OP_ITEM 
+		
+		<set>
+			SEO_TITLE = #{seoTitle}, 
+			SEO_KEYWORDS = #{seoKeywords}, 
+			SEO_DESCRIPTION = #{seoDescription}, 
+			SEO_HEADER_CONTENTS1 = #{seoHeaderContents1},
+			SEO_THEMAWORD_TITLE = #{seoThemawordTitle}, 
+			SEO_THEMAWORD_DESCRIPTION = #{seoThemawordDescription}
+		</set>
+		WHERE ITEM_USER_CODE = #{itemUserCode}
+	</update>
+	
+	<!-- [엑셀업로드] 상품 컨텐츠 정보를 업데이트 한다. (DETAIL_CONTENT_TOP, DETAIL_CONTENT)  -->
+	<update id="updateItemContentByItemIdForExcel" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM 
+		<set>
+			<if test='itemNoticeCode != null and itemNoticeCode != ""'>
+				ITEM_NOTICE_CODE = #{itemNoticeCode}
+			</if>
+		</set>
+		WHERE ITEM_ID = #{itemId}
+	</update>
+	
+	<!-- [엑셀업로드] 모바일용 상품 컨텐츠 정보를 업데이트 한다. (DETAIL_CONTENT_TOP_MOBILE, DETAIL_CONTENT_MOBILE)  -->
+	<update id="updateItemContentMobileByItemIdForExcel" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM 
+		
+		<set>
+			DETAIL_CONTENT_MOBILE = #{detailContentMobile}
+		</set>
+		WHERE ITEM_ID = #{itemId}
+	</update>
+	
+	
+	<!-- [엑셀업로드] 상품수정 (ITEM_CHECK) -->
+	<update id="updateItemCheckForExcel" parameterType="saleson.shop.item.domain.ExcelItemCheck">
+	
+		UPDATE OP_ITEM 
+		
+		<set>
+			<if test='team != ""'>
+				TEAM = #{team}, 
+			</if>
+			<if test='displayFlag != ""'>
+				DISPLAY_FLAG = #{displayFlag}, 
+			</if>
+			<if test='seoIndexFlag != ""'>
+				SEO_INDEX_FLAG = #{seoIndexFlag}, 
+			</if>
+			<if test='itemLabel != ""'>
+				ITEM_LABEL = #{itemLabel}, 
+			</if>
+			<if test='itemNewFlag != ""'>
+				ITEM_NEW_FLAG = #{itemNewFlag}, 
+			</if>
+			
+			STOCK_QUANTITY = #{stockQuantity}, 
+				
+			<if test='itemLabelSoldOut != ""'>
+				ITEM_LABEL_SOLD_OUT = #{itemLabelSoldOut}, 
+			</if>
+			<if test='stockScheduleType != ""'>
+				STOCK_SCHEDULE_TYPE = #{stockScheduleType}, 
+			</if>
+		
+			<if test='stockScheduleDate != ""'>
+				OPTION_STOCK_SCHEDULE_DATE = #{optionStockScheduleDate}, 
+			</if>
+			<if test='stockScheduleText != ""'>
+				STOCK_SCHEDULE_TEXT = #{optionStockScheduleText},
+			</if>
+		</set>
+		WHERE ITEM_USER_CODE = #{itemUserCode}
+	</update>
+	
+	
+
+	<!-- [엑셀업로드] 상품 옵션 등록 -->
+	<insert id="insertItemOption" parameterType="saleson.shop.item.domain.ItemOption">
+		INSERT INTO OP_ITEM_OPTION (ITEM_OPTION_ID, ITEM_ID, ERP_ITEM_CODE, OPTION_TYPE, OPTION_DISPLAY_TYPE, OPTION_NAME1, OPTION_NAME2, OPTION_NAME3, OPTION_STOCK_CODE, OPTION_STOCK_FLAG, OPTION_QUANTITY, OPTION_SOLD_OUT_FLAG, OPTION_PRICE, OPTION_COST_PRICE, OPTION_STOCK_QUANTITY, OPTION_DISPLAY_FLAG, OPTION_ORDERING, CREATED_USER_ID, CREATED_DATE)
+		VALUES (#{itemOptionId}, #{itemId}, #{erpItemCode}, #{optionType}, #{optionDisplayType}, #{optionName1}, #{optionName2}, #{optionName3}, #{optionStockCode}, #{optionStockFlag}, #{optionQuantity}, #{optionSoldOutFlag}, #{optionPrice}, #{optionCostPrice}, #{optionStockQuantity}, #{optionDisplayFlag}, #{optionOrdering}, #{createdUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	
+	<!-- [엑셀업로드] 상품 옵션 등록 -->
+	<insert id="insertItemOptionListForExcel">
+		INSERT INTO OP_ITEM_OPTION (ITEM_OPTION_ID, ITEM_ID, ERP_ITEM_CODE, OPTION_TYPE, OPTION_DISPLAY_TYPE, OPTION_NAME1, OPTION_NAME2, OPTION_NAME3, OPTION_STOCK_CODE, OPTION_STOCK_FLAG, OPTION_QUANTITY, OPTION_SOLD_OUT_FLAG, OPTION_PRICE, OPTION_COST_PRICE, OPTION_STOCK_QUANTITY, OPTION_DISPLAY_FLAG, OPTION_ORDERING, CREATED_USER_ID, CREATED_DATE)
+		VALUES 
+			<foreach item="itemOption" index="index" collection="list" open="" separator="," close=""> 
+				(#{itemOption.itemOptionId}, #{itemOption.itemId}, #{itemOption.erpItemCode}, #{itemOption.optionType}, #{itemOption.optionDisplayType}, #{itemOption.optionName1}, #{itemOption.optionName2}, #{itemOption.optionName3}, #{itemOption.optionStockCode}, #{itemOption.optionStockFlag}, #{itemOption.optionQuantity}, #{itemOption.optionSoldOutFlag}, #{itemOption.optionPrice}, #{itemOption.optionCostPrice}, #{itemOption.optionStockQuantity}, #{itemOption.optionDisplayFlag}, #{itemOption.optionOrdering}, #{itemOption.createdUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+			</foreach>
+		
+	</insert>
+	
+	
+	<!-- [엑셀업로드] 상품에 설정된 옵션을 모두 삭제 -->
+	<delete id="deleteItemOptionByItemId" parameterType="int">
+		DELETE FROM OP_ITEM_OPTION
+		WHERE ITEM_ID = #{value}
+	</delete>
+	
+	
+	<!-- [엑셀업로드] 상품상세정보(테이블) 일괄등록 -->
+	<insert id="insertItemInfoListForExcel">
+		INSERT INTO OP_ITEM_INFO (ITEM_INFO_ID, ITEM_ID, INFO_CODE, TITLE, DESCRIPTION, CREATED_DATE)
+		VALUES 
+		
+		<foreach item="itemInfo" index="index" collection="list" open="" separator="," close=""> 
+			(#{itemInfo.itemInfoId}, #{itemInfo.itemId}, #{itemInfo.infoCode}, #{itemInfo.title}, #{itemInfo.description}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+	
+	
+	<insert id="insertItemInfo" parameterType="saleson.shop.item.domain.ItemInfo">
+		INSERT INTO OP_ITEM_INFO (ITEM_INFO_ID, ITEM_ID, INFO_CODE, TITLE, DESCRIPTION, CREATED_DATE)
+		VALUES (#{itemInfoId}, #{itemId}, #{infoCode}, #{title}, #{description}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<!-- [엑셀업로드] 상품상세정보(테이블) 모두 삭제 -->
+	<delete id="deleteItemInfoByItemId" parameterType="int">
+		DELETE FROM OP_ITEM_INFO
+		WHERE ITEM_ID = #{value}
+	</delete>
+	
+	
+	<!-- [엑셀업로드] 상품상세정보(테이블-모바일) 일괄등록 -->
+	<insert id="insertItemInfoMobileListForExcel">
+		INSERT INTO OP_ITEM_INFO_MOBILE (ITEM_INFO_ID, ITEM_ID, INFO_CODE, TITLE, DESCRIPTION, CREATED_DATE)
+		VALUES 
+		
+		<foreach item="itemInfo" index="index" collection="list" open="" separator="," close=""> 
+			(#{itemInfo.itemInfoId}, #{itemInfo.itemId}, #{itemInfo.infoCode}, #{itemInfo.title}, #{itemInfo.description}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+	
+	
+	<!-- [엑셀업로드] 상품상세정보(테이블-모바일) 모두 삭제 -->
+	<delete id="deleteItemInfoMobileByItemId" parameterType="int">
+		DELETE FROM OP_ITEM_INFO_MOBILE
+		WHERE ITEM_ID = #{value}
+	</delete>
+	
+
+
+	<!-- [엑셀업로드] 상품 옵션 처리 후 상품의 옵션 플래그 값을 업데이트 -->
+	<delete id="updateItemOptionFlag" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM SET
+			ITEM_OPTION_FLAG = #{itemOptionFlag}
+			<if test="stockFlag != null and stockFlag != ''">
+				<if test='stockFlag == "N"'>
+					, STOCK_FLAG = 'N'
+					, STOCK_QUANTITY = -1
+				</if>
+			</if>
+			<if test="itemOptionType != null and itemOptionType != ''">
+				, ITEM_OPTION_TYPE = #{itemOptionType}
+			</if>
+		WHERE 
+			ITEM_ID = #{itemId}
+	</delete>
+	
+	
+	<!-- [엑셀업로드] 상품 옵션 등록 -->
+	<insert id="insertItemImageListForExcel">
+		INSERT INTO OP_ITEM_IMAGE (ITEM_IMAGE_ID, ITEM_ID, IMAGE_NAME, ORDERING, CREATED_DATE)
+		VALUES 
+		<foreach item="itemImage" index="index" collection="list" open="" separator="," close=""> 
+			(#{itemImage.itemImageId}, #{itemImage.itemId}, #{itemImage.imageName}, #{itemImage.ordering}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+	
+	
+	<!--  [엑셀업로드] 상품 이미지 중 첫번째 항목은 상품 목록 이미지로 업데이트 -->
+	<update id="updateItemImageInfoByItemImage" parameterType="saleson.shop.item.domain.ItemImage">
+		UPDATE OP_ITEM SET
+			ITEM_IMAGE = #{imageName}
+		WHERE
+			ITEM_ID = #{itemId}
+	</update>
+	
+	
+	<!--  [엑셀업로드] 상품 이미지 중 첫번째 항목은 상품 목록 이미지로 업데이트 -->
+	<update id="updateItemKeywordForExcel" parameterType="saleson.shop.item.domain.ExcelItemKeyword">
+		UPDATE OP_ITEM SET
+			ITEM_KEYWORD = #{itemKeyword}
+		WHERE
+			ITEM_USER_CODE = #{itemUserCode}
+	</update>
+	
+	
+	
+	<!-- [엑셀업로드] 상품에 설정된 옵션을 모두 삭제 -->
+	<delete id="deleteItemImageByItemId" parameterType="int">
+		DELETE FROM OP_ITEM_IMAGE
+		WHERE ITEM_ID = #{value}
+	</delete>
+	
+	
+	<!-- [엑셀업로드] 상품 카테고리 일괄등록 -->
+	<insert id="insertItemCategoryListForExcel">
+		INSERT INTO OP_ITEM_CATEGORY (ITEM_CATEGORY_ID, CATEGORY_ID, ITEM_ID, ORDERING, CREATED_DATE)
+		VALUES 
+		<foreach item="itemCategory" index="index" collection="list" open="" separator="," close=""> 
+			(#{itemCategory.itemCategoryId}, #{itemCategory.categoryId}, #{itemCategory.itemId}, #{itemCategory.ordering}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+	
+	
+	<!-- [엑셀업로드] 상품에 설정된 카테고리를 모두 삭제 -->
+	<delete id="deleteItemCategoryByItemId" parameterType="int">
+		DELETE FROM OP_ITEM_CATEGORY
+		WHERE ITEM_ID = #{value}
+	</delete>
+
+	<!-- [엑셀업로드] 추가구성상품 일괄등록 -->
+	<insert id="insertItemAdditionListForExcel">
+		INSERT INTO OP_ITEM_ADDITION (ITEM_ADDITION_ID, ITEM_ID, ADDITION_ITEM_ID, ORDERING, CREATED_DATE)
+		VALUES
+		<foreach item="itemAddition" index="index" collection="list" open="" separator="," close="">
+			(#{itemAddition.itemAdditionId}, #{itemAddition.itemId}, #{itemAddition.additionItemId}, #{itemAddition.ordering}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+
+	<!-- [엑셀업로드] 추가구성상품 모두 삭제 -->
+	<delete id="deleteItemAdditionByItemId" parameterType="int">
+		DELETE FROM OP_ITEM_ADDITION
+		WHERE ITEM_ID = #{value}
+	</delete>
+
+	<!-- [엑셀업로드] 추가구성상품을 처리 후 상품(ITEM)의 ITEM_ADDITION_FLAG를 업데이트 한다. -->
+	<delete id="updateAdditionItemFlag" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM SET
+			ITEM_ADDITION_FLAG = #{itemAdditionFlag}
+		WHERE
+			ITEM_ID = #{itemId}
+	</delete>
+
+	<!-- [엑셀업로드] 관련상품 일괄등록 -->
+	<insert id="insertItemRelationListForExcel">
+		INSERT INTO OP_ITEM_RELATION (ITEM_RELATION_ID, ITEM_ID, RELATED_ITEM_ID, ORDERING, CREATED_DATE)
+		VALUES 
+		<foreach item="itemRelation" index="index" collection="list" open="" separator="," close=""> 
+			(#{itemRelation.itemRelationId}, #{itemRelation.itemId}, #{itemRelation.relatedItemId}, #{itemRelation.ordering}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+
+	<!-- [엑셀업로드] 관련상품 모두 삭제 -->
+	<delete id="deleteItemRelationByItemId" parameterType="int">
+		DELETE FROM OP_ITEM_RELATION
+		WHERE ITEM_ID = #{value}
+	</delete>
+
+	<!-- [엑셀업로드] 관련상품을 처리 후 상품(ITEM)의 RELATION_ITEM_DISPLAY_TYPE를 업데이트 한다. -->
+	<delete id="updateRelationItemDisplayType" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM SET
+			RELATION_ITEM_DISPLAY_TYPE = #{relationItemDisplayType}
+		WHERE
+			ITEM_ID = #{itemId}
+	</delete>
+
+	<!-- [엑셀업로드] 포인트설정 일괄등록 -->
+	<insert id="insertItemPointConfigListForExcel">
+		INSERT INTO OP_POINT_CONFIG (POINT_CONFIG_ID, CONFIG_TYPE, PERIOD_TYPE, POINT_TYPE, POINT, START_DATE, START_TIME, END_DATE, END_TIME, REPEAT_DAY, ITEM_ID, STATUS_CODE, CREATED_USER_ID, CREATED_DATE)
+		VALUES 
+	
+		<foreach item="pointConfig" index="index" collection="list" open="" separator="," close=""> 
+			(#{pointConfig.pointConfigId}, #{pointConfig.configType}, #{pointConfig.periodType}, #{pointConfig.pointType}, #{pointConfig.point}, #{pointConfig.startDate}, #{pointConfig.startTime}, #{pointConfig.endDate}, #{pointConfig.endTime}, #{pointConfig.repeatDay}, #{pointConfig.itemId}, #{pointConfig.statusCode}, #{pointConfig.createdUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+
+	<!-- [엑셀업로드] 포인트설정 모두 삭제 -->
+	<delete id="deleteItemPointConfigByItemId" parameterType="int">
+		DELETE FROM OP_POINT_CONFIG
+		WHERE ITEM_ID = #{value}
+	</delete>
+
+</mapper>

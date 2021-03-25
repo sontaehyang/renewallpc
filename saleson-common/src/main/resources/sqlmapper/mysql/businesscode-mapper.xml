@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.businesscode.BusinessCodeMapper">
+
+	<resultMap id="BusinessCodeResult" type="saleson.shop.businesscode.domain.BusinessCode">
+		<result property="businessCodeId" column="BUSINESS_CODE_ID" />
+		<result property="shopConfigId" column="SHOP_CONFIG_ID" />
+		<result property="codeType" column="CODE_TYPE" />
+		<result property="language" column="LANGUAGE" />
+		<result property="id" column="ID" />
+		<result property="ordering" column="ORDERING" />
+		<result property="useYn" column="USE_YN" />
+	</resultMap>
+
+	
+	
+	<select id="getBusinessCodeCount" parameterType="saleson.shop.businesscode.domain.BusinessCode" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM OP_BUSINESS_CODE 
+		<where>
+			SHOP_CONFIG_ID = #{shopConfigId}
+			<if test="id != null and id != ''">
+				AND ID = TRIM(#{id})
+			</if>
+			<if test="businessCodeId != null and businessCodeId != ''">
+				AND BUSINESS_CODE_ID = #{businessCodeId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getBusinessCodeListAll" parameterType="saleson.shop.businesscode.domain.BusinessCode" resultMap="BusinessCodeResult">
+		SELECT * 
+		FROM OP_BUSINESS_CODE 
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+		ORDER BY ORDERING ASC
+	</select>
+	
+	<select id="getBusinessCodeList" parameterType="saleson.shop.businesscode.domain.BusinessCode" resultMap="BusinessCodeResult">
+		SELECT * 
+		FROM OP_BUSINESS_CODE 
+		WHERE SHOP_CONFIG_ID = #{shopConfigId} AND USE_YN = 1
+		ORDER BY ORDERING ASC
+	</select>
+	
+	<select id="getBusinessCode" parameterType="Integer" resultMap="BusinessCodeResult">
+		SELECT * 
+		FROM OP_BUSINESS_CODE 
+		WHERE BUSINESS_CODE_ID = #{value}
+	</select>
+	
+	<insert id="insertBusinessCode" parameterType="saleson.shop.businesscode.domain.BusinessCode">
+		INSERT INTO OP_BUSINESS_CODE (BUSINESS_CODE_ID,SHOP_CONFIG_ID, CODE_TYPE, LANGUAGE, ID, ORDERING, USE_YN)
+		VALUES (#{businessCodeId},#{shopConfigId}, #{codeType}, #{language}, #{id}, #{ordering}, #{useYn})
+	</insert>
+	
+	<update id="updateBusinessCode" parameterType="saleson.shop.businesscode.domain.BusinessCode">
+		UPDATE OP_BUSINESS_CODE SET
+			ORDERING = #{ordering}
+			<if test="useYn != null or useYn != ''">
+				, USE_YN = #{useYn}
+			</if>
+		WHERE BUSINESS_CODE_ID = #{businessCodeId}
+	</update>
+	
+	<update id="updateOrdering" parameterType="saleson.shop.businesscode.domain.BusinessCode">
+		UPDATE OP_BUSINESS_CODE SET
+			<if test="ordering > previousOrdering">
+				ORDERING = ORDERING - 1
+				WHERE ORDERING <![CDATA[<=]]> #{ordering} AND ORDERING > #{previousOrdering}
+			</if>
+			<if test="previousOrdering > ordering">
+				ORDERING = ORDERING + 1
+				WHERE ORDERING >= #{ordering} AND ORDERING <![CDATA[<]]> #{previousOrdering}
+			</if>
+	</update>
+	
+	<delete id="deleteBusinessCode" parameterType="Integer">
+		DELETE FROM OP_BUSINESS_CODE 
+		WHERE BUSINESS_CODE_ID = #{businessCodeId}
+	</delete>
+	
+	<update id="updateDeleteOrdering" parameterType="saleson.shop.businesscode.domain.BusinessCode">
+		UPDATE OP_BUSINESS_CODE SET
+			ORDERING = ORDERING - 1
+		WHERE ORDERING > #{ordering}
+	</update>
+	
+	<update id="updateInsertOrdering" parameterType="saleson.shop.businesscode.domain.BusinessCode">
+		UPDATE OP_BUSINESS_CODE SET
+			ORDERING = ORDERING + 1
+		WHERE ORDERING >= #{ordering}
+	</update>
+</mapper>

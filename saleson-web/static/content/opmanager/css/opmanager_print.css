@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+#header,
+.lnb,
+#footer,
+.btn_print,
+.btn,
+button,
+a.sort span,
+.chart_horizontal .bar .tip {
+	display: none;
+}
+.contents {
+	margin-left: 0;
+}
+.sort_area {
+	border: 1px solid #ddd;
+	background: none;
+}
+.chart_horizontal .bar,
+.chart_vertical .bar {
+	/* background: #aaa; */
+	border: 1px solid #ddd;
+}
+.chart_vertical .bar_wrap {
+	background: none;
+}
+.chart_vertical .bar {
+	border-bottom: 0;
+}
+.chart_horizontal .bar {
+	margin-left: -1px;
+}
+a.sort.on span {
+	display: inline;
+}
+.board_list > table th,
+.board_list > * > table th {
+	border-bottom: 1px solid #ddd;
+}
+.pagination strong {
+	text-decoration: underline;
+}

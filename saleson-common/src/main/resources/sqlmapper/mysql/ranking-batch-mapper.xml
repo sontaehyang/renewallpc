@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.rankingbatch.RankingBatchMapper">
+	
+	<update id="updateDataStatusByParam" parameterType="saleson.shop.rankingbatch.support.RankingBatchParam">
+		UPDATE OP_RANKING_BATCH SET DATA_STATUS_CODE = '1'
+		WHERE
+			RANKING_TYPE = #{rankingType}
+			AND RANKING_CODE = #{rankingCode}
+			AND DATA_STATUS_CODE = '0'
+	</update>
+	
+	<delete id="deleteDataStatusByParam" parameterType="saleson.shop.rankingbatch.support.RankingBatchParam">
+		DELETE FROM OP_RANKING_BATCH
+		WHERE
+			RANKING_TYPE = #{rankingType}
+			AND RANKING_CODE = #{rankingCode}
+			AND DATA_STATUS_CODE = '1'
+	</delete>
+	
+	<insert id="insertItemRankingBatch" parameterType="saleson.shop.rankingbatch.support.RankingBatchParam">
+		INSERT INTO OP_RANKING_BATCH (RANKING_TYPE, RANKING_CODE, ITEM_ID, ORDERING, DATA_STATUS_CODE)
+		SELECT
+			#{rankingType} AS RANKING_TYPE,
+			#{rankingCode} AS RANKING_CODE,
+			G.ITEM_ID AS ITEM_ID,
+			(@RNUM := @RNUM + 1) AS ORDERING,
+			'0' AS DATA_STATUS_CODE
+		FROM (
+			SELECT
+				SUM(TT.WEIGHT) AS WEIGHT,
+				TT.ITEM_ID
+			FROM (
+				<trim prefix="" suffixOverrides="UNION ALL">
+					<if test="salePriceWeight > 0">
+						SELECT T.* 
+						FROM (
+							SELECT 
+								(@RNUM := @RNUM - 1) * #{salePriceWeight} AS WEIGHT, 
+								I.ITEM_ID
+							FROM (
+								SELECT 
+									OI.ITEM_ID, 
+									SUM(OI.SALE_PRICE * OI.QUANTITY) AS TOTAL_SALE_PRICE,
+									<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />
+								FROM 
+								
+									<choose>
+										<when test='rankingType == "2" or rankingType == "3"'>
+											OP_CATEGORY C
+												INNER JOIN OP_ITEM_CATEGORY IC ON C.CATEGORY_ID = IC.CATEGORY_ID
+												INNER JOIN OP_ITEM I ON IC.ITEM_ID = I.ITEM_ID
+												INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+												INNER JOIN OP_ORDER_ITEM OI ON I.ITEM_ID = OI.ITEM_ID
+										</when>
+										<otherwise>
+											OP_ORDER_ITEM OI
+												INNER JOIN OP_ITEM I ON OI.ITEM_ID = I.ITEM_ID
+												INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+										</otherwise>
+									</choose>
+									
+									<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+									
+								<where>
+									OI.CANCEL_FLAG = 'N'
+									AND OI.PAY_DATE BETWEEN DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -#{salePriceDays} DAY), '%Y%m%d%H%i%s') AND DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+									<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+									AND I.FRONT_DISPLAY_FLAG = 'Y'
+									<choose>
+										<when test='rankingType == "2"'>
+											AND C.CATEGORY_FLAG = 'Y'
+											AND C.CATEGORY_CLASS1 IN
+											<foreach item="item" index="index" collection="groupCategoryClassCodes" open="(" separator="," close=")"> 
+												#{item}
+											</foreach>
+										</when>
+										<when test='rankingType == "3"'>
+											AND C.CATEGORY_FLAG = 'Y'
+											AND C.CATEGORY_CODE LIKE CONCAT(SUBSTRING(#{categoryCode}, 1, #{categoryLevel} * 3), '%')
+										</when>
+									</choose>
+								</where>
+								
+								GROUP BY OI.ITEM_ID
+								
+							) I, (SELECT @RNUM := #{limit} + 1) R
+							WHERE 
+								I.ITEM_SOLD_OUT_FLAG = 'N'
+							ORDER BY I.TOTAL_SALE_PRICE DESC
+							LIMIT #{limit}
+						) T
+						
+						UNION ALL
+					</if>
+					
+					<if test="saleCountWeight > 0">
+						SELECT T.*
+						FROM (
+						
+							SELECT 
+								(@RNUM := @RNUM - 1) * #{saleCountWeight} AS WEIGHT, 
+								I.ITEM_ID
+							FROM (
+								SELECT 
+									OI.ITEM_ID, 
+									SUM(OI.QUANTITY) AS TOTAL_SALE_QUANTITY,
+									<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />
+								FROM
+								
+									<choose>
+										<when test='rankingType == "2" or rankingType == "3"'>
+											OP_CATEGORY C 
+												INNER JOIN OP_ITEM_CATEGORY IC ON C.CATEGORY_ID = IC.CATEGORY_ID
+												INNER JOIN OP_ITEM I ON IC.ITEM_ID = I.ITEM_ID
+												INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+												INNER JOIN OP_ORDER_ITEM OI ON I.ITEM_ID = OI.ITEM_ID
+										</when>
+										<otherwise>
+											OP_ORDER_ITEM OI
+												INNER JOIN OP_ITEM I ON OI.ITEM_ID = I.ITEM_ID
+												INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+										</otherwise>
+									</choose>
+									
+									<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+								<where>
+									OI.CANCEL_FLAG = 'N'
+									AND OI.PAY_DATE BETWEEN DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -#{saleCountDays} DAY), '%Y%m%d%H%i%s') AND DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+									<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+									AND I.FRONT_DISPLAY_FLAG = 'Y'
+									<choose>
+										<when test='rankingType == "2"'>
+											AND C.CATEGORY_FLAG = 'Y'
+											AND C.CATEGORY_CLASS1 IN
+											<foreach item="item" index="index" collection="groupCategoryClassCodes" open="(" separator="," close=")"> 
+												#{item}
+											</foreach>
+										</when>
+										<when test='rankingType == "3"'>
+											AND C.CATEGORY_FLAG = 'Y'
+											AND C.CATEGORY_CODE LIKE CONCAT(SUBSTRING(#{categoryCode}, 1, #{categoryLevel} * 3), '%')
+										</when>
+									</choose>
+								</where>
+								
+								GROUP BY ITEM_ID
+								
+							) I, (SELECT @RNUM := #{limit} + 1) R
+							WHERE 
+								I.ITEM_SOLD_OUT_FLAG = 'N'
+							ORDER BY I.TOTAL_SALE_QUANTITY DESC
+							LIMIT #{limit}
+						) T
+						
+						UNION ALL
+					</if>
+					
+					<if test="itemHitWeight > 0">
+						SELECT T.*
+						FROM (
+						
+							SELECT 
+								(@RNUM := @RNUM - 1) * #{itemHitWeight} AS WEIGHT, 
+								I.ITEM_ID
+							FROM (
+								SELECT 
+									I.ITEM_ID, 
+									I.HITS
+								FROM 
+									
+									<choose>
+										<when test='rankingType == "2" or rankingType == "3"'>
+											OP_CATEGORY C 
+												INNER JOIN OP_ITEM_CATEGORY IC ON C.CATEGORY_ID = IC.CATEGORY_ID
+												INNER JOIN OP_ITEM I ON IC.ITEM_ID = I.ITEM_ID
+												INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+										</when>
+										<otherwise>
+											<include refid="saleson.shop.item.ItemMapper.defaultOnSaleFromQuery" />
+										</otherwise>
+									</choose>
+									
+									<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+								<where>
+									<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+									AND I.FRONT_DISPLAY_FLAG = 'Y'
+									AND I.HITS > 0
+									AND (
+										<include refid="saleson.shop.item.ItemMapper.caseSoldOut" />
+									) = 'N'
+									<choose>
+										<when test='rankingType == "2"'>
+											AND C.CATEGORY_FLAG = 'Y'
+											AND C.CATEGORY_CLASS1 IN
+											<foreach item="item" index="index" collection="groupCategoryClassCodes" open="(" separator="," close=")"> 
+												#{item}
+											</foreach>
+										</when>
+										<when test='rankingType == "3"'>
+											AND C.CATEGORY_FLAG = 'Y'
+											AND C.CATEGORY_CODE LIKE CONCAT(SUBSTRING(#{categoryCode}, 1, #{categoryLevel} * 3), '%')
+										</when>
+									</choose>
+								</where>
+								ORDER BY I.HITS DESC
+								LIMIT #{limit}
+							) I, (SELECT @RNUM := #{limit} + 1) R
+						) T
+						
+						UNION ALL
+					</if>
+					
+					<if test="itemReviewWeight > 0">
+						SELECT T.* 
+						FROM (
+							SELECT 
+								((@RNUM := @RNUM - 1) * (I.SCORE_AVG * #{itemReviewWeight})) AS WEIGHT,
+								I.ITEM_ID
+							FROM (
+								SELECT 
+									IR.ITEM_ID,
+									AVG(IR.SCORE) AS SCORE_AVG,
+									COUNT(IR.ITEM_ID) AS TOTAL_COUNT
+								FROM 
+								
+									<choose>
+										<when test='rankingType == "2" or rankingType == "3"'>
+											OP_CATEGORY C 
+												INNER JOIN OP_ITEM_CATEGORY IC ON C.CATEGORY_ID = IC.CATEGORY_ID
+												INNER JOIN OP_ITEM I ON IC.ITEM_ID = I.ITEM_ID
+												INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+												INNER JOIN OP_ITEM_REVIEW IR ON I.ITEM_ID = IR.ITEM_ID
+										</when>
+										<otherwise>
+											<include refid="saleson.shop.item.ItemMapper.defaultOnSaleFromQuery" />
+											INNER JOIN OP_ITEM_REVIEW IR ON I.ITEM_ID = IR.ITEM_ID
+										</otherwise>
+									</choose>
+									
+									<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+								<where>
+									IR.DISPLAY_FLAG = 'Y'
+									AND IR.CREATED_DATE BETWEEN DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -#{itemReviewWeight} DAY), '%Y%m%d%H%i%s') AND DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+									AND IR.SCORE >= 4
+									<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+									AND I.FRONT_DISPLAY_FLAG = 'Y'
+									AND (
+										<include refid="saleson.shop.item.ItemMapper.caseSoldOut" />
+									) = 'N'
+									<choose>
+										<when test='rankingType == "2"'>
+											AND C.CATEGORY_FLAG = 'Y'
+											AND C.CATEGORY_CLASS1 IN
+											<foreach item="item" index="index" collection="groupCategoryClassCodes" open="(" separator="," close=")"> 
+												#{item}
+											</foreach>
+										</when>
+										<when test='rankingType == "3"'>
+											AND C.CATEGORY_FLAG = 'Y'
+											AND C.CATEGORY_CODE LIKE CONCAT(SUBSTRING(#{categoryCode}, 1, #{categoryLevel} * 3), '%')
+										</when>
+									</choose>
+								</where>
+								
+								GROUP BY IR.ITEM_ID
+							) I, (SELECT @RNUM := #{limit} + 1) R
+							ORDER BY I.SCORE_AVG DESC, I.TOTAL_COUNT DESC
+							LIMIT #{limit}
+						) T
+					</if>
+				</trim>
+			) TT GROUP BY TT.ITEM_ID
+		) G, (SELECT @RNUM := 0) R
+		ORDER BY G.WEIGHT DESC
+		LIMIT #{limit}
+	</insert>
+
+</mapper>

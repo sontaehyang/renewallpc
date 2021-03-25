@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <script type="text/javascript" src="/content/js/jquery-1.12.4.js"></script>
+        <script type="text/javascript" src="/content/modules/op.shop.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/content/css/base.css">
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <script type="text/javascript">
+            $(function() {
+                if (Shop.isMobilePage) {
+                    $('head').append('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">');
+                    $('body').load("/content/error/mobile.html");
+                } else {
+                    $('body').load("/content/error/web.html");
+                }
+            });
+        </script>
+    </body>
+</html>

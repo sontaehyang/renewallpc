@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.sendmaillog.SendMailLogMapper">
+
+	<resultMap id="SendMailLogResult" type="saleson.shop.sendmaillog.domain.SendMailLog">
+		<result property="sendMailLogId" column="SEND_MAIL_LOG_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="userId" column="USER_ID" />
+		<result property="vendorId" column="VENDOR_ID" />
+		<result property="sendLoginId" column="SEND_LOGIN_ID" />
+		<result property="sendName" column="SEND_NAME" />
+		<result property="sendEmail" column="SEND_EMAIL" />
+		<result property="receiveLoginId" column="RECEIVE_LOGIN_ID" />
+		<result property="receiveName" column="RECEIVE_NAME" />
+		<result property="receiveEmail" column="RECEIVE_EMAIL" />
+		<result property="subject" column="SUBJECT" />
+		<result property="content" column="CONTENT" />
+		<result property="sendFlag" column="SEND_FLAG" />
+		<result property="sendDate" column="SEND_DATE" />
+		<result property="susinNumber" column="SUSIN_NUMBER" />
+		<result property="sendType" column="SEND_TYPE" />
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="mailType" column="MAIL_TYPE" />
+		<result property="useTagFlag" column="USE_TAG_FLAG" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<sql id="sqlSendMailLogWhere">
+		<where>
+		
+			<if test="sendType != null and sendType != ''">
+				AND (SML.SEND_TYPE = #{sendType} OR SML.SEND_TYPE = CONCAT('hpmail-', #{sendType}))
+			</if>
+			
+			<if test="userId != null and userId != ''">
+				AND SML.USER_ID = #{userId}
+			</if>
+			
+			<if test="orderStatus != null and orderStatus != ''">
+				AND SML.ORDER_STATUS = #{orderStatus}
+			</if>
+		
+			<if test='searchStartDate != null and searchStartDate != ""'>
+				AND SML.CREATED_DATE >= CONCAT(#{searchStartDate}, "000000") 
+			</if>
+			
+			<if test='searchEndDate != null and searchEndDate != ""'>
+				AND SML.CREATED_DATE <![CDATA[<=]]> CONCAT(#{searchEndDate}, "235959") 
+			</if>
+		
+			<if test="(query != null and query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'RECEIVE_NAME'">
+						AND SML.RECEIVE_NAME = CONCAT('%', #{query}, '%')
+					</when>
+					<when test="where == 'SUBJECT'">
+						AND SML.SUBJECT LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<otherwise>
+						AND SML.ORDER_CODE = #{query}
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="getSendMailLogCount" parameterType="saleson.shop.sendmaillog.support.SendMailLogParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_SEND_MAIL_LOG SML
+		<include refid="sqlSendMailLogWhere" />
+	</select>
+	
+	<select id="getOrderMailLogCountByOrderId" parameterType="saleson.shop.sendmaillog.support.SendMailLogParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_SEND_MAIL_LOG SML
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_STATUS = #{orderStatus}
+			AND (SEND_TYPE = 'order' OR SEND_TYPE = 'hpmail-order')
+			AND MAIL_TYPE = 'buyer'
+	</select>
+	
+	<select id="getSendMailLogById" parameterType="Integer" resultMap="SendMailLogResult">
+		SELECT
+			SEND_MAIL_LOG_ID, 
+			ORDER_CODE, 
+			VENDOR_ID, 
+			SEND_LOGIN_ID, 
+			SEND_NAME, 
+			SEND_EMAIL, 
+			RECEIVE_LOGIN_ID, 
+			RECEIVE_NAME, 
+			RECEIVE_EMAIL, 
+			SUBJECT, 
+			CONTENT, 
+			SEND_FLAG, 
+			SEND_DATE, 
+			SUSIN_NUMBER, 
+			SEND_TYPE, 
+			ORDER_STATUS, 
+			MAIL_TYPE, 
+			USE_TAG_FLAG, 
+			CREATED_DATE,
+			SEND_LOGIN_ID
+		FROM OP_SEND_MAIL_LOG SML
+		WHERE SML.SEND_MAIL_LOG_ID = #{value} 
+	</select>
+	
+	<select id="getSendMailLogList" parameterType="saleson.shop.sendmaillog.support.SendMailLogParam" resultMap="SendMailLogResult">
+		<include refid="CommonMapper.paginationHeader" />
+		SELECT
+			SEND_MAIL_LOG_ID, 
+			ORDER_CODE, 
+			VENDOR_ID, 
+			SEND_LOGIN_ID, 
+			SEND_NAME, 
+			SEND_EMAIL, 
+			RECEIVE_LOGIN_ID, 
+			RECEIVE_NAME, 
+			RECEIVE_EMAIL, 
+			SUBJECT, 
+			CONTENT, 
+			SEND_FLAG, 
+			SEND_DATE, 
+			SUSIN_NUMBER, 
+			SEND_TYPE, 
+			ORDER_STATUS, 
+			MAIL_TYPE, 
+			USE_TAG_FLAG, 
+			CREATED_DATE
+		FROM OP_SEND_MAIL_LOG SML
+		<include refid="sqlSendMailLogWhere" />
+		ORDER BY SML.SEND_MAIL_LOG_ID DESC
+		<include refid="CommonMapper.paginationFooter" />
+		
+	</select>
+	
+	<select id="getSendMailLogListForOrderDetail" parameterType="saleson.shop.sendmaillog.support.SendMailLogParam" resultMap="SendMailLogResult" >
+		SELECT 
+			SEND_MAIL_LOG_ID, 
+			USER_ID,
+			ORDER_CODE, 
+			VENDOR_ID, 
+			SEND_LOGIN_ID, 
+			SEND_NAME, 
+			SEND_EMAIL, 
+			RECEIVE_LOGIN_ID, 
+			RECEIVE_NAME, 
+			RECEIVE_EMAIL, 
+			SUBJECT, 
+			CONTENT, 
+			SEND_FLAG, 
+			SEND_DATE, 
+			SUSIN_NUMBER, 
+			SEND_TYPE, 
+			ORDER_STATUS, 
+			MAIL_TYPE, 
+			USE_TAG_FLAG, 
+			CREATED_DATE
+		FROM OP_SEND_MAIL_LOG 
+		<where>
+			VENDOR_ID = #{vendorId}
+			<if test="orderCode != null and orderCode != ''">
+				AND ORDER_CODE = #{orderCode}
+			</if>
+			
+			<if test="userId != null and userId != ''">
+				AND USER_ID = #{userId}
+			</if>
+			
+			<if test="sendType != null and sendType != ''">
+				AND SEND_TYPE = #{sendType}
+			</if>
+			
+			<if test="mailType != null and mailType != ''">
+				AND MAIL_TYPE = #{mailType}
+			</if> 
+			
+		</where>
+		
+		ORDER BY SEND_MAIL_LOG_ID DESC
+	</select>
+	
+	<insert id="insertSendMailLog" parameterType="saleson.shop.sendmaillog.domain.SendMailLog">
+		INSERT INTO OP_SEND_MAIL_LOG (ORDER_CODE, USER_ID, VENDOR_ID, SEND_LOGIN_ID, SEND_NAME, SEND_EMAIL, RECEIVE_LOGIN_ID, RECEIVE_NAME, RECEIVE_EMAIL, SUBJECT, CONTENT, SEND_FLAG, SEND_DATE, SUSIN_NUMBER, SEND_TYPE, ORDER_STATUS, MAIL_TYPE, USE_TAG_FLAG, CREATED_DATE)
+		VALUES (#{orderCode}, #{userId}, #{vendorId}, #{sendLoginId}, #{sendName}, #{sendEmail}, #{receiveLoginId}, #{receiveName}, #{receiveEmail}, #{subject}, #{content}, #{sendFlag}, #{sendDate}, #{susinNumber}, #{sendType}, #{orderStatus}, #{mailType}, #{useTagFlag}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<delete id="deleteSendMailLog" parameterType="String">
+		DELETE FROM OP_SEND_MAIL_LOG WHERE SEND_MAIL_LOG_ID = #{value}
+	</delete>	
+	
+</mapper>

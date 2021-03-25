@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.calendar.CalendarMapper">
+	<resultMap id="CalendarResult" type="saleson.shop.calendar.domain.Calendar">
+		<result property="calendarId" column="CALENDAR_ID" />
+		<result property="calendarYear" column="CALENDAR_YEAR" />
+		<result property="calendarMonth" column="CALENDAR_MONTH" />
+		<result property="calendarDay" column="CALENDAR_DAY" />
+		<result property="subject" column="SUBJECT" />
+		<result property="hday" column="HDAY" />
+	</resultMap>
+	
+	<select id="getCalendarList" parameterType="saleson.shop.calendar.support.CalendarSearchParam" resultMap="CalendarResult">
+		SELECT * FROM OP_CALENDAR 
+		WHERE CALENDAR_YEAR = #{calendarYear}
+		AND CALENDAR_MONTH = #{calendarMonth}
+	</select>
+	
+	<select id="getCalendarById" parameterType="saleson.shop.calendar.support.CalendarSearchParam" resultMap="CalendarResult">
+		SELECT * FROM OP_CALENDAR 
+		WHERE CALENDAR_YEAR = #{calendarYear}
+		AND CALENDAR_MONTH = #{calendarMonth}
+		AND CALENDAR_DAY = #{calendarDay}
+	</select>
+	
+	<insert id="insertCalendar" parameterType="saleson.shop.calendar.domain.Calendar">
+		INSERT INTO OP_CALENDAR (CALENDAR_ID, CALENDAR_YEAR, CALENDAR_MONTH, CALENDAR_DAY, SUBJECT, HDAY)
+		VALUES (#{calendarId}, #{calendarYear}, #{calendarMonth}, #{calendarDay}, #{subject}, #{hday})
+	</insert>
+	
+	<delete id="deleteCalendar" parameterType="saleson.shop.calendar.domain.Calendar">
+		DELETE FROM OP_CALENDAR 
+		WHERE CALENDAR_YEAR = #{calendarYear}
+		AND CALENDAR_MONTH = #{calendarMonth}
+		AND CALENDAR_DAY = #{calendarDay}
+	</delete>
+	
+</mapper>

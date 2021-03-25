@@ -1,0 +1,1693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.categories.CategoriesMapper">
+	
+	<resultMap id="CategoriesResult" type="saleson.shop.categories.domain.Categories">
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="categoryCode" column="CATEGORY_CODE" />
+		<result property="categoryGroupId" column="CATEGORY_GROUP_ID" />
+		<result property="categoryUrl" column="CATEGORY_URL" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+		<result property="categoryType" column="CATEGORY_TYPE" />
+		<result property="categoryHeader" column="CATEGORY_HEADER" />
+		<result property="categoryMobileHtml" column="CATEGORY_MOBILE_HTML" />
+		<result property="categoryMobileHtmlHeader" column="CATEGORY_MOBILE_HTML_HEADER" />
+		<result property="categoryAdvertisement" column="CATEGORY_ADVERTISEMENT" />
+		<result property="categoryFooter" column="CATEGORY_FOOTER" />
+		<result property="categoryBanner" column="CATEGORY_BANNER" />
+		<result property="categoryClass1" column="CATEGORY_CLASS1" />
+		<result property="categoryClass2" column="CATEGORY_CLASS2" />
+		<result property="categoryClass3" column="CATEGORY_CLASS3" />
+		<result property="categoryClass4" column="CATEGORY_CLASS4" />
+		<result property="categoryLevel" column="CATEGORY_LEVEL" />
+		<result property="ordering" column="ORDERING" />
+		<result property="categoryFlag" column="CATEGORY_FLAG" />
+		<result property="accessType" column="ACCESS_TYPE" />
+		<result property="childMaxLevel" column="CHILD_MAX_LEVEL" />
+		<result property="categoryCount" column="CATEGORY_COUNT" />
+		
+		<association property="categoriesSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="TITLE" />
+			<result property="keywords" column="KEYWORDS" />
+			<result property="description" column="DESCRIPTION" />
+			<result property="headerContents1" column="HEADER_CONTENTS1" />
+			<result property="headerContents2" column="HEADER_CONTENTS2" />
+			<result property="headerContents3" column="HEADER_CONTENTS3" />
+			<result property="themawordTitle" column="THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="THEMAWORD_DESCRIPTION" />
+		</association>
+		
+		<association property="rankSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="RANK_TITLE" />
+			<result property="keywords" column="RANK_KEYWORDS" />
+			<result property="description" column="RANK_DESCRIPTION" />
+			<result property="headerContents1" column="RANK_HEADERCONTENTS1" />
+			<result property="themawordTitle" column="RANK_THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="RANK_THEMAWORD_DESCRIPTION" />
+		</association>
+		
+		<association property="reviewSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="REVIEW_TITLE" />
+			<result property="keywords" column="REVIEW_KEYWORDS" />
+			<result property="description" column="REVIEW_DESCRIPTION" />
+			<result property="headerContents1" column="REVIEW_HEADERCONTENTS1" />
+			<result property="themawordTitle" column="REVIEW_THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="REVIEW_THEMAWORD_DESCRIPTION" />
+		</association>
+	</resultMap>
+	
+	<resultMap id="CategoriesGroupResult" type="saleson.shop.categoriesteamgroup.domain.CategoriesGroup">
+		<result property="name" column="NAME" />
+		<result property="categoryGroupId" column="CATEGORY_GROUP_ID" />
+		
+	</resultMap>
+	
+	<resultMap id="CategoriesInGroupResult" type="saleson.shop.categoriesteamgroup.domain.CategoriesGroup" extends="CategoriesGroupResult">
+		<collection property="categoryList" ofType="saleson.shop.categories.domain.Categories">
+			<result property="categoryCode" column="CATEGORY_CODE" />
+			<result property="categoryName" column="CATEGORY_NAME" />
+		</collection>
+	</resultMap>
+	
+
+	<resultMap id="BreadcrumbResult" type="saleson.shop.categories.domain.Breadcrumb">
+		<result property="teamId" column="TEAM_ID" />
+		<result property="teamName" column="TEAM_NAME" />
+		<result property="teamUrl" column="TEAM_URL" />
+		<result property="groupId" column="GROUP_ID" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="groupUrl" column="GROUP_URL" />
+		<result property="categoryClass" column="CATEGORY_CLASS" />
+		<collection property="breadcrumbCategories" ofType="saleson.shop.categories.domain.BreadcrumbCategory">
+			<result property="categoryId" column="CATEGORY_ID" />
+			<result property="categoryName" column="CATEGORY_NAME" />
+			<result property="categoryUrl" column="CATEGORY_URL" />
+			<result property="indexId" column="INDEX_ID" />
+		</collection>
+	</resultMap>
+	
+	
+	<resultMap id="CategoryBaseResult" type="saleson.shop.categories.domain.Categories">
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="categoryGroupId" column="CATEGORY_GROUP_ID" />
+		<result property="categoryCode" column="CATEGORY_CODE" />
+		<result property="categoryUrl" column="CATEGORY_URL" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+		<result property="categoryHeader" column="CATEGORY_HEADER" />
+		<result property="categoryAdvertisement" column="CATEGORY_ADVERTISEMENT" />
+		<result property="categoryFooter" column="CATEGORY_FOOTER" />
+		<result property="categoryBanner" column="CATEGORY_BANNER" />
+		<result property="categoryAdvertisement" column="CATEGORY_ADVERTISEMENT" />
+		<result property="categoryMobileHtmlHeader" column="CATEGORY_MOBILE_HTML_HEADER" />
+		<result property="categoryMobileHtml" column="CATEGORY_MOBILE_HTML" />
+		<result property="categoryLevel" column="CATEGORY_LEVEL" />
+		<result property="accessType" column="ACCESS_TYPE" />
+		
+		<association property="categoriesSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="TITLE" />
+			<result property="keywords" column="KEYWORDS" />
+			<result property="description" column="DESCRIPTION" />
+			<result property="headerContents1" column="HEADER_CONTENTS1" />
+			<result property="headerContents2" column="HEADER_CONTENTS2" />
+			<result property="headerContents3" column="HEADER_CONTENTS3" />
+			<result property="themawordTitle" column="THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="THEMAWORD_DESCRIPTION" />
+		</association>
+	</resultMap>
+	
+	
+	<resultMap id="CategoryAndParentSiblingResult" type="saleson.shop.categories.domain.Categories">
+	
+		<result property="categoryUrl" column="CATEGORY_URL" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+		<result property="categoryHeader" column="CATEGORY_HEADER" />
+		<result property="categoryAdvertisement" column="CATEGORY_ADVERTISEMENT" />
+		<result property="categoryFooter" column="CATEGORY_FOOTER" />
+		<result property="categoryBanner" column="CATEGORY_BANNER" />
+		<result property="categoryLevel" column="CATEGORY_LEVEL" />
+		
+		<association property="categoriesSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="TITLE" />
+			<result property="keywords" column="KEYWORDS" />
+			<result property="description" column="DESCRIPTION" />
+			<result property="headerContents1" column="HEADER_CONTENTS1" />
+			<result property="headerContents2" column="HEADER_CONTENTS2" />
+			<result property="headerContents3" column="HEADER_CONTENTS3" />
+			<result property="themawordTitle" column="THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="THEMAWORD_DESCRIPTION" />
+		</association>
+		
+		<association property="parentCategory" javaType="saleson.shop.categories.domain.Category">
+			<result property="url" column="PARENT_CATEGORY_URL" />
+			<result property="name" column="PARENT_CATEGORY_NAME" />
+		</association>
+		
+		<collection property="siblingCategories" resultMap="SiblingCategoryResult" />
+		
+	</resultMap>
+	
+	<resultMap id="CategoryAndParentSiblingChildResult" type="saleson.shop.categories.domain.Categories">
+		<result property="categoryCode" column="CATEGORY_CODE" />
+		<result property="categoryUrl" column="CATEGORY_URL" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+		<result property="categoryHeader" column="CATEGORY_HEADER" />
+		<result property="categoryAdvertisement" column="CATEGORY_ADVERTISEMENT" />
+		<result property="categoryFooter" column="CATEGORY_FOOTER" />
+		<result property="categoryMobileHtml" column="CATEGORY_MOBILE_HTML" />
+		<result property="categoryBanner" column="CATEGORY_BANNER" />
+		<result property="categoryLevel" column="CATEGORY_LEVEL" />
+		
+		<association property="categoriesSeo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="TITLE" />
+			<result property="keywords" column="KEYWORDS" />
+			<result property="description" column="DESCRIPTION" />
+			<result property="headerContents1" column="HEADER_CONTENTS1" />
+			<result property="headerContents2" column="HEADER_CONTENTS2" />
+			<result property="headerContents3" column="HEADER_CONTENTS3" />
+			<result property="themawordTitle" column="THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="THEMAWORD_DESCRIPTION" />
+		</association>
+		
+		<association property="parentCategory" javaType="saleson.shop.categories.domain.Category">
+			<result property="url" column="PARENT_CATEGORY_URL" />
+			<result property="name" column="PARENT_CATEGORY_NAME" />
+		</association>
+		
+		<collection property="childCategories" resultMap="ChildCategoryResult" />
+		<collection property="siblingCategories" resultMap="SiblingCategoryResult" />
+		
+	</resultMap>
+	
+	<resultMap id="SiblingCategoryResult" type="saleson.shop.categories.domain.Category">
+		<result property="url" column="SIBLING_CATEGORY_URL" />
+		<result property="name" column="SIBLING_CATEGORY_NAME" />
+	</resultMap>
+	
+	<resultMap id="ChildCategoryResult" type="saleson.shop.categories.domain.Category">
+		<result property="name" column="CHILD_CATEGORY_NAME" />
+		<result property="url" column="CHILD_CATEGORY_URL" />
+	</resultMap>	
+	
+	<!-- 프론트 GNB, LNB 카테고리 -->
+	<resultMap id="CategoriesForFrontResult" type="saleson.shop.categories.domain.Team">
+		<result property="name" column="TEAM_NAME" />
+		<result property="url" column="TEAM_URL" />
+		<collection property="groups" resultMap="GroupResult" />
+	</resultMap>
+	
+	<resultMap id="GroupResult" type="saleson.shop.categories.domain.Group">
+		<result property="name" column="GROUP_NAME" />
+		<result property="url" column="GROUP_URL" />
+		<result property="itemList" column="ITEM_LIST" />
+		<collection property="categories" resultMap="CategoryResult" />
+	</resultMap>
+	
+	<resultMap id="CategoryResult" type="saleson.shop.categories.domain.Category">
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="name" column="CATEGORY_NAME" />
+		<result property="url" column="CATEGORY_URL" />
+		<result property="code" column="CATEGORY_CODE" />
+		<collection property="childCategories" resultMap="CategoryResult2" />
+	</resultMap>
+	
+	<resultMap id="CategoryResult2" type="saleson.shop.categories.domain.Category">
+		<result property="categoryId" column="CATEGORY2_ID" />
+		<result property="name" column="CATEGORY2_NAME" />
+		<result property="url" column="CATEGORY2_URL" />
+		<result property="code" column="CATEGORY2_CODE" />
+		<collection property="childCategories" resultMap="CategoryResult3" />
+	</resultMap>
+	
+	<resultMap id="CategoryResult3" type="saleson.shop.categories.domain.Category">
+		<result property="categoryId" column="CATEGORY3_ID" />
+		<result property="name" column="CATEGORY3_NAME" />
+		<result property="url" column="CATEGORY3_URL" />
+		<result property="code" column="CATEGORY3_CODE" />
+		<collection property="childCategories" resultMap="CategoryResult4" />
+	</resultMap>
+	
+	<resultMap id="CategoryResult4" type="saleson.shop.categories.domain.Category">
+		<result property="categoryId" column="CATEGORY4_ID" />
+		<result property="name" column="CATEGORY4_NAME" />
+		<result property="url" column="CATEGORY4_URL" />
+		<result property="code" column="CATEGORY4_CODE" />
+	</resultMap>
+	
+	<resultMap id="ProductsRepCategoriesResult" type="saleson.shop.categories.domain.ProductsRepCategories">
+		<result property="categoryTeamId" column="CATEGORY_TEAM_ID" />
+		<result property="categoryGroupId" column="CATEGORY_GROUP_ID" />
+		<result property="categoryId" column="CATEGORY_ID" />
+	</resultMap>
+	
+	<select id="getProductsRepCategoriesByItemId" parameterType="Integer" resultMap="ProductsRepCategoriesResult">
+		SELECT  
+			CG.CATEGORY_TEAM_ID, 
+			CG.CATEGORY_GROUP_ID, 
+			C1.CATEGORY_ID
+		FROM OP_ITEM_CATEGORY IC
+			INNER JOIN OP_CATEGORY C1 ON IC.CATEGORY_ID = C1.CATEGORY_ID
+			INNER JOIN OP_CATEGORY C2 ON C1.CATEGORY_CLASS1 = C2.CATEGORY_CLASS1
+			INNER JOIN OP_CATEGORY_GROUP CG ON C2.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+		WHERE 
+			IC.ITEM_ID = #{value}
+			AND C2.CATEGORY_LEVEL = 1
+		ORDER BY IC.ORDERING ASC, IC.ITEM_CATEGORY_ID DESC
+		LIMIT 0, 1
+	</select>	
+
+
+	<select id="getCategoiesListByLevel1" parameterType="saleson.shop.categories.support.CategoriesSearchParam" resultMap="CategoriesResult">
+		SELECT
+			  C1.CATEGORY_GROUP_ID
+			, C1.CATEGORY_ID
+			, C1.CATEGORY_CODE
+		    , C1.CATEGORY_NAME
+		    , C1.CATEGORY_FLAG
+		    , C1.CATEGORY_URL
+		    , C1.ORDERING
+		    , C1.CATEGORY_CLASS1
+		    , C1.CATEGORY_TYPE
+		    ,(
+				SELECT MAX(CATEGORY_LEVEL) FROM OP_CATEGORY
+				WHERE CATEGORY_CLASS1 = C1.CATEGORY_CLASS1 
+			) AS CHILD_MAX_LEVEL
+		    , C2.CATEGORY_COUNT
+		FROM
+		(
+		  	SELECT CATEGORY_GROUP_ID, CATEGORY_ID, CATEGORY_CODE , CATEGORY_NAME , CATEGORY_CLASS1, CATEGORY_URL , CATEGORY_FLAG, ORDERING, CATEGORY_TYPE
+		  	FROM OP_CATEGORY WHERE CATEGORY_LEVEL = '1'
+		 	 <if test="categoryGroupId != null and categoryGroupId != ''"> 
+		  		AND CATEGORY_GROUP_ID = #{categoryGroupId}
+		  	</if>
+		  	ORDER BY ORDERING ASC
+		) AS C1 LEFT JOIN  
+		(
+		  SELECT CATEGORY_CLASS1, COUNT(CATEGORY_CLASS1) AS CATEGORY_COUNT FROM OP_CATEGORY
+		  GROUP BY CATEGORY_CLASS1
+		) AS C2 ON C1.CATEGORY_CLASS1 = C2.CATEGORY_CLASS1
+	</select>
+	
+	<select id="getCategoiesListByLevels" parameterType="saleson.shop.categories.support.CategoriesSearchParam" resultMap="CategoriesResult">
+	
+		SELECT
+			C1.CATEGORY_GROUP_ID
+			,  C1.CATEGORY_ID
+			, C1.CATEGORY_CODE
+		    , C1.CATEGORY_NAME
+		    , C1.CATEGORY_FLAG
+		    , C1.CATEGORY_URL
+		    , C1.ORDERING
+		  <if test="categoryLevel == 2">
+		    , C1.CATEGORY_CLASS1
+		    , C1.CATEGORY_CLASS2
+		  </if>
+		   <if test="categoryLevel == 3">
+		    , C1.CATEGORY_CLASS1
+		    , C1.CATEGORY_CLASS2
+		    , C1.CATEGORY_CLASS3
+		  </if>
+		   <if test="categoryLevel == 4">
+		    , C1.CATEGORY_CLASS1
+		    , C1.CATEGORY_CLASS2
+		    , C1.CATEGORY_CLASS3
+		    , C1.CATEGORY_CLASS4
+		  </if>
+		  
+			,(
+				SELECT MAX(CATEGORY_LEVEL) FROM OP_CATEGORY
+				WHERE 
+					CATEGORY_CLASS1 = C1.CATEGORY_CLASS1 
+					<if test="categoryLevel == 2">
+						AND CATEGORY_CLASS2 = C1.CATEGORY_CLASS2
+					</if>
+					<if test="categoryLevel == 3">
+						AND CATEGORY_CLASS2 = C1.CATEGORY_CLASS2
+						AND CATEGORY_CLASS3 = C1.CATEGORY_CLASS3
+					</if>
+					<if test="categoryLevel == 4">
+						AND CATEGORY_CLASS2 = C1.CATEGORY_CLASS2
+						AND CATEGORY_CLASS3 = C1.CATEGORY_CLASS3
+						AND CATEGORY_CLASS4 = C1.CATEGORY_CLASS4
+					</if>
+			) AS CHILD_MAX_LEVEL
+
+		  
+		    , IFNULL(C2.CATEGORY_COUNT,1) AS CATEGORY_COUNT
+		FROM
+		(
+		  SELECT
+		  	CATEGORY_GROUP_ID
+		  	,  CATEGORY_ID 
+		  	, CATEGORY_CODE  
+		  	, CATEGORY_NAME  
+		  	, CATEGORY_FLAG
+		  	, CATEGORY_URL
+		  	, ORDERING
+		   <if test="categoryLevel == 2">
+		    , CATEGORY_CLASS1
+		    , CATEGORY_CLASS2
+		   </if> 
+		   <if test="categoryLevel == 3">
+		    , CATEGORY_CLASS1
+		    , CATEGORY_CLASS2
+		    , CATEGORY_CLASS3
+		   </if> 
+		   <if test="categoryLevel == 4">
+		    , CATEGORY_CLASS1
+		    , CATEGORY_CLASS2
+		    , CATEGORY_CLASS3
+		    , CATEGORY_CLASS4
+		   </if>  
+		  FROM 
+		  	OP_CATEGORY 
+		  WHERE 
+		  	CATEGORY_LEVEL = #{categoryLevel}
+		  <if test="categoryLevel == 2">
+		  AND 
+		  	CATEGORY_CLASS1 = #{categoryClass1}
+		  </if>
+		  <if test="categoryLevel == 3">
+		  AND 
+		  	CATEGORY_CLASS1 = #{categoryClass1}
+		  AND 
+		  	CATEGORY_CLASS2 = #{categoryClass2}
+		  </if>
+		  <if test="categoryLevel == 4">
+		  AND 
+		  	CATEGORY_CLASS1 = #{categoryClass1}
+		  AND 
+		  	CATEGORY_CLASS2 = #{categoryClass2}
+		  AND 
+		  	CATEGORY_CLASS3 = #{categoryClass3}
+		  </if>
+		  ORDER BY ORDERING ASC
+		) AS C1 LEFT JOIN  
+		(
+		  SELECT 
+		  <if test="categoryLevel == 2">
+		  	  CATEGORY_CLASS2
+		    , COUNT(CATEGORY_CLASS2) AS CATEGORY_COUNT
+		  </if>
+		  <if test="categoryLevel == 3">
+		  	  CATEGORY_CLASS3
+		    , COUNT(CATEGORY_CLASS3) AS CATEGORY_COUNT
+		  </if>
+		  <if test="categoryLevel == 4">
+		  	  CATEGORY_CLASS4
+		    , COUNT(CATEGORY_CLASS4) AS CATEGORY_COUNT
+		  </if>
+		  FROM 
+		  	OP_CATEGORY
+		<where> 
+		  	
+			<if test="categoryLevel == 2">
+			  AND 
+			  	CATEGORY_CLASS1 = #{categoryClass1}
+			  AND  
+			  	CATEGORY_LEVEL IN('2','3')
+			  	
+			  GROUP BY CATEGORY_CLASS2
+	
+			) AS C2 ON C1.CATEGORY_CLASS2 = C2.CATEGORY_CLASS2
+			</if>
+			<if test="categoryLevel == 3">
+			  AND 
+			  	CATEGORY_CLASS1 = #{categoryClass1}
+			  AND 
+			  	CATEGORY_CLASS2 = #{categoryClass2}
+			  AND  
+			  	CATEGORY_LEVEL IN('3','4')
+			  	
+			  GROUP BY CATEGORY_CLASS3
+	
+			) AS C2 ON C1.CATEGORY_CLASS3 = C2.CATEGORY_CLASS3
+			</if>
+			<if test="categoryLevel == 4">
+			  AND 
+			  	CATEGORY_CLASS1 = #{categoryClass1}
+			  AND 
+			  	CATEGORY_CLASS2 = #{categoryClass2}
+			  AND 
+			  	CATEGORY_CLASS3 = #{categoryClass3}
+			  AND  
+			  	CATEGORY_LEVEL = '4'
+			  	
+			  GROUP BY CATEGORY_CLASS4
+	
+			) AS C2 ON C1.CATEGORY_CLASS4 = C2.CATEGORY_CLASS4
+			</if>
+		</where>
+		
+	</select>
+	
+	<select id="getGroupsInCategoriesList" resultMap="CategoriesInGroupResult">
+		SELECT CG.NAME
+		     , CG.ORDERING
+		     , CG.CATEGORY_GROUP_ID
+			 , C.CATEGORY_CODE
+			 , C.CATEGORY_NAME
+		  FROM OP_CATEGORY_TEAM AS A
+		  LEFT JOIN OP_CATEGORY_GROUP AS CG ON A.CATEGORY_TEAM_ID = CG.CATEGORY_TEAM_ID
+		 RIGHT JOIN OP_CATEGORY AS C ON CG.CATEGORY_GROUP_ID = C.CATEGORY_GROUP_ID
+		 WHERE C.CATEGORY_FLAG = 'Y' 
+		   AND C.CATEGORY_LEVEL = '1'
+		 ORDER BY A.ORDERING, CG.ORDERING, CG.CATEGORY_GROUP_ID ASC
+		
+		<!-- SELECT
+		    CG.NAME,
+		    CG.CATEGORY_GROUP_ID,
+		    C.CATEGORY_CODE, 
+		    C.CATEGORY_NAME
+		FROM 
+			OP_CATEGORY_GROUP AS CG RIGHT JOIN  OP_CATEGORY AS C ON CG.CATEGORY_GROUP_ID = C.CATEGORY_GROUP_ID
+		WHERE
+			C.CATEGORY_FLAG = 'Y'
+		AND
+			C.CATEGORY_LEVEL = '1'
+		ORDER BY CG.CATEGORY_GROUP_ID ASC -->
+	</select>
+	
+	<select id="getCategoriesListById" parameterType="saleson.shop.categories.support.CategoriesSearchParam" resultMap="CategoriesResult">
+		SELECT
+			CATEGORY_ID,
+			CATEGORY_CODE, 
+			CATEGORY_GROUP_ID, 
+			CATEGORY_URL, 
+			CATEGORY_NAME, 
+			CATEGORY_TYPE, 
+			CATEGORY_HEADER,
+			CATEGORY_MOBILE_HTML_HEADER,
+			CATEGORY_MOBILE_HTML,
+			CATEGORY_ADVERTISEMENT, 
+			CATEGORY_FOOTER, 
+			CATEGORY_BANNER, 
+			CATEGORY_CLASS1, 
+			CATEGORY_CLASS2, 
+			CATEGORY_CLASS3, 
+			CATEGORY_CLASS4, 
+			CATEGORY_LEVEL, 
+			ORDERING, 
+			CATEGORY_FLAG, 
+			TITLE, 
+			KEYWORDS, 
+			DESCRIPTION, 
+			HEADER_CONTENTS1, 
+			HEADER_CONTENTS2, 
+			HEADER_CONTENTS3, 
+			THEMAWORD_TITLE, 
+			THEMAWORD_DESCRIPTION, 
+			RANK_TITLE, 
+			RANK_KEYWORDS, 
+			RANK_DESCRIPTION, 
+			RANK_HEADERCONTENTS1, 
+			RANK_THEMAWORD_TITLE, 
+			RANK_THEMAWORD_DESCRIPTION, 
+			REVIEW_TITLE, 
+			REVIEW_KEYWORDS, 
+			REVIEW_DESCRIPTION, 
+			REVIEW_HEADERCONTENTS1, 
+			REVIEW_THEMAWORD_TITLE, 
+			REVIEW_THEMAWORD_DESCRIPTION
+		FROM
+			OP_CATEGORY
+		WHERE
+				CATEGORY_FLAG = 'Y'
+			AND
+				CATEGORY_LEVEL = '1'
+			AND 
+				CATEGORY_GROUP_ID = #{categoryGroupId}
+			AND 
+				CATEGORY_GROUP_ID > 0
+		ORDER BY
+			ORDERING ASC
+			
+	</select>
+	
+	<!-- LCH-CategoriesMapper 스팟 세일 - 카테고리 1차 리스트  <추가> -->
+	
+	<select id="getCategoriesGroupId" parameterType="String" resultMap="CategoriesGroupResult">
+	
+	SELECT * 
+		FROM
+			OP_CATEGORY_GROUP
+		WHERE 
+			CATEGORY_GROUP_FLAG = 'Y'
+	
+	
+	</select>
+	
+	
+	<select id="getCategoriesById" parameterType="Integer" resultMap="CategoriesResult">
+		SELECT
+			CATEGORY_ID,
+			CATEGORY_CODE, 
+			CATEGORY_GROUP_ID, 
+			CATEGORY_URL, 
+			CATEGORY_NAME, 
+			CATEGORY_TYPE, 
+			CATEGORY_HEADER,
+			CATEGORY_MOBILE_HTML_HEADER,
+			CATEGORY_MOBILE_HTML,
+			CATEGORY_ADVERTISEMENT, 
+			CATEGORY_FOOTER, 
+			CATEGORY_BANNER, 
+			CATEGORY_CLASS1, 
+			CATEGORY_CLASS2, 
+			CATEGORY_CLASS3, 
+			CATEGORY_CLASS4, 
+			CATEGORY_LEVEL, 
+			ORDERING, 
+			CATEGORY_FLAG, 
+			TITLE, 
+			KEYWORDS, 
+			DESCRIPTION, 
+			HEADER_CONTENTS1, 
+			HEADER_CONTENTS2, 
+			HEADER_CONTENTS3, 
+			THEMAWORD_TITLE, 
+			THEMAWORD_DESCRIPTION, 
+			RANK_TITLE, 
+			RANK_KEYWORDS, 
+			RANK_DESCRIPTION, 
+			RANK_HEADERCONTENTS1, 
+			RANK_THEMAWORD_TITLE, 
+			RANK_THEMAWORD_DESCRIPTION, 
+			REVIEW_TITLE, 
+			REVIEW_KEYWORDS, 
+			REVIEW_DESCRIPTION, 
+			REVIEW_HEADERCONTENTS1, 
+			REVIEW_THEMAWORD_TITLE, 
+			REVIEW_THEMAWORD_DESCRIPTION
+		FROM
+			OP_CATEGORY
+		WHERE
+			CATEGORY_FLAG = 'Y'
+		AND 
+			CATEGORY_ID = #{categoryId}
+	</select>
+	
+	<select id="getCategoriesByParam" parameterType="saleson.shop.categories.support.CategoriesSearchParam" resultMap="CategoriesResult">
+		SELECT
+			CATEGORY_ID,
+			CATEGORY_CODE, 
+			CATEGORY_GROUP_ID, 
+			CATEGORY_URL, 
+			CATEGORY_NAME, 
+			CATEGORY_TYPE, 
+			CATEGORY_HEADER,
+			CATEGORY_MOBILE_HTML_HEADER,
+			CATEGORY_MOBILE_HTML,
+			CATEGORY_ADVERTISEMENT, 
+			CATEGORY_FOOTER, 
+			CATEGORY_BANNER, 
+			CATEGORY_CLASS1, 
+			CATEGORY_CLASS2, 
+			CATEGORY_CLASS3, 
+			CATEGORY_CLASS4, 
+			CATEGORY_LEVEL, 
+			ORDERING, 
+			CATEGORY_FLAG, 
+			TITLE, 
+			KEYWORDS, 
+			DESCRIPTION, 
+			HEADER_CONTENTS1, 
+			HEADER_CONTENTS2, 
+			HEADER_CONTENTS3, 
+			THEMAWORD_TITLE, 
+			THEMAWORD_DESCRIPTION, 
+			RANK_TITLE, 
+			RANK_KEYWORDS, 
+			RANK_DESCRIPTION, 
+			RANK_HEADERCONTENTS1, 
+			RANK_THEMAWORD_TITLE, 
+			RANK_THEMAWORD_DESCRIPTION, 
+			REVIEW_TITLE, 
+			REVIEW_KEYWORDS, 
+			REVIEW_DESCRIPTION, 
+			REVIEW_HEADERCONTENTS1, 
+			REVIEW_THEMAWORD_TITLE, 
+			REVIEW_THEMAWORD_DESCRIPTION
+		FROM
+			OP_CATEGORY
+		WHERE
+			CATEGORY_FLAG = 'Y'
+		AND 
+			CATEGORY_URL = #{categoryUrl}
+	</select>
+	
+	
+	
+	<select id="getCategoriesListByGroupCode" parameterType="String" resultMap="CategoriesResult">
+		SELECT
+			C.CATEGORY_ID,
+			C.CATEGORY_CODE, 
+			C.CATEGORY_GROUP_ID, 
+			C.CATEGORY_URL, 
+			C.CATEGORY_NAME, 
+			C.CATEGORY_TYPE, 
+			C.CATEGORY_HEADER,
+			C.CATEGORY_MOBILE_HTML_HEADER,
+			C.CATEGORY_MOBILE_HTML,
+			C.CATEGORY_ADVERTISEMENT, 
+			C.CATEGORY_FOOTER, 
+			C.CATEGORY_BANNER, 
+			C.CATEGORY_CLASS1, 
+			C.CATEGORY_CLASS2, 
+			C.CATEGORY_CLASS3, 
+			C.CATEGORY_CLASS4, 
+			C.CATEGORY_LEVEL, 
+			C.ORDERING, 
+			C.CATEGORY_FLAG, 
+			C.TITLE, 
+			C.KEYWORDS, 
+			C.DESCRIPTION, 
+			C.HEADER_CONTENTS1, 
+			C.HEADER_CONTENTS2, 
+			C.HEADER_CONTENTS3, 
+			C.THEMAWORD_TITLE, 
+			C.THEMAWORD_DESCRIPTION, 
+			C.RANK_TITLE, 
+			C.RANK_KEYWORDS, 
+			C.RANK_DESCRIPTION, 
+			C.RANK_HEADERCONTENTS1, 
+			C.RANK_THEMAWORD_TITLE, 
+			C.RANK_THEMAWORD_DESCRIPTION, 
+			C.REVIEW_TITLE, 
+			C.REVIEW_KEYWORDS, 
+			C.REVIEW_DESCRIPTION, 
+			C.REVIEW_HEADERCONTENTS1, 
+			C.REVIEW_THEMAWORD_TITLE, 
+			C.REVIEW_THEMAWORD_DESCRIPTION
+		FROM
+			OP_CATEGORY C 
+			INNER JOIN OP_CATEGORY_GROUP CG ON C.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+		WHERE
+				C.CATEGORY_FLAG = 'Y'
+			AND
+				C.CATEGORY_LEVEL = '1'
+			AND 
+				CG.CODE= #{value}
+		ORDER BY
+			C.ORDERING ASC
+			
+	</select>
+	
+	<update id="updateCategoriesByParam" parameterType="saleson.shop.categories.support.CategoriesSearchParam">
+		UPDATE OP_CATEGORY SET 
+			CATEGORY_GROUP_ID = #{categoryGroupId}
+		WHERE CATEGORY_CODE = #{categoryCode}
+	</update>
+	
+	
+	<select id="getChildCategoriesFromParantCategoryClass" parameterType="String" resultMap="CategoriesResult">
+		SELECT * FROM OP_CATEGORY
+		WHERE CATEGORY_LEVEL = LENGTH(#{value}) / 3 + 1 
+			AND CATEGORY_CODE LIKE CONCAT(#{value}, '%') 
+			AND CATEGORY_FLAG = 'Y'
+		ORDER BY ORDERING ASC
+	</select>
+	
+	
+	<select id="getBreadcrumbListByCategoryId" parameterType="Integer" resultMap="BreadcrumbResult">
+		<![CDATA[
+			SELECT 
+				CT.CATEGORY_TEAM_ID AS TEAM_ID, 
+				CT.CODE AS TEAM_URL, 
+				CT.NAME AS TEAM_NAME, 
+				C2.CATEGORY_GROUP_ID AS GROUP_ID, 
+				CG.CODE AS GROUP_URL, 
+				CG.NAME AS GROUP_NAME, 
+				SUBSTRING(C.CATEGORY_CODE, 1, 3) AS CATEGORY_CLASS, 
+				C.CATEGORY_ID, 
+				C.CATEGORY_URL, 
+				C.CATEGORY_NAME 
+			FROM (
+				SELECT CONCAT(SUBSTRING(CATEGORY_CODE, 1, 3), '000000000') AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1 FROM OP_CATEGORY
+				WHERE CATEGORY_ID = #{value} AND CATEGORY_CLASS1 <> '000' AND CATEGORY_FLAG = 'Y'
+				
+				UNION
+				
+				SELECT CONCAT(SUBSTRING(CATEGORY_CODE, 1, 6), '000000') AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1  FROM OP_CATEGORY
+				WHERE CATEGORY_ID = #{value} AND CATEGORY_CLASS2 <> '000' AND CATEGORY_FLAG = 'Y'
+				
+				UNION
+				
+				SELECT CONCAT(SUBSTRING(CATEGORY_CODE, 1, 9), '000') AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1  FROM OP_CATEGORY
+				WHERE CATEGORY_ID = #{value} AND CATEGORY_CLASS3 <> '000' AND CATEGORY_FLAG = 'Y'
+				
+				UNION
+				
+				SELECT CATEGORY_CODE AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1  FROM OP_CATEGORY
+				WHERE CATEGORY_ID = #{value} AND CATEGORY_CLASS4 <> '000' AND CATEGORY_FLAG = 'Y'
+			) A 
+			LEFT JOIN OP_CATEGORY C ON A.CATE_CODE = C.CATEGORY_CODE
+			LEFT JOIN OP_CATEGORY C2 ON A.CATE_CLASS1 = C2.CATEGORY_CODE
+			LEFT JOIN OP_CATEGORY_GROUP CG ON C2.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+			LEFT JOIN OP_CATEGORY_TEAM CT ON CG.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+
+			ORDER BY C.CATEGORY_LEVEL ASC
+		]]>
+	</select>
+	
+	
+	<!-- 카테고리 ID에 해당하는 breadcrumb 정보를 조회 -->
+	<sql id="queryBreadcrumbList">
+		<foreach collection="list" item="itemCategory" index="index" open="" separator="UNION" close=""> 
+		
+			<![CDATA[
+				SELECT
+					#{index} AS ORDERING,
+					CT.CATEGORY_TEAM_ID AS TEAM_ID, 
+					CT.CODE AS TEAM_URL, 
+					CT.NAME AS TEAM_NAME, 
+					C2.CATEGORY_GROUP_ID AS GROUP_ID, 
+					CG.CODE AS GROUP_URL, 
+					CG.NAME AS GROUP_NAME, 
+					#{itemCategory.categoryId} AS CATEGORY_CLASS, 
+					C.CATEGORY_ID, 
+					C.CATEGORY_URL, 
+					C.CATEGORY_NAME,
+					C.CATEGORY_LEVEL
+				FROM (
+					SELECT CONCAT(SUBSTRING(CATEGORY_CODE, 1, 3), '000000000') AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1 FROM OP_CATEGORY
+					WHERE CATEGORY_ID = #{itemCategory.categoryId} AND CATEGORY_CLASS1 <> '000' AND CATEGORY_FLAG = 'Y'
+					
+					UNION
+					
+					SELECT CONCAT(SUBSTRING(CATEGORY_CODE, 1, 6), '000000') AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1  FROM OP_CATEGORY
+					WHERE CATEGORY_ID = #{itemCategory.categoryId} AND CATEGORY_CLASS2 <> '000' AND CATEGORY_FLAG = 'Y'
+					
+					UNION
+					
+					SELECT CONCAT(SUBSTRING(CATEGORY_CODE, 1, 9), '000') AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1  FROM OP_CATEGORY
+					WHERE CATEGORY_ID = #{itemCategory.categoryId} AND CATEGORY_CLASS3 <> '000' AND CATEGORY_FLAG = 'Y'
+					
+					UNION
+					
+					SELECT CATEGORY_CODE AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1  FROM OP_CATEGORY
+					WHERE CATEGORY_ID = #{itemCategory.categoryId} AND CATEGORY_CLASS4 <> '000' AND CATEGORY_FLAG = 'Y'
+				) A 
+				LEFT JOIN OP_CATEGORY C ON A.CATE_CODE = C.CATEGORY_CODE
+				LEFT JOIN OP_CATEGORY C2 ON A.CATE_CLASS1 = C2.CATEGORY_CODE
+				LEFT JOIN OP_CATEGORY_GROUP CG ON C2.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+				LEFT JOIN OP_CATEGORY_TEAM CT ON CG.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+			]]>
+		</foreach>
+	</sql>
+	
+	<select id="getBreadcrumbListByCollection" parameterType="java.util.List" resultMap="BreadcrumbResult">
+		SELECT * FROM (
+			<include refid="queryBreadcrumbList" />
+		) T
+		ORDER BY T.ORDERING ASC, T.CATEGORY_LEVEL ASC
+	</select>
+	
+	
+	
+	
+	
+	
+	<select id="getBreadcrumbListByCategoryUrl" parameterType="String" resultMap="BreadcrumbResult">
+		<![CDATA[
+			SELECT 
+				CT.CATEGORY_TEAM_ID AS TEAM_ID, 
+				CT.CODE AS TEAM_URL, 
+				CT.NAME AS TEAM_NAME, 
+				C2.CATEGORY_GROUP_ID AS GROUP_ID, 
+				CG.CODE AS GROUP_URL, 
+				CG.NAME AS GROUP_NAME, 
+				SUBSTRING(C.CATEGORY_CODE, 1, 3) AS CATEGORY_CLASS, 
+				C.CATEGORY_ID, 
+				C.CATEGORY_URL, 
+				C.CATEGORY_NAME,
+				CASE C.CATEGORY_URL WHEN #{value} THEN C.CATEGORY_ID ELSE '' END AS INDEX_ID
+			FROM (
+				SELECT CONCAT(SUBSTRING(CATEGORY_CODE, 1, 3), '000000000') AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1, CATEGORY_LEVEL
+				FROM OP_CATEGORY
+				WHERE CATEGORY_URL = #{value} AND CATEGORY_CLASS1 <> '000' AND CATEGORY_FLAG = 'Y'
+				
+				UNION
+				
+				SELECT CONCAT(SUBSTRING(CATEGORY_CODE, 1, 6), '000000') AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1, CATEGORY_LEVEL
+				FROM OP_CATEGORY
+				WHERE CATEGORY_URL = #{value} AND CATEGORY_CLASS2 <> '000' AND CATEGORY_FLAG = 'Y'
+				
+				UNION
+				
+				SELECT CONCAT(SUBSTRING(CATEGORY_CODE, 1, 9), '000') AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1, CATEGORY_LEVEL
+				FROM OP_CATEGORY
+				WHERE CATEGORY_URL = #{value} AND CATEGORY_CLASS3 <> '000' AND CATEGORY_FLAG = 'Y'
+				
+				UNION
+				
+				SELECT CATEGORY_CODE AS CATE_CODE, CONCAT(CATEGORY_CLASS1, '000000000') AS CATE_CLASS1, CATEGORY_LEVEL
+				FROM OP_CATEGORY
+				WHERE CATEGORY_URL = #{value} AND CATEGORY_CLASS4 <> '000' AND CATEGORY_FLAG = 'Y'
+			) A 
+			LEFT JOIN OP_CATEGORY C ON A.CATE_CODE = C.CATEGORY_CODE
+			LEFT JOIN OP_CATEGORY C2 ON A.CATE_CLASS1 = C2.CATEGORY_CODE
+			LEFT JOIN OP_CATEGORY_GROUP CG ON C2.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+			LEFT JOIN OP_CATEGORY_TEAM CT ON CG.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+
+			ORDER BY C.CATEGORY_LEVEL ASC
+		]]>
+	</select>
+	
+	
+	<select id="getCategoryClassCodesByCategoryGroupId" parameterType="Integer" resultType="String">
+		SELECT SUBSTRING(CATEGORY_CODE, 1, 3) FROM OP_CATEGORY
+		WHERE CATEGORY_GROUP_ID = #{value} AND CATEGORY_FLAG = 'Y' AND CATEGORY_LEVEL = 1
+	</select>
+	
+	<select id="getCategoryByCategoryCode" parameterType="String" resultMap="CategoriesResult">
+		SELECT 
+			CATEGORY_ID
+			,CATEGORY_CODE
+			,CATEGORY_GROUP_ID
+			,CATEGORY_URL
+			,CATEGORY_NAME
+			,CATEGORY_TYPE
+			,CATEGORY_HEADER
+			,CATEGORY_MOBILE_HTML
+			,CATEGORY_ADVERTISEMENT
+			,CATEGORY_FOOTER
+			,CATEGORY_BANNER
+			,CATEGORY_CLASS1
+			,CATEGORY_CLASS2
+			,CATEGORY_CLASS3
+			,CATEGORY_CLASS4
+			,CATEGORY_LEVEL
+			,ORDERING
+			,CATEGORY_FLAG
+			,ACCESS_TYPE
+			,TITLE
+			,KEYWORDS
+			,DESCRIPTION
+			,HEADER_CONTENTS1
+			,HEADER_CONTENTS2
+			,HEADER_CONTENTS3
+			,THEMAWORD_TITLE
+			,THEMAWORD_DESCRIPTION
+			,RANK_TITLE
+			,RANK_KEYWORDS
+			,RANK_DESCRIPTION
+			,RANK_HEADERCONTENTS1
+			,RANK_THEMAWORD_TITLE
+			,RANK_THEMAWORD_DESCRIPTION
+			,REVIEW_TITLE
+			,REVIEW_KEYWORDS
+			,REVIEW_DESCRIPTION
+			,REVIEW_HEADERCONTENTS1
+			,REVIEW_THEMAWORD_TITLE
+			,REVIEW_THEMAWORD_DESCRIPTION
+		FROM
+			OP_CATEGORY
+		WHERE
+			CATEGORY_CODE = #{value}
+	</select>
+	
+	<select id="getCategoryMaxClassByCategoryLevel" parameterType="saleson.shop.categories.domain.Categories" resultType="String">
+		
+		SELECT 
+			IFNULL(CASE 
+		      WHEN #{categoryLevel} = '1' THEN CONCAT(CATEGORY_CODE,'000000000')
+		      WHEN #{categoryLevel} = '2' THEN CONCAT(CATEGORY_CLASS1, CATEGORY_CODE,'000000') 
+		      WHEN #{categoryLevel} = '3' THEN CONCAT(CATEGORY_CLASS1, CATEGORY_CLASS2, CATEGORY_CODE,'000') 
+		      WHEN #{categoryLevel} = '4' THEN CONCAT(CATEGORY_CLASS1, CATEGORY_CLASS2, CATEGORY_CLASS3, CATEGORY_CODE)
+		    END, '100000000000') AS CATEGORY_CODE 
+		FROM
+		(
+		  SELECT
+			<if test="categoryLevel == 1">
+				CASE
+					WHEN length(MAX(CATEGORY_CLASS1)+1) = 1 THEN CONCAT('00',MAX(CATEGORY_CLASS1)+1)
+					WHEN length(MAX(CATEGORY_CLASS1)+1) = 2 THEN CONCAT('0',MAX(CATEGORY_CLASS1)+1)
+					WHEN length(MAX(CATEGORY_CLASS1)+1) = 3 THEN MAX(CATEGORY_CLASS1)+1
+				END AS CATEGORY_CODE
+			</if>
+			<if test="categoryLevel == 2">
+				CASE
+					WHEN length(MAX(CATEGORY_CLASS2)+1) = 1 THEN CONCAT('00',MAX(CATEGORY_CLASS2)+1)
+					WHEN length(MAX(CATEGORY_CLASS2)+1) = 2 THEN CONCAT('0',MAX(CATEGORY_CLASS2)+1)
+					WHEN length(MAX(CATEGORY_CLASS2)+1) = 3 THEN MAX(CATEGORY_CLASS2)+1
+				END AS CATEGORY_CODE
+			</if>
+			<if test="categoryLevel == 3">
+				CASE
+					WHEN length(MAX(CATEGORY_CLASS3)+1) = 1 THEN CONCAT('00',MAX(CATEGORY_CLASS3)+1)
+					WHEN length(MAX(CATEGORY_CLASS3)+1) = 2 THEN CONCAT('0',MAX(CATEGORY_CLASS3)+1)
+					WHEN length(MAX(CATEGORY_CLASS3)+1) = 3 THEN MAX(CATEGORY_CLASS3)+1
+				END AS CATEGORY_CODE
+			</if>
+		  	<!--
+		      CASE
+		          WHEN length(MAX(CATEGORY_CLASS#{categoryLevel})+1) = 1 THEN CONCAT('00',MAX(CATEGORY_CLASS#{categoryLevel})+1)
+		          WHEN length(MAX(CATEGORY_CLASS#{categoryLevel})+1) = 2 THEN CONCAT('0',MAX(CATEGORY_CLASS#{categoryLevel})+1)
+		          WHEN length(MAX(CATEGORY_CLASS#{categoryLevel})+1) = 3 THEN MAX(CATEGORY_CLASS#{categoryLevel})+1
+		      END AS CATEGORY_CODE  	-->
+		      , CATEGORY_CLASS1
+		      , CATEGORY_CLASS2
+		      , CATEGORY_CLASS3
+		      , CATEGORY_CLASS4
+		  FROM
+		       OP_CATEGORY 
+			<where> 
+				<if test="categoryClass1 != '' and categoryClass1 != null and categoryClass1 != '000'">
+				AND 
+					CATEGORY_CLASS1 = #{categoryClass1}
+				</if>
+				<if test="categoryClass2 != '' and categoryClass2 != null and categoryClass2 != '000'">
+				AND 
+					CATEGORY_CLASS2 = #{categoryClass2}
+				</if>
+				<if test="categoryClass3 != '' and categoryClass3 != null and categoryClass3 != '000'">
+				AND 
+					CATEGORY_CLASS3 = #{categoryClass3}
+				</if>
+			</where> 
+		) AS C
+	</select>
+	
+	<!-- 부모 카테고리 정보로 새로운 자식 카테고리의 CATEGORY_CODE를 가져옴 -->
+	<select id="getNewCategoryCodeByParent" parameterType="saleson.shop.categories.domain.Categories" resultType="String">
+		SELECT 
+			SUBSTRING(
+				CONCAT(
+					SIMPLE_CATEGORY_CODE,
+					RIGHT(CONCAT('000', MAX(IFNULL(CATEGORY_CLASS, '000')) + 1), 3),
+					'000000000'
+				), 1, 12)
+			AS NEW_CATEGORY_CODE
+				
+		FROM (
+			SELECT 
+				C2.SIMPLE_CATEGORY_CODE,
+				
+				CASE 
+					WHEN C.CATEGORY_LEVEL = '1' THEN
+						CATEGORY_CLASS1
+					WHEN C.CATEGORY_LEVEL = '2' THEN
+						CATEGORY_CLASS2
+					WHEN C.CATEGORY_LEVEL = '3' THEN
+						CATEGORY_CLASS3
+					WHEN C.CATEGORY_LEVEL = '4' THEN
+						CATEGORY_CLASS4
+				END AS CATEGORY_CLASS
+			
+			FROM (
+				SELECT 
+					SUBSTRING(CATEGORY_CODE, 1, CATEGORY_LEVEL * 3) AS SIMPLE_CATEGORY_CODE,
+					CATEGORY_LEVEL + 1 AS CHILD_CATEGORY_LEVEL 
+				FROM OP_CATEGORY
+				WHERE CATEGORY_CODE = #{categoryCode}
+			) C2 LEFT JOIN OP_CATEGORY C ON C.CATEGORY_CODE LIKE CONCAT(C2.SIMPLE_CATEGORY_CODE, '%') 
+				AND C.CATEGORY_LEVEL = C2.CHILD_CATEGORY_LEVEL
+		) T
+	</select>
+	
+	<select id="getCategoryLevelMaxOrdring" parameterType="saleson.shop.categories.domain.Categories" resultType="Integer">
+		SELECT 
+			IFNULL(MAX(ORDERING),0)+1 
+		FROM 
+			OP_CATEGORY
+		WHERE 
+			CATEGORY_LEVEL = #{categoryLevel}
+		<if test="categoryClass1 != '' and categoryClass1 != null and categoryClass1 != '000'">
+		AND 
+			CATEGORY_CLASS1 = #{categoryClass1}
+		</if>
+		<if test="categoryClass2 != '' and categoryClass2 != null and categoryClass2 != '000'">
+		AND 
+			CATEGORY_CLASS2 = #{categoryClass2}
+		</if>
+		<if test="categoryClass3 != '' and categoryClass3 != null and categoryClass3 != '000'">
+		AND 
+			CATEGORY_CLASS3 = #{categoryClass3}
+		</if>
+	</select>
+	
+	<insert id="insertCategory" parameterType="saleson.shop.categories.domain.Categories">
+		INSERT INTO OP_CATEGORY (CATEGORY_ID, CATEGORY_CODE, CATEGORY_GROUP_ID, CATEGORY_URL, CATEGORY_NAME, CATEGORY_TYPE, CATEGORY_HEADER, CATEGORY_FOOTER, CATEGORY_BANNER, CATEGORY_ADVERTISEMENT, CATEGORY_CLASS1, CATEGORY_CLASS2, CATEGORY_CLASS3, CATEGORY_CLASS4, CATEGORY_LEVEL, ORDERING, CATEGORY_FLAG, ACCESS_TYPE, TITLE, KEYWORDS, DESCRIPTION, HEADER_CONTENTS1, HEADER_CONTENTS2, HEADER_CONTENTS3, THEMAWORD_TITLE, THEMAWORD_DESCRIPTION, RANK_TITLE, RANK_KEYWORDS, RANK_DESCRIPTION, RANK_HEADERCONTENTS1, RANK_THEMAWORD_TITLE, RANK_THEMAWORD_DESCRIPTION, REVIEW_TITLE, REVIEW_KEYWORDS, REVIEW_DESCRIPTION, REVIEW_HEADERCONTENTS1, REVIEW_THEMAWORD_TITLE, REVIEW_THEMAWORD_DESCRIPTION)
+		VALUES (#{categoryId}, #{categoryCode}, #{categoryGroupId}, #{categoryUrl}, #{categoryName}, #{categoryType}, #{categoryHeader}, #{categoryFooter}, #{categoryBanner}, #{categoryAdvertisement}, #{categoryClass1}, #{categoryClass2}, #{categoryClass3}, #{categoryClass4}, #{categoryLevel}, #{ordering}, #{categoryFlag}, #{accessType}, #{categoriesSeo.title}, #{categoriesSeo.keywords}, #{categoriesSeo.description}, #{categoriesSeo.headerContents1}, #{categoriesSeo.headerContents2}, #{categoriesSeo.headerContents3}, #{categoriesSeo.themawordTitle}, #{categoriesSeo.themawordDescription}, #{rankSeo.title}, #{rankSeo.keywords}, #{rankSeo.description}, #{rankSeo.headerContents1}, #{rankSeo.themawordTitle}, #{rankSeo.themawordDescription}, #{reviewSeo.title}, #{reviewSeo.keywords}, #{reviewSeo.description}, #{reviewSeo.headerContents1}, #{reviewSeo.themawordTitle}, #{reviewSeo.themawordDescription})
+	</insert>
+
+	<update id="updateCategory" parameterType="saleson.shop.categories.domain.Categories">
+		UPDATE OP_CATEGORY SET
+			CATEGORY_GROUP_ID = #{categoryGroupId},
+			CATEGORY_URL = #{categoryUrl}, 
+			CATEGORY_NAME = #{categoryName}, 
+			CATEGORY_TYPE = #{categoryType}, 
+			CATEGORY_FLAG = #{categoryFlag}, 
+			ACCESS_TYPE = #{accessType}, 
+			TITLE = #{categoriesSeo.title}, 
+			KEYWORDS = #{categoriesSeo.keywords}, 
+			DESCRIPTION = #{categoriesSeo.description}, 
+			HEADER_CONTENTS1 = #{categoriesSeo.headerContents1}, 
+			HEADER_CONTENTS2 = #{categoriesSeo.headerContents2}, 
+			HEADER_CONTENTS3 = #{categoriesSeo.headerContents3}, 
+			THEMAWORD_TITLE = #{categoriesSeo.themawordTitle}, 
+			THEMAWORD_DESCRIPTION = #{categoriesSeo.themawordDescription}, 
+			RANK_TITLE = #{rankSeo.title}, 
+			RANK_KEYWORDS = #{rankSeo.keywords}, 
+			RANK_DESCRIPTION = #{rankSeo.description}, 
+			RANK_HEADERCONTENTS1 = #{rankSeo.headerContents1}, 
+			RANK_THEMAWORD_TITLE = #{rankSeo.themawordTitle}, 
+			RANK_THEMAWORD_DESCRIPTION = #{rankSeo.themawordDescription}, 
+			REVIEW_TITLE = #{reviewSeo.title}, 
+			REVIEW_KEYWORDS = #{reviewSeo.keywords}, 
+			REVIEW_DESCRIPTION = #{reviewSeo.description}, 
+			REVIEW_HEADERCONTENTS1 = #{reviewSeo.headerContents1}, 
+			REVIEW_THEMAWORD_TITLE = #{reviewSeo.themawordTitle}, 
+			REVIEW_THEMAWORD_DESCRIPTION = #{reviewSeo.themawordDescription}
+		WHERE CATEGORY_ID = #{categoryId}
+	</update>
+	
+	<!--  하위 카테고리의 CATEGORY_GROUP_ID 일괄 수정  -->
+	<update id="updateCategoryGroupIdOfChild" parameterType="saleson.shop.categories.domain.Categories">
+		UPDATE OP_CATEGORY SET
+			CATEGORY_GROUP_ID = #{categoryGroupId}
+		WHERE CATEGORY_CODE LIKE CONCAT(#{categoryCode},'%')
+	</update>
+	
+	<update id="updateCategoryFalg" parameterType="saleson.shop.categories.domain.Categories">
+		UPDATE OP_CATEGORY SET
+			CATEGORY_FLAG = #{categoryFlag} 
+		WHERE CATEGORY_CODE LIKE CONCAT(#{categoryCode},'%')
+	</update>
+	
+	<update id="updateChangeCategory" parameterType="saleson.shop.categories.domain.Categories">
+		UPDATE OP_CATEGORY SET
+			CATEGORY_CODE = #{categoryCode}, 
+			CATEGORY_CLASS1 = #{categoryClass1}, 
+			CATEGORY_CLASS2 = #{categoryClass2}, 
+			CATEGORY_CLASS3 = #{categoryClass3}, 
+			CATEGORY_CLASS4 = #{categoryClass4}, 
+			CATEGORY_LEVEL = #{categoryLevel}, 
+			ORDERING = #{ordering}
+		WHERE CATEGORY_CODE = #{categoryUrl}
+	</update>
+	
+	<update id="updateOrderingCategory" parameterType="saleson.shop.categories.domain.Categories">
+		UPDATE OP_CATEGORY SET
+			ORDERING = #{ordering}
+		WHERE CATEGORY_ID = #{categoryId}
+	</update>
+	
+	<select id="getcategoryLevelsCount" parameterType="saleson.shop.categories.domain.Categories" resultType="Integer">
+		SELECT 
+			COUNT(*) 
+		FROM
+		(
+			SELECT 
+				CATEGORY_LEVEL 
+			FROM
+				OP_CATEGORY
+			<where>
+				<if test="categoryClass1 != '' and categoryClass1 != null and categoryClass1 != '000'">
+				AND 
+					CATEGORY_CLASS1 = #{categoryClass1}
+				</if>
+				<if test="categoryClass2 != '' and categoryClass2 != null and categoryClass2 != '000'">
+				AND 
+					CATEGORY_CLASS2 = #{categoryClass2}
+				</if>
+				<if test="categoryClass3 != '' and categoryClass3 != null and categoryClass3 != '000'">
+				AND 
+					CATEGORY_CLASS3 = #{categoryClass3}
+				</if>
+				AND CATEGORY_LEVEL >= #{categoryLevel}
+			</where>
+			GROUP BY CATEGORY_LEVEL
+		) AS A
+	</select>
+	
+	<select id="getCategoryOrderingDownList" parameterType="saleson.shop.categories.domain.Categories" resultMap="CategoriesResult">
+		SELECT 
+			* 
+		FROM
+			OP_CATEGORY
+		WHERE
+			CATEGORY_CODE NOT IN(#{categoryCode})
+		AND
+			CATEGORY_LEVEL = #{categoryLevel}
+		<if test="categoryClass1 != '' and categoryClass1 != null and categoryClass1 != '000'">
+		AND 
+			CATEGORY_CLASS1 = #{categoryClass1}
+		</if>
+		<if test="categoryClass2 != '' and categoryClass2 != null and categoryClass2 != '000'">
+		AND 
+			CATEGORY_CLASS2 = #{categoryClass2}
+		</if>
+		<if test="categoryClass3 != '' and categoryClass3 != null and categoryClass3 != '000'">
+		AND 
+			CATEGORY_CLASS3 = #{categoryClass3}
+		</if>
+		AND 
+			ORDERING >= #{ordering}
+	</select>
+	
+	<select id="deleteCategoryByClass" parameterType="saleson.shop.categories.domain.Categories">
+		DELETE FROM
+			OP_CATEGORY
+		<where>
+			<if test="categoryClass1 != '' and categoryClass1 != null and categoryClass1 != '000'">
+			AND 
+				CATEGORY_CLASS1 = #{categoryClass1}
+			</if>
+			<if test="categoryClass2 != '' and categoryClass2 != null and categoryClass2 != '000'">
+			AND 
+				CATEGORY_CLASS2 = #{categoryClass2}
+			</if>
+			<if test="categoryClass3 != '' and categoryClass3 != null and categoryClass3 != '000'">
+			AND 
+				CATEGORY_CLASS3 = #{categoryClass3}
+			</if>
+			<if test="categoryClass4 != '' and categoryClass4 != null and categoryClass4 != '000'">
+			AND 
+				CATEGORY_CLASS4 = #{categoryClass4}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 카테고리 베이스 코드로 하위 카테고리 까지 삭제한다. -->
+	<delete id="deleteCategoryWithChilrenByCategoryCodeBase" parameterType="String">
+		DELETE FROM OP_CATEGORY
+		WHERE CATEGORY_CODE LIKE CONCAT(#{value}, '%')
+	</delete>
+	
+	
+	<select id="getCategoriesForFront" resultMap="CategoriesForFrontResult">
+		SELECT 
+			CT.NAME AS TEAM_NAME, 
+			CT.CODE AS TEAM_URL, 
+			CG.NAME AS GROUP_NAME, 
+			CG.CODE AS GROUP_URL,
+			CG.ITEM_LIST,
+			C1.CATEGORY_ID AS CATEGORY_ID, 
+			C1.CATEGORY_NAME AS CATEGORY_NAME, 
+			C1.CATEGORY_URL AS CATEGORY_URL,
+			C1.CATEGORY_CODE AS CATEGORY_CODE,
+			C2.CATEGORY_ID AS CATEGORY2_ID,  
+			C2.CATEGORY_NAME AS CATEGORY2_NAME, 
+			C2.CATEGORY_URL AS CATEGORY2_URL, 
+			C2.CATEGORY_CODE AS CATEGORY2_CODE,
+			C3.CATEGORY_ID AS CATEGORY3_ID, 
+			C3.CATEGORY_NAME AS CATEGORY3_NAME, 
+			C3.CATEGORY_URL AS CATEGORY3_URL, 
+			C3.CATEGORY_CODE AS CATEGORY3_CODE,
+			C4.CATEGORY_ID AS CATEGORY4_ID, 
+			C4.CATEGORY_NAME AS CATEGORY4_NAME, 
+			C4.CATEGORY_URL AS CATEGORY4_URL,
+			C4.CATEGORY_CODE AS CATEGORY4_CODE
+			
+		FROM OP_CATEGORY_TEAM CT 
+			INNER JOIN  OP_CATEGORY_GROUP CG ON CT.CATEGORY_TEAM_ID = CG.CATEGORY_TEAM_ID AND CT.CATEGORY_TEAM_FLAG = 'Y' AND CG.CATEGORY_GROUP_FLAG = 'Y'
+			INNER JOIN OP_CATEGORY C1 ON CG.CATEGORY_GROUP_ID = C1.CATEGORY_GROUP_ID AND C1.CATEGORY_LEVEL = 1 AND C1.CATEGORY_FLAG = 'Y'
+			LEFT JOIN OP_CATEGORY C2 ON C2.CATEGORY_CODE LIKE CONCAT(SUBSTRING(C1.CATEGORY_CODE, 1, 3), '%') AND C2.CATEGORY_LEVEL = 2 AND C2.CATEGORY_FLAG = 'Y'
+			LEFT JOIN OP_CATEGORY C3 ON C3.CATEGORY_CODE LIKE CONCAT(SUBSTRING(C2.CATEGORY_CODE, 1, 6), '%') AND C3.CATEGORY_LEVEL = 3 AND C3.CATEGORY_FLAG = 'Y'
+			LEFT JOIN OP_CATEGORY C4 ON C4.CATEGORY_CODE LIKE CONCAT(SUBSTRING(C3.CATEGORY_CODE, 1, 9), '%') AND C4.CATEGORY_LEVEL = 4 AND C4.CATEGORY_FLAG = 'Y'
+		
+		ORDER BY CT.ORDERING ASC, CG.ORDERING ASC, C1.ORDERING ASC, C2.ORDERING ASC, C3.ORDERING ASC, C4.ORDERING ASC
+	</select>
+	
+	
+	<!--LCH-categories-mapper 카테고리 리스트 <수정> -->
+	
+	
+	<!--  카테고리 URL로 현재 카테고리 정보를 조회한다.  -->
+	<select id="getCategoryByCategoryUrl" parameterType="String" resultMap="CategoryBaseResult">
+		SELECT 
+			CATEGORY_ID,
+			CATEGORY_GROUP_ID,
+			CATEGORY_CODE,
+			CATEGORY_URL,
+			CATEGORY_NAME,
+			CATEGORY_HEADER,
+			CATEGORY_FOOTER,
+			CATEGORY_BANNER,
+			CATEGORY_ADVERTISEMENT,
+			CATEGORY_MOBILE_HTML_HEADER,
+			CATEGORY_MOBILE_HTML,
+			CATEGORY_LEVEL,
+			ACCESS_TYPE,
+			TITLE,
+			KEYWORDS,
+			DESCRIPTION,
+			HEADER_CONTENTS1,
+			HEADER_CONTENTS2,
+			HEADER_CONTENTS3,
+			THEMAWORD_TITLE,
+			THEMAWORD_DESCRIPTION
+		FROM 
+			OP_CATEGORY
+		WHERE
+			CATEGORY_URL = #{value}
+	</select>
+	
+	
+	<!-- 현재 카테고리, 부모, 형제 카테고리 조회 -->
+	<select id="getCategoryAndParentSiblingByCategoryUrl" parameterType="String" resultMap="CategoryAndParentSiblingResult">
+		SELECT 
+			C.CATEGORY_URL,
+			C.CATEGORY_NAME,
+			C.CATEGORY_HEADER,
+			C.CATEGORY_FOOTER,
+			C.CATEGORY_BANNER,
+			C.CATEGORY_ADVERTISEMENT,
+			CATEGORY_MOBILE_HTML_HEADER,
+			C.CATEGORY_MOBILE_HTML,
+			C.CATEGORY_LEVEL,
+			C.TITLE,
+			C.KEYWORDS,
+			C.DESCRIPTION,
+			C.HEADER_CONTENTS1,
+			C.HEADER_CONTENTS2,
+			C.HEADER_CONTENTS3,
+			C.THEMAWORD_TITLE,
+			C.THEMAWORD_DESCRIPTION,
+		
+			CASE WHEN PARENT_CATEGORY_CLASS IS NULL THEN
+				CG.CODE 
+			ELSE
+				C3.CATEGORY_URL
+			END AS PARENT_CATEGORY_URL, 
+			
+			
+			CASE WHEN PARENT_CATEGORY_CLASS IS NULL THEN
+				CG.NAME 
+			ELSE
+				C3.CATEGORY_NAME
+			END AS PARENT_CATEGORY_NAME , 
+			
+			
+			CASE WHEN PARENT_CATEGORY_CLASS IS NULL THEN
+				C2.CATEGORY_URL
+			ELSE
+				C4.CATEGORY_URL
+			END AS SIBLING_CATEGORY_URL, 
+			
+			CASE WHEN PARENT_CATEGORY_CLASS IS NULL THEN
+				C2.CATEGORY_NAME
+			ELSE
+				C4.CATEGORY_NAME
+			END AS SIBLING_CATEGORY_NAME 
+		
+		
+		FROM (
+			SELECT 
+				C.*, 
+				CASE WHEN C.CATEGORY_LEVEL = 1 THEN 
+					C.CATEGORY_GROUP_ID 
+				END AS PARENT_GROUP_ID,
+				
+				CASE WHEN C.CATEGORY_LEVEL > 1 THEN 
+					SUBSTRING(C.CATEGORY_CODE, 1, 3 * (C.CATEGORY_LEVEL - 1))
+				END AS PARENT_CATEGORY_CLASS
+			FROM 
+				OP_CATEGORY C 
+				
+			WHERE C.CATEGORY_URL = #{value} AND C.CATEGORY_FLAG = 'Y'
+		) C 
+		LEFT JOIN OP_CATEGORY_GROUP CG ON C.PARENT_GROUP_ID = CG.CATEGORY_GROUP_ID
+		LEFT JOIN OP_CATEGORY C2 ON C.PARENT_GROUP_ID = C2.CATEGORY_GROUP_ID AND C2.CATEGORY_LEVEL = 1 AND C2.CATEGORY_FLAG = 'Y'
+		
+		LEFT JOIN OP_CATEGORY C3 ON C3.CATEGORY_CODE LIKE LEFT(CONCAT(C.PARENT_CATEGORY_CLASS, '000000000'), 12) AND C3.CATEGORY_LEVEL = C.CATEGORY_LEVEL - 1 AND C3.CATEGORY_FLAG = 'Y'
+		LEFT JOIN OP_CATEGORY C4 ON C4.CATEGORY_CODE LIKE CONCAT(C.PARENT_CATEGORY_CLASS, '%') AND C4.CATEGORY_LEVEL = C.CATEGORY_LEVEL AND C4.CATEGORY_FLAG = 'Y'
+		
+		ORDER BY C2.ORDERING ASC, C4.ORDERING ASC
+	</select>
+	
+	<!-- 현재 카테고리의 하위 카테고리, 부모, 형제 카테고리 조회 -->
+	<select id="getCategoryAndParentSiblingChildByCategoryUrl" parameterType="String" resultMap="CategoryAndParentSiblingChildResult">
+		SELECT 
+			C.CATEGORY_CODE, 
+			C.CATEGORY_URL,
+			C.CATEGORY_NAME,
+			C.CATEGORY_MOBILE_HTML_HEADER,
+			C.CATEGORY_MOBILE_HTML,
+			C.CATEGORY_HEADER,
+			C.CATEGORY_FOOTER,
+			C.CATEGORY_FOOTER,
+			C.CATEGORY_BANNER,
+			C.CATEGORY_ADVERTISEMENT,
+			C.CATEGORY_LEVEL,
+			C.TITLE,
+			C.KEYWORDS,
+			C.DESCRIPTION,
+			C.HEADER_CONTENTS1,
+			C.HEADER_CONTENTS2,
+			C.HEADER_CONTENTS3,
+			C.THEMAWORD_TITLE,
+			C.THEMAWORD_DESCRIPTION,
+			C.CHILD_CATEGORY_URL,
+			C.CHILD_CATEGORY_NAME,
+		
+			CASE WHEN PARENT_CATEGORY_CLASS IS NULL THEN
+				CG.CODE 
+			ELSE
+				C3.CATEGORY_URL
+			END AS PARENT_CATEGORY_URL, 
+			
+			
+			CASE WHEN PARENT_CATEGORY_CLASS IS NULL THEN
+				CG.NAME 
+			ELSE
+				C3.CATEGORY_NAME
+			END AS PARENT_CATEGORY_NAME , 
+			
+			
+			CASE WHEN PARENT_CATEGORY_CLASS IS NULL THEN
+				C2.CATEGORY_URL
+			ELSE
+				C4.CATEGORY_URL
+			END AS SIBLING_CATEGORY_URL, 
+			
+			CASE WHEN PARENT_CATEGORY_CLASS IS NULL THEN
+				C2.CATEGORY_NAME
+			ELSE
+				C4.CATEGORY_NAME
+			END AS SIBLING_CATEGORY_NAME 
+		
+		
+		FROM (
+			SELECT 
+				C.*, 
+				CASE WHEN C.CATEGORY_LEVEL = 1 THEN 
+					C.CATEGORY_GROUP_ID 
+				END AS PARENT_GROUP_ID,
+				
+				CASE WHEN C.CATEGORY_LEVEL > 1 THEN 
+					SUBSTRING(C.CATEGORY_CODE, 1, 3 * (C.CATEGORY_LEVEL - 1))
+				END AS PARENT_CATEGORY_CLASS,
+				C2.CATEGORY_URL AS CHILD_CATEGORY_URL,
+				C2.CATEGORY_NAME AS CHILD_CATEGORY_NAME
+			FROM OP_CATEGORY C 
+				LEFT JOIN OP_CATEGORY C2 ON C2.CATEGORY_CODE LIKE CONCAT(SUBSTRING(C.CATEGORY_CODE, 1, 3 * C.CATEGORY_LEVEL), '%')
+					AND C2.CATEGORY_LEVEL = C.CATEGORY_LEVEL + 1
+					AND C2.CATEGORY_FLAG = 'Y'
+			WHERE C.CATEGORY_URL = #{value}
+			ORDER BY C2.ORDERING ASC
+		) C 
+		LEFT JOIN OP_CATEGORY_GROUP CG ON C.PARENT_GROUP_ID = CG.CATEGORY_GROUP_ID
+		LEFT JOIN OP_CATEGORY C2 ON C.PARENT_GROUP_ID = C2.CATEGORY_GROUP_ID AND C2.CATEGORY_LEVEL = 1 AND C2.CATEGORY_FLAG = 'Y'
+		
+		LEFT JOIN OP_CATEGORY C3 ON C3.CATEGORY_CODE LIKE LEFT(CONCAT(C.PARENT_CATEGORY_CLASS, '000000000'), 12) AND C3.CATEGORY_LEVEL = C.CATEGORY_LEVEL - 1 AND C3.CATEGORY_FLAG = 'Y'
+		LEFT JOIN OP_CATEGORY C4 ON C4.CATEGORY_CODE LIKE CONCAT(C.PARENT_CATEGORY_CLASS, '%') AND C4.CATEGORY_LEVEL = C.CATEGORY_LEVEL AND C4.CATEGORY_FLAG = 'Y'
+		
+		ORDER BY C2.ORDERING ASC, C4.ORDERING ASC
+	</select>
+	
+	<select id="getCategoryTypeByCategoryCode" parameterType="String" resultType="String">
+		SELECT * FROM (
+			SELECT 'team' AS CATEGORY_TYPE FROM OP_CATEGORY_TEAM WHERE CODE = #{value} AND CATEGORY_TEAM_FLAG = 'Y'
+			UNION
+			SELECT 'group' AS CATEGORY_TYPE FROM OP_CATEGORY_GROUP WHERE CODE = #{value} AND CATEGORY_GROUP_FLAG = 'Y'
+			UNION
+			SELECT 'category' AS CATEGORY_TYPE FROM OP_CATEGORY WHERE CATEGORY_URL = #{value} AND CATEGORY_FLAG = 'Y'
+		) T LIMIT 1
+	</select>
+	
+	<select id="getCategoryLowList" parameterType="saleson.shop.categories.domain.Categories" resultMap="CategoriesResult">
+		SELECT 
+			* 
+		FROM 
+		OP_CATEGORY
+		<where>
+			AND CATEGORY_LEVEL > #{categoryLevel}
+			AND	CATEGORY_CODE LIKE CONCAT('%',#{categoryCode},'%')
+		</where>
+	</select>
+	
+	<update id="updateCategoryEdit" parameterType="saleson.shop.categories.domain.Categories">
+		UPDATE OP_CATEGORY SET
+			CATEGORY_HEADER = #{categoryHeader} ,
+			CATEGORY_FOOTER = #{categoryFooter} ,
+			CATEGORY_MOBILE_HTML = #{categoryMobileHtml}
+			
+			<if test="categoryMobileHtmlHeader != null">
+				, CATEGORY_MOBILE_HTML_HEADER = #{categoryMobileHtmlHeader}
+			</if>
+			
+		WHERE CATEGORY_ID = #{categoryId}
+	</update>
+	
+	<!--LCH-categories-mapper  <수정> -->
+
+	<select id="getCategoryGroupRanking" parameterType="String" resultMap="CategoriesForFrontResult">
+		SELECT 
+		    CT.NAME AS TEAM_NAME, 
+		    CT.CODE AS TEAM_URL, 
+		    CG.NAME AS GROUP_NAME, 
+		    CG.CODE AS GROUP_URL, 
+		    C1.CATEGORY_NAME AS CATEGORY_NAME, 
+		    C1.CATEGORY_URL AS CATEGORY_URL
+					
+		FROM OP_CATEGORY_TEAM CT 
+		    INNER JOIN  OP_CATEGORY_GROUP CG ON CT.CATEGORY_TEAM_ID = CG.CATEGORY_TEAM_ID AND CT.CATEGORY_TEAM_FLAG = 'Y' AND CG.CATEGORY_GROUP_FLAG = 'Y'
+		    INNER JOIN OP_CATEGORY C1 ON CG.CATEGORY_GROUP_ID = C1.CATEGORY_GROUP_ID AND C1.CATEGORY_LEVEL = 1 AND C1.CATEGORY_FLAG = 'Y'
+		
+
+		ORDER BY CG.CATEGORY_TEAM_ID ASC, CG.CODE ASC
+	</select>
+	
+	<select id="getCategoryCountByCode" parameterType="saleson.shop.categories.support.CategoriesSearchParam" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+		(
+			SELECT CATEGORY_URL FROM OP_CATEGORY
+			<where>
+				<if test="categoryUrl != null and categoryUrl != ''">
+					AND 
+						CATEGORY_URL = #{categoryUrl}
+				</if>
+				<if test="categoryCode != null and categoryCode != ''">
+					AND 
+						CATEGORY_CODE = #{categoryCode}
+				</if>
+			</where>
+			
+			UNION ALL
+			
+			SELECT CODE FROM OP_CATEGORY_GROUP
+			
+			<if test="categoryUrl != null and categoryUrl != ''">
+				WHERE 
+					CODE = #{categoryUrl}
+			</if>
+			
+			UNION ALL
+			
+			SELECT CODE FROM OP_CATEGORY_TEAM
+			
+			<if test="categoryUrl != null and categoryUrl != ''">
+				WHERE 
+					CODE = #{categoryUrl}
+			</if>
+			 
+		) AS T
+	</select>
+	
+	
+	<!-- [엑셀업로드] 카테고리URL에 해당하는 Category ID를 조회함. -->
+	<!-- 데이터가 없는 경우 BindingException 발생한 예외처리 해야함. (NULL->int) -->
+	<select id="getCategoryIdByCategoryUrl" parameterType="String" resultType="int">
+		SELECT CATEGORY_ID FROM OP_CATEGORY
+		WHERE CATEGORY_URL = #{value}
+	</select>
+	
+	
+	<!-- 그룹 내 1차 카테고리 순서 일괄 업데이트. -->
+	<insert id="updateCategoryOrderingAfterIncreaseInGroup" parameterType="saleson.shop.categories.support.CategoriesSearchParam">
+		<selectKey keyProperty="ordering" resultType="int" order="BEFORE">
+			SELECT MAX(ORDERING) FROM (
+				SELECT 0 AS ORDERING
+				
+				UNION
+				
+				SELECT ORDERING FROM OP_CATEGORY C1 
+				WHERE CATEGORY_GROUP_ID = #{categoryGroupId} AND CATEGORY_CLASS1 = #{parentCode} AND CATEGORY_LEVEL = '1'
+			) T
+		</selectKey>
+	
+		UPDATE OP_CATEGORY SET
+			ORDERING = ORDERING + 1
+			
+		WHERE CATEGORY_GROUP_ID = #{categoryGroupId}
+			AND CATEGORY_LEVEL = '1'
+			
+			<if test='parentCode != ""'>
+			AND ORDERING > #{ordering}
+			</if>
+	</insert>
+	
+	
+	<!-- 1차 카테고리 순서 업데이트. -->
+	<update id="updateOrderingCategory1FromJsTree" parameterType="saleson.shop.categories.support.CategoriesSearchParam">
+		UPDATE OP_CATEGORY SET
+			ORDERING = #{ordering}
+			
+		WHERE CATEGORY_GROUP_ID = #{categoryGroupId} 
+			AND CATEGORY_CLASS1 = #{newCode} AND CATEGORY_LEVEL = '1'
+	
+	</update>
+	
+	<update id="updateCategoryOrderingFromJsTree" parameterType="saleson.shop.categories.support.CategoriesSearchParam">
+		UPDATE OP_CATEGORY SET
+			ORDERING = ORDERING + 1
+		
+		<where>
+			CATEGORY_LEVEL = #{categoryLevel}
+			
+			<if test='parentCode != null and parentCode != ""'>
+				AND CATEGORY_CODE LIKE CONCAT(#{parentCode}, '%')
+			</if>
+			
+			<if test='categoryGroupId != null and categoryGroupId != ""'>
+		 		AND CATEGORY_GROUP_ID = #{categoryGroupId}
+		 	</if>
+
+			<if test='previousOrdering > 0'>
+			AND ORDERING > #{previousOrdering}
+			</if>
+		</where>
+	</update>
+	
+	
+	<!-- CATEGORY_CLASS 목록 조회 (비어있는 놈 찾을라고 해요) -->
+	<sql id="sqlCategoryClass">
+		<choose>
+			<when test='categoryLevel == "1"'>
+				CATEGORY_CLASS1
+			</when>
+			<when test='categoryLevel == "2"'>
+				CATEGORY_CLASS2
+			</when>
+			<when test='categoryLevel == "3"'>
+				CATEGORY_CLASS3
+			</when>
+			<when test='categoryLevel == "4"'>
+				CATEGORY_CLASS4
+			</when>
+		</choose>
+	</sql>
+	<select id="getCategoryClassListBy" parameterType="saleson.shop.categories.support.CategoriesSearchParam" resultType="String">
+		SELECT
+			<include refid="sqlCategoryClass" />
+		FROM OP_CATEGORY
+		WHERE
+			CATEGORY_LEVEL = #{categoryLevel}
+			
+			<if test='parentCode != null and parentCode != ""'>
+				AND CATEGORY_CODE LIKE CONCAT(#{parentCode}, '%')
+			</if>
+		
+		GROUP BY
+			<include refid="sqlCategoryClass" />
+			
+		ORDER BY 
+			<include refid="sqlCategoryClass" /> ASC
+	</select>
+	
+	
+	
+	<!-- 이동하는 카테고리 정보를 수정함. -->
+	<update id="updateCurrentCategoryFromJsTree" parameterType="saleson.shop.categories.support.CategoriesSearchParam">
+		UPDATE OP_CATEGORY 
+		<set>
+			CATEGORY_CODE = #{categoryCode},
+			CATEGORY_CLASS1 = #{categoryClass1},
+			CATEGORY_CLASS2 = #{categoryClass2},
+			CATEGORY_CLASS3 = #{categoryClass3},
+			CATEGORY_CLASS4 = #{categoryClass4},
+			CATEGORY_LEVEL = #{categoryLevel},
+			ORDERING = #{ordering},
+			<if test='categoryGroupId != null and categoryGroupId != ""'>
+				CATEGORY_GROUP_ID = #{categoryGroupId}
+			</if>
+		</set>
+		WHERE CATEGORY_CODE LIKE CONCAT(#{currentCode}, '%')
+			AND CATEGORY_LEVEL = #{currentLevel} 
+	</update>
+
+	
+	<!-- 현재 카테고리의 자식 카테고리 목록 -->
+	<select id="getChildCategoriesFromJsTree"  parameterType="saleson.shop.categories.support.CategoriesSearchParam" resultMap="CategoriesResult">
+		SELECT 
+			CATEGORY_ID,
+			CATEGORY_CODE,
+			CATEGORY_CLASS1,
+			CATEGORY_CLASS2,
+			CATEGORY_CLASS3,
+			CATEGORY_CLASS4,
+			CATEGORY_LEVEL
+		FROM OP_CATEGORY 
+		WHERE CATEGORY_CODE LIKE CONCAT(#{currentCode}, '%')
+			AND CATEGORY_LEVEL > #{currentLevel} 
+	</select>
+			
+	<!-- 하위 카테고리 정보 변경. (categoryCode, categoryClass, Level) 1->2차, 2->3차, 3->4차, 레벨 + 1 -->
+	<update id="updateSubCategoriesForGroupToCategory" parameterType="saleson.shop.categories.domain.Categories">
+		UPDATE OP_CATEGORY SET 
+			CATEGORY_CODE = CONCAT(#{categoryClass1}, SUBSTRING(CATEGORY_CODE, 1, 9)),
+			CATEGORY_CLASS1 = SUBSTRING(CATEGORY_CODE, 1, 3),
+			CATEGORY_CLASS2 = SUBSTRING(CATEGORY_CODE, 4, 3),
+			CATEGORY_CLASS3 = SUBSTRING(CATEGORY_CODE, 7, 3),
+			CATEGORY_CLASS4 = SUBSTRING(CATEGORY_CODE, 10, 3),
+			CATEGORY_LEVEL = CATEGORY_LEVEL + 1 
+
+		WHERE CATEGORY_CLASS1 IN (
+			SELECT * FROM (
+				SELECT CATEGORY_CLASS1 FROM OP_CATEGORY
+				WHERE CATEGORY_GROUP_ID = #{categoryGroupId} AND CATEGORY_LEVEL = '1'
+			) T
+		)
+	</update>
+	
+	<select id="getCategoryByCategorygroupId" parameterType="String" resultMap="CategoryBaseResult">
+		SELECT 
+			CATEGORY_ID,
+			CATEGORY_GROUP_ID,
+			CATEGORY_CODE,
+			CATEGORY_URL,
+			CATEGORY_NAME,
+			CATEGORY_HEADER,
+			CATEGORY_FOOTER,
+			CATEGORY_BANNER,
+			CATEGORY_ADVERTISEMENT,
+			CATEGORY_MOBILE_HTML_HEADER,
+			CATEGORY_MOBILE_HTML,
+			CATEGORY_LEVEL,
+			ACCESS_TYPE,
+			TITLE,
+			KEYWORDS,
+			DESCRIPTION,
+			HEADER_CONTENTS1,
+			HEADER_CONTENTS2,
+			HEADER_CONTENTS3,
+			THEMAWORD_TITLE,
+			THEMAWORD_DESCRIPTION
+		FROM 
+			OP_CATEGORY C
+		INNER JOIN ( SELECT CATEGORY_GROUP_ID FROM OP_CATEGORY_GROUP WHERE CODE = #{value} ) CG ON C.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+		WHERE CATEGORY_FLAG = 'Y'
+
+	</select>
+	
+	<select id="getCategoryListByMaxLevel" parameterType="Integer" resultMap="CategoryBaseResult">
+		SELECT C.* FROM OP_CATEGORY C
+			INNER JOIN OP_CATEGORY_GROUP G ON C.CATEGORY_GROUP_ID = G.CATEGORY_GROUP_ID AND G.CATEGORY_GROUP_FLAG = 'Y'
+		WHERE
+			C.CATEGORY_FLAG = 'Y'
+			AND C.CATEGORY_LEVEL <![CDATA[<=]]> #{value}
+	</select>
+
+	<select id="getCategoryListBySitemap" resultMap="CategoryBaseResult">
+		SELECT C.* FROM OP_CATEGORY C
+			INNER JOIN OP_CATEGORY_GROUP G ON C.CATEGORY_GROUP_ID = G.CATEGORY_GROUP_ID AND G.CATEGORY_GROUP_FLAG = 'Y'
+		WHERE
+			C.CATEGORY_FLAG = 'Y'
+	</select>
+
+</mapper>

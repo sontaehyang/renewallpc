@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.coupon.regular.CouponRegularMapperBatch">
+
+	<resultMap id="CouponResult" type="saleson.shop.coupon.domain.Coupon">
+		<id property="couponId" column="COUPON_ID" />
+		<result property="couponType" column="COUPON_TYPE" />
+		<result property="couponName" column="COUPON_NAME" />
+		<result property="couponComment" column="COUPON_COMMENT" />
+		<result property="couponIssueType" column="COUPON_ISSUE_TYPE" />
+		<result property="couponIssueStartDate" column="COUPON_ISSUE_START_DATE" />
+		<result property="couponIssueEndDate" column="COUPON_ISSUE_END_DATE" />
+		<result property="couponApplyType" column="COUPON_APPLY_TYPE" />
+		<result property="couponApplyDay" column="COUPON_APPLY_DAY" />
+		<result property="couponApplyStartDate" column="COUPON_APPLY_START_DATE" />
+		<result property="couponApplyEndDate" column="COUPON_APPLY_END_DATE" />
+		
+		<result property="couponTargetTimeType" column="COUPON_TARGET_TIME_TYPE" />
+		<result property="couponTargetUserType" column="COUPON_TARGET_USER_TYPE" />
+		<result property="couponTargetUserLevel" column="COUPON_TARGET_USER_LEVEL" />
+		<result property="couponTargetUser" column="COUPON_TARGET_USER" />
+		
+		<result property="couponTargetItemType" column="COUPON_TARGET_ITEM_TYPE" />
+		<result property="couponTargetItem" column="COUPON_TARGET_ITEM" />
+		
+		<result property="couponPayRestriction" column="COUPON_PAY_RESTRICTION" />
+		<result property="couponConcurrently" column="COUPON_CONCURRENTLY" />
+		
+		<result property="couponPayType" column="COUPON_PAY_TYPE" />
+		<result property="couponPay" column="COUPON_PAY" />
+		
+		<result property="couponDiscountLimitPrice" column="COUPON_DISCOUNT_LIMIT_PRICE" />
+		<result property="couponDownloadLimit" column="COUPON_DOWNLOAD_LIMIT" />
+		<result property="couponDownloadUserLimit" column="COUPON_DOWNLOAD_USER_LIMIT" />
+		<result property="couponMulitpleDownloadFlag" column="COUPON_MULITPLE_DOWNLOAD_FLAG" />
+		
+		<result property="couponFlag" column="COUPON_FLAG" />
+		<result property="couponOfflineFlag" column="COUPON_OFFLINE_FLAG" />
+		<result property="couponBirthday" column="COUPON_BIRTHDAY" />
+		<result property="couponType" column="COUPON_TYPE" />
+		
+		<result property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		
+		<result property="totalDownloadCount" column="TOTAL_DOWNLOAD_COUNT" />
+		<result property="totalUsedCount" column="TOTAL_USED_COUNT" />
+	</resultMap>
+	
+	<select id="getCouponRegularBatchList" resultMap="CouponResult">
+		SELECT 
+			C.COUPON_ID,
+			C.COUPON_TYPE,
+			C.COUPON_NAME,
+			C.COUPON_COMMENT,
+			C.COUPON_ISSUE_TYPE,
+			C.COUPON_ISSUE_START_DATE,
+			C.COUPON_ISSUE_END_DATE,
+			C.COUPON_TARGET_TIME_TYPE,
+			C.COUPON_TARGET_USER_TYPE,
+			C.COUPON_TARGET_USER_LEVEL,
+			C.COUPON_TARGET_USER,
+			C.COUPON_TARGET_ITEM_TYPE,
+			C.COUPON_TARGET_ITEM,
+			C.COUPON_PAY_RESTRICTION,
+			C.COUPON_CONCURRENTLY,
+			C.COUPON_PAY_TYPE,
+			C.COUPON_PAY,
+			C.COUPON_DISCOUNT_LIMIT_PRICE,
+			C.COUPON_FLAG,
+			C.COUPON_BIRTHDAY,
+			C.DATA_STATUS_CODE,
+			C.COUPON_DOWNLOAD_LIMIT,
+			C.COUPON_DOWNLOAD_USER_LIMIT,
+			C.COUPON_MULITPLE_DOWNLOAD_FLAG,
+			C.CREATED_DATE
+		FROM OP_COUPON_REGULAR C
+		<where> 
+			AND C.DATA_STATUS_CODE = '1'
+			AND C.COUPON_FLAG = 'Y'
+			AND ( 
+				C.COUPON_ISSUE_TYPE = '0'
+				OR (
+					C.COUPON_ISSUE_TYPE = '1' 
+					AND CONCAT(C.COUPON_ISSUE_START_DATE, '000000') <![CDATA[<=]]> <include refid="CommonMapper.datetime" />
+					AND CONCAT(C.COUPON_ISSUE_END_DATE, '235959') <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+				)
+			)
+		</where>
+	</select>
+	
+	<insert id="insertSelectCouponRegular" parameterType="saleson.shop.coupon.domain.Coupon">
+		INSERT INTO OP_COUPON (
+			COUPON_ID, 
+			COUPON_TYPE, 
+			COUPON_NAME, 
+			COUPON_COMMENT, 
+			COUPON_ISSUE_TYPE,
+			COUPON_ISSUE_START_DATE,
+			COUPON_ISSUE_END_DATE,
+			COUPON_APPLY_TYPE,
+			COUPON_APPLY_DAY,
+			COUPON_APPLY_START_DATE,
+			COUPON_APPLY_END_DATE,
+			COUPON_TARGET_TIME_TYPE,
+			COUPON_TARGET_USER_TYPE,
+			COUPON_TARGET_USER_LEVEL,
+			COUPON_TARGET_USER,
+			COUPON_TARGET_ITEM_TYPE,
+			COUPON_TARGET_ITEM,
+			COUPON_PAY_RESTRICTION,
+			COUPON_CONCURRENTLY,
+			COUPON_PAY_TYPE,
+			COUPON_PAY,
+			COUPON_DISCOUNT_LIMIT_PRICE,
+			COUPON_DOWNLOAD_LIMIT,
+			COUPON_DOWNLOAD_USER_LIMIT,
+			COUPON_MULITPLE_DOWNLOAD_FLAG,
+			COUPON_FLAG,
+			COUPON_OFFLINE_FLAG,
+			COUPON_BIRTHDAY,
+			DATA_STATUS_CODE,
+			UPDATE_USER_NAME,
+			UPDATED_DATE,
+			CREATED_DATE
+		) VALUES (  
+			#{couponId},
+			#{selectedCouponTypes},
+			#{couponName},
+			#{couponComment},
+			'1',
+			CONCAT(#{couponIssueStartDate}, '000000'),
+			CONCAT(#{couponIssueEndDate}, '235959'),
+			'1',
+			0,
+			CONCAT(#{couponApplyStartDate}, '000000'),
+			CONCAT(#{couponApplyEndDate}, '235959'),
+			#{couponTargetTimeType},
+			#{couponTargetUserType},
+			#{selectedCouponTargetUserLevels},
+			#{couponTargetUsersToJsonString},
+			#{couponTargetItemType},
+			#{couponTargetItemsToJsonString},
+			#{couponPayRestriction},
+			#{couponConcurrently},
+			#{couponPayType},
+			#{couponPay},
+			#{couponDiscountLimitPrice},
+			#{couponDownloadLimit},
+			#{couponDownloadUserLimit},
+			#{couponMulitpleDownloadFlag},
+			#{couponFlag},
+			'N',
+			#{couponBirthday},
+			'1',
+			'관리자',
+			<include refid="CommonMapper.datetime" />,
+			<include refid="CommonMapper.datetime" />
+		)	
+	</insert>
+	
+</mapper>

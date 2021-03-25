@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	<typeAliases>
+		<!-- web
+		<typeAlias alias="Sample" 			type="com.onlinepowers.web.sample.domain.Sample" />
+		<typeAlias alias="Ars" 				type="com.onlinepowers.web.ars.domain.Ars" />
+		<typeAlias alias="Zipcode" 			type="com.onlinepowers.web.zipcode.domain.Zipcode" />
+		<typeAlias alias="Popup" 			type="com.onlinepowers.web.popup.domain.Popup" />
+		<typeAlias alias="UserSearchParam" 	type="com.onlinepowers.web.user.support.UserSearchParam" />
+		-->
+
+		<!-- framework -->
+		<typeAlias alias="Code" 			type="com.onlinepowers.framework.repository.Code" />
+		<typeAlias alias="Board" 			type="com.onlinepowers.board.domain.Board" />
+		<typeAlias alias="BoardCfg" 		type="com.onlinepowers.board.domain.BoardCfg" />
+		<typeAlias alias="BoardComment" 	type="com.onlinepowers.board.domain.BoardComment" />
+		<typeAlias alias="BoardContext" 	type="com.onlinepowers.board.support.BoardContext" />
+		<typeAlias alias="BoardNew" 		type="com.onlinepowers.board.domain.BoardNew" />
+		<typeAlias alias="BoardSearchParam"	type="com.onlinepowers.board.domain.BoardSearchParam" />
+		<typeAlias alias="Menu" 			type="com.onlinepowers.framework.web.opmanager.menu.domain.Menu" />
+		<typeAlias alias="MenuRight" 		type="com.onlinepowers.framework.web.opmanager.menu.domain.MenuRight" />
+		<typeAlias alias="Role" 			type="com.onlinepowers.framework.web.opmanager.role.domain.Role" />
+		<typeAlias alias="SearchParam" 		type="com.onlinepowers.framework.web.domain.SearchParam" />
+		<typeAlias alias="UploadFile" 		type="com.onlinepowers.framework.file.domain.UploadFile" />
+		<typeAlias alias="User" 			type="com.onlinepowers.framework.security.userdetails.User" />
+		<typeAlias alias="Visit" 			type="saleson.shop.stats.domain.Visit" />
+
+		<typeAlias alias="Popup" 			type="saleson.shop.popup.domain.Popup" />
+		<!--
+		<typeAlias alias="Skc" 			type="com.onlinepowers.web.skc.domain.Skc" />
+		<typeAlias alias="SkcSearchParam" 			type="com.onlinepowers.web.skc.support.SkcSearchParam" />
+
+
+
+		 -->
+		<!-- Do not delete!! -->
+
+
+
+	</typeAliases>
+	<plugins>
+		<plugin interceptor="saleson.common.interceptor.QueryLogIntercepter"/>
+	</plugins>
+</configuration>  
+
+

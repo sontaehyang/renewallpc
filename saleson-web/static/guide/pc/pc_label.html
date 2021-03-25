@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+  <meta name="Keywords" content="입점몰, 세일즈온, JAVA쇼핑몰">
+  <meta name="Description" content="세일즈온은 단기간에 구축비용을 최소화 하는 맞춤형 통합 쇼핑몰 솔루션 입니다.">
+  <meta property="og:title" content="세일즈온, SalesON | JAVA기반의 맞춤형 통합 쇼핑몰 솔루션">  
+  <meta property="og:image" content="http://saleson.onlinepowers.com/content/image_delete/common/og_logo.png">
+  <meta property="og:description" content="세일즈온은 단기간에 구축비용을 최소화 하는 맞춤형 통합 쇼핑몰 솔루션 입니다.">
+  <title>세일즈온 데모</title>
+	<link rel="stylesheet" type="text/css" href="/content/css/base.css"> 
+	<link rel="stylesheet" type="text/css" href="/content/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/layout.css">	
+	<link rel="stylesheet" type="text/css" href="/content/css/event.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/category.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/product.css">	
+	<link rel="stylesheet" type="text/css" href="/content/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/member.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/mypage.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/order.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/intro.css"> 
+	<link rel="stylesheet" type="text/css" href="/content/css/popup.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/jquery-ui-datepicker.css">
+	<link rel="stylesheet" type="text/css" href="../css/pc_guide.css">
+	<!--  js Start -->
+	<script type="text/javascript" src="/content/js/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="/content/js/jquery-ui.js"></script>
+	<script type="text/javascript" src="/content/js/jquery.bxslider.js"></script>	
+	<script type="text/javascript" src="/content/js/jquery.sticky.js"></script>	
+	<script type="text/javascript" src="/content/js/common.js"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<![endif]--> 
+ </head>
+<body>
+
+
+<div id="wrap">
+	<div id="header">
+		<h1>세일즈온 웹 HTML GUIDE</h1>
+		<div class="gnb">
+			<ul>
+				<li><a href="pc_button.html">버튼, 링크</a></li>
+				<li class="on"><a href="pc_label.html">라벨</a></li>
+				<li><a href="pc_form.html">폼</a></li>
+				<li><a href="pc_tab.html">탭</a></li>
+				<li><a href="pc_text.html">텍스트</a></li>
+				<li><a href="pc_board.html">게시판</a></li>
+				<li><a href="pc_etc.html">기타</a></li> 
+			</ul>
+		</div>
+	</div>
+	<!-- //header -->
+
+	<div id="container">
+		<div class="bs-docs-section">
+		
+		<h2>상품라벨</h2>
+		<form class="bs-example">
+			<div class="item_label">
+				<span><img src="/content/images/common/label_new.gif" alt="신상품"></span>
+				<span><img src="/content/images/common/label_best.gif" alt="BEST상품"></span>
+				<span><img src="/content/images/common/label_popular.gif" alt="인기상품"></span>
+				<span><img src="/content/images/common/label_basic.gif" alt="기본상품"></span>
+				<span><img src="/content/images/common/label_push.gif" alt="추천상품"></span>
+			</div>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"item_label"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;span&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/common/label_new.gif"</span> <span class="na">alt=</span><span class="s">"신상품"<span class="nt">&gt;</span></span><span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;span&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/common/label_best.gif"</span> <span class="na">alt=</span><span class="s">"BEST상품"<span class="nt">&gt;</span></span><span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;span&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/common/label_popular.gif"</span> <span class="na">alt=</span><span class="s">"인기상품"<span class="nt">&gt;</span></span><span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;span&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/common/label_basic.gif"</span> <span class="na">alt=</span><span class="s">"기본상품"<span class="nt">&gt;</span></span><span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;span&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/common/label_push.gif"</span> <span class="na">alt=</span><span class="s">"추천상품"<span class="nt">&gt;</span></span><span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>				
+</code>
+			</pre>
+		</figure>
+		
+		<h2>일반라벨</h2>
+		<form class="bs-example">
+			<span class="icon_answer answer_ing" title="답변처리중">답변처리중</span>
+			<span class="icon_answer answer_end" title="답변완료">답변완료</span>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon_answer answer_ing"</span> <span class="na">title=</span><span class="s">"답변처리중"</span><span class="nt">&gt;</span>답변처리중<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"icon_answer answer_end"</span> <span class="na">title=</span><span class="s">"답변완료"</span><span class="nt">&gt;</span>답변완료<span class="nt">&lt;/span&gt;</span>		
+				</code>
+			</pre>
+		</figure>
+		 
+		
+		</div>
+		<!-- //bs-docs-section -->
+	</div>
+	<!-- //#container -->
+
+</div>
+<!-- //#wrap -->
+
+</body>
+</html>

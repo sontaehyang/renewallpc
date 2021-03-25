@@ -1,0 +1,354 @@
+<?include "../include/head.html"?>	
+	<style>
+		.guideLine{border:1px solid #262626; width: 600px;margin:10px 0;}
+		.guideLine_large{border:1px solid #262626; width: 846px;margin:10px 0;}
+	</style>
+	<div class="guideLine">		
+		<!-- 상품Q&A 팝업 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">상품Q&amp;A</h1>
+			<div class="popup_contents">
+				<div class="popup_review">
+					<div class="reivew_top">
+						<div class="item_info">
+							<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+							<div class="order_option noline">
+								<!-- 상품명이 2줄일 경우 line2 클래스명 추가하기 --> 
+								<p class="item_name line2 mt10">[레드씰] 레드씰 프로폴리스 기능성 치약 레드씰 프로폴리스 기능성 치약 </p>  
+							</div>
+						</div>
+					</div><!--// review_top E-->
+					
+					<div class="board_wrap">
+			 			<table cellpadding="0" cellspacing="0" class="board-write">
+				 			<caption>상품Q&amp;A</caption>
+				 			<colgroup>
+				 				<col style="width:110px;">
+				 				<col style="width:auto;">	 				
+				 			</colgroup>
+				 			<tbody>  
+				 				<tr>
+				 					<th scope="row">문의유형</th>
+				 					<td>
+				 						<div> 
+				 							<input type="radio" id="age10" name="radio_btn"> <label for="age10">상품</label>&nbsp;&nbsp;
+				 							<input type="radio" id="age11" name="radio_btn"> <label for="age11">배송</label>&nbsp;&nbsp;
+				 							<input type="radio" id="age12" name="radio_btn"> <label for="age12">반품/환불/취소</label>&nbsp;&nbsp;
+				 							<input type="radio" id="age13" name="radio_btn"> <label for="age13">교환</label>&nbsp;&nbsp;
+				 							<input type="radio" id="age14" name="radio_btn"> <label for="age14">기타</label>&nbsp;&nbsp;   
+				 						</div>
+				 					</td>
+				 				</tr> 
+				 				<tr>
+				 					<th scope="row">제목</th>
+				 					<td>
+				 						<div class="input_wrap col-w-5">
+				 							<input type="text" title="제목">
+				 						</div>  
+				 						<span><input type="checkbox" id="aa"> <label for="aa">비공개</label></span>
+				 					</td>
+				 				</tr> 
+				 				<tr>
+				 					<th scope="row" valign="top">내용</th>
+				 					<td>
+				 						<textarea cols="10" rows="5"> </textarea>  
+				 					</td>
+				 				</tr> 
+				 			</tbody>
+				 		</table>  
+					</div> <!-- // board_wrap E-->
+					<div class="pop_desc">
+						<ul>
+							<li>상품 Q&amp;A에 등록한 게시글은 마이페이지 &gt; 상품 Q&amp;A에서 확인하실 수 있습니다.</li>
+							<li>부적절한 게시물 등록시 ID이용 제한 및 게시물이 삭제될 수 있습니다.</li>
+						</ul>
+					</div> 
+					
+				</div><!--//popup_review E-->
+			</div><!--//popup_contents E-->
+			
+			<div class="btn_wrap">
+				<button type="button" class="btn btn-success btn-lg" title="저장하기">저장하기</button> 
+				<button type="button" class="btn btn-default btn-lg" title="취소하기">취소하기</button> 
+			</div>
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 상품Q&A 팝업 E -->
+		<!-- 관심상품담기 레이어팝업 S -->
+		<div id="op-layer-wishlist" class="cart_wishlist_layer popup_wrap">
+			<h1 class="popup_title">관심상품 담기</h1>
+			<div class="popup_contents">
+				<div class="result_box">
+					<p>상품이 관심상품에 담겼습니다.</p>
+					<p>바로 확인하시겠습니까?</p>
+				</div>
+			</div><!--//popup_contents E-->
+
+			<div class="btn_wrap">
+				<a href="/mypage/wishlist" class="btn btn-success btn-lg">관심상품 가기</a>
+				<a href="#a;" class="btn btn-lg btn-default">계속 쇼핑하기</a>
+			</div>
+			<a href="#a;" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 관심상품담기 레이어팝업 E -->
+		<!-- 장바구니담기 레이어팝업 S -->
+		<div id="op-layer-cart" class="popup_wrap cart_wishlist_layer">
+			<h1 class="popup_title">장바구니 담기</h1>
+			<div class="popup_contents">
+				<div class="result_box">
+					<p>장바구니에 상품을 담았습니다.</p>
+				</div>
+			</div><!--//popup_contents E-->
+
+			<div class="btn_wrap">
+				<a href="/cart" class="btn btn-success btn-lg">장바구니 가기</a>  <!-- 장바구니로 이동 -->
+				<a href="#a;" class="btn btn-lg btn-default">계속 쇼핑하기</a>  <!-- 계속 쇼핑 -->
+			</div>
+			<a href="#a;" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 장바구니담기 레이어팝업 E -->
+		<!-- 제주 / 도서산간지역 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">제주 / 도서산간지역</h1>
+			<div class="popup_contents">
+				<div class="board_info"> 
+					<select title="지역선택" class="area">
+						<option value="">주소</option>
+						<option value="">서울</option> 
+						<option value="">경기</option>
+					</select>
+					<div class="board-search"> 
+						<input id="where" name="where" value="SUBJECT" type="hidden">
+						<input id="query" name="query" title="검색어입력" type="text" value="">
+						<button type="submit" class="btn btn-m btn-submit" title="검색">검색</button> 
+					</div> 
+				</div><!-- // region_top E -->
+				<div class="board-list mt20">
+					<table cellpadding="0" cellspacing="0">
+						<caption>제주 / 도서산간지역</caption>
+						<colgroup>
+							<col style="width:66%">
+							<col style="width:14%">
+							<col style="width:20%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">우편번호/주소</th>
+								<th scope="col">제주</th>
+								<th scope="col">도서산간</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="tleft"><a href="#">409-911<br>인천 옹진군 백령면 가을1리</a></td>
+								<td>&nbsp;</td>
+								<td>O</td>
+							</tr>
+							<tr>
+								<td class="tleft"><a href="#">409-911<br>인천 옹진군 백령면 가을2리</a></td>
+								<td>&nbsp;</td>
+								<td>O</td>
+							</tr>
+							<tr>
+								<td class="tleft"><a href="#">409-919<br>인천 옹진군 백령면 남포리 사서함 타경 603-30</a></td>
+								<td>&nbsp;</td>
+								<td>O</td>
+							</tr>
+							<tr>
+								<td class="tleft"><a href="#">409-911<br>인천 옹진군 백령면 가을1리</a></td>
+								<td>&nbsp;</td>
+								<td>O</td>
+							</tr>
+							<tr>
+								<td class="tleft"><a href="#">690-003<br>제주시 노형동 제주우편집중국</a></td>
+								<td>O</td>
+								<td>&nbsp;</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>	 <!-- // board-list E -->
+				<p class="pagination">
+					<a href="#" class="first"><img src="/content/images/btn/btn_first.gif" alt=""></a>
+					<a href="#" class="prev"><img src="/content/images/btn/btn_prev.gif" alt=""></a>
+					<a href="#">1</a>
+					<a href="#">2</a>
+					<strong>3</strong>
+					<a href="#">4</a>
+					<a href="#">5</a>
+					<a href="#" class="next"><img src="/content/images/btn/btn_next.gif" alt=""></a>
+					<a href="#" class="last"><img src="/content/images/btn/btn_last.gif" alt=""></a>
+				</p>
+			</div><!--//popup_contents E-->			
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 제주 / 도서산간지역 E -->
+		<!-- 쿠폰다운로드 유 / 무 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">쿠폰 다운로드</h1>
+			<!-- 쿠폰다운로드 무 S -->
+			<div class="popup_contents">
+				<div class="result_box">
+					<p>‘다운 가능한 쿠폰이 없습니다.’</p>
+				</div> 
+			</div>
+			<!-- 쿠폰다운로드 무 E -->
+			<!-- 쿠폰다운로드 유 S -->			
+			<div class="popup_contents">
+				<div class="popup_review">  
+					<div class="board_wrap">
+			 			<table cellpadding="0" cellspacing="0" class="board-list">
+				 			<caption>쿠폰 다운로드</caption>
+				 			<colgroup> 
+				 				<col style="width:auto;">	 
+				 				<col style="width:90px;">
+				 				<col style="width:180px;">
+				 				<col style="width:90px;">				
+				 			</colgroup>
+				 			<thead>
+				 				<tr>
+				 					<th scope="col">할인 쿠폰명</th>
+				 					<th scope="col">할인금액</th>
+				 					<th scope="col">유효기간</th>
+				 					<th scope="col">상태</th>
+				 				</tr>
+				 			</thead>
+				 			<tbody> 
+				 				<tr>
+				 					<td>10월 7뷰티 무료배송쿠폰 1차</td>
+				 					<td><span class="coupons">12,000원</span> </td>
+				 					<td><span class="date">2014-12-01~2014-12-31</span></td>
+				 					<td><a href="#" class="btn btn-s btn-normal" title="쿠폰다운">쿠폰다운</a></td>
+				 				</tr>  
+				 				<tr>
+				 					<td>15% 할인쿠폰을 다운로드!</td>
+				 					<td><span class="coupons">15%</span></td>
+				 					<td><span class="date">2014-12-01~2014-12-31</span></td>
+				 					<td><a href="#" class="btn btn-s btn-normal" title="쿠폰다운">쿠폰다운</a></td>
+				 				</tr> 
+				 				<tr>
+				 					<td>10월 7뷰티 무료배송쿠폰 2차</td>
+				 					<td><span class="coupons">10,000원</span></td>
+				 					<td><span class="date">2014-12-01~2014-12-31</span></td>
+				 					<td><a href="#" class="btn btn-s btn-normal" title="쿠폰다운">쿠폰다운</a></td>
+				 				</tr>
+				 				<tr>
+				 					<td>10월 7뷰티 무료배송쿠폰 3차</td>
+				 					<td><span class="coupons">2,000원</span></td>
+				 					<td><span class="date">2014-12-01~2014-12-31</span></td>
+				 					<td><a href="#" class="btn btn-s btn-normal" title="쿠폰다운">쿠폰다운</a></td>
+				 				</tr>
+				 				<tr>
+				 					<td>10월 7뷰티 무료배송쿠폰 4차</td>
+				 					<td><span class="coupons">10%</span></td>
+				 					<td><span class="date">2014-12-01~2014-12-31</span></td>
+				 					<td><a href="#" class="btn btn-s btn-normal" title="쿠폰다운">쿠폰다운</a></td>
+				 				</tr>
+				 			</tbody>
+				 		</table> 
+				 	</div> <!--// board_wrapE-->	 
+				</div><!--//popup_review E-->
+				<div class="pop_desc">
+					<p><strong>알아두세요!</strong></p>
+					<ul class="mt10">
+						<li>다운로드한 할인 쿠폰은 <strong>[마이페이지 > 쿠폰]</strong> 에서 확인하실 수 있습니다.</li>
+						<li>다운로드한 할인쿠폰의 유효기간 경과시 사용할 수 없습니다.</li>
+						<li>할인 쿠폰을 사용하여 주문하신 후 취소/반품/교환하신 경우 <strong>쿠폰 유효기간 경과 시 사용하실 수 없습니다.</strong></li>
+						<li>할인 쿠폰을 사용하여 주문하신 후 취소/반품/교환하신 경우 <strong>쿠폰 유효기간이 남아 있는 경우 사용이 가능합니다.</strong></li>
+					</ul>
+				</div>			 
+			</div><!--//popup_contents E--> 	
+			<!-- 쿠폰다운로드 유 E -->		
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 쿠폰다운로드 유 / 무 E -->
+		<!-- 카드혜택 안내 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">카드 헤택 안내</h1>
+			<div class="popup_contents">
+				<div class="card_con">
+					<div class="card_info">
+						<ul>
+							<li>기간 : 2016.12.01 ~ 2016.12.31</li>
+							<li>대상 : 5만원 이상 신용카드 결제 고객</li>
+						</ul>
+					</div>
+					
+					<div class="card_list">
+						<ul>
+							<li>
+								<dl>
+									<dt>1. 현대카드</dt>
+									<dd>전체무이자 : 2, 3, 4, 5개월 무이자</dd>
+									<dd>신청방법 : 별도 신청 없이 적용</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt>2. 신한카드</dt>
+									<dd>전체무이자 : 2, 3, 4, 5개월 무이자</dd>
+									<dd>신청방법 : 별도 신청 없이 적용</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt>3. 삼성카드</dt>
+									<dd>전체무이자 : 2, 3, 4, 5개월 무이자</dd>
+									<dd>부분무이자 : 6개월(1회차 고객부담) / 10개월(1,2회차 고객부담) / 12개월(1,2,3회차 고객부담)</dd>
+									<dd>신청방법 : 별도 신청 없이 적용</dd>
+								</dl>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="card_desc">
+						<dl>
+							<dt>[유의사항]</dt>
+							<dd>법인(기업), 체크, 선불, 기프트, 하이브리드, 은행계열(광주,수협,제주 등) 카드 제외</dd>
+							<dd>상점부담무이자 가맹점, 특별 제휴 가맹점 등 일부 가맹점 제외</dd>
+							<dd>마일리지 및 포인트 적립 시 무이자 혜택 불가</dd>
+						</dl>
+					</div> 
+				</div>
+			</div><!--//popup_contents E-->			
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 카드혜택 안내 E -->
+	</div><!-- GuideLine E -->	
+	<div class="guideLine_large">
+		<!-- 이미지상세보기 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">[프로즈비] 마사지 논오일(리퀴드타입) _그레이프후르츠 1L</h1>
+			<div class="popup_contents type02">
+				<div class="popup_itemView">
+					<div class="photoView">
+						<img src="/content/images/popup/itemView.jpg" alt="">
+					</div>
+					<div class="min_img">
+						<ul>
+							<li><a href="#a;" class="on"><img src="/content/images/popup/item_min.gif" alt="img 1"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min02.gif" alt="img 2"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min.gif" alt="img 3"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min02.gif" alt="img 4"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min.gif" alt="img 5"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min02.gif" alt="img 6"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min.gif" alt="img 7"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min02.gif" alt="img 8"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min.gif" alt="img 9"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min02.gif" alt="img 10"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min.gif" alt="img 11"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min02.gif" alt="img 12"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min.gif" alt="img 13"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min02.gif" alt="img 14"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min.gif" alt="img 15"></a></li>
+							<li><a href="#a;"><img src="/content/images/popup/item_min02.gif" alt="img 16"></a></li>
+						</ul>
+					</div> 
+				</div><!--//popup_itemView E-->
+			</div><!--//popup_contents E--> 
+			<a href="#" class="popup_close">창 닫기</a>
+		</div> <!-- // popup_wrap E -->
+		<!-- 이미지상세보기 E -->
+	</div>
+
+</body>
+</html> 

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.cardbenefits.CardBenefitsMapper">
+
+	<resultMap id="cardBenefitsResult" type="saleson.shop.cardbenefits.domain.CardBenefits">
+		<result property="benefitsId" column="BENEFITS_ID" />
+		<result property="subject" column="SUBJECT" />
+		<result property="content" column="CONTENT" />
+		<result property="startDate" column="START_DATE" />
+		<result property="endDate" column="END_DATE" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<sql id="cardBenefitsWhere">
+		<where>
+			<if test="startDate != '' and startDate != null">
+				AND START_DATE >= #{startDate}
+			</if>
+			<if test="endDate != '' and endDate != null">
+				AND END_DATE <![CDATA[<=]]> #{endDate}
+			</if>
+			<if test='query != null and query != ""'>
+				<choose>
+					<when test='where == "subject"'>
+						AND SUBJECT LIKE CONCAT('%', #{query} , '%')
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="getCardBenefitsCount" parameterType="saleson.shop.cardbenefits.support.CardBenefitsParam" resultType="Integer" >
+		SELECT COUNT(*) 
+		FROM OP_CARD_BENEFITS 
+		<include refid="cardBenefitsWhere"/>
+	</select>
+	
+	<select id="getCardBenefitsList" parameterType="saleson.shop.cardbenefits.support.CardBenefitsParam" resultMap="cardBenefitsResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT *
+			FROM OP_CARD_BENEFITS
+			<include refid="cardBenefitsWhere"/>
+			ORDER BY CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getCardBenefits" parameterType="Integer" resultMap="cardBenefitsResult" >
+		SELECT *
+		FROM OP_CARD_BENEFITS
+		WHERE BENEFITS_ID = #{benefitsId}
+	</select>
+	
+	<insert id="insertCardBenefits" parameterType="saleson.shop.cardbenefits.domain.CardBenefits">
+		INSERT INTO OP_CARD_BENEFITS (BENEFITS_ID, SUBJECT, CONTENT, START_DATE, END_DATE, CREATED_DATE)
+		VALUES (#{benefitsId}, #{subject}, #{content}, #{startDate}, #{endDate}, DATE_FORMAT(NOW(),'%Y%m%d%H'))
+	</insert>
+
+	
+	<update id="updateCardBenefits" parameterType="saleson.shop.cardbenefits.domain.CardBenefits">
+		UPDATE OP_CARD_BENEFITS
+		<set>
+			SUBJECT = #{subject},
+			CONTENT = #{content},
+			START_DATE = #{startDate},
+			END_DATE = #{endDate}
+		</set>
+		WHERE BENEFITS_ID = #{benefitsId}
+	</update>
+
+	
+	<delete id="deleteCardBenefits" parameterType="Integer" >
+		DELETE FROM OP_CARD_BENEFITS
+		WHERE 
+		<foreach collection="benefitsIds" item="benefitsId" separator="or">
+			BENEFITS_ID = #{benefitsId}
+		</foreach>
+	</delete>	
+	
+	<select id="getTodayCardBenefits" parameterType="String" resultMap="cardBenefitsResult" >
+		SELECT *
+		FROM OP_CARD_BENEFITS
+		WHERE  #{today} BETWEEN START_DATE AND END_DATE;
+	</select>
+	
+	<select id="getDuplicateCardBenefitsCount" parameterType="String" resultType="int" >
+		SELECT COUNT(*)
+		FROM OP_CARD_BENEFITS
+		WHERE START_DATE <![CDATA[<=]]> #{startDate} AND END_DATE >= #{startDate}
+	</select>
+	
+	<!-- 기간내 카드혜택 존재 여부 체크 2017-03-08_seungil.lee -->
+	<select id="checkPeriod" parameterType="saleson.shop.cardbenefits.domain.CardBenefits" resultMap="cardBenefitsResult">
+		SELECT 
+			BENEFITS_ID
+			, SUBJECT
+			, START_DATE
+			, END_DATE 
+		FROM OP_CARD_BENEFITS 
+		WHERE 
+			<!-- 조건 수정 [2017-03-09]minae.yun-->
+			(START_DATE <![CDATA[<=]]> #{startDate}  
+			AND END_DATE <![CDATA[>=]]> #{endDate}
+ 			OR ((START_DATE BETWEEN #{startDate} AND #{endDate})
+			OR (END_DATE BETWEEN #{startDate} AND #{endDate})))
+			<if test='benefitsId != null and benefitsId != 0'>
+				AND BENEFITS_ID <![CDATA[<>]]> #{benefitsId}
+			</if>
+	</select>
+	
+</mapper>

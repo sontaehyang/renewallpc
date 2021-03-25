@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.display.DisplayMapper">
+	
+	<resultMap id="DisplayItemResult" type="saleson.shop.display.domain.DisplayItem" extends="saleson.shop.item.ItemMapper.ItemResult">
+		<result property="displayGroupCode" column="DISPLAY_GROUP_CODE" />
+		<result property="displaySubCode" column="DISPLAY_SUB_CODE" />
+		<result property="viewTarget" column="VIEW_TARGET" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="ordering" column="ORDERING" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<resultMap id="SpotApplyGroupResult" type="saleson.shop.group.domain.Group">
+		<result property="groupCode" column="GROUP_CODE"/>
+		<result property="groupName" column="GROUP_NAME"/>
+	</resultMap>
+	
+	<resultMap id="DisplayTemplateResult" type="saleson.shop.display.domain.DisplayTemplate">
+		<result property="displayTemplateCode" column="DISPLAY_TEMPLATE_CODE"/>
+		<result property="displaySettingValue" column="DISPLAY_SETTING_VALUE"/>
+	</resultMap>
+	
+	<resultMap id="DisplayGroupCodeResult" type="saleson.shop.display.domain.DisplayGroupCode">
+		<result property="displayGroupCode" column="DISPLAY_GROUP_CODE"/>
+		<result property="displayGroupCodeName" column="DISPLAY_GROUP_CODE_NAME"/>
+		<result property="displayTemplateCode" column="DISPLAY_TEMPLATE_CODE"/>
+	</resultMap>
+	
+	<resultMap id="DisplayImageResult" type="saleson.shop.display.domain.DisplayImage">
+		<result property="displayGroupCode" column="DISPLAY_GROUP_CODE" />
+		<result property="displaySubCode" column="DISPLAY_SUB_CODE" />
+		<result property="viewTarget" column="VIEW_TARGET" />
+		<result property="displayImage" column="DISPLAY_IMAGE" />
+		<result property="displayUrl" column="DISPLAY_URL" />
+		<result property="displayContent" column="DISPLAY_CONTENT" />
+		<result property="displayColor" column="DISPLAY_COLOR" />
+		<result property="ordering" column="ORDERING" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<resultMap id="DisplayEditorResult" type="saleson.shop.display.domain.DisplayEditor">
+		<result property="displayGroupCode" column="DISPLAY_GROUP_CODE" />
+		<result property="displaySubCode" column="DISPLAY_SUB_CODE" />
+		<result property="viewTarget" column="VIEW_TARGET" />
+		<result property="displayEditorContent" column="DISPLAY_EDITOR_CONTENT" />
+		<result property="ordering" column="ORDERING" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+	<resultMap id="DisplaySnsResult" type="saleson.shop.display.domain.DisplaySns">
+		<result property="snsId" column="SNS_ID" />
+		<result property="snsToken" column="SNS_TOKEN" />
+		<result property="snsType" column="SNS_TYPE" />
+		<result property="ordering" column="ORDERING" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+	<sql id="selectDisplayItemListWhere">
+		<where>
+
+			<choose>
+				<when test="displayGroupCodes != null">
+					AND DI.DISPLAY_GROUP_CODE IN
+					<foreach collection="displayGroupCodes" item="code" separator="," open="(" close=")">
+						#{code}
+					</foreach>
+				</when>
+				<otherwise>
+					AND DI.DISPLAY_GROUP_CODE = #{displayGroupCode}
+				</otherwise>
+			</choose>
+
+			<choose>
+				<when test="displaySubCodes != null">
+					AND DI.DISPLAY_SUB_CODE IN
+					<foreach collection="displaySubCodes" item="code" separator="," open="(" close=")">
+						#{code}
+					</foreach>
+				</when>
+				<otherwise>
+					<if test="displaySubCode != null and displaySubCode != ''">
+						AND DI.DISPLAY_SUB_CODE = #{displaySubCode}
+					</if>
+				</otherwise>
+			</choose>
+			
+			<if test="viewTarget != null and viewTarget != ''">
+				AND DI.VIEW_TARGET = #{viewTarget}
+			</if>
+			
+			<if test='conditionType == "FRONT"'>
+				<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+				AND I.FRONT_DISPLAY_FLAG = 'Y'
+				AND S.STATUS_CODE = '2'
+			</if>
+
+			<if test='privateTypes != null'>
+				AND I.PRIVATE_TYPE IN (
+				<foreach collection="privateTypes" item="privateType" index="i" open="" separator="," close="">
+					#{privateType}
+				</foreach>
+				)
+			</if>
+
+		</where>
+	</sql>
+	
+	<sql id="selectDisplayItemListOrderBy">
+		
+		<choose>
+			
+			<when test='conditionType == "FRONT"'>
+				<choose>
+					<when test='sort == "DESC"'>
+						<choose>
+							<when test='orderBy == "SALE_PRICE"'>
+								ORDER BY I.SALE_PRICE DESC
+							</when>
+							<when test='orderBy == "HITS"'>
+								ORDER BY I.HITS DESC
+							</when>
+							<when test='orderBy == "ITEM_ID"'>
+								ORDER BY I.ITEM_ID DESC
+							</when>
+							<otherwise>
+								ORDER BY DI.ORDERING ASC
+							</otherwise>
+						</choose>
+					</when>
+					<when test='sort == "ASC"'>
+						<choose>
+							<when test='orderBy == "SALE_PRICE"'>
+								ORDER BY I.SALE_PRICE ASC
+							</when>
+							<when test='orderBy == "HITS"'>
+								ORDER BY I.HITS ASC
+							</when>
+							<when test='orderBy == "ITEM_ID"'>
+								ORDER BY I.ITEM_ID ASC
+							</when>
+							<otherwise>
+								ORDER BY DI.ORDERING ASC
+							</otherwise>
+						</choose>
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				ORDER BY DI.ORDERING ASC
+			</otherwise>
+			
+		</choose>
+		
+	</sql>
+	
+	<select id="getDisplayItemListCountByParam" parameterType="saleson.shop.display.support.DisplayItemParam" resultType="int">
+		
+			SELECT 
+				COUNT(*) AS CNT
+			FROM 
+				OP_DISPLAY_ITEM DI 
+					INNER JOIN OP_ITEM I ON DI.ITEM_ID = I.ITEM_ID
+					INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+					<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />	
+			
+			<include refid="selectDisplayItemListWhere"/>
+		
+	</select>
+	
+	<select id="getDisplayItemListByParam" parameterType="saleson.shop.display.support.DisplayItemParam" resultMap="DisplayItemResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+				<include refid="saleson.shop.item.ItemMapper.defaultItemColumns" />,
+				<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />,
+				<include refid="saleson.shop.item.ItemMapper.itemReviewColumns" />,
+				DI.DISPLAY_GROUP_CODE, 
+				DI.DISPLAY_SUB_CODE,
+				DI.VIEW_TARGET,
+				DI.ORDERING
+			FROM 
+				OP_DISPLAY_ITEM DI 
+					INNER JOIN OP_ITEM I ON DI.ITEM_ID = I.ITEM_ID
+					INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+					<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />	
+			
+			<include refid="selectDisplayItemListWhere"/>
+			<include refid="selectDisplayItemListOrderBy"/>
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getFrontDisplayItemListByParam" parameterType="saleson.shop.display.support.DisplayItemParam" resultMap="DisplayItemResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT
+				<include refid="saleson.shop.item.ItemMapper.baseItemColumns" />,
+				DI.DISPLAY_GROUP_CODE,
+				DI.DISPLAY_SUB_CODE,
+				DI.VIEW_TARGET,
+				DI.ORDERING
+			FROM OP_DISPLAY_ITEM DI
+				INNER JOIN OP_ITEM I ON DI.ITEM_ID = I.ITEM_ID
+				INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+			<include refid="selectDisplayItemListWhere"/>
+			<include refid="selectDisplayItemListOrderBy"/>
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getDisplayItemSubCodeCountByGroupCode" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*) AS CNT 
+		FROM (
+			SELECT 
+				DISTINCT DISPLAY_SUB_CODE 
+			FROM OP_DISPLAY_ITEM
+			WHERE DISPLAY_GROUP_CODE = #{value}
+		) T
+	</select>
+	
+	<insert id="insertDisplayItem" parameterType="saleson.shop.display.domain.DisplayItem">
+		INSERT INTO OP_DISPLAY_ITEM (DISPLAY_GROUP_CODE, DISPLAY_SUB_CODE, VIEW_TARGET, ITEM_ID, ORDERING, CREATED_DATE)
+		VALUES (#{displayGroupCode}, #{displaySubCode}, #{viewTarget}, #{itemId}, #{ordering}, <include refid="CommonMapper.datetime" />)
+	</insert>
+
+	<delete id="deleteDisplayItemByParam" parameterType="saleson.shop.display.support.DisplayItemParam">
+		DELETE FROM OP_DISPLAY_ITEM
+		<where>
+			
+			AND DISPLAY_GROUP_CODE = #{displayGroupCode}
+			
+			<if test="displaySubCode != null and displaySubCode != ''">
+				AND DISPLAY_SUB_CODE = #{displaySubCode}
+			</if>
+			
+			<if test="viewTarget != null and viewTarget != ''">
+				AND VIEW_TARGET = #{viewTarget}
+			</if>
+			
+		</where>
+	</delete>
+	
+	<!-- Spot 공통 -->
+	<sql id="sqlItemForSpotWhere">
+		<where>
+			AND I.DATA_STATUS_CODE = '1'
+			AND I.SPOT_FLAG = 'Y' 
+			
+			<if test='searchStartDate != null and searchStartDate != ""'>
+				AND I.SPOT_START_DATE >= #{searchStartDate}
+			</if>
+			
+			<if test='searchEndDate != null and searchEndDate != ""'>
+				AND I.SPOT_END_DATE <![CDATA[<=]]> #{searchEndDate}
+			</if>
+			
+			<choose>
+				<when test='conditionType == "OPMANAGER"'>
+					<if test='spotApplyGroup != "All"'>
+						AND I.SPOT_APPLY_GROUP = #{spotApplyGroup}
+					</if>
+					<choose>
+						<when test='spotStatus == "1"'>
+							AND ((I.SPOT_START_DATE <![CDATA[<]]> DATE_FORMAT(NOW(),'%Y%m%d')) OR (I.SPOT_START_DATE = DATE_FORMAT(NOW(),'%Y%m%d') AND I.SPOT_START_TIME <![CDATA[<=]]> DATE_FORMAT(NOW(),'%H%i%s'))) 
+							AND ((I.SPOT_END_DATE > DATE_FORMAT(NOW(),'%Y%m%d')) OR (I.SPOT_END_DATE = DATE_FORMAT(NOW(),'%Y%m%d') AND I.SPOT_END_TIME >= DATE_FORMAT(NOW(),'%H%i%s')))
+						</when>
+						<when test='spotStatus == "2"'>
+							AND (I.SPOT_START_DATE > DATE_FORMAT(NOW(),'%Y%m%d') OR (I.SPOT_START_DATE = DATE_FORMAT(NOW(),'%Y%m%d') AND I.SPOT_START_TIME > DATE_FORMAT(NOW(),'%H%i%s')))
+						</when>
+						<otherwise>
+								AND ((((I.SPOT_START_DATE <![CDATA[<]]> DATE_FORMAT(NOW(),'%Y%m%d')) OR (I.SPOT_START_DATE = DATE_FORMAT(NOW(),'%Y%m%d') AND I.SPOT_START_TIME <![CDATA[<=]]> DATE_FORMAT(NOW(),'%H%i%s')))
+										AND ((I.SPOT_END_DATE > DATE_FORMAT(NOW(),'%Y%m%d')) OR (I.SPOT_END_DATE = DATE_FORMAT(NOW(),'%Y%m%d') AND I.SPOT_END_TIME >= DATE_FORMAT(NOW(),'%H%i%s'))))
+										OR (I.SPOT_START_DATE > DATE_FORMAT(NOW(),'%Y%m%d') OR (I.SPOT_START_DATE = DATE_FORMAT(NOW(),'%Y%m%d') AND I.SPOT_START_TIME > DATE_FORMAT(NOW(),'%H%i%s'))))
+						</otherwise>
+					</choose>
+				</when>
+				<otherwise>
+					AND (
+						I.SPOT_APPLY_GROUP IS NULL OR I.SPOT_APPLY_GROUP = '' OR I.SPOT_APPLY_GROUP = 'ALL' OR I.SPOT_APPLY_GROUP = #{spotApplyGroup}
+					)
+                    AND
+                        (
+                            (
+                                I.SPOT_DATE_TYPE = '1'
+                                AND DATE_FORMAT(NOW(),'%Y%m%d') BETWEEN I.SPOT_START_DATE AND I.SPOT_END_DATE
+                                AND DATE_FORMAT(NOW(),'%H%i%s') BETWEEN I.SPOT_START_TIME AND I.SPOT_END_TIME
+                            ) OR
+                            (
+                                I.SPOT_DATE_TYPE = '2'
+                                AND DATE_FORMAT(NOW(),'%Y%m%d%H%i%s') BETWEEN CONCAT(I.SPOT_START_DATE, SPOT_START_TIME) AND CONCAT(I.SPOT_END_DATE, I.SPOT_END_TIME)
+                            )
+                        )
+					AND I.SPOT_WEEK_DAY LIKE CONCAT('%', DAYOFWEEK(NOW()) - 1 ,'%')
+					<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+				</otherwise>
+			</choose>
+			
+			AND I.STOCK_QUANTITY <![CDATA[<>]]> 0
+			
+			<choose>
+				<when test='spotType == "1"'>AND I.SPOT_TYPE = '1'</when>
+				<when test='spotType == "2"'>AND I.SPOT_TYPE = '2'</when>
+			</choose>
+			
+			<if test='query != null and query != ""'>
+				<choose>
+					<when test='where == "ITEM_USER_CODE"'>
+						AND I.ITEM_USER_CODE LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<when test='where == "ITEM_NAME"'>
+						AND I.ITEM_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<when test='where == null or where == ""'>
+						AND (I.ITEM_USER_CODE LIKE CONCAT('%', #{query}, '%')
+								OR I.ITEM_NAME LIKE CONCAT('%', #{query}, '%') )
+					</when>
+				</choose>
+			</if>
+
+			<if test='spotWeekDay != null and spotWeekDay != "" and spotWeekDay != "0123456"'>
+					AND ( I.SPOT_WEEK_DAY LIKE '%7%'
+					<foreach collection='spotWeekDays' item='week' index='index'>
+						 OR I.SPOT_WEEK_DAY LIKE #{week}
+					</foreach>
+					)
+			</if>
+
+			<if test='privateTypes != null'>
+				AND I.PRIVATE_TYPE IN (
+					<foreach collection="privateTypes" item="privateType" index="i" open="" separator="," close="">
+						#{privateType}
+					</foreach>
+				)
+			</if>
+		</where>
+	</sql>
+	
+	<!-- Spot 상품 카운트 -->
+	<select id="getItemCountForSpot" parameterType="saleson.shop.item.support.ItemParam" resultType="Integer">
+		SELECT COUNT(DISTINCT I.ITEM_ID)
+		FROM 
+			OP_SELLER S 
+			INNER JOIN OP_ITEM I ON S.SELLER_ID = I.SELLER_ID
+				<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />	
+			
+			
+		<include refid="sqlItemForSpotWhere" />
+	</select>
+	
+	<!-- Spot 상품 목록 -->
+	<select id="getItemListForSpot" parameterType="saleson.shop.item.support.ItemParam" resultMap="saleson.shop.item.ItemMapper.ItemResult">
+		<include refid="CommonMapper.paginationHeader" /> 
+			SELECT 
+			
+				<include refid="saleson.shop.item.ItemMapper.defaultItemColumns" />,
+				<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />,
+				<include refid="saleson.shop.item.ItemMapper.itemReviewColumns" />,
+				S.SELLER_NAME
+			
+			FROM
+				<include refid="saleson.shop.item.ItemMapper.defaultOnSaleFromQuery" />
+				<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />	
+				
+			<include refid="sqlItemForSpotWhere"/>
+
+			ORDER BY 
+			<choose>
+				<when test='orderBy == "RANDOM"'>
+					RAND()
+				</when>
+				<when test='orderBy == "SPOT_END_DATE"'>
+					I.SPOT_END_DATE ASC, I.CREATED_DATE DESC
+				</when>
+				<when test='orderBy == "HITS"'>
+					I.HITS DESC, I.CREATED_DATE DESC
+				</when>
+				<when test='orderBy == "SALE_PRICE"'>
+					I.SALE_PRICE
+					<choose>
+						<when test='sort == "DESC"'>
+							DESC,
+						</when>
+						<otherwise>
+							ASC,
+						</otherwise>
+					</choose>
+					I.CREATED_DATE DESC
+				</when>
+				<otherwise>
+					I.SPOT_END_DATE ASC, I.CREATED_DATE DESC
+				</otherwise>
+			</choose>
+			
+		<include refid="CommonMapper.paginationFooter" /> 
+	</select>
+	
+	<update id="updateItemSpot" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM
+		<set>
+			SPOT_DISCOUNT_AMOUNT = #{spotDiscountAmount},
+			SPOT_START_DATE = #{spotStartDate},
+			SPOT_END_DATE = #{spotEndDate},
+			SPOT_START_TIME = #{spotStartTime},
+			SPOT_END_TIME = #{spotEndTime},
+			SPOT_WEEK_DAY = #{spotWeekDay},
+			SPOT_FLAG = #{spotFlag},
+			SPOT_APPLY_GROUP = #{spotApplyGroup},
+			SPOT_DATE_TYPE = #{spotDateType},
+			<if test="spotType != '' and spotType != null">
+				SPOT_TYPE = #{spotType},
+			</if>
+		</set>
+		WHERE ITEM_ID = #{itemId}
+	</update>
+
+	<update id="updateAllSpotDiscount" parameterType="saleson.shop.item.domain.ItemSpot">
+		UPDATE OP_ITEM I
+		
+		<set>
+			I.SPOT_DISCOUNT_AMOUNT = 
+			<choose>
+				<when test='discountType == "per"'>(I.SALE_PRICE * #{discountAmount}) / 100</when>
+				<otherwise>#{discountAmount}</otherwise>
+			</choose>
+		</set> 
+		
+		<where>
+			I.ITEM_ID IN 
+			<foreach item="id" index="index" collection="id" open="(" separator="," close=")"> 
+				#{id}
+			</foreach>
+		</where>
+	</update>	
+	
+	<update id="updateOneSpotDiscount" parameterType="saleson.shop.item.domain.ItemSpot">
+		UPDATE OP_ITEM I 
+		SET I.SPOT_DISCOUNT_AMOUNT = #{oneDiscountAmount}
+		WHERE I.ITEM_ID = #{itemId}
+	</update>
+	
+	
+	<select id="getSpotApplyGroup" resultMap="SpotApplyGroupResult">
+		SELECT GROUP_CODE,GROUP_NAME
+		FROM OP_GROUP
+	</select>
+
+	<select id="getDisplayTemplateByGroupCode" parameterType="String" resultMap="DisplayTemplateResult">
+		SELECT
+			DGC.DISPLAY_GROUP_CODE,
+			DT.DISPLAY_TEMPLATE_CODE,
+			DT.DISPLAY_SETTING_VALUE
+		FROM OP_DISPLAY_GROUP_CODE DGC
+		INNER JOIN OP_DISPLAY_TEMPLATE DT 
+			ON DGC.DISPLAY_TEMPLATE_CODE = DT.DISPLAY_TEMPLATE_CODE
+		WHERE DGC.DISPLAY_GROUP_CODE = #{value}
+	</select>
+
+	<select id="getDisplayGroupCodeByGroupCode" parameterType="String" resultMap="DisplayGroupCodeResult">
+		SELECT
+			DGC.*
+		FROM OP_DISPLAY_GROUP_CODE DGC
+		WHERE DGC.DISPLAY_GROUP_CODE = #{value}
+	</select>
+
+	<select id="getDisplayImageListByParam" parameterType="saleson.shop.display.support.DisplayParam" resultMap="DisplayImageResult">
+		SELECT
+			DI.*
+		FROM OP_DISPLAY_IMAGE DI
+		
+		<where>
+
+			<choose>
+				<when test="displayGroupCodes != null">
+					AND DI.DISPLAY_GROUP_CODE IN
+					<foreach collection="displayGroupCodes" item="code" separator="," open="(" close=")">
+						#{code}
+					</foreach>
+				</when>
+				<otherwise>
+					AND DI.DISPLAY_GROUP_CODE = #{displayGroupCode}
+				</otherwise>
+			</choose>
+
+			<if test="displaySubCode != null and displaySubCode != ''">
+				AND DI.DISPLAY_SUB_CODE = #{displaySubCode}
+			</if>
+
+			<if test="viewTarget != null and viewTarget != ''">
+				AND DI.VIEW_TARGET = #{viewTarget}
+			</if>
+
+		</where>
+		
+		ORDER BY DI.ORDERING ASC
+	</select>
+	
+	<select id="getDisplayImageByParam" parameterType="saleson.shop.display.support.DisplayParam" resultMap="DisplayImageResult">
+		SELECT
+			DI.*
+		FROM OP_DISPLAY_IMAGE DI
+		
+		<where>
+			DISPLAY_GROUP_CODE = #{displayGroupCode}
+			AND DISPLAY_SUB_CODE = #{displaySubCode}
+			AND VIEW_TARGET = #{viewTarget}
+			AND ORDERING = #{ordering}
+		</where>
+		
+	</select>
+	
+	<select id="getDisplayEditorListByParam" parameterType="saleson.shop.display.support.DisplayParam" resultMap="DisplayEditorResult">
+		SELECT
+			DE.*
+		FROM OP_DISPLAY_EDITOR DE
+		
+		<where>
+
+			<choose>
+				<when test="displayGroupCodes != null">
+					AND DE.DISPLAY_GROUP_CODE IN
+					<foreach collection="displayGroupCodes" item="code" separator="," open="(" close=")">
+						#{code}
+					</foreach>
+				</when>
+				<otherwise>
+					AND DE.DISPLAY_GROUP_CODE = #{displayGroupCode}
+				</otherwise>
+			</choose>
+			
+			<if test="displaySubCode != null and displaySubCode != ''">
+				AND DE.DISPLAY_SUB_CODE = #{displaySubCode}
+			</if>
+			
+			<if test="viewTarget != null and viewTarget != ''">
+				AND DE.VIEW_TARGET = #{viewTarget}
+			</if>
+			
+		</where>
+		
+		ORDER BY DE.ORDERING ASC
+	</select>
+	
+	<delete id="deleteDisplayEditorByParam" parameterType="saleson.shop.display.support.DisplayParam">
+		DELETE FROM OP_DISPLAY_EDITOR
+		<where>
+			
+			AND DISPLAY_GROUP_CODE = #{displayGroupCode}
+			
+			<if test="displaySubCode != null and displaySubCode != ''">
+				AND DISPLAY_SUB_CODE = #{displaySubCode}
+			</if>
+			
+			<if test="viewTarget != null and viewTarget != ''">
+				AND VIEW_TARGET = #{viewTarget}
+			</if>
+			
+		</where>
+	</delete>
+	
+	<insert id="insertDisplayEditor" parameterType="saleson.shop.display.domain.DisplayEditor">
+		INSERT INTO OP_DISPLAY_EDITOR (DISPLAY_GROUP_CODE, DISPLAY_SUB_CODE, VIEW_TARGET, DISPLAY_EDITOR_CONTENT, ORDERING, CREATED_DATE)
+		VALUES (#{displayGroupCode}, #{displaySubCode}, #{viewTarget}, #{displayEditorContent}, #{ordering}, <include refid="CommonMapper.datetime" />)
+	</insert>
+	
+	<delete id="deleteDisplayImageByParam" parameterType="saleson.shop.display.support.DisplayParam">
+		DELETE FROM OP_DISPLAY_IMAGE
+		<where>
+			AND DISPLAY_GROUP_CODE = #{displayGroupCode}
+			<if test="displaySubCode != null and displaySubCode != ''">
+				AND DISPLAY_SUB_CODE = #{displaySubCode}
+			</if>
+			<if test="viewTarget != null and viewTarget != ''">
+				AND VIEW_TARGET = #{viewTarget}
+			</if>
+			<if test="conditionType == 'DISPLAY_IMAGE_DELETE'">
+				AND ORDERING = #{ordering}
+			</if>
+		</where>
+	</delete>
+	
+	<insert id="insertDisplayImage" parameterType="saleson.shop.display.domain.DisplayImage">
+		INSERT INTO OP_DISPLAY_IMAGE (DISPLAY_GROUP_CODE, DISPLAY_SUB_CODE, VIEW_TARGET, DISPLAY_IMAGE, DISPLAY_URL, DISPLAY_CONTENT, DISPLAY_COLOR, ORDERING, CREATED_DATE)
+		VALUES (#{displayGroupCode}, #{displaySubCode}, #{viewTarget}, #{displayImage}, #{displayUrl}, #{displayContent}, #{displayColor}, #{ordering}, <include refid="CommonMapper.datetime" />)
+	</insert>
+
+	<update id="deleteDisplayImageFile"  parameterType="saleson.shop.display.domain.DisplayImage">
+		UPDATE OP_DISPLAY_IMAGE
+		SET
+			DISPLAY_IMAGE = ''
+		<where>
+			DISPLAY_GROUP_CODE = #{displayGroupCode}
+			AND DISPLAY_SUB_CODE = #{displaySubCode}
+			AND VIEW_TARGET = #{viewTarget}
+			AND ORDERING = #{ordering}
+		</where>
+	</update>
+	
+	<sql id="selectBasicDisplayItemInfoByCategories">
+		
+		SELECT 
+				<include refid="saleson.shop.item.ItemMapper.defaultItemColumns" />, 
+				<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />,
+				DI.DISPLAY_GROUP_CODE, 
+				DI.DISPLAY_SUB_CODE
+			FROM 
+				OP_DISPLAY_ITEM DI 
+					INNER JOIN OP_ITEM I ON DI.ITEM_ID = I.ITEM_ID
+					INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+					<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+			<include refid="selectDisplayItemListWhere"/>
+		
+	</sql>
+	<select id="getDisplayItemInfoForSubCodeByParam" parameterType="saleson.shop.display.support.DisplayItemParam" resultType="map">
+		
+		SELECT 
+			T.DISPLAY_SUB_CODE,
+			COUNT(T.ITEM_ID) AS COUNT 
+		FROM (
+			<include refid="selectBasicDisplayItemInfoByCategories"/>
+		) T
+		<where>
+			
+			<choose>
+				<when test='conditionType == "CATEGORIES_SOLD_OUT"'>
+					AND T.ITEM_SOLD_OUT_FLAG = 'Y'
+				</when>
+				<when test='conditionType == "CATEGORIES_NOT_DISPLAY_FLAG"'>
+					AND T.DISPLAY_FLAG = 'N'
+					OR T.DATA_STATUS_CODE != '1'
+				</when>
+			</choose>
+		</where>
+		 
+		GROUP BY T.DISPLAY_SUB_CODE
+			
+	</select>
+
+	<insert id="insertDisplaySns" parameterType="saleson.shop.display.domain.DisplaySns">
+		INSERT INTO OP_DISPLAY_SNS (SNS_ID, SNS_TOKEN, SNS_TYPE, ORDERING, UPDATED_DATE, CREATED_DATE)
+		VALUES (#{snsId}, #{snsToken}, #{snsType}, #{ordering}, #{updatedDate}, <include refid="CommonMapper.datetime" />)
+	</insert>
+
+	<update id="updateDisplaySns" parameterType="saleson.shop.display.domain.DisplaySns">
+		UPDATE OP_DISPLAY_SNS
+		<set>
+			<if test='snsToken != null and snsToken != ""'>
+				SNS_TOKEN = #{snsToken},
+			</if>
+			<if test='snsType != null and snsType != ""'>
+				SNS_TYPE = #{snsType},
+			</if>
+			ORDERING = #{ordering},
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		</set>
+		WHERE SNS_ID = #{snsId}
+	</update>
+
+	<delete id="deleteDisplaySnsByIds" parameterType="saleson.shop.display.support.DisplaySnsParam">
+		DELETE FROM OP_DISPLAY_SNS
+		WHERE SNS_ID IN (
+			<foreach collection="snsIds" item="snsId" index="i" open="" separator="," close="">
+				#{snsId}
+			</foreach>
+		)
+	</delete>
+
+	<select id="getDisplaySnsCount" parameterType="saleson.shop.display.support.DisplaySnsParam" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_DISPLAY_SNS
+		<where>
+			<if test='query != null and query != ""'>
+				<choose>
+					<when test='where == "SNS_TOKEN"'>
+						SNS_TOKEN LIKE CONCAT('%', #{query}, '%')
+					</when>
+				</choose>
+			</if>
+			<if test='snsType != null and snsType != ""'>
+				AND SNS_TYPE = #{snsType}
+			</if>
+			<if test='searchStartDate != null and searchStartDate != ""'>
+				AND CREATED_DATE >= CONCAT(#{searchStartDate}, '000000')
+			</if>
+			<if test='searchEndDate != null and searchEndDate != ""'>
+				AND CREATED_DATE <![CDATA[<=]]> CONCAT(#{searchEndDate}, '235959')
+			</if>
+		</where>
+	</select>
+
+	<select id="getDisplaySnsList" parameterType="saleson.shop.display.support.DisplaySnsParam" resultMap="DisplaySnsResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT
+				SNS_ID,
+				SNS_TOKEN,
+				SNS_TYPE,
+				ORDERING,
+				UPDATED_DATE,
+				CREATED_DATE
+			FROM OP_DISPLAY_SNS
+			<where>
+				<if test='query != null and query != ""'>
+					<choose>
+						<when test='where == "SNS_TOKEN"'>
+							SNS_TOKEN LIKE CONCAT('%', #{query}, '%')
+						</when>
+					</choose>
+				</if>
+				<if test='snsType != null and snsType != ""'>
+					AND SNS_TYPE = #{snsType}
+				</if>
+				<if test='searchStartDate != null and searchStartDate != ""'>
+					AND CREATED_DATE >= CONCAT(#{searchStartDate}, '000000')
+				</if>
+				<if test='searchEndDate != null and searchEndDate != ""'>
+					AND CREATED_DATE <![CDATA[<=]]> CONCAT(#{searchEndDate}, '235959')
+				</if>
+			</where>
+			ORDER BY SNS_TYPE DESC, ORDERING ASC, SNS_ID DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getDisplaySnsById" parameterType="Integer" resultMap="DisplaySnsResult">
+		SELECT
+			SNS_ID,
+			SNS_TOKEN,
+			SNS_TYPE,
+			ORDERING,
+			UPDATED_DATE,
+			CREATED_DATE
+		FROM OP_DISPLAY_SNS
+		WHERE SNS_ID = #{value}
+	</select>
+
+	<update id="updateDisplaySnsOrdering" parameterType="saleson.shop.display.domain.DisplaySns">
+		UPDATE OP_DISPLAY_SNS SET ORDERING = #{ordering}
+		WHERE SNS_ID = #{snsId}
+	</update>
+	
+</mapper>

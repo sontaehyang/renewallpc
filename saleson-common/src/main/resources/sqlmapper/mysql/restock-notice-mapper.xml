@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.restocknotice.RestockNoticeMapper">
+
+    <resultMap id="RestockNoticeResult" type="saleson.shop.restocknotice.domain.RestockNotice">
+        <result property="restockNoticeId" column="RESTOCK_NOTICE_ID" />
+        <result property="itemId" column="ITEM_ID" />
+        <result property="itemName" column="ITEM_NAME" />
+        <result property="userId" column="USER_ID" />
+        <result property="phoneNumber" column="PHONE_NUMBER" />
+        <result property="sendFlag" column="SEND_FLAG" />
+        <result property="createdDate" column="CREATED_DATE" />
+    </resultMap>
+
+    <insert id="insertRestockNotice" parameterType="saleson.shop.restocknotice.domain.RestockNotice">
+		INSERT INTO OP_RESTOCK_NOTICE (RESTOCK_NOTICE_ID, ITEM_ID, USER_ID, SEND_FLAG, CREATED_DATE)
+		VALUES (#{restockNoticeId}, #{itemId}, #{userId}, #{sendFlag}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+    <update id="updateSendFlagByItemId" parameterType="Integer">
+		UPDATE OP_RESTOCK_NOTICE
+		SET SEND_FLAG = 'Y'
+		WHERE ITEM_ID = #{itemId}
+	</update>
+
+	<select id="getRestockNoticeCount" parameterType="saleson.shop.restocknotice.domain.RestockNotice" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_RESTOCK_NOTICE
+		WHERE
+		    ITEM_ID = #{itemId} AND SEND_FLAG = 'N'
+		    <if test='userId > 0'>
+				AND USER_ID = #{userId}
+			</if>
+	</select>
+
+    <select id="getRestockNoticeListForMessage" parameterType="Integer" resultMap="RestockNoticeResult">
+		SELECT
+			RN.RESTOCK_NOTICE_ID,
+		    I.ITEM_ID,
+		    I.ITEM_NAME,
+		    UD.USER_ID,
+		    UD.PHONE_NUMBER
+		FROM OP_RESTOCK_NOTICE RN
+			INNER JOIN OP_ITEM I ON RN.ITEM_ID = I.ITEM_ID
+		    INNER JOIN OP_USER_DETAIL UD ON RN.USER_ID = UD.USER_ID
+		WHERE
+		    RN.ITEM_ID = #{value} AND RN.SEND_FLAG = 'N'
+	</select>
+
+	<delete id="deleteRestockNoticeByItemId" parameterType="Integer">
+		DELETE FROM OP_RESTOCK_NOTICE
+		WHERE ITEM_ID = #{itemId}
+	</delete>
+
+</mapper>

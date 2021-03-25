@@ -1,0 +1,1643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.coupon.CouponMapper">
+	
+	<resultMap id="CouponResult" type="saleson.shop.coupon.domain.Coupon">
+		<id property="couponId" column="COUPON_ID" />
+		<result property="couponType" column="COUPON_TYPE" />
+		<result property="couponName" column="COUPON_NAME" />
+		<result property="couponComment" column="COUPON_COMMENT" />
+		<result property="couponIssueType" column="COUPON_ISSUE_TYPE" />
+		<result property="couponIssueStartDate" column="COUPON_ISSUE_START_DATE" />
+		<result property="couponIssueEndDate" column="COUPON_ISSUE_END_DATE" />
+		<result property="couponApplyType" column="COUPON_APPLY_TYPE" />
+		<result property="couponApplyDay" column="COUPON_APPLY_DAY" />
+		<result property="couponApplyStartDate" column="COUPON_APPLY_START_DATE" />
+		<result property="couponApplyEndDate" column="COUPON_APPLY_END_DATE" />
+		
+		<result property="couponTargetTimeType" column="COUPON_TARGET_TIME_TYPE" />
+		<result property="couponTargetUserType" column="COUPON_TARGET_USER_TYPE" />
+		<result property="couponTargetUserLevel" column="COUPON_TARGET_USER_LEVEL" />
+		<result property="couponTargetUser" column="COUPON_TARGET_USER" />
+		
+		<result property="couponTargetItemType" column="COUPON_TARGET_ITEM_TYPE" />
+		<result property="couponTargetItem" column="COUPON_TARGET_ITEM" />
+		
+		<result property="couponPayRestriction" column="COUPON_PAY_RESTRICTION" />
+		<result property="couponConcurrently" column="COUPON_CONCURRENTLY" />
+		
+		<result property="couponPayType" column="COUPON_PAY_TYPE" />
+		<result property="couponPay" column="COUPON_PAY" />
+		
+		<result property="couponDiscountLimitPrice" column="COUPON_DISCOUNT_LIMIT_PRICE" />
+		<result property="couponDownloadLimit" column="COUPON_DOWNLOAD_LIMIT" />
+		<result property="couponDownloadUserLimit" column="COUPON_DOWNLOAD_USER_LIMIT" />
+		<result property="couponMulitpleDownloadFlag" column="COUPON_MULITPLE_DOWNLOAD_FLAG" />
+		
+		<result property="couponFlag" column="COUPON_FLAG" />
+		<result property="couponOfflineFlag" column="COUPON_OFFLINE_FLAG" />
+		<result property="couponBirthday" column="COUPON_BIRTHDAY" />
+		<result property="couponType" column="COUPON_TYPE" />
+		
+		<result property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		
+		<result property="totalDownloadCount" column="TOTAL_DOWNLOAD_COUNT" />
+		<result property="totalUsedCount" column="TOTAL_USED_COUNT" />
+
+		<result property="directInputFlag" column="DIRECT_INPUT_FLAG" />
+		<result property="directInputValue" column="DIRECT_INPUT_VALUE" />
+		<result property="influencerUserId" column="INFLUENCER_USER_ID" />
+	</resultMap>
+		
+	<resultMap id="CouponOfflineResult" type="saleson.shop.coupon.domain.CouponOffline">
+		<id property="couponOfflineId" column="COUPON_USER_ID" />
+		<result property="couponId" column="COUPON_ID" />
+		<result property="couponOfflineCode" column="COUPON_OFFLINE_CODE" />
+		<result property="couponUsedFlag" column="COUPON_USED_FLAG" />
+		<result property="couponUsedDate" column="COUPON_USED_DATE" />
+		<result property="publishedDate" column="PUBLISHED_DATE" />
+	</resultMap>
+	
+	<resultMap id="CouponUserResult" type="saleson.shop.coupon.domain.CouponUser">
+		<id property="couponUserId" column="COUPON_USER_ID" />
+		<result property="couponId" column="COUPON_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="couponType" column="COUPON_TYPE" />
+		<result property="couponName" column="COUPON_NAME" />
+		<result property="couponComment" column="COUPON_COMMENT" />
+		<result property="couponApplyType" column="COUPON_APPLY_TYPE" />
+		<result property="couponApplyStartDate" column="COUPON_APPLY_START_DATE" />
+		<result property="couponApplyEndDate" column="COUPON_APPLY_END_DATE" />
+		<result property="couponPayRestriction" column="COUPON_PAY_RESTRICTION" />
+		<result property="couponConcurrently" column="COUPON_CONCURRENTLY" />
+		<result property="couponPayType" column="COUPON_PAY_TYPE" />
+		<result property="couponPay" column="COUPON_PAY" />
+		<result property="couponDiscountLimitPrice" column="COUPON_DISCOUNT_LIMIT_PRICE" />
+		<result property="couponTargetItemType" column="COUPON_TARGET_ITEM_TYPE" />
+		<result property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="couponDownloadDate" column="COUPON_DOWNLOAD_DATE" />
+		<result property="couponUseDate" column="COUPON_USED_DATE" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="orderSequence" column="ORDER_SEQUENCE" />
+		<result property="itemSequence" column="ITEM_SEQUENCE" />
+		<result property="discountAmount" column="DISCOUNT_AMOUNT" />
+		<result property="createdDate" column="CREATED_DATE" />
+		
+		<result property="userName" column="USER_NAME" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="email" column="EMAIL" />
+		<result property="couponDataStatusCode" column="COUPON_DATA_STATUS_CODE" />
+		
+	</resultMap>
+	
+	<resultMap id="CouponItemResult" type="saleson.shop.coupon.domain.CouponItem">
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="couponId" column="COUPON_ID" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+		
+	<resultMap id="OrderCouponResult" type="saleson.shop.coupon.domain.OrderCoupon" extends="CouponUserResult">
+		<collection property="couponItems" resultMap="CouponItemResult" />
+	</resultMap>
+	
+	<resultMap id="CouponAppliesToItemResult" type="saleson.shop.coupon.domain.Coupon" extends="CouponResult">
+		<collection property="items" resultMap="saleson.shop.item.ItemMapper.ItemBaseResult" />
+	</resultMap>
+	
+	<resultMap id="CouponCountResult" type="saleson.shop.coupon.domain.CouponCount">
+		<result property="totalCount" column="TOTAL_COUNT" />
+		<result property="downloadCouponCount" column="DOWNLOAD_COUPON_COUNT" />
+		<result property="usedCouponCount" column="USED_COUPON_COUNT" />
+		<result property="expirationCouponCount" column="EXPIRATION_COUPON_COUNT" />
+	</resultMap>
+
+	<resultMap id="UmsCouponUserResult" type="saleson.shop.coupon.domain.CouponUser">
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="phoneNumber" column="PHONE_NUMBER" />
+		<result property="couponCount" column="COUPON_COUNT" />
+		<result property="couponName" column="COUPON_NAME" />
+	</resultMap>
+
+	<sql id="couponColumns">
+		C.COUPON_ID,
+		C.COUPON_TYPE,
+		C.COUPON_NAME,
+		C.COUPON_COMMENT,
+		C.COUPON_ISSUE_TYPE,
+		C.COUPON_ISSUE_START_DATE,
+		C.COUPON_ISSUE_END_DATE,
+		C.COUPON_APPLY_TYPE,
+		C.COUPON_APPLY_DAY,
+		C.COUPON_APPLY_START_DATE,
+		C.COUPON_APPLY_END_DATE,
+		C.COUPON_TARGET_TIME_TYPE,
+		C.COUPON_TARGET_USER_TYPE,
+		C.COUPON_TARGET_USER_LEVEL,
+		C.COUPON_TARGET_USER,
+		C.COUPON_TARGET_ITEM_TYPE,
+		C.COUPON_TARGET_ITEM,
+		C.COUPON_PAY_RESTRICTION,
+		C.COUPON_CONCURRENTLY,
+		C.COUPON_PAY_TYPE,
+		C.COUPON_PAY,
+		C.COUPON_DISCOUNT_LIMIT_PRICE,
+		C.COUPON_FLAG,
+		C.COUPON_OFFLINE_FLAG,
+		C.COUPON_BIRTHDAY,
+		C.DATA_STATUS_CODE,
+		C.COUPON_DOWNLOAD_LIMIT,
+		C.COUPON_DOWNLOAD_USER_LIMIT,
+		C.COUPON_MULITPLE_DOWNLOAD_FLAG,
+		C.CREATED_DATE,
+		C.UPDATED_DATE,
+		C.DIRECT_INPUT_FLAG,
+		C.DIRECT_INPUT_VALUE
+	</sql>
+	
+	<sql id="couponUserColumns">
+		CU.COUPON_USER_ID,
+		CU.COUPON_ID,
+		CU.USER_ID,
+		CU.COUPON_TYPE,
+		CU.COUPON_NAME,
+		CU.COUPON_COMMENT,
+		CU.COUPON_APPLY_TYPE,
+		CU.COUPON_APPLY_START_DATE,
+		CU.COUPON_APPLY_END_DATE,
+		CU.COUPON_PAY_RESTRICTION,
+		CU.COUPON_CONCURRENTLY,
+		CU.COUPON_PAY_TYPE,
+		CU.COUPON_PAY,
+		CU.COUPON_DISCOUNT_LIMIT_PRICE,
+		CU.COUPON_TARGET_ITEM_TYPE,
+		CU.DATA_STATUS_CODE,
+		CU.COUPON_DOWNLOAD_DATE,
+		CU.COUPON_USED_DATE,
+		CU.ORDER_CODE,
+		CU.ORDER_SEQUENCE,
+		CU.ITEM_SEQUENCE,
+		CU.DISCOUNT_AMOUNT,
+		CU.CREATED_DATE
+	</sql>
+	
+	<sql id="defaultUserDownloadableCouponWhereQuery">
+		AND ( C.COUPON_APPLY_START_DATE <![CDATA[<=]]> <include refid="CommonMapper.datetime" />
+			  OR C.COUPON_APPLY_START_DATE = '' )
+		AND ( C.COUPON_APPLY_END_DATE <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+			  OR C.COUPON_APPLY_END_DATE = '' )
+		
+		AND ( 
+			C.COUPON_ISSUE_TYPE = '0'
+			OR (
+				C.COUPON_ISSUE_TYPE = '1' 
+				AND CONCAT(C.COUPON_ISSUE_START_DATE, '000000') <![CDATA[<=]]> <include refid="CommonMapper.datetime" />
+				AND CONCAT(C.COUPON_ISSUE_END_DATE, '235959') <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+			)
+		)
+		AND (
+			C.COUPON_DOWNLOAD_LIMIT = -1
+			OR (
+				C.COUPON_DOWNLOAD_LIMIT > (
+					SELECT COUNT(*) FROM OP_COUPON_USER
+					WHERE COUPON_ID = C.COUPON_ID 
+				)
+			)
+		)
+		AND (
+			C.COUPON_DOWNLOAD_USER_LIMIT = -1
+			OR (
+				C.COUPON_TARGET_TIME_TYPE != '3'
+				AND C.COUPON_DOWNLOAD_USER_LIMIT > (
+					SELECT COUNT(*) FROM OP_COUPON_USER
+					WHERE
+						COUPON_ID = C.COUPON_ID
+						AND USER_ID = #{userId}
+				)
+			)
+			OR (
+				C.COUPON_TARGET_TIME_TYPE = '3'
+				AND C.COUPON_DOWNLOAD_USER_LIMIT > (
+					SELECT COUNT(*) FROM OP_COUPON_USER TCU
+					INNER JOIN OP_COUPON TC ON TC.COUPON_ID = TCU.COUPON_ID AND TC.COUPON_TARGET_TIME_TYPE = '3'
+					WHERE TCU.USER_ID = #{userId}
+					AND DATE_FORMAT(TCU.COUPON_DOWNLOAD_DATE,'%Y') = DATE_FORMAT(NOW(),'%Y')
+				)
+			)
+		)
+		AND (
+			C.COUPON_MULITPLE_DOWNLOAD_FLAG = 'Y'
+			OR (
+				C.COUPON_TARGET_TIME_TYPE != '3'
+				AND C.COUPON_MULITPLE_DOWNLOAD_FLAG = 'N'
+				AND (
+					SELECT COUNT(*) FROM OP_COUPON_USER
+					WHERE
+						COUPON_ID = C.COUPON_ID
+					AND USER_ID = #{userId}
+					AND DATA_STATUS_CODE = '0'
+				) = 0
+			)
+			OR (
+				C.COUPON_TARGET_TIME_TYPE = '3'
+				AND C.COUPON_MULITPLE_DOWNLOAD_FLAG = 'N'
+				AND (
+					SELECT COUNT(*) FROM OP_COUPON_USER TCU
+					INNER JOIN OP_COUPON TC ON TC.COUPON_ID = TCU.COUPON_ID AND TC.COUPON_TARGET_TIME_TYPE = '3'
+					WHERE TCU.USER_ID = #{userId}
+					AND DATE_FORMAT(TCU.COUPON_DOWNLOAD_DATE,'%Y') = DATE_FORMAT(NOW(),'%Y')
+				) = 0
+			)
+		)
+		<if test="itemId > 0">
+			AND (
+				C.COUPON_TARGET_ITEM_TYPE = '1'
+				OR (
+					C.COUPON_TARGET_ITEM_TYPE = '2'
+					AND CTI.ITEM_ID = #{itemId}
+				)
+			)
+		</if>
+		<choose>
+			<when test="directInputFlag">
+				AND C.DIRECT_INPUT_FLAG = 'Y'
+				AND C.DIRECT_INPUT_VALUE = #{directInputValue}
+			</when>
+			<otherwise>
+				AND ( C.DIRECT_INPUT_FLAG != 'Y'
+				OR C.DIRECT_INPUT_FLAG IS NULL )
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<sql id="defaultUserDownloadableCouponQuery">
+		SELECT 
+			<include refid="couponColumns" />
+		FROM OP_COUPON C
+		<if test="itemId > 0">
+			LEFT JOIN OP_COUPON_TARGET_ITEM CTI ON C.COUPON_ID = CTI.COUPON_ID
+		</if>
+		<where>
+			C.DATA_STATUS_CODE = '1'
+			AND C.COUPON_FLAG = 'Y' 
+			<if test="viewTarget != 'offlineCoupon'">
+				AND ( C.COUPON_OFFLINE_FLAG != 'Y' 
+					OR C.COUPON_OFFLINE_FLAG IS NULL )
+			</if>
+			<include refid="defaultUserDownloadableCouponWhereQuery" />
+			AND (
+				C.COUPON_TARGET_USER_TYPE = '1'
+				OR (
+					C.COUPON_TARGET_USER_TYPE = '3'
+					AND C.COUPON_TARGET_USER_LEVEL LIKE CONCAT('%||', #{userLevelId}, '||%') 
+				)
+			)
+			AND ( 
+	  				(C.COUPON_TARGET_TIME_TYPE = '3'
+					AND DATE_FORMAT(DATE(SUBDATE(NOW(), INTERVAL C.COUPON_BIRTHDAY DAY)), '%Y%m%d') <![CDATA[<=]]> (SELECT CONCAT(DATE_FORMAT(NOW(), '%Y'), DATE_FORMAT(BIRTHDAY, '%m%d')) FROM OP_USER_DETAIL WHERE USER_ID = #{userId})
+					AND (SELECT CONCAT(DATE_FORMAT(NOW(), '%Y'), DATE_FORMAT(BIRTHDAY, '%m%d')) FROM OP_USER_DETAIL WHERE USER_ID = #{userId}) <![CDATA[<=]]> DATE_FORMAT(DATE(SUBDATE(NOW(), INTERVAL -C.COUPON_BIRTHDAY DAY)), '%Y%m%d')
+					)
+					<choose>
+						<when test="viewTarget == 'list'">
+							OR C.COUPON_TARGET_TIME_TYPE = '1' 
+						</when>
+						<otherwise>
+							OR C.COUPON_TARGET_TIME_TYPE != '3' 
+						</otherwise>
+					</choose>
+			)
+		</where>
+		
+		UNION
+		
+		SELECT 
+			<include refid="couponColumns" />
+		FROM OP_COUPON C
+			INNER JOIN OP_COUPON_TARGET_USER CTU ON C.COUPON_ID = CTU.COUPON_ID AND CTU.USER_ID = #{userId}
+			<if test="itemId > 0">
+				LEFT JOIN OP_COUPON_TARGET_ITEM CTI ON C.COUPON_ID = CTI.COUPON_ID AND CTI.ITEM_ID = #{itemId}
+			</if>
+		<where>
+			C.DATA_STATUS_CODE = '1'
+			AND C.COUPON_FLAG = 'Y' 
+			<if test="viewTarget != 'offlineCoupon'">
+				AND ( C.COUPON_OFFLINE_FLAG != 'Y' 
+					OR C.COUPON_OFFLINE_FLAG IS NULL )
+			</if>
+			<include refid="defaultUserDownloadableCouponWhereQuery" />
+			<!-- AND C.COUPON_TARGET_USER_TYPE = '2' -->
+			AND ( ( C.COUPON_TARGET_USER_TYPE = '2' AND CTU.USER_ID = #{userId}) OR (C.COUPON_TARGET_USER_TYPE = '3' AND CTU.USER_ID = #{userId}) )
+			AND ( 
+					(C.COUPON_TARGET_TIME_TYPE = '3'
+						AND DATE_FORMAT(DATE(SUBDATE(NOW(), INTERVAL C.COUPON_BIRTHDAY DAY)), '%Y%m%d') <![CDATA[<=]]> (SELECT CONCAT(DATE_FORMAT(NOW(), '%Y'), DATE_FORMAT(BIRTHDAY, '%m%d')) FROM OP_USER_DETAIL WHERE USER_ID = #{userId})
+						AND (SELECT CONCAT(DATE_FORMAT(NOW(), '%Y'), DATE_FORMAT(BIRTHDAY, '%m%d')) FROM OP_USER_DETAIL WHERE USER_ID = #{userId}) <![CDATA[<=]]> DATE_FORMAT(DATE(SUBDATE(NOW(), INTERVAL -C.COUPON_BIRTHDAY DAY)), '%Y%m%d')
+					)
+					<choose>
+						<when test="viewTarget == 'list'">
+							OR C.COUPON_TARGET_TIME_TYPE = '1' 
+						</when>
+						<otherwise>
+							OR C.COUPON_TARGET_TIME_TYPE != '3' 
+						</otherwise>
+					</choose>
+			)
+		</where>
+		
+	</sql>
+
+	<sql id="whereUserDownloadableCouponList">
+		<where>
+			C.COUPON_TARGET_TIME_TYPE NOT IN ( '4', '5')
+			<if test="couponType != null and couponType != ''">
+				AND C.COUPON_TYPE LIKE CONCAT('%', #{couponType}, '%')
+			</if>
+		</where>
+	</sql>
+
+	<select id="getUserDownloadableCouponListByParam" parameterType="saleson.shop.coupon.support.UserCouponParam" resultMap="CouponResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT C.*
+			FROM (
+			<include refid="defaultUserDownloadableCouponQuery" />
+			) C
+			<include refid="whereUserDownloadableCouponList"/>
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getUserDownloadableCouponListCountByParam" parameterType="saleson.shop.coupon.support.UserCouponParam" resultType="integer">
+		SELECT COUNT(*)
+		FROM (
+		<include refid="defaultUserDownloadableCouponQuery" />
+		) C
+		<include refid="whereUserDownloadableCouponList"/>
+	</select>
+	
+	<insert id="insertDownloadCoupon" parameterType="saleson.shop.coupon.support.UserCouponParam">
+		INSERT INTO OP_COUPON_USER (
+			COUPON_ID,
+			USER_ID,
+			COUPON_TYPE,
+			COUPON_NAME,
+			COUPON_COMMENT,
+			COUPON_APPLY_TYPE,
+			COUPON_APPLY_START_DATE,
+			COUPON_APPLY_END_DATE,
+			COUPON_PAY_RESTRICTION,
+			COUPON_CONCURRENTLY,
+			COUPON_PAY_TYPE,
+			COUPON_PAY,
+			COUPON_DISCOUNT_LIMIT_PRICE,
+			COUPON_TARGET_ITEM_TYPE,
+			DATA_STATUS_CODE,
+			COUPON_DOWNLOAD_DATE,
+			CREATED_DATE
+		)
+		SELECT
+			TARGET.COUPON_ID,
+			#{userId} AS USER_ID,
+			TARGET.COUPON_TYPE,
+			TARGET.COUPON_NAME,
+			TARGET.COUPON_COMMENT,
+			(
+				CASE WHEN TARGET.COUPON_APPLY_TYPE = '2' THEN '1' ELSE TARGET.COUPON_APPLY_TYPE END
+			) AS COUPON_APPLY_TYPE,
+			(
+				CASE WHEN TARGET.COUPON_APPLY_TYPE = '2' THEN
+					CONCAT(<include refid="CommonMapper.date" />, '000000')
+				ELSE
+					TARGET.COUPON_APPLY_START_DATE
+				END
+			) AS COUPON_APPLY_START_DATE,
+			(
+				CASE WHEN TARGET.COUPON_APPLY_TYPE = '2' THEN
+					CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL TARGET.COUPON_APPLY_DAY DAY), '%Y%m%d'), '235959')
+				ELSE
+					TARGET.COUPON_APPLY_END_DATE
+				END
+			) AS COUPON_APPLY_END_DATE,
+			TARGET.COUPON_PAY_RESTRICTION,
+			TARGET.COUPON_CONCURRENTLY,
+			TARGET.COUPON_PAY_TYPE,
+			TARGET.COUPON_PAY,
+			TARGET.COUPON_DISCOUNT_LIMIT_PRICE,
+			TARGET.COUPON_TARGET_ITEM_TYPE,
+			'0' AS DATA_STATUS_CODE,
+			<include refid="CommonMapper.datetime" /> AS COUPON_DOWNLOAD_DATE,
+			<include refid="CommonMapper.datetime" /> AS CREATED_DATE
+		FROM (
+			<include refid="defaultUserDownloadableCouponQuery" />
+		) TARGET
+		WHERE 
+			TARGET.COUPON_ID = #{couponId}
+	</insert>
+	
+	<sql id="defaultTargetItemQuery">
+		SELECT I.*, G.SELLER_NAME FROM (
+			SELECT 
+				DISTINCT I.ITEM_ID, S.SELLER_NAME 
+			FROM OP_ITEM I
+				INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+				INNER JOIN OP_ITEM_CATEGORY IC ON I.ITEM_ID = IC.ITEM_ID 
+				INNER JOIN OP_CATEGORY C ON IC.CATEGORY_ID = C.CATEGORY_ID 
+				INNER JOIN OP_CATEGORY_GROUP CG ON C.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID AND CG.CATEGORY_GROUP_FLAG = 'Y'
+			<where>
+				I.DATA_STATUS_CODE = '1'
+				<choose>
+					<when test='terget.addType == "selected"'>
+						AND I.ITEM_ID IN
+						<foreach item="itemId" index="index" collection="terget.itemIds" open="(" separator="," close=")"> 
+							#{itemId}
+						</foreach>
+					</when>
+					<otherwise>
+						<if test='(terget.where != null and terget.where != "") and (terget.query != null and terget.query != "")'>
+							<if test='terget.where == "ITEM_USER_CODE"'>
+								AND (I.ITEM_USER_CODE LIKE CONCAT('%', #{terget.query}, '%'))
+							</if>
+							<if test='terget.where == "ITEM_NAME"'>
+								AND (
+									I.ITEM_NAME LIKE CONCAT('%', REPLACE(#{terget.query}, ' ', '%'), '%')
+									OR I.ITEM_USER_CODE LIKE CONCAT('%', REPLACE(#{terget.query}, ' ', '%'), '%')
+									OR I.ITEM_KEYWORD LIKE CONCAT('%', REPLACE(#{terget.query}, ' ', '%'), '%')
+									OR I.ITEM_ID IN ( 
+										SELECT 
+											ITEM_ID 
+										FROM 
+											OP_ITEM_OPTION 
+										WHERE OPTION_STOCK_CODE LIKE CONCAT('%', REPLACE(#{terget.query}, ' ', '%'), '%')
+									)
+							   	)
+							</if>
+						</if>
+		
+						<if test='terget.categoryClass != null and terget.categoryClass != ""'>
+							AND C.CATEGORY_CODE LIKE CONCAT(#{terget.categoryClass}, '%')
+						</if>
+						
+						<if test = 'terget.categoryGroupId > 0'>
+							AND CG.CATEGORY_GROUP_ID = #{terget.categoryGroupId} 
+							<if test = 'terget.categoryClass != null and terget.categoryClass != ""'>
+								AND C.CATEGORY_CODE LIKE CONCAT(#{terget.categoryClass},'%')
+							</if>
+						</if>
+						
+						<if test='terget.itemIds != null and terget.itemIds != ""'>
+							AND I.ITEM_ID IN 
+							<foreach item="itemId" index="index" collection="terget.itemIds" open="(" separator=", " close=")">
+								#{itemId}
+							</foreach>
+						</if>
+					</otherwise>
+				</choose>
+			</where>
+		) G INNER JOIN OP_ITEM I ON G.ITEM_ID = I.ITEM_ID
+	</sql>
+	
+	<select id="getCouponTargetItemCountByCoupon" parameterType="saleson.shop.coupon.domain.Coupon" resultType="Integer">
+		SELECT COUNT(*) FROM (
+			<foreach item="terget" index="index" collection="couponTargetItems" open="" separator="UNION" close="">
+				<include refid="defaultTargetItemQuery" />
+			</foreach>
+		) TARGET
+	</select>
+	
+	<select id="getCouponTargetItemListByCoupon" parameterType="saleson.shop.coupon.domain.Coupon" resultMap="saleson.shop.item.ItemMapper.ItemResult">
+		
+		<include refid="CommonMapper.paginationHeader" />
+
+		SELECT TARGET.* FROM (
+			<foreach item="terget" index="index" collection="couponTargetItems" open="" separator="UNION" close="">
+				<include refid="defaultTargetItemQuery" />
+			</foreach>
+		) TARGET
+		ORDER BY TARGET.ITEM_ID ASC
+		
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<sql id="defaultTargetUserQuery">
+		SELECT 
+			U.USER_ID
+		FROM OP_USER U 
+			INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID AND U.STATUS_CODE = '9'
+
+		<where>
+			<choose>
+				<when test='terget.addType == "selected"'>
+					U.USER_ID IN
+					<foreach item="userId" index="index" collection="terget.userIds" open="(" separator="," close=")"> 
+						#{userId}
+					</foreach>
+				</when>
+				<otherwise>
+					<if test="terget.loginId != null and terget.loginId != ''">
+						AND U.LOGIN_ID LIKE CONCAT('%', #{terget.loginId}, '%')
+					</if>
+					
+					<if test="terget.userName != null and terget.userName != ''">
+						AND U.USER_NAME LIKE CONCAT('%', #{terget.userName}, '%')
+					</if>
+					
+					<if test="terget.email != null and terget.email != ''">
+						AND U.EMAIL LIKE CONCAT('%', #{terget.email}, '%')
+					</if>
+					
+					<if test="terget.searchReceiveEmail != null and terget.searchReceiveEmail != ''">
+						AND UD.RECEIVE_EMAIL = #{searchReceiveEmail}
+					</if>
+					
+					<if test="terget.searchReceiveSms != null and terget.searchReceiveSms != ''">
+						AND UD.RECEIVE_SMS = #{terget.searchReceiveSms}
+					</if>
+				</otherwise>
+			</choose>
+		</where>
+	</sql>
+	
+	<select id="getCouponTargetUserCountByCoupon" parameterType="saleson.shop.coupon.domain.Coupon" resultType="Integer">
+		SELECT COUNT(*) FROM (
+			<foreach item="terget" index="index" collection="couponTargetUsers" open="" separator="UNION" close="">
+				<include refid="defaultTargetUserQuery" />
+			</foreach>
+		) TARGET
+	</select>
+	
+	<select id="getCouponTargetUserListByCoupon" parameterType="saleson.shop.coupon.domain.Coupon" resultMap="saleson.shop.user.UserMapper.UserResult">
+        SELECT U.USER_ID, U.LOGIN_ID, U.USER_NAME, U.EMAIL, GL.GROUP_NAME, UL.LEVEL_NAME
+        FROM (
+            <include refid="CommonMapper.paginationHeader" />
+
+            SELECT TARGET.* FROM (
+                <foreach item="terget" index="index" collection="couponTargetUsers" open="" separator="UNION" close="">
+                    <include refid="defaultTargetUserQuery" />
+                </foreach>
+            ) TARGET
+            ORDER BY TARGET.USER_ID ASC
+
+            <include refid="CommonMapper.paginationFooter" />
+        ) U1
+            INNER JOIN OP_USER U ON U1.USER_ID = U.USER_ID
+            INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+            LEFT JOIN OP_USER_LEVEL UL ON UD.LEVEL_ID = UL.LEVEL_ID
+            LEFT JOIN OP_GROUP GL ON UD.GROUP_CODE = GL.GROUP_CODE
+        ORDER BY U.USER_ID ASC
+	</select>
+	
+	<sql id="defaultCouponWhereQuery">
+	
+		<choose>
+			<when test='conditionType == "COUPON_USE_LIST"'>
+				AND C.DATA_STATUS_CODE IN('1', '9')
+			</when>
+			<otherwise>
+				AND C.DATA_STATUS_CODE != '9'
+			</otherwise>
+		</choose>
+		
+		<if test="query != '' and query != null "  >
+			AND C.COUPON_NAME LIKE CONCAT('%',#{query},'%')
+		</if>
+		<if test="couponFlag != '' and couponFlag != null">
+			AND C.COUPON_FLAG = #{couponFlag}
+		</if>
+		<if test='dataStatusCode != null and dataStatusCode != ""'>
+			AND C.DATA_STATUS_CODE = #{dataStatusCode}
+		</if>
+		<if test="couponTypes.length > 0">
+			AND 
+			<foreach item="couponType" index="index" collection="couponTypes" open="(" separator="OR" close=")">
+				C.COUPON_TYPE LIKE CONCAT('%', #{couponType}, '%')
+			</foreach>
+		</if>
+		<if test="couponTargetTimeType != '' and couponTargetTimeType != null">
+			AND C.COUPON_TARGET_TIME_TYPE = #{couponTargetTimeType}
+		</if>
+		<if test="couponTargetUserType != '' and couponTargetUserType != null">
+			AND C.COUPON_TARGET_USER_TYPE = #{couponTargetUserType}
+		</if>
+		<if test="couponTargetItemType != '' and couponTargetItemType != null">
+			AND C.COUPON_TARGET_ITEM_TYPE = #{couponTargetItemType}
+		</if>
+
+		<if test="campaignFlag">
+
+			<choose>
+				<when test="levelId != '' and levelId != null and levelId >= 0">
+					AND ( C.COUPON_TARGET_USER_TYPE = '3'
+					AND C.COUPON_TARGET_USER_LEVEL LIKE CONCAT('%||', #{levelId}, '||%')
+					)
+				</when>
+				<otherwise>
+					AND C.COUPON_TARGET_USER_TYPE = '1'
+				</otherwise>
+			</choose>
+
+			<if test="couponOfflineFlag != '' and couponOfflineFlag != null">
+				AND C.COUPON_OFFLINE_FLAG = #{couponOfflineFlag}
+			</if>
+			<if test="couponDownloadLimit != '' and couponDownloadLimit != null">
+				AND C.COUPON_DOWNLOAD_LIMIT = #{couponDownloadLimit}
+			</if>
+			<if test="couponDownloadUserLimit != '' and couponDownloadUserLimit != null">
+				AND C.COUPON_DOWNLOAD_USER_LIMIT = #{couponDownloadUserLimit}
+			</if>
+
+			<choose>
+				<when test="sendDate != '' and sendDate != null and endSendDate == null and endSendDate == ''">
+					AND (C.COUPON_APPLY_START_DATE <![CDATA[<=]]> CONCAT(#{sendDate}, '0000')
+					OR C.COUPON_APPLY_START_DATE = '')
+					AND (C.COUPON_APPLY_END_DATE <![CDATA[>=]]> CONCAT(#{sendDate}, '5959')
+					OR C.COUPON_APPLY_END_DATE = '')
+				</when>
+				<when test="endSendDate != '' and endSendDate != null">
+					AND (C.COUPON_APPLY_START_DATE <![CDATA[<=]]> CONCAT(#{endSendDate}, '0000')
+					OR C.COUPON_APPLY_START_DATE = '')
+					AND (C.COUPON_APPLY_END_DATE <![CDATA[>=]]> CONCAT(#{endSendDate}, '5959')
+					OR C.COUPON_APPLY_END_DATE = '')
+				</when>
+				<otherwise>
+					AND ( C.COUPON_APPLY_START_DATE <![CDATA[<=]]> <include refid="CommonMapper.datetime" />
+					OR C.COUPON_APPLY_START_DATE = '' )
+					AND ( C.COUPON_APPLY_END_DATE <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+					OR C.COUPON_APPLY_END_DATE = '' )
+				</otherwise>
+			</choose>
+
+		</if>
+
+	</sql>
+	
+	<select id="getCouponCountByParamForManager" parameterType="saleson.shop.coupon.support.CouponParam" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM OP_COUPON C
+		<where>
+			<include refid="defaultCouponWhereQuery" />
+		</where>
+	</select>
+
+	<sql id="sqlCouponListOrder">
+		<choose>
+			<when test='sort == "DESC"'>
+				<choose>
+					<when test='orderBy == "COUPON_ID"'>
+						ORDER BY C.COUPON_ID DESC
+					</when>
+					<when test='orderBy == "COUPON_NAME"'>
+						ORDER BY C.COUPON_NAME DESC
+					</when>
+					<when test='orderBy == "COUPON_ISSUE_START_DATE"'>
+						ORDER BY C.COUPON_ISSUE_START_DATE DESC
+					</when>
+					<when test='orderBy == "COUPON_APPLY_START_DATE"'>
+						ORDER BY C.COUPON_APPLY_START_DATE DESC
+					</when>
+					<otherwise>
+						ORDER BY C.COUPON_ID DESC
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test='orderBy == "COUPON_ID"'>
+						ORDER BY C.COUPON_ID ASC
+					</when>
+					<when test='orderBy == "COUPON_NAME"'>
+						ORDER BY C.COUPON_NAME ASC
+					</when>
+					<when test='orderBy == "COUPON_ISSUE_START_DATE"'>
+						ORDER BY C.COUPON_ISSUE_START_DATE ASC
+					</when>
+					<when test='orderBy == "COUPON_APPLY_START_DATE"'>
+						ORDER BY C.COUPON_APPLY_START_DATE ASC
+					</when>
+					<otherwise>
+						ORDER BY C.COUPON_ID DESC
+					</otherwise>
+				</choose>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<select id="getCouponListByParamForManager" parameterType="saleson.shop.coupon.support.CouponParam" resultMap="CouponResult">
+
+		<if test='conditionType == "COUPON_USE_LIST"'>
+			SELECT
+				C.*,
+				T.TOTAL_DOWNLOAD_COUNT,
+				T.TOTAL_USED_COUNT
+			FROM OP_COUPON C
+			INNER JOIN (
+				SELECT
+					C.COUPON_ID,
+					IFNULL(COUNT(CU.COUPON_ID), 0) AS TOTAL_DOWNLOAD_COUNT,
+					SUM(CASE WHEN CU.DATA_STATUS_CODE = '1' THEN 1 ELSE 0 END) AS TOTAL_USED_COUNT
+				FROM (
+		</if>
+
+					<include refid="CommonMapper.paginationHeader"/>
+						SELECT
+							<include refid="couponColumns" />
+						FROM OP_COUPON C
+						<where>
+							<include refid="defaultCouponWhereQuery" />
+						</where>
+						<include refid="sqlCouponListOrder"/>
+					<include refid="CommonMapper.paginationFooter" />
+
+		<if test='conditionType == "COUPON_USE_LIST"'>
+				) C LEFT JOIN OP_COUPON_USER CU ON C.COUPON_ID = CU.COUPON_ID
+				GROUP BY C.COUPON_ID
+			) T ON C.COUPON_ID = T.COUPON_ID
+			<include refid="sqlCouponListOrder"/>
+		</if>
+	</select>
+	
+	<select id="getCouponById" parameterType="Integer" resultMap="CouponResult" >
+		SELECT 
+			<include refid="couponColumns" />
+		FROM OP_COUPON C
+ 		WHERE C.COUPON_ID = #{value}
+	</select>
+	
+	<sql id="defaultCouponUserWhereQuery">
+		<if test="couponId > 0">
+			COUPON_ID = #{couponId}
+		</if>
+	</sql>
+	
+	<select id="getCouponUserCountByParamForManager" parameterType="saleson.shop.coupon.support.CouponParam" resultType="Integer">
+		
+			SELECT 
+				COUNT(*)
+			FROM OP_COUPON_USER CU
+			<where> 
+				<include refid="defaultCouponUserWhereQuery" />
+			</where>
+			
+			ORDER BY CU.COUPON_USER_ID DESC
+		
+	</select>
+	
+	<select id="getCouponUserListByParamForManager" parameterType="saleson.shop.coupon.support.CouponParam" resultMap="CouponUserResult">
+		
+		SELECT 
+			TARGET.*,
+			U.USER_NAME,
+			U.LOGIN_ID,
+			U.EMAIL,
+			(CASE WHEN 
+				TARGET.COUPON_APPLY_TYPE = '1' 
+				AND TARGET.DATA_STATUS_CODE = '0' 
+				AND <include refid="CommonMapper.datetime" /> > TARGET.COUPON_APPLY_END_DATE 
+			THEN
+				'2'
+			ELSE
+				TARGET.DATA_STATUS_CODE
+			END) AS COUPON_DATA_STATUS_CODE
+		FROM (
+		
+			<include refid="CommonMapper.paginationHeader" />
+				SELECT 
+					<include refid="couponUserColumns" />
+				FROM OP_COUPON_USER CU
+				<where> 
+					<include refid="defaultCouponUserWhereQuery" />
+				</where>
+				
+				ORDER BY CU.COUPON_USER_ID DESC
+				
+			<include refid="CommonMapper.paginationFooter" />
+			
+		) TARGET LEFT JOIN OP_USER U ON TARGET.USER_ID = U.USER_ID
+	</select>
+	
+	<insert id="insertCoupon" parameterType="saleson.shop.coupon.domain.Coupon">
+		INSERT INTO OP_COUPON (
+			COUPON_ID, 
+			COUPON_TYPE, 
+			COUPON_NAME, 
+			COUPON_COMMENT, 
+			COUPON_ISSUE_TYPE,
+			COUPON_ISSUE_START_DATE,
+			COUPON_ISSUE_END_DATE,
+			COUPON_APPLY_TYPE,
+			COUPON_APPLY_DAY,
+			COUPON_APPLY_START_DATE,
+			COUPON_APPLY_END_DATE,
+			COUPON_TARGET_TIME_TYPE,
+			COUPON_TARGET_USER_TYPE,
+			COUPON_TARGET_USER_LEVEL,
+			COUPON_TARGET_USER,
+			COUPON_TARGET_ITEM_TYPE,
+			COUPON_TARGET_ITEM,
+			COUPON_PAY_RESTRICTION,
+			COUPON_CONCURRENTLY,
+			COUPON_PAY_TYPE,
+			COUPON_PAY,
+			COUPON_DISCOUNT_LIMIT_PRICE,
+			COUPON_DOWNLOAD_LIMIT,
+			COUPON_DOWNLOAD_USER_LIMIT,
+			COUPON_MULITPLE_DOWNLOAD_FLAG,
+			COUPON_FLAG,
+			COUPON_OFFLINE_FLAG,
+			COUPON_BIRTHDAY,
+			DATA_STATUS_CODE,
+			CREATED_DATE,
+			DIRECT_INPUT_FLAG,
+			DIRECT_INPUT_VALUE
+		) VALUES (
+			#{couponId},
+			#{selectedCouponTypes},
+			#{couponName},
+			#{couponComment},
+			#{couponIssueType},
+			<choose>
+				<when test='couponIssueType == "1"'>CONCAT(#{couponIssueStartDate}, '000000')</when>
+				<otherwise>#{couponIssueStartDate}</otherwise>
+			</choose>,
+			<choose>
+				<when test='couponIssueType == "1"'>CONCAT(#{couponIssueEndDate}, '235959')</when>
+				<otherwise>#{couponIssueEndDate}</otherwise>
+			</choose>,
+			#{couponApplyType},
+			#{couponApplyDay},
+			<choose>
+				<when test='couponApplyType == "1"'>CONCAT(#{couponApplyStartDate}, '000000')</when>
+				<otherwise>#{couponApplyStartDate}</otherwise>
+			</choose>,
+			<choose>
+				<when test='couponApplyType == "1"'>CONCAT(#{couponApplyEndDate}, '235959')</when>
+				<otherwise>#{couponApplyEndDate}</otherwise>
+			</choose>,
+			#{couponTargetTimeType},
+			#{couponTargetUserType},
+			#{selectedCouponTargetUserLevels},
+			#{couponTargetUsersToJsonString},
+			#{couponTargetItemType},
+			#{couponTargetItemsToJsonString},
+			#{couponPayRestriction},
+			#{couponConcurrently},
+			#{couponPayType},
+			#{couponPay},
+			#{couponDiscountLimitPrice},
+			#{couponDownloadLimit},
+			#{couponDownloadUserLimit},
+			#{couponMulitpleDownloadFlag},
+			#{couponFlag},
+			#{couponOfflineFlag},
+			#{couponBirthday},
+			#{dataStatusCode},
+			<include refid="CommonMapper.datetime" />,
+			#{directInputFlag},
+			#{directInputValue}
+		)
+	</insert>
+	
+	<update id="updateCoupon" parameterType="saleson.shop.coupon.domain.Coupon">
+		UPDATE OP_COUPON 
+		<set>
+			COUPON_TYPE = #{selectedCouponTypes},
+			COUPON_NAME = #{couponName}, 
+			COUPON_COMMENT = #{couponComment}, 
+			
+			COUPON_ISSUE_TYPE = #{couponIssueType},
+			
+			<choose>
+				<when test='couponIssueType == "1"'>COUPON_ISSUE_START_DATE = CONCAT(#{couponIssueStartDate}, '000000')</when>
+				<otherwise>COUPON_ISSUE_START_DATE = #{couponIssueStartDate}</otherwise>
+			</choose>,
+			<choose>
+				<when test='couponIssueType == "1"'>COUPON_ISSUE_END_DATE = CONCAT(#{couponIssueEndDate}, '235959')</when>
+				<otherwise>COUPON_ISSUE_END_DATE = #{couponIssueEndDate}</otherwise>
+			</choose>,
+			
+			COUPON_APPLY_TYPE = #{couponApplyType},
+			COUPON_APPLY_DAY = #{couponApplyDay},
+			
+			<choose>
+				<when test='couponApplyType == "1"'>COUPON_APPLY_START_DATE = CONCAT(#{couponApplyStartDate}, '000000')</when>
+				<otherwise>COUPON_APPLY_START_DATE = #{couponApplyStartDate}</otherwise>
+			</choose>,
+			
+			<choose>
+				<when test='couponApplyType == "1"'>COUPON_APPLY_END_DATE = CONCAT(#{couponApplyEndDate}, '235959')</when>
+				<otherwise>COUPON_APPLY_END_DATE = #{couponApplyEndDate}</otherwise>
+			</choose>,
+			
+			COUPON_TARGET_TIME_TYPE = #{couponTargetTimeType},
+			COUPON_TARGET_USER_TYPE = #{couponTargetUserType},
+			COUPON_TARGET_USER_LEVEL = #{selectedCouponTargetUserLevels},
+			COUPON_TARGET_USER = #{couponTargetUsersToJsonString},
+			
+			COUPON_TARGET_ITEM_TYPE = #{couponTargetItemType},
+			COUPON_TARGET_ITEM = #{couponTargetItemsToJsonString},
+			
+			COUPON_PAY_RESTRICTION = #{couponPayRestriction},
+			COUPON_CONCURRENTLY = #{couponConcurrently},
+			COUPON_PAY_TYPE = #{couponPayType},
+			COUPON_PAY = #{couponPay},
+			COUPON_DISCOUNT_LIMIT_PRICE = #{couponDiscountLimitPrice},
+			COUPON_FLAG = #{couponFlag},
+			COUPON_OFFLINE_FLAG = #{couponOfflineFlag},
+			COUPON_BIRTHDAY = #{couponBirthday},
+			
+			COUPON_DOWNLOAD_LIMIT = #{couponDownloadLimit},
+			COUPON_DOWNLOAD_USER_LIMIT = #{couponDownloadUserLimit},
+			COUPON_MULITPLE_DOWNLOAD_FLAG = #{couponMulitpleDownloadFlag},
+			
+			DATA_STATUS_CODE = #{dataStatusCode},		
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />,
+
+			DIRECT_INPUT_FLAG = #{directInputFlag},
+			DIRECT_INPUT_VALUE = #{directInputValue}
+		</set>
+		<where>
+			COUPON_ID = #{couponId}
+		</where>
+	</update>
+	
+	<update id="deleteCoupon" parameterType="saleson.shop.coupon.domain.Coupon">
+		UPDATE OP_COUPON 
+		<set>
+			DATA_STATUS_CODE = #{dataStatusCode},
+			UPDATE_USER_NAME = #{updateUserName},
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		</set>
+		<where>
+			COUPON_ID = #{couponId}
+			AND DATA_STATUS_CODE = '0'
+		</where>
+	</update>
+	
+	<update id="updateCouponPublish" parameterType="saleson.shop.coupon.domain.Coupon">
+		UPDATE OP_COUPON 
+		<set>
+			DATA_STATUS_CODE = #{dataStatusCode},
+			UPDATE_USER_NAME = #{updateUserName},
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		</set>
+		<where>
+			COUPON_ID = #{couponId}
+			AND DATA_STATUS_CODE = '0'
+		</where>
+	</update>
+
+	<update id="updateCouponDownloadStatus" parameterType="saleson.shop.coupon.domain.Coupon">
+		UPDATE OP_COUPON 
+		<set>
+			COUPON_FLAG = #{couponFlag},
+			UPDATE_USER_NAME = #{updateUserName},
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		</set>
+		<where>
+			COUPON_ID = #{couponId}
+		</where>
+	</update>
+	
+	<select id="getCouponOfflineListByCouponId" parameterType="Integer" resultMap="CouponOfflineResult">
+		SELECT CO.COUPON_OFFLINE_ID,
+			CO.COUPON_ID,
+			CO.USER_ID,
+			CO.COUPON_OFFLINE_CODE,
+			CO.COUPON_USED_FLAG,
+			DATE_FORMAT(CO.COUPON_USED_DATE, "%Y-%m-%d %T") AS COUPON_USED_DATE,
+			DATE_FORMAT(CO.PUBLISHED_DATE, "%Y-%m-%d") AS PUBLISHED_DATE
+		FROM OP_COUPON_OFFLINE CO
+		LEFT JOIN OP_COUPON C
+		ON CO.COUPON_ID = C.COUPON_ID
+		WHERE C.COUPON_ID = #{value}
+	</select>
+	
+	<!-- 오프라인 쿠폰 전환시 전환 가능 확인 -->
+	<select id="getCouponOfflineByOfflineCode" parameterType="saleson.shop.coupon.domain.CouponOffline" resultMap="CouponOfflineResult">
+		SELECT CO.* 
+		FROM OP_COUPON_OFFLINE CO
+		LEFT JOIN OP_COUPON C
+		ON CO.COUPON_ID = C.COUPON_ID
+		WHERE CO.COUPON_OFFLINE_CODE = #{couponOfflineCode}
+		AND C.DATA_STATUS_CODE = '1'
+		AND C.COUPON_OFFLINE_FLAG = 'Y'
+		AND CO.COUPON_USED_FLAG = 'N'
+		AND ( C.COUPON_APPLY_START_DATE <![CDATA[<=]]> <include refid="CommonMapper.datetime" />
+			  OR C.COUPON_APPLY_START_DATE = '' )
+		AND ( C.COUPON_APPLY_END_DATE <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+			  OR C.COUPON_APPLY_END_DATE = '' )
+		
+		AND ( 
+			C.COUPON_ISSUE_TYPE = '0'
+			OR (
+				C.COUPON_ISSUE_TYPE = '1' 
+				AND CONCAT(C.COUPON_ISSUE_START_DATE, '000000') <![CDATA[<=]]> <include refid="CommonMapper.datetime" />
+				AND CONCAT(C.COUPON_ISSUE_END_DATE, '235959') <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+			)
+		)
+		AND (
+			C.COUPON_DOWNLOAD_LIMIT = -1
+			OR (
+				C.COUPON_DOWNLOAD_LIMIT > (
+					SELECT COUNT(*) FROM OP_COUPON_USER
+					WHERE COUPON_ID = C.COUPON_ID 
+				)
+			)
+		)
+		AND (
+			C.COUPON_DOWNLOAD_USER_LIMIT = -1
+			OR (
+				C.COUPON_DOWNLOAD_USER_LIMIT > (
+					SELECT COUNT(*) FROM OP_COUPON_USER
+					WHERE 
+						COUPON_ID = C.COUPON_ID
+						AND USER_ID = #{userId} 
+				)
+			)
+		)
+		AND (
+			C.COUPON_MULITPLE_DOWNLOAD_FLAG = 'Y'
+			OR (
+				C.COUPON_MULITPLE_DOWNLOAD_FLAG = 'N'
+				AND (
+					SELECT COUNT(*) FROM OP_COUPON_USER
+					WHERE 
+						COUPON_ID = C.COUPON_ID
+						AND USER_ID = #{userId}
+						AND DATA_STATUS_CODE = '0'
+				) = 0
+			)
+		)
+	</select>
+	
+	<insert id="insertCouponOffline" parameterType="saleson.shop.coupon.domain.CouponOffline">
+		INSERT INTO OP_COUPON_OFFLINE (COUPON_OFFLINE_ID, COUPON_ID, USER_ID, COUPON_OFFLINE_CODE, COUPON_USED_FLAG, COUPON_USED_DATE, PUBLISHED_DATE)
+		VALUES (#{couponOfflineId}, #{couponId}, #{userId}, #{couponOfflineCode}, #{couponUsedFlag}, #{couponUsedDate}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<update id="updateCouponOffline" parameterType="saleson.shop.coupon.domain.CouponOffline">
+		UPDATE OP_COUPON_OFFLINE
+		<set>
+			USER_ID = #{userId},
+			COUPON_USED_FLAG = 'Y',
+			COUPON_USED_DATE = <include refid="CommonMapper.datetime" />
+		</set>
+		<where>
+			COUPON_OFFLINE_CODE = #{couponOfflineCode}
+		</where>
+	</update>
+	
+	<insert id="insertCouponTargetUser" parameterType="saleson.shop.coupon.domain.Coupon">
+		INSERT INTO OP_COUPON_TARGET_USER (USER_ID, COUPON_ID, CREATED_DATE)
+		SELECT TARGET.USER_ID, #{couponId}, <include refid="CommonMapper.datetime" /> FROM (
+			<foreach item="terget" index="index" collection="couponTargetUsers" open="" separator="UNION" close="">
+				<include refid="defaultTargetUserQuery" />
+			</foreach>
+		) TARGET
+	</insert>
+	
+	<insert id="insertCouponTargetUserOne" parameterType="saleson.shop.coupon.support.UserCouponParam">
+		INSERT INTO OP_COUPON_TARGET_USER (
+			USER_ID, COUPON_ID, CREATED_DATE
+		) VALUES (
+			#{userId}, #{couponId}, <include refid="CommonMapper.datetime" />
+		)
+	</insert>
+	
+	<insert id="insertCouponTargetItem" parameterType="saleson.shop.coupon.domain.Coupon">
+		INSERT INTO OP_COUPON_TARGET_ITEM (ITEM_ID, COUPON_ID, CREATED_DATE)
+		SELECT TARGET.ITEM_ID, #{couponId}, <include refid="CommonMapper.datetime" /> FROM (
+			<foreach item="terget" index="index" collection="couponTargetItems" open="" separator="UNION" close="">
+				<include refid="defaultTargetItemQuery" />
+			</foreach>
+		) TARGET
+	</insert>
+	
+	<sql id="defaultDownloadUserCouponWhereQuery">
+		CU.USER_ID = #{userId}
+		AND CU.DATA_STATUS_CODE = '0'
+		AND (
+			CU.COUPON_APPLY_TYPE = '0'
+			OR (
+				CU.COUPON_APPLY_TYPE = '1'
+				AND CU.COUPON_APPLY_END_DATE <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+			)
+		)
+		<if test="couponType != null and couponType != ''">
+			AND CU.COUPON_TYPE LIKE CONCAT('%', #{couponType}, '%')
+		</if>
+	</sql>
+	
+	<select id="getDownloadUserCouponCountByUserCouponParam" parameterType="saleson.shop.coupon.support.UserCouponParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_COUPON_USER CU
+		<where>
+			<include refid="defaultDownloadUserCouponWhereQuery" />
+		</where>
+	</select>
+	
+	<select id="getDownloadUserCouponListByUserCouponParam" parameterType="saleson.shop.coupon.support.UserCouponParam" resultMap="CouponUserResult">
+		
+		<include refid="CommonMapper.paginationHeader" />
+		
+		SELECT 
+			<include refid="couponUserColumns" /> 
+		FROM OP_COUPON_USER CU
+		<where>
+			<include refid="defaultDownloadUserCouponWhereQuery" />
+		</where>
+		ORDER BY CU.COUPON_DOWNLOAD_DATE DESC
+		
+		<include refid="CommonMapper.paginationFooter" />
+		
+	</select>
+	
+	<sql id="defaultCompletedUserCouponWhereQuery">
+		CU.USER_ID = #{userId}
+		AND (
+			CU.DATA_STATUS_CODE = '1'
+			OR (
+				CU.COUPON_APPLY_TYPE = '1'
+				AND CU.COUPON_APPLY_END_DATE <![CDATA[<]]> CONCAT(DATE_FORMAT(NOW(),'%Y%m%d'), '235959')
+			)
+		)
+	</sql>
+	
+	<select id="getCompletedUserCouponCountByUserCouponParam" parameterType="saleson.shop.coupon.support.UserCouponParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_COUPON_USER CU
+		<where>
+			<include refid="defaultCompletedUserCouponWhereQuery" />
+		</where>
+	</select>
+	
+	<select id="getCompletedUserCouponListByUserCouponParam" parameterType="saleson.shop.coupon.support.UserCouponParam" resultMap="CouponUserResult">
+		
+		<include refid="CommonMapper.paginationHeader" />
+		
+		SELECT 
+			<include refid="couponUserColumns" /> 
+		FROM OP_COUPON_USER CU
+		<where>
+			<include refid="defaultCompletedUserCouponWhereQuery" />
+		</where>
+		ORDER BY CU.COUPON_USED_DATE DESC, CU.COUPON_USER_ID ASC
+		
+		<include refid="CommonMapper.paginationFooter" />
+		
+	</select>
+	
+	<select id="getCouponUserCountByUserId" parameterType="Integer" resultMap="CouponCountResult">
+		
+		SELECT
+			COUNT(*) AS TOTAL_COUNT,
+			SUM(CASE WHEN TARGET.COUPON_DATA_STATUS_CODE = '0' THEN 1 ELSE 0 END) AS DOWNLOAD_COUPON_COUNT,
+			SUM(CASE WHEN TARGET.COUPON_DATA_STATUS_CODE = '1' THEN 1 ELSE 0 END) AS USED_COUPON_COUNT,
+			SUM(CASE WHEN TARGET.COUPON_DATA_STATUS_CODE = '2' THEN 1 ELSE 0 END) AS EXPIRATION_COUPON_COUNT
+		FROM (
+			SELECT 
+				<include refid="couponUserColumns" />,
+				(CASE WHEN CU.COUPON_APPLY_TYPE = '1' AND <include refid="CommonMapper.datetime" /> > CU.COUPON_APPLY_END_DATE THEN
+					'2'
+				ELSE
+					CU.DATA_STATUS_CODE
+				END) AS COUPON_DATA_STATUS_CODE
+			FROM OP_COUPON_USER CU
+			<where>
+				CU.USER_ID = #{userId}
+			</where>
+			
+		) TARGET
+		
+	</select>
+	
+	<sql id="defaultCouponAppliesItemForCouponTableWhereQuery">
+		C.COUPON_ID = #{couponId}
+		AND I.DATA_STATUS_CODE =  '1'
+		AND I.DISPLAY_FLAG = 'Y'
+		AND I.SOLD_OUT = '0'
+		AND I.COUPON_USE_FLAG = 'Y'
+	</sql>
+	
+	<select id="getCouponAppliesItemCountParamForCoupon" parameterType="saleson.shop.coupon.support.CouponParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_COUPON C 
+			INNER JOIN OP_COUPON_TARGET_ITEM CTI ON C.COUPON_ID = CTI.COUPON_ID
+			INNER JOIN OP_ITEM I ON CTI.ITEM_ID = I.ITEM_ID
+		<where>
+			<include refid="defaultCouponAppliesItemForCouponTableWhereQuery" />
+		</where>
+	</select>
+	
+	<select id="getCouponAppliesItemListParamForCoupon" parameterType="saleson.shop.coupon.support.CouponParam" resultMap="CouponAppliesToItemResult">
+		<include refid="CommonMapper.paginationHeader" />
+		
+		SELECT 
+			<include refid="couponColumns" />,
+			<include refid="saleson.shop.item.ItemMapper.baseItemColumns" />,
+			<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />
+			
+		FROM OP_COUPON C 
+			INNER JOIN OP_COUPON_TARGET_ITEM CTI ON C.COUPON_ID = CTI.COUPON_ID
+			INNER JOIN OP_ITEM I ON CTI.ITEM_ID = I.ITEM_ID
+			<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+		<where>
+			<include refid="defaultCouponAppliesItemForCouponTableWhereQuery" />
+		</where>
+		ORDER BY I.ITEM_ID DESC
+		
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<sql id="defaultCouponAppliesItemForCouponUserTableWhereQuery">
+		CU.COUPON_ID = #{couponId}
+		<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+	</sql>
+	
+	<select id="getCouponAppliesItemCountParamForCouponUser" parameterType="saleson.shop.coupon.support.CouponParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_COUPON_USER CU
+			INNER JOIN OP_COUPON_TARGET_ITEM CTI ON CU.COUPON_ID = CTI.COUPON_ID
+			INNER JOIN OP_ITEM I ON CTI.ITEM_ID = I.ITEM_ID
+		<where>
+			<include refid="defaultCouponAppliesItemForCouponUserTableWhereQuery" />
+		</where>
+	</select>
+	
+	<select id="getCouponAppliesItemListParamForCouponUser" parameterType="saleson.shop.coupon.support.CouponParam" resultMap="CouponAppliesToItemResult">
+		<include refid="CommonMapper.paginationHeader" />
+		
+		SELECT 
+			<include refid="couponUserColumns" />,
+			I.ITEM_ID,
+			I.ITEM_USER_CODE,
+			I.ITEM_NAME,
+			I.ITEM_IMAGE,
+			I.ITEM_PRICE,
+			I.SALE_PRICE,
+			I.ITEM_OPTION_FLAG
+			
+		FROM OP_COUPON_USER CU
+			INNER JOIN OP_COUPON_TARGET_ITEM CTI ON CU.COUPON_ID = CTI.COUPON_ID
+			INNER JOIN OP_ITEM I ON CTI.ITEM_ID = I.ITEM_ID
+		<where>
+			<include refid="defaultCouponAppliesItemForCouponUserTableWhereQuery" />
+		</where>
+		ORDER BY I.ITEM_ID DESC
+		
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getAvailableCouponListByParam" parameterType="saleson.shop.coupon.support.UserCouponParam" resultMap="OrderCouponResult">
+		
+		SELECT 
+			<include refid="couponUserColumns" />
+			<if test='conditionType == "TARGET_SELECT_ITEMS"'>
+				,CTI.ITEM_ID
+			</if>
+		FROM OP_COUPON_USER CU
+		<if test='conditionType == "TARGET_SELECT_ITEMS"'>
+			INNER JOIN OP_COUPON_TARGET_ITEM CTI ON CU.COUPON_ID = CTI.COUPON_ID	
+		</if>
+		<where>
+			CU.USER_ID = #{userId}
+			AND CU.DATA_STATUS_CODE = '0'
+			<if test="viewTarget != null and viewTarget != ''">
+				AND CU.COUPON_TYPE LIKE CONCAT ('%||', #{viewTarget}, '||%')
+			</if>
+			AND (
+				CU.COUPON_APPLY_TYPE = '0'
+				OR (
+					CU.COUPON_APPLY_TYPE = '1'
+					AND CU.COUPON_APPLY_END_DATE <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+				)
+			)
+			
+			<choose>
+				<when test='conditionType == "TARGET_ALL_ITEMS"'>
+					AND CU.COUPON_TARGET_ITEM_TYPE = '1'
+				</when>
+				<when test='conditionType == "TARGET_SELECT_ITEMS"'>
+					AND CU.COUPON_TARGET_ITEM_TYPE = '2'
+					AND CTI.ITEM_ID IN
+					<foreach item="itemId" index="index" collection="itemIds" open="(" separator="," close=")"> 
+						#{itemId}
+					</foreach>
+				</when>
+			</choose>
+			
+		</where>
+		
+	</select>
+	
+	<update id="updateCouponUserUseProcessByOrderCouponUser" parameterType="saleson.shop.coupon.domain.OrderCoupon">
+		UPDATE OP_COUPON_USER
+		SET 
+			DATA_STATUS_CODE = '1',
+			COUPON_USED_DATE = <include refid="CommonMapper.datetime" />,
+			DISCOUNT_AMOUNT = #{discountAmount},
+			ORDER_CODE = #{orderCode},
+			ORDER_SEQUENCE = #{orderSequence},
+			ITEM_SEQUENCE = #{itemSequence}
+		WHERE
+			USER_ID = #{userId}
+			AND COUPON_USER_ID = #{couponUserId}
+			AND DATA_STATUS_CODE = '0'
+	</update>
+
+	
+	<update id="updateCouponUserReturnsByOrderCouponUser" parameterType="saleson.shop.coupon.domain.OrderCoupon">
+		UPDATE OP_COUPON_USER
+		SET 
+			DATA_STATUS_CODE = '0',
+			COUPON_USED_DATE = '',
+			DISCOUNT_AMOUNT = 0,
+			ORDER_CODE = '',
+			ORDER_SEQUENCE = 0,
+			ITEM_SEQUENCE = 0
+		WHERE
+			USER_ID = #{userId}
+			AND COUPON_USER_ID = #{couponUserId}
+			AND DATA_STATUS_CODE = '1'
+	</update>
+	
+	<select id="getCouponForItemView" parameterType="saleson.shop.coupon.support.UserCouponParam" resultMap="CouponResult">
+		SELECT 
+			C.COUPON_ID,
+			C.COUPON_NAME,
+			C.COUPON_PAY_TYPE,
+			C.COUPON_PAY,
+			C.COUPON_DISCOUNT_LIMIT_PRICE,
+			C.COUPON_PAY_RESTRICTION
+		FROM (
+		
+			SELECT 
+				CU.COUPON_ID,
+				CU.COUPON_NAME,
+				CU.COUPON_PAY_TYPE,
+				CU.COUPON_PAY,
+				CU.COUPON_DISCOUNT_LIMIT_PRICE,
+				CU.COUPON_PAY_RESTRICTION
+					 
+			FROM OP_COUPON_USER CU
+				INNER JOIN OP_COUPON_TARGET_ITEM CTI ON CU.COUPON_ID = CTI.COUPON_ID
+			<where>
+				CU.USER_ID = #{userId}
+				AND CU.DATA_STATUS_CODE = '0'
+				AND CU.COUPON_TARGET_ITEM_TYPE = '2'
+				AND (
+					CU.COUPON_APPLY_TYPE = '0'
+					OR (
+						CU.COUPON_APPLY_TYPE = '1'
+						AND CU.COUPON_APPLY_START_DATE <![CDATA[<=]]> <include refid="CommonMapper.datetime" />
+						AND CU.COUPON_APPLY_END_DATE <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+					)
+				)
+				<if test="viewTarget != null and viewTarget != ''">
+					AND CU.COUPON_TYPE LIKE CONCAT ('%||', #{viewTarget}, '||%')
+				</if>
+				
+				AND CTI.ITEM_ID = #{itemId} 
+			</where>
+			
+			UNION
+			
+			SELECT 
+				CU.COUPON_ID,
+				CU.COUPON_NAME,
+				CU.COUPON_PAY_TYPE,
+				CU.COUPON_PAY,
+				CU.COUPON_DISCOUNT_LIMIT_PRICE,
+				CU.COUPON_PAY_RESTRICTION
+					 
+			FROM OP_COUPON_USER CU
+			<where>
+				CU.USER_ID = #{userId}
+				AND CU.DATA_STATUS_CODE = '0'
+				AND CU.COUPON_TARGET_ITEM_TYPE = '1'
+				AND (
+					CU.COUPON_APPLY_TYPE = '0'
+					OR (
+						CU.COUPON_APPLY_TYPE = '1'
+						AND CU.COUPON_APPLY_START_DATE <![CDATA[<=]]> <include refid="CommonMapper.datetime" />
+						AND CU.COUPON_APPLY_END_DATE <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+					)
+				)
+				<if test="viewTarget != null and viewTarget != ''">
+					AND CU.COUPON_TYPE LIKE CONCAT ('%||', #{viewTarget}, '||%')
+				</if>
+			</where>
+			
+		) T INNER JOIN OP_COUPON C ON T.COUPON_ID = C.COUPON_ID
+	</select>
+	
+	<!-- 발행 시점에 따른 쿠폰 발급을 위한 SELECT -->
+	<select id="getCouponByTargetTimeType" parameterType="saleson.shop.coupon.support.UserCouponParam" resultMap="CouponResult">
+		SELECT
+			<include refid="couponColumns"></include> 
+		FROM OP_COUPON C
+		WHERE C.COUPON_TARGET_TIME_TYPE = #{couponTargetTimeType}
+		AND C.DATA_STATUS_CODE = '1'
+		AND ( C.COUPON_APPLY_START_DATE <![CDATA[<=]]> <include refid="CommonMapper.datetime" />
+					  OR C.COUPON_APPLY_START_DATE = '' )
+		AND ( C.COUPON_APPLY_END_DATE <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+			  OR C.COUPON_APPLY_END_DATE = '' )
+		
+		AND ( 
+			C.COUPON_ISSUE_TYPE = '0'
+			OR (
+				C.COUPON_ISSUE_TYPE = '1' 
+				AND CONCAT(C.COUPON_ISSUE_START_DATE, '000000') <![CDATA[<=]]> <include refid="CommonMapper.datetime" />
+				AND CONCAT(C.COUPON_ISSUE_END_DATE, '235959') <![CDATA[>=]]> <include refid="CommonMapper.datetime" />
+			)
+		)
+		<if test="userLevelId != 0">
+			AND (
+				C.COUPON_TARGET_USER_TYPE = '1'
+				OR (
+					C.COUPON_TARGET_USER_TYPE = '3'
+					AND C.COUPON_TARGET_USER_LEVEL LIKE CONCAT('%||', #{userLevelId}, '||%') 
+				)
+			)
+		</if>
+	</select>
+
+	<select id="getUserCouponListForNewUserCoupon" parameterType="saleson.shop.coupon.support.UserCouponParam" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM OP_COUPON_TARGET_USER
+		WHERE
+			USER_ID = #{userId}
+			AND COUPON_ID = #{couponId}
+	</select>
+
+	<sql id="wehreCouponUserListByUserForManager">
+		<where>
+			AND CU.USER_ID = #{userId}
+
+			<if test='(searchStartDate != null and searchStartDate != "") and (searchEndDate != null and searchEndDate != "")'>
+				AND CU.CREATED_DATE <![CDATA[>=]]> #{searchStartDate}
+				AND CU.CREATED_DATE <![CDATA[<=]]> #{searchEndDate}
+			</if>
+
+			<if test="(query != null and query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'COUPON_NAME'">
+						AND CU.COUPON_NAME LIKE CONCAT('%' , #{query} , '%')
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="baseCouponUserListByUserForManager">
+
+		SELECT
+		<include refid="couponUserColumns" />,
+		(
+			CASE
+				WHEN CU.COUPON_APPLY_TYPE = '1'
+				AND <include refid="CommonMapper.datetime" /> > CU.COUPON_APPLY_END_DATE THEN
+			'2'
+				ELSE
+			CU.DATA_STATUS_CODE
+			END
+		) AS COUPON_DATA_STATUS_CODE
+		FROM OP_COUPON_USER CU
+		INNER JOIN OP_COUPON C
+		ON CU.COUPON_ID = C.COUPON_ID
+		<include refid="wehreCouponUserListByUserForManager"/>
+
+	</sql>
+
+	<select id="getCouponUserListByUserForManager" parameterType="saleson.shop.coupon.support.UserCouponParam" resultMap="CouponUserResult">
+
+		<include refid="CommonMapper.paginationHeader" />
+		SELECT T.* FROM (
+
+		<include refid="baseCouponUserListByUserForManager"/>
+		) T
+		<where>
+			<if test="couponDataStatusCode != null and couponDataStatusCode != ''">
+				T.COUPON_DATA_STATUS_CODE = #{couponDataStatusCode}
+			</if>
+		</where>
+		ORDER BY T.COUPON_DOWNLOAD_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getCouponUserListCountByUserForManager" parameterType="saleson.shop.coupon.support.UserCouponParam" resultType="int">
+
+		SELECT COUNT(*) AS CNT FROM (
+
+		<include refid="baseCouponUserListByUserForManager"/>
+		) T
+		<where>
+			<if test="couponDataStatusCode != null and couponDataStatusCode != ''">
+				T.COUPON_DATA_STATUS_CODE = #{couponDataStatusCode}
+			</if>
+		</where>
+
+	</select>
+
+	<select id="getCouponExcelItemListByCoupon" parameterType="saleson.shop.coupon.domain.Coupon" resultMap="saleson.shop.item.ItemMapper.ItemResult">
+		SELECT CI.* FROM (
+			SELECT I.* FROM (
+				SELECT
+					DISTINCT I.ITEM_ID
+				FROM OP_ITEM I
+					INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+					INNER JOIN OP_ITEM_CATEGORY IC ON I.ITEM_ID = IC.ITEM_ID
+					INNER JOIN OP_CATEGORY C ON IC.CATEGORY_ID = C.CATEGORY_ID
+					INNER JOIN OP_CATEGORY_GROUP CG ON C.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID AND CG.CATEGORY_GROUP_FLAG = 'Y'
+				<where>
+					I.DATA_STATUS_CODE = '1'
+					<if test='items != null and !items.isEmpty()'>
+						AND I.ITEM_USER_CODE IN
+						<foreach item="items" index="index" collection="items" open="(" separator=", " close=")">
+							#{items.itemUserCode}
+						</foreach>
+					</if>
+				</where>
+			) G INNER JOIN OP_ITEM I ON G.ITEM_ID = I.ITEM_ID
+		) CI
+		ORDER BY CI.ITEM_ID ASC
+	</select>
+
+	<select id="getDirectInputValueCount" parameterType="string" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM OP_COUPON
+		WHERE DIRECT_INPUT_VALUE = #{value}
+	</select>
+
+	<select id="getExpirationCouponUserList" parameterType="saleson.shop.coupon.support.UserCouponParam" resultMap="UmsCouponUserResult">
+		SELECT
+			CU.USER_ID,
+			U.USER_NAME,
+			UD.PHONE_NUMBER,
+		COUNT(*) AS COUPON_COUNT
+		FROM OP_COUPON_USER CU
+			INNER JOIN OP_USER U ON CU.USER_ID = U.USER_ID
+			INNER JOIN OP_USER_DETAIL UD ON CU.USER_ID = UD.USER_ID
+		WHERE CU.COUPON_APPLY_END_DATE LIKE CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL + #{day} DAY), '%Y%m%d'), '%')
+		AND CU.DATA_STATUS_CODE = 0
+		GROUP BY CU.USER_ID, U.USER_NAME, UD.PHONE_NUMBER
+
+		<if test="paging != null">
+			LIMIT #{paging.startRownum}, #{paging.endRownum}
+		</if>
+	</select>
+
+	<select id="getExpirationCouponUserCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(USER_ID)
+		FROM (
+				SELECT CU.USER_ID
+				FROM OP_COUPON_USER CU
+					INNER JOIN OP_USER U ON CU.USER_ID = U.USER_ID
+					INNER JOIN OP_USER_DETAIL UD ON CU.USER_ID = UD.USER_ID
+				WHERE CU.COUPON_APPLY_END_DATE LIKE CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL + #{value} DAY), '%Y%m%d'), '%')
+				AND CU.DATA_STATUS_CODE = 0
+				GROUP BY CU.USER_ID
+			) T
+	</select>
+
+	<select id="getExpirationCouponList" parameterType="saleson.shop.coupon.support.UserCouponParam" resultMap="UmsCouponUserResult">
+		SELECT
+			USER_ID, COUPON_NAME
+		FROM OP_COUPON_USER
+		WHERE COUPON_USER_ID IN (
+			SELECT MAX(COUPON_USER_ID)
+			FROM OP_COUPON_USER
+			WHERE COUPON_APPLY_END_DATE LIKE CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL + #{day} DAY), '%Y%m%d'), '%')
+			AND DATA_STATUS_CODE = 0
+			GROUP BY USER_ID
+		)
+
+		<if test="paging != null">
+			LIMIT #{paging.startRownum}, #{paging.endRownum}
+		</if>
+	</select>
+
+	<select id="getBirthdayUserList" parameterType="saleson.shop.coupon.support.UserCouponParam" resultMap="UmsCouponUserResult">
+		SELECT
+			U.USER_ID,
+			U.USER_NAME,
+			UD.PHONE_NUMBER
+		FROM OP_USER U
+		INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		<where>
+			UD.RECEIVE_SMS = '0'
+			AND DATE_FORMAT(DATE(SUBDATE(NOW(), INTERVAL #{couponBirthday} DAY)), '%m%d')
+				<![CDATA[<=]]> DATE_FORMAT(UD.BIRTHDAY, '%m%d')
+			AND DATE_FORMAT(UD.BIRTHDAY, '%m%d')
+				<![CDATA[<=]]> DATE_FORMAT(DATE(SUBDATE(NOW(), INTERVAL - #{couponBirthday} DAY)), '%m%d')
+
+			<if test="couponTargetUserLevels != null and couponTargetUserLevels != ''">
+				AND UD.LEVEL_ID IN
+				<foreach collection="couponTargetUserLevels" item="couponTargetUserLevels" separator="," open="(" close=")">
+					#{couponTargetUserLevels}
+				</foreach>
+			</if>
+		</where>
+	</select>
+</mapper>

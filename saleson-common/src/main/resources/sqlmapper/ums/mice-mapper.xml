@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.common.notification.micesoft.MiceMapper">
+
+	<insert id="insertKkoMsg" parameterType="saleson.common.notification.micesoft.domain.kakao.KkoMsg">
+
+		INSERT MS_KKO_MSG (
+			ID,
+			STATUS,
+			PHONE,
+			CALLBACK,
+			REQDATE,
+			MSG,
+			TEMPLATE_CODE,
+			FAILED_TYPE,
+			FAILED_SUBJECT,
+			FAILED_MSG,
+			PROFILE_KEY,
+			BUTTON_JSON
+		) VALUES (
+			#{id},
+			'0',
+			#{phone},
+			#{callback},
+			NOW(),
+			#{msg},
+			#{templateCode},
+			#{failedType},
+			#{failedSubject},
+			#{failedMsg},
+			#{profileKey},
+			#{buttonJson}
+		)
+
+	</insert>
+
+	<insert id="insertKkoMsgs" parameterType="list">
+
+		INSERT MS_KKO_MSG (
+			ID,
+			STATUS,
+			PHONE,
+			CALLBACK,
+			REQDATE,
+			MSG,
+			TEMPLATE_CODE,
+			FAILED_TYPE,
+			FAILED_SUBJECT,
+			FAILED_MSG,
+			PROFILE_KEY,
+			BUTTON_JSON
+		) VALUES
+		<foreach collection="list" item="kkoMsg" open="" close="" separator=",">
+			( #{kkoMsg.id}, '0', #{kkoMsg.phone}, #{kkoMsg.callback}, NOW(), #{kkoMsg.msg}, #{kkoMsg.templateCode}, #{kkoMsg.failedType},#{kkoMsg.failedSubject}, #{kkoMsg.failedMsg}, #{kkoMsg.profileKey}, #{kkoMsg.buttonJson} )
+		</foreach>
+
+	</insert>
+
+
+	<insert id="insertMmsMsg" parameterType="saleson.common.notification.micesoft.domain.message.MmsMsg">
+
+		INSERT INTO mms_msg (
+			ID,
+			SUBJECT,
+			PHONE,
+			CALLBACK,
+			STATUS,
+			WRTDATE,
+			MSG,
+			FILE_CNT,
+			FILE_PATH1,
+			FILE_PATH1_SIZ,
+			ETC1
+		) VALUES (
+			#{id},
+			#{subject},
+			#{phone},
+			#{callback},
+			'0',
+			NOW(),
+			#{msg},
+			#{fileCnt},
+			#{filePath1},
+			#{filePath1Siz},
+			#{etc1}
+		)
+
+	</insert>
+
+	<insert id="insertMmsMsgBatch" parameterType="list">
+
+		INSERT INTO mms_msg (
+			ID,
+			SUBJECT,
+			PHONE,
+			CALLBACK,
+			STATUS,
+			WRTDATE,
+			MSG,
+			FILE_CNT,
+			FILE_PATH1,
+			FILE_PATH1_SIZ,
+			ETC1
+		) VALUES
+		<foreach collection="list" item="mmsMsg" open="" close="" separator=",">
+			(
+				#{mmsMsg.id},
+				#{mmsMsg.subject},
+				#{mmsMsg.phone},
+				#{mmsMsg.callback},
+				'0',
+				NOW(),
+				#{mmsMsg.msg},
+				#{mmsMsg.fileCnt},
+				#{mmsMsg.filePath1},
+				#{mmsMsg.filePath1Siz},
+				#{mmsMsg.etc1}
+			)
+		</foreach>
+
+	</insert>
+
+	<insert id="insertSmsMsg" parameterType="saleson.common.notification.micesoft.domain.message.SmsMsg">
+
+		INSERT INTO sms_msg (
+			ID,
+			PHONE,
+			CALLBACK,
+			STATUS,
+			WRTDATE,
+			REQDATE,
+			MSG,
+			ETC1
+		) VALUES (
+			#{id},
+			#{phone},
+			#{callback},
+			'0',
+			NOW(),
+			NOW(),
+			#{msg},
+			#{etc1}
+		)
+
+	</insert>
+
+	<insert id="insertSmsMsgBatch" parameterType="list">
+
+		INSERT INTO sms_msg (
+			ID,
+			PHONE,
+			CALLBACK,
+			STATUS,
+			WRTDATE,
+			REQDATE,
+			MSG,
+			ETC1
+		) VALUES
+		<foreach collection="list" item="smsMsg" open="" close="" separator=",">
+			(
+				#{smsMsg.id},
+				#{smsMsg.phone},
+				#{smsMsg.callback},
+				'0',
+				NOW(),
+				NOW(),
+				#{smsMsg.msg},
+				#{smsMsg.etc1}
+			)
+		</foreach>
+
+	</insert>
+
+	<insert id="insertPushmsg" parameterType="saleson.common.notification.micesoft.domain.push.Pushmsg">
+		INSERT INTO TMB_PUSHMSG (
+			MSG_NO,
+			PUSH_TYPE,
+			PUSH_TOKEN,
+			TITLE,
+			CNTS,
+			MSG_TYPE,
+			MENU_ID,
+			APP_NO,
+			APP_VER,
+			MBR_NO,
+			UUID,
+			OS,
+			RECV_YN,
+			TEST_YN,
+			STS_CD,
+			WEB_URL,
+			IMG_URL,
+			STS_URL,
+			POPUP_YN,
+			STS_YN,
+			REG_DT,
+			UPD_DT,
+			KIND,
+			CUSTOM_DATA,
+			SR_STATUS,
+			RT_TYPE,
+			TEMPLATE_CODE,
+			KKO_MSG,
+			PROFILE_KEY,
+			URL,
+			URL_BUTTON_TXT,
+			IMG_PATH,
+			IMG_PATH_URL,
+			BUTTON_JSON,
+			AD_FLAG,
+			REQDATE,
+			FAILED_TYPE,
+			ID,
+			PHONE,
+			CALLBACK,
+			FAILED_SUBJECT,
+			FAILED_MSG,
+			FAILED_IMG,
+			ETC1,
+			ETC2
+		) VALUES (
+			#{msgNo},
+			#{pushType},
+			#{pushToken},
+			#{title},
+			#{cnts},
+			#{msgType},
+			#{menuId},
+			#{appNo},
+			#{appVer},
+			#{mbrNo},
+			#{uuid},
+			#{os},
+			'N',
+			#{testYn},
+			'003',
+			#{webUrl},
+			#{imgUrl},
+			#{stsUrl},
+			#{popupYn},
+			#{stsYn},
+			NOW(),
+			NOW(),
+			#{kind},
+			#{customData},
+			'1',
+			#{rtType},
+			#{templateCode},
+			#{kkoMsg},
+			#{profileKey},
+			#{url},
+			#{urlButtonTxt},
+			#{imgPath},
+			#{imgPathUrl},
+			#{buttonJson},
+			#{adFlag},
+			#{reqdate},
+			#{failedType},
+			#{id},
+			#{phone},
+			#{callback},
+			#{failedSubject},
+			#{failedMsg},
+			#{failedImg},
+			#{etc1},
+			#{etc2}
+		)
+	</insert>
+
+
+	<insert id="insertPushmsgBatch" parameterType="list">
+		INSERT INTO TMB_PUSHMSG_BATCH (
+			MSG_NO,
+			PUSH_TYPE,
+			PUSH_TOKEN,
+			TITLE,
+			CNTS,
+			MSG_TYPE,
+			MENU_ID,
+			APP_NO,
+			APP_VER,
+			MBR_NO,
+			UUID,
+			OS,
+			RECV_YN,
+			TEST_YN,
+			STS_CD,
+			WEB_URL,
+			IMG_URL,
+			STS_URL,
+			POPUP_YN,
+			STS_YN,
+			REG_DT,
+			UPD_DT,
+			KIND,
+			CUSTOM_DATA,
+			SR_STATUS,
+			RT_TYPE,
+			TEMPLATE_CODE,
+			KKO_MSG,
+			PROFILE_KEY,
+			URL,
+			URL_BUTTON_TXT,
+			IMG_PATH,
+			IMG_PATH_URL,
+			BUTTON_JSON,
+			AD_FLAG,
+			REQDATE,
+			FAILED_TYPE,
+			ID,
+			PHONE,
+			CALLBACK,
+			FAILED_SUBJECT,
+			FAILED_MSG,
+			FAILED_IMG,
+			ETC1,
+			ETC2
+		) VALUES
+		<foreach collection="list" item="pushmsg" open="" close="" separator=",">
+			(
+				#{pushmsg.msgNo},
+				#{pushmsg.pushType},
+				#{pushmsg.pushToken},
+				#{pushmsg.title},
+				#{pushmsg.cnts},
+				#{pushmsg.msgType},
+				#{pushmsg.menuId},
+				#{pushmsg.appNo},
+				#{pushmsg.appVer},
+				#{pushmsg.mbrNo},
+				#{pushmsg.uuid},
+				#{pushmsg.os},
+				'N',
+				#{pushmsg.testYn},
+				'003',
+				#{pushmsg.webUrl},
+				#{pushmsg.imgUrl},
+				#{pushmsg.stsUrl},
+				#{pushmsg.popupYn},
+				#{pushmsg.stsYn},
+				NOW(),
+				NOW(),
+				#{pushmsg.kind},
+				#{pushmsg.customData},
+				'1',
+				#{pushmsg.rtType},
+				#{pushmsg.templateCode},
+				#{pushmsg.kkoMsg},
+				#{pushmsg.profileKey},
+				#{pushmsg.url},
+				#{pushmsg.urlButtonTxt},
+				#{pushmsg.imgPath},
+				#{pushmsg.imgPathUrl},
+				#{pushmsg.buttonJson},
+				#{pushmsg.adFlag},
+				#{pushmsg.reqdate},
+				#{pushmsg.failedType},
+				#{pushmsg.id},
+				#{pushmsg.phone},
+				#{pushmsg.callback},
+				#{pushmsg.failedSubject},
+				#{pushmsg.failedMsg},
+				#{pushmsg.failedImg},
+				#{pushmsg.etc1},
+				#{pushmsg.etc2}
+			)
+		</foreach>
+
+	</insert>
+
+	<resultMap id="CampaignStatisticsResult" type="saleson.common.notification.domain.CampaignStatistics">
+		<result property="type" column="STATISTICS_TYPE" />
+		<result property="key" column="CAMPAIGN_KEY" />
+		<result property="sent" column="SENT" />
+	</resultMap>
+
+	<select id="getValidTableCount" parameterType="saleson.common.notification.domain.Table" resultType="int">
+		SELECT COUNT(*) AS CNT FROM INFORMATION_SCHEMA.TABLES
+		WHERE TABLE_SCHEMA = #{schema}
+		AND TABLE_NAME = #{name}
+	</select>
+
+	<sql id="statisticsListColumnsType1">
+		#{table} AS TABLE_KEY,
+		<choose>
+			<when test="autoFlag">
+				#{campaignKey}
+			</when>
+			<otherwise>
+				L.ETC1
+			</otherwise>
+		</choose>	AS CAMPAIGN_KEY,
+		COUNT(*) AS SENT
+	</sql>
+
+	<sql id="statisticsListColumnsType2">
+		#{table} AS TABLE_KEY,
+		<choose>
+			<when test="autoFlag">
+				#{campaignKey}
+			</when>
+			<otherwise>
+				L.ETC2
+			</otherwise>
+		</choose>  AS CAMPAIGN_KEY,
+		COUNT(*) AS SENT
+	</sql>
+
+	<sql id="sentStatisticsListWhereType1">
+		<choose>
+			<when test="autoFlag">
+				AND (
+					ETC1 = ''
+					OR ETC1 IS NULL
+					OR ETC1 = '0'
+				)
+			</when>
+			<otherwise>
+				AND (
+					ETC1 != ''
+					OR ETC1 IS NOT NULL
+					AND ETC1 != '0'
+				)
+			</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="sentStatisticsListWhereType2">
+		<choose>
+			<when test="autoFlag">
+				AND (
+					ETC2 = ''
+					OR ETC2 IS NULL
+					OR ETC2 = '0'
+				)
+			</when>
+			<otherwise>
+				AND (
+					ETC2 != ''
+					OR ETC2 IS NOT NULL
+					AND ETC2 != '0'
+				)
+			</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="successStatisticsListWhereType1">
+		<include refid="sentStatisticsListWhereType1"/>
+		<choose>
+			<when test='tableType == "push" or tableType == "push-batch"'>
+				AND STS_CD = '000'
+			</when>
+			<otherwise>
+				AND RSLT = '0'
+			</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="successStatisticsListWhereType2">
+		<include refid="sentStatisticsListWhereType2"/>
+		<choose>
+			<when test='tableType == "push" or tableType == "push-batch"'>
+				AND STS_CD = '000'
+			</when>
+			<otherwise>
+				AND RSLT = '0'
+			</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="openPushStatisticsListInnerJoin">
+		INNER JOIN tmb_pushmsg_open TPO
+			ON TPO.MSG_SEQ = L.MSG_SEQ
+			AND TPO.MSG_NO = L.MSG_NO
+	</sql>
+
+	<sql id="mmsCampaignStatisticsListQuery">
+		SELECT
+		'sent' AS STATISTICS_TYPE,
+		T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType1"/>
+			FROM mms_log_${table} L
+			<where>
+				<include refid="sentStatisticsListWhereType1"/>
+			</where>
+		GROUP BY L.ETC1
+		)T
+
+		UNION
+
+		SELECT
+		'success' AS STATISTICS_TYPE,
+		T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType1"/>
+			FROM mms_log_${table} L
+			<where>
+				<include refid="successStatisticsListWhereType1"/>
+			</where>
+		GROUP BY L.ETC1
+		)T
+	</sql>
+
+	<sql id="smsCampaignStatisticsListQuery">
+		SELECT
+		'sent' AS STATISTICS_TYPE,
+		T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType1"/>
+			FROM sms_log_${table} L
+			<where>
+				<include refid="sentStatisticsListWhereType1"/>
+			</where>
+			GROUP BY L.ETC1
+		)T
+
+		UNION
+
+		SELECT
+		'success' AS STATISTICS_TYPE,
+		T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType1"/>
+			FROM sms_log_${table} L
+			<where>
+				<include refid="successStatisticsListWhereType1"/>
+			</where>
+			GROUP BY L.ETC1
+		)T
+
+	</sql>
+
+	<sql id="pushCampaignStatisticsListQuery">
+		SELECT
+			'sent' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType1"/>
+			FROM tmb_pushmsg_log_${table} L
+			<where>
+				<include refid="sentStatisticsListWhereType1"/>
+			</where>
+			GROUP BY L.ETC1
+		)T
+
+		UNION
+
+		SELECT
+			'success' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType1"/>
+			FROM tmb_pushmsg_log_${table} L
+			<where>
+				<include refid="successStatisticsListWhereType1"/>
+			</where>
+			GROUP BY L.ETC1
+		)T
+
+		UNION
+
+		SELECT
+			'open' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+			<include refid="statisticsListColumnsType1"/>
+			FROM tmb_pushmsg_log_${table} L
+			<include refid="openPushStatisticsListInnerJoin"/>
+			<where>
+				<include refid="sentStatisticsListWhereType1"/>
+			</where>
+		GROUP BY L.ETC1
+		)T
+
+	</sql>
+
+	<sql id="pushBatchCampaignStatisticsListQuery">
+		SELECT
+			'sent' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType1"/>
+			FROM tmb_pushmsg_batch_log_${table} L
+			<where>
+				<include refid="sentStatisticsListWhereType1"/>
+			</where>
+			GROUP BY L.ETC1
+		)T
+
+		UNION
+
+		SELECT
+			'success' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType1"/>
+			FROM tmb_pushmsg_batch_log_${table} L
+			<where>
+				<include refid="successStatisticsListWhereType1"/>
+			</where>
+			GROUP BY L.ETC1
+		)T
+
+		UNION
+
+		SELECT
+			'open' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType1"/>
+			FROM tmb_pushmsg_batch_log_${table} L
+			<include refid="openPushStatisticsListInnerJoin"/>
+			<where>
+				<include refid="sentStatisticsListWhereType1"/>
+			</where>
+			GROUP BY L.ETC1
+		)T
+
+	</sql>
+
+
+	<sql id="kakaoCampaignStatisticsListQuery">
+		SELECT
+			'sent' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType2"/>
+			FROM ms_kko_msg_log_${table} L
+			<where>
+				<include refid="sentStatisticsListWhereType2"/>
+			</where>
+			GROUP BY L.ETC2
+		)T
+
+		UNION
+
+		SELECT
+			'success' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType2"/>
+			FROM ms_kko_msg_log_${table} L
+			<where>
+				<include refid="successStatisticsListWhereType2"/>
+			</where>
+			GROUP BY L.ETC2
+		)T
+	</sql>
+
+	<sql id="kakaoMmsCampaignStatisticsListQuery">
+		SELECT
+			'sent' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType2"/>
+			FROM ms_kko_mms_msg_log_${table} L
+			<where>
+				<include refid="sentStatisticsListWhereType2"/>
+			</where>
+			GROUP BY L.ETC2
+		)T
+
+		UNION
+
+		SELECT
+			'success' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType2"/>
+			FROM ms_kko_mms_msg_log_${table} L
+			<where>
+				<include refid="successStatisticsListWhereType2"/>
+			</where>
+			GROUP BY L.ETC2
+		)T
+	</sql>
+
+	<sql id="kakaoSmsCampaignStatisticsListQuery">
+		SELECT
+			'sent' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType2"/>
+			FROM ms_kko_sms_msg_log_${table} L
+			<where>
+				<include refid="sentStatisticsListWhereType2"/>
+			</where>
+			GROUP BY L.ETC2
+		)T
+
+		UNION
+
+		SELECT
+			'success' AS STATISTICS_TYPE,
+			T.*
+		FROM(
+			SELECT
+				<include refid="statisticsListColumnsType2"/>
+			FROM ms_kko_sms_msg_log_${table} L
+			<where>
+				<include refid="successStatisticsListWhereType2"/>
+			</where>
+			GROUP BY L.ETC2
+		)T
+
+	</sql>
+
+	<select id="getCampaignStatisticsListByParam" parameterType="saleson.common.notification.support.StatisticsParam" resultMap="CampaignStatisticsResult">
+		SELECT
+		STATISTICS_TYPE,
+		CAMPAIGN_KEY,
+		SUM(BASE.SENT) AS SENT
+		FROM (
+		<foreach item="table" index="i" collection="tables" open="" separator=" UNION " close="">
+
+			<if test='tableType == "sms"'>
+				<include refid="smsCampaignStatisticsListQuery"/>
+			</if>
+			<if test='tableType == "mms"'>
+				<include refid="mmsCampaignStatisticsListQuery"/>
+			</if>
+			<if test='tableType == "push"'>
+				<include refid="pushCampaignStatisticsListQuery"/>
+			</if>
+			<if test='tableType == "push-batch"'>
+				<include refid="pushBatchCampaignStatisticsListQuery"/>
+			</if>
+			<if test='tableType == "kakao"'>
+				<include refid="kakaoCampaignStatisticsListQuery"/>
+			</if>
+			<if test='tableType == "kakao-sms"'>
+				<include refid="kakaoSmsCampaignStatisticsListQuery"/>
+			</if>
+			<if test='tableType == "kakao-mms"'>
+				<include refid="kakaoMmsCampaignStatisticsListQuery"/>
+			</if>
+
+		</foreach>
+		) BASE
+		GROUP BY STATISTICS_TYPE, CAMPAIGN_KEY
+	</select>
+
+</mapper>

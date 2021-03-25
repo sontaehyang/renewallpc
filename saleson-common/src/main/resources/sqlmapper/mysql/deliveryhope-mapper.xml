@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.deliveryhope.DeliveryHopeMapper">
+	<resultMap id="DeliveryHopeResult" type="saleson.shop.deliveryhope.domain.DeliveryHope">
+		<result property="deliveryHopeId" column="DELIVERY_HOPE_ID" />
+		<result property="deliveryHopeTime" column="DELIVERY_HOPE_TIME" />
+		<result property="deliveryHopeIndex" column="DELIVERY_HOPE_INDEX" />
+	</resultMap>
+
+
+	<select id="getDeliveryHopeList" parameterType="saleson.shop.deliveryhope.domain.DeliveryHope" resultMap="DeliveryHopeResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+				DELIVERY_HOPE_ID, 
+				DELIVERY_HOPE_TIME, 
+				DELIVERY_HOPE_INDEX
+			FROM OP_DELIVERY_HOPE 
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+
+	<select id="getDeliveryHopeById" parameterType="Integer" resultMap="DeliveryHopeResult" >
+		SELECT 
+			DELIVERY_HOPE_ID, 
+			DELIVERY_HOPE_TIME, 
+			DELIVERY_HOPE_INDEX
+		FROM OP_DELIVERY_HOPE 
+ 		WHERE DELIVERY_HOPE_ID = #{value}
+	</select>
+
+
+	<insert id="insertDeliveryHope" parameterType="saleson.shop.deliveryhope.domain.DeliveryHope">
+		INSERT INTO OP_DELIVERY_HOPE (DELIVERY_HOPE_ID, DELIVERY_HOPE_TIME, DELIVERY_HOPE_INDEX)
+		VALUES (#{deliveryHopeId}, #{deliveryHopeTime}, #{deliveryHopeIndex})
+	</insert>
+
+
+	<update id="updateDeliveryHope" parameterType="saleson.shop.deliveryhope.domain.DeliveryHope">
+		UPDATE OP_DELIVERY_HOPE SET
+			DELIVERY_HOPE_TIME = #{deliveryHopeTime}, 
+			DELIVERY_HOPE_INDEX = #{deliveryHopeIndex}
+		WHERE DELIVERY_HOPE_ID = #{deliveryHopeId}
+	</update>
+
+
+	<delete id="deleteDeliveryHope" parameterType="Integer" >
+		DELETE FROM OP_DELIVERY_HOPE 
+		WHERE DELIVERY_HOPE_ID = #{value}
+	</delete>
+	
+</mapper>

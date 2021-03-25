@@ -1,0 +1,1 @@
+<%@ tag pageEncoding="utf-8" %><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><c:if test="${!empty param.page && !empty pagination && pagination.totalPages > 0}">(${param.page}/${pagination.totalPages}) </c:if>

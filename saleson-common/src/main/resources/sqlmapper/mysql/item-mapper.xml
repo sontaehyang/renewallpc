@@ -1,0 +1,4387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.item.ItemMapper">
+	<resultMap id="ItemBaseResult" type="saleson.shop.item.domain.ItemBase">
+		<id property="itemId" column="ITEM_ID" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="nonmemberOrderType" column="NONMEMBER_ORDER_TYPE" />
+		<result property="itemPrice" column="ITEM_PRICE" />
+		<result property="taxType" column="TAX_TYPE" />
+		<result property="salePrice" column="SALE_PRICE" />
+		<result property="itemPrice" column="ITEM_PRICE" />
+		<result property="salePriceNonmember" column="SALE_PRICE_NONMEMBER" />
+		<result property="itemType" column="ITEM_TYPE" />
+		<result property="spotFlag" column="SPOT_FLAG" />
+		<result property="spotDateType" column="SPOT_DATE_TYPE" />
+		<result property="spotType" column="SPOT_TYPE" />
+		<result property="spotApplyGroup" column="SPOT_APPLY_GROUP" />
+		<result property="userLevelDiscountRate" column="USER_LEVEL_DISCOUNT_RATE" />
+		<result property="spotApplyGroup" column="SPOT_APPLY_GROUP" />
+		<result property="spotDiscountAmount" column="SPOT_DISCOUNT_AMOUNT" />
+		<result property="spotStartDate" column="SPOT_START_DATE" />
+		<result property="spotEndDate" column="SPOT_END_DATE" />
+		<result property="spotStartTime" column="SPOT_START_TIME" />
+		<result property="spotEndTime" column="SPOT_END_TIME" />
+		<result property="spotWeekDay" column="SPOT_WEEK_DAY" />
+		<result property="sellerDiscountFlag" column="SELLER_DISCOUNT_FLAG" />
+		<result property="sellerDiscountType" column="SELLER_DISCOUNT_TYPE" />
+		<result property="sellerDiscountAmount" column="SELLER_DISCOUNT_AMOUNT" />
+		<result property="sellerPointFlag" column="SELLER_POINT_FLAG" />
+		<result property="soldOut" column="SOLD_OUT" />
+		<result property="itemSummary" column="ITEM_SUMMARY" />
+		<result property="itemImage" column="ITEM_IMAGE" />
+		<result property="itemOptionFlag" column="ITEM_OPTION_FLAG" />
+		<result property="seoIndexFlag" column="SEO_INDEX_FLAG" />
+		<result property="itemSoldOutFlag" column="ITEM_SOLD_OUT_FLAG" />
+		<result property="itemOptionSoldOutFlag" column="ITEM_OPTION_SOLD_OUT_FLAG" />
+		<result property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="displayFlag" column="DISPLAY_FLAG" />
+	</resultMap>
+
+	<resultMap id="ItemResult" type="saleson.shop.item.domain.Item" extends="ItemBaseResult">
+		<result property="itemCode" column="ITEM_CODE" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="sellerName" column="SELLER_NAME" />
+		<result property="sellerLoginId" column="SELLER_LOGIN_ID" />
+
+		<result property="itemLabel" column="ITEM_LABEL" />
+		<result property="itemLabelValue" column="ITEM_LABEL_VALUE" />
+		<result property="itemNewFlag" column="ITEM_NEW_FLAG" />
+		<result property="itemType1" column="ITEM_TYPE1" />
+		<result property="itemType2" column="ITEM_TYPE2" />
+		<result property="itemType3" column="ITEM_TYPE3" />
+		<result property="itemType4" column="ITEM_TYPE4" />
+		<result property="itemType5" column="ITEM_TYPE5" />
+		<result property="privateType" column="PRIVATE_TYPE" />
+		<result property="mdId" column="MD_ID" />
+		<result property="mdName" column="MD_NAME" />
+
+		<result property="originCountry" column="ORIGIN_COUNTRY" />
+		<result property="manufacturer" column="MANUFACTURER" />
+		<result property="brand" column="BRAND" />
+		<result property="brandId" column="BRAND_ID" />
+		<result property="color" column="COLOR" />
+		<result property="weight" column="WEIGHT" />
+		<result property="displayQuantity" column="DISPLAY_QUANTITY" />
+		<result property="salePoint" column="SALE_POINT" />
+		<result property="costPrice" column="COST_PRICE" />
+		<result property="supplyPrice" column="SUPPLY_PRICE" />
+
+		<result property="commissionType" column="COMMISSION_TYPE" />
+		<result property="commissionRate" column="COMMISSION_RATE" />
+		<result property="stockFlag" column="STOCK_FLAG" />
+		<result property="stockQuantity" column="STOCK_QUANTITY" />
+		<result property="stockCode" column="STOCK_CODE" />
+
+		<result property="orderMinQuantity" column="ORDER_MIN_QUANTITY" />
+		<result property="orderMaxQuantity" column="ORDER_MAX_QUANTITY" />
+		<result property="saleQuantity" column="SALE_QUANTITY" />
+		<result property="itemOptionFlag" column="ITEM_OPTION_FLAG" />
+		<result property="itemOptionType" column="ITEM_OPTION_TYPE" />
+		<result property="itemOptionTitle1" column="ITEM_OPTION_TITLE1" />
+		<result property="itemOptionTitle2" column="ITEM_OPTION_TITLE2" />
+		<result property="itemOptionTitle3" column="ITEM_OPTION_TITLE3" />
+		<result property="itemAdditionFlag" column="ITEM_ADDITION_FLAG" />
+		<result property="freeGiftFlag" column="FREE_GIFT_FLAG" />
+		<result property="freeGiftName" column="FREE_GIFT_NAME" />
+		<result property="itemKeyword" column="ITEM_KEYWORD" />
+		<result property="itemNoticeCode" column="ITEM_NOTICE_CODE" />
+		<result property="headerContentFlag" column="HEADER_CONTENT_FLAG" />
+		<result property="footerContentFlag" column="FOOTER_CONTENT_FLAG" />
+		<result property="detailContent" column="DETAIL_CONTENT" />
+		<result property="detailContentMobile" column="DETAIL_CONTENT_MOBILE" />
+		<result property="team" column="TEAM" />
+		<result property="opentime" column="OPENTIME" />
+		<result property="otherFlag" column="OTHER_FLAG" />
+		<result property="recommendFlag" column="RECOMMEND_FLAG" />
+		<result property="relationItemDisplayType" column="RELATION_ITEM_DISPLAY_TYPE" />
+
+		<result property="deliveryCompanyId" column="DELIVERY_COMPANY_ID" />
+		<result property="deliveryCompanyName" column="DELIVERY_COMPANY_NAME" />
+		<result property="deliveryType" column="DELIVERY_TYPE" />
+		<result property="shipmentId" column="SHIPMENT_ID" />
+		<result property="shipmentGroupCode" column="SHIPMENT_GROUP_CODE" />
+		<result property="shipmentReturnId" column="SHIPMENT_RETURN_ID" />
+		<result property="shipmentReturnType" column="SHIPMENT_RETURN_TYPE" />
+		<result property="shippingType" column="SHIPPING_TYPE" />
+		<result property="shippingGroupCode" column="SHIPPING_GROUP_CODE" />
+		<result property="shipping" column="SHIPPING" />
+		<result property="shippingFreeAmount" column="SHIPPING_FREE_AMOUNT" />
+		<result property="shippingItemCount" column="SHIPPING_ITEM_COUNT" />
+		<result property="shippingExtraCharge1" column="SHIPPING_EXTRA_CHARGE1" />
+		<result property="shippingExtraCharge2" column="SHIPPING_EXTRA_CHARGE2" />
+		<result property="shippingReturn" column="SHIPPING_RETURN" />
+
+		<result property="hits" column="HITS" />
+
+
+		<result property="dataStatusMessage" column="DATA_STATUS_MESSAGE" />
+		<result property="updatedUserId" column="UPDATED_USER_ID" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="createdUserId" column="CREATED_USER_ID" />
+		<result property="createdDate" column="CREATED_DATE" />
+
+		<result property="reviewCount" column="REVIEW_COUNT" />
+		<result property="reviewScore" column="REVIEW_SCORE" />
+		<result property="erpExceptionType" column="ERP_EXCEPTION_TYPE" />
+		<result property="cnt" column="CNT" />
+		<result property="itemReturnFlag" column="ITEM_RETURN_FLAG" />
+		<result property="couponUseFlag" column="COUPON_USE_FLAG" />
+
+		<result property="naverShoppingItemName" column="NAVER_SHOPPING_ITEM_NAME" />
+		<result property="naverShoppingFlag" column="NAVER_SHOPPING_FLAG" />
+		<result property="naverPayFlag" column="NAVER_PAY_FLAG" />
+
+		<result property="quickDeliveryExtraChargeFlag" column="QUICK_DELIVERY_EXTRA_CHARGE_FLAG" />
+		<result property="cashDiscountFlag" column="CASH_DISCOUNT_FLAG" />
+
+		<association property="seo" javaType="saleson.shop.seo.domain.Seo">
+			<result property="title" column="SEO_TITLE" />
+			<result property="indexFlag" column="SEO_INDEX_FLAG" />
+			<result property="keywords" column="SEO_KEYWORDS" />
+			<result property="description" column="SEO_DESCRIPTION" />
+			<result property="headerContents1" column="SEO_HEADER_CONTENTS1" />
+			<result property="headerContents2" column="SEO_HEADER_CONTENTS2" />
+			<result property="headerContents3" column="SEO_HEADER_CONTENTS3" />
+			<result property="themawordTitle" column="SEO_THEMAWORD_TITLE" />
+			<result property="themawordDescription" column="SEO_THEMAWORD_DESCRIPTION" />
+		</association>
+
+		<collection property="itemCategories" resultMap="ItemCategoryResult" />
+		<collection property="itemOptionGroups" resultMap="ItemOptionGroupResult" />
+		<collection property="itemImages" resultMap="ItemImageResult" />
+
+	</resultMap>
+
+	<resultMap id="GroupAndItemResult" type="saleson.shop.categories.domain.Group">
+		<id property="code" column="CODE" />
+		<association property="items" resultMap="ItemResult" />
+	</resultMap>
+
+	<resultMap id="MainItemResult" type="saleson.shop.item.domain.Item">
+		<id property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="cnt" column="CNT" />
+	</resultMap>
+
+
+	<resultMap id="ItemRankingResult" type="saleson.shop.item.domain.Item">
+		<id property="itemId" column="ITEM_ID" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="itemCode" column="ITEM_CODE" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="itemType" column="ITEM_TYPE" />
+		<result property="itemLabel" column="ITEM_LABEL" />
+		<result property="itemLabelValue" column="ITEM_LABEL_VALUE" />
+		<result property="soldOut" column="SOLD_OUT" />
+		<result property="itemType1" column="ITEM_TYPE1" />
+		<result property="itemType2" column="ITEM_TYPE2" />
+		<result property="itemType3" column="ITEM_TYPE3" />
+		<result property="itemType4" column="ITEM_TYPE4" />
+		<result property="itemType5" column="ITEM_TYPE5" />
+		<result property="nonmemberOrderType" column="NONMEMBER_ORDER_TYPE" />
+		<result property="taxType" column="TAX_TYPE" />
+		<result property="itemPrice" column="ITEM_PRICE" />
+		<result property="salePrice" column="SALE_PRICE" />
+		<result property="salePriceNonmember" column="SALE_PRICE_NONMEMBER" />
+		<result property="spotDiscountAmount" column="SPOT_DISCOUNT_AMOUNT" />
+		<result property="spotStartDate" column="SPOT_START_DATE" />
+		<result property="spotEndDate" column="SPOT_END_DATE" />
+		<result property="spotStartTime" column="SPOT_START_TIME" />
+		<result property="spotEndTime" column="SPOT_END_TIME" />
+		<result property="spotWeekDay" column="SPOT_WEEK_DAY" />
+		<result property="itemImage" column="ITEM_IMAGE" />
+		<result property="itemOptionFlag" column="ITEM_OPTION_FLAG" />
+		<result property="seoIndexFlag" column="SEO_INDEX_FLAG" />
+		<result property="reviewCount" column="REVIEW_COUNT" />
+		<result property="reviewScore" column="REVIEW_SCORE" />
+	</resultMap>
+
+	<resultMap id="ItemDetailsResult" type="saleson.shop.item.domain.Item" extends="ItemResult">
+		<collection property="itemCategories" resultMap="ItemCategoryResult" />
+		<collection property="itemImages" resultMap="ItemImageResult" />
+	</resultMap>
+
+	<resultMap id="ItemOptionGroupResult" type="saleson.shop.item.domain.ItemOptionGroup">
+		<result property="itemId" column="ITEM_ID" />
+		<result property="optionType" column="OPTION_TYPE" />
+		<result property="optionTitle" column="OPTION_TITLE" />
+		<result property="optionDisplayType" column="OPTION_DISPLAY_TYPE" />
+		<result property="optionHideFlag" column="OPTION_HIDE_FLAG" />
+		<collection property="itemOptions" resultMap="ItemOptionResult" />
+	</resultMap>
+
+
+	<resultMap id="ItemOptionResult" type="saleson.shop.item.domain.ItemOption">
+		<id property="itemOptionId" column="ITEM_OPTION_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="erpItemCode" column="ERP_ITEM_CODE" />
+		<result property="optionType" column="OPTION_TYPE" />
+		<result property="optionDisplayType" column="OPTION_DISPLAY_TYPE" />
+		<result property="optionName1" column="OPTION_NAME1" />
+		<result property="optionName2" column="OPTION_NAME2" />
+		<result property="optionName3" column="OPTION_NAME3" />
+		<result property="optionPrice" column="OPTION_PRICE" />
+		<result property="optionCostPrice" column="OPTION_COST_PRICE" />
+		<result property="optionPriceNonmember" column="OPTION_PRICE_NONMEMBER" />
+		<result property="optionQuantity" column="OPTION_QUANTITY" />
+		<result property="optionStockFlag" column="OPTION_STOCK_FLAG" />
+		<result property="optionStockCode" column="OPTION_STOCK_CODE" />
+		<result property="optionStockQuantity" column="OPTION_STOCK_QUANTITY" />
+		<result property="optionSoldOutFlag" column="OPTION_SOLD_OUT_FLAG" />
+		<result property="optionDisplayFlag" column="OPTION_DISPLAY_FLAG" />
+		<result property="optionOrdering" column="OPTION_ORDERING" />
+	</resultMap>
+
+
+	<resultMap id="ItemCategoryResult" type="saleson.shop.item.domain.ItemCategory">
+		<id property="itemCategoryId" column="ITEM_CATEGORY_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="ordering" column="ORDERING" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+	<resultMap id="ItemImageResult" type="saleson.shop.item.domain.ItemImage">
+		<id property="itemImageId" column="ITEM_IMAGE_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="imageName" column="IMAGE_NAME" />
+		<result property="ordering" column="ORDERING" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+	<resultMap id="ItemRelationResult" type="saleson.shop.item.domain.ItemRelation">
+		<id property="itemRelationId" column="ITEM_RELATION_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="ordering" column="ORDERING" />
+		<result property="createdDate" column="CREATED_DATE" />
+
+		<association property="item" javaType="saleson.shop.item.domain.Item">
+			<result property="itemId" column="RELATED_ITEM_ID" />
+			<result property="itemUserCode" column="RELATED_ITEM_USER_CODE" />
+			<result property="itemName" column="RELATED_ITEM_NAME" />
+			<result property="nonmemberOrderType" column="RELATED_NONMEMBER_ORDER_TYPE" />
+			<result property="itemType" column="RELATED_ITEM_TYPE" />
+			<result property="taxType" column="RELATED_TAX_TYPE" />
+			<result property="itemPrice" column="RELATED_ITEM_PRICE" />
+			<result property="salePrice" column="RELATED_SALE_PRICE" />
+			<result property="salePriceNonmember" column="RELATED_SALE_PRICE_NONMEMBER" />
+			<result property="itemSummary" column="RELATED_ITEM_SUMMARY" />
+			<result property="itemImage" column="RELATED_ITEM_IMAGE" />
+			<result property="itemOptionFlag" column="RELATED_ITEM_OPTION_FLAG" />
+			<result property="orderMinQuantity" column="RELATED_ORDER_MIN_QUANTITY" />
+			<result property="orderMaxQuantity" column="RELATED_ORDER_MAX_QUANTITY" />
+			<result property="itemSoldOutFlag" column="ITEM_SOLD_OUT_FLAG" />
+			<result property="seoIndexFlag" column="RELATED_SEO_INDEX_FLAG" />
+			<result property="spotFlag" column="SPOT_FLAG" />
+			<result property="spotType" column="SPOT_TYPE" />
+			<result property="spotDateType" column="SPOT_DATE_TYPE" />
+			<result property="spotDiscountAmount" column="SPOT_DISCOUNT_AMOUNT" />
+			<result property="spotStartDate" column="SPOT_START_DATE" />
+			<result property="spotEndDate" column="SPOT_END_DATE" />
+			<result property="spotStartTime" column="SPOT_START_TIME" />
+			<result property="spotEndTime" column="SPOT_END_TIME" />
+			<result property="spotWeekDay" column="SPOT_WEEK_DAY" />
+			<result property="sellerDiscountFlag" column="SELLER_DISCOUNT_FLAG" />
+			<result property="sellerDiscountType" column="SELLER_DISCOUNT_TYPE" />
+			<result property="sellerDiscountAmount" column="SELLER_DISCOUNT_AMOUNT" />
+		</association>
+	</resultMap>
+
+	<resultMap id="ItemAdditionResult" type="saleson.shop.item.domain.ItemAddition">
+		<id property="itemAdditionId" column="ITEM_ADDITION_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="ordering" column="ORDERING" />
+		<result property="createdDate" column="CREATED_DATE" />
+
+		<association property="item" javaType="saleson.shop.item.domain.Item">
+			<result property="itemId" column="ADDITION_ITEM_ID" />
+			<result property="itemUserCode" column="ADDITION_ITEM_USER_CODE" />
+			<result property="itemName" column="ADDITION_ITEM_NAME" />
+			<result property="nonmemberOrderType" column="ADDITION_NONMEMBER_ORDER_TYPE" />
+			<result property="itemType" column="ADDITION_ITEM_TYPE" />
+			<result property="taxType" column="ADDITION_TAX_TYPE" />
+			<result property="itemPrice" column="ADDITION_ITEM_PRICE" />
+			<result property="salePrice" column="ADDITION_SALE_PRICE" />
+			<result property="salePriceNonmember" column="ADDITION_SALE_PRICE_NONMEMBER" />
+			<result property="itemSummary" column="ADDITION_ITEM_SUMMARY" />
+			<result property="itemImage" column="ADDITION_ITEM_IMAGE" />
+			<result property="itemOptionFlag" column="ADDITION_ITEM_OPTION_FLAG" />
+			<result property="seoIndexFlag" column="ADDITION_SEO_INDEX_FLAG" />
+			<result property="spotFlag" column="SPOT_FLAG" />
+			<result property="spotType" column="SPOT_TYPE" />
+			<result property="spotDateType" column="SPOT_DATE_TYPE" />
+			<result property="spotDiscountAmount" column="SPOT_DISCOUNT_AMOUNT" />
+			<result property="spotStartDate" column="SPOT_START_DATE" />
+			<result property="spotEndDate" column="SPOT_END_DATE" />
+			<result property="spotStartTime" column="SPOT_START_TIME" />
+			<result property="spotEndTime" column="SPOT_END_TIME" />
+			<result property="spotWeekDay" column="SPOT_WEEK_DAY" />
+			<result property="sellerDiscountFlag" column="SELLER_DISCOUNT_FLAG" />
+			<result property="sellerDiscountType" column="SELLER_DISCOUNT_TYPE" />
+			<result property="sellerDiscountAmount" column="SELLER_DISCOUNT_AMOUNT" />
+			<result property="quickDeliveryExtraChargeFlag" column="QUICK_DELIVERY_EXTRA_CHARGE_FLAG" />
+		</association>
+	</resultMap>
+
+	<!-- [색인검색 상품목록 -->
+	<resultMap id="ItemIndexResult" type="saleson.shop.item.domain.ItemIndex" extends="ItemResult">
+		<result property="categoryUrl1" column="CATEGORY_URL1" />
+		<result property="categoryName1" column="CATEGORY_NAME1" />
+		<result property="categoryUrl2" column="CATEGORY_URL2" />
+		<result property="categoryName2" column="CATEGORY_NAME2" />
+		<result property="categoryUrl3" column="CATEGORY_URL3" />
+		<result property="categoryName3" column="CATEGORY_NAME3" />
+		<result property="categoryUrl4" column="CATEGORY_URL4" />
+		<result property="categoryName4" column="CATEGORY_NAME4" />
+	</resultMap>
+
+	<resultMap id="ItemOtherResult" type="saleson.shop.item.domain.ItemOther">
+		<id property="itemOtherId" column="ITEM_OTHER_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="otherItemId" column="OTHER_ITEM_ID" />
+		<result property="counting" column="COUNTING" />
+
+		<association property="item" javaType="saleson.shop.item.domain.ItemBase">
+			<result property="itemId" column="OTHER_ITEM_ID" />
+			<result property="itemUserCode" column="OTHER_ITEM_USER_CODE" />
+			<result property="itemName" column="OTHER_ITEM_NAME" />
+			<result property="nonmemberOrderType" column="OTHER_NONMEMBER_ORDER_TYPE" />
+			<result property="itemType" column="OTHER_ITEM_TYPE" />
+			<result property="taxType" column="OTHER_TAX_TYPE" />
+			<result property="itemPrice" column="OTHER_ITEM_PRICE" />
+			<result property="salePrice" column="OTHER_SALE_PRICE" />
+			<result property="salePriceNonmember" column="OTHER_SALE_PRICE_NONMEMBER" />
+			<result property="itemSummary" column="OTHER_ITEM_SUMMARY" />
+			<result property="itemImage" column="OTHER_ITEM_IMAGE" />
+			<result property="itemOptionFlag" column="OTHER_ITEM_OPTION_FLAG" />
+			<result property="seoIndexFlag" column="OTHER_SEO_INDEX_FLAG" />
+		</association>
+	</resultMap>
+
+
+	<resultMap id="ItemOrderingResult" type="saleson.shop.item.domain.ItemOrdering">
+		<result property="itemOrderingId" column="ITEM_ORDERING_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="categoryCode" column="CATEGORY_CODE" />
+		<result property="ordering" column="ORDERING" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+
+	<!-- 상품 기본 정보 -->
+	<resultMap id="ItemInfoResult" type="saleson.shop.item.domain.ItemInfo">
+		<id property="itemInfoId" column="ITEM_INFO_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="headerContentFlag" column="HEADER_CONTENT_FLAG" />
+		<result property="footerContentFlag" column="FOOTER_CONTENT_FLAG" />
+		<result property="detailContent" column="DETAIL_CONTENT" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="itemNoticeCode" column="ITEM_NOTICE_CODE" />
+		<result property="infoCode" column="INFO_CODE" />
+		<result property="title" column="TITLE" />
+		<result property="description" column="DESCRIPTION" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+
+
+	<!-- 리뷰 ResultMap -->
+	<resultMap id="ItemReviewResult" type="saleson.shop.item.domain.ItemReview">
+		<id property="itemReviewId" column="ITEM_REVIEW_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemCode" column="ITEM_CODE" />
+		<result property="subject" column="SUBJECT" />
+		<result property="content" column="CONTENT" />
+		<result property="score" column="SCORE" />
+		<result property="recommendFlag" column="RECOMMEND_FLAG" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="sellerName" column="SELLER_NAME" />
+		<result property="displayFlag" column="REVIEW_DISPLAY_FLAG" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="pointPayment" column="POINT_PAYMENT" />
+		<result property="point" column="POINT" />
+		<result property="pointPaymentDate" column="POINT_PAYMENT_DATE" />
+		<result property="displayOptionsFlag" column="DISPLAY_OPTIONS_FLAG" />
+		<result property="options" column="OPTIONS" />
+		<result property="adminComment" column="ADMIN_COMMENT" />
+		<result property="likeCount" column="LIKE_COUNT" />
+		<association property="item" resultMap="ItemBaseResult" />
+		<collection property="itemReviewImages" resultMap="ItemReviewImageResult" />
+		<collection property="itemReviewFilters" resultMap="ItemReviewFilterResult" />
+	</resultMap>
+
+	<!-- 상품 옵션 이미지  -->
+	<resultMap id="ItemOptionImageResult" type="saleson.shop.item.domain.ItemOptionImage">
+		<result property="itemOptionImageId" column="ITEM_OPTION_IMAGE_ID" />
+		<result property="itemOptionId" column="ITEM_OPTION_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="optionName" column="OPTION_NAME" />
+		<result property="optionImage" column="OPTION_IMAGE" />
+	</resultMap>
+
+	<resultMap id="ItemSaleEditResult" type="saleson.shop.item.domain.ItemSaleEdit">
+		<result property="itemSaleEditId" column="ITEM_SALE_EDIT_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="sellerName" column="SELLER_NAME" />
+		<result property="itemCode" column="ITEM_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="salePrice" column="SALE_PRICE" />
+		<result property="itemPrice" column="ITEM_PRICE" />
+		<result property="costPrice" column="COST_PRICE" />
+		<result property="status" column="STATUS" />
+		<result property="message" column="MESSAGE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+	</resultMap>
+
+
+
+	<resultMap id="ChosenItemResult" type="saleson.shop.coupon.domain.ChosenItem">
+		<result property="itemId" column="ITEM_ID"/>
+		<result property="imageName" column="ITEM_IMAGE"/>
+		<result property="itemName" column="ITEM_NAME"/>
+		<result property="itemUserCode" column="ITEM_USER_CODE"/>
+		<result property="salePrice" column="SALE_PRICE"/>
+	</resultMap>
+
+	<resultMap id="ItemLogResult" type="saleson.shop.item.domain.Item" extends="ItemResult">
+		<id property="itemLogId" column="ITEM_LOG_ID" />
+		<result property="processPage" column="PROCESS_PAGE" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="managerLoginId" column="MANAGER_LOGIN_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="createdManagerId" column="CREATED_MANAGER_ID" />
+		<result property="createdSellerId" column="CREATED_SELLER_ID" />
+		<result property="actionType" column="ACTION_TYPE" />
+	</resultMap>
+
+	<resultMap id="ItemReviewImageResult" type="saleson.shop.item.domain.ItemReviewImage">
+		<result property="itemReviewImageId" column="ITEM_REVIEW_IMAGE_ID" />
+		<result property="itemReviewId" column="ITEM_REVIEW_ID" />
+		<result property="reviewImage" column="REVIEW_IMAGE" />
+		<result property="ordering" column="ORDERING" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
+	<resultMap id="ItemReviewFilterResult" type="saleson.model.review.ItemReviewFilter">
+		<result property="itemReviewId" column="ITEM_REVIEW_ID" />
+		<result property="filterCodeId" column="FILTER_CODE_ID" />
+		<result property="filterGroupId" column="FILTER_GROUP_ID" />
+		<result property="ordering" column="FITER_ORDERING" />
+	</resultMap>
+
+	<!--
+		CJH 2017.03.08
+		- 영업중인 판매자의 상품만 노출시키는경우 해당 From 쿼리를 기본으로 시작한다.
+		EX) 사용자 페이지의 상품 노출
+	-->
+	<sql id="defaultOnSaleFromQuery">
+		OP_ITEM I
+			INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+	</sql>
+
+	<!--
+		CJH 2017.03.08
+		- 상품의 전시 상태를 체크하여 상품을 노출할때 해당 쿼리를 시작으로 Where문을 작성한다.
+		EX) 사용자 페이지의 상품 노출
+	-->
+	<sql id="defaultOnSaleWhereQuery">
+		AND I.DATA_STATUS_CODE = '1'
+		AND I.DISPLAY_FLAG = 'Y'
+		AND I.ITEM_DATA_TYPE = '1'
+		AND I.ITEM_TYPE = '1'
+		<include refid="saleson.shop.item.ItemMapper.sqlFrontDisplayItemWhere" />
+	</sql>
+
+	<sql id="caseSoldOut">
+		CASE WHEN I.SOLD_OUT = '1' THEN
+			'Y'
+		WHEN I.ITEM_OPTION_FLAG = 'N' AND I.STOCK_FLAG = 'Y' AND I.STOCK_QUANTITY = 0 THEN
+			'Y'
+		WHEN I.ITEM_OPTION_FLAG = 'Y' AND I.ITEM_OPTION_TYPE = 'T' AND I.STOCK_FLAG = 'Y' AND I.STOCK_QUANTITY = 0 THEN
+			'Y'
+		WHEN I.ITEM_OPTION_FLAG = 'Y' AND IOST.ITEM_OPTION_SOLD_OUT_FLAG = 'Y' THEN
+			'Y'
+		ELSE
+			'N'
+		END
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		- 해당 컬럼은 재고 관련 테이블 쿼리를 추가해야 사용할수 있음
+	-->
+	<sql id="defaultStockColumns">
+		(<include refid="saleson.shop.item.ItemMapper.caseSoldOut" />) AS ITEM_SOLD_OUT_FLAG,
+		IFNULL(IOST.ITEM_OPTION_SOLD_OUT_FLAG, 'N') AS ITEM_OPTION_SOLD_OUT_FLAG
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		상품 기본 컬럼
+	-->
+	<sql id="baseItemColumns">
+		I.ITEM_ID,
+		I.SELLER_ID,
+		I.ITEM_CODE,
+		I.ITEM_USER_CODE,
+		I.ITEM_NAME,
+		I.ITEM_SUMMARY,
+		I.ITEM_DATA_TYPE,
+		I.ITEM_TYPE,
+		I.ITEM_NEW_FLAG,
+		I.ITEM_LABEL,
+		I.ITEM_LABEL_VALUE,
+		I.ITEM_TYPE1,
+		I.ITEM_TYPE2,
+		I.ITEM_TYPE3,
+		I.ITEM_TYPE4,
+		I.ITEM_TYPE5,
+		I.ITEM_TYPE6,
+		I.ITEM_TYPE7,
+		I.ITEM_TYPE8,
+		I.ITEM_TYPE9,
+		I.ITEM_TYPE10,
+		I.BRAND_ID,
+		I.BRAND,
+		I.DISPLAY_QUANTITY,
+		I.SOLD_OUT,
+		I.STOCK_FLAG,
+		I.STOCK_QUANTITY,
+		<include refid="saleson.shop.item.ItemMapper.defaultItemPriceColumns" />,
+		I.ITEM_IMAGE,
+		I.ITEM_OPTION_FLAG,
+		I.ITEM_OPTION_TYPE,
+		I.ITEM_OPTION_TITLE1,
+		I.ITEM_OPTION_TITLE2,
+		I.ITEM_OPTION_TITLE3,
+		I.DATA_STATUS_CODE,
+		I.DISPLAY_FLAG,
+		I.COUPON_USE_FLAG,
+		I.NAVER_SHOPPING_ITEM_NAME,
+		I.NAVER_SHOPPING_FLAG,
+		I.NAVER_PAY_FLAG
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		상품 기본 컬럼
+	-->
+	<sql id="defaultItemColumns">
+		<include refid="saleson.shop.item.ItemMapper.baseItemColumns" />,
+
+		I.PRIVATE_TYPE,
+
+		I.MINOR_ALLOW_FLAG,
+		I.ORIGIN_COUNTRY,
+		I.MANUFACTURER,
+		I.COLOR,
+		I.WEIGHT,
+		I.SALE_POINT,
+
+		I.STOCK_CODE,
+		I.STOCK_SCHEDULE_AUTO_FLAG,
+		I.STOCK_SCHEDULE_TYPE,
+		I.STOCK_SCHEDULE_DATE,
+		I.STOCK_SCHEDULE_TEXT,
+		I.ORDER_MIN_QUANTITY,
+		I.ORDER_MAX_QUANTITY,
+		I.SALE_QUANTITY,
+
+		I.ITEM_ADDITION_FLAG,
+		I.FREE_GIFT_FLAG,
+		I.FREE_GIFT_NAME,
+		I.ITEM_KEYWORD,
+		I.ITEM_NOTICE_CODE,
+		I.TEAM,
+		I.OPENTIME,
+		I.OTHER_FLAG,
+		I.RECOMMEND_FLAG,
+		I.RELATION_ITEM_DISPLAY_TYPE,
+		I.DELIVERY_COMPANY_ID,
+		I.DELIVERY_COMPANY_NAME,
+		I.DELIVERY_TYPE,
+		I.ITEM_RETURN_FLAG,
+		I.HITS,
+
+		I.MD_ID,
+		I.MD_NAME,
+
+		I.UPDATED_USER_ID,
+		I.UPDATED_DATE,
+		I.CREATED_USER_ID,
+		I.CREATED_DATE,
+		I.ERP_EXCEPTION_TYPE,
+
+		I.QUICK_DELIVERY_EXTRA_CHARGE_FLAG,
+		I.CASH_DISCOUNT_FLAG
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		중요!! 상품의 금액 결정에 필요한 컬럼들
+	-->
+	<sql id="defaultItemPriceColumns">
+
+		I.NONMEMBER_ORDER_TYPE,
+		I.TAX_TYPE,
+		I.COMMISSION_TYPE,
+		I.COMMISSION_RATE,
+		I.PRICE_CRITERIA,
+
+		I.ITEM_PRICE,
+		I.COST_PRICE,
+		I.SUPPLY_PRICE,
+		I.SALE_PRICE,
+		I.SALE_PRICE_NONMEMBER_FLAG,
+		I.SALE_PRICE_NONMEMBER,
+
+		I.SPOT_FLAG,
+		I.SPOT_DATE_TYPE,
+		I.SPOT_TYPE,
+		I.SPOT_APPLY_GROUP,
+		I.SPOT_DISCOUNT_AMOUNT,
+		I.SPOT_START_DATE,
+		I.SPOT_END_DATE,
+		I.SPOT_START_TIME,
+		I.SPOT_END_TIME,
+		I.SPOT_WEEK_DAY,
+
+		I.SELLER_DISCOUNT_FLAG,
+		I.SELLER_DISCOUNT_TYPE,
+		I.SELLER_DISCOUNT_AMOUNT,
+		I.SELLER_POINT_FLAG
+
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		상품의 상세 설명들 - 해당 컬럼은 List등에서는 사용하지 않고 필요한경우에만 사용하도록 한다.
+		BASE_ITEM 컬럼의 경우 사용용도를 모르겠음..
+	-->
+	<sql id="defaultItemContentColumns">
+		I.BASE_ITEM,
+		I.HEADER_CONTENT_FLAG,
+		I.FOOTER_CONTENT_FLAG,
+		I.DETAIL_CONTENT,
+		I.DETAIL_CONTENT_MOBILE,
+		I.DATA_STATUS_MESSAGE
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		상품 배송정책 관련 컬럼
+	-->
+	<sql id="defaultItemShippingColumns">
+		I.SHIPMENT_ID,
+		I.SHIPMENT_GROUP_CODE,
+		I.SHIPMENT_RETURN_TYPE,
+		I.SHIPMENT_RETURN_ID,
+		I.SHIPPING_TYPE,
+		I.SHIPPING_GROUP_CODE,
+		I.SHIPPING,
+		I.SHIPPING_FREE_AMOUNT,
+		I.SHIPPING_ITEM_COUNT,
+		I.SHIPPING_EXTRA_CHARGE1,
+		I.SHIPPING_EXTRA_CHARGE2,
+		I.SHIPPING_RETURN
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		상품 SEO 관련 컬럼
+	-->
+	<sql id="defaultItemSeoColumns">
+		I.SEO_TITLE,
+		I.SEO_INDEX_FLAG,
+		I.SEO_KEYWORDS,
+		I.SEO_DESCRIPTION,
+		I.SEO_HEADER_CONTENTS1,
+		I.SEO_THEMAWORD_TITLE,
+		I.SEO_THEMAWORD_DESCRIPTION
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		상품 전체 컬럼 - 해당 SQL은 리스트 쿼리에서는 사용하지 않는것을 원칙으로 한다.
+	-->
+	<sql id="allItemColumns">
+		<include refid="defaultItemColumns" />,
+		<include refid="defaultItemShippingColumns" />,
+		<include refid="defaultItemSeoColumns" />,
+		<include refid="defaultItemContentColumns" />
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		- defaultStockColumns를 사용하기 위해서는 해당 쿼리가 포함 되어야 한다.
+		- 공통 From 절에는 해당 SQL을 삽입하지 않도록 한다.
+		- 재고 관련 정보가 필요한 경우에만 선택적으로 사용하도록 한다.
+	-->
+	<sql id="itemOptionSoldOutFlagFromQuery">
+		LEFT JOIN OP_ITEM_OPTION_SOLDOUT IOST ON I.ITEM_ID = IOST.ITEM_ID
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		상품의 리뷰 카운트, 평점등을 조회하는 용도
+	-->
+	<sql id="itemReviewColumns">
+		IFNULL((SELECT COUNT(*) FROM OP_ITEM_REVIEW WHERE ITEM_ID = I.ITEM_ID AND DISPLAY_FLAG = 'Y'), 0) AS REVIEW_COUNT,
+		ROUND(IFNULL((SELECT SUM(SCORE) / COUNT(*) FROM OP_ITEM_REVIEW WHERE ITEM_ID = I.ITEM_ID AND DISPLAY_FLAG = 'Y'), 0),1) AS REVIEW_SCORE
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		전시상품 조희의 기본 쿼리 - templateId 기준으로 분기처리를 해당 영역에 하면 될듯..
+	-->
+	<sql id="defatulMainDisplayQuery">
+		<choose>
+			<when test='templateId == "best"'>
+				SELECT
+				I.ITEM_ID
+				FROM OP_MAIN_DISPLAY_ITEM MDI
+				INNER JOIN OP_ITEM I ON MDI.ITEM_ID = I.ITEM_ID
+				INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+
+				<where>
+
+					<choose>
+						<when test='team != null and team != ""'>
+							AND MDI.TEMPLATE_ID = CONCAT(#{templateId}, '_', #{team})
+						</when>
+						<otherwise>
+							AND MDI.TEMPLATE_ID LIKE CONCAT(#{templateId}, '%')
+						</otherwise>
+					</choose>
+
+					<include refid="defaultOnSaleWhereQuery" />
+
+				</where>
+
+				ORDER BY MDI.DISPLAY_ORDER ASC
+			</when>
+			<otherwise>
+				SELECT
+				I.ITEM_ID
+				FROM OP_MAIN_DISPLAY_ITEM MDI
+				INNER JOIN OP_ITEM I ON MDI.ITEM_ID = I.ITEM_ID
+				INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+
+				<where>
+
+					<choose>
+						<when test='team != null and team != ""'>
+							AND MDI.TEMPLATE_ID = CONCAT(#{templateId}, '_', #{team})
+						</when>
+						<otherwise>
+							AND MDI.TEMPLATE_ID LIKE CONCAT(#{templateId}, '%')
+						</otherwise>
+					</choose>
+
+					<include refid="defaultOnSaleWhereQuery" />
+
+				</where>
+
+				ORDER BY MDI.DISPLAY_ORDER ASC
+			</otherwise>
+		</choose>
+	</sql>
+
+	<select id="getItemCountByItemUserCode" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM OP_ITEM
+		WHERE ITEM_USER_CODE = #{value}
+	</select>
+
+	<sql id="selectItemBy">
+
+		<include refid="allItemColumns" />,
+		<include refid="defaultStockColumns" />,
+		<include refid="itemReviewColumns" />,
+
+		IC.ITEM_CATEGORY_ID,
+		IC.CATEGORY_ID,
+
+		II.ITEM_IMAGE_ID,
+		II.IMAGE_NAME
+
+	</sql>
+
+	<sql id="fromItemBy">
+		<include refid="defaultOnSaleFromQuery" />
+		<include refid="itemOptionSoldOutFlagFromQuery" />
+
+		LEFT JOIN OP_ITEM_CATEGORY IC ON I.ITEM_ID = IC.ITEM_ID
+		LEFT JOIN OP_ITEM_IMAGE II ON I.ITEM_ID = II.ITEM_ID
+	</sql>
+
+	<sql id="orderItemBy">
+		IC.ITEM_CATEGORY_ID ASC,
+		IC.ORDERING ASC,
+		II.ORDERING ASC
+	</sql>
+
+	<select id="getItemById" parameterType="Integer" resultMap="ItemDetailsResult">
+		SELECT
+
+		<trim prefix="" suffixOverrides=",">
+			<include refid="selectItemBy" />
+		</trim>
+
+		FROM
+		<include refid="fromItemBy" />
+
+		<where>
+			I.ITEM_ID = #{value}
+		</where>
+
+		ORDER BY
+		<include refid="orderItemBy" />
+	</select>
+
+	<select id="getItemByItemUserCodeForPreview" parameterType="String" resultMap="ItemDetailsResult">
+		SELECT
+		<trim prefix="" suffixOverrides=",">
+			<include refid="selectItemBy" />
+		</trim>
+
+		FROM
+
+		<include refid="fromItemBy" />
+
+		<where>
+			I.ITEM_USER_CODE = #{value}
+		</where>
+
+		ORDER BY
+		<include refid="orderItemBy" />
+	</select>
+
+	<select id="getItemByItemUserCode" parameterType="String" resultMap="ItemDetailsResult">
+		SELECT
+		<trim prefix="" suffixOverrides=",">
+			<include refid="selectItemBy" />
+		</trim>
+
+		FROM
+
+		<include refid="fromItemBy" />
+
+		<where>
+			I.ITEM_USER_CODE = #{value}
+			AND I.DATA_STATUS_CODE = '1'
+		</where>
+
+		ORDER BY
+		<include refid="orderItemBy" />
+	</select>
+
+	<select id="getItemByParam" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemDetailsResult">
+		SELECT
+		<trim prefix="" suffixOverrides=",">
+			<include refid="selectItemBy" />
+
+			<if test="userId > 0">
+				, IFNULL((
+				SELECT UL.DISCOUNT_RATE
+				FROM OP_USER_DETAIL UD
+				INNER JOIN OP_USER_LEVEL UL ON UD.LEVEL_ID = UL.LEVEL_ID
+				WHERE
+				UD.USER_ID = #{userId}
+				), 0) AS USER_LEVEL_DISCOUNT_RATE
+			</if>
+		</trim>
+
+		FROM
+		<include refid="fromItemBy" />
+
+		<where>
+			I.ITEM_USER_CODE = #{itemUserCode}
+			AND I.DATA_STATUS_CODE = '1'
+			<if test='privateTypes != null'>
+				AND I.PRIVATE_TYPE IN (
+					<foreach collection="privateTypes" item="privateType" index="i" open="" separator="," close="">
+						#{privateType}
+					</foreach>
+				)
+			</if>
+		</where>
+
+		ORDER BY
+		<include refid="orderItemBy" />
+	</select>
+
+	<select id="getItemIdByItemUserCode" parameterType="String" resultType="int">
+		SELECT ITEM_ID FROM OP_ITEM
+		WHERE ITEM_USER_CODE = #{value}
+	</select>
+
+
+	<!--  상품옵션 ID로 옵션코드(옵션상품코드)를 조회함. -->
+	<select id="getItemOptionCodeById" parameterType="int" resultType="String">
+		SELECT OPTION_STOCK_CODE FROM OP_ITEM_OPTION
+		WHERE ITEM_OPTION_ID = #{value}
+	</select>
+
+
+	<!-- 상품의 옵션 정보 (선택형인 경우만 사용.)-->
+	<select id="getItemOptionGroupList" parameterType="Integer" resultMap="ItemOptionGroupResult">
+		SELECT
+			IO.OPTION_TYPE,
+			IO.OPTION_NAME1 AS OPTION_TITLE,
+			IO.OPTION_NAME2
+		FROM OP_ITEM_OPTION IO
+		WHERE
+			IO.ITEM_ID = #{value} AND IO.OPTION_DISPLAY_FLAG = 'Y' AND IO.OPTION_TYPE = 'S'
+		ORDER BY
+			IO.ITEM_OPTION_ID ASC
+	</select>
+
+	<!-- 상품의 옵션 정보 -->
+	<select id="getItemOptionList" parameterType="Integer" resultMap="ItemOptionResult">
+		SELECT
+			IO.*
+		FROM OP_ITEM_OPTION IO
+		WHERE
+			IO.ITEM_ID = #{value} AND IO.OPTION_DISPLAY_FLAG = 'Y'
+		ORDER BY
+			IO.OPTION_NAME1 ASC, IO.OPTION_NAME2 ASC, IO.OPTION_NAME3 ASC
+	</select>
+
+	<select id="getItemOptionDefaultGroupList" parameterType="Integer" resultMap="ItemOptionGroupResult">
+		SELECT
+			IO.OPTION_TYPE,
+			IO.OPTION_NAME1 AS OPTION_TITLE,
+			IO.*,
+			IO.OPTION_STOCK_QUANTITY,
+			IO.OPTION_STOCK_SCHEDULE_TEXT,
+			IO.OPTION_STOCK_SCHEDULE_DATE,
+			IO.OPTION_DISPLAY_FLAG
+		FROM OP_ITEM_OPTION IO
+		WHERE
+			IO.ITEM_ID = #{value} AND IO.OPTION_HIDE_FLAG = 'N'
+		ORDER BY
+			IO.ITEM_OPTION_ID ASC
+	</select>
+
+
+	<!-- 상품의 옵션 정보 (관리자용)-->
+	<select id="getItemOptionGroupListForManager" parameterType="Integer" resultMap="ItemOptionGroupResult">
+		SELECT
+			IO.OPTION_TYPE,
+			IO.OPTION_NAME1 AS OPTION_TITLE,
+			IO.*,
+			IO.OPTION_STOCK_QUANTITY,
+			IO.OPTION_STOCK_SCHEDULE_TEXT,
+			IO.OPTION_STOCK_SCHEDULE_DATE,
+			IO.OPTION_DISPLAY_FLAG
+		FROM OP_ITEM_OPTION IO
+		WHERE
+			IO.ITEM_ID = #{value}
+		ORDER BY
+			IO.OPTION_NAME1 ASC, IO.OPTION_NAME2 ASC, IO.OPTION_NAME3 ASC
+	</select>
+
+
+	<!-- 상품의 옵션 정보 (관리자용)-->
+	<select id="getItemOptionListForManager" parameterType="Integer" resultMap="ItemOptionResult">
+		SELECT
+			IO.*
+		FROM OP_ITEM_OPTION IO
+		WHERE
+			IO.ITEM_ID = #{value}
+		ORDER BY
+			IO.OPTION_NAME1 ASC, IO.OPTION_NAME2 ASC, IO.OPTION_NAME3 ASC
+	</select>
+
+
+	<!-- 관련 상품 -->
+	<select id="getItemRelationList" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemRelationResult">
+		SELECT
+			IR.*,
+			I.ITEM_ID AS RELATED_ITEM_ID,
+			I.ITEM_USER_CODE AS RELATED_ITEM_USER_CODE,
+			I.ITEM_NAME AS RELATED_ITEM_NAME,
+			I.NONMEMBER_ORDER_TYPE AS RELATED_NONMEMBER_ORDER_TYPE,
+			I.ITEM_TYPE AS RELATED_ITEM_TYPE,
+			I.TAX_TYPE AS RELATED_TAX_TYPE,
+			I.ITEM_PRICE AS RELATED_ITEM_PRICE,
+			I.SALE_PRICE AS RELATED_SALE_PRICE,
+			I.SALE_PRICE_NONMEMBER AS RELATED_SALE_PRICE_NONMEMBER,
+			I.ORDER_MIN_QUANTITY AS RELATED_ORDER_MIN_QUANTITY,
+			I.ORDER_MAX_QUANTITY AS RELATED_ORDER_MAX_QUANTITY,
+			I.ITEM_SUMMARY AS RELATED_ITEM_SUMMARY,
+			I.ITEM_IMAGE AS RELATED_ITEM_IMAGE,
+			I.ITEM_OPTION_FLAG AS RELATED_ITEM_OPTION_FLAG,
+			I.SEO_INDEX_FLAG AS RELATED_SEO_INDEX_FLAG,
+			I.SELLER_DISCOUNT_FLAG,
+			I.SELLER_DISCOUNT_TYPE,
+			I.SELLER_DISCOUNT_AMOUNT,
+			I.SPOT_FLAG,
+			I.SPOT_TYPE,
+			I.SPOT_DATE_TYPE,
+			I.SPOT_DISCOUNT_AMOUNT,
+			I.SPOT_START_DATE,
+			I.SPOT_END_DATE,
+			I.SPOT_START_TIME,
+			I.SPOT_END_TIME,
+			I.SPOT_WEEK_DAY,
+			<include refid="defaultStockColumns" />
+		FROM OP_ITEM_RELATION IR
+			INNER JOIN OP_ITEM I ON IR.RELATED_ITEM_ID = I.ITEM_ID
+			<include refid="itemOptionSoldOutFlagFromQuery" />
+		WHERE
+			IR.ITEM_ID = #{itemId} AND I.DATA_STATUS_CODE = '1' AND I.DISPLAY_FLAG = 'Y'
+			<if test='privateTypes != null'>
+				AND I.PRIVATE_TYPE IN (
+				<foreach collection="privateTypes" item="privateType" index="i" open="" separator="," close="">
+					#{privateType}
+				</foreach>
+				)
+			</if>
+		ORDER BY
+			IR.ORDERING ASC
+
+	</select>
+
+	<!-- 관련상품 임의 출력 (동일 카테고리) -->
+	<select id="getItemRelationRandomList" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemRelationResult" >
+		SELECT
+			@RNUM := @RNUM + 1 AS ITEM_RELATION_ID,
+			@RNUM AS ORDERING, '' AS CREATED_DATE,
+			T.*
+		FROM (
+			SELECT
+				DISTINCT(IC2.ITEM_ID) AS ITEM_ID,
+				I.ITEM_ID AS RELATED_ITEM_ID,
+				I.ITEM_USER_CODE AS RELATED_ITEM_USER_CODE,
+				I.ITEM_NAME AS RELATED_ITEM_NAME,
+				I.NONMEMBER_ORDER_TYPE AS RELATED_NONMEMBER_ORDER_TYPE,
+				I.ITEM_TYPE AS RELATED_ITEM_TYPE,
+				I.TAX_TYPE AS RELATED_TAX_TYPE,
+				I.ITEM_PRICE AS RELATED_ITEM_PRICE,
+				I.SALE_PRICE AS RELATED_SALE_PRICE,
+				I.SALE_PRICE_NONMEMBER AS RELATED_SALE_PRICE_NONMEMBER,
+				I.ORDER_MIN_QUANTITY AS RELATED_ORDER_MIN_QUANTITY,
+				I.ORDER_MAX_QUANTITY AS RELATED_ORDER_MAX_QUANTITY,
+				I.ITEM_SUMMARY AS RELATED_ITEM_SUMMARY,
+				I.ITEM_IMAGE AS RELATED_ITEM_IMAGE,
+				I.ITEM_OPTION_FLAG AS RELATED_ITEM_OPTION_FLAG,
+				I.SEO_INDEX_FLAG AS RELATED_SEO_INDEX_FLAG,
+
+				I.SELLER_DISCOUNT_FLAG,
+				I.SELLER_DISCOUNT_TYPE,
+				I.SELLER_DISCOUNT_AMOUNT,
+				I.SPOT_FLAG,
+				I.SPOT_TYPE,
+				I.SPOT_DATE_TYPE,
+				I.SPOT_DISCOUNT_AMOUNT,
+				I.SPOT_START_DATE,
+				I.SPOT_END_DATE,
+				I.SPOT_START_TIME,
+				I.SPOT_END_TIME,
+				I.SPOT_WEEK_DAY,
+
+				<include refid="defaultStockColumns" />
+			FROM OP_ITEM_CATEGORY IC
+				INNER JOIN OP_ITEM_CATEGORY IC2 ON IC.CATEGORY_ID = IC2.CATEGORY_ID AND IC2.ITEM_ID = #{itemId} AND IC.ITEM_ID <![CDATA[<>]]> #{itemId}
+				INNER JOIN OP_ITEM I ON IC.ITEM_ID = I.ITEM_ID
+				<include refid="itemOptionSoldOutFlagFromQuery" />
+			<where>
+				<include refid="sqlFrontDisplayItemWhere" />
+			</where>
+			LIMIT 12
+		) T, ( SELECT @RNUM := 0 ) R
+	</select>
+
+
+
+	<sql id="sqlItemListFrom">
+
+		<include refid="defaultOnSaleFromQuery" />
+
+		<if test='(conditionType == "EP_ITEM_LIST") or (groupCategoryClassCodes != null) or (categoryClass != null and categoryClass != "")'>
+			INNER JOIN OP_ITEM_CATEGORY IC ON I.ITEM_ID = IC.ITEM_ID
+			INNER JOIN OP_CATEGORY C ON IC.CATEGORY_ID = C.CATEGORY_ID AND C.CATEGORY_FLAG = 'Y'
+			<if test='groupCategoryClassCodes != null'>
+				AND
+				<foreach item="item" index="index" collection="groupCategoryClassCodes" open="(" separator="OR" close=")">
+					C.CATEGORY_CODE LIKE CONCAT(#{item}, '%')
+				</foreach>
+			</if>
+			<if test='categoryClass != null and categoryClass != ""'>
+				AND C.CATEGORY_CODE LIKE CONCAT(#{categoryClass}, '%')
+			</if>
+		</if>
+
+		<if test='orderBy == "ORDERING" and ((groupCategoryClassCodes != null) or (categoryClass != null and categoryClass != ""))'>
+			LEFT JOIN OP_ITEM_ORDERING IO2 ON I.ITEM_ID = IO2.ITEM_ID
+
+			<if test='categoryId > 0'>
+				AND IO2.CATEGORY_ID = #{categoryId}
+			</if>
+		</if>
+
+		<if test='(where == "ITEM_USER_CODE" and (query != null and query != "") or (addQuery != null and addQuery != ""))'>
+			LEFT JOIN OP_ITEM_OPTION IO ON I.ITEM_ID = IO.ITEM_ID AND IO.OPTION_DISPLAY_FLAG = 'Y'
+		</if>
+		<if test="filterCodeIds != null">
+			LEFT JOIN OP_ITEM_FILTER OIF ON I.ITEM_ID = OIF.ITEM_ID
+		</if>
+	</sql>
+
+	<!-- FRONT 회원 권한 별 상품 노출 조건 설정 -->
+	<sql id="sqlFrontDisplayItemWhere">
+		<if test='conditionType == "FRONT_DISPLAY_ITEM"'>
+			AND I.DATA_STATUS_CODE = '1'
+			AND I.DISPLAY_FLAG = 'Y'
+			<if test='privateTypes != null'>
+				AND I.PRIVATE_TYPE IN (
+					<foreach collection="privateTypes" item="privateType" index="i" open="" separator="," close="">
+						#{privateType}
+					</foreach>
+				)
+			</if>
+
+			<if test='isAdult == "Y"'>
+				AND I.MINOR_ALLOW_FLAG = 'Y'
+			</if>
+		</if>
+	</sql>
+
+	<!-- 상품 조회 조건 (EXCEL_ITEM_USER_CODE_FIX = 엑셀 다운로드 시 상품코드 고정입력) -->
+	<sql id="sqlItemListWhere">
+		<choose>
+			<when test='conditionType == "SPOT_ITEM"'>
+				I.DATA_STATUS_CODE = '1'
+				AND I.ITEM_DATA_TYPE = '1'
+				AND I.DISPLAY_FLAG = 'Y'
+				AND I.STOCK_QUANTITY <![CDATA[<>]]> 0
+				AND I.ITEM_TYPE = '1'
+				<!-- AND ( I.SPOT_END_DATE IS NULL OR I.SPOT_END_DATE = '' OR I.SPOT_END_DATE <![CDATA[<]]> DATE_FORMAT(NOW(),'%Y%m%d') )  -->
+
+				<if test='(where != null and where != "") and (query != null and query != "")'>
+					<if test='where == "ITEM_USER_CODE"'>
+						AND (I.ITEM_USER_CODE LIKE CONCAT('%', #{query}, '%') OR I.STOCK_CODE LIKE CONCAT('%', #{query}, '%') OR IO.OPTION_STOCK_CODE LIKE CONCAT('%', #{query}, '%'))
+					</if>
+
+					<if test='where == "ITEM_NAME"'>
+						AND (
+						I.ITEM_NAME LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+						OR
+						I.ITEM_USER_CODE LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+						OR
+						I.ITEM_KEYWORD LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+						OR
+						I.ITEM_SUMMARY LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+						OR
+						I.ITEM_ID IN (
+						SELECT
+						ITEM_ID
+						FROM
+						OP_ITEM_OPTION
+						WHERE OPTION_STOCK_CODE LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+						)
+						)
+					</if>
+				</if>
+
+			</when>
+			<when test='conditionType == "EXCEL_ITEM_USER_CODE_FIX"'>
+				<foreach item="itemUserCode" index="index" collection="excelItemUserCodes" open="(" separator="OR" close=")">
+					I.ITEM_USER_CODE LIKE CONCAT('%', #{itemUserCode}, '%')
+				</foreach>
+			</when>
+			<otherwise>
+
+				<choose>
+					<when test='conditionType == "FRONT_DISPLAY_ITEM"'>
+
+						<include refid="defaultOnSaleWhereQuery" />
+
+						<if test='dataStatusCode != null and dataStatusCode != "" and soldOut != "saleEnd"'>
+							AND I.DATA_STATUS_CODE = #{dataStatusCode}
+						</if>
+					</when>
+					<otherwise>
+						<choose>
+							<when test='dataStatusCode != null and dataStatusCode != "" and soldOut != "saleEnd"'>
+								AND I.DATA_STATUS_CODE = #{dataStatusCode}
+							</when>
+							<otherwise>
+								<choose>
+									<when test='conditionType == "ITEM_LIST_APPROVAL" or conditionType == "ITEM_SIMPLE_LIST" or conditionType == "EXCEL_DOWNLOAD"'>
+										AND I.DATA_STATUS_CODE IN ('1', '90')
+									</when>
+									<when test='conditionType == "ITEM_LIST_PENDING_APPROVAL"'>
+										AND I.DATA_STATUS_CODE IN ('20', '21','30', '31','40', '41')
+									</when>
+								</choose>
+							</otherwise>
+						</choose>
+						<if test='displayFlag != null and displayFlag != ""'>
+							AND I.DISPLAY_FLAG = #{displayFlag}
+						</if>
+
+						<if test='itemDataType != null and itemDataType != ""'>
+							AND I.ITEM_DATA_TYPE = #{itemDataType}
+						</if>
+					</otherwise>
+				</choose>
+
+				<if test='sellerId > 0'>
+					AND I.SELLER_ID = #{sellerId}
+				</if>
+
+				<if test='searchStartDate != null and searchStartDate != ""'>
+					AND I.CREATED_DATE >= CONCAT(#{searchStartDate}, "000000")
+				</if>
+
+				<if test='searchEndDate != null and searchEndDate != ""'>
+					AND I.CREATED_DATE <![CDATA[<=]]> CONCAT(#{searchEndDate}, "235959")
+				</if>
+
+				<if test='deliveryType != null and deliveryType != ""'>
+					AND I.DELIVERY_TYPE = #{deliveryType}
+				</if>
+
+				<if test='shipmentReturnType != null and shipmentReturnType != ""'>
+					AND I.SHIPMENT_RETURN_TYPE = #{shipmentReturnType}
+				</if>
+
+				<if test='mdName != null and mdName != ""'>
+					AND I.MD_NAME = #{mdName}
+				</if>
+
+				<if test='taxType != null and taxType != ""'>
+					AND I.TAX_TYPE = #{taxType}
+				</if>
+
+				<if test='(where != null and where != "") and (query != null and query != "")'>
+					<if test='where == "ITEM_USER_CODE"'>
+						AND (I.ITEM_USER_CODE LIKE CONCAT('%', #{query}, '%') OR I.STOCK_CODE LIKE CONCAT('%', #{query}, '%') OR IO.OPTION_STOCK_CODE LIKE CONCAT('%', #{query}, '%'))
+					</if>
+					<if test='where == "ITEM_NAME"'>
+						AND (
+						I.ITEM_NAME LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+						OR
+						I.ITEM_USER_CODE LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+						OR
+						I.ITEM_KEYWORD LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+						OR
+						I.ITEM_SUMMARY LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+						OR
+						I.ITEM_ID IN (
+						SELECT
+						ITEM_ID
+						FROM
+						OP_ITEM_OPTION
+						WHERE OPTION_STOCK_CODE LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+						)
+						)
+					</if>
+					<if test='where == "SELLER_NAME"'>
+						AND S.SELLER_NAME LIKE CONCAT('%', #{query}, '%')
+					</if>
+					<if test='where == "STOCK_CODE"'>
+						AND I.STOCK_CODE LIKE CONCAT('%', #{query}, '%')
+					</if>
+				</if>
+
+				<if test='(addWhere != null and addWhere != "") and (addQuery != null and addQuery != "")'>
+					<if test='addWhere == "ITEM_USER_CODE"'>
+						AND (I.ITEM_USER_CODE LIKE CONCAT('%', #{addQuery}, '%') OR I.STOCK_CODE LIKE CONCAT('%', #{addQuery}, '%') OR IO.OPTION_STOCK_CODE LIKE CONCAT('%', #{addQuery}, '%'))
+					</if>
+					<if test='addWhere == "ITEM_NAME"'>
+						AND (
+						I.ITEM_NAME LIKE CONCAT('%', REPLACE(#{addQuery}, ' ', '%'), '%')
+						OR
+						I.ITEM_USER_CODE LIKE CONCAT('%', REPLACE(#{addQuery}, ' ', '%'), '%')
+						OR
+						I.ITEM_KEYWORD LIKE CONCAT('%', REPLACE(#{addQuery}, ' ', '%'), '%')
+						OR
+						I.ITEM_SUMMARY LIKE CONCAT('%', REPLACE(#{addQuery}, ' ', '%'), '%')
+						OR
+						I.ITEM_ID IN (
+						SELECT
+						ITEM_ID
+						FROM
+						OP_ITEM_OPTION
+						WHERE OPTION_STOCK_CODE LIKE CONCAT('%', REPLACE(#{addQuery}, ' ', '%'), '%')
+						)
+						)
+					</if>
+					<if test='addWhere == "SELLER_NAME"'>
+						AND S.SELLER_NAME LIKE CONCAT('%', #{addQuery}, '%')
+					</if>
+				</if>
+
+				<if test='soldOut != ""'>
+					AND I.SOLD_OUT = #{soldOut}
+				</if>
+
+				<if test='saleStatus != null and saleStatus != ""'>
+					<choose>
+						<when test='saleStatus == "pending"'>
+							AND I.DATA_STATUS_CODE IN ('20', '21', '30', '31', '40', '41')
+						</when>
+						<when test='saleStatus == "saleEnd"'>
+							AND I.DATA_STATUS_CODE = '90'
+						</when>
+						<when test='saleStatus == "sale"'>
+							AND I.DATA_STATUS_CODE = '1'
+							AND (
+							CASE WHEN I.SOLD_OUT = '1' THEN
+							'Y'
+							WHEN I.ITEM_OPTION_FLAG = 'N' AND I.STOCK_FLAG = 'Y' AND I.STOCK_QUANTITY = 0 THEN
+							'Y'
+							WHEN I.ITEM_OPTION_FLAG = 'Y' AND I.ITEM_OPTION_TYPE = 'T' AND I.STOCK_FLAG = 'Y' AND I.STOCK_QUANTITY = 0 THEN
+							'Y'
+							WHEN I.ITEM_OPTION_FLAG = 'Y' AND IOST.ITEM_OPTION_SOLD_OUT_FLAG = 'Y' THEN
+							'Y'
+							ELSE
+							'N'
+							END
+							) = 'N'
+						</when>
+						<when test='saleStatus == "soldOut"'>
+							AND I.DATA_STATUS_CODE = '1'
+							AND
+							(
+							I.SOLD_OUT = '1'
+							OR (I.ITEM_OPTION_FLAG = 'N' AND I.STOCK_FLAG = 'Y' AND I.STOCK_QUANTITY = 0)
+							OR (I.ITEM_OPTION_FLAG = 'Y' AND I.ITEM_OPTION_TYPE = 'T' AND I.STOCK_FLAG = 'Y' AND I.STOCK_QUANTITY = 0)
+							OR (I.ITEM_OPTION_FLAG = 'Y' AND IOST.ITEM_OPTION_SOLD_OUT_FLAG = 'Y')
+							)
+						</when>
+					</choose>
+				</if>
+
+				<if test='itemOptionFlag != null and itemOptionFlag != ""'>
+					AND I.ITEM_OPTION_FLAG = #{itemOptionFlag}
+				</if>
+
+				<if test='recommendFlag != null and recommendFlag != ""'>
+					AND I.RECOMMEND_FLAG = #{recommendFlag}
+				</if>
+
+				<if test='minPrice != null and minPrice != ""'>
+					AND I.SALE_PRICE >= #{minPrice}
+				</if>
+
+				<if test='maxPrice != null and maxPrice != ""'>
+					AND I.SALE_PRICE <![CDATA[<=]]> #{maxPrice}
+				</if>
+
+				<if test='priceRange != null and priceRange != ""'>
+					AND I.SALE_PRICE > #{priceStart} AND I.SALE_PRICE <![CDATA[<=]]> #{priceEnd}
+				</if>
+
+				<if test='team != null and team != ""'>
+					AND I.TEAM = #{team}
+				</if>
+
+				<if test='itemType != null and itemType != ""'>
+					AND I.ITEM_TYPE = #{itemType}
+				</if>
+
+				<if test='noIndexDisplayFlag != null and noIndexDisplayFlag != ""'>
+					AND I.SEO_INDEX_FLAG = #{noIndexDisplayFlag}
+				</if>
+
+				<if test='brand != null and brand != ""'>
+					AND I.BRAND = #{brand}
+				</if>
+
+				<if test='excludeItems != ""'>
+					AND I.ITEM_ID NOT IN (#{excludeItems})
+				</if>
+
+				<if test="styleBookId > 0">
+					AND I.ITEM_ID IN (
+						SELECT ITEM_ID FROM OP_STYLE_BOOK_ITEM
+						WHERE STYLE_BOOK_ID = #{styleBookId}
+					)
+				</if>
+
+				<if test='naverShoppingFlag != null and naverShoppingFlag != ""'>
+					AND I.NAVER_SHOPPING_FLAG = #{naverShoppingFlag}
+					<if test='naverShoppingFlag == "Y"'>
+						AND I.NAVER_SHOPPING_ITEM_NAME IS NOT NULL AND I.NAVER_SHOPPING_ITEM_NAME != ''
+					</if>
+				</if>
+
+				<if test='itemUserCodes != null'>
+					AND I.ITEM_USER_CODE IN (
+						<foreach collection="itemUserCodes" item="itemUserCode" index="i" open="" separator="," close="">
+							#{itemUserCode}
+						</foreach>
+					)
+				</if>
+
+			</otherwise>
+		</choose>
+		<if test='conditionType == "FIND_ITEM_POPUP" or conditionType == "SPOT_ITEM"'>
+			AND S.STATUS_CODE = 2
+			<if test='itemUserCode != null and itemUserCode != ""'>
+				AND I.ITEM_USER_CODE != #{itemUserCode}
+			</if>
+		</if>
+		<!--  SPOT_END_TIME까지 체크하도록 수정 2017-04-25_seungil.lee  -->
+		<if test='conditionType == "SPOT_ITEM"'>
+			AND (I.SPOT_FLAG = 'N' OR (SPOT_END_DATE <![CDATA[ < ]]> DATE_FORMAT(NOW(),'%Y%m%d'))
+			OR (SPOT_END_DATE = DATE_FORMAT(NOW(),'%Y%m%d') AND SPOT_END_TIME <![CDATA[ < ]]> DATE_FORMAT(NOW(),'%H%i%s')))
+		</if>
+		<if test='filterCodeIds != null'>
+			AND OIF.FILTER_CODE_ID IN (
+			<foreach collection="filterCodeIds" item="filterCode" index="i" open="" separator="," close="">
+				#{filterCode}
+			</foreach>
+			)
+		</if>
+	</sql>
+
+	<sql id="sqlItemSaleEditList">
+		<where>
+			<if test='itemSaleEditId != null and itemSaleEditId !=""'>
+				AND ITEM_SALE_EDIT_ID = #{itemSaleEditId}
+			</if>
+			<if test='itemId != null and itemId !=""'>
+				AND ITEM_ID = #{itemId}
+			</if>
+			<if test='sellerId != null and sellerId !=""'>
+				AND SELLER_ID = #{sellerId}
+			</if>
+			<if test='sellerName != null and sellerName !=""'>
+				AND SELLER_NAME = #{sellerName}
+			</if>
+			<if test='(where != null and where !="") and (query != null and query !="")'>
+				<if test='where == "ITEM_CODE"'>
+					AND ITEM_CODE LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test='where == "ITEM_NAME"'>
+					AND ITEM_NAME LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test='where == "SELLER_NAME"'>
+					AND SELLER_NAME LIKE CONCAT('%', #{query}, '%')
+				</if>
+			</if>
+			<if test='status != null and status != ""'>
+				AND STATUS = #{status}
+			</if>
+			<if test='searchStartDate != null and searchStartDate != ""'>
+				AND CREATED_DATE >= CONCAT(#{searchStartDate}, "000000")
+			</if>
+			<if test='searchEndDate != null and searchEndDate != ""'>
+				AND CREATED_DATE <![CDATA[<=]]> CONCAT(#{searchEndDate}, "235959")
+			</if>
+		</where>
+	</sql>
+
+	<sql id="sqlItemListOrderBy">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+			<if test='displayNewItemListTop == "1" and orderBy == "ORDERING"'>
+
+			</if>
+
+			<if test='sort == "DESC" or sort == "" or sort == null'>
+				<choose>
+					<when test='orderBy == "ORDERING" and ((groupCategoryClassCodes != null) or (categoryClass != null and categoryClass != ""))'>
+						IO2.ORDERING DESC, I.ITEM_ID DESC,
+					</when>
+					<when test='orderBy == "SALE_PRICE"'>
+						(SALE_PRICE - SELLER_DISCOUNT_AMOUNT) DESC,     <!-- 상품 가격순 정렬 2017-04-24 yulsun.yoo  -->
+					</when>
+					<when test='orderBy == "HITS"'>
+						I.HITS DESC,
+					</when>
+					<when test='orderBy == "ITEM_ID"'>
+						I.ITEM_ID DESC,
+					</when>
+					<otherwise>
+						I.ITEM_ID DESC
+					</otherwise>
+				</choose>
+			</if>
+			<if test='sort == "ASC"'>
+				<choose>
+					<when test='orderBy == "ORDERING" and ((groupCategoryClassCodes != null) or (categoryClass != null and categoryClass != ""))'>
+						IO2.ORDERING ASC, I.ITEM_ID DESC,
+					</when>
+					<when test='orderBy == "SALE_PRICE"'>
+						(SALE_PRICE - SELLER_DISCOUNT_AMOUNT) ASC,     <!-- 상품 가격순 정렬 2017-04-24 yulsun.yoo  -->
+					</when>
+					<when test='orderBy == "HITS"'>
+						I.HITS ASC,
+					</when>
+					<when test='orderBy == "ITEM_ID"'>
+						I.ITEM_ID ASC,
+					</when>
+					<otherwise>
+						I.ITEM_ID DESC
+					</otherwise>
+				</choose>
+			</if>
+		</trim>
+	</sql>
+
+	<select id="getItemCount" parameterType="saleson.shop.item.support.ItemParam" resultType="Integer">
+		SELECT COUNT(*)
+		FROM (
+
+		SELECT
+		I.ITEM_ID
+
+		FROM
+		<include refid="sqlItemListFrom" />
+
+		<if test='saleStatus != null and saleStatus != ""'>
+			<if test='saleStatus == "soldOut" or saleStatus == "sale"'>
+				<include refid="itemOptionSoldOutFlagFromQuery" />
+			</if>
+		</if>
+
+		<where>
+			<include refid="sqlItemListWhere" />
+		</where>
+
+		GROUP BY I.ITEM_ID
+		) I
+	</select>
+
+	<select id="getItemList" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemResult">
+		SELECT
+		<trim prefix="" suffixOverrides=",">
+
+			<choose>
+				<when test='conditionType == "EXCEL_DOWNLOAD" or conditionType == "EXCEL_ITEM_USER_CODE_FIX"'>
+					I.*,
+					IO.ITEM_OPTION_ID,
+					IO.ERP_ITEM_CODE,
+					IO.OPTION_TYPE,
+					IO.OPTION_DISPLAY_TYPE,
+					IO.OPTION_HIDE_FLAG,
+					IO.OPTION_NAME1 AS OPTION_TITLE,
+					IO.OPTION_NAME1,
+					IO.OPTION_NAME2,
+					IO.OPTION_NAME3,
+					IO.OPTION_QUANTITY,
+					IO.OPTION_STOCK_CODE,
+					IO.OPTION_PRICE,
+					IO.OPTION_COST_PRICE,
+					IO.OPTION_PRICE_NONMEMBER,
+					IO.OPTION_STOCK_FLAG,
+					IO.OPTION_STOCK_QUANTITY,
+					IO.OPTION_STOCK_CODE,
+					IO.OPTION_STOCK_SCHEDULE_TEXT,
+					IO.OPTION_STOCK_SCHEDULE_DATE,
+					IO.OPTION_SOLD_OUT_FLAG,
+					IO.OPTION_DISPLAY_FLAG,
+					IO.OPTION_ORDERING,
+
+					II.ITEM_IMAGE_ID,
+					II.IMAGE_NAME,
+					II.ORDERING,
+				</when>
+				<when test='conditionType == "EP_ITEM_LIST"'>
+					IC.ITEM_CATEGORY_ID,
+					IC.CATEGORY_ID,
+					<include refid="defaultItemColumns" />,
+				</when>
+				<otherwise>
+					<include refid="defaultItemColumns" />,
+				</otherwise>
+			</choose>
+
+			<include refid="defaultStockColumns" />,
+			<include refid="itemReviewColumns" />,
+
+			S.SELLER_NAME,
+			S.LOGIN_ID AS SELLER_LOGIN_ID
+		</trim>
+		FROM (
+
+		<include refid="CommonMapper.paginationHeader" />
+
+		SELECT
+		I.ITEM_ID
+		FROM
+		<include refid="sqlItemListFrom" />
+
+		<if test='saleStatus != null and saleStatus != ""'>
+			<if test='saleStatus == "soldOut" or saleStatus == "sale"'>
+				<include refid="itemOptionSoldOutFlagFromQuery" />
+			</if>
+		</if>
+
+		<where>
+			<include refid="sqlItemListWhere" />
+		</where>
+		GROUP BY I.ITEM_ID
+
+		<include refid="sqlItemListOrderBy" />
+
+		<include refid="CommonMapper.paginationFooter" />
+
+		) IT INNER JOIN OP_ITEM I ON IT.ITEM_ID = I.ITEM_ID
+		INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+
+		<include refid="itemOptionSoldOutFlagFromQuery" />
+
+		<if test='conditionType == "EXCEL_DOWNLOAD" or conditionType == "EXCEL_ITEM_USER_CODE_FIX"'>
+			LEFT JOIN OP_ITEM_OPTION IO ON I.ITEM_ID = IO.ITEM_ID AND IO.OPTION_DISPLAY_FLAG = 'Y'
+			LEFT JOIN OP_ITEM_IMAGE II ON I.ITEM_ID = II.ITEM_ID
+		</if>
+
+		<if test='conditionType == "EP_ITEM_LIST"'>
+			INNER JOIN OP_ITEM_CATEGORY IC ON I.ITEM_ID = IC.ITEM_ID
+			INNER JOIN OP_CATEGORY C ON IC.CATEGORY_ID = C.CATEGORY_ID AND C.CATEGORY_FLAG = 'Y'
+
+		</if>
+		<trim prefix="ORDER BY" suffixOverrides=",">
+			<if test='conditionType == "EXCEL_DOWNLOAD" or conditionType == "EXCEL_ITEM_USER_CODE_FIX"'>
+				I.ITEM_CODE DESC,
+				IO.OPTION_NAME1 ASC, IO.OPTION_ORDERING ASC, IO.OPTION_NAME2 ASC, IO.OPTION_NAME3 ASC,
+			</if>
+			<if test='conditionType == "CATEGORY_ITEM_LIST" or conditionType == "EXCEL_DOWNLOAD" or conditionType == "EXCEL_ITEM_USER_CODE_FIX"'>
+				II.ORDERING ASC,
+			</if>
+			<if test='conditionType == "EP_ITEM_LIST"'>
+				I.ITEM_ID DESC, IC.ORDERING ASC
+			</if>
+		</trim>
+	</select>
+
+	<!-- 전시상품 조회 -->
+	<select id="getMainDisplayItemCountByParam" parameterType="saleson.shop.item.support.ItemParam" resultType="Integer">
+
+		SELECT COUNT(*) FROM (
+		<include refid="defatulMainDisplayQuery" />
+		) TMP INNER JOIN OP_ITEM I ON TMP.ITEM_ID = I.ITEM_ID
+
+	</select>
+
+	<!-- 전시상품 조회 -->
+	<select id="getMainDisplayItemListByParam" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemResult">
+
+		SELECT
+		<include refid="defaultItemColumns" />,
+		<include refid="defaultStockColumns" />,
+		<include refid="itemReviewColumns" />
+		FROM (
+
+		<include refid="CommonMapper.paginationHeader" />
+
+		<include refid="defatulMainDisplayQuery" />
+
+		<include refid="CommonMapper.paginationFooter" />
+
+		) TMP INNER JOIN OP_ITEM I ON TMP.ITEM_ID = I.ITEM_ID
+		<include refid="itemOptionSoldOutFlagFromQuery" />
+
+	</select>
+
+	<!-- 오늘 본 상품 목록 -->
+	<select id="getTodayItemList" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemResult">
+		SELECT
+		<include refid="defaultItemColumns" />,
+		<include refid="defaultStockColumns" />,
+		<include refid="itemReviewColumns" />
+		FROM (
+
+		<include refid="CommonMapper.paginationHeader" />
+
+		SELECT
+		I.ITEM_ID
+		FROM
+		<include refid="defaultOnSaleFromQuery" />
+		<where>
+			<include refid="defaultOnSaleWhereQuery" />
+			AND I.ITEM_ID IN
+			<foreach collection="todayIdArray" item="itemId" index="index" open="(" separator="," close=")">
+				#{itemId}
+			</foreach>
+		</where>
+
+		ORDER BY FIELD(
+		I.ITEM_ID,
+		<foreach collection="todayIdArray" item="itemId" index="index" open="" separator="," close="">
+			#{itemId}
+		</foreach>
+		)
+
+		<include refid="CommonMapper.paginationFooter" />
+
+		) TMP INNER JOIN OP_ITEM I ON TMP.ITEM_ID = I.ITEM_ID
+		<include refid="itemOptionSoldOutFlagFromQuery" />
+	</select>
+
+	<!-- 상품별 카테고리 목록 (엑셀 다운로드 용) -->
+	<resultMap id="ExcelItemCategoryResult" type="saleson.shop.item.domain.ExcelItemCategory">
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="categoryUrl" column="CATEGORY_URL" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+		<result property="ordering" column="ORDERING" />
+	</resultMap>
+
+	<!-- 상품별 추가구성상품 목록 목록 (엑셀 다운로드 용) -->
+	<resultMap id="ExcelItemAdditionResult" type="saleson.shop.item.domain.ExcelItemAddition">
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="additionItemUserCode" column="ADDITION_ITEM_USER_CODE" />
+		<result property="additionItemName" column="ADDITION_ITEM_NAME" />
+		<result property="ordering" column="ORDERING" />
+	</resultMap>
+
+	<!-- 상품별 관련상품 목록 목록 (엑셀 다운로드 용) -->
+	<resultMap id="ExcelItemRelationResult" type="saleson.shop.item.domain.ExcelItemRelation">
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="relationItemUserCode" column="RELATION_ITEM_USER_CODE" />
+		<result property="relationItemName" column="RELATION_ITEM_NAME" />
+		<result property="ordering" column="ORDERING" />
+	</resultMap>
+
+	<!-- 상품별 포인트 목록 (엑셀 다운로드 용) -->
+	<resultMap id="ExcelItemPointConfigResult" type="saleson.shop.item.domain.ExcelItemPointConfig" extends="saleson.shop.point.PointMapper.PointConfigResult">
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+	</resultMap>
+
+
+	<!-- 상품별 카테고리 목록 (엑셀 다운로드 용) -->
+	<select id="getItemCategoryListForExcel" parameterType="saleson.shop.item.support.ItemParam" resultMap="ExcelItemCategoryResult">
+		SELECT
+		I.ITEM_USER_CODE,
+		I.ITEM_NAME,
+
+		C.CATEGORY_URL,
+		C.CATEGORY_NAME,
+		IC.ORDERING
+
+		FROM
+		<include refid="sqlItemListFrom" />
+
+		<if test='(groupCategoryClassCodes == null) and (categoryClass == null or categoryClass == "")'>
+			INNER JOIN OP_ITEM_CATEGORY IC ON I.ITEM_ID = IC.ITEM_ID
+			LEFT JOIN OP_CATEGORY C ON IC.CATEGORY_ID = C.CATEGORY_ID AND C.CATEGORY_FLAG = 'Y'
+		</if>
+
+		<if test='saleStatus != null and saleStatus != ""'>
+			<if test='saleStatus == "soldOut" or saleStatus == "sale"'>
+				<include refid="itemOptionSoldOutFlagFromQuery" />
+			</if>
+		</if>
+
+		<where>
+			<include refid="sqlItemListWhere" />
+		</where>
+
+		ORDER BY
+		I.ITEM_USER_CODE DESC, IC.ORDERING ASC
+	</select>
+
+
+	<!-- 상품별 추가구성상품 목록 (엑셀 다운로드 용) -->
+	<select id="getItemAdditionListForExcel" parameterType="saleson.shop.item.support.ItemParam" resultMap="ExcelItemAdditionResult">
+		SELECT
+			I.ITEM_USER_CODE,
+			I.ITEM_NAME,
+
+			I2.ITEM_USER_CODE AS ADDITION_ITEM_USER_CODE,
+			I2.ITEM_NAME AS ADDITION_ITEM_NAME,
+			IA.ORDERING
+		FROM
+			<include refid="sqlItemListFrom" />
+			INNER JOIN OP_ITEM_ADDITION IA ON I.ITEM_ID = IA.ITEM_ID
+			INNER JOIN OP_ITEM I2 ON IA.ADDITION_ITEM_ID = I2.ITEM_ID
+
+		<if test='saleStatus != null and saleStatus != ""'>
+			<if test='saleStatus == "soldOut" or saleStatus == "sale"'>
+				<include refid="itemOptionSoldOutFlagFromQuery" />
+			</if>
+		</if>
+
+		<where>
+			<include refid="sqlItemListWhere" />
+			AND I2.ITEM_OPTION_FLAG = 'N'
+		</where>
+
+		ORDER BY I.ITEM_USER_CODE, IA.ORDERING ASC
+	</select>
+
+	<!-- 상품별 관련상품 목록 (엑셀 다운로드 용) -->
+	<select id="getItemRelationListForExcel" parameterType="saleson.shop.item.support.ItemParam" resultMap="ExcelItemRelationResult">
+		SELECT
+		I.ITEM_USER_CODE,
+		I.ITEM_NAME,
+
+		I2.ITEM_USER_CODE AS RELATION_ITEM_USER_CODE,
+		I2.ITEM_NAME AS RELATION_ITEM_NAME,
+		IR.ORDERING
+
+		FROM
+		<include refid="sqlItemListFrom" />
+
+		INNER JOIN OP_ITEM_RELATION IR ON I.ITEM_ID = IR.ITEM_ID
+		INNER JOIN OP_ITEM I2 ON IR.RELATED_ITEM_ID = I2.ITEM_ID
+
+		<if test='saleStatus != null and saleStatus != ""'>
+			<if test='saleStatus == "soldOut" or saleStatus == "sale"'>
+				<include refid="itemOptionSoldOutFlagFromQuery" />
+			</if>
+		</if>
+
+		<where>
+			<include refid="sqlItemListWhere" />
+		</where>
+
+		ORDER BY
+		I.ITEM_USER_CODE, IR.ORDERING ASC
+	</select>
+
+
+
+	<!-- 상품별 포인트 목록 (엑셀 다운로드 용) -->
+	<select id="getItemPointListForExcel" parameterType="saleson.shop.item.support.ItemParam" resultMap="ExcelItemPointConfigResult">
+		SELECT
+		I.ITEM_USER_CODE,
+		I.ITEM_NAME,
+
+		PC.*
+
+		FROM
+		<include refid="sqlItemListFrom" />
+
+		INNER JOIN OP_POINT_CONFIG PC ON I.ITEM_ID = PC.ITEM_ID AND PC.CONFIG_TYPE = '2'
+
+		<if test='saleStatus != null and saleStatus != ""'>
+			<if test='saleStatus == "soldOut" or saleStatus == "sale"'>
+				<include refid="itemOptionSoldOutFlagFromQuery" />
+			</if>
+		</if>
+
+		<where>
+			<include refid="sqlItemListWhere" />
+		</where>
+
+		ORDER BY
+		I.ITEM_USER_CODE ASC
+	</select>
+
+
+	<!-- 상품별 기본 정보 (엑셀 다운로드 용) -->
+	<select id="getItemInfoListForExcel" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemInfoResult">
+		SELECT
+		I.ITEM_USER_CODE,
+		I.ITEM_NAME,
+		I.ITEM_NOTICE_CODE,
+		I.HEADER_CONTENT_FLAG,
+		I.FOOTER_CONTENT_FLAG,
+		I.DETAIL_CONTENT,
+
+		II.*
+		FROM
+		<include refid="sqlItemListFrom" />
+
+		LEFT JOIN OP_ITEM_INFO II ON I.ITEM_ID = II.ITEM_ID
+
+		<if test='saleStatus != null and saleStatus != ""'>
+			<if test='saleStatus == "soldOut" or saleStatus == "sale"'>
+				<include refid="itemOptionSoldOutFlagFromQuery" />
+			</if>
+		</if>
+
+		<where>
+			<include refid="sqlItemListWhere" />
+		</where>
+
+		ORDER BY
+		I.ITEM_USER_CODE DESC
+	</select>
+
+
+	<!-- 상품별 기본 정보 (엑셀 다운로드 용, 모바일) -->
+	<select id="getItemInfoMobileListForExcel" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemInfoResult">
+		SELECT
+		I.ITEM_USER_CODE,
+		I.ITEM_NAME,
+		I.HEADER_CONTENT_FLAG,
+		I.FOOTER_CONTENT_FLAG,
+		I.DETAIL_CONTENT_MOBILE AS DETAIL_CONTENT,
+
+		II.*
+		FROM
+		<include refid="sqlItemListFrom" />
+
+		LEFT JOIN OP_ITEM_INFO_MOBILE II ON I.ITEM_ID = II.ITEM_ID
+
+		<if test='saleStatus != null and saleStatus != ""'>
+			<if test='saleStatus == "soldOut" or saleStatus == "sale"'>
+				<include refid="itemOptionSoldOutFlagFromQuery" />
+			</if>
+		</if>
+
+		<where>
+			<include refid="sqlItemListWhere" />
+		</where>
+
+		ORDER BY
+		I.ITEM_USER_CODE ASC
+	</select>
+
+
+	<!-- 상품별 검색어 정보 (엑셀 다운로드 용) -->
+	<select id="getItemKeywordListForExcel" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemResult">
+		SELECT
+		I.ITEM_ID,
+		I.ITEM_USER_CODE,
+		I.ITEM_KEYWORD
+
+		FROM
+		<include refid="sqlItemListFrom" />
+
+		<if test='saleStatus != null and saleStatus != ""'>
+			<if test='saleStatus == "soldOut" or saleStatus == "sale"'>
+				<include refid="itemOptionSoldOutFlagFromQuery" />
+			</if>
+		</if>
+
+		<where>
+			<include refid="sqlItemListWhere" />
+		</where>
+
+		ORDER BY
+		I.ITEM_USER_CODE ASC
+	</select>
+
+
+
+	<!-- 상품 기본 정보 -->
+	<select id="getItemInfoListByItemId" parameterType="int" resultMap="ItemInfoResult" >
+		SELECT
+			ITEM_INFO_ID,
+			ITEM_ID,
+			INFO_CODE,
+			TITLE,
+			DESCRIPTION,
+			CREATED_DATE
+		FROM OP_ITEM_INFO
+ 		WHERE ITEM_ID = #{value}
+	</select>
+
+	<!-- 상품 기본 정보 (모바일)-->
+	<select id="getItemInfoMobileListByItemId" parameterType="int" resultMap="ItemInfoResult" >
+		SELECT
+			ITEM_ID,
+			INFO_CODE,
+			TITLE,
+			DESCRIPTION,
+			CREATED_DATE
+		FROM OP_ITEM_INFO_MOBILE
+ 		WHERE ITEM_ID = #{value}
+	</select>
+
+	<!--
+		CJH 2017.03.09
+		상품 리뷰의 컬럼
+	-->
+	<sql id="defaultItemReviewColumns">
+		IR.ITEM_REVIEW_ID,
+		IR.ORDER_CODE,
+		IR.SUBJECT,
+		IR.CONTENT,
+		IR.SCORE,
+		IR.RECOMMEND_FLAG,
+		IR.DISPLAY_FLAG AS REVIEW_DISPLAY_FLAG,
+		IR.CREATED_DATE,
+		IR.POINT_PAYMENT,
+		IR.POINT,
+		IR.POINT_PAYMENT_DATE,
+		IR.DISPLAY_OPTIONS_FLAG,
+		IR.OPTIONS,
+		IR.ADMIN_COMMENT,
+		IR.LIKE_COUNT
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		상품 리뷰의 공통 FROM 쿼리
+	-->
+	<sql id="defaultItemReviewFromQuery">
+		OP_ITEM_REVIEW IR
+
+		<if test='conditionType == "FRONT_CATEGORY"'>
+			INNER JOIN (
+			SELECT IC.ITEM_ID
+			FROM OP_CATEGORY C
+			INNER JOIN OP_CATEGORY C2 ON C.CATEGORY_CLASS1 = C2.CATEGORY_CLASS1 AND C2.CATEGORY_FLAG = 'Y' AND C.CATEGORY_URL = #{categoryCode}
+			INNER JOIN OP_ITEM_CATEGORY IC ON C2.CATEGORY_ID = IC.CATEGORY_ID
+			GROUP BY IC.ITEM_ID
+			) IC ON IR.ITEM_ID = IC.ITEM_ID
+		</if>
+
+		<if test='conditionType == "FRONT_GROUP"'>
+			INNER JOIN OP_ITEM_CATEGORY AS IC ON IR.ITEM_ID = IC.ITEM_ID AND IC.ORDERING = 1
+			INNER JOIN OP_CATEGORY AS C1 ON IC.CATEGORY_ID = C1.CATEGORY_ID
+			INNER JOIN OP_CATEGORY AS C2 ON C1.CATEGORY_CLASS1 = C2.CATEGORY_CLASS1 AND C2.CATEGORY_LEVEL = 1
+			INNER JOIN OP_CATEGORY_GROUP AS CG ON C2.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+		</if>
+
+		INNER JOIN OP_ITEM I ON IR.ITEM_ID = I.ITEM_ID
+		INNER JOIN OP_SELLER S ON IR.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+		LEFT JOIN OP_USER U ON U.USER_ID = IR.USER_ID
+	</sql>
+
+	<!--
+		CJH 2017.03.09
+		상품 리뷰의 공통 WHERE 쿼리
+	-->
+	<sql id="defaultItemReviewWhereQuery">
+
+		AND IR.DATA_STATUS_CODE = '0'
+
+		<choose>
+			<when test='conditionType == "SELLER"'>
+				AND S.SELLER_ID = #{sellerId}
+			</when>
+			<when test='conditionType == "FRONT_ITEM_DETAIL"'>
+				AND I.ITEM_ID = #{itemId}
+				AND IR.DISPLAY_FLAG = 'Y'
+				<include refid="defaultOnSaleWhereQuery" />
+			</when>
+			<when test='conditionType == "FRONT_CATEGORY" or conditionType == "FRONT_MAIN"'>
+				AND IR.DISPLAY_FLAG = 'Y'
+				<include refid="defaultOnSaleWhereQuery" />
+			</when>
+			<when test='conditionType == "FRONT_MYPAGE"'>
+				AND IR.USER_ID = #{userId}
+				<include refid="defaultOnSaleWhereQuery" />
+			</when>
+			<when test='conditionType == "FRONT_TEAM"'>
+				AND IR.DISPLAY_FLAG = 'Y'
+				AND I.TEAM = #{categoryCode}
+				<include refid="defaultOnSaleWhereQuery" />
+			</when>
+			<when test='conditionType == "FRONT_GROUP"'>
+				AND IR.DISPLAY_FLAG = 'Y'
+				AND CG.CODE = #{categoryCode}
+				<include refid="defaultOnSaleWhereQuery" />
+			</when>
+		</choose>
+
+		<if test='(where != null and where != "") and (query != null and query != "")'>
+			<if test='where == "ITEM_ID"'>
+				AND I.ITEM_ID = #{query}
+			</if>
+			<if test='where == "ITEM_CODE"'>
+				AND I.ITEM_CODE LIKE CONCAT('%', #{query}, '%')
+			</if>
+			<if test='where == "USER_NAME"'>
+				AND IR.USER_NAME LIKE CONCAT('%', #{query}, '%')
+			</if>
+			<if test='where == "ITEM_NAME"'>
+				AND I.ITEM_NAME LIKE CONCAT('%', #{query}, '%')
+			</if>
+			<if test='where == "ITEM_USER_CODE"'>
+				AND I.ITEM_USER_CODE LIKE CONCAT('%', #{query}, '%')
+			</if>
+		</if>
+		<if test='sellerId != null and sellerId != ""'>
+			AND I.SELLER_ID = #{sellerId}
+		</if>
+
+		<if test='(displayFlag != null and displayFlag != "") and (displayFlag == "Y" or displayFlag == "N")'>
+			AND I.DISPLAY_FLAG = #{displayFlag}
+		</if>
+
+		<if test='(reviewDisplayFlag != null and reviewDisplayFlag != "") and (reviewDisplayFlag == "Y" or reviewDisplayFlag == "N")'>
+			AND IR.DISPLAY_FLAG = #{reviewDisplayFlag}
+		</if>
+
+		<if test='(recommendFlag != null and recommendFlag != "") and (recommendFlag == "Y" or recommendFlag == "N")'>
+			AND IR.RECOMMEND_FLAG = #{recommendFlag}
+		</if>
+
+		<if test='reviewScore > 0'>
+			AND IR.SCORE = #{reviewScore}
+		</if>
+
+		<if test='searchStartDate != null and searchStartDate != ""'>
+			AND IR.CREATED_DATE >= CONCAT(#{searchStartDate}, "000000")
+		</if>
+
+		<if test='searchEndDate != null and searchEndDate != ""'>
+			AND IR.CREATED_DATE <![CDATA[<=]]> CONCAT(#{searchEndDate}, "235959")
+		</if>
+
+		<if test="userId > 0">
+			AND IR.USER_ID = #{userId}
+		</if>
+
+		<if test="reviewFilterFlag and filterCodeIds != null">
+			AND IR.ITEM_REVIEW_ID IN (
+				SELECT ITEM_REVIEW_ID FROM OP_ITEM_REVIEW_FILTER
+				WHERE  ITEM_ID = #{itemId}
+				AND FILTER_CODE_ID IN
+				<foreach item="codeId" index="index" collection="filterCodeIds" open="(" separator="," close=")">
+					#{codeId}
+				</foreach>
+			)
+		</if>
+	</sql>
+
+	<select id="getItemReviewCountByParam" parameterType="saleson.shop.item.support.ItemParam" resultType="Integer">
+		SELECT COUNT(*)
+		FROM
+			<include refid="defaultItemReviewFromQuery" />
+		<where>
+			<include refid="defaultItemReviewWhereQuery" />
+		</where>
+	</select>
+
+	<select id="getItemReviewListByParam" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemReviewResult">
+		SELECT
+			<trim prefix="" suffixOverrides=",">
+				I.*,
+				IRI.ITEM_REVIEW_IMAGE_ID,
+				IRI.REVIEW_IMAGE,
+				IRI.ORDERING,
+				IRF.FILTER_GROUP_ID,
+				IRF.FILTER_CODE_ID,
+				IRF.ORDERING AS FILTER_ORDERING,
+				<if test='conditionType == "FRONT_MYPAGE" or conditionType == "FRONT_CATEGORY" or conditionType == "FRONT_TEAM" or conditionType == "FRONT_GROUP"'>
+					<include refid="defaultStockColumns" />
+				</if>
+			</trim>
+		FROM (
+			<include refid="CommonMapper.paginationHeader" />
+
+				SELECT
+					<include refid="defaultItemReviewColumns" />,
+					<include refid="baseItemColumns" />,
+					U.USER_NAME,
+					U.LOGIN_ID,
+					U.USER_ID,
+					S.SELLER_NAME
+				FROM
+					<include refid="defaultItemReviewFromQuery" />
+				<where>
+					<include refid="defaultItemReviewWhereQuery" />
+				</where>
+				ORDER BY
+				<choose>
+					<when test='orderBy == "LIKE_COUNT"'>IR.LIKE_COUNT DESC, IR.CREATED_DATE DESC</when>
+					<when test='orderBy == "SCORE"'>IR.SCORE DESC, IR.CREATED_DATE DESC</when>
+					<when test='orderBy == "CREATED_DATE"'>IR.CREATED_DATE DESC</when>
+					<otherwise>IR.CREATED_DATE DESC</otherwise>
+				</choose>
+			<include refid="CommonMapper.paginationFooter" />
+		) I
+		LEFT JOIN OP_ITEM_REVIEW_IMAGE IRI ON I.ITEM_REVIEW_ID = IRI.ITEM_REVIEW_ID
+		LEFT JOIN OP_ITEM_REVIEW_FILTER IRF ON I.ITEM_REVIEW_ID = IRF.ITEM_REVIEW_ID
+		<if test='conditionType == "FRONT_MYPAGE" or conditionType == "FRONT_CATEGORY" or conditionType == "FRONT_TEAM" or conditionType == "FRONT_GROUP"'>
+			<include refid="itemOptionSoldOutFlagFromQuery" />
+		</if>
+	</select>
+
+	<select id="getItemReviewById" parameterType="Integer" resultMap="ItemReviewResult">
+		SELECT
+			<include refid="defaultItemReviewColumns" />,
+			IRI.ITEM_REVIEW_IMAGE_ID,
+			IRI.REVIEW_IMAGE,
+			IRI.ORDERING,
+			(SELECT LOGIN_ID FROM OP_USER WHERE USER_ID = IR.USER_ID) AS LOGIN_ID,
+			(SELECT USER_NAME FROM OP_USER WHERE USER_ID = IR.USER_ID) AS USER_NAME,
+			IR.USER_ID,
+			<include refid="baseItemColumns" />
+		FROM OP_ITEM_REVIEW IR
+			INNER JOIN OP_ITEM I ON IR.ITEM_ID = I.ITEM_ID
+			LEFT JOIN OP_ITEM_REVIEW_IMAGE IRI ON IR.ITEM_REVIEW_ID = IRI.ITEM_REVIEW_ID
+		WHERE IR.ITEM_REVIEW_ID = #{value} AND IR.DATA_STATUS_CODE = '0'
+		ORDER BY IRI.ORDERING
+	</select>
+
+	<insert id="insertItemReview" parameterType="saleson.shop.item.domain.ItemReview">
+		INSERT INTO OP_ITEM_REVIEW (ITEM_REVIEW_ID, ITEM_ID, ORDER_CODE, SUBJECT, CONTENT, SCORE, RECOMMEND_FLAG, USER_ID, USER_NAME, SELLER_ID, DISPLAY_FLAG, CREATED_DATE, POINT_PAYMENT, POINT, POINT_PAYMENT_DATE, DISPLAY_OPTIONS_FLAG, OPTIONS)
+		VALUES (#{itemReviewId}, #{itemId}, #{orderCode}, #{subject}, #{content}, #{score}, #{recommendFlag}, #{userId}, #{userName}, #{sellerId}, #{displayFlag}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{pointPayment}, #{point}, 0, #{displayOptionsFlag}, #{options})
+	</insert>
+
+
+	<!-- 같이 구매한 상품 목록 -->
+	<select id="getItemOtherList" parameterType="Integer" resultMap="ItemOtherResult">
+		SELECT
+			IO.*,
+			I.ITEM_ID AS OTHER_ITEM_ID,
+			I.ITEM_USER_CODE AS OTHER_ITEM_USER_CODE,
+			I.ITEM_NAME AS OTHER_ITEM_NAME,
+			I.NONMEMBER_ORDER_TYPE AS OTHER_NONMEMBER_ORDER_TYPE,
+			I.ITEM_TYPE AS OTHER_ITEM_TYPE,
+			I.TAX_TYPE AS OTHER_TAX_TYPE,
+			I.ITEM_PRICE AS OTHER_ITEM_PRICE,
+			I.SALE_PRICE AS OTHER_SALE_PRICE,
+			I.SALE_PRICE_NONMEMBER AS OTHER_SALE_PRICE_NONMEMBER,
+			I.ITEM_SUMMARY AS OTHER_ITEM_SUMMARY,
+			I.ITEM_IMAGE AS OTHER_ITEM_IMAGE,
+			I.ITEM_OPTION_FLAG AS OTHER_ITEM_OPTION_FLAG,
+			I.SEO_INDEX_FLAG AS OTHER_SEO_INDEX_FLAG
+		FROM OP_ITEM_OTHER IO
+		  INNER JOIN OP_ITEM I ON IO.OTHER_ITEM_ID = I.ITEM_ID
+		WHERE
+		  IO.ITEM_ID = #{value}
+		  AND I.DISPLAY_FLAG = 'Y'
+		  AND I.ITEM_TYPE = '1'
+		ORDER BY IO.COUNTING DESC LIMIT 12
+	</select>
+
+	<insert id="insertItem" parameterType="saleson.shop.item.domain.Item">
+		INSERT INTO OP_ITEM (ITEM_ID, SELLER_ID, ITEM_CODE, ITEM_USER_CODE, ITEM_NAME, ITEM_SUMMARY, ITEM_DATA_TYPE, ITEM_TYPE, ITEM_LABEL, ITEM_LABEL_VALUE, ITEM_NEW_FLAG, ITEM_TYPE1, ITEM_TYPE2, ITEM_TYPE3, ITEM_TYPE4, ITEM_TYPE5, PRIVATE_TYPE, MD_ID, MD_NAME, DISPLAY_FLAG, ORIGIN_COUNTRY, MANUFACTURER, BRAND_ID, BRAND, COLOR, WEIGHT, DISPLAY_QUANTITY, NONMEMBER_ORDER_TYPE, TAX_TYPE, COMMISSION_TYPE, COMMISSION_RATE, PRICE_CRITERIA, ITEM_PRICE, COST_PRICE, SUPPLY_PRICE, SALE_PRICE, SALE_PRICE_NONMEMBER_FLAG, SALE_PRICE_NONMEMBER, SPOT_FLAG, SPOT_DATE_TYPE, SPOT_TYPE, SPOT_DISCOUNT_AMOUNT, SPOT_START_DATE, SPOT_END_DATE, SPOT_START_TIME, SPOT_END_TIME, SPOT_WEEK_DAY, SALE_POINT, SELLER_DISCOUNT_FLAG, SELLER_DISCOUNT_TYPE, SELLER_DISCOUNT_AMOUNT, SELLER_POINT_FLAG, SOLD_OUT, STOCK_FLAG, STOCK_QUANTITY, STOCK_CODE, STOCK_SCHEDULE_AUTO_FLAG, STOCK_SCHEDULE_TYPE, STOCK_SCHEDULE_DATE, STOCK_SCHEDULE_TEXT, ORDER_MIN_QUANTITY, ORDER_MAX_QUANTITY, SALE_QUANTITY, ITEM_OPTION_FLAG, ITEM_OPTION_TYPE, ITEM_OPTION_TITLE1, ITEM_OPTION_TITLE2, ITEM_OPTION_TITLE3, ITEM_ADDITION_FLAG, FREE_GIFT_FLAG, FREE_GIFT_NAME, ITEM_KEYWORD, HEADER_CONTENT_FLAG, FOOTER_CONTENT_FLAG, DETAIL_CONTENT, DETAIL_CONTENT_MOBILE, ITEM_NOTICE_CODE, ITEM_IMAGE, TEAM, OPENTIME, BASE_ITEM, OTHER_FLAG, RECOMMEND_FLAG, RELATION_ITEM_DISPLAY_TYPE, DELIVERY_COMPANY_ID, DELIVERY_COMPANY_NAME, DELIVERY_TYPE, SHIPMENT_ID, SHIPMENT_GROUP_CODE, SHIPMENT_RETURN_TYPE, SHIPMENT_RETURN_ID, SHIPPING_TYPE, SHIPPING_GROUP_CODE, SHIPPING, SHIPPING_FREE_AMOUNT, SHIPPING_ITEM_COUNT, SHIPPING_EXTRA_CHARGE1, SHIPPING_EXTRA_CHARGE2, SHIPPING_RETURN, HITS, SEO_TITLE, SEO_INDEX_FLAG, SEO_KEYWORDS, SEO_DESCRIPTION, SEO_HEADER_CONTENTS1, SEO_THEMAWORD_TITLE, SEO_THEMAWORD_DESCRIPTION, DATA_STATUS_CODE, DATA_STATUS_MESSAGE, UPDATED_USER_ID, UPDATED_DATE, CREATED_USER_ID, CREATED_DATE, ERP_EXCEPTION_TYPE, ITEM_RETURN_FLAG, COUPON_USE_FLAG, NAVER_SHOPPING_ITEM_NAME, NAVER_SHOPPING_FLAG, NAVER_PAY_FLAG, QUICK_DELIVERY_EXTRA_CHARGE_FLAG, CASH_DISCOUNT_FLAG)
+		VALUES (#{itemId}, #{sellerId}, #{itemCode}, #{itemUserCode}, #{itemName}, #{itemSummary}, #{itemDataType}, #{itemType}, #{itemLabel}, #{itemLabelValue}, #{itemNewFlag}, #{itemType1}, #{itemType2}, #{itemType3}, #{itemType4}, #{itemType5}, #{privateType}, #{mdId}, #{mdName}, #{displayFlag}, #{originCountry}, #{manufacturer}, #{brandId}, #{brand}, #{color}, #{weight}, #{displayQuantity}, #{nonmemberOrderType}, #{taxType}, #{commissionType}, #{commissionRate}, #{priceCriteria}, #{itemPrice}, #{costPrice}, #{supplyPrice}, #{salePrice}, #{salePriceNonmemberFlag}, #{salePriceNonmember}, #{spotFlag}, #{spotDateType}, #{spotType}, #{spotDiscountAmount}, #{spotStartDate}, #{spotEndDate}, #{spotStartTime}, #{spotEndTime}, #{spotWeekDay}, #{salePoint}, #{sellerDiscountFlag}, #{sellerDiscountType}, #{sellerDiscountAmount}, #{sellerPointFlag}, #{soldOut}, #{stockFlag}, #{stockQuantity}, #{stockCode}, #{stockScheduleAutoFlag}, #{stockScheduleType}, #{stockScheduleDate}, #{stockScheduleText}, #{orderMinQuantity}, #{orderMaxQuantity}, #{saleQuantity}, #{itemOptionFlag}, #{itemOptionType}, #{itemOptionTitle1}, #{itemOptionTitle2}, #{itemOptionTitle3}, #{itemAdditionFlag}, #{freeGiftFlag}, #{freeGiftName}, #{itemKeyword}, #{headerContentFlag}, #{footerContentFlag}, #{detailContent}, #{detailContentMobile}, #{itemNoticeCode}, #{itemImage}, #{team}, #{opentime}, #{baseItem}, #{otherFlag}, #{recommendFlag}, #{relationItemDisplayType}, #{deliveryCompanyId}, #{deliveryCompanyName}, #{deliveryType}, #{shipmentId}, #{shipmentGroupCode}, #{shipmentReturnType}, #{shipmentReturnId}, #{shippingType}, #{shippingGroupCode}, #{shipping}, #{shippingFreeAmount}, #{shippingItemCount}, #{shippingExtraCharge1}, #{shippingExtraCharge2}, #{shippingReturn}, #{hits}, #{seo.title}, #{seo.indexFlag}, #{seo.keywords}, #{seo.description}, #{seo.headerContents1}, #{seo.themawordTitle}, #{seo.themawordDescription}, #{dataStatusCode}, #{dataStatusMessage}, #{updatedUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{createdUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{erpExceptionType}, #{itemReturnFlag}, #{couponUseFlag}, #{naverShoppingItemName}, #{naverShoppingFlag}, #{naverPayFlag}, #{quickDeliveryExtraChargeFlag}, #{cashDiscountFlag})
+	</insert>
+
+	<insert id="insertFullItem" parameterType="saleson.shop.item.domain.Item">
+		INSERT INTO OP_ITEM (ITEM_ID, SELLER_ID, SELLER_DELIVERY_ID, ITEM_CODE, ITEM_SHORT_CODE, ITEM_NAME, ITEM_TYPE, ITEM_LABEL, ITEM_LABEL_VALUE, ITEM_TYPE1, ITEM_TYPE2, ITEM_TYPE3, ITEM_TYPE4, ITEM_TYPE5, ITEM_NEW_FLAG, PRIVATE_TYPE, MD_ID, MD_NAME, DISPLAY_FLAG, ORIGIN_COUNTRY, MANUFACTURER, BRAND_ID, BRAND, ORDER_NONMEMBER, TAX_TYPE, ITEM_PRICE, COST_PRICE, SALE_PRICE, SALE_PRICE_NONMEMBER, SALE_POINT, SUPPLY_PRICE, SELLER_DISCOUNT_USE, SELLER_DISCOUNT_TYPE, SELLER_DISCOUNT_AMOUNT, COMMISSION_TYPE, COMMISSION_RATE, STOCK_USE, STOCK_QUANTITY, STOCK_SCHEDULE_AUTO, STOCK_SCHEDULE_TYPE, STOCK_SCHEDULE_DATE, STOCK_SCHEDULE_TEXT, ORDER_MIN_QUANTITY, ORDER_MAX_QUANTITY, SALE_QUANTITY, ITEM_OPTION_USE, ITEM_OPTION_TITLE1, ITEM_OPTION_TITLE2, ITEM_OPTION_TITLE3, ITEM_ADDITION_USE, FREE_GIFT_USE, FREE_GIFT_NAME, ITEM_KEYWORD, ITEM_SUMMARY, HEADER_CONTENT_FLAG, FOOTER_CONTENT_FLAG, DETAIL_CONTENT, DETAIL_CONTENT_MOBILE, TEAM, OPENTIME, BASE_ITEM, OTHER_FLAG, RECOMMEND_USE, RELATION_ITEM_DISPLAY_TYPE, DELIVERY_INFO, HITS, DISPLAY_ORDER, SEO_TITLE, SEO_INDEX_FLAG, SEO_KEYWORDS, SEO_DESCRIPTION, SEO_THEMAWORD_TITLE, SEO_THEMAWORD_DESC, DATA_STATUS_CODE, UPDATED_USER_ID, UPDATED_DATE, CREATED_USER_ID, CREATED_DATE)
+		VALUES (#{itemId}, #{sellerId}, #{vendorDeliveryId}, #{itemCode}, #{itemShortCode}, #{itemName}, #{itemType}, #{itemLabel}, #{itemLabelValue}, #{itemType1}, #{itemType2}, #{itemType3}, #{itemType4}, #{itemType5}, #{itemNewFlag}, #{privateType}, #{mdId}, #{mdName}, #{displayFlag}, #{originCountry}, #{manufacturer}, #{brandId}, #{brand}, #{orderNonmember}, #{taxType}, #{itemPrice}, #{costPrice}, #{salePrice}, #{salePriceNonmember}, #{salePoint}, #{supplyPrice}, #{sellerDiscountUse}, #{sellerDiscountType}, #{sellerDiscountAmount}, #{commissionType}, #{commissionRate}, #{stockUse}, #{stockQuantity}, #{stockScheduleAuto}, #{stockScheduleType}, #{stockScheduleDate}, #{stockScheduleText}, #{orderMinQuantity}, #{orderMaxQuantity}, #{saleQuantity}, #{itemOptionUse}, #{itemOptionTitle1}, #{itemOptionTitle2}, #{itemOptionTitle3}, #{itemAdditionUse}, #{freeGiftUse}, #{freeGiftName}, #{itemKeyword}, #{itemSummary}, #{headerContentFlag}, #{footerContentFlag}, #{detailContent}, #{detailContentMobile}, #{team}, #{opentime}, #{baseItem}, #{otherFlag}, #{recommendUse}, #{relationItemDisplayType}, #{deliveryInfo}, #{hits}, #{displayOrder}, #{seoTitle}, #{seoIndexFlag}, #{seoKeywords}, #{seoDescription}, #{seoThemawordTitle}, #{seoThemawordDesc}, #{dataStatusCode}, #{updatedUserId}, #{updatedDate}, #{createdUserId}, #{createdDate})
+	</insert>
+
+
+	<update id="updateItem" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM
+		<set>
+			DELIVERY_COMPANY_ID = #{deliveryCompanyId},
+			DELIVERY_COMPANY_NAME = #{deliveryCompanyName},
+			DELIVERY_TYPE = #{deliveryType},
+			SHIPMENT_ID = #{shipmentId},
+			SHIPMENT_GROUP_CODE = #{shipmentGroupCode},
+			SHIPMENT_RETURN_TYPE = #{shipmentReturnType},
+			SHIPMENT_RETURN_ID = #{shipmentReturnId},
+			SHIPPING_TYPE = #{shippingType},
+			SHIPPING_GROUP_CODE = #{shippingGroupCode},
+			SHIPPING = #{shipping},
+			SHIPPING_FREE_AMOUNT = #{shippingFreeAmount},
+			SHIPPING_ITEM_COUNT = #{shippingItemCount},
+			SHIPPING_EXTRA_CHARGE1 = #{shippingExtraCharge1},
+			SHIPPING_EXTRA_CHARGE2 = #{shippingExtraCharge2},
+			SHIPPING_RETURN = #{shippingReturn},
+
+			ITEM_USER_CODE = #{itemUserCode},
+			ITEM_NAME = #{itemName},
+			ITEM_TYPE = #{itemType},
+			ITEM_LABEL = #{itemLabel},
+			ITEM_LABEL_VALUE = #{itemLabelValue},
+
+			SOLD_OUT = #{soldOut},
+			ITEM_TYPE1 = #{itemType1},
+			ITEM_TYPE2 = #{itemType2},
+			ITEM_TYPE3 = #{itemType3},
+			ITEM_TYPE4 = #{itemType4},
+			ITEM_TYPE5 = #{itemType5},
+			PRIVATE_TYPE = #{privateType},
+			ITEM_NEW_FLAG = #{itemNewFlag},
+			DISPLAY_FLAG = #{displayFlag},
+			ORIGIN_COUNTRY = #{originCountry},
+			MANUFACTURER = #{manufacturer},
+			BRAND = #{brand},
+			BRAND_ID = #{brandId},
+			COLOR = #{color},
+			WEIGHT = #{weight},
+			DISPLAY_QUANTITY = #{displayQuantity},
+			NONMEMBER_ORDER_TYPE = #{nonmemberOrderType},
+			TAX_TYPE = #{taxType},
+			ITEM_PRICE = #{itemPrice},
+			COST_PRICE = #{costPrice},
+			SALE_PRICE = #{salePrice},
+			SALE_PRICE_NONMEMBER = #{salePriceNonmember},
+			SALE_POINT = #{salePoint},
+			SUPPLY_PRICE = #{supplyPrice},
+			COUPON_USE_FLAG = #{couponUseFlag},
+			<if test='spotFlag != null and spotFlag != ""'>
+				SPOT_FLAG = #{spotFlag},
+			</if>
+			<if test='spotDateType != null and spotDateType != ""'>
+				SPOT_DATE_TYPE = #{spotDateType},
+			</if>
+			<if test='spotType != null and spotType != ""'>
+				SPOT_TYPE = #{spotType},
+			</if>
+			<if test='spotDiscountAmount > 0'>
+				SPOT_DISCOUNT_AMOUNT = #{spotDiscountAmount},
+			</if>
+			<if test='spotStartDate != null and spotStartDate != ""'>
+				SPOT_START_DATE = #{spotStartDate},
+			</if>
+			<if test='spotEndDate != null and spotEndDate != ""'>
+				SPOT_END_DATE = #{spotEndDate},
+			</if>
+			<if test='spotStartTime != null and spotStartTime != ""'>
+				SPOT_START_TIME = #{spotStartTime},
+			</if>
+			<if test='spotEndTime != null and spotEndTime != ""'>
+				SPOT_END_TIME = #{spotEndTime},
+			</if>
+			<if test='spotWeekDay != null and spotWeekDay != ""'>
+				SPOT_WEEK_DAY = #{spotWeekDay},
+			</if>
+			<if test='mdId != null and mdId != ""'>
+				MD_ID = #{mdId},
+			</if>
+			<if test='mdName != null'>
+				MD_NAME = #{mdName},
+			</if>
+			SELLER_DISCOUNT_FLAG = #{sellerDiscountFlag},
+			SELLER_DISCOUNT_TYPE = #{sellerDiscountType},
+			SELLER_DISCOUNT_AMOUNT = #{sellerDiscountAmount},
+			SELLER_POINT_FLAG = #{sellerPointFlag},
+			COMMISSION_TYPE = #{commissionType},
+			COMMISSION_RATE = #{commissionRate},
+			STOCK_FLAG = #{stockFlag},
+			STOCK_CODE = #{stockCode},
+			STOCK_QUANTITY = #{stockQuantity},
+			STOCK_SCHEDULE_AUTO_FLAG = #{stockScheduleAutoFlag},
+			STOCK_SCHEDULE_TYPE = #{stockScheduleType},
+			STOCK_SCHEDULE_DATE = #{stockScheduleDate},
+			STOCK_SCHEDULE_TEXT = #{stockScheduleText},
+			ORDER_MIN_QUANTITY = #{orderMinQuantity},
+			ORDER_MAX_QUANTITY = #{orderMaxQuantity},
+			SALE_QUANTITY = #{saleQuantity},
+			ITEM_OPTION_FLAG = #{itemOptionFlag},
+			ITEM_OPTION_TYPE = #{itemOptionType},
+			ITEM_OPTION_TITLE1 = #{itemOptionTitle1},
+			ITEM_OPTION_TITLE2 = #{itemOptionTitle2},
+			ITEM_OPTION_TITLE3 = #{itemOptionTitle3},
+
+			ITEM_ADDITION_FLAG = #{itemAdditionFlag},
+			ITEM_NOTICE_CODE = #{itemNoticeCode},
+
+			FREE_GIFT_FLAG = #{freeGiftFlag},
+			FREE_GIFT_NAME = #{freeGiftName},
+
+			ITEM_KEYWORD = #{itemKeyword},
+			ITEM_SUMMARY = #{itemSummary},
+			HEADER_CONTENT_FLAG = #{headerContentFlag},
+			FOOTER_CONTENT_FLAG = #{footerContentFlag},
+			DETAIL_CONTENT = #{detailContent},
+			DETAIL_CONTENT_MOBILE = #{detailContentMobile},
+
+			TEAM = #{team},
+			OPENTIME = #{opentime},
+			BASE_ITEM = #{baseItem},
+			OTHER_FLAG = #{otherFlag},
+			RECOMMEND_FLAG = #{recommendFlag},
+			RELATION_ITEM_DISPLAY_TYPE = #{relationItemDisplayType},
+
+			SEO_TITLE = #{seo.title},
+			SEO_INDEX_FLAG = #{seo.indexFlag},
+			SEO_KEYWORDS = #{seo.keywords},
+			SEO_DESCRIPTION = #{seo.description},
+			SEO_HEADER_CONTENTS1 = #{seo.headerContents1},
+			SEO_THEMAWORD_TITLE = #{seo.themawordTitle},
+			SEO_THEMAWORD_DESCRIPTION = #{seo.themawordDescription},
+
+			<if test='dataStatusCode != null and dataStatusCode != ""'>
+				DATA_STATUS_MESSAGE = #{dataStatusMessage},
+				DATA_STATUS_CODE = #{dataStatusCode},
+			</if>
+			UPDATED_USER_ID = #{updatedUserId},
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),
+
+			<if test='erpExceptionType != null and erpExceptionType != ""'>
+				ERP_EXCEPTION_TYPE = #{erpExceptionType},
+			</if>
+
+			ITEM_RETURN_FLAG = #{itemReturnFlag},
+
+			<if test='naverShoppingFlag != null and naverShoppingFlag != ""'>
+				NAVER_SHOPPING_FLAG = #{naverShoppingFlag},
+			</if>
+			<if test='naverPayFlag != null and naverPayFlag != ""'>
+				NAVER_PAY_FLAG = #{naverPayFlag},
+			</if>
+			NAVER_SHOPPING_ITEM_NAME = #{naverShoppingItemName},
+
+			QUICK_DELIVERY_EXTRA_CHARGE_FLAG = #{quickDeliveryExtraChargeFlag},
+			CASH_DISCOUNT_FLAG = #{cashDiscountFlag}
+		</set>
+		WHERE ITEM_ID = #{itemId}
+	</update>
+
+
+	<update id="updateItemImage" parameterType="Integer">
+		UPDATE OP_ITEM I LEFT JOIN (
+			SELECT ITEM_ID, IMAGE_NAME
+			FROM OP_ITEM_IMAGE
+			WHERE
+				ITEM_ID = #{value}
+			ORDER BY ORDERING ASC LIMIT 1
+		) II ON I.ITEM_ID = II.ITEM_ID
+
+		SET
+			I.ITEM_IMAGE = IFNULL(II.IMAGE_NAME, '')
+		WHERE
+			I.ITEM_ID = #{value}
+	</update>
+
+
+	<!-- 관리자 목록에서 선택한 데이터 수정 -->
+	<update id="updateItemByListParam" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM
+		<set>
+			<if test='dataStatusCode != null and dataStatusCode != ""'>
+				DATA_STATUS_CODE = #{dataStatusCode},
+			</if>
+			<if test='displayFlag != null and displayFlag != ""'>
+				DISPLAY_FLAG = #{displayFlag},
+			</if>
+			<if test='dataStatusMessage != null and dataStatusMessage != ""'>
+				DATA_STATUS_MESSAGE = CONCAT(DATA_STATUS_MESSAGE, #{dataStatusMessage}),
+			</if>
+
+
+			<if test='itemPrice != null and itemPrice != ""'>
+				ITEM_PRICE = #{itemPrice},
+			</if>
+			<if test='salePrice > 0'>
+				SALE_PRICE = #{salePrice},
+			</if>
+			<if test='salePriceNonmember > 0'>
+				SALE_PRICE_NONMEMBER = #{salePriceNonmember},
+			</if>
+
+			UPDATED_USER_ID = #{updatedUserId},
+
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		</set>
+
+
+		WHERE ITEM_ID = #{itemId}
+	</update>
+
+	<!-- 관리자 승인대기 목록에서 선택한 데이터 수정 -->
+	<update id="updateItemApprovalByListParam" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM
+		<set>
+			DATA_STATUS_CODE = #{dataStatusCode},
+			DATA_STATUS_MESSAGE = CONCAT(DATA_STATUS_MESSAGE, #{dataStatusMessage}),
+			UPDATED_USER_ID = #{updatedUserId},
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		</set>
+		WHERE
+		ITEM_ID = #{itemId}
+	</update>
+
+	<!-- 관리자 목록에서 선택한 데이터 공개여부 수정 -->
+	<update id="updateItemDisplayByListParam" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM SET
+			DISPLAY_FLAG = #{displayFlag},
+			UPDATED_USER_ID = #{updatedUserId},
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE ITEM_ID = #{itemId}
+	</update>
+
+	<!-- 관리자 목록에서 선택한 데이터 상품라벨 수정 -->
+	<update id="updateItemLabelByListParam" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM SET
+		<if test='soldOut == "1"'>
+			SOLD_OUT = '1',
+		</if>
+		<if test='soldOut == "0"'>
+			SOLD_OUT = '0',
+		</if>
+		<if test='soldOut == "90"'>
+			DATA_STATUS_CODE = '90',
+		</if>
+
+		<if test='dataStatusMessage != null and dataStatusMessage != ""'>
+			DATA_STATUS_MESSAGE = #{dataStatusMessage},
+		</if>
+		UPDATED_USER_ID = #{updatedUserId},
+		UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE ITEM_ID = #{itemId}
+	</update>
+
+	<update id="updateItemImageOfItemByItemId" parameterType="Integer">
+		UPDATE OP_ITEM SET
+			ITEM_IMAGE = ''
+		WHERE ITEM_ID = #{value}
+	</update>
+
+	<!-- 삭제 : 데이터 삭제 -->
+	<!-- <delete id="deleteItem" parameterType="saleson.shop.item.domain.Item">
+		DELETE FROM OP_ITEM
+		WHERE ITEM_ID = ${itemId}
+	</delete> -->
+
+	<!-- 삭제 : 상품만 업데이트  -->
+	<update id="deleteItem" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM I,(SELECT ITEM_USER_CODE FROM OP_ITEM WHERE ITEM_ID = #{itemId}) I2
+		   SET I.ITEM_USER_CODE = CONCAT(I2.ITEM_USER_CODE, '_', DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+			 , I.DATA_STATUS_CODE = '99'
+		     , I.UPDATED_USER_ID = #{updatedUserId}
+			 , I.UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		 WHERE I.ITEM_ID = #{itemId}
+	</update>
+
+	<delete id="deleteItemById" parameterType="Integer">
+		DELETE FROM OP_ITEM
+		WHERE ITEM_ID = #{itemId}
+	</delete>
+
+
+	<select id="getItemCategoryListByItemId" parameterType="Integer" resultMap="ItemCategoryResult" >
+			SELECT
+				ITEM_CATEGORY_ID,
+				CATEGORY_ID,
+				ITEM_ID,
+				ORDERING,
+				CREATED_DATE
+			FROM OP_ITEM_CATEGORY
+			WHERE ITEM_ID = #{value}
+			ORDER BY ORDERING ASC
+	</select>
+
+
+
+
+
+	<insert id="insertItemCategory" parameterType="saleson.shop.item.domain.ItemCategory">
+		INSERT INTO OP_ITEM_CATEGORY (ITEM_CATEGORY_ID, CATEGORY_ID, ITEM_ID, ORDERING, CREATED_DATE)
+		VALUES (#{itemCategoryId}, #{categoryId}, #{itemId}, #{ordering}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+	<delete id="deleteItemCategoryByItemId" parameterType="Integer">
+		DELETE FROM OP_ITEM_CATEGORY
+		WHERE ITEM_ID = #{value}
+	</delete>
+
+
+	<delete id="deleteItemCategoryByCategoryClass" parameterType="String">
+		DELETE FROM OP_ITEM_CATEGORY
+		WHERE CATEGORY_ID IN (
+			SELECT CATEGORY_ID FROM OP_CATEGORY
+			WHERE CATEGORY_CODE LIKE CONCAT(#{categoryClass}, '%')
+		)
+	</delete>
+
+	<!-- 공통 : 카테고리 타입별 상품 조회 (팀, 그룹, 카테고리) -->
+	<sql id="sqlItemsByCategoryType">
+		SELECT
+		I.ITEM_ID,
+		I.ITEM_USER_CODE,
+		I.ITEM_NAME,
+		I.NONMEMBER_ORDER_TYPE,
+		I.ITEM_TYPE,
+		I.TAX_TYPE,
+		I.ITEM_PRICE,
+		I.SALE_PRICE,
+		I.SALE_PRICE_NONMEMBER,
+		I.ITEM_SUMMARY,
+		I.ITEM_IMAGE,
+		I.ITEM_OPTION_FLAG,
+		I.SEO_INDEX_FLAG
+		FROM (
+		SELECT DISTINCT CATEGORY_ID
+		FROM OP_CATEGORY C, (
+
+		SELECT SUBSTRING(C.CATEGORY_CODE, 1, C.CATEGORY_LEVEL * 3) CATE_CLASS
+		FROM OP_CATEGORY_TEAM CT
+		INNER JOIN OP_CATEGORY_GROUP CG ON CT.CATEGORY_TEAM_ID = CG.CATEGORY_TEAM_ID
+		INNER JOIN OP_CATEGORY C ON CG.CATEGORY_GROUP_ID = C.CATEGORY_GROUP_ID
+		<where>
+			<choose>
+				<when test='categoryUrl != ""'>
+					C.CATEGORY_URL = #{categoryUrl}
+				</when>
+				<when test='categoryGroupCode != ""'>
+					CG.CODE = #{categoryGroupCode}
+				</when>
+				<when test='categoryTeamCode != ""'>
+					CT.CODE = #{categoryTeamCode}
+				</when>
+
+			</choose>
+		</where>
+
+		) C2
+		WHERE C.CATEGORY_CODE LIKE CONCAT(C2.CATE_CLASS, '%') AND C.CATEGORY_FLAG = 'Y'
+		) C
+		INNER JOIN OP_ITEM_CATEGORY IC ON C.CATEGORY_ID = IC.CATEGORY_ID
+		INNER JOIN OP_ITEM I ON IC.ITEM_ID = I.ITEM_ID
+	</sql>
+
+	<sql id="sqlItemsBySearchTeamType">
+		SELECT
+		I.*
+		FROM (
+		SELECT DISTINCT CATEGORY_ID
+		FROM OP_CATEGORY C, (
+
+		SELECT SUBSTRING(C.CATEGORY_CODE, 1, C.CATEGORY_LEVEL * 3) CATE_CLASS
+		FROM OP_CATEGORY_TEAM CT
+		INNER JOIN OP_CATEGORY_GROUP CG ON CT.CATEGORY_TEAM_ID = CG.CATEGORY_TEAM_ID
+		INNER JOIN OP_CATEGORY C ON CG.CATEGORY_GROUP_ID = C.CATEGORY_GROUP_ID
+		<where>
+			<choose>
+				<when test='categoryUrl != ""'>
+					C.CATEGORY_URL = #{categoryUrl}
+				</when>
+				<when test='categoryGroupCode != ""'>
+					CG.CODE = #{categoryGroupCode}
+				</when>
+				<when test='categoryTeamCode != ""'>
+					CT.CODE = #{categoryTeamCode}
+				</when>
+
+			</choose>
+		</where>
+
+		) C2
+		WHERE C.CATEGORY_CODE LIKE CONCAT(C2.CATE_CLASS, '%') AND C.CATEGORY_FLAG = 'Y'
+		) C
+		INNER JOIN OP_ITEM_CATEGORY IC ON C.CATEGORY_ID = IC.CATEGORY_ID
+		INNER JOIN OP_ITEM I ON IC.ITEM_ID = I.ITEM_ID
+	</sql>
+
+
+	<!-- 신상품 목록 (카테고리별) -->
+	<select id="getNewArrivalItemList" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemResult">
+		<include refid="sqlItemsByCategoryType" />
+
+		WHERE I.DISPLAY_FLAG = 'Y' AND I.OTHER_FLAG = '1' AND I.ITEM_LABEL = '2' AND I.STOCK_QUANTITY <![CDATA[<>]]> '0' AND I.DATA_STATUS_CODE = '1'
+		GROUP BY I.ITEM_ID
+		ORDER BY I.OPENTIME DESC, I.ITEM_ID ASC
+		LIMIT #{limit}
+
+	</select>
+
+	<select id="getSearchNewArrivalItemCount" parameterType="saleson.shop.item.support.ItemParam" resultType="Integer">
+
+		SELECT
+		COUNT(*)
+		FROM (
+		<include refid="sqlItemsBySearchTeamType" />
+
+		WHERE I.DISPLAY_FLAG = 'Y' AND I.OTHER_FLAG = '1' AND I.ITEM_LABEL = '2' AND I.STOCK_QUANTITY <![CDATA[<>]]> '0' AND I.DATA_STATUS_CODE = '1'
+		GROUP BY I.ITEM_ID
+		) AS I
+
+	</select>
+
+
+
+	<select id="getSearchNewArrivalItemList" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemResult">
+
+
+		SELECT
+		I.* ,
+		IFNULL(IR.REVIEW_COUNT, 0) AS REVIEW_COUNT,
+		ROUND(IFNULL(IR.REVIEW_SCORE, 0),1) AS REVIEW_SCORE,
+		IO2.OPTION_TYPE,
+		IO2.OPTION_NAME1 AS OPTION_TITLE,
+		IO2.*,
+		II.*
+		FROM (
+
+		<include refid="CommonMapper.paginationHeader" />
+
+		<include refid="sqlItemsBySearchTeamType" />
+
+		WHERE I.DISPLAY_FLAG = 'Y' AND I.OTHER_FLAG = '1' AND I.ITEM_LABEL = '2' AND I.STOCK_QUANTITY <![CDATA[<>]]> '0' AND I.DATA_STATUS_CODE = '1'
+		GROUP BY I.ITEM_ID
+
+		<trim prefix="ORDER BY" suffixOverrides=",">
+
+			<if test='sort == "DESC" or sort == "ASC" or sort == "" or sort == null'>
+				<choose>
+					<when test='orderBy == "ORDERING" and ((groupCategoryClassCodes != null) or (categoryClass != null and categoryClass != ""))'>
+						I.ITEM_NEW_FLAG DESC, IO2.ORDERING #{sort}, I.ITEM_ID DESC,
+					</when>
+					<when test='orderBy == "SALE_PRICE"'>
+						I.SALE_PRICE #{sort},
+					</when>
+					<when test='orderBy == "HITS"'>
+						I.HITS #{sort},
+					</when>
+					<when test='orderBy == "ITEM_ID"'>
+						I.ITEM_ID #{sort},
+					</when>
+					<otherwise>
+						I.OPENTIME DESC, I.ITEM_ID
+					</otherwise>
+				</choose>
+			</if>
+
+		</trim>
+
+		<include refid="CommonMapper.paginationFooter" />
+
+		)  AS I LEFT JOIN
+		(
+		SELECT
+		ITEM_ID,
+		COUNT(*) AS REVIEW_COUNT,
+		SUM(SCORE) / COUNT(*) AS REVIEW_SCORE
+		FROM
+		OP_ITEM_REVIEW
+		WHERE
+		DISPLAY_FLAG = 'Y' GROUP BY ITEM_ID
+		) IR ON I.ITEM_ID = IR.ITEM_ID
+		LEFT JOIN OP_ITEM_ORDERING IO ON I.ITEM_ID = IO.ITEM_ID AND IO.CATEGORY_ID = '0'
+		LEFT JOIN OP_ITEM_OPTION IO2 ON I.ITEM_ID = IO2.ITEM_ID AND IO2.DISPLAY_FLAG = 'Y'
+		LEFT JOIN OP_ITEM_IMAGE II ON I.ITEM_ID = II.ITEM_ID ORDER BY IO.ORDERING ASC
+
+		<trim prefix="ORDER BY" suffixOverrides=",">
+			<if test='sort == "DESC" or sort == "ASC"'>
+				<choose>
+					<when test='orderBy == "ORDERING" and ((groupCategoryClassCodes != null) or (categoryClass != null and categoryClass != ""))'>
+						IO.ORDERING #{sort},
+					</when>
+				</choose>
+			</if>
+		</trim>
+
+
+	</select>
+
+	<!-- 신상품 목록 (메인) -->
+	<select id="getNewArrivalItemListForMain" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemResult">
+		SELECT
+			I.ITEM_ID,
+			I.ITEM_USER_CODE,
+			I.ITEM_NAME,
+			I.NONMEMBER_ORDER_TYPE,
+			I.ITEM_TYPE,
+			I.ITEM_PRICE,
+			I.SALE_PRICE,
+			I.SELLER_DISCOUNT_FLAG,
+			I.SELLER_DISCOUNT_TYPE,
+			I.SELLER_DISCOUNT_AMOUNT,
+			I.SPOT_FLAG,
+			I.SPOT_TYPE,
+			I.SPOT_DISCOUNT_AMOUNT,
+			I.SPOT_START_DATE,
+			I.SPOT_END_DATE,
+			I.SPOT_START_TIME,
+			I.SPOT_END_TIME,
+			I.SPOT_WEEK_DAY,
+
+			I.ITEM_SUMMARY,
+			I.ITEM_IMAGE,
+			I.ITEM_OPTION_FLAG
+		FROM
+			OP_ITEM I
+		WHERE I.DISPLAY_FLAG = 'Y' AND I.OTHER_FLAG = '1' AND I.ITEM_LABEL = '2' AND I.STOCK_QUANTITY <![CDATA[<>]]> '0' AND I.DATA_STATUS_CODE = '1'
+		GROUP BY I.ITEM_ID
+		ORDER BY I.OPENTIME DESC, I.ITEM_ID ASC
+		LIMIT #{limit}
+
+	</select>
+
+	<!-- 관심상품 그룹에 포함된 상품목록 -->
+	<select id="getWishlistItemList" parameterType="saleson.shop.wishlist.domain.WishlistGroup" resultMap="ItemResult">
+		SELECT
+			I.ITEM_ID,
+			I.ITEM_USER_CODE,
+			I.ITEM_NAME,
+			I.NONMEMBER_ORDER_TYPE,
+			I.ITEM_TYPE,
+			I.TAX_TYPE,
+			I.ITEM_PRICE,
+			I.SALE_PRICE,
+			I.SALE_PRICE_NONMEMBER,
+			I.ITEM_SUMMARY,
+			I.ITEM_IMAGE,
+			I.ITEM_OPTION_FLAG
+		FROM OP_WISHLIST W
+			INNER JOIN OP_ITEM I ON W.ITEM_ID = I.ITEM_ID
+		WHERE
+			W.WISHLIST_GROUP_ID = #{wishlistGroupId}
+
+	</select>
+
+	<select id="getItemOptionByItemOption" parameterType="saleson.shop.item.domain.ItemOption" resultMap="ItemOptionResult">
+		SELECT
+			ITEM_OPTION_ID,
+			ITEM_ID,
+			OPTION_TYPE,
+			OPTION_DISPLAY_TYPE,
+			OPTION_HIDE_FLAG,
+			OPTION_NAME1,
+			OPTION_NAME2,
+			OPTION_NAME3,
+			OPTION_STOCK_CODE,
+			OPTION_COST_PRICE,
+			OPTION_PRICE,
+			OPTION_PRICE_NONMEMBER,
+			OPTION_STOCK_QUANTITY,
+			OPTION_DISPLAY_FLAG
+		FROM OP_ITEM_OPTION
+		WHERE
+			ITEM_ID = #{itemId}
+			AND OPTION_STOCK_CODE = #{optionStockCode}
+	</select>
+
+	<select id="getItemOptionById" parameterType="Integer" resultMap="ItemOptionResult">
+		SELECT
+			ITEM_OPTION_ID,
+			ITEM_ID,
+			OPTION_TYPE,
+			OPTION_DISPLAY_TYPE,
+			OPTION_HIDE_FLAG,
+			OPTION_NAME1,
+			OPTION_NAME2,
+			OPTION_NAME3,
+			OPTION_STOCK_CODE,
+			OPTION_COST_PRICE,
+			OPTION_PRICE,
+			OPTION_PRICE_NONMEMBER,
+			OPTION_STOCK_FLAG,
+			OPTION_STOCK_QUANTITY,
+			OPTION_STOCK_SCHEDULE_TEXT,
+			OPTION_STOCK_SCHEDULE_DATE,
+
+			OPTION_DISPLAY_FLAG,
+			CREATED_USER_ID,
+			CREATED_DATE
+		FROM OP_ITEM_OPTION
+		WHERE ITEM_OPTION_ID = #{value}
+	</select>
+
+	<select id="getItemOptionListByItemOptionIdsForOrder" parameterType="saleson.shop.cart.support.CartParam" resultMap="ItemOptionResult">
+		SELECT
+		IO.OPTION_TYPE,
+		IO.OPTION_NAME1 AS OPTION_TITLE,
+		IO.*,
+		IO.OPTION_STOCK_FLAG,
+		IO.OPTION_STOCK_QUANTITY,
+		IO.OPTION_STOCK_SCHEDULE_TEXT,
+		IO.OPTION_STOCK_SCHEDULE_DATE,
+		IO.OPTION_DISPLAY_FLAG
+		FROM OP_ITEM_OPTION IO
+		WHERE IO.ITEM_OPTION_ID IN
+
+		<foreach item="itemOptionId" index="index" collection="itemOptionIds" open="(" separator="," close=")">
+			#{itemOptionId}
+		</foreach>
+	</select>
+
+
+	<select id="getItemOptionListByItemOptionIds" resultMap="ItemOptionGroupResult">
+		SELECT
+		IO.OPTION_TYPE,
+		IO.OPTION_NAME1 AS OPTION_TITLE,
+		IO.*,
+		IO.OPTION_STOCK_QUANTITY,
+		IO.OPTION_STOCK_SCHEDULE_TEXT,
+		IO.OPTION_STOCK_SCHEDULE_DATE,
+		IO.OPTION_DISPLAY_FLAG
+		FROM OP_ITEM_OPTION IO
+		WHERE IO.ITEM_OPTION_ID IN
+
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+
+	<!-- 상품ID와 상품 옵션 코드로 옵션 목록을 조회함. -->
+	<select id="getItemOptionListByWishlistHash" parameterType="java.util.HashMap" resultMap="ItemOptionGroupResult">
+		SELECT
+		IO.OPTION_TYPE,
+		IO.OPTION_NAME1 AS OPTION_TITLE,
+		IO.*,
+		IO.OPTION_STOCK_QUANTITY,
+		IO.OPTION_STOCK_SCHEDULE_TEXT,
+		IO.OPTION_STOCK_SCHEDULE_DATE,
+		IO.OPTION_DISPLAY_FLAG
+		FROM OP_ITEM_OPTION IO
+		WHERE IO.ITEM_ID = #{itemId} AND IO.OPTION_STOCK_CODE IN
+
+		<foreach item="optionCode" index="index" collection="itemOptionCodes" open="(" separator="," close=")">
+			#{optionStockCode}
+		</foreach>
+	</select>
+
+
+	<!-- 상품ID와 상품 옵션 코드로 옵션 목록을 조회함. -->
+	<select id="getItemOptionListByItemOptions" resultMap="ItemOptionGroupResult">
+		<foreach item="itemOption" index="index" collection="list" open="" separator="UNION" close="">
+			SELECT
+			IO.OPTION_TYPE,
+			IO.OPTION_NAME1 AS OPTION_TITLE,
+			IO.*,
+			IO.OPTION_STOCK_QUANTITY,
+			IO.OPTION_STOCK_SCHEDULE_TEXT,
+			IO.OPTION_STOCK_SCHEDULE_DATE,
+			IO.OPTION_DISPLAY_FLAG
+			FROM OP_ITEM_OPTION IO
+			WHERE IO.ITEM_ID = #{itemOption.itemId}
+			AND IO.OPTION_NAME1 = #{itemOption.optionName1}
+			AND IO.OPTION_NAME2 = #{itemOption.optionName2}
+		</foreach>
+	</select>
+
+
+	<insert id="insertItemOption" parameterType="saleson.shop.item.domain.ItemOption">
+		INSERT INTO OP_ITEM_OPTION (ITEM_OPTION_ID, ITEM_ID, ERP_ITEM_CODE, OPTION_TYPE, OPTION_DISPLAY_TYPE, OPTION_HIDE_FLAG, OPTION_NAME1, OPTION_NAME2, OPTION_NAME3, OPTION_STOCK_CODE, OPTION_COST_PRICE, OPTION_PRICE, OPTION_PRICE_NONMEMBER, OPTION_QUANTITY, OPTION_STOCK_FLAG, OPTION_STOCK_QUANTITY, OPTION_STOCK_SCHEDULE_TEXT, OPTION_STOCK_SCHEDULE_DATE, OPTION_SOLD_OUT_FLAG, OPTION_DISPLAY_FLAG, OPTION_ORDERING, CREATED_USER_ID, CREATED_DATE)
+		VALUES (#{itemOptionId}, #{itemId}, #{erpItemCode}, #{optionType}, #{optionDisplayType}, #{optionHideFlag}, #{optionName1}, #{optionName2}, #{optionName3}, #{optionStockCode}, #{optionCostPrice}, #{optionPrice}, #{optionPriceNonmember}, #{optionQuantity}, #{optionStockFlag}, #{optionStockQuantity}, #{optionStockScheduleText}, #{optionStockScheduleDate}, #{optionSoldOutFlag}, #{optionDisplayFlag}, #{optionOrdering}, #{createdUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+
+		ON DUPLICATE KEY
+		UPDATE
+			ERP_ITEM_CODE = #{erpItemCode},
+			OPTION_TYPE = #{optionType},
+			OPTION_DISPLAY_TYPE = #{optionDisplayType},
+			OPTION_HIDE_FLAG = #{optionHideFlag},
+			OPTION_NAME1 = #{optionName1},
+			OPTION_NAME2 = #{optionName2},
+			OPTION_NAME3 = #{optionName3},
+			OPTION_STOCK_CODE = #{optionStockCode},
+			OPTION_COST_PRICE = #{optionCostPrice},
+			OPTION_PRICE = #{optionPrice},
+			OPTION_PRICE_NONMEMBER = #{optionPriceNonmember},
+			OPTION_QUANTITY = #{optionQuantity},
+			OPTION_STOCK_FLAG = #{optionStockFlag},
+			OPTION_STOCK_QUANTITY = #{optionStockQuantity},
+			OPTION_STOCK_SCHEDULE_TEXT = #{optionStockScheduleText},
+			OPTION_STOCK_SCHEDULE_DATE = #{optionStockScheduleDate},
+			OPTION_SOLD_OUT_FLAG = #{optionSoldOutFlag},
+			OPTION_DISPLAY_FLAG = #{optionDisplayFlag},
+			OPTION_ORDERING = #{optionOrdering}
+	</insert>
+
+	<update id="updateItemOption" parameterType="saleson.shop.item.domain.ItemOption">
+		UPDATE OP_ITEM_OPTION SET
+			OPTION_TYPE = #{optionType},
+			OPTION_DISPLAY_TYPE = #{optionDisplayType},
+			OPTION_HIDE_FLAG = #{optionHideFlag},
+			OPTION_NAME1 = #{optionName1},
+			OPTION_NAME2 = #{optionName2},
+			OPTION_NAME3 = #{optionName3},
+			OPTION_STOCK_CODE = #{optionStockCode},
+			OPTION_COST_PRICE = #{optionCostPrice},
+			OPTION_PRICE = #{optionPrice},
+			OPTION_PRICE_NONMEMBER = #{optionPriceNonmember},
+			OPTION_STOCK_FLAG = #{optionStockFlag},
+			OPTION_STOCK_QUANTITY = #{optionStockQuantity},
+			OPTION_STOCK_SCHEDULE_TEXT = #{optionStockScheduleText},
+			OPTION_STOCK_SCHEDULE_DATE = #{optionStockScheduleDate},
+			OPTION_SOLD_OUT_FLAG = #{optionSoldOutFlag},
+			OPTION_DISPLAY_FLAG = #{optionDisplayFlag},
+			OPTION_ORDERING = #{optionOrdering}
+		WHERE
+			ITEM_OPTION_ID = #{itemOptionId}
+	</update>
+
+	<insert id="deleteItemOptionByItemId" parameterType="Integer">
+		DELETE FROM OP_ITEM_OPTION
+		WHERE ITEM_ID = #{value}
+	</insert>
+
+
+
+
+	<insert id="insertItemRelation" parameterType="saleson.shop.item.domain.ItemRelation">
+		INSERT INTO OP_ITEM_RELATION (ITEM_RELATION_ID, ITEM_ID, RELATED_ITEM_ID, ORDERING, CREATED_DATE)
+		VALUES (#{itemRelationId}, #{itemId}, #{relatedItemId}, #{ordering}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+
+	<delete id="deleteItemRelationByItemId" parameterType="Integer" >
+		DELETE FROM OP_ITEM_RELATION
+		WHERE ITEM_ID = #{value}
+	</delete>
+
+
+	<select id="getItemImageById" parameterType="Integer" resultMap="ItemImageResult">
+		SELECT II.*, I.ITEM_USER_CODE
+		FROM OP_ITEM_IMAGE II
+			INNER JOIN OP_ITEM I ON II.ITEM_ID = I.ITEM_ID
+		WHERE ITEM_IMAGE_ID = #{value}
+	</select>
+
+
+	<!-- 상품 이미지 목록을 가져옴. -->
+	<select id="getItemImageListByItemId" parameterType="Integer" resultMap="ItemImageResult">
+		SELECT *
+		FROM OP_ITEM_IMAGE
+		WHERE ITEM_ID = #{value}
+		ORDER BY ORDERING ASC
+	</select>
+
+	<!-- 상품의 목록 이미지 정보를 업데이트 한다. -->
+	<update id="updateItemImageName" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM SET
+			ITEM_IMAGE = #{itemImage}
+		WHERE
+			ITEM_ID = #{itemId}
+	</update>
+
+
+	<select id="getMaxOrderingOfItemImageByItemId" parameterType="Integer" resultType="Integer">
+		SELECT IFNULL(MAX(ORDERING), 0) + 1
+		FROM OP_ITEM_IMAGE
+		WHERE ITEM_ID = #{value}
+	</select>
+
+	<update id="updateOrderingOfItemImage" parameterType="saleson.shop.item.domain.ItemImage">
+		UPDATE OP_ITEM_IMAGE SET
+			ORDERING = #{ordering}
+		WHERE ITEM_IMAGE_ID = #{itemImageId}
+	</update>
+
+	<update id="updateItemStockQuantityByItemStockQuantityParam" parameterType="saleson.shop.item.support.ItemStockQuantityParam">
+		UPDATE OP_ITEM
+		SET STOCK_QUANTITY =
+		(
+		CASE WHEN STOCK_QUANTITY <choose><when test="sign == '1'">+</when><otherwise>-</otherwise></choose> #{quantity} >= 0 THEN
+		STOCK_QUANTITY <choose><when test="sign == '1'">+</when><otherwise>-</otherwise></choose> #{quantity}
+		ELSE
+		0
+		END
+		)
+		<where>
+			<choose>
+				<when test="stockCode != null and stockCode != ''">
+					ITEM_USER_CODE = #{stockCode}
+				</when>
+				<otherwise>
+					ITEM_ID IN
+					<foreach item="itemId" index="index" collection="keys" open="(" separator="," close=")">
+						#{itemId}
+					</foreach>
+				</otherwise>
+			</choose>
+
+			AND STOCK_QUANTITY <choose><when test="sign == '+'">>=</when><otherwise>></otherwise></choose> 0
+		</where>
+	</update>
+
+	<update id="updateItemOptionStockQuantityByItemStockQuantityParam" parameterType="saleson.shop.item.support.ItemStockQuantityParam">
+		UPDATE OP_ITEM_OPTION
+		SET STOCK_QUANTITY =
+		(
+		CASE WHEN STOCK_QUANTITY <choose><when test="sign == '1'">+</when><otherwise>-</otherwise></choose> #{quantity} >= 0 THEN
+		STOCK_QUANTITY <choose><when test="sign == '1'">+</when><otherwise>-</otherwise></choose> #{quantity}
+		ELSE
+		0
+		END
+		)
+		<where>
+			<choose>
+				<when test="stockCode != null and stockCode != ''">
+					OPTION_STOCK_CODE = #{stockCode}
+				</when>
+				<otherwise>
+					ITEM_OPTION_ID IN
+					<foreach item="itemOptionId" index="index" collection="keys" open="(" separator="," close=")">
+						#{itemOptionId}
+					</foreach>
+				</otherwise>
+			</choose>
+
+
+			AND STOCK_QUANTITY <choose><when test="sign == '+'">>=</when><otherwise>></otherwise></choose> 0
+		</where>
+	</update>
+
+	<insert id="insertItemImage" parameterType="saleson.shop.item.domain.ItemImage">
+		INSERT INTO OP_ITEM_IMAGE (ITEM_IMAGE_ID, ITEM_ID, IMAGE_NAME, ORDERING, CREATED_DATE)
+		VALUES (#{itemImageId}, #{itemId}, #{imageName}, #{ordering}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+	<select id="deleteItemImageById" parameterType="Integer">
+		DELETE FROM OP_ITEM_IMAGE
+		WHERE ITEM_IMAGE_ID = #{value}
+	</select>
+
+	<select id="deleteItemImageByItemId" parameterType="Integer">
+		DELETE FROM OP_ITEM_IMAGE
+		WHERE ITEM_ID = #{value}
+	</select>
+
+	<insert id="insertItemOrdering" parameterType="saleson.shop.item.domain.ItemOrdering">
+		INSERT INTO OP_ITEM_ORDERING (ITEM_ORDERING_ID, ITEM_ID, CATEGORY_ID, ORDERING, CREATED_DATE)
+		VALUES (#{itemOrderingId}, #{itemId}, #{categoryId}, #{ordering}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+	<delete id="deleteItemOrderingByCategoryId" parameterType="Integer" >
+		DELETE FROM OP_ITEM_ORDERING
+		WHERE CATEGORY_ID = #{value}
+	</delete>
+
+	<select id="getItemCountByDeliveryId" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM OP_ITEM
+		WHERE DELIVERY_ID = #{value}
+	</select>
+
+	<select id="getItemCountByDeliveryChargeId" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM OP_ITEM
+		WHERE DELIVERY_CHARGE_ID = #{value}
+	</select>
+
+
+	<update id="updateItemReview" parameterType="saleson.shop.item.domain.ItemReview">
+		UPDATE OP_ITEM_REVIEW SET
+			<if test='subject != null and subject != ""'>
+				SUBJECT = #{subject},
+			</if>
+			CONTENT = #{content},
+			SCORE = #{score},
+			ADMIN_COMMENT = #{adminComment},
+			RECOMMEND_FLAG = #{recommendFlag},
+			DISPLAY_FLAG = #{displayFlag}
+			<if test='pointPayment == "Y"'>
+				, POINT_PAYMENT = #{pointPayment}
+				, POINT = #{point}
+				, POINT_PAYMENT_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+			</if>
+		WHERE ITEM_REVIEW_ID = #{itemReviewId}
+	</update>
+
+
+	<!-- 상품 입하예정일 수정 -->
+	<update id="updateItemStockScheduleDate" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM SET
+			STOCK_SCHEDULE_DATE = #{stockScheduleDate}
+		WHERE ITEM_ID = #{itemId}
+	</update>
+
+
+	<!-- 상품 옵션 입하예정일 수정 -->
+	<update id="updateItemOptionStockScheduleDate" parameterType="saleson.shop.item.domain.ItemOption">
+		UPDATE OP_ITEM_OPTION SET
+			OPTION_STOCK_SCHEDULE_DATE = #{optionStockScheduleDate}
+		WHERE
+			ITEM_ID = #{itemId}
+			AND OPTION_STOCK_CODE = #{optionStockCode}
+	</update>
+
+	<delete id="deleteItemReview" parameterType="Integer" >
+		<!--
+		DELETE FROM OP_ITEM_REVIEW
+		WHERE ITEM_REVIEW_ID = #{value}
+		 -->
+		UPDATE OP_ITEM_REVIEW
+		SET DATA_STATUS_CODE = '1'
+		WHERE ITEM_REVIEW_ID = #{value}
+	</delete>
+
+
+	<!-- [색인검색] 1차 인덱스 카운트 목록 -->
+	<select id="getIndexList" parameterType="saleson.shop.item.domain.SearchIndexParam" resultType="java.util.HashMap">
+
+		SELECT 'a-z' AS title, COUNT(*) AS itemCount FROM OP_ITEM
+		WHERE DISPLAY_FLAG = 'Y' AND ITEM_USER_CODE RLIKE '^[a-z]'
+
+		UNION
+
+		<foreach item="index" collection="indexList" open="" separator="UNION" close="">
+			SELECT CONCAT(#{index.start},'-', #{index.end}) AS title, COUNT(*) AS itemCount FROM OP_ITEM
+			WHERE DISPLAY_FLAG = 'Y' AND ITEM_USER_CODE BETWEEN #{index.start} AND #{index.end} AND LENGTH(ITEM_USER_CODE) <![CDATA[<=]]> LENGTH(#{index.end})
+		</foreach>
+	</select>
+
+	<!-- [색인검색] 2차 인덱스 카운트 목록 -->
+	<select id="getSubIndexList" parameterType="saleson.shop.item.domain.SearchIndexParam" resultType="java.util.HashMap">
+		<foreach item="index" collection="subIndexList" open="" separator="UNION" close="">
+			<choose>
+				<when test='index.end == ""'>
+					SELECT #{index.start} AS title, COUNT(*) AS itemCount FROM OP_ITEM
+					WHERE DISPLAY_FLAG = 'Y' AND ITEM_USER_CODE RLIKE CONCAT('^[', #{index.start}, ']')
+				</when>
+				<otherwise>
+					SELECT CONCAT(#{index.start},'-', #{index.end}) AS title, COUNT(*) AS itemCount FROM OP_ITEM
+					WHERE DISPLAY_FLAG = 'Y' AND ITEM_USER_CODE BETWEEN #{index.start} AND #{index.end} AND LENGTH(ITEM_USER_CODE) <![CDATA[<=]]> LENGTH(#{index.end})
+				</otherwise>
+			</choose>
+		</foreach>
+	</select>
+
+	<!-- [색인검색] 검색 상품 목록 -->
+	<select id="getItemIndexList" parameterType="saleson.shop.item.domain.SearchIndexParam" resultMap="ItemIndexResult">
+		SELECT
+		I.*,
+		C1.CATEGORY_URL AS CATEGORY_URL1,
+		C1.CATEGORY_NAME  AS CATEGORY_NAME1,
+		C2.CATEGORY_URL AS CATEGORY_URL2,
+		C2.CATEGORY_NAME  AS CATEGORY_NAME2,
+		C3.CATEGORY_URL AS CATEGORY_URL3,
+		C3.CATEGORY_NAME  AS CATEGORY_NAME3,
+		C4.CATEGORY_URL AS CATEGORY_URL4,
+		C4.CATEGORY_NAME  AS CATEGORY_NAME4
+		FROM (
+		SELECT I.*,
+		CASE WHEN C.CATEGORY_CLASS1 = '000' THEN
+		''
+		ELSE
+		CONCAT(C.CATEGORY_CLASS1, '000000000')
+		END AS CATEGORY_CODE1,
+
+		CASE WHEN C.CATEGORY_CLASS2 = '000' THEN
+		''
+		ELSE
+		CONCAT(C.CATEGORY_CLASS1, C.CATEGORY_CLASS2, '000000')
+		END AS CATEGORY_CODE2,
+
+		CASE WHEN C.CATEGORY_CLASS3 = '000' THEN
+		''
+		ELSE
+		CONCAT(C.CATEGORY_CLASS1, C.CATEGORY_CLASS2, C.CATEGORY_CLASS3, '000')
+		END
+		AS CATEGORY_CODE3,
+
+		CASE WHEN C.CATEGORY_CLASS4 = '000' THEN
+		''
+		ELSE
+		CONCAT(C.CATEGORY_CLASS1, C.CATEGORY_CLASS2, C.CATEGORY_CLASS3, C.CATEGORY_CLASS4)
+		END
+		AS CATEGORY_CODE4
+		FROM (
+		SELECT I.*, IC.CATEGORY_ID
+		FROM OP_ITEM I
+		LEFT JOIN OP_ITEM_CATEGORY IC ON I.ITEM_ID = IC.ITEM_ID
+
+		<where>
+			DISPLAY_FLAG = 'Y' AND (
+			SELECT COUNT(*) FROM OP_ITEM_CATEGORY AS IC2
+			WHERE IC2.ITEM_ID = IC.ITEM_ID and IC2.ORDERING <![CDATA[<=]]> IC.ORDERING
+			) <![CDATA[<=]]> 1
+
+
+			<if test='type == "A"'>
+				AND ITEM_USER_CODE RLIKE CONCAT('^[', #{startIndex}, ']')
+			</if>
+
+			<if test='type == "N"'>
+				AND ITEM_USER_CODE BETWEEN #{startIndex} AND #{endIndex}
+				AND LENGTH(ITEM_USER_CODE) <![CDATA[<=]]> LENGTH(#{endIndex})
+			</if>
+		</where>
+
+		ORDER BY RAND()
+		LIMIT 100
+		) I INNER JOIN OP_CATEGORY C ON I.CATEGORY_ID = C.CATEGORY_ID
+		) I
+
+		LEFT JOIN OP_CATEGORY C1 ON C1.CATEGORY_CODE = I.CATEGORY_CODE1
+		LEFT JOIN OP_CATEGORY C2 ON C2.CATEGORY_CODE = I.CATEGORY_CODE2
+		LEFT JOIN OP_CATEGORY C3 ON C3.CATEGORY_CODE = I.CATEGORY_CODE3
+		LEFT JOIN OP_CATEGORY C4 ON C4.CATEGORY_CODE = I.CATEGORY_CODE4
+	</select>
+
+
+	<!-- [엑셀업로드] 상품리스트로 일괄등록 -->
+	<insert id="insertItemListForExcel">
+		INSERT INTO OP_ITEM (ITEM_ID, SELLER_ID, SHIPMENT_ID, DELIVERY_TYPE, SHIPMENT_GROUP_CODE, SHIPMENT_RETURN_TYPE, DELIVERY_ID, DELIVERY_CHARGE_ID, ITEM_CODE, ITEM_USER_CODE, ITEM_NAME, ITEM_TYPE, ITEM_LABEL, SOLD_OUT, ITEM_TYPE1, ITEM_TYPE2, ITEM_TYPE3, ITEM_TYPE4, ITEM_TYPE5, ITEM_NEW_FLAG, DISPLAY_FLAG, ORIGIN_COUNTRY, MANUFACTURER, BRAND, COLOR, NONMEMBER_ORDER_TYPE, TAX_TYPE, COST_PRICE, ITEM_PRICE, SALE_PRICE, SALE_PRICE_NONMEMBER, SALE_POINT, SUPPLY_PRICE, SELLER_DISCOUNT_FLAG, SELLER_DISCOUNT_TYPE, SELLER_DISCOUNT_AMOUNT, COMMISSION_TYPE, COMMISSION_RATE, STOCK_FLAG, STOCK_QUANTITY, STOCK_SCHEDULE_AUTO_FLAG, STOCK_SCHEDULE_TYPE, STOCK_SCHEDULE_DATE, STOCK_SCHEDULE_TEXT, ORDER_MIN_QUANTITY, ORDER_MAX_QUANTITY, SALE_QUANTITY, ITEM_OPTION_FLAG, ITEM_OPTION_TITLE1, ITEM_OPTION_TITLE2, ITEM_OPTION_TITLE3, ITEM_ADDITION_FLAG, FREE_GIFT_FLAG, FREE_GIFT_NAME, ITEM_KEYWORD, ITEM_SUMMARY, HEADER_CONTENT_FLAG, FOOTER_CONTENT_FLAG, DETAIL_CONTENT, DETAIL_CONTENT_MOBILE, USE_MANUAL, MAKE_MANUAL, ITEM_IMAGE, TEAM, OPENTIME, BASE_ITEM, OTHER_FLAG, RECOMMEND_FLAG, RELATION_ITEM_DISPLAY_TYPE, DELIVERY_INFO, HITS, SEO_TITLE, SEO_INDEX_FLAG, SEO_KEYWORDS, SEO_DESCRIPTION, SEO_HEADER_CONTENTS1, SEO_THEMAWORD_TITLE, SEO_THEMAWORD_DESCRIPTION, DATA_STATUS_CODE, UPDATED_USER_ID, UPDATED_DATE, CREATED_USER_ID, CREATED_DATE)
+		VALUES
+
+		<foreach item="item" index="index" collection="list" open="" separator="," close="">
+			(#{item.itemId}, #{item.sellerId}, #{item.shipmentId}, #{item.deliveryType}, #{item.shipmentGroupCode}, #{item.shipmentReturnType}, #{item.deliveryId}, #{item.deliveryChargeId}, #{item.itemCode}, #{item.itemUserCode}, #{item.itemName}, #{item.itemType}, #{item.itemLabel}, #{item.soldOut}, #{item.itemType1}, #{item.itemType2}, #{item.itemType3}, #{item.itemType4}, #{item.itemType5}, #{item.itemNewFlag}, #{item.displayFlag}, #{item.originCountry}, #{item.manufacturer}, #{item.brand}, #{item.color}, #{item.nonmemberOrderType}, #{item.taxType}, #{item.costPrice}, #{item.itemPrice}, #{item.salePrice}, #{item.salePriceNonmember}, #{item.salePoint}, #{item.supplyPrice}, #{item.sellerDiscountFlag}, #{item.sellerDiscountType}, #{item.sellerDiscountAmount}, #{item.commissionType}, #{item.commissionRate}, #{item.stockFlag}, #{item.stockQuantity}, #{item.stockScheduleAutoFlag}, #{item.stockScheduleType}, #{item.stockScheduleDate}, #{item.stockScheduleText}, #{item.orderMinQuantity}, #{item.orderMaxQuantity}, #{item.saleQuantity}, #{item.itemOptionFlag}, #{item.itemOptionTitle1}, #{item.itemOptionTitle2}, #{item.itemOptionTitle3}, #{item.itemAdditionFlag}, #{item.freeGiftFlag}, #{item.freeGiftName}, #{item.itemKeyword}, #{item.itemSummary}, #{item.listContent}, #{item.headerContentFlag}, #{item.footerContentFlag}, #{item.detailContent}, #{item.detailContentMobile}, #{item.useManual}, #{item.makeManual}, #{item.itemImage}, #{item.team}, #{item.opentime}, #{item.baseItem}, #{item.otherFlag}, #{item.recommendFlag}, #{item.relationItemDisplayType}, #{item.deliveryInfo}, #{item.hits}, #{item.seo.title}, #{item.seo.noIndexDisplayFlag}, #{item.seo.keywords}, #{item.seo.description}, #{item.seo.headerContents1}, #{item.seo.themawordTitle}, #{item.seo.themawordDescription}, #{item.dataStatusCode}, #{item.updatedUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{item.createdUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+
+	<!--LCH-item-mapper  <수정> -->
+	<select id="getItemListForGroupBanner" parameterType="String" resultMap="ItemResult">
+		SELECT
+			I.ITEM_ID,
+			I.ITEM_USER_CODE,
+			I.ITEM_NAME,
+			I.ITEM_LABEL,
+			I.ITEM_LABEL_VALUE,
+			I.SOLD_OUT,
+			I.ITEM_NEW_FLAG,
+			I.ITEM_OPTION_FLAG,
+			I.NONMEMBER_ORDER_TYPE,
+			I.ITEM_TYPE,
+			I.ITEM_PRICE,
+			I.SALE_PRICE,
+			I.SELLER_DISCOUNT_FLAG,
+			I.SELLER_DISCOUNT_TYPE,
+			I.SELLER_DISCOUNT_AMOUNT,
+			I.SPOT_FLAG,
+			I.SPOT_TYPE,
+			I.SPOT_DISCOUNT_AMOUNT,
+			I.SPOT_START_DATE,
+			I.SPOT_END_DATE,
+			I.SPOT_START_TIME,
+			I.SPOT_END_TIME,
+			I.SPOT_WEEK_DAY,
+
+			I.ITEM_IMAGE,
+			I.HITS,
+			I.DISPLAY_FLAG,
+			I.OTHER_FLAG
+		FROM OP_ITEM I
+		WHERE
+			I.ITEM_ID IN
+			<foreach collection="ids" item="id" separator="," open="(" close=")">
+				#{id}
+			</foreach>
+			AND I.DATA_STATUS_CODE = '1'
+			AND I.DISPLAY_FLAG = 'Y'
+	</select>
+
+
+	<select id="getGroupItemsForGroupBanner" resultMap="GroupAndItemResult">
+		<foreach item="group" index="index" collection="list" open="" separator="UNION ALL" close="">
+			SELECT
+			#{group.url} AS CODE,
+			I.ITEM_ID,
+			I.ITEM_USER_CODE,
+			I.ITEM_NAME,
+			I.ITEM_LABEL,
+			I.ITEM_LABEL_VALUE,
+			I.SOLD_OUT,
+			I.ITEM_NEW_FLAG,
+			I.ITEM_OPTION_FLAG,
+			I.NONMEMBER_ORDER_TYPE,
+			I.ITEM_TYPE,
+			I.ITEM_PRICE,
+			I.SALE_PRICE,
+			I.SELLER_DISCOUNT_FLAG,
+			I.SELLER_DISCOUNT_TYPE,
+			I.SELLER_DISCOUNT_AMOUNT,
+			I.SPOT_FLAG,
+			I.SPOT_TYPE,
+			I.SPOT_DISCOUNT_AMOUNT,
+			I.SPOT_START_DATE,
+			I.SPOT_END_DATE,
+			I.SPOT_START_TIME,
+			I.SPOT_END_TIME,
+			I.SPOT_WEEK_DAY,
+
+			I.ITEM_IMAGE,
+			I.HITS,
+			I.DISPLAY_FLAG,
+			I.OTHER_FLAG
+			FROM OP_ITEM I
+			WHERE
+			I.ITEM_ID IN (#{group.itemList})
+			AND I.DATA_STATUS_CODE = '1'
+			AND I.DISPLAY_FLAG = 'Y'
+		</foreach>
+	</select>
+
+
+	<!-- 상품 조회 수 증가. -->
+	<update id="updateItemHitsByItemId" parameterType="int">
+		UPDATE OP_ITEM SET
+			HITS = HITS + 1
+		WHERE
+			ITEM_ID = #{value}
+	</update>
+
+	<select id="getItemListByOptionCode" parameterType="String" resultMap="ItemResult">
+		SELECT I.*
+		FROM OP_ITEM_OPTION IO INNER JOIN OP_ITEM I ON IO.ITEM_ID = I.ITEM_ID
+		WHERE
+			IO.OPTION_STOCK_CODE = #{value}
+			AND I.DATA_STATUS_CODE = '1'
+		GROUP BY I.ITEM_ID
+	</select>
+
+	<select id="getItemListByOpenMarketItemParam" parameterType="saleson.shop.item.support.OpenMarketItemParam" resultMap="ItemResult">
+
+		SELECT I.*
+		FROM OP_ITEM I INNER JOIN (
+		SELECT T.ITEM_ID FROM (
+		SELECT
+		I.ITEM_ID,
+		CONCAT(',', GROUP_CONCAT(IO.OPTION_STOCK_CODE), ',') AS OPTION_STOCK_CODES,
+		COUNT(DISTINCT IO.OPTION_NAME1) AS COUNT
+		FROM OP_ITEM I
+		INNER JOIN OP_ITEM_OPTION IO ON I.ITEM_ID = IO.ITEM_ID
+		WHERE
+		I.ITEM_ID IN (
+		SELECT DISTINCT I.ITEM_ID FROM OP_ITEM_OPTION IO
+		INNER JOIN OP_ITEM I ON IO.ITEM_ID = I.ITEM_ID
+		WHERE
+		IO.OPTION_STOCK_CODE IN
+		<foreach item="optionCode" index="index" collection="optionCodes" open="(" separator="," close=")">
+			#{optionStockCode}
+		</foreach>
+
+		<if test="itemUserCode != null and itemUserCode != ''">
+			AND I.ITEM_USER_CODE = #{itemUserCode}
+		</if>
+		)
+		AND I.DATA_STATUS_CODE = '1'
+		AND IO.OPTION_HIDE_FLAG = 'Y'
+		GROUP BY I.ITEM_ID
+		) T
+		WHERE
+		<foreach item="optionCode" index="index" collection="optionCodes" open="" separator=" AND " close="">
+			T.OPTION_STOCK_CODES LIKE CONCAT('%,', #{optionStockCode}, ',%')
+		</foreach>
+		AND T.COUNT = #{count}
+		) TT ON I.ITEM_ID = TT.ITEM_ID
+
+	</select>
+
+
+	<!-- 상품 고시 유형 목록. -->
+	<select id="getItemNoticeCodes" resultType="saleson.shop.item.domain.ItemNotice">
+		SELECT
+			ITEM_NOTICE_CODE AS itemNoticeCode,
+			ITEM_NOTICE_TITLE AS itemNoticeTitle
+		FROM OP_ITEM_NOTICE
+		GROUP BY ITEM_NOTICE_CODE, ITEM_NOTICE_TITLE
+	</select>
+
+
+	<!-- 상품 유형 코드에 해당하는 상품 고시 목록을 가져옴. -->
+	<select id="getItemNoticeListByCode" parameterType="String" resultType="saleson.shop.item.domain.ItemNotice">
+		SELECT
+			ITEM_NOTICE_CODE AS itemNoticeCode,
+			ITEM_NOTICE_TITLE AS itemNoticeTitle,
+			NOTICE_TITLE AS noticeTitle,
+			NOTICE_DESCRIPTION AS noticeDescription
+		FROM OP_ITEM_NOTICE
+		WHERE
+			ITEM_NOTICE_CODE = #{value}
+		ORDER BY ORDERING ASC
+	</select>
+
+	<!-- 추가구성 상품 등록 -->
+	<insert id="insertItemAddition" parameterType="saleson.shop.item.domain.ItemAddition">
+		INSERT INTO OP_ITEM_ADDITION (ITEM_ADDITION_ID, ITEM_ID, ADDITION_ITEM_ID, ORDERING, CREATED_DATE)
+		VALUES (#{itemAdditionId}, #{itemId}, #{additionItemId}, #{ordering}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+	<select id="getParentAdditionItemId" parameterType="Integer" resultType="Integer">
+		SELECT ITEM_ID FROM OP_ITEM_ADDITION
+		WHERE ITEM_ADDITION_ID = #{value}
+	</select>
+
+	<!-- 추가구성 상품 정보 삭제 -->
+	<delete id="deleteItemAdditionByItemId" parameterType="int">
+		DELETE FROM OP_ITEM_ADDITION
+		WHERE ITEM_ID = #{value}
+	</delete>
+
+	<!-- 추가 상품 목록 -->
+	<select id="getItemAdditionList" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemAdditionResult">
+		SELECT
+			IA.*,
+			I.ITEM_ID AS ADDITION_ITEM_ID,
+			I.ITEM_USER_CODE AS ADDITION_ITEM_USER_CODE,
+			I.ITEM_NAME AS ADDITION_ITEM_NAME,
+			I.NONMEMBER_ORDER_TYPE AS ADDITION_NONMEMBER_ORDER_TYPE,
+			I.ITEM_TYPE AS ADDITION_ITEM_TYPE,
+			I.TAX_TYPE AS ADDITION_TAX_TYPE,
+			I.ITEM_PRICE AS ADDITION_ITEM_PRICE,
+			I.SALE_PRICE AS ADDITION_SALE_PRICE,
+			I.SALE_PRICE_NONMEMBER AS ADDITION_SALE_PRICE_NONMEMBER,
+			I.ITEM_SUMMARY AS ADDITION_ITEM_SUMMARY,
+			I.ITEM_IMAGE AS ADDITION_ITEM_IMAGE,
+			I.ITEM_OPTION_FLAG AS ADDITION_ITEM_OPTION_FLAG,
+			I.SEO_INDEX_FLAG AS ADDITION_SEO_INDEX_FLAG,
+			I.SELLER_DISCOUNT_FLAG,
+			I.SELLER_DISCOUNT_TYPE,
+			I.SELLER_DISCOUNT_AMOUNT,
+			I.SPOT_FLAG,
+			I.SPOT_TYPE,
+			I.SPOT_DATE_TYPE,
+			I.SPOT_DISCOUNT_AMOUNT,
+			I.SPOT_START_DATE,
+			I.SPOT_END_DATE,
+			I.SPOT_START_TIME,
+			I.SPOT_END_TIME,
+			I.SPOT_WEEK_DAY,
+			I.QUICK_DELIVERY_EXTRA_CHARGE_FLAG
+		FROM OP_ITEM_ADDITION IA
+		INNER JOIN OP_ITEM I ON IA.ADDITION_ITEM_ID = I.ITEM_ID
+		WHERE
+			IA.ITEM_ID = #{itemId} AND I.DISPLAY_FLAG = 'Y' AND I.ITEM_OPTION_FLAG = 'N'
+			<if test='privateTypes != null'>
+				AND I.PRIVATE_TYPE IN (
+					<foreach collection="privateTypes" item="privateType" index="i" open="" separator="," close="">
+						#{privateType}
+					</foreach>
+				)
+			</if>
+		ORDER BY IA.ORDERING ASC
+	</select>
+
+	<select id="getItemOptionImageList" parameterType="int" resultMap="ItemOptionImageResult">
+		SELECT *
+		FROM OP_ITEM_OPTION_IMAGE
+		WHERE ITEM_ID = #{value}
+	</select>
+
+	<update id="updateShipmentPrice" parameterType="saleson.shop.shipment.domain.Shipment">
+		UPDATE OP_ITEM
+		<set>
+			SHIPPING = #{shipping},
+			SHIPPING_FREE_AMOUNT = #{shippingFreeAmount},
+			SHIPPING_EXTRA_CHARGE1 = #{shippingExtraCharge1},
+			SHIPPING_EXTRA_CHARGE2 = #{shippingExtraCharge2},
+			SHIPMENT_GROUP_CODE = #{shipmentGroupCode}
+		</set>
+		WHERE SHIPMENT_ID = #{shipmentId} AND SHIPPING_TYPE = 3
+	</update>
+
+	<!-- 판매자 정보 수정 시 상품 배송비 정보 일괄 업데이트 -->
+	<update id="updateShipmentPriceForSeller" parameterType="saleson.seller.main.domain.Seller">
+		UPDATE OP_ITEM
+		<set>
+			SHIPPING = #{shipping},
+			SHIPPING_FREE_AMOUNT = #{shippingFreeAmount},
+			SHIPPING_EXTRA_CHARGE1 = #{shippingExtraCharge1},
+			SHIPPING_EXTRA_CHARGE2 = #{shippingExtraCharge2}
+		</set>
+		WHERE SHIPPING_GROUP_CODE = CONCAT('SELLER-', #{sellerId})
+	</update>
+
+	<!-- 판매자 정보의 담당MD가 변경된 경우 해당 업체 상품 정보에 변경 전 담당MD가 지정된 경우에만 상품MD 일괄 UPDATE  -->
+	<update id="updateItemMdUserForSeller" parameterType="saleson.seller.main.domain.Seller">
+		UPDATE OP_ITEM
+		SET
+			MD_ID = #{mdId},
+			MD_NAME = #{mdName}
+		WHERE SELLER_ID = #{sellerId} AND MD_ID = #{currentMdId}
+	</update>
+
+	<update id="updateShipment" parameterType="saleson.shop.shipment.domain.Shipment">
+		UPDATE OP_ITEM
+		<set>
+			SHIPMENT_ID = #{shipmentId},
+			SHIPPING = #{shipping},
+			SHIPPING_FREE_AMOUNT = #{shippingFreeAmount},
+			SHIPPING_EXTRA_CHARGE1 = #{shippingExtraCharge1},
+			SHIPPING_EXTRA_CHARGE2 = #{shippingExtraCharge2}
+		</set>
+		WHERE SHIPMENT_ID = #{deleteShipmentId} AND SHIPPING_TYPE = 3
+	</update>
+
+	<update id="updateShipmentReturn" parameterType="saleson.shop.shipmentreturn.domain.ShipmentReturn">
+		UPDATE OP_ITEM
+		<set>
+			SHIPMENT_RETURN_ID = #{shipmentReturnId},
+		</set>
+		WHERE SHIPMENT_RETURN_ID = #{deleteShipmentReturnId}
+	</update>
+
+	<select id="getItemCountForMain" parameterType="int" resultMap="MainItemResult">
+
+		SELECT
+		'총 상품 수' AS DATA_STATUS_CODE,
+
+		COUNT(*) AS CNT
+		FROM
+		OP_ITEM I
+		JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+		WHERE S.STATUS_CODE = 2
+		<!-- AND I.DATA_STATUS_CODE IN ('1', '90') -->
+		AND I.DATA_STATUS_CODE IN ('1','20','21','30','31','90')
+		AND I.ITEM_DATA_TYPE = '1'
+		<if test='value != 0 and value !="" and value != null'>
+			AND S.SELLER_ID = #{value}
+		</if>
+
+
+		UNION
+
+		SELECT
+		'등록대기' AS DATA_STATUS_CODE,
+
+		COUNT(*) AS CNT
+		FROM
+		OP_ITEM I
+		JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+
+		WHERE S.STATUS_CODE = 2
+		AND DATA_STATUS_CODE IN ('20','21','30','31','40','41')
+		<if test='value != 0 and value !="" and value != null'>
+			AND S.SELLER_ID = #{value}
+		</if>
+
+
+
+		UNION
+
+		SELECT
+		'판매중' AS DATA_STATUS_CODE,
+
+		COUNT(*) AS CNT
+		FROM
+		OP_ITEM I
+		JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+		WHERE S.STATUS_CODE = 2 AND DATA_STATUS_CODE=1
+		AND I.ITEM_DATA_TYPE = '1'
+		AND I.SOLD_OUT = '0'
+		<!-- 	SELECT
+                '판매중' AS DATA_STATUS_CODE,
+
+                COUNT(*) AS CNT
+            FROM (
+                SELECT
+                    I.ITEM_ID
+                FROM
+                    OP_ITEM I
+                    LEFT JOIN (
+                        SELECT IO1.ITEM_ID, 'Y' AS ITEM_OPTION_SOLD_OUT_FLAG FROM (
+                            SELECT ITEM_ID, OPTION_NAME1, COUNT(*) AS OPTION_SOLD_OUT_COUNT FROM OP_ITEM_OPTION
+                            WHERE OPTION_TYPE = 'S' AND (OPTION_SOLD_OUT_FLAG = 'Y' OR
+                                (OPTION_SOLD_OUT_FLAG = 'N' AND OPTION_STOCK_QUANTITY = 0))
+                            GROUP BY ITEM_ID, OPTION_NAME1
+                        ) IO1 LEFT JOIN (
+                            SELECT ITEM_ID, OPTION_NAME1, COUNT(*) AS OPTION_COUNT FROM OP_ITEM_OPTION
+                            WHERE OPTION_TYPE = 'S'
+                            GROUP BY ITEM_ID, OPTION_NAME1
+                        ) IO2 ON IO1.ITEM_ID = IO2.ITEM_ID AND IO1.OPTION_NAME1 = IO2.OPTION_NAME1
+                        WHERE IO1.OPTION_SOLD_OUT_COUNT = IO2.OPTION_COUNT
+
+                        UNION
+
+                        SELECT IO1.ITEM_ID, 'Y' AS ITEM_OPTION_SOLD_OUT_FLAG FROM (
+                            SELECT ITEM_ID, COUNT(*) AS OPTION_SOLD_OUT_COUNT FROM OP_ITEM_OPTION
+                            WHERE OPTION_TYPE IN ('S2', 'S3') AND (OPTION_SOLD_OUT_FLAG = 'Y' OR
+                                (OPTION_SOLD_OUT_FLAG = 'N' AND OPTION_STOCK_QUANTITY = 0))
+                            GROUP BY ITEM_ID
+                        ) IO1 LEFT JOIN (
+                            SELECT ITEM_ID, COUNT(*) AS OPTION_COUNT FROM OP_ITEM_OPTION
+                            WHERE OPTION_TYPE IN ('S2', 'S3')
+                            GROUP BY ITEM_ID
+                        ) IO2 ON IO1.ITEM_ID = IO2.ITEM_ID
+                        WHERE IO1.OPTION_SOLD_OUT_COUNT = IO2.OPTION_COUNT
+                    ) IOS ON I.ITEM_ID = IOS.ITEM_ID
+                    INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+
+                WHERE
+                    I.DATA_STATUS_CODE = '1'
+                    AND S.STATUS_CODE = 2
+                    AND (
+                        I.SOLD_OUT = '1' OR
+                        (I.ITEM_OPTION_FLAG = 'N' AND I.STOCK_FLAG = 'Y' AND I.STOCK_QUANTITY = 0) OR
+                        (I.ITEM_OPTION_FLAG = 'Y' AND I.ITEM_OPTION_TYPE = 'T' AND I.STOCK_FLAG = 'Y' AND I.STOCK_QUANTITY = 0)) OR
+                        (I.ITEM_OPTION_FLAG = 'Y' AND IOS.ITEM_OPTION_SOLD_OUT_FLAG = 'Y') -->
+		<if test='value != 0 and value !="" and value != null'>
+			AND S.SELLER_ID = #{value}
+		</if>
+
+		<!-- 	) I -->
+
+
+
+
+		UNION
+
+		SELECT '품절' AS OPTION_SOLD_OUT_FLAG
+		, COUNT(DISTINCT I.ITEM_ID) CNT
+		FROM OP_ITEM I
+		LEFT JOIN OP_ITEM_OPTION IO
+		ON I.ITEM_ID = IO.ITEM_ID
+		AND IO.OPTION_TYPE = 'S'
+		AND (IO.OPTION_SOLD_OUT_FLAG = 'Y' OR IO.OPTION_STOCK_QUANTITY = 0)
+		INNER JOIN OP_SELLER S
+		ON I.SELLER_ID = S.SELLER_ID
+		AND S.STATUS_CODE = '2'
+		WHERE I.DATA_STATUS_CODE =1
+		AND I.ITEM_DATA_TYPE = '1'
+		AND I.SOLD_OUT = '1'
+
+		<!-- SELECT
+			'품절',
+			COUNT(*) CNT
+		FROM (
+			SELECT
+				I.ITEM_ID
+			FROM
+				OP_ITEM I
+				LEFT JOIN (
+					SELECT IO1.ITEM_ID, 'Y' AS ITEM_OPTION_SOLD_OUT_FLAG FROM (
+						SELECT ITEM_ID, OPTION_NAME1, COUNT(*) AS OPTION_SOLD_OUT_COUNT FROM OP_ITEM_OPTION
+						WHERE OPTION_TYPE = 'S' AND (OPTION_SOLD_OUT_FLAG = 'Y' OR
+							(OPTION_SOLD_OUT_FLAG = 'N' AND OPTION_STOCK_QUANTITY = 0))
+						GROUP BY ITEM_ID, OPTION_NAME1
+					) IO1 LEFT JOIN (
+						SELECT ITEM_ID, OPTION_NAME1, COUNT(*) AS OPTION_COUNT FROM OP_ITEM_OPTION
+						WHERE OPTION_TYPE = 'S'
+						GROUP BY ITEM_ID, OPTION_NAME1
+					) IO2 ON IO1.ITEM_ID = IO2.ITEM_ID AND IO1.OPTION_NAME1 = IO2.OPTION_NAME1
+					WHERE IO1.OPTION_SOLD_OUT_COUNT = IO2.OPTION_COUNT
+
+					UNION
+
+					SELECT IO1.ITEM_ID, 'Y' AS ITEM_OPTION_SOLD_OUT_FLAG FROM (
+						SELECT ITEM_ID, COUNT(*) AS OPTION_SOLD_OUT_COUNT FROM OP_ITEM_OPTION
+						WHERE OPTION_TYPE IN ('S2', 'S3') AND (OPTION_SOLD_OUT_FLAG = 'Y' OR
+							(OPTION_SOLD_OUT_FLAG = 'N' AND OPTION_STOCK_QUANTITY = 0))
+						GROUP BY ITEM_ID
+					) IO1 LEFT JOIN (
+						SELECT ITEM_ID, COUNT(*) AS OPTION_COUNT FROM OP_ITEM_OPTION
+						WHERE OPTION_TYPE IN ('S2', 'S3')
+						GROUP BY ITEM_ID
+					) IO2 ON IO1.ITEM_ID = IO2.ITEM_ID
+					WHERE IO1.OPTION_SOLD_OUT_COUNT = IO2.OPTION_COUNT
+				) IOS ON I.ITEM_ID = IOS.ITEM_ID
+				INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+
+			WHERE
+				I.DATA_STATUS_CODE = '1'
+				AND S.STATUS_CODE = 2
+				AND NOT (
+					I.SOLD_OUT = '1' OR
+					(I.ITEM_OPTION_FLAG = 'N' AND I.STOCK_FLAG = 'Y' AND I.STOCK_QUANTITY = 0) OR
+					(I.ITEM_OPTION_FLAG = 'Y' AND I.ITEM_OPTION_TYPE = 'T' AND I.STOCK_FLAG = 'Y' AND I.STOCK_QUANTITY = 0)) OR
+					(I.ITEM_OPTION_FLAG = 'Y' AND IOS.ITEM_OPTION_SOLD_OUT_FLAG = 'Y') -->
+		<if test='value != 0 and value !="" and value != null'>
+			AND S.SELLER_ID = #{value}
+		</if>
+		<!-- ) I -->
+
+
+		UNION
+
+		SELECT '판매종료', COUNT(*) AS CNT FROM OP_ITEM I INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+		WHERE I.DATA_STATUS_CODE = '90' AND S.STATUS_CODE = 2
+		<if test='value != 0 and value !="" and value != null'>
+			AND S.SELLER_ID = #{value}
+		</if>
+
+	</select>
+
+	<resultMap id="ItemAddOptionResult" type="saleson.shop.item.domain.ItemAddOption" extends="ItemBaseResult">
+		<result property="itemCode" column="ITEM_CODE" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="sellerName" column="SELLER_NAME" />
+		<result property="sellerLoginId" column="SELLER_LOGIN_ID" />
+
+		<result property="itemLabel" column="ITEM_LABEL" />
+		<result property="itemLabelValue" column="ITEM_LABEL_VALUE" />
+
+		<result property="itemNewFlag" column="ITEM_NEW_FLAG" />
+		<result property="itemType1" column="ITEM_TYPE1" />
+		<result property="itemType2" column="ITEM_TYPE2" />
+		<result property="itemType3" column="ITEM_TYPE3" />
+		<result property="itemType4" column="ITEM_TYPE4" />
+		<result property="itemType5" column="ITEM_TYPE5" />
+		<result property="displayFlag" column="DISPLAY_FLAG" />
+		<result property="originCountry" column="ORIGIN_COUNTRY" />
+		<result property="manufacturer" column="MANUFACTURER" />
+		<result property="brand" column="BRAND" />
+		<result property="color" column="COLOR" />
+		<result property="weight" column="WEIGHT" />
+		<result property="displayQuantity" column="DISPLAY_QUANTITY" />
+		<result property="salePoint" column="SALE_POINT" />
+		<result property="costPrice" column="COST_PRICE" />
+		<result property="supplyPrice" column="SUPPLY_PRICE" />
+
+		<result property="commissionType" column="COMMISSION_TYPE" />
+		<result property="commissionRate" column="COMMISSION_RATE" />
+		<result property="stockFlag" column="STOCK_FLAG" />
+		<result property="stockQuantity" column="STOCK_QUANTITY" />
+		<result property="stockCode" column="STOCK_CODE" />
+
+		<result property="orderMinQuantity" column="ORDER_MIN_QUANTITY" />
+		<result property="orderMaxQuantity" column="ORDER_MAX_QUANTITY" />
+		<result property="saleQuantity" column="SALE_QUANTITY" />
+		<result property="itemOptionFlag" column="ITEM_OPTION_FLAG" />
+		<result property="itemOptionType" column="ITEM_OPTION_TYPE" />
+		<result property="itemOptionTitle1" column="ITEM_OPTION_TITLE1" />
+		<result property="itemOptionTitle2" column="ITEM_OPTION_TITLE2" />
+		<result property="itemOptionTitle3" column="ITEM_OPTION_TITLE3" />
+		<result property="itemAdditionFlag" column="ITEM_ADDITION_FLAG" />
+		<result property="freeGiftFlag" column="FREE_GIFT_FLAG" />
+		<result property="freeGiftName" column="FREE_GIFT_NAME" />
+		<result property="itemKeyword" column="ITEM_KEYWORD" />
+		<result property="itemNoticeCode" column="ITEM_NOTICE_CODE" />
+		<result property="headerContentFlag" column="HEADER_CONTENT_FLAG" />
+		<result property="footerContentFlag" column="FOOTER_CONTENT_FLAG" />
+		<result property="detailContent" column="DETAIL_CONTENT" />
+		<result property="detailContentMobile" column="DETAIL_CONTENT_MOBILE" />
+
+		<result property="team" column="TEAM" />
+		<result property="opentime" column="OPENTIME" />
+		<result property="otherFlag" column="OTHER_FLAG" />
+		<result property="recommendFlag" column="RECOMMEND_FLAG" />
+		<result property="relationItemDisplayType" column="RELATION_ITEM_DISPLAY_TYPE" />
+
+		<result property="deliveryCompanyId" column="DELIVERY_COMPANY_ID" />
+		<result property="deliveryCompanyName" column="DELIVERY_COMPANY_NAME" />
+		<result property="shipmentId" column="SHIPMENT_ID" />
+		<result property="shipmentReturnId" column="SHIPMENT_RETURN_ID" />
+		<result property="shippingType" column="SHIPPING_TYPE" />
+		<result property="shippingGroupCode" column="SHIPPING_GROUP_CODE" />
+		<result property="shipping" column="SHIPPING" />
+		<result property="shippingFreeAmount" column="SHIPPING_FREE_AMOUNT" />
+		<result property="shippingItemCount" column="SHIPPING_ITEM_COUNT" />
+		<result property="shippingExtraCharge1" column="SHIPPING_EXTRA_CHARGE1" />
+		<result property="shippingExtraCharge2" column="SHIPPING_EXTRA_CHARGE2" />
+		<result property="shippingReturn" column="SHIPPING_RETURN" />
+
+		<result property="hits" column="HITS" />
+
+		<result property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="dataStatusMessage" column="DATA_STATUS_MESSAGE" />
+		<result property="updatedUserId" column="UPDATED_USER_ID" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="createdUserId" column="CREATED_USER_ID" />
+		<result property="createdDate" column="CREATED_DATE" />
+
+		<result property="reviewCount" column="REVIEW_COUNT" />
+		<result property="reviewScore" column="REVIEW_SCORE" />
+		<result property="erpExceptionType" column="ERP_EXCEPTION_TYPE" />
+		<result property="cnt" column="CNT" />
+		<result property="itemReturnFlag" column="ITEM_RETURN_FLAG" />
+
+		<result property="addItemOptionId" column="ADD_ITEM_OPTION_ID" />
+		<result property="addOptionSalePrice" column="ADD_OPTION_SALE_PRICE" />
+		<result property="addOptionName1" column="ADD_OPTION_NAME1" />
+		<result property="addOptionName2" column="ADD_OPTION_NAME2" />
+		<result property="addOptionName3" column="ADD_OPTION_NAME3" />
+		<result property="textOptionCount" column="TEXT_OPTION_COUNT" />
+		<result property="addOptionStockFlag" column="ADD_OPTION_STOCK_FLAG" />
+		<result property="addOptionSoldOutFlag" column="ADD_OPTION_SOLD_OUT_FLAG" />
+		<result property="addOptionStockQuantity" column="ADD_OPTION_STOCK_QUANTITY" />
+	</resultMap>
+
+	<sql id="itemAddOptionWhere">
+		<if test='(where != null and where != "") and (query != null and query != "")'>
+			<if test='where == "ITEM_USER_CODE"'>
+				AND (I.ITEM_USER_CODE LIKE CONCAT('%', #{query}, '%') OR IO.OPTION_STOCK_CODE LIKE CONCAT('%', #{query}, '%'))
+			</if>
+			<if test='where == "ITEM_NAME"'>
+				AND (
+				I.ITEM_NAME LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+				OR
+				I.ITEM_USER_CODE LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+				OR
+				I.ITEM_KEYWORD LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+				OR
+				I.ITEM_ID IN (
+				SELECT
+				ITEM_ID
+				FROM
+				OP_ITEM_OPTION
+				WHERE OPTION_STOCK_CODE LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+				)
+				)
+			</if>
+		</if>
+	</sql>
+
+	<select id="getItemAddOptionCountByParam" parameterType="saleson.shop.item.support.ItemParam" resultType="Integer">
+
+		SELECT COUNT(*)
+		FROM OP_ITEM I
+		LEFT JOIN OP_ITEM_OPTION IO ON I.ITEM_ID = IO.ITEM_ID AND IO.OPTION_DISPLAY_FLAG = 'Y' AND IO.OPTION_TYPE NOT IN ('T', 'S')
+		<where>
+			I.DISPLAY_FLAG = 'Y'
+			AND I.DATA_STATUS_CODE = '1'
+			<include refid="itemAddOptionWhere" />
+		</where>
+	</select>
+
+	<select id="getItemAddOptionListByParam" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemAddOptionResult">
+		<include refid="CommonMapper.paginationHeader" />
+
+		SELECT
+		I.*,
+		IFNULL(IO.ITEM_OPTION_ID, 0) AS ADD_ITEM_OPTION_ID,
+		IO.OPTION_PRICE AS ADD_OPTION_SALE_PRICE,
+		IO.OPTION_NAME1 AS ADD_OPTION_NAME1,
+		IO.OPTION_NAME2 AS ADD_OPTION_NAME2,
+		IO.OPTION_NAME3 AS ADD_OPTION_NAME3,
+		IO.OPTION_STOCK_FLAG AS ADD_OPTION_STOCK_FLAG,
+		IO.OPTION_SOLD_OUT_FLAG AS ADD_OPTION_SOLD_OUT_FLAG,
+		IO.OPTION_STOCK_QUANTITY AS ADD_OPTION_STOCK_QUANTITY,
+		(
+		SELECT COUNT(*) FROM OP_ITEM_OPTION
+		WHERE
+		ITEM_ID = I.ITEM_ID
+		AND OPTION_TYPE = 'T'
+		AND OPTION_DISPLAY_FLAG = 'Y'
+		) AS TEXT_OPTION_COUNT
+		FROM OP_ITEM I
+		LEFT JOIN OP_ITEM_OPTION IO
+		ON I.ITEM_ID = IO.ITEM_ID AND IO.OPTION_DISPLAY_FLAG = 'Y' AND IO.OPTION_TYPE NOT IN ('T', 'S')
+		<where>
+			I.DISPLAY_FLAG = 'Y'
+			AND I.DATA_STATUS_CODE = '1'
+			<include refid="itemAddOptionWhere" />
+		</where>
+
+		ORDER BY I.ITEM_ID DESC
+
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<insert id="insertItemSaleEdit" parameterType="saleson.shop.item.domain.ItemSaleEdit">
+		INSERT INTO OP_ITEM_SALE_EDIT ( ITEM_SALE_EDIT_ID, ITEM_ID, SELLER_ID, SELLER_NAME, ITEM_CODE, ITEM_NAME, SALE_PRICE, ITEM_PRICE, COST_PRICE, STATUS, MESSAGE, CREATED_DATE)
+		VALUES ( #{itemSaleEditId}, #{itemId}, #{sellerId}, #{sellerName}, #{itemCode}, #{itemName}, #{salePrice}, #{itemPrice}, #{costPrice}, '0', #{message}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+	<select id="getItemSaleEdit" parameterType="saleson.shop.item.support.ItemSaleEditParam" resultMap="ItemSaleEditResult">
+		<include refid="CommonMapper.paginationHeader" />
+		SELECT *
+		FROM OP_ITEM_SALE_EDIT
+		<include refid="sqlItemSaleEditList" />
+		ORDER BY CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getItemSaleEditByParam" parameterType="saleson.shop.item.support.ItemSaleEditParam" resultMap="ItemSaleEditResult">
+		SELECT *
+		FROM OP_ITEM_SALE_EDIT
+		<include refid="sqlItemSaleEditList" />
+	</select>
+
+	<select id="getItemSaleEditCountByParam" parameterType="saleson.shop.item.support.ItemSaleEditParam" resultType="int">
+		SELECT COUNT(*)
+		FROM OP_ITEM_SALE_EDIT
+		<include refid="sqlItemSaleEditList" />
+	</select>
+
+	<delete id="deleteItemSaleEdit" parameterType="saleson.shop.item.domain.ItemSaleEdit">
+		DELETE FROM OP_ITEM_SALE_EDIT
+		WHERE
+			ITEM_SALE_EDIT_ID = #{itemSaleEditId}
+			AND SELLER_ID = #{sellerId}
+	</delete>
+
+	<update id="updateSaleEdit" parameterType="saleson.shop.item.domain.ItemSaleEdit">
+		UPDATE OP_ITEM_SALE_EDIT
+		SET
+			SALE_PRICE = #{salePrice},
+			ITEM_PRICE = #{itemPrice},
+			COST_PRICE = #{costPrice},
+			MESSAGE = CONCAT(MESSAGE, #{message}),
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE
+			ITEM_SALE_EDIT_ID = #{itemSaleEditId}
+			AND SELLER_ID = #{sellerId}
+	</update>
+
+	<update id="updateSaleEditStatus" parameterType="saleson.shop.item.domain.ItemSaleEdit">
+		UPDATE OP_ITEM_SALE_EDIT
+		SET
+			STATUS = #{status},
+			MESSAGE = CONCAT(MESSAGE, #{message}),
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE
+			ITEM_SALE_EDIT_ID = #{itemSaleEditId}
+	</update>
+
+	<update id="updateItemPrice" parameterType="saleson.shop.item.domain.ItemSaleEdit">
+		UPDATE OP_ITEM
+		SET
+			ITEM_PRICE = #{itemPrice},
+			COST_PRICE = #{costPrice},
+			SALE_PRICE = #{salePrice}
+		WHERE
+			ITEM_ID = #{itemId}
+			AND SELLER_ID = #{sellerId}
+			AND ITEM_CODE = #{itemCode}
+	</update>
+
+	<select id="getItemByItemSaleEdit" parameterType="saleson.shop.item.domain.ItemSaleEdit" resultMap="ItemResult">
+		SELECT SALE_PRICE, ITEM_PRICE, COST_PRICE
+		FROM
+			OP_ITEM
+		WHERE
+			ITEM_ID = #{itemId}
+			AND SELLER_ID = #{sellerId}
+			AND ITEM_CODE = #{itemCode}
+	</select>
+
+	<select id="getChosenItemList" parameterType="java.util.List" resultMap="ChosenItemResult">
+		SELECT ITEM_IMAGE, ITEM_NAME, ITEM_USER_CODE, SALE_PRICE
+		FROM OP_ITEM
+		<where>
+			<foreach collection="list" item="item">
+				OR ITEM_ID = #{item}
+			</foreach>
+		</where>
+	</select>
+	<select id="getSearchItemList" parameterType="saleson.shop.coupon.domain.ChosenItem" resultMap="ChosenItemResult">
+		SELECT I.ITEM_ID, I.ITEM_IMAGE, I.ITEM_NAME, I.ITEM_USER_CODE, I.SALE_PRICE
+		FROM OP_ITEM I
+		LEFT JOIN OP_ITEM_CATEGORY IC ON I.ITEM_ID = IC.ITEM_ID
+		LEFT JOIN OP_CATEGORY C ON IC.CATEGORY_ID = C.CATEGORY_ID
+		<where>
+			<!-- <if test='(categoryGroupId != "0") and (categoryGroupId != null) and (categoryGroupId != "")'>
+				AND C.CATEGORY_GROUP_ID = #{categoryGroupId}
+			</if> -->
+
+			<if test="categoryClass != '' and categoryClass != null">
+				AND C.CATEGORY_CODE LIKE CONCAT(#{categoryClass},'%')
+			</if>
+			<if test='(where != null and where != "") and (query != null and query != "")'>
+				<if test='where == "ITEM_USER_CODE"'>
+					AND (I.ITEM_USER_CODE LIKE CONCAT('%', #{query}, '%'))
+				</if>
+
+				<if test='where == "ITEM_NAME"'>
+					AND (
+					I.ITEM_NAME LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+					OR
+					I.ITEM_USER_CODE LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+					OR
+					I.ITEM_KEYWORD LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+					OR
+					I.ITEM_ID IN (
+					SELECT
+					ITEM_ID
+					FROM
+					OP_ITEM_OPTION
+					WHERE OPTION_STOCK_CODE LIKE CONCAT('%', REPLACE(#{query}, ' ', '%'), '%')
+					)
+					)
+				</if>
+			</if>
+		</where>
+
+	</select>
+
+	<!-- 카테고리 일괄 삭제 -->
+	<delete id="deleteItemCategoryByListParam" parameterType="saleson.shop.item.support.ItemListParam">
+		DELETE FROM OP_ITEM_CATEGORY
+		WHERE CATEGORY_ID = #{categoryId} AND ITEM_ID IN (
+
+		<foreach item="itemId" index="index" collection="id" open="" separator="UNION" close="">
+			SELECT #{itemId} AS ITEM_ID FROM DUAL
+		</foreach>
+		)
+	</delete>
+
+	<!-- 카테고리 일괄 등록 -->
+	<insert id="insertItemCategoryByListParam" parameterType="saleson.shop.item.support.ItemListParam">
+
+		INSERT INTO OP_ITEM_CATEGORY (ITEM_ID, CATEGORY_ID, ORDERING, CREATED_DATE)
+		VALUES
+		<foreach item="itemId" index="index" collection="id" open="" separator="," close="">
+			(#{itemId}, #{categoryId}, #{index}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+		</foreach>
+	</insert>
+
+	<!-- 상품 간편 설정 -->
+	<update id="updateItemForSimple" parameterType="saleson.shop.item.domain.Item">
+		UPDATE OP_ITEM
+
+		<set>
+			ITEM_NAME = #{itemName},
+			MANUFACTURER = #{manufacturer},
+			ORIGIN_COUNTRY = #{originCountry},
+
+			<!-- COST_PRICE = #{costPrice}, -->
+			SALE_PRICE = #{salePrice},
+			ITEM_PRICE = #{itemPrice},
+
+			SOLD_OUT = #{soldOut},
+			DISPLAY_FLAG = #{displayFlag},
+
+			UPDATED_USER_ID = #{updatedUserId},
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		</set>
+		WHERE ITEM_ID = #{itemId}
+	</update>
+
+	<insert id="insertItemLog" parameterType="saleson.shop.item.domain.Item">
+		INSERT INTO OP_ITEM_LOG (ITEM_ID, ITEM_USER_CODE, ITEM_NAME, DISPLAY_FLAG, SOLD_OUT, COST_PRICE, ITEM_PRICE, SALE_PRICE, COMMISSION_TYPE, COMMISSION_RATE, PRICE_CRITERIA, PROCESS_PAGE, CREATED_MANAGER_ID, CREATED_SELLER_ID, CREATED_DATE, ACTION_TYPE)
+		VALUES (#{itemId}, #{itemUserCode}, #{itemName}, #{displayFlag}, #{soldOut}, #{costPrice}, #{itemPrice}, #{salePrice}, #{commissionType}, #{commissionRate}, #{priceCriteria}, #{processPage}, #{createdManagerId}, #{createdSellerId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{actionType})
+	</insert>
+
+	<!-- 상품 로그 (판매자 상품 승인시) -->
+	<insert id="insertItemLogForApproval" parameterType="saleson.shop.item.domain.Item">
+		INSERT INTO OP_ITEM_LOG (ITEM_ID, ITEM_USER_CODE, ITEM_NAME, DISPLAY_FLAG, SOLD_OUT, COST_PRICE, ITEM_PRICE, SALE_PRICE, COMMISSION_TYPE, COMMISSION_RATE, PRICE_CRITERIA, PROCESS_PAGE, CREATED_MANAGER_ID, CREATED_SELLER_ID, CREATED_DATE, ACTION_TYPE)
+		SELECT
+		ITEM_ID, ITEM_USER_CODE, ITEM_NAME, DISPLAY_FLAG, SOLD_OUT, COST_PRICE, ITEM_PRICE, SALE_PRICE, COMMISSION_TYPE, COMMISSION_RATE, PRICE_CRITERIA,
+		#{processPage}, #{createdManagerId}, #{createdSellerId}, <include refid="CommonMapper.datetime" />, #{actionType}
+		FROM OP_ITEM
+		WHERE ITEM_ID = #{itemId}
+	</insert>
+
+	<select id="getItemLogListById" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemLogResult">
+		<include refid="CommonMapper.paginationHeader" />
+		SELECT
+		IL.ITEM_LOG_ID,
+		IL.ITEM_ID,
+		IL.ITEM_USER_CODE,
+		IL.ITEM_NAME,
+		IL.DISPLAY_FLAG,
+		IL.SOLD_OUT,
+		IL.COST_PRICE,
+		IL.ITEM_PRICE,
+		IL.SALE_PRICE,
+		IL.COMMISSION_TYPE,
+		IL.COMMISSION_RATE,
+		IL.PRICE_CRITERIA,
+		IL.PROCESS_PAGE,
+		IL.CREATED_MANAGER_ID,
+		IL.CREATED_SELLER_ID,
+		IL.CREATED_DATE,
+		IL.ACTION_TYPE,
+		S.SELLER_NAME,
+		S.LOGIN_ID AS SELLER_LOGIN_ID,
+		U.LOGIN_ID AS MANAGER_LOGIN_ID,
+		U.USER_NAME
+		FROM
+		OP_ITEM_LOG IL LEFT OUTER JOIN OP_SELLER S
+		ON IL.CREATED_MANAGER_ID = S.SELLER_ID
+		LEFT OUTER JOIN OP_MANAGER U ON IL.CREATED_MANAGER_ID = U.USER_ID
+		WHERE ITEM_ID = #{itemId}
+		ORDER BY ITEM_LOG_ID DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getItemLogCountById" parameterType="saleson.shop.item.support.ItemParam" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_ITEM_LOG
+		WHERE ITEM_ID = #{itemId}
+	</select>
+	<!-- kye 추가 시작 -->
+	<select id="getItemNonregisteredReviewCount" parameterType="saleson.shop.item.support.ItemParam" resultType="Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		(SELECT
+		OI.USER_ID,
+		OI.ORDER_CODE,
+		OI.CREATED_DATE,
+		OI.ITEM_ID ,
+		OI.ITEM_CODE ,
+		OI.ITEM_USER_CODE,
+		OI.ITEM_NAME,
+		OI.IMAGE_SRC AS ITEM_IMAGE
+		<include refid="saleson.shop.order.OrderMapper.sqlDefaultFormForOrder" />
+		<where>
+			OI.USER_ID  = #{userId}
+			AND OI.GUEST_FLAG = 'N'
+			AND OI.ORDER_STATUS = '40'
+			<!-- 미등록 이용후기 리스트 조건과 달라 추가 2017-05-15 yulsun.yoo -->
+			AND O.CREATED_DATE >= DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 90 DAY),'%Y%m%d%H%i%s')
+			<if test="conditionType == 'FRONT_ITEM_DETAIL' and itemUserCode != null">
+				AND OI.ITEM_USER_CODE = #{itemUserCode}
+			</if>
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+		) OT
+		LEFT JOIN OP_ITEM_REVIEW IR
+		ON OT.ORDER_CODE = IR.ORDER_CODE
+		AND OT.USER_ID = IR.USER_ID
+		AND OT.ITEM_ID = IR.ITEM_ID
+		<where>
+			IR.ITEM_REVIEW_ID IS NULL
+		</where>
+	</select>
+
+	<select id="getItemNonregisteredReviewList" parameterType="saleson.shop.item.support.ItemParam" resultMap="saleson.shop.order.OrderMapper.BaseOrderItemResult">
+		<include refid="CommonMapper.paginationHeader" />
+		SELECT
+		OT.USER_ID,
+		OT.ORDER_CODE,
+		OT.ORDER_SEQUENCE,
+		OT.ITEM_SEQUENCE,
+		OT.CREATED_DATE,
+		OT.ITEM_ID ,
+		OT.ITEM_CODE ,
+		OT.ITEM_USER_CODE,
+		OT.ITEM_NAME,
+		OT.ITEM_IMAGE AS IMAGE_SRC
+		FROM
+		(SELECT
+		OI.USER_ID,
+		OI.ORDER_CODE,
+		OI.ORDER_SEQUENCE,
+		OI.ITEM_SEQUENCE,
+		OI.CREATED_DATE,
+		OI.ITEM_ID ,
+		OI.ITEM_CODE ,
+		OI.ITEM_USER_CODE,
+		OI.ITEM_NAME,
+		OI.IMAGE_SRC AS ITEM_IMAGE
+		<include refid="saleson.shop.order.OrderMapper.sqlDefaultFormForOrder" />
+		<where>
+			OI.USER_ID  = #{userId}
+			AND OI.GUEST_FLAG = 'N'
+			AND OI.ORDER_STATUS = '40'
+			AND O.CREATED_DATE >= DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 90 DAY),'%Y%m%d%H%i%s')
+			<if test="conditionType == 'FRONT_ITEM_DETAIL' and itemUserCode != null">
+				AND OI.ITEM_USER_CODE = #{itemUserCode}
+			</if>
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+		) OT
+		LEFT JOIN OP_ITEM_REVIEW IR
+		ON OT.ORDER_CODE = IR.ORDER_CODE
+		AND OT.USER_ID = IR.USER_ID
+		AND OT.ITEM_ID = IR.ITEM_ID
+		<where>
+			IR.ITEM_REVIEW_ID IS NULL
+		</where>
+		ORDER BY IR.CREATED_DATE, OT.ORDER_CODE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	<!-- kye 추가 끝 -->
+
+	<!-- OP_ITEM_OPTION_SOLDOUT 테이블 데이터를 모두 삭제. -->
+	<delete id="deleteItemOptionSoldout">
+		DELETE FROM OP_ITEM_OPTION_SOLDOUT
+	</delete>
+
+	<!-- OP_ITEM_OPTION_SOLDOUT 데이터 전체 등록 -->
+	<insert id="insertItemOptionSoldout">
+		INSERT INTO OP_ITEM_OPTION_SOLDOUT
+		SELECT 
+			T.ITEM_ID,
+			'Y' AS ITEM_OPTION_SOLD_OUT_FLAG
+		FROM (
+			SELECT 
+				IOS_1.ITEM_ID, 
+				IOS_1.OPTION_NAME1,
+				(CASE WHEN COUNT(*) = IOS_2.OPTION_SOLD_OUT_COUNT THEN 'Y' ELSE 'N' END) AS ITEM_OPTION_SOLD_OUT_FLAG
+			FROM OP_ITEM_OPTION IOS_1 INNER JOIN (
+				SELECT
+					ITEM_ID, 
+					OPTION_NAME1, 
+					COUNT(*) AS OPTION_SOLD_OUT_COUNT
+				FROM OP_ITEM_OPTION
+				WHERE 
+					OPTION_TYPE IN ('S', 'C')
+					AND OPTION_DISPLAY_FLAG = 'Y'
+					AND (OPTION_SOLD_OUT_FLAG = 'Y' OR (OPTION_SOLD_OUT_FLAG = 'N' AND OPTION_STOCK_QUANTITY = 0))
+				GROUP BY ITEM_ID, OPTION_NAME1
+			) IOS_2 ON IOS_1.ITEM_ID = IOS_2.ITEM_ID AND IOS_1.OPTION_NAME1 = IOS_2.OPTION_NAME1
+			WHERE
+				IOS_1.OPTION_TYPE IN ('S', 'C')
+				AND IOS_1.OPTION_DISPLAY_FLAG = 'Y'
+			GROUP BY IOS_1.ITEM_ID, IOS_1.OPTION_NAME1
+		) T WHERE T.ITEM_OPTION_SOLD_OUT_FLAG = 'Y'
+		GROUP BY T.ITEM_ID
+		
+		UNION
+
+		SELECT
+			T.ITEM_ID,
+			'Y' AS ITEM_OPTION_SOLD_OUT_FLAG
+		FROM (
+			SELECT
+				IOS_1.ITEM_ID,
+				IOS_1.OPTION_NAME1,
+				COUNT(*) AS OPTION_COUNT,
+				IOS_2.OPTION_SOLD_OUT_COUNT
+			FROM OP_ITEM_OPTION IOS_1 INNER JOIN (
+				SELECT
+					ITEM_ID,
+					OPTION_NAME1,
+					COUNT(*) AS OPTION_SOLD_OUT_COUNT
+				FROM OP_ITEM_OPTION
+				WHERE
+					OPTION_TYPE IN ('S2', 'S3')
+					AND OPTION_DISPLAY_FLAG = 'Y'
+					AND (OPTION_SOLD_OUT_FLAG = 'Y' OR (OPTION_SOLD_OUT_FLAG = 'N' AND OPTION_STOCK_QUANTITY = 0))
+				GROUP BY ITEM_ID, OPTION_NAME1
+			) IOS_2 ON IOS_1.ITEM_ID = IOS_2.ITEM_ID AND IOS_1.OPTION_NAME1 = IOS_2.OPTION_NAME1
+			WHERE
+				IOS_1.OPTION_TYPE IN ('S2', 'S3')
+				AND IOS_1.OPTION_DISPLAY_FLAG = 'Y'
+			GROUP BY IOS_1.ITEM_ID, IOS_1.OPTION_NAME1
+		) T
+		GROUP BY T.ITEM_ID
+		HAVING SUM(T.OPTION_COUNT) = SUM(T.OPTION_SOLD_OUT_COUNT)
+	</insert>
+
+
+    <!-- OP_ITEM_HIT 테이블에 조회수 증가 -->
+    <insert id="mergeItemHits" parameterType="int">
+        INSERT INTO OP_ITEM_HIT VALUES (#{value}, 1)
+        ON DUPLICATE KEY UPDATE HITS = HITS + 1
+    </insert>
+
+    <!-- OP_ITEM 테이블에 조회수 반영 -->
+    <update id="updateItemHitsAll">
+        UPDATE OP_ITEM_HIT IH
+            INNER JOIN OP_ITEM I ON IH.ITEM_ID = I.ITEM_ID
+        SET
+            I.HITS = IH.HITS
+    </update>
+
+	<resultMap id="SalePriceInfoResult" type="saleson.shop.item.domain.SalePriceInfo">
+		<result column="MAX_PRICE" property="maxPrice"/>
+		<result column="MIN_PRICE" property="minPrice"/>
+		<result column="AVERAGE_PRICE" property="averagePrice"/>
+	</resultMap>
+
+	<select id="getSalePriceInfoByCategoryClass" parameterType="saleson.shop.item.support.ItemParam" resultMap="SalePriceInfoResult">
+		SELECT
+			COALESCE(MAX(I.SALE_PRICE), 0) AS MAX_PRICE,
+			COALESCE(MIN(I.SALE_PRICE), 0) AS MIN_PRICE,
+			COALESCE(ROUND(AVG(I.SALE_PRICE),0), 0) AS AVERAGE_PRICE
+		FROM OP_ITEM I
+		INNER JOIN OP_ITEM_CATEGORY IC
+			ON IC.ITEM_ID = I.ITEM_ID
+		INNER JOIN OP_CATEGORY C
+			ON C.CATEGORY_ID = IC.CATEGORY_ID
+			AND C.CATEGORY_CODE LIKE CONCAT(#{categoryClass},'%')
+		<where>
+			<include refid="defaultOnSaleWhereQuery" />
+		</where>
+	</select>
+
+	<insert id="insertItemReviewImage" parameterType="saleson.shop.item.domain.ItemReview">
+		INSERT INTO OP_ITEM_REVIEW_IMAGE
+		(
+			ITEM_REVIEW_ID,
+			REVIEW_IMAGE,
+			ORDERING,
+			CREATED_DATE
+		) VALUE
+		<foreach item="itemReviewImage" index="index" collection="itemReviewImages" open="" separator="," close="">
+			(#{itemReviewId}, #{itemReviewImage.reviewImage}, #{itemReviewImage.ordering}, <include refid="CommonMapper.datetime"/>)
+		</foreach>
+	</insert>
+
+	<delete id="deleteItemReviewImageById" parameterType="Long">
+		DELETE FROM OP_ITEM_REVIEW_IMAGE
+		WHERE ITEM_REVIEW_IMAGE_ID = #{value}
+	</delete>
+
+	<select id="getItemReviewImageCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_ITEM_REVIEW_IMAGE
+		WHERE ITEM_REVIEW_ID = #{value}
+	</select>
+
+	<update id="updateItemReviewLikeCount" parameterType="int">
+		UPDATE OP_ITEM_REVIEW
+		SET LIKE_COUNT = COALESCE(LIKE_COUNT, 0) + 1
+		WHERE ITEM_REVIEW_ID = #{value}
+	</update>
+
+	<update id="updateItemLabelValue" parameterType="saleson.shop.item.support.ItemParam">
+		UPDATE OP_ITEM
+		SET ITEM_LABEL_VALUE = REPLACE(ITEM_LABEL_VALUE, #{itemLabelValue}, #{newItemLabelValue})
+		WHERE ITEM_LABEL_VALUE LIKE CONCAT('%', #{itemLabelValue}, '%')
+	</update>
+
+	<update id="deleteItemLabelValue" parameterType="saleson.shop.item.support.ItemParam">
+		UPDATE OP_ITEM
+		SET
+			ITEM_LABEL_VALUE = IF(REPLACE(ITEM_LABEL_VALUE, CONCAT('[', #{itemLabelValue}, ']'), '') = '', NULL, ITEM_LABEL_VALUE),
+			ITEM_LABEL_VALUE = REPLACE(ITEM_LABEL_VALUE, CONCAT(',', #{itemLabelValue}), ''),
+			ITEM_LABEL_VALUE = REPLACE(ITEM_LABEL_VALUE, CONCAT(#{itemLabelValue}, ','), ''),
+			ITEM_LABEL_VALUE = REPLACE(ITEM_LABEL_VALUE, #{itemLabelValue}, '')
+		WHERE ITEM_LABEL_VALUE LIKE CONCAT('%', #{itemLabelValue}, '%')
+	</update>
+</mapper>
+
+
+
+

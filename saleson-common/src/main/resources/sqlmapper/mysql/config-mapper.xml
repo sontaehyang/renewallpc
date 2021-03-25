@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.config.ConfigMapper">
+
+	<resultMap id="ConfigResult" type="saleson.shop.config.domain.Config">
+		<result property="shopConfigId" column="SHOP_CONFIG_ID" />
+		<result property="shopName" column="SHOP_NAME" />
+		<result property="companyName" column="COMPANY_NAME" />
+		<result property="bossName" column="BOSS_NAME" />
+		<result property="categoryType" column="CATEGORY_TYPE" />
+		<result property="businessType" column="BUSINESS_TYPE" />
+		<result property="telNumber" column="TEL_NUMBER" />
+		<result property="faxNumber" column="FAX_NUMBER" />
+		<result property="post" column="POST" />
+		<result property="dodobuhyun" column="DODOBUHYUN" />
+		<result property="address" column="ADDRESS" />
+		<result property="addressDetail" column="ADDRESS_DETAIL" />
+		<result property="userName" column="USERNAME" />
+		<result property="email" column="EMAIL" />
+		<result property="companyNumber" column="COMPANY_NUMBER" />
+		<result property="mailOrderNumber" column="MAIL_ORDER_NUMBER" />
+		<result property="deniedId" column="DENIED_ID" />
+		<result property="paymentId" column="PAYMENT_ID" />
+		<result property="paymentCard" column="PAYMENT_CARD" />
+		<result property="paymentVbank" column="PAYMENT_VBANK" />
+		<result property="paymentEscrow" column="PAYMENT_ESCROW" />
+		<result property="paymentBank" column="PAYMENT_BANK" />
+		<result property="paymentConv" column="PAYMENT_CONV" />
+		<result property="paymentDlv" column="PAYMENT_DLV" />
+		<result property="paymentHp" column="PAYMENT_HP" />
+		<result property="paymentRealtime" column="PAYMENT_REALTIME" />
+		<result property="paymentConvLimit" column="PAYMENT_CONV_LIMIT" />
+		<result property="minimumPaymentAmount" column="MINIMUM_PAYMENT_AMOUNT" />
+		<result property="agreement" column="AGREEMENT" />
+		<result property="traderRaw" column="TRADER_RAW" />
+		<result property="protectPolicy" column="PROTECT_POLICY" />
+		<result property="deliveryInfo" column="DELIVERY_INFO" />
+		<result property="sourceOpen" column="SOURCE_OPEN" />
+		<result property="tagOverture" column="TAG_OVERTURE" />
+		<result property="tagAdwords" column="TAG_ADWORDS" />
+		<result property="counselTelNumber" column="COUNSEL_TEL_NUMBER" />
+		<result property="adminTelNumber" column="ADMIN_TEL_NUMBER" />
+		<result property="adminName" column="ADMIN_NAME" />
+		<result property="adminEmail" column="ADMIN_EMAIL" />
+		<result property="seoTitle" column="SEO_TITLE" />
+		<result property="seoKeywords" column="SEO_KEYWORDS" />
+		<result property="seoDescription" column="SEO_DESCRIPTION" />
+		<result property="seoHeaderContents1" column="SEO_HEADER_CONTENTS1" />
+		<result property="seoThemawordTitle" column="SEO_THEMAWORD_TITLE" />
+		<result property="seoThemawordDescription" column="SEO_THEMAWORD_DESCRIPTION" />
+		<result property="sourceFlag" column="SOURCE_FLAG" />
+		<result property="topBannerLink" column="TOP_BANNER_LINK" />
+		<result property="topBannerImage" column="TOP_BANNER_IMAGE" />
+		<result property="topBannerColor" column="TOP_BANNER_COLOR" />
+		<result property="rightBannerLink" column="RIGHT_BANNER_LINK" />
+		<result property="rightBannerImage" column="RIGHT_BANNER_IMAGE" />
+		<result property="pointDefaultType" column="POINT_DEFAULT_TYPE" />
+		<result property="pointDefault" column="POINT_DEFAULT" />
+		<result property="repeatDayStartTime" column="REPEAT_DAY_START_TIME" />
+		<result property="repeatDayEndTime" column="REPEAT_DAY_END_TIME" />
+		<result property="pointJoin" column="POINT_JOIN" />
+		<result property="pointReview" column="POINT_REVIEW" />
+		<result property="photoPointReview" column="PHOTO_POINT_REVIEW" />
+		<result property="reviewDisplayType" column="REVIEW_DISPLAY_TYPE" />
+		<result property="pointFirstBuy" column="POINT_FIRST_BUY" />
+		<result property="pointVisitDay" column="POINT_VISIT_DAY" />
+		<result property="pointRecommend" column="POINT_RECOMMEND" />
+		<result property="pointRecommendPrice" column="POINT_RECOMMEND_PRICE" />
+		<result property="pointSaveAfterDay" column="POINT_SAVE_AFTER_DAY" />
+		<result property="pointSaveTime" column="POINT_SAVE_TIME" />
+		<result property="pointSaveType" column="POINT_SAVE_TYPE" />
+		<result property="pointUseMax" column="POINT_USE_MAX" />
+		<result property="pointUseMin" column="POINT_USE_MIN" />
+		<result property="pointExpirationMonth" column="POINT_EXPIRATION_MONTH" />
+		<result property="shippingCouponExpirationMonth" column="SHIPPING_COUPON_EXP_MONTH" />
+		<result property="tax" column="TAX" />
+		<result property="taxType" column="TAX_TYPE" />
+		<result property="taxDisplayType" column="TAX_DISPLAY_TYPE" />
+		<result property="useCouponFlag" column="USE_COUPON_FLAG" />
+		<result property="stockQuantityFlag" column="STOCK_QUANTITY_FLAG" />
+		<result property="loginText" column="LOGIN_TEXT" />
+		<result property="deliveryHopeFlag" column="DELIVERY_HOPE_FLAG" />
+		<result property="deliveryHopeStartDate" column="DELIVERY_HOPE_START_DATE" />
+		<result property="deliveryHopeEndDate" column="DELIVERY_HOPE_END_DATE" />
+		<result property="confirmPurchaseRequestDate" column="CONFIRM_PURCHASE_REQUEST_DATE" />
+		<result property="confirmPurchaseDate" column="CONFIRM_PURCHASE_DATE" />
+		<result property="naverPayFlag" column="NAVER_PAY_FLAG" />
+		<result property="revenueSalesStatus" column="REVENUE_SALES_STATUS" />
+		<result property="banWord" column="BAN_WORD" />
+		<result property="bankDepositDueDay" column="BANK_DEPOSIT_DUE_DAY" />
+		<result property="thumbnailType" column="THUMBNAIL_TYPE" />
+		<result property="thumbnailSize" column="THUMBNAIL_SIZE" />
+		<result property="categoryUpdatedDate" column="CATEGORY_UPDATED_DATE" />
+		<result property="pointUseRatio" column="POINT_USE_RATIO" />
+        <result property="categoryUpdatedDate" column="CATEGORY_UPDATED_DATE" />
+        <result property="retentionPeriod" column="RETENTION_PERIOD" />
+		<result property="itemHeaderContent" column="ITEM_HEADER_CONTENT" />
+		<result property="itemFooterContent" column="ITEM_FOOTER_CONTENT" />
+		<result property="itemHeaderContentMobile" column="ITEM_HEADER_CONTENT_MOBILE" />
+		<result property="itemFooterContentMobile" column="ITEM_FOOTER_CONTENT_MOBILE" />
+	</resultMap>
+	
+	
+	<select id="getShopConfigCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM OP_CONFIG 
+		WHERE SHOP_CONFIG_ID = #{value}
+	</select>
+	
+	<select id="getShopConfig" parameterType="Integer" resultMap="ConfigResult">
+		SELECT 
+			SHOP_CONFIG_ID,
+			SHOP_NAME,
+			COMPANY_NAME,
+			BOSS_NAME,
+			CATEGORY_TYPE,
+			BUSINESS_TYPE,
+			TEL_NUMBER,
+			FAX_NUMBER,
+			POST,
+			DODOBUHYUN,
+			ADDRESS,
+			ADDRESS_DETAIL,
+			USERNAME,
+			EMAIL,
+			COMPANY_NUMBER,
+			MAIL_ORDER_NUMBER,
+			SOURCE_OPEN,
+			THUMBNAIL_TYPE,
+			THUMBNAIL_SIZE,
+			DENIED_ID,
+			PAYMENT_ID,
+			PAYMENT_CARD,
+			PAYMENT_BANK,
+			PAYMENT_VBANK,
+			PAYMENT_ESCROW,
+			PAYMENT_CONV,
+			PAYMENT_DLV,
+			PAYMENT_REALTIME,
+			PAYMENT_HP,
+			MINIMUM_PAYMENT_AMOUNT,
+			PAYMENT_CONV_LIMIT,
+			CREATED_DATE,
+			AGREEMENT,
+			TRADER_RAW,
+			PROTECT_POLICY,
+			DELIVERY_INFO,
+			TAG_OVERTURE,
+			TAG_ADWORDS,
+			COUNSEL_TEL_NUMBER,
+			ADMIN_TEL_NUMBER,
+			ADMIN_NAME,
+			ADMIN_EMAIL,
+			SEO_TITLE,
+			SEO_KEYWORDS,
+			SEO_DESCRIPTION,
+			SEO_HEADER_CONTENTS1,
+			SEO_THEMAWORD_TITLE,
+			SEO_THEMAWORD_DESCRIPTION,
+			SOURCE_FLAG,
+			TOP_BANNER_LINK,
+			TOP_BANNER_IMAGE,
+			TOP_BANNER_COLOR,
+			RIGHT_BANNER_LINK,
+			RIGHT_BANNER_IMAGE,
+			POINT_DEFAULT_TYPE,
+			POINT_DEFAULT,
+			REPEAT_DAY_START_TIME,
+			REPEAT_DAY_END_TIME,
+			POINT_JOIN,
+			POINT_REVIEW,
+			PHOTO_POINT_REVIEW,
+			REVIEW_DISPLAY_TYPE,
+			POINT_FIRST_BUY,
+			POINT_VISIT_DAY,
+			POINT_RECOMMEND,
+			POINT_RECOMMEND_PRICE,
+			POINT_SAVE_AFTER_DAY,
+			POINT_SAVE_TIME,
+			POINT_SAVE_TYPE,
+			POINT_USE_MIN,
+			POINT_USE_MAX,
+			POINT_EXPIRATION_MONTH,
+			SHIPPING_COUPON_EXP_MONTH,
+			TAX,
+			TAX_TYPE,
+			TAX_DISPLAY_TYPE,
+			STOCK_QUANTITY_FLAG,
+			LOGIN_TEXT,
+			USE_COUPON_FLAG,
+			USER_HTML_EDIT,
+			DELIVERY_HOPE_FLAG,
+			DELIVERY_HOPE_START_DATE,
+			DELIVERY_HOPE_END_DATE,
+			CONFIRM_PURCHASE_REQUEST_DATE,
+			CONFIRM_PURCHASE_DATE,
+			NAVER_PAY_FLAG,
+			REVENUE_SALES_STATUS,
+			BAN_WORD,
+			BANK_DEPOSIT_DUE_DAY,
+			POINT_USE_RATIO,
+			CATEGORY_UPDATED_DATE,
+			RETENTION_PERIOD,
+			ITEM_HEADER_CONTENT,
+			ITEM_FOOTER_CONTENT,
+			ITEM_HEADER_CONTENT_MOBILE,
+			ITEM_FOOTER_CONTENT_MOBILE
+		FROM OP_CONFIG
+		WHERE SHOP_CONFIG_ID = #{value}
+		<!-- LIMIT 1 -->
+	</select>
+	
+	<update id="updateShopConfigDeniedId" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG SET
+		<if test="deniedId != null and deniedId != ''">
+			DENIED_ID = #{deniedId}
+		</if>
+		<if test="agreement != null and agreement != ''">
+			AGREEMENT = #{agreement}
+		</if>
+		<if test="traderRaw != null and traderRaw != ''">
+			TRADER_RAW = #{traderRaw}
+		</if>
+		<if test="protectPolicy != null and protectPolicy != ''">
+			PROTECT_POLICY = #{protectPolicy}
+		</if>
+		<if test="userHtmlEdit != null and userHtmlEdit != ''">
+			USER_HTML_EDIT = #{userHtmlEdit}
+		</if>
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+	
+	<update id="updateShopConfig" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG 
+		<set>
+			<if test="companyName != null and companyName != ''">
+				COMPANY_NAME = #{companyName} ,
+			</if>
+			<if test="companyNumber != null and companyNumber != ''">
+				COMPANY_NUMBER = #{companyNumber} ,
+			</if>
+			<if test="categoryType != null">
+				CATEGORY_TYPE = #{categoryType} ,
+			</if>
+			<if test="businessType != null">
+				BUSINESS_TYPE = #{businessType} ,
+			</if>
+			<if test="bossName != null and bossName !=''">
+				BOSS_NAME = #{bossName} ,
+			</if>
+			<if test="mailOrderNumber != null">
+				MAIL_ORDER_NUMBER = #{mailOrderNumber} ,
+			</if>
+			<if test="dodobuhyun != null and dodobuhyun !=''">
+				DODOBUHYUN = #{dodobuhyun} , 
+			</if>
+			<if test="post != null and post !=''">
+				POST = #{post} ,
+			</if>
+			<if test="address != null and address !=''">
+				ADDRESS = #{address} ,
+			</if>
+			<if test="addressDetail != null">
+				ADDRESS_DETAIL = #{addressDetail} ,
+			</if>
+			<if test="telNumber != null">
+				TEL_NUMBER = #{telNumber} ,
+			</if>
+			<if test="faxNumber != null">
+				FAX_NUMBER = #{faxNumber} ,
+			</if>
+			<if test="counselTelNumber != null">
+				COUNSEL_TEL_NUMBER = #{counselTelNumber} ,
+			</if>
+			<if test="adminTelNumber != null">
+				ADMIN_TEL_NUMBER = #{adminTelNumber} ,
+			</if>
+			<if test="adminName != null">
+				ADMIN_NAME = #{adminName} ,
+			</if>
+			<if test="adminEmail != null">
+				ADMIN_EMAIL = #{adminEmail},
+			</if>
+			<if test="seoTitle != null and seoTitle != ''">
+				SEO_TITLE = #{seoTitle} ,
+			</if>
+			<if test="shopName != null and shopName != ''">
+				SHOP_NAME = #{shopName} ,
+			</if>
+			<if test='loginText != null'>
+				LOGIN_TEXT = #{loginText} ,
+			</if>
+			<if test="seoKeywords != null">
+				SEO_KEYWORDS = #{seoKeywords} ,
+			</if>
+			<if test="seoDescription != null">
+				SEO_DESCRIPTION = #{seoDescription} ,
+			</if>
+			<if test="seoHeaderContents1 != null">
+				SEO_HEADER_CONTENTS1 = #{seoHeaderContents1} ,
+			</if>
+			<if test="seoDescription != null">
+				SEO_DESCRIPTION = #{seoDescription} ,
+			</if>
+			<if test="seoThemawordTitle != null">
+				SEO_THEMAWORD_TITLE = #{seoThemawordTitle} ,
+			</if>
+			<if test="seoThemawordDescription != null">
+				SEO_THEMAWORD_DESCRIPTION = #{seoThemawordDescription} ,
+			</if>
+			<if test="sourceFlag != null">
+				SOURCE_FLAG = #{sourceFlag},
+			</if>	
+			<if test="email != null">
+				EMAIL = #{email},
+			</if>
+			<if test="banWord != null">
+				BAN_WORD = #{banWord},
+			</if>
+			<if test="thumbnailType != null">
+				THUMBNAIL_TYPE = #{thumbnailType},
+			</if>
+            <if test="thumbnailSize != null">
+                THUMBNAIL_SIZE = #{thumbnailSize},
+            </if>
+            <if test="retentionPeriod != null">
+                RETENTION_PERIOD = #{retentionPeriod},
+            </if>
+            <if test='itemHeaderContent != null'>
+				ITEM_HEADER_CONTENT = #{itemHeaderContent},
+			</if>
+			<if test='itemFooterContent != null'>
+				ITEM_FOOTER_CONTENT = #{itemFooterContent},
+			</if>
+			<if test='itemHeaderContentMobile != null'>
+				ITEM_HEADER_CONTENT_MOBILE = #{itemHeaderContentMobile},
+			</if>
+			<if test='itemFooterContentMobile != null'>
+				ITEM_FOOTER_CONTENT_MOBILE = #{itemFooterContentMobile},
+			</if>
+		</set>
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+	
+	<update id="updateShopSiteConfig" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG SET
+			<if test="seoTitle != null and seoTitle != ''">
+				SEO_TITLE = #{seoTitle} ,
+			</if>
+			<if test="shopName != null and shopName != ''">
+				SHOP_NAME = #{shopName} ,
+			</if>
+
+			LOGIN_TEXT = #{loginText} ,
+
+			<if test="seoKeywords != null">
+				SEO_KEYWORDS = #{seoKeywords} ,
+			</if>
+			<if test="seoDescription != null">
+				SEO_DESCRIPTION = #{seoDescription} ,
+			</if>
+			<if test="thumbnailType != null">
+				THUMBNAIL_TYPE = #{thumbnailType},
+			</if>
+			<if test="thumbnailSize != null">
+				THUMBNAIL_SIZE = #{thumbnailSize},
+			</if>
+
+			SEO_HEADER_CONTENTS1 = #{seoHeaderContents1} ,
+			SEO_DESCRIPTION = #{seoDescription} ,
+			SEO_THEMAWORD_TITLE = #{seoThemawordTitle} ,
+			SEO_THEMAWORD_DESCRIPTION = #{seoThemawordDescription} ,
+
+			SOURCE_FLAG = #{sourceFlag}
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+	
+	<update id="updateShopConfigConversionTag" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG SET
+		<if test="tagOverture != null">
+			TAG_OVERTURE = #{tagOverture} , 
+		</if>
+		<if test="tagAdwords != null">
+			TAG_ADWORDS = #{tagAdwords}
+		</if>
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+	
+	<update id="updateShopConfigPayment" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG SET
+			PAYMENT_ID = #{paymentId} , 
+			PAYMENT_CARD = #{paymentCard} , 
+			PAYMENT_BANK = #{paymentBank} ,
+			PAYMENT_VBANK = #{paymentVbank} ,
+			PAYMENT_ESCROW = #{paymentEscrow},
+			PAYMENT_DLV = #{paymentDlv} ,
+			PAYMENT_HP = #{paymentHp} , 
+			PAYMENT_REALTIME = #{paymentRealtime} ,  
+			MINIMUM_PAYMENT_AMOUNT = #{minimumPaymentAmount},
+			CONFIRM_PURCHASE_REQUEST_DATE = #{confirmPurchaseRequestDate},
+			CONFIRM_PURCHASE_DATE = #{confirmPurchaseDate},
+			BANK_DEPOSIT_DUE_DAY = #{bankDepositDueDay},
+			NAVER_PAY_FLAG = #{naverPayFlag}
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+	
+	<update id="updateShopConfigTopBanner" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG SET
+			<if test="topBannerImage != null and topBannerImage != ''">
+				TOP_BANNER_IMAGE = #{topBannerImage},
+			</if>
+			<if test="rightBannerImage != null and rightBannerImage != ''">
+				RIGHT_BANNER_IMAGE = #{rightBannerImage},
+			</if>
+			TOP_BANNER_LINK = #{topBannerLink},
+			TOP_BANNER_COLOR = #{topBannerColor},
+			RIGHT_BANNER_LINK = #{rightBannerLink}
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+	
+	<update id="deleteShopConfigTopBanner" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG 
+		SET TOP_BANNER_LINK = "", TOP_BANNER_IMAGE = null
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+	
+	<update id="deleteShopConfigBannerImage" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG 
+		SET TOP_BANNER_IMAGE = #{topBannerImage},
+			RIGHT_BANNER_IMAGE = #{rightBannerImage}
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+	
+	<update id="updateShopConfigReserve" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG 
+		SET POINT_DEFAULT = #{pointDefault},
+			POINT_DEFAULT_TYPE = #{pointDefaultType},
+			REPEAT_DAY_START_TIME = #{repeatDayStartTime},
+			REPEAT_DAY_END_TIME = #{repeatDayEndTime},
+			POINT_JOIN = #{pointJoin},
+			POINT_REVIEW = #{pointReview},
+			PHOTO_POINT_REVIEW = #{photoPointReview},
+			REVIEW_DISPLAY_TYPE = #{reviewDisplayType},
+			POINT_FIRST_BUY = #{pointFirstBuy},
+			POINT_VISIT_DAY = #{pointVisitDay},
+			POINT_SAVE_AFTER_DAY = #{pointSaveAfterDay},
+			POINT_SAVE_TYPE = #{pointSaveType},
+			POINT_EXPIRATION_MONTH = #{pointExpirationMonth},
+			SHIPPING_COUPON_EXP_MONTH = #{shippingCouponExpirationMonth},
+			POINT_USE_MIN = #{pointUseMin},
+			POINT_USE_MAX = #{pointUseMax},
+			POINT_USE_RATIO = #{pointUseRatio}
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+	
+	<update id="updateShopConfigDeliveryInfo" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG 
+		SET DELIVERY_INFO = #{deliveryInfo}
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+	
+	<update id="updateShopConfigDeliveryHope" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG 
+		SET DELIVERY_HOPE_FLAG = #{deliveryHopeFlag}
+		<if test="deliveryHopeStartDate != null">
+			, DELIVERY_HOPE_START_DATE = #{deliveryHopeStartDate}
+		</if>
+		<if test="deliveryHopeEndDate != null">
+			, DELIVERY_HOPE_END_DATE = #{deliveryHopeEndDate}
+		</if>
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+
+	<update id="updateCategoryUpdatedDate">
+		UPDATE OP_CONFIG
+		SET
+		CATEGORY_UPDATED_DATE = <include refid="CommonMapper.datetime"/>
+	</update>
+
+	<update id="updateShopConfigItem" parameterType="saleson.shop.config.domain.Config">
+		UPDATE OP_CONFIG SET
+			ITEM_HEADER_CONTENT = #{itemHeaderContent},
+			ITEM_FOOTER_CONTENT = #{itemFooterContent},
+			ITEM_HEADER_CONTENT_MOBILE = #{itemHeaderContentMobile},
+			ITEM_FOOTER_CONTENT_MOBILE = #{itemFooterContentMobile}
+		WHERE SHOP_CONFIG_ID = #{shopConfigId}
+	</update>
+</mapper>

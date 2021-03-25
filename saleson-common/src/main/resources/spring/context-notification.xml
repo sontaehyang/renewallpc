@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Mail -->
+	<bean id="mailService" class="com.onlinepowers.framework.notification.mail.MailService">
+        <constructor-arg ref="mailSender"/>
+    </bean>
+
+	<!-- SMTP 
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.sender.host}" />
+	</bean>
+	-->
+	
+	<!-- Gmail SMTP Mail Sender 
+	- mail.smtp.auth : Use SMTP-AUTH to authenticate to SMTP server : smtp 서버 인증을 하는가?
+	- mail.smtp.starttls.enable : Use TLS to encrypt communication with SMTP server : 암호화된 연결 유형이 TLS인 경우
+	-->
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.renewallpc.co.kr" />
+		<property name="username" value="webmail@renewallpc.co.kr" />
+		<property name="password" value="webmail92%@" />
+		<property name="protocol" value="smtp" />
+		<property name="port" value="25" />
+		
+		<property name="javaMailProperties"> 
+			<props> 
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">false</prop>
+				<prop key="mail.smtps.debug">true</prop>
+				<prop key="mail.smtp.connectiontimeout">30000</prop>
+				<prop key="mail.smtp.timeout">30000</prop> 
+			</props> 
+		</property>
+	</bean>
+
+	<bean id="smsSender" class="saleson.common.notification.micesoft.MiceMessageSender">
+	</bean>
+
+	<bean id="alimtalkSender" class="saleson.common.notification.micesoft.MiceAlimtalkSender">
+	</bean>
+
+	<bean id="pushSender" class="saleson.common.notification.micesoft.MicePushSender">
+	</bean>
+
+	<!-- Twitter
+	<bean id="twitterService" class="com.onlinepowers.framework.notification.twitter.TwitterService">
+        <constructor-arg ref="mainTwitter" />
+    </bean>
+
+	<bean id="mainTwitter" class="twitter4j.Twitter">
+		<constructor-arg name="screenName" value="${twitter.userName}" />
+		<constructor-arg name="password" value="${twitter.password}" />
+	</bean>
+	 -->
+	
+</beans>

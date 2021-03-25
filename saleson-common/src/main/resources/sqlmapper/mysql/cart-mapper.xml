@@ -1,0 +1,306 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.cart.CartMapper">
+	
+	<resultMap id="CartResult" type="saleson.shop.cart.domain.Cart">
+		<result property="cartId" column="CART_ID" />
+		<result property="sessionId" column="SESSION_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="quantity" column="QUANTITY" />
+		<result property="options" column="OPTIONS" />
+		<result property="shippingPaymentType" column="SHIPPING_PAYMENT_TYPE" />
+		<result property="additionItemFlag" column="ADDITION_ITEM_FLAG" />
+		<result property="parentItemId" column="PARENT_ITEM_ID" />
+		<result property="createdDate" column="CART_CREATED_DATE" />
+	</resultMap>
+
+	<resultMap id="CartListResult" type="saleson.shop.order.domain.BuyItem" extends="saleson.shop.order.OrderMapper.BuyItemResult">
+		<result property="cartId" column="CART_ID" />
+		<result property="parentItemId" column="PARENT_ITEM_ID" />
+		<result property="parentItemOptions" column="PARENT_ITEM_OPTIONS" />
+ 	</resultMap>
+
+	<select id="getCartAvailableInsertValidationCountForItemTypeByCartParam" parameterType="saleson.shop.cart.support.CartParam" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_CART C 
+			INNER JOIN OP_ITEM I ON C.ITEM_ID = I.ITEM_ID
+		<where> 
+			<choose>
+				<when test="isLogin == true"><include refid="sqlCartUserWhere" /></when>
+				<otherwise><include refid="sqlCartGuestWhere" /></otherwise>
+			</choose>
+			
+			AND I.ITEM_TYPE != (
+				SELECT ITEM_TYPE FROM OP_ITEM WHERE ITEM_ID = #{itemId} 
+			)
+		</where>
+	</select>
+	
+	<select id="getCartList" parameterType="saleson.shop.cart.support.CartParam" resultMap="CartListResult">
+		SELECT
+			C.CART_ID,
+			C.SESSION_ID,
+			C.USER_ID,
+			C.ITEM_ID,
+			C.QUANTITY,
+			C.OPTIONS,
+			C.SHIPPING_PAYMENT_TYPE,
+			C.ADDITION_ITEM_FLAG,
+			C.PARENT_ITEM_ID,
+			C.PARENT_ITEM_OPTIONS,
+			C.CREATED_DATE AS CART_CREATED_DATE,
+			<include refid="saleson.shop.item.ItemMapper.defaultItemColumns" />,
+			<include refid="saleson.shop.item.ItemMapper.defaultItemShippingColumns" />,
+			S.SELLER_NAME
+			<if test="isLogin == true">
+				, IFNULL((
+					SELECT UL.DISCOUNT_RATE 
+					FROM OP_USER_DETAIL UD 
+						INNER JOIN OP_USER_LEVEL UL ON UD.LEVEL_ID = UL.LEVEL_ID
+					WHERE
+						UD.USER_ID = #{userId} 
+				), 0) AS USER_LEVEL_DISCOUNT_RATE
+			</if>
+		FROM OP_CART C 
+			INNER JOIN OP_ITEM I ON C.ITEM_ID = I.ITEM_ID
+			INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+		<where>
+			<choose>
+				<when test="isLogin == true"><include refid="sqlCartUserWhere" /></when>
+				<otherwise><include refid="sqlCartGuestWhere" /></otherwise>
+			</choose>
+
+			<if test="cartIds != null and !cartIds.isEmpty()">
+				AND C.CART_ID IN
+				<foreach item="cartId" index="index" collection="cartIds" open="(" separator="," close=")">
+					#{cartId}
+				</foreach>
+			</if>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND C.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+		
+		ORDER BY C.CART_ID ASC
+	</select>
+
+	<select id="getCartListBySessionId" parameterType="String" resultMap="CartResult">
+		SELECT * FROM OP_CART
+		WHERE SESSION_ID = #{sessionId}
+	</select>
+	
+	<select id="getCountForUserItemByUserId" parameterType="long" resultType="Integer">
+		SELECT COUNT(*) FROM OP_CART WHERE USER_ID = #{value}
+	</select>
+	
+	<select id="getGuestConvertibleItems" parameterType="saleson.shop.cart.support.CartParam" resultMap="CartResult">
+		SELECT * FROM OP_CART C INNER JOIN OP_ITEM I
+			ON C.ITEM_ID = I.ITEM_ID
+		WHERE 
+			C.SESSION_ID = #{sessionId}
+			AND I.ITEM_TYPE IN (
+				SELECT DISTINCT ITEM_TYPE FROM 
+					OP_CART C INNER JOIN OP_ITEM I
+						ON C.ITEM_ID = I.ITEM_ID
+				WHERE C.USER_ID = #{userId}
+			) 
+	</select>
+	
+	<select id="getDuplicateCart" parameterType="saleson.shop.cart.domain.Cart" resultMap="CartResult">
+		SELECT * 
+		FROM OP_CART
+		<where>
+			<choose>
+				<when test="isLogin == true">
+					USER_ID = #{userId}
+				</when>
+				<otherwise>
+					SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+			
+			AND ITEM_ID = #{itemId}
+			
+			<if test="options != null and options != ''">
+				AND OPTIONS = #{options}
+			</if>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+
+			<if test="parentItemId != null and parentItemId != ''">
+				AND PARENT_ITEM_ID = #{parentItemId}
+			</if>
+		</where>
+
+		ORDER BY CART_ID ASC
+	</select>
+	
+	
+	
+	<update id="updateDuplicateCartQuantity" parameterType="saleson.shop.cart.domain.Cart">
+		UPDATE OP_CART
+		SET QUANTITY = #{quantity}
+		<where>
+			<choose>
+				<when test="isLogin == true">
+					USER_ID = #{userId}
+				</when>
+				<otherwise>
+					SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+			
+			AND ITEM_ID = #{itemId}
+			
+			<if test="options != null and options != ''">
+				AND OPTIONS = #{options}
+			</if>
+			
+			AND ADDITION_ITEM_FLAG = #{additionItemFlag}
+		</where> 
+	</update>
+	
+	<sql id="sqlCartUserWhere">
+		C.USER_ID = #{userId}
+		AND I.DATA_STATUS_CODE = '1'
+		AND I.DISPLAY_FLAG = 'Y'
+		
+		<if test="itemType != null and itemType != ''">
+			AND I.ITEM_TYPE = #{itemType}
+		</if>
+	</sql>
+	
+	<sql id="sqlCartGuestWhere">
+		C.SESSION_ID = #{sessionId}
+		AND I.DATA_STATUS_CODE = '1'
+		AND I.DISPLAY_FLAG = 'Y'
+		AND NONMEMBER_ORDER_TYPE = '1'
+		AND I.ITEM_TYPE = '1'
+	</sql>
+	
+	<insert id="insertCart" parameterType="saleson.shop.cart.domain.Cart">
+		INSERT INTO OP_CART (CART_ID, SESSION_ID, USER_ID, ITEM_ID, QUANTITY, OPTIONS, SHIPPING_PAYMENT_TYPE, SHIPPING_GROUP_CODE, ADDITION_ITEM_FLAG, PARENT_ITEM_ID, PARENT_ITEM_OPTIONS, CREATED_DATE)
+		VALUES (#{cartId}, #{sessionId}, #{userId}, #{itemId}, #{quantity}, #{options}, #{shippingPaymentType},#{shippingGroupCode}, #{additionItemFlag}, #{parentItemId}, #{parentItemOptions}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+	<update id="updateQuantity" parameterType="saleson.shop.cart.support.CartParam">
+		UPDATE OP_CART
+		SET QUANTITY = #{quantity}
+		<where>
+			CART_ID = #{cartId}
+			<choose>
+				<when test="isLogin == true">
+					AND USER_ID = #{userId}
+				</when>
+				<otherwise>
+					AND SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+		</where>
+	</update>
+	
+	<update id="updateUserIdByCart" parameterType="saleson.shop.cart.domain.Cart">
+		UPDATE OP_CART
+		SET USER_ID = #{userId},
+			QUANTITY = #{quantity}
+		WHERE 
+			CART_ID = #{cartId}
+	</update>
+	
+	
+	
+	<delete id="deleteCart" parameterType="saleson.shop.cart.support.CartParam">
+		DELETE FROM OP_CART 
+		<where>
+			CART_ID = #{cartId}
+			<choose>
+				<when test="isLogin == true">
+					AND USER_ID = #{userId}
+				</when>
+				<otherwise>
+					AND SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+	
+	<delete id="deleteCartByCartIds" parameterType="saleson.shop.cart.support.CartParam">
+		DELETE FROM OP_CART 
+		<where>
+			CART_ID IN 
+			<foreach item="cartId" index="index" collection="cartIds" open="(" separator="," close=")"> 
+				#{cartId}
+			</foreach>
+			<choose>
+				<when test="isLogin == true">
+					AND USER_ID = #{userId}
+				</when>
+				<otherwise>
+					AND SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+	
+	<delete id="deleteCartByItemIds" parameterType="saleson.shop.cart.support.CartParam">
+		DELETE FROM OP_CART 
+		<where>
+			ITEM_ID IN 
+			<foreach item="itemId" index="index" collection="itemIds" open="(" separator="," close=")"> 
+				#{itemId}
+			</foreach>
+			<choose>
+				<when test="isLogin == true">
+					AND USER_ID = #{userId}
+				</when>
+				<otherwise>
+					AND SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+	
+	<delete id="deleteDuplicateCart" parameterType="saleson.shop.cart.domain.Cart">
+		DELETE FROM OP_CART
+		<where>
+			<choose>
+				<when test="isLogin == true">
+					USER_ID = #{userId}
+				</when>
+				<otherwise>
+					SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+			
+			AND ITEM_ID = #{itemId}
+			
+			<if test="options != null and options != ''">
+				AND OPTIONS = #{options}
+			</if>
+		</where>
+	</delete>
+	
+	<update id="updateShippingPaymentType" parameterType="saleson.shop.cart.support.CartParam">
+		UPDATE OP_CART
+		SET SHIPPING_PAYMENT_TYPE = #{shippingPaymentType}
+		<where>
+			CART_ID = #{cartId}
+			<!--SHIPPING_GROUP_CODE = #{shippingGroupCode}-->
+			<choose>
+				<when test="isLogin == true">
+					AND USER_ID = #{userId}
+				</when>
+				<otherwise>
+					AND SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+		</where>
+	</update>
+
+</mapper>

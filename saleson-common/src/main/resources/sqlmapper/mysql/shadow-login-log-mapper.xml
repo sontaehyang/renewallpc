@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.shadowlogin.ShadowLoginLogMapper">
+
+	<insert id="insertShadowLoginLog" parameterType="saleson.shop.shadowlogin.domain.ShadowLoginLog">
+		INSERT INTO OP_SHADOW_LOGIN_LOG (
+			SHADOW_LOGIN_LOG_ID,
+			MANAGER_ID,
+			LOGIN_TARGET_ID,
+			LOGIN_TARGET,
+			LOGIN_DATE
+		) VALUES (
+			#{shadowLoginLogId},
+			#{managerId},
+			#{loginTargetId},
+			#{loginTarget},
+			DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		)
+	</insert>
+	
+	<update id="updateShadowLogoutLogById" parameterType="Integer">
+		UPDATE OP_SHADOW_LOGIN_LOG 
+		<set>
+			LOGOUT_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		</set>
+		<where>
+			SHADOW_LOGIN_LOG_ID = #{value}
+		</where>
+	</update>
+	
+</mapper>

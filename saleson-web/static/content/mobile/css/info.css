@@ -1,0 +1,15 @@
+@charset "utf-8";
+/* ONLINEPOWERS FED */
+
+/*==================
+	푸터
+==================*/
+/* 회사소개 안내페이지 */
+.search_way {margin:10px; padding:18px 15px; background: #f0f0f0; } /* 170417 수정 */
+.search_way dt,
+.search_way dd {color:#666; font-size:11px;}
+.search_way dt {margin-bottom:6px; font-weight:bold;}
+.search_way dd {margin-left:3px; padding-left: 10px; background: url(../images/common/tab_txt_b.gif) no-repeat left 8px; line-height:19px; }
+
+/* 추가 - 210302 */
+img.company_img {display: block;}

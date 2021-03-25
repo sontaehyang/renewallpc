@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.log.ChangeLogMapper">
+
+    <resultMap id="ChangeLogResult" type="saleson.shop.log.domain.ChangeLog">
+        <result column="CHANGE_LOG_ID" property="changeLogId"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="REMOTE_ADDR" property="remoteAddr"/>
+        <result column="PARAMETER" property="parameter"/>
+        <result column="CREATED_DATE" property="createdDate"/>
+    </resultMap>
+
+    <insert id="insertUserChangeLog" parameterType="saleson.shop.log.domain.ChangeLog">
+        INSERT INTO OP_USER_CHANGE_LOG (
+            USER_ID,
+            PARAMETER,
+            REMOTE_ADDR,
+            MANAGER_ID,
+            CREATED_DATE
+        ) VALUES (
+            #{userId},
+            #{parameter},
+            #{remoteAddr},
+            #{managerId},
+            <include refid="CommonMapper.datetime"/>
+        )
+    </insert>
+
+    <insert id="insertManagerChangeLog" parameterType="saleson.shop.log.domain.ChangeLog">
+        INSERT INTO OP_MANAGER_CHANGE_LOG (
+            USER_ID,
+            PARAMETER,
+            REMOTE_ADDR,
+            MANAGER_ID,
+            CREATED_DATE
+        ) VALUES (
+            #{userId},
+            #{parameter},
+            #{remoteAddr},
+            #{managerId},
+            <include refid="CommonMapper.datetime"/>
+        )
+    </insert>
+
+</mapper>

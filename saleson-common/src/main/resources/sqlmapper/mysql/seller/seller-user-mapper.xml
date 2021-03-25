@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.seller.user.SellerUserMapper">
+
+	<resultMap id="SellerUserResult" type="com.onlinepowers.framework.security.userdetails.User">
+		<id property="userId" column="USER_ID" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="email" column="EMAIL" />
+		<result property="password" column="PASSWORD" />
+		<result property="userName" column="USER_NAME" />
+		<result property="statusCode" column="STATUS_CODE" />
+		<result property="loginCount" column="LOGIN_COUNT" />
+		<result property="loginDate" column="LOGIN_DATE" />
+		<result property="denyDate" column="DENY_DATE" />
+		<result property="leaveDate" column="LEAVE_DATE" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="phoneNumber" column="PHONE_NUMBER" />
+		<association property="userRoles" resultMap="SellerUserRoleResult" />
+	</resultMap>
+
+	<resultMap id="SellerUserRoleResult" type="com.onlinepowers.framework.security.userdetails.UserRole">
+		<result property="userId" column="USER_ID" />
+		<result property="authority" column="AUTHORITY" />
+	</resultMap>
+
+	<insert id="insertSellerUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		INSERT INTO OP_SELLER_USER (USER_ID, LOGIN_ID, PASSWORD, PHONE_NUMBER, USER_NAME, EMAIL, LOGIN_COUNT, LOGIN_DATE, UPDATED_DATE, DENY_DATE, LEAVE_DATE, STATUS_CODE, CREATED_DATE, PASSWORD_EXPIRED_DATE)
+		VALUES (#{userId}, #{loginId}, #{password}, #{phoneNumber}, #{userName}, #{email}, 0, null, <include refid="CommonMapper.datetime" />, null, null, #{statusCode}, <include refid="CommonMapper.datetime" />, #{passwordExpiredDate})
+	</insert>
+
+	<update id="updateSellerUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_SELLER_USER
+		<set>
+			<if test="password != null and password != ''">
+				PASSWORD = #{password},
+			</if>
+			<if test="userName != null and userName != ''">
+				USER_NAME = #{userName},
+			</if>
+			<if test="phoneNumber != null">
+				PHONE_NUMBER = #{phoneNumber},
+			</if>
+			EMAIL = #{email},
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		</set>
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<delete id="deleteSellerUserById" parameterType="long">
+		UPDATE OP_SELLER_USER
+		SET
+			LEAVE_DATE = <include refid="CommonMapper.datetime" /> ,
+			STATUS_CODE = '3',
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		WHERE USER_ID = #{userId}
+	</delete>
+
+	<sql id="sqlBaseSellerUserColumns">
+		SU.*,
+		UR.AUTHORITY
+	</sql>
+
+	<sql id="sqlSellerUserWhere">
+		<where>
+			SU.STATUS_CODE = '9'
+			<if test="query != null and query != ''">
+				<if test="where == 'USER_NAME'">
+					AND SU.USER_NAME LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'EMAIL'">
+					AND SU.EMAIL LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'LOGIN_ID'">
+					AND SU.LOGIN_ID LIKE CONCAT('%', #{query}, '%')
+				</if>
+			</if>
+			<if test='loginId != null'>
+				AND SU.LOGIN_ID = #{loginId}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="sqlSellerUserForm">
+		FROM OP_SELLER_USER SU
+		INNER JOIN OP_USER_ROLE UR
+			ON SU.USER_ID = UR.USER_ID
+	</sql>
+
+	<select id="getSellerUserList" parameterType="saleson.shop.user.support.UserSearchParam"
+	        resultMap="SellerUserResult">
+
+			SELECT
+				<include refid="sqlBaseSellerUserColumns"/>
+			<include refid="sqlSellerUserForm"/>
+			INNER JOIN (
+				<include refid="CommonMapper.paginationHeader" />
+					SELECT
+						SU.USER_ID
+					<include refid="sqlSellerUserForm"/>
+					AND UR.AUTHORITY = CONCAT('ROLE_SELLER_',#{sellerId})
+					<include refid="sqlSellerUserWhere"/>
+				<include refid="CommonMapper.paginationFooter" />
+			) BASE ON BASE.USER_ID = SU.USER_ID
+			ORDER BY SU.USER_ID DESC
+
+	</select>
+
+	<select id="getSellerUserListCount" parameterType="saleson.shop.user.support.UserSearchParam" resultType="int">
+		SELECT
+			COUNT(*)
+		<include refid="sqlSellerUserForm"/>
+		AND UR.AUTHORITY = CONCAT('ROLE_SELLER_',#{sellerId})
+		<include refid="sqlSellerUserWhere"/>
+	</select>
+
+	<select id="getSellerUserById" parameterType="long" resultMap="SellerUserResult">
+		SELECT
+			<include refid="sqlBaseSellerUserColumns"/>
+		<include refid="sqlSellerUserForm"/>
+		WHERE SU.STATUS_CODE = '9'
+		AND SU.USER_ID = #{userId}
+	</select>
+
+	<select id="getSellerUserByLoginId" parameterType="String" resultMap="SellerUserResult">
+		SELECT
+			<include refid="sqlBaseSellerUserColumns"/>
+		<include refid="sqlSellerUserForm"/>
+		WHERE SU.STATUS_CODE = '9'
+		AND SU.LOGIN_ID = #{loginId}
+	</select>
+
+	<select id="getDuplicateSellerUserByLoginId" parameterType="String" resultType="int">
+		SELECT
+			COUNT(*) AS CNT
+		FROM OP_SELLER_USER
+		WHERE LOGIN_ID = #{loginId}
+	</select>
+
+	<update id="updatePasswordForSellerUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_SELLER_USER
+		SET
+			PASSWORD = #{password},
+			PASSWORD_TYPE = #{passwordType},
+			PASSWORD_EXPIRED_DATE = #{passwordExpiredDate},
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		WHERE USER_ID = #{userId}
+	</update>
+
+</mapper>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.userdelivery.UserDeliveryMapper">
+	
+	<resultMap id="UserDeliveryResult" type="saleson.shop.userdelivery.domain.UserDelivery">
+		<result property="userDeliveryId" column="USER_DELIVERY_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="defaultFlag" column="DEFAULT_FLAG" />
+		<result property="title" column="TITLE" />
+		<result property="userName" column="USER_NAME" />
+		<result property="phone" column="PHONE" />
+		<result property="mobile" column="MOBILE" />
+		<result property="newZipcode" column="NEW_ZIPCODE" />
+		<result property="zipcode" column="ZIPCODE" />
+		<result property="sido" column="SIDO" />
+		<result property="sigungu" column="SIGUNGU" />
+		<result property="eupmyeondong" column="EUPMYEONDONG" />
+		<result property="address" column="ADDRESS" />
+		<result property="addressDetail" column="ADDRESS_DETAIL" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<select id="getUserDeliveryListByParam" parameterType="saleson.shop.userdelivery.support.UserDeliveryParam" resultMap="UserDeliveryResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT
+				USER_DELIVERY_ID,
+				USER_ID,
+				TITLE,
+				DEFAULT_FLAG,
+				USER_NAME,
+				PHONE,
+				MOBILE,
+				NEW_ZIPCODE,
+				ZIPCODE,
+				SIDO,
+				SIGUNGU,
+				EUPMYEONDONG,
+				ADDRESS,
+				ADDRESS_DETAIL,
+				CREATED_DATE
+			FROM OP_USER_DELIVERY
+			WHERE USER_ID = #{userId}
+			ORDER BY DEFAULT_FLAG DESC, USER_DELIVERY_ID DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	
+	<select id="getDefaultUserDelivery" parameterType="saleson.shop.userdelivery.support.UserDeliveryParam" resultMap="UserDeliveryResult" >
+		SELECT 
+			USER_DELIVERY_ID, 
+			USER_ID, 
+			TITLE,
+			DEFAULT_FLAG,
+			USER_NAME, 
+			PHONE, 
+			MOBILE, 
+			NEW_ZIPCODE,
+			ZIPCODE, 
+			SIDO,
+			SIGUNGU,
+			EUPMYEONDONG,
+			ADDRESS, 
+			ADDRESS_DETAIL, 
+			CREATED_DATE
+		FROM OP_USER_DELIVERY 
+ 		WHERE 
+ 			USER_ID = #{userId}
+ 			AND DEFAULT_FLAG = 'Y'
+ 		ORDER BY USER_DELIVERY_ID DESC
+ 		LIMIT 0, 1
+	</select>
+	
+	<select id="getUserDeliveryById" parameterType="saleson.shop.userdelivery.support.UserDeliveryParam" resultMap="UserDeliveryResult" >
+		SELECT 
+			USER_DELIVERY_ID, 
+			USER_ID, 
+			TITLE,
+			DEFAULT_FLAG,
+			USER_NAME, 
+			PHONE, 
+			MOBILE, 
+			NEW_ZIPCODE,
+			ZIPCODE, 
+			SIDO,
+			SIGUNGU,
+			EUPMYEONDONG,
+			ADDRESS, 
+			ADDRESS_DETAIL, 
+			CREATED_DATE
+		FROM OP_USER_DELIVERY 
+ 		WHERE 
+ 			USER_ID = #{userId}
+ 			AND USER_DELIVERY_ID = #{userDeliveryId}
+	</select>
+	
+	<insert id="insertUserDelivery" parameterType="saleson.shop.userdelivery.domain.UserDelivery">
+		INSERT INTO OP_USER_DELIVERY (USER_DELIVERY_ID, USER_ID, DEFAULT_FLAG, TITLE, USER_NAME, PHONE, MOBILE, NEW_ZIPCODE, ZIPCODE,SIDO,	SIGUNGU, EUPMYEONDONG, ADDRESS, ADDRESS_DETAIL, CREATED_DATE)
+		VALUES (#{userDeliveryId}, #{userId}, #{defaultFlag}, #{title}, #{userName}, #{fullPhone}, #{fullMobile}, #{newZipcode}, #{fullZipcode}, #{sido}, #{sigungu}, #{eupmyeondong}, #{address}, #{addressDetail}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<update id="initializationDefaultFlag" parameterType="long">
+		UPDATE OP_USER_DELIVERY SET
+		DEFAULT_FLAG = 'N'
+		WHERE USER_ID = #{value}
+	</update>
+	
+	<update id="updateDefaultFlagByParam" parameterType="saleson.shop.userdelivery.support.UserDeliveryParam">
+		UPDATE OP_USER_DELIVERY SET
+		DEFAULT_FLAG = 'Y'
+		WHERE
+			USER_DELIVERY_ID = #{userDeliveryId} 
+			AND USER_ID = #{userId}
+	</update>
+	
+	<update id="updateUserDelivery" parameterType="saleson.shop.userdelivery.domain.UserDelivery">
+		UPDATE OP_USER_DELIVERY SET
+			TITLE = #{title}, 
+			USER_NAME = #{userName},
+			DEFAULT_FLAG = #{defaultFlag},
+			PHONE = #{fullPhone}, 
+			MOBILE = #{fullMobile},
+			NEW_ZIPCODE = #{newZipcode},  
+			ZIPCODE = #{fullZipcode}, 
+			SIDO = #{sido},
+			SIGUNGU = #{sigungu},
+			EUPMYEONDONG = #{eupmyeondong},
+			ADDRESS = #{address}, 
+			ADDRESS_DETAIL = #{addressDetail} 
+		WHERE 
+			USER_DELIVERY_ID = #{userDeliveryId}
+			AND USER_ID = #{userId}
+	</update>
+	
+	<delete id="deleteUserDeliveryByParam" parameterType="saleson.shop.userdelivery.support.UserDeliveryParam">
+		DELETE FROM OP_USER_DELIVERY
+		WHERE
+			USER_ID = #{userId}
+			AND USER_DELIVERY_ID = #{userDeliveryId}
+	</delete>
+
+	<select id="getDeliveryCount" parameterType="saleson.shop.userdelivery.support.UserDeliveryParam" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM OP_USER_DELIVERY
+ 		WHERE USER_ID = #{userId}
+	</select>
+</mapper>

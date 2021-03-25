@@ -1,0 +1,161 @@
+@charset "utf-8";
+/* ONLINEPOWERS FED */
+
+/*==================
+	로그인 
+==================*/
+/*회원가입*/
+#wrap .join_pr li img {z-index:1; display:none; position:absolute; right:-5px;  top:26px; width:5px; height:10px;}
+#wrap .join_pr li.on img {display:block;}
+.join_area.order_wrap {padding:0;}
+.join_area.order_wrap .policy_info:last-child {padding-bottom:0;}
+.join_area {padding:0 10px; background:#fff;}
+.join_pr {border-bottom:1px solid #e7e7e7;}
+.join_pr li {position:relative; float:left; width:25%; padding: 16px 0; border-left:1px solid #e7e7e7; text-align:center;}
+.join_pr li:first-child {border:0;}
+.join_pr li span,
+.join_pr li p {color:#b7b7b7; font-weight:bold;}
+.join_pr li span {display: inline-block; margin-bottom:6px; font-size:9px; }
+.join_pr li p {font-size:11px;}
+.join_pr li.on {background:#ff7101;}
+.join_pr li.on span {color:#fde3cf;}
+.join_pr li.on p {color:#fff;}
+.comp_txt {padding:45px 5px 13px; text-align:center;}
+.ob_txt {padding-top:28px; font-size:13px; font-weight:600; color:#1a1a1a; text-align:center; line-height:18px;}
+.ob_txt.sm {padding-top: 11px; font-size:12px;}
+.ob_txt.bd {padding-top: 6px; font-size:12px; font-weight:bold;}
+.ob_txt2 {margin-bottom:12px; color:#666; font-size:11px; letter-spacing:-0.8px; line-height:16px;}
+.ob_txt2.deep {color:#999}
+.ob_txt3 {margin-bottom:14px; font-size:19px; font-weight:bold; line-height:25px; color:#1c2957;}
+.ob_btn {margin: 20px 0 24px; text-align:center;}
+.acc_btn button {width:100%; padding: 10.5px 36px;}
+.acc_btn button:first-child {margin-bottom:5px;}
+.acc_txt {padding: 25px 0; text-align:center;}
+.acc_txt .ob_txt {text-align:left;}
+
+.ob_notice {padding: 15px 9px; border:1px solid #e4e4e4;}
+.ob_notice span,
+.ob_notice p {color:#999;}
+.ob_notice span {display:inline-block; margin-bottom:5px; font-weight:bold; font-size:11px; letter-spacing:-1.2px; line-height: 15px;}
+.ob_notice p {font-size:10px; line-height:16px;}
+.pr_btn {margin-top:15px; padding:15px 10px; background:#f0f0f0; text-align:center;}
+.pr_btn button {width:49.5%;}
+.pr_btn .btn_st1.reset {float:left;}
+.pr_btn .btn_st1,b_pink {float:right;}
+.pr_btn.typeA {margin:0; padding:0 0 70px; background:#fff;}
+
+.search_way.typeA {margin:25px 0 18px;}
+.search_way.typeA dl:last-child {margin-top:13px;}
+
+.so_noti {margin-bottom:20px;}
+.so_noti span,
+.so_noti p {color:#666; font-size:11px;}
+.so_noti span {font-weight:bold;}
+.so_noti p {margin-top:6px; line-height:16px }
+
+/* 170608 추가 : s */
+.ob_select{margin:28px 0 56px;}
+.ob_select li{float:left; width:47.5%; padding:29px 0 30px; background:#f8f8f8; border:1px solid #c9c9c9; text-align:center;}
+.ob_select li:first-child{margin-right:5%;}
+.ob_select li a{display:block; padding-top:56px; font-size:15px; font-weight:600; color:#1a1a1a;}
+.ob_select .type01 a{background:url(/content/mobile/images/common/bg_obtain01.gif) no-repeat 50% 0; background-size:39px;}
+.ob_select .type02 a{background:url(/content/mobile/images/common/bg_obtain02.gif) no-repeat 50% 0; background-size:39px;}
+.join_pr.tab_2 li{width:50%;}
+.ob_easy{padding:15px 50px 15px;}
+.ob_easy li{/*width:186px;*/ margin:8px auto 0;}
+.ob_easy li:first-child{margin-top:0;}
+.ob_easy li a{display:block; padding:27px 0 27px 55px; border-radius:5px; font-size:11px; color:#fff;}
+.ob_easy .join_naver a{background:#2db400 url(/content/mobile/images/common/logo_naver.gif) no-repeat 18px 50%; background-size:27px 21px;}
+.ob_easy .join_fb a{background:#3b579d url(/content/mobile/images/common/logo_facebook.gif) no-repeat 18px 50%; background-size:27px 34px;}
+.ob_easy .join_kakao a{background:#ffea0f url(/content/mobile/images/common/logo_kakao.gif) no-repeat 18px 50%; background-size:27px 24px; color:#51302c;}
+/* 170608 추가 : e */
+
+
+/* 아이디 찾기 */
+.pw_sh {margin-top: 10px; margin-bottom: 20px; text-align:center;}
+.pw_sh span {margin-right:6px; font-size:12px; font-weight: 600; color:#999;} 
+.pw_sh button {padding:5px 9px; font-size:11px;}
+.pw_sh.dash {padding-top: 20px;border-top:1px dotted #dcdcdc;}
+.btn_area {margin:20px 0 15px; text-align: center;}
+.btn_area02 {margin:20px 0; text-align: center;}
+.result_box {margin-top:10px;  padding:50px 0; border:1px solid #e4e4e4; text-align:center;}
+.result_box .user_id {color:#ff7101;}
+
+/* 비밀번호 변경 */
+ .pw_btn{text-align:center; margin:20px 0px;}
+
+ /* 인증번호 틀린 경우*/
+.code_tit {padding: 10px 10px 0;; font-size:11px; font-weight:600; line-height:15px; color:#666;}
+input[type="password"].transparent.pw_re {height: 60px; line-height: 60px;}
+ 
+
+
+/*==================
+	회원
+==================*/
+/* 170405 수정 시작 */
+.login_tab {padding:10px 10px 0 10px; }
+.login_input {padding:0 10px; margin-top:25px; }
+.login_input .input_area {margin-bottom:5px; }
+.login_input .cert btn_st1 {float:right; width:29%; }
+.login_input .login_check {overflow:hidden; margin-top:8px; }
+.login_input input[type="checkbox"]+label {font-size:12px; font-weight:600; color:#666; text-indent:0; padding-left:28px; }
+.login_btn {padding:0 10px; margin-top:15px; }
+.login_btn button {width:100%; }
+.login_btn .find {text-align:center; font-size:0; margin-top:15px; }
+.login_btn .find li {display:inline-block; }
+.login_btn .find li {border-left:1px solid #a7a7a7; margin-left:12px; padding-left:13px; }
+.login_btn .find li:first-child {border-left:none; margin-left:0; padding-left:0; }
+.login_btn .find li a {font-size:12px; font-weight:600; color:#999; vertical-align:text-top; }
+.join_wrap {margin:25px 10px 25px; padding-top:25px; border-top:1px dotted #dcdcdc; text-align:center; }
+.join_wrap p {font-size:14px; color:#666; margin-bottom:11px; }
+.join_wrap button {width:100%; }
+.no_member {display: none;}
+.no_member .tel_area {margin-bottom:5px; }
+.no_member .tel_area ul {float:left; width:70%; }
+.no_member .tel_area ul li {float:left; height:39px; line-height:39px; text-align:center; vertical-align:middle; }
+.no_member .tel_area ul li:nth-child(odd) {width:30%; }
+.no_member .tel_area ul li:nth-child(even) {width:5%; }
+.no_member .tel_area .btn_st1, .no_member .cert .btn_st1 {float:right; width:29%; height:39px; line-height:39px; padding:0; }
+.no_member .cert input {float:left; width:70%; }
+.no_member .desc {margin:25px 10px 25px; padding-top:25px; border-top:1px dotted #dcdcdc; }
+.no_member .desc p {font-size:13px; color:#1a1a1a; text-align:center; line-height:18px; }
+.no_member .desc p span {font-size:13px; font-weight:800; color:#23ade3; vertical-align:bottom; }
+.non_member {display:none; }
+.non_member_txt {font-size:13px; color:#1a1a1a; text-align:center; line-height:18px; margin:25px 0 20px; }
+.non_member_txt span {font-size:13px; font-weight:800; color:#1a1a1a; vertical-align:bottom; }
+/* 170405 수정 끝 */
+
+/* 170608 수정 시작 */
+.login_btn .easy{margin-top:15px;}
+.login_btn .easy li{float:left; width:32.33%; margin-left:1.5%;}
+.login_btn .easy li:first-of-type{margin-left:0;}
+.login_btn .easy li a{display:block; height:40px; border-radius:5px; line-height:38px; font-size:14px; font-weight:600; color:#fff; text-align:center;}
+.login_btn .easy li a .logo{display:inline-block; margin-right:5px; vertical-align:top;}
+.login_btn .easy li a .logo img{margin-top:-1px;}
+.login_btn .easy .login_naver a{background:#2db400;}
+.login_btn .easy .login_facebook a{background:#3b579d;}
+.login_btn .easy .login_kakao a{background:#ffea0f; color:#3b1e1e;}
+.login_btn .easy .login_naver a .logo{width:12px;}
+.login_btn .easy .login_facebook a .logo{width:8px;}
+.login_btn .easy .login_kakao a .logo{width:15px;}
+/* 170608 수정 끝 */
+
+/* 이용약관 */
+.agreement_wrap { padding: 15px; }
+.agreement_wrap .ag_con { margin-bottom:25px; }
+.agreement_wrap .ag_con dt {font-size:13px; color:#1a1a1a; font-weight:bold;}
+.agreement_wrap .ag_con dd {position:relative; margin-top:10px; line-height:17px; font-size:11px;}
+.agreement_wrap .ag_con.num dd {margin: 10px 0 0 13px;}
+.agreement_wrap .ag_con.num dd span {position: absolute; left: -13px; margin-top: 4px; display:inline-block; width:11px; height:11px; line-height:10px; border:1px solid #7a7a7a; border-radius:50%; text-align: center; font-size: 11px;}
+
+/* 개인정보보호정책 */
+.pt_noti .tit {margin-top:15px; font-size: 12px; color:#1a1a1a; line-height:18px; }
+.pt_noti > p:first-child {margin:0;}
+.pt_noti .tit.sub { margin:22px 0 8px; }
+.pt_noti ul {font-size:11px; color:#666; line-height:18px;}
+.pt_noti ul.or {color:#ff7101;}
+.pt_noti ul.ur {margin-top:15px;}
+.pt_noti ul.ur li {position:relative; margin:15px 0 0 8px;}
+.pt_noti ul.ur li span { position:absolute; left: -8px; }
+.pt_noti .tit_sub {font-size:11px;color:#666; line-height:17px;}

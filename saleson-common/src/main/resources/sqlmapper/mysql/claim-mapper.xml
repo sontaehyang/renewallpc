@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.claim.ClaimMapper">
+	<resultMap id="ClaimMemoResult" type="saleson.shop.claim.domain.ClaimMemo">
+		<result property="claimMemoId" column="CLAIM_MEMO_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="claimStatus" column="CLAIM_STATUS" />
+		<result property="memo" column="MEMO" />
+		<result property="managerUserId" column="MANAGER_USER_ID" />
+		<result property="managerLoginId" column="MANAGER_LOGIN_ID" />
+		<result property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<!-- 조회 조건 -->
+	<sql id="sqlClaimMemoWhere">
+		<where>
+			AND DATA_STATUS_CODE = '1'
+			
+			<if test='PageType != "total"'>
+				<choose>
+					<when test="orderCode != null and orderCode != ''">
+						AND ORDER_CODE = #{orderCode}
+					</when>
+					<otherwise>
+						AND USER_ID = #{userId}
+					</otherwise>
+				</choose>
+			</if>
+			
+			<if test="claimStatus != null and claimStatus != ''">
+				AND CLAIM_STATUS = #{claimStatus}
+			</if>
+			
+			<if test="query != null and query != ''">
+				<if test="where == 'ORDERCODE'">
+					AND ORDER_CODE = #{query}
+				</if>
+				<if test="where == 'MEMO'">
+					AND MEMO LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'USER_NAME'">
+					AND USER_NAME LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'ORDER_CODE'">
+					AND ORDER_CODE LIKE CONCAT('%', #{query}, '%')
+				</if>
+			</if>
+			<if test="startDate != null and startDate !='' and endDate != null and endDate !=''">
+					AND DATE_FORMAT(CREATED_DATE,'%Y%m%d') BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="memoType != null and memoType !=''">
+				<choose>
+					<when test='memoType == "1"'>
+						AND ORDER_CODE IS NOT NULL
+					</when>
+					<otherwise>
+						AND ORDER_CODE IS NULL
+					</otherwise>
+				</choose>
+			</if>			
+		</where>
+	</sql>
+
+	<select id="getClaimMemoById" parameterType="Integer" resultMap="ClaimMemoResult">
+		SELECT * FROM OP_CLAIM_MEMO
+		WHERE
+			CLAIM_MEMO_ID = #{value}
+	</select>
+
+	<!-- 조건에 해당하는 데이터 수 -->
+	<select id="getClaimMemoCount" parameterType="saleson.shop.claim.support.ClaimMemoParam" resultType="int">
+		SELECT COUNT(*) FROM OP_CLAIM_MEMO
+		<include refid="sqlClaimMemoWhere" />
+	</select>
+	
+	<!-- 조건에 해당하는 데이터 목록 -->
+	<select id="getClaimMemoList" parameterType="saleson.shop.claim.support.ClaimMemoParam" resultMap="ClaimMemoResult">
+		<include refid="CommonMapper.paginationHeader" />
+		
+			SELECT * FROM OP_CLAIM_MEMO
+			<include refid="sqlClaimMemoWhere" />
+			
+			ORDER BY CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<!-- 데이터 등록 -->
+	<insert id="insertClaimMemo" parameterType="saleson.shop.claim.domain.ClaimMemo">
+		INSERT INTO OP_CLAIM_MEMO (CLAIM_MEMO_ID, USER_ID, USER_NAME, ORDER_CODE, CLAIM_STATUS, MEMO, MANAGER_USER_ID, MANAGER_LOGIN_ID, DATA_STATUS_CODE, CREATED_DATE)
+		VALUES (#{claimMemoId}, #{userId}, #{userName}, #{orderCode}, #{claimStatus}, #{memo}, #{managerUserId}, #{managerLoginId}, #{dataStatusCode}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<update id="updateClaimMemo" parameterType="saleson.shop.claim.domain.ClaimMemo">
+		UPDATE OP_CLAIM_MEMO SET
+			CLAIM_STATUS = #{claimStatus},
+			MEMO = #{memo},
+			MANAGER_USER_ID = #{managerUserId}, 
+			MANAGER_LOGIN_ID = #{managerLoginId}
+		WHERE
+			CLAIM_MEMO_ID = #{claimMemoId}
+	</update>
+	
+	<!-- ID로 데이터 삭제 -->
+	<delete id="deleteClaimMemoById" parameterType="int">
+		DELETE FROM OP_CLAIM_MEMO
+		WHERE CLAIM_MEMO_ID = #{value}
+	</delete>
+	
+</mapper>

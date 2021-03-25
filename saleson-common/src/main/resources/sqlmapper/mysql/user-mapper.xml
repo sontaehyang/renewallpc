@@ -1,0 +1,1479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.user.UserMapper">
+	<resultMap id="UserBaseResult" type="com.onlinepowers.framework.security.userdetails.User">
+		<id property="userId" column="USER_ID" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="email" column="EMAIL" />
+		<result property="password" column="PASSWORD" />
+		<result property="userName" column="USER_NAME" />
+		<result property="statusCode" column="STATUS_CODE" />
+		<result property="loginCount" column="LOGIN_COUNT" />
+		<result property="loginDate" column="LOGIN_DATE" />
+		<result property="denyDate" column="DENY_DATE" />
+		<result property="leaveDate" column="LEAVE_DATE" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="createdDate" column="CREATED_DATE" />
+        <result property="phoneNumber" column="PHONE_NUMBER" />
+	</resultMap>
+	
+	<resultMap id="UserResult" type="com.onlinepowers.framework.security.userdetails.User" extends="UserBaseResult">
+		<association property="userRoles" resultMap="UserRoleResult" />
+		<association property="userDetail" resultMap="UserDetailResult" />
+	</resultMap>
+	
+	<resultMap id="UserExcelResult" type="saleson.shop.user.domain.UserExcel" extends="UserResult">
+		<collection property="userExcelOrders" resultMap="UserExcelOrderResult" />
+	</resultMap>
+	
+	<resultMap id="UserExcelOrderResult" type="saleson.shop.user.domain.UserExcelOrder">
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="orderDate" column="CREATED_DATE" />
+	</resultMap>
+	
+
+	<resultMap id="UserRoleResult" type="com.onlinepowers.framework.security.userdetails.UserRole">
+		<result property="userId" column="USER_ID" />
+		<result property="authority" column="AUTHORITY" />
+	</resultMap>
+
+	<resultMap id="UserDetailResult" type="saleson.shop.user.domain.UserDetail">
+		<result property="userId" column="USER_ID" />
+		<result property="groupCode" column="GROUP_CODE" />
+		<result property="newPost" column="NEW_POST" />
+		<result property="post" column="POST" />
+		<result property="address" column="ADDRESS" />
+		<result property="addressDetail" column="ADDRESS_DETAIL" />
+		<result property="telNumber" column="TEL_NUMBER" />
+		<result property="phoneNumber" column="PHONE_NUMBER" />
+		<result property="faxNumber" column="FAX_NUMBER" />
+		<result property="receiveEmail" column="RECEIVE_EMAIL" />
+		<result property="receiveSms" column="RECEIVE_SMS" />
+		<result property="receivePush" column="RECEIVE_PUSH" />
+		<result property="gender" column="GENDER" />
+		<result property="age" column="AGE" />
+		<result property="point" column="USER_POINT" />
+		<result property="buyCount" column="BUY_COUNT_FOR_ORDER" />
+		<result property="buyPrice" column="BUY_PRICE_FOR_ORDER" />
+		<result property="lastBuyDate" column="LAST_BUY_DATE" />
+		<result property="leaveReason" column="LEAVE_REASON" />
+		<result property="siteFlag" column="SITE_FLAG" />
+		<result property="useFlag" column="USE_FLAG" />
+		<result property="birthdayType" column="BIRTHDAY_TYPE" />
+		<result property="birthday" column="BIRTHDAY" />
+		<result property="levelId" column="LEVEL_ID" />
+		<result property="userLevelExpirationDate" column="USER_LEVEL_EXPIRATION_DATE" />
+		
+		<result property="levelName" column="LEVEL_NAME" />
+		<result property="groupName" column="GROUP_NAME" />
+		
+		<association property="userlevel" resultMap="saleson.shop.userlevel.UserLevelMapper.UserLevelResult"/>
+	</resultMap>
+	
+	<resultMap id="UserLevelResult" type="saleson.shop.userlevel.domain.UserLevel">
+		<result property="levelId" column="LEVEL_ID" />
+		<result property="levelName" column="LEVEL_NAME" />
+		<result property="levelCount" column="LEVEL_COUNT" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="fileName" column="FILE_NAME" />
+	</resultMap>
+	
+	<resultMap id="ChosenUserResult" type="saleson.shop.coupon.domain.ChosenUser">
+		<result property="userId" column="USER_ID" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="email" column="EMAIL" />
+		<result property="userName" column="USER_NAME" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="levelName" column="LEVEL_NAME" />
+	</resultMap>
+	
+	<resultMap id="userCountResult" type="saleson.common.opmanager.count.OpmanagerCount">
+		<id property="id" column="ID"/>
+		<result property="label" column="LABEL"/>
+		<result property="count" column="COUNT"/>
+	</resultMap>
+
+	<sql id="defaultColumns">
+		U.USER_ID,
+		U.LOGIN_ID,
+		U.PASSWORD,
+		U.USER_NAME,
+		U.EMAIL,
+		U.STATUS_CODE,
+		U.LOGIN_COUNT,
+		U.LOGIN_DATE,
+		U.DENY_DATE,
+		U.LEAVE_DATE,
+		U.UPDATED_DATE,
+		U.CREATED_DATE,
+
+		UR.AUTHORITY,
+
+		UD.GROUP_CODE,
+		UD.LEVEL_ID,
+		UD.USER_LEVEL_EXPIRATION_DATE,
+		UD.NEW_POST,
+		UD.POST,
+		UD.ADDRESS,
+		UD.ADDRESS_DETAIL,
+		UD.TEL_NUMBER,
+		UD.PHONE_NUMBER,
+		UD.FAX_NUMBER,
+		UD.RECEIVE_EMAIL,
+		UD.RECEIVE_SMS,
+		UD.GENDER,
+		UD.AGE,
+		UD.POINT,
+		UD.BUY_COUNT,
+		UD.BUY_PRICE,
+		UD.LAST_BUY_DATE,
+		UD.LEAVE_REASON,
+		UD.SITE_FLAG,
+
+		UD.USE_FLAG,
+		UD.BIRTHDAY_TYPE,
+		UD.BIRTHDAY
+		<!-- UD.REG_GUBN,
+		UD.EP_GUBN,
+		UD.CP_GUBN,
+		UD.HM_UNIQ_NO,
+		UD.CONTENT,
+		UD.RECOMMEND_LOGIN_ID,
+		UD.SUPPLY_PRICE_FLAG,
+		UD.ITEM_DELETE_FLAG,
+		UD.ROYAL_FLAG -->
+	</sql>
+	
+	<select id="getUserByUserIdNotStatusCode" parameterType="Long" resultMap="UserResult">
+		SELECT 
+			<include refid="defaultColumns" />,
+			IFNULL(UL.LEVEL_NAME,'일반회원 ') AS LEVEL_NAME
+		FROM OP_USER U 
+		    INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID
+		    LEFT JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		    LEFT JOIN OP_USER_LEVEL UL ON UD.LEVEL_ID = UL.LEVEL_ID
+		WHERE
+		    U.USER_ID =  #{value}
+	</select>
+	
+	<select id="getUserByLoginId" parameterType="String" resultMap="UserResult">
+		SELECT U.*, UR.*, UD.*
+		FROM OP_USER U 
+		    INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID AND U.STATUS_CODE IN ('9', '4')
+		    LEFT JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		WHERE LOGIN_ID = #{value}
+	</select>
+	
+	<select id="getUserDetailCountByUserId" parameterType="long" resultType="Integer">
+		SELECT COUNT(*) FROM OP_USER_DETAIL
+		WHERE USER_ID = #{value}
+	</select>
+	
+	<select id="getUserDetail" parameterType="long" resultMap="UserDetailResult">
+		SELECT UD.*, UL.LEVEL_ID, UL.GROUP_CODE, IFNULL(UL.LEVEL_NAME,'일반회원 ') AS LEVEL_NAME <!-- SNS 로그인시 모바일에서 회원등급이 나타나지 않아서 쿼리 수정 2017-06-13 yulsun.yoo -->
+		FROM OP_USER U 
+	      	LEFT JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+	      	LEFT JOIN OP_USER_LEVEL UL ON UD.LEVEL_ID = UL.LEVEL_ID
+	 	WHERE 
+	 		U.USER_ID =  #{value}
+	</select>
+	
+	<select id="getUserTotalCount" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_USER U 
+			INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID AND U.STATUS_CODE = '9'
+				AND UR.AUTHORITY LIKE CONCAT('%', #{value}, '%')
+			<!-- 
+		  	LEFT JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		  	 -->
+	</select>
+	
+	<select id="getManagerCount" parameterType="saleson.shop.user.support.UserSearchParam" resultType="int">
+		SELECT COUNT(*) 
+		FROM OP_MANAGER M
+		<if test="conditionType == 'FIND_MD'">
+			LEFT JOIN OP_USER_ROLE UR ON M.USER_ID=UR.USER_ID
+		</if>
+		<include refid="sqlManagerWhere" /> 
+	</select>
+	
+	<select id="getManagerCountByEmail" parameterType="string" resultType="int">
+		SELECT COUNT(*) 
+		FROM OP_MANAGER M
+		WHERE
+			EMAIL = #{value}
+	</select>
+	
+	
+	<select id="getManagerByUserId" parameterType="long" resultMap="UserResult">
+		SELECT * 
+		FROM OP_MANAGER M
+		WHERE USER_ID = #{value}
+	</select>
+	
+	<update id="updateManager" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_MANAGER 
+		<set>
+			<if test="password != null and password != ''">
+				PASSWORD = #{password}, 
+			</if>
+			<if test="userName != null and userName != ''">
+				USER_NAME = #{userName}, 
+			</if>
+			<if test="email != null and email != ''">
+				EMAIL = #{email} , 
+			</if>
+			<if test="leaveDate != null">
+				LEAVE_DATE = #{leaveDate} ,
+			</if>
+			<if test="statusCode != null">
+				STATUS_CODE = #{statusCode},
+			</if>
+            <if test="phoneNumber != null">
+                PHONE_NUMBER = #{phoneNumber}
+            </if>
+		</set>
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<insert id="insertManager" parameterType="com.onlinepowers.framework.security.userdetails.User">
+
+		INSERT INTO OP_MANAGER (USER_ID, LOGIN_ID, PASSWORD, PHONE_NUMBER, USER_NAME, EMAIL, LOGIN_COUNT, LOGIN_DATE, UPDATED_DATE, DENY_DATE, LEAVE_DATE, STATUS_CODE, CREATED_DATE, PASSWORD_EXPIRED_DATE)
+		VALUES (#{userId}, #{loginId}, #{password}, #{phoneNumber}, #{userName}, #{email}, 0, #{loginDate}, <include refid="CommonMapper.datetime" />, #{denyDate}, #{leaveDate}, #{statusCode}, <include refid="CommonMapper.datetime" />, #{passwordExpiredDate})
+
+	</insert>
+	
+	<delete id="deleteManagerByUserId" parameterType="long">
+		DELETE FROM OP_MANAGER
+		WHERE USER_ID = #{value}
+	</delete>
+	
+	<select id="getManagerList" parameterType="saleson.shop.user.support.UserSearchParam" resultMap="UserResult">
+		<include refid="CommonMapper.paginationHeader" /> 
+			SELECT *
+			FROM OP_MANAGER M
+			<if test="conditionType == 'FIND_MD'">
+				LEFT JOIN OP_USER_ROLE UR ON M.USER_ID=UR.USER_ID
+			</if>
+			<include refid="sqlManagerWhere" /> 
+			ORDER BY M.USER_ID DESC
+		
+		<include refid="CommonMapper.paginationFooter" /> 
+	</select>
+	
+	<select id="getManagerRoleListByUserId" parameterType="long" resultMap="UserRoleResult">
+		SELECT UR.USER_ID, UR.AUTHORITY 
+		FROM OP_MANAGER U 
+			INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID
+		WHERE U.USER_ID = #{value} AND U.STATUS_CODE = '9'
+	</select>
+	
+	<sql id="sqlManagerWhere">
+		<where>
+			<if test="query != null and query != ''">
+				<if test="where == 'USER_NAME'">
+					M.USER_NAME LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'EMAIL'">
+					M.EMAIL LIKE CONCAT('%', #{query}, '%')
+				</if>
+				<if test="where == 'LOGIN_ID'">
+					M.LOGIN_ID LIKE CONCAT('%', #{query}, '%')
+				</if>
+			</if>
+			<if test='loginId != null'>
+				AND M.LOGIN_ID = #{loginId}
+			</if>
+			<if test="conditionType == 'FIND_MD'">
+				AND UR.AUTHORITY = #{authority}
+			</if>
+		</where>
+	</sql>
+
+
+
+
+
+    <sql id="defaultUserWhere">
+        <where>
+            U.STATUS_CODE = '9'
+
+            <if test="query != null and query != ''">
+                <if test="where == 'USER_NAME'">
+                    AND U.USER_NAME LIKE CONCAT('%', #{query}, '%')
+                </if>
+                <if test="where == 'EMAIL'">
+                    AND U.EMAIL LIKE CONCAT('%', #{query}, '%')
+                </if>
+                <if test="where == 'LOGIN_ID'">
+                    AND U.LOGIN_ID LIKE CONCAT('%', #{query}, '%')
+                </if>
+                <if test="where == 'TEL_NUMBER'">
+                    AND REPLACE(UD.TEL_NUMBER, '-', '') LIKE CONCAT('%', REPLACE(#{query}, '-', ''), '%')
+                </if>
+                <if test="where == 'PHONE_NUMBER'">
+                    AND REPLACE(UD.PHONE_NUMBER, '-', '') LIKE CONCAT('%', REPLACE(#{query}, '-', ''), '%')
+                </if>
+            </if>
+
+            <if test="loginId != null and loginId != ''">
+                AND U.LOGIN_ID LIKE CONCAT('%', #{loginId}, '%')
+            </if>
+            <if test="userName != null and userName != ''">
+                AND U.USER_NAME LIKE CONCAT('%', #{userName}, '%')
+            </if>
+            <if test="email != null and email != ''">
+                AND U.EMAIL LIKE CONCAT('%', #{email}, '%')
+            </if>
+
+            <if test="startCreated != null and startCreated !='' and endCreated != null and endCreated !=''">
+                AND DATE_FORMAT(U.CREATED_DATE,'%Y%m%d') BETWEEN #{startCreated} AND #{endCreated}
+            </if>
+            <if test="startLoginDate != null and startLoginDate !='' and endLoginDate != null and endLoginDate !=''">
+                AND DATE_FORMAT(U.LOGIN_DATE,'%Y%m%d') BETWEEN #{startLoginDate} AND #{endLoginDate}
+            </if>
+
+            <if test="startLoginCount != null and startLoginCount !='' and endLoginCount != null and endLoginCount !=''">
+                AND U.LOGIN_COUNT BETWEEN #{startLoginCount} AND #{endLoginCount}
+            </if>
+            <if test="loginCount != null and loginCount !=''">
+                AND DATE_FORMAT(U.LOGIN_DATE,'%Y%m%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -#{loginCount} DAY),'%Y%m%d')
+            </if>
+
+            <if test="levelId != null and levelId !=''">
+                AND UD.LEVEL_ID = #{levelId}
+            </if>
+            <if test="receiveEmail != null and receiveEmail !=''">
+                AND UD.RECEIVE_EMAIL = #{receiveEmail}
+            </if>
+            <if test="receiveSms != null and receiveSms !=''">
+                AND UD.RECEIVE_SMS = #{receiveSms}
+            </if>
+            <if test="siteFlag != null and siteFlag !=''">
+                AND UD.SITE_FLAG = #{siteFlag}
+            </if>
+            <if test="useFlag != null and useFlag !=''">
+                AND UD.USE_FLAG = #{useFlag}
+            </if>
+
+            <if test="groupCode != null and groupCode != ''">
+                <choose>
+                    <when test='groupCode == "NO_GROUP_CODE"'>
+                        AND IFNULL(UD.GROUP_CODE, '') = ''
+                    </when>
+                    <otherwise>
+                        AND UD.GROUP_CODE = #{groupCode}
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+	
+	<select id="getUserCount" parameterType="saleson.shop.user.support.UserSearchParam" resultType="Integer">
+        SELECT COUNT(*)
+        FROM OP_USER U
+            INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+        <include refid="defaultUserWhere" />
+	</select>
+	
+	
+	<select id="getUserList" parameterType="saleson.shop.user.support.UserSearchParam" resultMap="UserResult">
+        SELECT
+            U.*,
+            (
+            	SELECT
+            		SUM(POINT)
+            	FROM OP_POINT
+            	WHERE USER_ID = U.USER_ID
+            	AND POINT_TYPE = 'point'
+				AND POINT != 0
+			) AS USER_POINT,
+            (SELECT IFNULL(LEVEL_NAME,'일반회원 ') FROM OP_USER_LEVEL WHERE LEVEL_ID = U.LEVEL_ID) AS LEVEL_NAME
+        FROM (
+            <include refid="CommonMapper.paginationHeader" />
+            SELECT
+                U.USER_ID,
+                U.LOGIN_ID,
+                U.USER_NAME,
+                U.EMAIL,
+                U.LOGIN_COUNT,
+                U.CREATED_DATE,
+
+                UD.LEVEL_ID,
+                UD.POST,
+                UD.ADDRESS,
+                UD.ADDRESS_DETAIL,
+                UD.TEL_NUMBER,
+                UD.PHONE_NUMBER,
+                UD.RECEIVE_EMAIL,
+                UD.RECEIVE_SMS,
+                UD.POINT,
+                UD.SITE_FLAG
+
+            FROM OP_USER U
+                INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+            <include refid="defaultUserWhere" />
+            ORDER BY U.USER_ID DESC
+            <include refid="CommonMapper.paginationFooter" />
+        ) U
+	</select>
+	
+	
+	<insert id="insertUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		INSERT INTO OP_USER (USER_ID, LOGIN_ID, PASSWORD, USER_NAME, EMAIL, LOGIN_COUNT, LOGIN_DATE, UPDATED_DATE, DENY_DATE, LEAVE_DATE, STATUS_CODE, CREATED_DATE, PASSWORD_EXPIRED_DATE)
+		VALUES (#{userId}, #{loginId}, #{password}, #{userName}, #{email}, 0, #{loginDate}, <include refid="CommonMapper.datetime" />, #{denyDate}, #{leaveDate}, 9, <include refid="CommonMapper.datetime" />, #{passwordExpiredDate})
+	
+		<!-- <selectKey keyProperty="userId" resultType="Integer" order="AFTER">
+			SELECT MAX(USER_ID) AS userId FROM OP_USER
+		</selectKey> -->
+	
+	</insert>
+	<insert id="insertUserDetail" parameterType="saleson.shop.user.domain.UserDetail">
+		INSERT INTO OP_USER_DETAIL (USER_ID, NEW_POST, POST, ADDRESS, ADDRESS_DETAIL, TEL_NUMBER, PHONE_NUMBER, FAX_NUMBER, RECEIVE_EMAIL, RECEIVE_SMS, RECEIVE_PUSH, GENDER, AGE, POINT, BUY_COUNT, BUY_PRICE, LEAVE_REASON, SITE_FLAG, LEVEL_ID, USE_FLAG, BIRTHDAY_TYPE, BIRTHDAY)
+		VALUES (#{userId}, #{newPost}, #{fullPost}, #{address}, #{addressDetail}, #{fullTelNumber}, #{fullPhoneNumber}, #{fullFaxNumber}, #{receiveEmail}, #{receiveSms}, #{receivePush}, #{gender}, #{age}, #{point}, #{buyCount}, #{buyPrice}, #{leaveReason}, #{siteFlag}, #{levelId}, #{useFlag}, #{birthdayType}, #{fullBirthday})
+	</insert>
+	
+	<update id="updateUserDetail" parameterType="saleson.shop.user.domain.UserDetail">
+		UPDATE OP_USER_DETAIL 
+			<set>
+				<if test='conditionType == "OPMANAGER"'>
+					LEVEL_ID = #{levelId},
+					GROUP_CODE = #{groupCode},
+					USER_LEVEL_EXPIRATION_DATE = #{userLevelExpirationDate},
+				</if>
+				
+				<if test="newPost != null">
+					NEW_POST = #{newPost}, 
+				</if>
+				<if test="fullPost != null">
+					POST = #{fullPost}, 
+				</if>
+				<if test="address != null">
+					ADDRESS = #{address}, 
+				</if>
+				<if test="addressDetail != null">
+					ADDRESS_DETAIL = #{addressDetail}, 
+				</if>
+				<if test="fullTelNumber != null">
+					TEL_NUMBER = #{fullTelNumber}, 
+				</if>
+				<if test="fullPhoneNumber != null">
+					PHONE_NUMBER = #{fullPhoneNumber}, 
+				</if>
+				<if test="fullFaxNumber != null">
+					FAX_NUMBER = #{fullFaxNumber}, 
+				</if>
+				<if test="receiveEmail != null">
+					RECEIVE_EMAIL = #{receiveEmail}, 
+				</if>
+				<if test="receiveSms != null">
+					RECEIVE_SMS = #{receiveSms}, 
+				</if>
+				<if test="receivePush != null">
+					RECEIVE_PUSH = #{receivePush},
+				</if>
+				<if test="gender != null">
+					GENDER = #{gender}, 
+				</if>
+				<if test="age != null">
+					AGE = #{age}, 
+				</if>
+				<if test="point != null and point != ''">
+					POINT = #{point}, 
+				</if>
+				<if test="buyCount != null and buyCount != ''">
+					BUY_COUNT = #{buyCount}, 
+				</if>
+				<if test="buyPrice != null and buyPrice != ''">
+					BUY_PRICE = #{buyPrice}, 
+				</if>
+				<if test="leaveReason != null and leaveReason != ''">
+					LEAVE_REASON = #{leaveReason}, 
+				</if>
+				<if test="siteFlag != null and siteFlag != ''">
+					SITE_FLAG = #{siteFlag}, 
+				</if>
+				<if test="useFlag != null and useFlag != ''">
+					USE_FLAG = #{useFlag}, 
+				</if>
+				<if test="birthdayType != null and birthdayType != ''">
+					BIRTHDAY_TYPE = #{birthdayType},
+				</if>
+				<if test="fullBirthday != null and fullBirthday != ''">
+					BIRTHDAY = #{fullBirthday},
+				</if>
+			</set>
+		WHERE USER_ID = #{userId}
+		
+	</update>
+	
+	
+	<insert id="insertUserRole" parameterType="com.onlinepowers.framework.security.userdetails.UserRole">
+		INSERT INTO OP_USER_ROLE (USER_ID, AUTHORITY)
+		VALUES (#{userId}, #{authority})
+	</insert>
+	
+	<select id="getUserByUserId" parameterType="Long" resultMap="UserResult">
+		SELECT 
+			U.*, 
+			UR.*, 
+			UD.*, 
+			IFNULL(UL.LEVEL_NAME,'일반회원 ') AS LEVEL_NAME
+		FROM OP_USER U 
+		    INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID AND U.STATUS_CODE = '9'
+		    LEFT JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		    LEFT JOIN OP_USER_LEVEL UL ON UD.LEVEL_ID = UL.LEVEL_ID
+		WHERE
+		    U.USER_ID = #{value}
+	</select>
+	
+	<update id="updateUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER 
+		<set>
+			<if test="password != null and password != ''">
+				PASSWORD = #{password}, 
+			</if>
+			<if test="userName != null and userName != ''">
+				USER_NAME = #{userName}, 
+			</if>
+			<if test="email != null and email != ''">
+				EMAIL = #{email} , 
+			</if>
+			<if test="leaveDate != null and leaveDate != ''">
+				LEAVE_DATE = #{leaveDate} ,
+			</if>
+			<if test="statusCode != null and statusCode != ''">
+				STATUS_CODE = #{statusCode},
+			</if>
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		</set>
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<update id="updateUserRole" parameterType="com.onlinepowers.framework.security.userdetails.UserRole">
+		UPDATE OP_USER_ROLE SET
+			AUTHORITY = #{authority}
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<delete id="deleteUserDetail" parameterType="long">
+		DELETE FROM OP_USER_DETAIL
+		WHERE USER_ID = #{userId}
+	</delete>
+	
+	<delete id="deleteUserRole" parameterType="long">
+		DELETE FROM OP_USER_ROLE 
+		WHERE USER_ID = #{userId}
+	</delete>
+	
+	<delete id="deleteUser" parameterType="long">
+		DELETE FROM OP_USER
+		WHERE USER_ID = #{userId}
+	</delete>
+	
+	<select id="getUserCountByPhoneNumber" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM OP_USER_DETAIL
+		WHERE PHONE_NUMBER = #{value}
+	</select>
+	
+	<select id="getUserCountByEmail" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM OP_USER
+		WHERE EMAIL = #{value}
+	</select>
+	
+	<select id="getUserCountByLoginId" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM OP_USER
+		WHERE LOGIN_ID = #{value}
+	</select>
+	
+	<select id="getUserCountByUserInfo" parameterType="User" resultType="Integer">
+		SELECT COUNT(*) FROM OP_USER
+		WHERE IFNULL(LOGIN_ID = #{loginId} , EMAIL = #{email})
+	</select>
+	
+	<select id="getUserCountByManagerId" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM OP_MANAGER
+		WHERE LOGIN_ID = #{value}
+	</select>
+
+	<select id="getPasswordCount" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM OP_USER
+		WHERE PASSWORD = #{value} AND STATUS_CODE = '9'
+	</select>
+	
+	
+	<select id="getPasswordCountByUser" parameterType="User" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) FROM OP_USER
+			WHERE USER_ID <> #{userId} AND PASSWORD = #{password} AND STATUS_CODE = '9'
+		]]>
+	</select>
+	
+
+	<select id="getUserCountByUserId" parameterType="long" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM OP_USER 
+		WHERE 
+			STATUS_CODE = '9'
+		  	AND USER_ID = #{value}
+	</select>
+	
+	
+	<select id="getUserRoleListByLoginId" parameterType="String" resultMap="UserRoleResult">
+		SELECT UR.USER_ID, UR.AUTHORITY 
+		FROM OP_USER U INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID
+		WHERE U.LOGIN_ID = #{value} AND U.STATUS_CODE = '9'
+	</select>
+	
+	<select id="getUserRoleListByUserId" parameterType="int" resultMap="UserRoleResult">
+		SELECT UR.USER_ID, UR.AUTHORITY 
+		FROM OP_USER U INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID
+		WHERE U.USER_ID = #{value} AND U.STATUS_CODE = '9'
+	</select>
+
+	
+	<insert id="mergeUserRole" parameterType="com.onlinepowers.framework.security.userdetails.UserRole">
+		MERGE INTO OP_USER_ROLE USING DUAL ON (USER_ID = #{userId} AND AUTHORITY = #{authority})
+		
+		WHEN MATCHED THEN
+		  UPDATE SET 
+		  	USER_ID = #{userId},
+		  	AUTHORITY = #{authority}
+		  WHERE USER_ID = #{userId} AND AUTHORITY = #{authority}
+		
+		WHEN NOT MATCHED THEN
+			INSERT (USER_ID, AUTHORITY)
+			VALUES (#{userId}, #{authority})
+			
+		
+	</insert>
+	
+	
+	
+	<delete id="deleteUserRoleByAuthority" parameterType="String">
+		DELETE FROM OP_USER_ROLE 
+		WHERE AUTHORITY = #{value}
+	</delete>
+	
+	
+	
+	
+	<update id="deleteUserById" parameterType="long">
+		UPDATE OP_USER SET
+			STATUS_CODE = '2',
+			LEAVE_DATE = TO_CHAR(SYSDATE, 'yyyymmddhh24miss')
+		WHERE USER_ID = #{value}
+	</update>
+	
+	<update id="updateUserByLoginId" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER 
+		<set>
+			<if test="password != null and password != ''">
+				PASSWORD = #{password}, 
+			</if>
+			<if test="email != null and email != ''">
+				EMAIL = #{email}
+			</if>
+		</set>
+		WHERE LOGIN_ID = #{loginId}
+	</update>
+	
+	<update id="updateUserBuyInfoForOrder" parameterType="saleson.shop.user.domain.UserDetail">
+		UPDATE OP_USER_DETAIL
+		SET
+			BUY_COUNT = BUY_COUNT + 1,
+			BUY_PRICE = BUY_PRICE + #{buyPrice},
+			LAST_BUY_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE
+			USER_ID = #{userId}
+	</update>
+	
+	<select id="getUserByParam" parameterType="saleson.shop.user.support.UserSearchParam" resultMap="UserResult">
+		SELECT 
+			U.*, 
+			UD.*, 
+			UR.*
+		FROM 
+			OP_USER AS U 
+	    	INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID AND U.STATUS_CODE = '9'
+	    	LEFT JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		WHERE U.USER_ID = #{userId}
+	</select>
+	
+	<select id="getUserListForExcel" parameterType="saleson.shop.user.support.UserSearchParam" resultMap="UserExcelResult">
+		SELECT 
+			U.USER_ID,
+			UD.BUSINESS_TYPE,
+			(SELECT IFNULL(SUM(POINT), 0) FROM OP_POINT WHERE USER_ID = U.USER_ID) AS USER_POINT,
+			<foreach item="column" collection="columns" open="" separator="," close="">
+				<if test='column != "TEAM" and column != "ITEM" and column != "P.POINT"'>
+					#{column}
+				</if>
+			</foreach>
+			<if test='itemUserCodeArray != null and itemUserCodeArray.length > 0
+		    			and orderStartDate != null and orderStartDate !=""
+		    			and orderEndDate != null and orderEndDate !=""'>
+		    	, OI.ITEM_USER_CODE		
+		    	, OI.ITEM_NAME
+		    	, OI.CREATED_DATE		
+		    </if>
+			
+		FROM OP_USER U 
+		    INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID AND U.STATUS_CODE = '9' AND UR.AUTHORITY = 'ROLE_USER'
+		    LEFT JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		    
+		    <if test='itemUserCodeArray != null and itemUserCodeArray.length > 0
+		    			and orderStartDate != null and orderStartDate !=""
+		    			and orderEndDate != null and orderEndDate !=""'>
+			    INNER JOIN OP_ORDER O ON U.USER_ID = O.USER_ID
+			    INNER JOIN OP_ORDER_ITEM OI ON O.ORDER_ID = OI.ORDER_ID
+		    </if>
+		    
+		    
+		    
+		<where>
+			<if test='userName != null and userName != ""'>
+				AND U.USER_NAME LIKE CONCAT('%', #{userName}, '%')
+			</if>
+			<if test='email != null and email != ""'>
+				AND U.EMAIL LIKE CONCAT('%', #{email}, '%')
+			</if>
+			<if test='telNumber != null and telNumber != ""'>
+				AND (
+					UD.TEL_NUMBER LIKE CONCAT('%', #{telNumber}, '%')
+					OR
+					UD.PHONE_NUMBER LIKE CONCAT('%', #{telNumber}, '%')
+				)
+			</if>
+			<if test='receiveEmail != null and receiveEmail != ""'>
+				AND UD.RECEIVE_EMAIL= #{receiveEmail}
+			</if>
+			
+			<if test='createdStartDate != null and createdStartDate != ""'>
+				AND U.CREATED_DATE >= CONCAT(#{createdStartDate}, '000000')
+			</if>
+			<if test='createdEndDate != null and createdEndDate != ""'>
+				AND U.CREATED_DATE <![CDATA[<=]]> CONCAT(#{createdEndDate}, '235959')
+			</if>
+			
+			<if test='leaveStartDate != null and leaveStartDate != ""'>
+				AND U.LEAVE_DATE >= CONCAT(#{leaveStartDate}, '000000')
+			</if>
+			<if test='leaveEndDate != null and leaveEndDate != ""'>
+				AND U.LEAVE_DATE <![CDATA[<=]]> CONCAT(#{leaveEndDate}, '235959')
+			</if>
+			
+			<if test='loginCount != null and loginCount != ""'>
+				<choose>
+					<when test='loginCountCondition == "1"'>
+						AND U.LOGIN_COUNT = #{loginCount}
+					</when>
+					<when test='loginCountCondition == "2"'>
+						AND U.LOGIN_COUNT <![CDATA[<=]]> #{loginCount}
+					</when>
+					<when test='loginCountCondition == "3"'>
+						AND U.LOGIN_COUNT >= #{loginCount}
+					</when>
+				</choose>
+			</if>
+			
+			<if test='gender != null and gender != ""'>
+				AND UD.GENDER = #{gender}
+			</if>
+			
+			<if test='age != null and age != ""'>
+				AND UD.AGE = #{age}
+			</if>
+			
+			
+			<if test='buyCount != null and buyCount != ""'>
+				<choose>
+					<when test='buyCountCondition == "1"'>
+						AND UD.BUY_COUNT = #{buyCount}
+					</when>
+					<when test='buyCountCondition == "2"'>
+						AND UD.BUY_COUNT <![CDATA[<=]]> #{buyCount}
+					</when>
+					<when test='buyCountCondition == "3"'>
+						AND UD.BUY_COUNT >= #{buyCount}
+					</when>
+				</choose>
+			</if>
+			
+			<if test='buyPrice != null and buyPrice != ""'>
+				<choose>
+					<when test='buyPriceCondition == "1"'>
+						AND UD.BUY_PRICE = #{buyPrice}
+					</when>
+					<when test='buyPriceCondition == "2"'>
+						AND UD.BUY_PRICE <![CDATA[<=]]> #{buyPrice}
+					</when>
+					<when test='buyPriceCondition == "3"'>
+						AND UD.BUY_PRICE >= #{buyPrice}
+					</when>
+				</choose>
+			</if>
+			
+			<if test='itemUserCodeArray != null and itemUserCodeArray.length > 0
+		    			and orderStartDate != null and orderStartDate !=""
+		    			and orderEndDate != null and orderEndDate !=""'>
+			    AND OI.ITEM_USER_CODE IN (
+			    	<foreach collection="itemUserCodeArray" item="itemCode" separator=",">
+			    		#{itemCode}
+			    	</foreach>
+			    )
+			    AND OI.ORDER_STATUS = '3'
+			    AND OI.PAY_DATE IS NOT NULL
+			    AND OI.PAY_DATE <![CDATA[<>]]> ''
+			    AND OI.CREATED_DATE BETWEEN CONCAT(#{orderStartDate}, '000000')  AND CONCAT(#{orderEndDate}, '235959')
+		    </if>
+			
+		</where>
+		
+		<choose>
+			<otherwise>
+				ORDER BY U.USER_ID ASC
+			</otherwise>
+		</choose>
+		
+	</select>
+	
+	<select id="getUserInfoByUserName" parameterType="saleson.shop.user.domain.AuthUserInfo" resultMap="UserResult">
+		SELECT *
+		FROM OP_USER U
+			INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID AND UD.PHONE_NUMBER = #{fullPhoneNumber}
+		<where>
+			<if test="userName != null and userName != ''">
+				U.USER_NAME = #{userName}
+			</if>
+			<if test="email != null and email != ''">
+				AND U.EMAIL = #{email}
+			</if>
+			<if test="loginId != null and loginId != ''">
+				AND U.LOGIN_ID = #{loginId}
+			</if>
+		</where>
+		LIMIT 1
+	</select>
+	
+	<sql id="whereSecedeUserQuery">
+		<if test="startCreated != null and startCreated !='' and endCreated != null and endCreated !=''">
+			AND DATE_FORMAT(U.LEAVE_DATE,'%Y%m%d') BETWEEN #{startCreated} AND #{endCreated}
+		</if>
+		<if test="query != null and query != ''">
+			<if test="where == 'USERNAME'">
+				AND U.USER_NAME LIKE CONCAT('%', #{query}, '%')
+			</if>
+			<if test="where == 'EMAIL'">
+				AND U.EMAIL LIKE CONCAT('%', #{query}, '%')
+			</if>
+			<if test="where == 'LOGIN_ID'">
+				AND U.LOGIN_ID LIKE CONCAT('%', #{query}, '%')
+			</if>
+		</if>
+		
+	</sql>
+	
+	<select id="getSecedeUserCount" parameterType="saleson.shop.user.support.UserSearchParam" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM OP_USER U
+		WHERE U.STATUS_CODE = 3
+		AND U.LOGIN_ID not like ('secede_%')
+		<include refid="whereSecedeUserQuery"/>
+	</select>
+	
+	<select id="getSecedeUserList" parameterType="saleson.shop.user.support.UserSearchParam" resultMap="UserResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT
+				UD.LEAVE_REASON,
+				U.*
+			FROM OP_USER_DETAIL UD
+			LEFT JOIN OP_USER U
+			ON UD.USER_ID = U.USER_ID
+			WHERE U.STATUS_CODE = 3
+			AND U.LOGIN_ID not like ('secede_%')
+			<include refid="whereSecedeUserQuery"/>
+			ORDER BY U.LEAVE_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<update id="updateSecedeUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		
+		UPDATE OP_USER 
+		SET 
+			LOGIN_ID = #{loginId},
+			LEAVE_DATE = DATE_FORMAT(NOW(),'%Y%m%d'), 
+			STATUS_CODE = '3', 
+			
+			PASSWORD = '',
+			USER_NAME = '',
+			EMAIL = ''
+		
+		WHERE USER_ID = #{userId}
+		
+	</update>
+	
+	<update id="updateSecedeUpdateUserDetail" parameterType="saleson.shop.user.domain.UserDetail">
+	
+		UPDATE OP_USER_DETAIL 
+			SET
+				NEW_POST = '', 
+				POST = '',
+				ADDRESS = '', 
+				ADDRESS_DETAIL = '',
+				TEL_NUMBER = '', 
+				PHONE_NUMBER = '', 
+				FAX_NUMBER = '', 
+				RECEIVE_EMAIL = '', 
+				RECEIVE_SMS = '', 
+				GENDER = '', 
+				AGE = 0, 
+				POINT = 0, 
+				BUY_COUNT = 0, 
+				BUY_PRICE = 0, 
+				LEAVE_REASON = #{leaveReason}, 
+				SITE_FLAG = '', 
+				USE_FLAG = #{useFlag}, 
+				BIRTHDAY_TYPE = '',
+				BIRTHDAY = ''
+				
+		WHERE USER_ID = #{userId}
+	
+	
+	</update>
+	
+	
+	<!-- 1차 메뉴 목록, 운영자 메뉴 권한용  -->
+	<select id="getAdminMenuRoleList" resultType="java.util.HashMap">
+		SELECT 
+		  CONCAT('MENU_' , MENU_ID) AS MENU_NAME_CODE, 
+		  CONCAT('ROLE_ADMIN_MENU_' , MENU_ID) AS ROLE_NAME
+		FROM OP_MENU
+		WHERE MENU_TYPE = 1 ORDER BY MENU_SEQ ASC
+	</select>
+	
+	
+	<update id="updateUserPasswordByUserId" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER SET
+		PASSWORD = #{password}
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<select id="getChosenUserList" parameterType="java.util.List" resultMap = "ChosenUserResult">
+		SELECT U.LOGIN_ID, U.USER_NAME, U.EMAIL, G.GROUP_NAME, L.LEVEL_NAME
+		FROM 
+		OP_USER_DETAIL AS D LEFT OUTER JOIN OP_USER_LEVEL AS L ON D.LEVEL_ID = L.LEVEL_ID
+		LEFT OUTER JOIN OP_USER AS U ON U.USER_ID = D.USER_ID
+		LEFT OUTER JOIN OP_GROUP G ON D.GROUP_CODE = G.GROUP_CODE
+					  
+		<where>
+			<foreach collection="list" item="id">
+				 OR U.USER_ID =#{id}
+			</foreach>
+		</where>
+	
+	</select>
+
+	<select id="getChosenUserListbyParam" parameterType="saleson.shop.coupon.domain.ChosenUser" resultMap = "ChosenUserResult">
+		SELECT 
+			U.LOGIN_ID, U.USER_NAME, U.EMAIL, GL.GROUP_NAME, UL.LEVEL_NAME
+		FROM 
+			OP_USER_DETAIL UD LEFT JOIN OP_USER_LEVEL UL ON UD.LEVEL_ID = UL.LEVEL_ID
+		LEFT JOIN OP_USER U ON U.USER_ID = UD.USER_ID
+		INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID 
+		AND U.STATUS_CODE = '9' AND UR.AUTHORITY LIKE CONCAT('%', #{authority}, '%')
+		LEFT JOIN OP_GROUP GL ON UD.GROUP_CODE = GL.GROUP_CODE
+		
+		<where>
+			<!-- WHERE 태그 내부에 AND가 자동으로 삭제되지 않아 추가 // 2016-09-29_JHC -->
+			<trim suffixOverrides="AND">
+				<if test="loginId != null and loginId != ''">
+				 	U.LOGIN_ID LIKE CONCAT('%',#{loginId},'%') AND
+				</if>
+				<if test="userName != null and userName != ''">
+				 	U.USER_NAME LIKE CONCAT('%',#{userName},'%') AND
+				</if>	
+				<if test="email != null and email != ''">
+				 	U.EMAIL LIKE CONCAT('%',#{email},'%') AND
+				</if>
+				<if test="receiveEmail != null and receiveEmail != ''">
+					UD.RECEIVE_EMAIL = '0' AND
+				</if>
+				<if test="receiveSms != null and receiveSms != ''">
+					UD.RECEIVE_SMS = '0' AND
+				</if>
+			</trim>
+		</where>		  
+		
+	</select>
+	
+	<select id="getUserListForChosen" parameterType="saleson.shop.user.support.UserSearchParam" resultMap="ChosenUserResult">
+		<include refid="CommonMapper.paginationHeader" /> 
+			SELECT 
+				U.*, 
+				UR.AUTHORITY, 
+				UD.*, 
+				IFNULL(UL.LEVEL_NAME,'일반회원 ') AS LEVEL_NAME,
+				(SELECT SUM(POINT) FROM OP_POINT WHERE USER_ID = U.USER_ID) AS USER_POINT,
+				0 AS BUY_COUNT_FOR_ORDER,
+				0 AS BUY_PRICE_FOR_ORDER,
+				GL.GROUP_NAME
+			FROM OP_USER U 
+			    INNER JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID AND U.STATUS_CODE = '9'
+			  	  AND UR.AUTHORITY LIKE CONCAT('%', #{authority}, '%')
+			    LEFT JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+			    LEFT OUTER JOIN OP_USER_LEVEL UL ON UD.LEVEL_ID = UL.LEVEL_ID
+			    LEFT OUTER JOIN OP_GROUP GL ON UD.GROUP_CODE = GL.GROUP_CODE 
+			
+		 	<include refid="defaultUserWhere" /> 
+			
+			ORDER BY U.USER_ID DESC 
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<sql id="defaultWaitSleepUserWhereQuery">
+		U.STATUS_CODE = '9' 
+		AND DATEDIFF(NOW(), LEFT(IFNULL(U.LOGIN_DATE, U.CREATED_DATE), 8)) > 335
+		AND IFNULL(U.SLEEP_MAIL_SEND_DATE, '') = ''
+	</sql>
+	
+	<select id="getWaitSleepUser" resultMap="UserResult">
+		SELECT 
+			U.USER_ID,
+			U.LOGIN_ID, 
+			U.USER_NAME,
+			U.EMAIL
+		FROM OP_USER U
+			INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		<where> 
+			<include refid="defaultWaitSleepUserWhereQuery" />
+		</where>
+		
+		ORDER BY U.USER_ID ASC
+		LIMIT 1000
+	</select>
+	
+	<update id="updateWaitSleepUser">
+		UPDATE OP_USER U
+		SET 
+			SLEEP_MAIL_SEND_DATE = <include refid="CommonMapper.datetime" /> 
+		<where> 
+			<include refid="defaultWaitSleepUserWhereQuery" />
+			AND U.USER_ID IN 
+			<foreach item="user" index="index" collection="list" open="(" separator="," close=")">
+				#{user.userId}
+			</foreach>
+		</where>
+	</update>
+	
+	<select id="getUserListForSleepTarget" resultMap="UserResult">
+		SELECT 
+			U.USER_ID, 
+			U.USER_NAME, 
+			U.EMAIL, 
+			UD.NEW_POST, 
+			UD.POST, 
+			UD.ADDRESS, 
+			UD.ADDRESS_DETAIL, 
+			UD.TEL_NUMBER, 
+			UD.PHONE_NUMBER, 
+			UD.FAX_NUMBER, 
+			UD.BIRTHDAY_TYPE, 
+			UD.BIRTHDAY, 
+			IFNULL(U.LOGIN_DATE, U.CREATED_DATE) LOGIN_DATE
+		FROM OP_USER U INNER JOIN OP_USER_DETAIL UD
+			ON U.USER_ID = UD.USER_ID 
+		WHERE
+			U.STATUS_CODE = '9'
+ 			AND IFNULL(U.SLEEP_MAIL_SEND_DATE, '') != ''
+ 			AND DATEDIFF(NOW(), U.SLEEP_MAIL_SEND_DATE) > 30  
+			AND DATEDIFF(NOW(), IFNULL(U.LOGIN_DATE, U.CREATED_DATE)) > 365
+	</select>
+	
+	<select id="getUserForWakeup" parameterType="com.onlinepowers.framework.security.userdetails.User" resultMap="UserResult">
+		SELECT
+			USER_ID,
+			USER_NAME,
+			EMAIL,
+			NEW_POST,
+			POST,
+			ADDRESS,
+			ADDRESS_DETAIL,
+			TEL_NUMBER,
+			PHONE_NUMBER,
+			FAX_NUMBER,
+			BIRTHDAY_TYPE,
+			BIRTHDAY
+		FROM OP_USER_SLEEP
+		WHERE 
+			USER_ID = #{userId}
+	</select>
+
+	<update id="wakeupUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER
+		SET
+			USER_NAME = #{userName},
+			EMAIL = #{email},
+			STATUS_CODE = '9'
+		WHERE
+			USER_ID = #{userId}
+	</update>
+
+	<update id="wakeupUserDetail" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER_DETAIL
+		SET
+			NEW_POST = #{userDetail.newPost},
+			POST = #{userDetail.post},
+			ADDRESS = #{userDetail.address},
+			ADDRESS_DETAIL = #{userDetail.addressDetail},
+			TEL_NUMBER = #{userDetail.telNumber},
+			PHONE_NUMBER = #{userDetail.phoneNumber},
+			FAX_NUMBER = #{userDetail.faxNumber},
+			BIRTHDAY_TYPE = #{userDetail.birthdayType},
+			BIRTHDAY = #{userDetail.birthday}
+		WHERE
+			USER_ID = #{userId}
+	</update>
+	
+	<delete id="deleteSleepUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		DELETE FROM OP_USER_SLEEP WHERE USER_ID = #{userId}
+	</delete>
+	
+	<update id="updateUserToSleep">
+		UPDATE OP_USER U
+		SET 
+			U.USER_NAME = NULL,
+			U.STATUS_CODE = '4',
+			U.SLEEP_MAIL_SEND_DATE = NULL
+		WHERE 
+			U.USER_ID IN 
+			<foreach item="user" index="index" collection="list" open="(" separator="," close=")">
+				#{user.userId}
+			</foreach>
+	</update>
+
+	<update id="updateUserDetailToSleep">
+		UPDATE OP_USER_DETAIL UD
+		SET
+			UD.NEW_POST = NULL,
+			UD.POST = NULL,
+			UD.ADDRESS = NULL,
+			UD.ADDRESS_DETAIL = NULL,
+			UD.TEL_NUMBER = NULL,
+			UD.PHONE_NUMBER = NULL,
+			UD.FAX_NUMBER = NULL,
+			UD.BIRTHDAY_TYPE = NULL,
+			UD.BIRTHDAY = NULL,
+			UD.RECEIVE_EMAIL = '1',
+			UD.RECEIVE_SMS = '1'
+		WHERE
+		UD.USER_ID IN
+		<foreach item="user" index="index" collection="list" open="(" separator="," close=")">
+			#{user.userId}
+		</foreach>
+	</update>
+	
+	<insert id="insertSleepUser">
+		INSERT INTO OP_USER_SLEEP (
+			USER_ID, 
+			USER_NAME, 
+			EMAIL, 
+			NEW_POST, 
+			POST, 
+			ADDRESS, 
+			ADDRESS_DETAIL, 
+			TEL_NUMBER, 
+			PHONE_NUMBER, 
+			FAX_NUMBER, 
+			BIRTHDAY_TYPE, 
+			BIRTHDAY,
+			CREATED_DATE
+		) VALUES
+		<foreach item="user" index="index" collection="list" open="" separator="," close="">
+			(
+				#{user.userId}, 
+				#{user.userName},
+				#{user.email},
+				#{user.userDetail.newPost},
+				#{user.userDetail.post},
+				#{user.userDetail.address},
+				#{user.userDetail.addressDetail},
+				#{user.userDetail.telNumber},
+				#{user.userDetail.phoneNumber},
+				#{user.userDetail.faxNumber},
+				#{user.userDetail.birthdayType},
+				#{user.userDetail.birthday},
+				<include refid="CommonMapper.datetime" />
+			)
+		</foreach>
+	</insert>
+
+    <select id="getOpmanagerUserCountAll" parameterType="java.util.HashMap" resultMap="userCountResult">
+		SELECT
+			'today-subscribers' AS ID,
+			'금일 가입자' AS LABEL,
+			count(*) AS COUNT
+		FROM OP_USER
+		WHERE CREATED_DATE LIKE CONCAT(#{today}, '%')
+
+		UNION ALL
+
+		SELECT
+			'weekly-subscribers' AS ID,
+			'주간 가입자' AS LABEL,
+			count(*) AS COUNT
+		FROM OP_USER
+		WHERE CREATED_DATE >= CONCAT(#{days7ago}, '000000')
+
+		UNION ALL
+
+		SELECT
+			'today-visit' AS ID,
+			'오늘 방문자' AS LABEL,
+			 VISIT_COUNT AS COUNT
+		FROM OP_VISIT_COUNT
+		WHERE VISIT_DATE = #{today}
+	</select>
+	
+	<!-- 주문자 정보 기본정보로 저장 체크시 update 2017-05-18 yulsun.yoo -->
+	<update id="updateUserDetailForOrder" parameterType="saleson.shop.order.domain.Buyer">
+		UPDATE OP_USER_DETAIL
+		<set>
+			<if test='zipcode != null and zipcode != ""'>
+				POST = #{zipcode},
+			</if>
+			<if test='newZipcode != null and newZipcode != ""'>
+				NEW_POST = #{newZipcode},
+			</if>
+			<if test='address != null and address != ""'>
+				ADDRESS = #{address},
+			</if>
+			<if test='addressDetail != null and addressDetail != ""'>
+				ADDRESS_DETAIL = #{addressDetail}
+			</if>
+		</set>
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<update id="updatePasswordForManager" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_MANAGER
+		SET
+		PASSWORD = #{password},
+		PASSWORD_TYPE = #{passwordType},
+		PASSWORD_EXPIRED_DATE = #{passwordExpiredDate},
+		UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<update id="updatePasswordForUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER
+		SET
+			PASSWORD = #{password},
+			PASSWORD_TYPE = #{passwordType},
+			PASSWORD_EXPIRED_DATE = #{passwordExpiredDate},
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<update id="updatePasswordExpiredDateForUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER
+		SET
+			PASSWORD_TYPE = 'N',
+			PASSWORD_EXPIRED_DATE = #{passwordExpiredDate},
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		WHERE USER_ID = #{userId}
+	</update>
+
+
+    <!-- [공통] 회원 등급 조회 쿼리 -->
+    <sql id="sqlUserLevelCommon">
+	    SELECT * FROM (
+		    SELECT
+			    BASE.USER_ID,
+			    #{groupCode} AS GROUP_CODE,
+			    #{levelId} AS LEVEL_ID,
+			    #{levelName} AS LEVEL_NAME,
+			    'SYSTEM_BATCH' AS ADMIN_USER_NAME,
+			    SUM(BASE.TOTAL_AMOUNT) AS TOTAL_AMOUNT
+		    FROM (
+			    SELECT
+				    O.USER_ID,
+				    OP.REMAINING_AMOUNT AS TOTAL_AMOUNT
+			    FROM OP_ORDER O
+			    INNER JOIN OP_ORDER_PAYMENT OP ON O.ORDER_CODE = OP.ORDER_CODE
+			    INNER JOIN OP_USER U ON U.USER_ID = O.USER_ID
+			    INNER JOIN OP_USER_DETAIL UD ON UD.USER_ID = U.USER_ID
+			    <where>
+				    O.DATA_STATUS_CODE = '1'
+				    AND U.STATUS_CODE = '9'
+				    <include refid="sqlUserLevelDefaultWhere" />
+
+				    AND OP.PAY_DATE BETWEEN #{startPaydate} AND #{endPaydate}
+			    </where>
+
+			    UNION ALL
+
+			    SELECT
+				    USER_ID,
+				    AMOUNT AS TOTAL_AMOUNT
+			    FROM OP_ORDER_SALES
+			    WHERE PAY_DATE BETWEEN #{startPaydate} AND #{endPaydate}
+		    ) BASE
+		    GROUP BY BASE.USER_ID
+	    ) T
+	    WHERE TOTAL_AMOUNT >= #{priceStart} AND TOTAL_AMOUNT <![CDATA[<]]> #{priceEnd}
+
+    </sql>
+
+    <!-- [공통] 회원 등급 조회 조건 -->
+    <sql id="sqlUserLevelDefaultWhere">
+        <if test='groupCode == "default"'>
+            AND (UD.GROUP_CODE = 'default' OR UD.GROUP_CODE IS NULL OR UD.GROUP_CODE = '')
+        </if>
+        <if test='groupCode != "default"'>
+            AND UD.GROUP_CODE = #{groupCode}
+        </if>
+
+        AND (UD.USER_LEVEL_EXPIRATION_DATE <![CDATA[<=]]> #{expirationDate} OR UD.USER_LEVEL_EXPIRATION_DATE IS NULL)
+    </sql>
+
+    <!-- 해당 등급에 맞는 회원 수 조회 (주문데이터에서 확인) -->
+    <select id="getUserCountByUserLevel" parameterType="saleson.shop.userlevel.domain.UserLevel" resultType="int">
+        <choose>
+            <when test='userLevelProcessType == "ALL_OTHER"'>
+                SELECT COUNT(*) FROM OP_USER_DETAIL UD
+                <where>
+                    USER_ID IN (SELECT USER_ID FROM OP_USER WHERE STATUS_CODE = '9')
+                    <include refid="sqlUserLevelDefaultWhere" />
+                </where>
+            </when>
+
+            <otherwise>
+                SELECT COUNT(*) FROM (
+                    <include refid="sqlUserLevelCommon" />
+                ) T
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 해당 등급에 맞는 회원의 등급 정보를 일괄 업데이트 (주문데이터에서 확인) -->
+    <update id="updateUserDetailByUserLevel" parameterType="saleson.shop.userlevel.domain.UserLevel">
+        UPDATE OP_USER_DETAIL UD SET
+            UD.GROUP_CODE = #{groupCode},
+            UD.LEVEL_ID = #{levelId},
+            UD.USER_LEVEL_EXPIRATION_DATE = #{newExpirationDate}
+        <where>
+            <choose>
+                <when test='userLevelProcessType == "ALL_OTHER"'>
+                    UD.USER_ID IN (SELECT USER_ID FROM OP_USER WHERE STATUS_CODE = '9')
+
+                    <include refid="sqlUserLevelDefaultWhere" />
+                </when>
+
+                <otherwise>
+                    UD.USER_ID IN (
+                        SELECT USER_ID FROM (
+                            <include refid="sqlUserLevelCommon"/>
+                        ) T
+                    )
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+
+
+    <!-- 회원 등급 변경 로그 저장 -->
+    <insert id="insertUserLevelLogByUserLevel" parameterType="saleson.shop.userlevel.domain.UserLevel">
+        INSERT INTO OP_USER_LEVEL_LOG (
+            USER_ID,
+            GROUP_CODE,
+            LEVEL_ID,
+            LEVEL_NAME,
+            ADMIN_USER_NAME,
+            CREATED_DATE
+        )
+        SELECT
+            USER_ID,
+            GROUP_CODE,
+            LEVEL_ID,
+            LEVEL_NAME,
+            ADMIN_USER_NAME,
+            <include refid="CommonMapper.datetime" />
+        FROM (
+            <choose>
+                <when test='userLevelProcessType == "ALL_OTHER"'>
+                    SELECT
+                        UD.USER_ID,
+                        #{groupCode} AS GROUP_CODE,
+                        #{levelId} AS LEVEL_ID,
+                        #{levelName} AS LEVEL_NAME,
+                        'SYSTEM_BATCH' AS ADMIN_USER_NAME
+                    FROM OP_USER_DETAIL UD
+                    <where>
+                        UD.USER_ID IN (SELECT USER_ID FROM OP_USER WHERE STATUS_CODE = '9')
+                        <include refid="sqlUserLevelDefaultWhere" />
+                    </where>
+                </when>
+
+                <otherwise>
+                    <include refid="sqlUserLevelCommon" />
+                </otherwise>
+            </choose>
+        ) T
+    </insert>
+
+	<update id="updatePasswordByAsisUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER
+		SET
+			PASSWORD = #{password},
+			PASSWORD_EXPIRED_DATE = #{passwordExpiredDate},
+			PASSWORD_TYPE = 'N'
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<select id="getConfirmPurchaseUserList" parameterType="Integer" resultMap="saleson.shop.user.UserMapper.UserDetailResult">
+		SELECT OI.USER_ID, UD.PHONE_NUMBER
+		FROM (
+			SELECT
+				O.ORDER_CODE, OI.ITEM_ID, OI.USER_ID
+			FROM OP_ORDER_ITEM OI
+				INNER JOIN OP_ORDER O ON OI.ORDER_CODE = O.ORDER_CODE AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+			WHERE OI.GUEST_FLAG = 'N' AND O.CREATED_DATE >= DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 90 DAY), '%Y%m%d%H%i%s')
+				AND OI.CANCEL_FLAG = 'N' AND OI.ORDER_STATUS = '40'
+				AND LEFT(OI.CONFIRM_DATE, 8) = DATE_FORMAT(DATE_ADD(NOW(), interval - #{value} DAY), '%Y%m%d')
+		) OI INNER JOIN OP_USER U ON OI.USER_ID = U.USER_ID AND U.STATUS_CODE = '9' INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+			LEFT JOIN OP_ITEM_REVIEW IR ON OI.USER_ID = IR.USER_ID AND OI.ORDER_CODE = IR.ORDER_CODE AND OI.ITEM_ID = IR.ITEM_ID
+		WHERE IR.ITEM_REVIEW_ID IS NULL
+		GROUP BY OI.USER_ID, UD.PHONE_NUMBER
+	</select>
+
+	<select id="getConfirmPurchaseRequestUserList" parameterType="Integer" resultMap="saleson.shop.user.UserMapper.UserDetailResult">
+		SELECT OI.USER_ID, UD.PHONE_NUMBER
+		FROM (
+			SELECT
+				OI.USER_ID
+			FROM OP_ORDER_ITEM OI
+				INNER JOIN OP_ORDER O ON OI.ORDER_CODE = O.ORDER_CODE AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+			WHERE OI.CANCEL_FLAG = 'N' AND OI.ORDER_STATUS IN ('30', '55')
+				AND LEFT(OI.SHIPPING_DATE, 8) <![CDATA[<]]> DATE_FORMAT(DATE_ADD(NOW(), interval - #{value} DAY), '%Y%m%d')
+			GROUP BY OI.USER_ID
+		) OI INNER JOIN OP_USER U ON OI.USER_ID = U.USER_ID AND U.STATUS_CODE = '9' INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+	</select>
+
+	<select id="getUserInfoExceptForSnsUser" parameterType="saleson.shop.user.domain.AuthUserInfo" resultMap="UserResult">
+		SELECT *
+		FROM OP_USER U
+			INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID AND UD.PHONE_NUMBER = #{fullPhoneNumber}
+			LEFT JOIN OP_USER_SNS S ON U.USER_ID = S.USER_ID
+		WHERE U.USER_NAME = #{userName}
+		  AND U.USER_ID NOT IN (
+				SELECT USER_ID FROM OP_USER_SNS
+			)
+		<if test="loginId != null and loginId != ''">
+			AND U.LOGIN_ID = #{loginId}
+		</if>
+	</select>
+</mapper>

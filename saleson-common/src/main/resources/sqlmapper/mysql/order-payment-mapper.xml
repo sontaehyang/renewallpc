@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.order.payment.OrderPaymentMapper">
+
+	<resultMap id="OrderPaymentResult" type="saleson.shop.order.domain.OrderPayment" extends="saleson.shop.order.OrderMapper.OrderPaymentResult">
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="buyerName" column="BUYER_NAME" />
+		<result property="orderDate" column="ORDER_DATE" />
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="escrowStatus" column="ESCROW_STATUS" />
+	</resultMap>
+	
+	<select id="getOrderPaymentByPgDataForInipayVacctForMobile" parameterType="saleson.shop.order.pg.domain.PgData" resultMap="OrderPaymentResult">
+		SELECT 
+			OP.*,
+			OPD.PG_SERVICE_TYPE,
+			OPD.PG_SERVICE_MID,
+			OPD.PG_SERVICE_KEY,
+			OPD.PG_PAYMENT_TYPE,
+			OPD.PG_KEY,
+			OPD.PG_AUTH_CODE,
+			OPD.PG_PROC_INFO,
+			OI.ORDER_STATUS,
+			OI.ESCROW_STATUS
+		FROM OP_ORDER_PAYMENT OP
+			INNER JOIN OP_ORDER O ON OP.ORDER_CODE = O.ORDER_CODE AND OP.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+			INNER JOIN OP_ORDER_PG_DATA OPD ON OP.ORDER_PG_DATA_ID = OPD.ORDER_PG_DATA_ID
+			INNER JOIN OP_ORDER_ITEM OI ON OP.ORDER_CODE = OI.ORDER_CODE AND OP.ORDER_SEQUENCE = OI.ORDER_SEQUENCE
+		WHERE
+			OP.ORDER_CODE = #{P_OID}
+			AND OP.APPROVAL_TYPE = 'vbank'
+			AND OP.PAYMENT_TYPE = '1'
+			AND OPD.PG_KEY = #{P_TID}
+	</select>
+
+	<select id="getOrderPaymentByPgDataForInipayVacct" parameterType="saleson.shop.order.pg.domain.PgData" resultMap="OrderPaymentResult">
+		SELECT 
+			OP.*,
+			OPD.PG_SERVICE_TYPE,
+			OPD.PG_SERVICE_MID,
+			OPD.PG_SERVICE_KEY,
+			OPD.PG_PAYMENT_TYPE,
+			OPD.PG_KEY,
+			OPD.PG_AUTH_CODE,
+			OPD.PG_PROC_INFO,
+			OI.ORDER_STATUS,
+			OI.ESCROW_STATUS
+		FROM OP_ORDER_PAYMENT OP
+			INNER JOIN OP_ORDER O ON OP.ORDER_CODE = O.ORDER_CODE AND OP.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+			INNER JOIN OP_ORDER_PG_DATA OPD ON OP.ORDER_PG_DATA_ID = OPD.ORDER_PG_DATA_ID
+			INNER JOIN OP_ORDER_ITEM OI ON OP.ORDER_CODE = OI.ORDER_CODE AND OP.ORDER_SEQUENCE = OI.ORDER_SEQUENCE 
+		WHERE
+			OP.ORDER_CODE = #{no_oid}
+			AND OP.APPROVAL_TYPE = 'vbank'
+			AND OP.PAYMENT_TYPE = '1'
+	</select>
+
+	<!-- 입금 대기 내역 Where -->
+	<sql id="whereWaitingDeposit">
+		<where>
+			OP.PAYMENT_TYPE = '1'
+			AND OP.NOW_PAYMENT_FLAG = 'N'
+			AND OP.CANCEL_AMOUNT = 0
+			<if test='conditionType == "CANCEL-BATCH"'>
+				AND (OP.PAY_DATE = '' OR OP.PAY_DATE IS NULL)
+			</if>
+
+			<choose>
+				<when test="searchDelayDay != null and searchDelayDay != ''">
+					AND TIMESTAMPDIFF(DAY, DATE_FORMAT(OP.BANK_DATE, '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d')) > #{searchDelayDay}
+				</when>
+				<otherwise>
+					AND (
+						((OP.PAY_DATE = '' OR OP.PAY_DATE IS NULL) AND OP.REMAINING_AMOUNT = 0)
+						<!-- OR DATE_FORMAT(OP.PAY_DATE, '%Y%m%d') = DATE_FORMAT(NOW(), '%Y%m%d') -->
+					)
+				</otherwise>
+			</choose>
+
+			<if test="(query != null and query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'BANK_IN_NAME'">
+						AND OP.BANK_IN_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<otherwise>
+						AND #{where} LIKE CONCAT('%', #{query}, '%')
+					</otherwise>
+				</choose>
+			</if>
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(O.CREATED_DATE, '%Y%m%d%H') BETWEEN CONCAT(#{searchStartDate},#{searchStartDateTime}) AND CONCAT(#{searchEndDate},#{searchEndDateTime})
+			</if>
+			<if test="conditionType == 'ORDER-DETAIL-EXCEL'" >
+				<if test="orderCodes != null and orderCodes.size() > 0">
+					AND OP.ORDER_CODE IN
+					<foreach collection="orderCodes" item="orderCode" index="i" open="(" close=")" separator=",">
+						#{orderCode}
+					</foreach>
+				</if>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 입금 대기 내역 카운트 -->
+	<select id="getWaitingDepositCountByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		FROM OP_ORDER_PAYMENT OP 
+			INNER JOIN OP_ORDER O ON OP.ORDER_CODE = O.ORDER_CODE AND OP.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+
+		<include refid="whereWaitingDeposit" />
+
+	</select>
+	
+	<!-- 입금 대기 내역 목록 -->
+	<select id="getWaitingDepositListByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultMap="OrderPaymentResult">
+		
+		<include refid="CommonMapper.paginationHeader" />
+		
+			SELECT 
+				OP.*,
+				O.BUYER_NAME,
+				O.USER_ID,
+				(SELECT USER_NAME FROM OP_USER WHERE USER_ID = O.USER_ID) USER_NAME,
+				O.LOGIN_ID,
+				O.CREATED_DATE AS ORDER_DATE,
+				IFNULL(TIMESTAMPDIFF(DAY ,DATE_FORMAT(BANK_DATE, '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d')), 0) AS DELAY_DAY,
+				OC.CASHBILL_TYPE
+			FROM OP_ORDER_PAYMENT OP 
+				INNER JOIN OP_ORDER O ON OP.ORDER_CODE = O.ORDER_CODE AND OP.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+                LEFT JOIN OP_CASHBILL OC ON OC.ORDER_CODE = O.ORDER_CODE
+			<include refid="whereWaitingDeposit" />
+			ORDER BY OP.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />	
+	</select>
+
+    <!-- [배치용] 입금 대기 내역 카운트 -->
+    <select id="getWaitingDepositCountByParamForBatch" parameterType="saleson.shop.order.support.OrderParam"
+            resultType="Integer">
+
+        SELECT COUNT(*)
+        FROM OP_ORDER_PAYMENT OP
+            INNER JOIN OP_ORDER O ON OP.ORDER_CODE = O.ORDER_CODE AND OP.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+        WHERE OP.PAYMENT_TYPE = '1'
+            AND OP.NOW_PAYMENT_FLAG = 'N'
+            AND OP.CANCEL_AMOUNT = 0
+            AND (OP.PAY_DATE = '' OR OP.PAY_DATE IS NULL)
+        <if test="searchDelayDay != null and searchDelayDay != ''">
+            AND TIMESTAMPDIFF(DAY, DATE_FORMAT(OP.BANK_DATE, '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d')) > #{searchDelayDay}
+        </if>
+    </select>
+
+    <!-- [배치용] 입금 대기 내역 목록 -->
+    <select id="getWaitingDepositListByParamForBatch" parameterType="saleson.shop.order.support.OrderParam"
+            resultMap="OrderPaymentResult">
+        SELECT
+            OP.*, O.BUYER_NAME, O.USER_ID, (SELECT USER_NAME FROM OP_USER WHERE USER_ID = O.USER_ID) USER_NAME, O.LOGIN_ID, O.CREATED_DATE AS ORDER_DATE,
+            IFNULL(TIMESTAMPDIFF(DAY ,DATE_FORMAT(BANK_DATE, '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d')), 0) AS DELAY_DAY
+        FROM OP_ORDER_PAYMENT OP
+            INNER JOIN OP_ORDER O ON OP.ORDER_CODE = O.ORDER_CODE AND OP.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+        WHERE OP.PAYMENT_TYPE = '1'
+            AND OP.NOW_PAYMENT_FLAG = 'N'
+            AND OP.CANCEL_AMOUNT = 0
+            AND (OP.PAY_DATE = '' OR OP.PAY_DATE IS NULL)
+        <if test="searchDelayDay != null and searchDelayDay != ''">
+            AND TIMESTAMPDIFF(DAY, DATE_FORMAT(OP.BANK_DATE, '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d')) > #{searchDelayDay}
+        </if>
+        ORDER BY OP.ORDER_CODE ASC
+        <if test="paging != null">
+            LIMIT #{paging.startRownum}, #{paging.endRownum}
+        </if>
+    </select>
+	
+	<!-- 입금확인 SETP1 -->
+	<update id="updateConfirmationOfPaymentStep1" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE OP_ORDER_PAYMENT
+		SET
+			PAY_DATE = <include refid="CommonMapper.datetime" />,
+			REMAINING_AMOUNT = AMOUNT
+		<where>
+			AND ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			<!-- 포인트로 4월에 결제하고 무통장입금을 5월에 했을때,
+			 일별통계쪽은 둘 다 5월 데이터로 잡히고 
+			 결제타입별매출통계에서는 포인트는 4월 무통장입금은 5월 데이터로 잡히는 이슈가 있음. 
+			 무통장입금시 포인트 결제날짜까지 업데이트하도록 수정함. [2017-05-02]minae.yun -->
+			<!-- AND PAYMENT_SEQUENCE = #{paymentSequence}
+			AND (PAY_DATE = '' OR PAY_DATE IS NULL) -->
+		</where>	
+	</update>
+	
+	<!-- 입금확인 SETP2 -->
+	<update id="updateConfirmationOfPaymentStep2" parameterType="saleson.shop.order.support.OrderParam">
+	
+		UPDATE OP_ORDER 
+		SET
+			PAY_AMOUNT = IFNULL((
+				SELECT SUM(CASE WHEN PAYMENT_TYPE = '1' THEN AMOUNT ELSE -AMOUNT END) 
+				FROM OP_ORDER_PAYMENT
+				<where>
+					AND ORDER_CODE = #{orderCode}
+					AND ORDER_SEQUENCE = #{orderSequence}
+					AND (PAY_DATE != '' AND PAY_DATE IS NOT NULL)
+				</where>
+			), 0)
+		<where>
+			AND ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+		</where>
+			
+	</update>
+	
+	<!-- 입금확인 SETP3 -->
+	<update id="updateConfirmationOfPaymentStep3" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE OP_ORDER_ITEM OI
+			INNER JOIN (
+				SELECT 
+					ORDER_CODE,
+					ORDER_SEQUENCE,
+					(CASE WHEN PAY_AMOUNT >= ORDER_TOTAL_AMOUNT THEN '10' ELSE '0' END) AS ORDER_STATUS 
+				FROM OP_ORDER
+				WHERE 
+					ORDER_CODE = #{orderCode}
+					AND ORDER_SEQUENCE = #{orderSequence}
+			) T ON OI.ORDER_CODE = T.ORDER_CODE AND OI.ORDER_SEQUENCE = T.ORDER_SEQUENCE
+		SET
+			OI.ORDER_STATUS = '10',
+			OI.PAY_DATE = (CASE WHEN IFNULL(T.ORDER_STATUS, '10') = '10' THEN <include refid="CommonMapper.datetime" /> ELSE OI.PAY_DATE END),
+			OI.SALES_DATE = (CASE WHEN OI.REVENUE_SALES_STATUS = '10' THEN (CASE WHEN IFNULL(T.ORDER_STATUS, '10') = '10' THEN <include refid="CommonMapper.datetime" /> ELSE OI.PAY_DATE END) ELSE OI.SALES_DATE END),
+			OI.UPDATED_ADMIN_USER_NAME = #{adminUserName}
+		WHERE
+			OI.ORDER_CODE = #{orderCode}
+			AND OI.ORDER_SEQUENCE = #{orderSequence}
+	</update>
+
+	<insert id="insertOrderPayment" parameterType="saleson.shop.order.domain.OrderPayment">
+		
+		<selectKey keyProperty="paymentSequence" resultType="Integer" order="BEFORE">
+			SELECT IFNULL(MAX(PAYMENT_SEQUENCE), 0) + 1 
+			FROM OP_ORDER_PAYMENT
+			WHERE
+				ORDER_CODE = #{orderCode}
+				AND ORDER_SEQUENCE = #{orderSequence}
+		</selectKey>
+	
+		INSERT INTO OP_ORDER_PAYMENT 
+		(
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			PAYMENT_SEQUENCE,
+			PAYMENT_TYPE,
+			ORDER_PG_DATA_ID, 
+			APPROVAL_TYPE,
+			DEVICE_TYPE,
+			BANK_VIRTUAL_NO,
+			BANK_IN_NAME,
+			BANK_DATE,
+			AMOUNT,
+			TAX_FREE_AMOUNT,
+			CANCEL_AMOUNT,
+			REMAINING_AMOUNT,
+			PAY_DATE,
+			NOW_PAYMENT_FLAG,
+            REFUND_FLAG,
+            PAYMENT_SUMMARY,
+			CREATED_DATE
+		) VALUES (
+			#{orderCode},
+			#{orderSequence},
+			#{paymentSequence},
+			#{paymentType},
+			#{orderPgDataId},
+			#{approvalType},
+			#{deviceType},
+			#{bankVirtualNo},
+			#{bankInName},
+			#{bankDate},
+			#{amount},
+			#{taxFreeAmount},
+			#{cancelAmount},
+			#{remainingAmount},
+			#{payDate},
+			#{nowPaymentFlag},
+            #{refundFlag},
+            #{paymentSummary},
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+
+	<update id="updateTotalPayAmount" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE OP_ORDER SET
+			PAY_AMOUNT = (
+				SELECT IFNULL(SUM(REMAINING_AMOUNT),0) FROM OP_ORDER_PAYMENT
+				WHERE
+					ORDER_CODE = #{orderCode}
+					AND ORDER_SEQUENCE = #{orderSequence}
+					AND PAYMENT_TYPE = '1'
+			)
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+	</update>
+
+	<update id="updateOrderPaymentForCancel" parameterType="saleson.shop.order.domain.OrderPayment">
+		UPDATE OP_ORDER_PAYMENT SET
+			CANCEL_AMOUNT = #{cancelAmount},
+			REMAINING_AMOUNT = #{remainingAmount}
+		<where>
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND PAYMENT_SEQUENCE = #{paymentSequence}
+			AND PAYMENT_TYPE = '1'
+		</where>
+	</update>
+
+	<update id="updateOrderPaymentForBankCancel" parameterType="saleson.shop.order.domain.OrderPayment">
+		UPDATE OP_ORDER_PAYMENT SET
+			CANCEL_AMOUNT = AMOUNT
+		<where>
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND PAYMENT_SEQUENCE = #{paymentSequence}
+			AND PAYMENT_TYPE = '1'
+		</where>
+	</update>
+
+	<delete id="deleteOrderPayment" parameterType="saleson.shop.order.support.OrderParam">
+		DELETE FROM OP_ORDER_PAYMENT
+		<where>
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND PAYMENT_SEQUENCE = #{paymentSequence}
+			AND PAYMENT_TYPE = '1'
+		</where>
+	</delete>
+	
+	<select id="getOrderPaymentByPgDataForKcpVacct" parameterType="String" resultMap="OrderPaymentResult">
+		SELECT 
+			OP.*,
+			OPD.PG_SERVICE_TYPE,
+			OPD.PG_SERVICE_KEY,
+			OPD.PG_SERVICE_MID,
+			OPD.PG_PAYMENT_TYPE,
+			OPD.PG_KEY,
+			OPD.PG_AUTH_CODE,
+			OPD.PG_PROC_INFO,
+			OI.ORDER_STATUS,
+			OI.ESCROW_STATUS
+		FROM OP_ORDER_PAYMENT OP
+			INNER JOIN OP_ORDER O ON OP.ORDER_CODE = O.ORDER_CODE AND OP.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+			INNER JOIN OP_ORDER_PG_DATA OPD ON OP.ORDER_PG_DATA_ID = OPD.ORDER_PG_DATA_ID
+			INNER JOIN OP_ORDER_ITEM OI ON OP.ORDER_CODE = OI.ORDER_CODE AND OP.ORDER_SEQUENCE = OI.ORDER_SEQUENCE 
+		WHERE
+			OP.ORDER_CODE = #{order_no}
+			AND OP.APPROVAL_TYPE = 'vbank'
+			AND OP.PAYMENT_TYPE = '1'
+	</select>
+
+
+    <select id="getOrderPgDataByOrderParam" parameterType="saleson.shop.order.support.OrderParam" resultType="saleson.shop.order.domain.OrderPgData">
+        SELECT
+            OPD.ORDER_PG_DATA_ID AS orderPgDataId,
+            OPD.ORDER_CODE AS orderCode,
+            OPD.PG_SERVICE_TYPE AS pgServiceType,
+            OPD.PG_SERVICE_MID AS pgServiceMid,
+            OPD.PG_SERVICE_KEY AS pgServiceKey,
+            OPD.PG_PAYMENT_TYPE AS pgPaymentType,
+            OPD.PG_KEY AS pgKey,
+            OPD.PG_AUTH_CODE AS pgAuthCode,
+            OPD.PG_PROC_INFO AS pgProcInfo,
+            OPD.PART_CANCEL_FLAG AS partCancelFlag,
+            OPD.PART_CANCEL_DETAIL AS partCancelDetail,
+            OPD.PG_AMOUNT AS pgAmount,
+            OPD.CREATED_DATE AS createdDate
+        FROM OP_ORDER_PAYMENT OP
+            INNER JOIN OP_ORDER_PG_DATA OPD ON OP.ORDER_PG_DATA_ID = OPD.ORDER_PG_DATA_ID
+        WHERE
+            OP.ORDER_CODE = #{orderCode}
+            AND OP.ORDER_SEQUENCE = #{orderSequence}
+            AND OP.PAYMENT_SEQUENCE = #{paymentSequence}
+            AND OP.ORDER_PG_DATA_ID > 0
+    </select>
+</mapper>

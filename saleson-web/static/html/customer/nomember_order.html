@@ -1,0 +1,205 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?>  
+<div class="inner nomember_wrap">  
+	 <div class="location_area">
+		<?include "../include/all_menu.html"?>
+		<div class="breadcrumbs">
+			<a href="#" class="home"><span class="hide">home</span></a>
+			<a href="#">고객센터</a>
+			<span>주문/배송조회</span> 
+		</div>
+	</div><!-- // location_area E --> 	
+	<div id="contents">
+		<?include "../include/customer_lnb.html"?>   
+		<div class="contents_inner">   
+			<h2>주문/배송조회</h2>		 
+			<div class="mypage_search_area"> 
+				<fieldset>
+					<dl>
+						<dt>기간별 조회</dt>
+						<dd>
+							<div class="date_box">
+								<span><input type="text" id="datepicker"></span>
+								<span>~</span>
+								<span><input type="text" id="datepicker2"></span>
+							</div>
+							<div class="search_term">
+								<button type="button" class="btn date_search" title="1주일">1주일</button> 
+								<button type="button" class="btn date_search" title="1개월">1개월</button> 
+								<button type="button" class="btn date_search" title="3개월">3개월</button> 
+								<button type="button" class="btn date_search" title="6개월">6개월</button> 
+							</div>
+						</dd>
+						<dt class="mt5">상품명 조회</dt>
+						<dd class="mt5">
+							<div class="col-w-0 search_write">
+								<input type="text" title="상품명조회" placeholder="의자">
+								<button type="button" class="btn btn_search_min" title="조회">조회</button>
+							</div>
+						</dd>
+					</dl> 
+				</fieldset>	 
+			</div> <!-- // mypage_search_area E -->
+		 	<div class="btn_wrap pt10">
+				<div class="btn_left">
+					<button type="button" class="btn btn-m btn-default"><img src="/content/images/icon/icon_reset.png" alt="초기화">초기화</button>
+				</div> 
+			</div> 		 	
+		 	<h3>주문상품정보</h3>
+		 	<!-- 주문내역이 없는 경우 S -->
+		 	<div class="board_wrap"> 	
+		 		<table cellpadding="0" cellspacing="0" class="order_list">
+		 			<caption>주문상품정보</caption>
+		 			<colgroup>
+		 				<col style="width:120px;">
+		 				<col style="width:auto;"> 
+		 				<col style="width:120px;">  
+		 			</colgroup>
+		 			<thead>
+		 				<tr>
+		 					<th scope="col">주문번호/일자</th>
+		 					<th scope="col">상품정보</th>
+		 					<th scope="col">주문/배송상태</th> 
+		 				</tr>
+		 			</thead>
+		 			<tbody> 
+		 				<tr>
+		 					<td colspan="3">
+		 						주문내역이 없습니다.
+		 					</td>  
+		 				</tr> 	 	 
+		 			</tbody>
+		 		</table>	 
+		 	</div> <!--// board_wrap E-->	 
+		 	<!-- 주문내역이 없는 경우 E -->
+		 	<!-- 주문내역이 있는 경우 S -->		 	
+		 	<div class="board_wrap">  
+				<table cellpadding="0" cellspacing="0" class="order_list">
+					<caption>주문정보</caption>
+					<colgroup>
+						<col style="width:125px;"> 
+						<col style="width:auto;">  
+						<col style="width:130px;"> 
+					</colgroup>
+					<thead>
+						<tr> 
+							<th scope="col">주문번호/일자</th>
+							<th scope="col">상품정보</th> 
+							<th scope="col">주문/배송상태</th>  
+						</tr>
+					</thead>
+					<tbody> 	 
+						<tr>
+							<td>
+								<div class="order_number">
+									<a href="#">1052-1009568</a>
+									<span class="date">(2016-11-11)</span></div>
+								<!--// order_number E-->
+							</td>
+							<td class="tleft">
+								<a href="/html/customer/nomember_order_view.html" class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</a><!--// item_info E-->
+							</td>
+							<td>
+								<div class="condition">
+									<p>입금대기중</p>
+									<p class="date">(2016-11-11)</p>
+									<div class="order_btnList">
+										<button type="submit" class="btn btn-s btn-default" title="주문취소">주문취소</button> 
+										<button type="submit" class="btn btn-s btn-default" title="배송추적">배송추적</button>
+										<button type="submit" class="btn btn-s btn-submit" title="구매확정">구매확정</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="order_number">
+									<a href="#">1052-1009568</a>
+									<span class="date">(2016-11-11)</span></div>
+								
+							</td>
+							<td class="tleft">
+								<a href="/html/customer/nomember_order_view.html" class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name line2">[우드웍] 트릴로지 라지캔들 12종 중 택1  트릴로지 라지캔들 12종 중 택1 트릴로지 라지캔들 12종 중 택1  트릴로지 라지캔들 12종 중 택1트릴로지 라지캔들 12종 중 택1  트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</a><!--// item_info E-->
+							</td>
+							<td>
+								<div class="condition">
+									<p>발송완료</p>
+									<p class="date">(2016-11-11)</p>
+									<div class="order_btnList">
+										<button type="submit" class="btn btn-s btn-default" title="주문취소신청">주문취소신청</button>
+										<button type="submit" class="btn btn-s btn-default" title="환불신청">환불신청</button>
+										<button type="submit" class="btn btn-s btn-default" title="교환신청">교환신청</button>
+										<button type="submit" class="btn btn-s btn-default" title="이용후기등록">이용후기등록</button>
+									</div>
+								</div><!--// condition E-->
+							</td>
+						</tr>
+					</tbody>
+				</table><!--//esthe-table E-->
+			</div> 
+			<!-- 주문내역이 있는 경우 E -->
+	 		<p class="pagination">
+				<a href="#" class="first"><img src="/content/images/btn/btn_first.gif" alt="처음페이지"></a>
+				<a href="#" class="first"><img src="/content/images/btn/btn_prev.gif" alt="이전페이지"></a>
+				<a href="#">1</a>
+				<a href="#">2</a>
+				<a href="#">3</a>
+				<a href="#">4</a>
+				<a href="#">5</a>
+				<strong>6</strong>
+				<a href="#">7</a>
+				<a href="#">8</a>
+				<a href="#">9</a>
+				<a href="#">10</a>
+				<a href="#" class="next"><img src="/content/images/btn/btn_next.gif" alt="다음페이지"></a>
+				<a href="#" class="last"><img src="/content/images/btn/btn_last.gif" alt="마지막페이지"></a>
+			</p> 
+		</div><!--// contents_inner  E--> 
+	</div><!--// contents E-->
+</div><!--// inner E-->		 
+<?include "../include/footer.html"?>	 
+ 

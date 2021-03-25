@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+	<!-- Spring Profile 설정 spring.profiles.active -->
+	<springProfile name="development">
+		<property resource="application-development.properties"/>
+	</springProfile>
+	<springProfile name="production-docker">
+		<property resource="application-production-docker.properties"/>
+	</springProfile>
+	<springProfile name="testing">
+		<property resource="application-testing.properties"/>
+	</springProfile>
+	<springProfile name="testing-oracle">
+		<property resource="application-testing-oracle.properties"/>
+	</springProfile>
+	<springProfile name="testing-postgres">
+		<property resource="application-testing-postgres.properties"/>
+	</springProfile>
+
+	<springProperty scope="context" name="ORDER_LOG_PATH" source="saleson.log.path.order" defaultValue=""/>
+
+	<appender name="ORDER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p --- [%X{txId:-TX-0000000000000}] %-40.40logger{39} %-5([%X{orderCode:--}-%X{loginId:--}]) : %m%n</pattern>
+			<charset>utf8</charset>
+		</encoder>
+		<file>${ORDER_LOG_PATH}/saleson-order.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${ORDER_LOG_PATH}/saleson-order-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+			<maxFileSize>100MB</maxFileSize>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+
+	<logger name="log4jdbc.log4j2" level="ERROR" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	<logger name="com.onlinepowers" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	<logger name="com.onlinepowers.framework.web.interceptor.WebLogInterceptor" level="TRACE" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	<logger name="com.onlinepowers.framework.log.service.LogAspect" level="TRACE" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	<logger name="com.saleson" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	<logger name="com.springframework" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	<logger name="com.hibernate" level="ERROR" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+
+	<logger name="saleson.shop.order" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="ORDER_FILE"/>
+	</logger>
+
+	<logger name="saleson.batch" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+
+	<logger name="com.hibernate" level="ERROR" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+
+
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+	</root>
+</configuration>

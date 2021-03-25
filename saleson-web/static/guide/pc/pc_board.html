@@ -1,0 +1,1451 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+  <meta name="Keywords" content="입점몰, 세일즈온, JAVA쇼핑몰">
+  <meta name="Description" content="세일즈온은 단기간에 구축비용을 최소화 하는 맞춤형 통합 쇼핑몰 솔루션 입니다.">
+  <meta property="og:title" content="세일즈온, SalesON | JAVA기반의 맞춤형 통합 쇼핑몰 솔루션">  
+  <meta property="og:image" content="http://saleson.onlinepowers.com/content/image_delete/common/og_logo.png">
+  <meta property="og:description" content="세일즈온은 단기간에 구축비용을 최소화 하는 맞춤형 통합 쇼핑몰 솔루션 입니다.">
+  <title>세일즈온 데모</title>
+	<link rel="stylesheet" type="text/css" href="/content/css/base.css"> 
+	<link rel="stylesheet" type="text/css" href="/content/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/layout.css">	
+	<link rel="stylesheet" type="text/css" href="/content/css/event.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/category.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/product.css">	
+	<link rel="stylesheet" type="text/css" href="/content/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/member.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/mypage.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/order.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/intro.css"> 
+	<link rel="stylesheet" type="text/css" href="/content/css/popup.css">
+	<link rel="stylesheet" type="text/css" href="/content/css/jquery-ui-datepicker.css">
+	<link rel="stylesheet" type="text/css" href="../css/pc_guide.css">
+	<!--  js Start -->
+	<script type="text/javascript" src="/content/js/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="/content/js/jquery-ui.js"></script>
+	<script type="text/javascript" src="/content/js/jquery.bxslider.js"></script>	
+	<script type="text/javascript" src="/content/js/jquery.sticky.js"></script>	
+	<script type="text/javascript" src="/content/js/common.js"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<![endif]--> 
+ </head>
+<body>
+
+
+<div id="wrap">
+	<div id="header">
+		<h1>세일즈온 웹 HTML GUIDE</h1>
+		<div class="gnb">
+			<ul>
+				<li><a href="pc_button.html">버튼, 링크</a></li>
+				<li><a href="pc_label.html">라벨</a></li>
+				<li><a href="pc_form.html">폼</a></li>
+				<li><a href="pc_tab.html">탭</a></li>
+				<li><a href="pc_text.html">텍스트</a></li>
+				<li class="on"><a href="pc_board.html">게시판</a></li>
+				<li><a href="pc_etc.html">기타</a></li> 
+			</ul>
+		</div>
+	</div>
+	<!-- //header -->
+
+	<div id="container">
+		<div class="bs-docs-section">
+		
+		<h2>게시판 write 형</h2>
+		<form class="bs-example">
+			<h3 class="sub_title mt30">정보입력 <span class="necessary">표시가 있는 부분은 필수 입력사항입니다.</span></h3>
+			<div class="board_wrap">
+	 			<div class="board_wrap">
+		 			<table cellpadding="0" cellspacing="0" class="board-write">
+			 			<caption>정보입력</caption>
+			 			<colgroup>
+			 				<col style="width:190px;">
+			 				<col style="width:auto;">	 				
+			 			</colgroup>
+			 			<tbody>
+			 				<tr>
+			 					<th scope="row">회원구분 <span class="necessary"></span></th>
+			 					<td>일반회원</td>
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">아이디 <span class="necessary"></span></th>
+			 					<td>
+			 						<div class="input_wrap col-w-7">
+			 							<input type="text" title="아이디">
+			 						</div>&nbsp;&nbsp;
+			 						<div class="input_wrap">
+			 							<button type="button" class="btn btn-ms btn-default" title="중복확인">중복확인</button>
+			 						</div>
+			 						<span class="coment">영문 및 숫자를 사용하여 4자 이상 입력하세요.</span> 
+			 					</td>
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">비밀번호 <span class="necessary"></span></th>
+			 					<td>
+			 						<div class="input_wrap col-w-7">
+			 							<input type="password" title="비밀번호">
+			 						</div> 
+			 						<span class="coment">영문/숫자를 혼합하여 4자 이상 20자 이하로 입력하세요. </span>
+			 					</td>
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">비밀번호 확인<span class="necessary"></span></th>
+			 					<td>
+			 						<div class="input_wrap col-w-7">
+			 							<input type="password" title="비밀번호 확인">
+			 						</div> 
+			 						<span class="coment">비밀번호 확인을 위하여 다시 한번 입력하세요. </span>
+			 					</td>
+			 				</tr> 
+			 				<tr>
+			 					<th scope="row">이름 <span class="necessary"></span></th>
+			 					<td>
+			 						<div class="input_wrap col-w-7">
+			 							<input type="text" class="disabled" value="홍길동" title="이름" disabled>
+			 						</div> 
+			 					</td>
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">생년월일</th>
+			 					<td>
+			 						<div class="input_wrap col-w-10"> 
+			 							<select class="form-control">
+									        <option value="">선택</option> 
+									  	</select>  
+									</div> 
+									<span class="connection"> 년 </span> &nbsp;&nbsp; 
+									<div class="input_wrap col-w-10">
+									    <select class="form-control">
+									        <option value="">선택</option> 
+									  	</select>  
+			 						</div> 	
+			 						<span class="connection"> 월 </span>&nbsp;&nbsp; 
+			 						<div class="input_wrap col-w-10">	
+			 							<select class="form-control">
+									        <option value="">선택</option> 
+									  	</select>  
+									 </div> 
+									 <span class="connection"> 일 </span>&nbsp;&nbsp;  
+									 <div class="input_wrap">	
+									  	<input type="radio" id="age122" name="radio_btn2"> <label for="age122">양력</label>&nbsp;&nbsp;
+			 							<input type="radio" id="age123" name="radio_btn2"> <label for="age123">음력</label>				 
+			 						</div>
+			 					</td>
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">성별</th>
+			 					<td>
+			 						 <div class="input_wrap">	
+									  	<input type="radio" id="man" name="radio_btn2"> <label for="man">남성</label>&nbsp;&nbsp;
+			 							<input type="radio" id="woman" name="radio_btn2"> <label for="woman">여성</label>				 
+			 						</div>
+			 					</td>
+			 				</tr> 
+			 				<tr>
+			 					<th scope="row">전화번호</th>
+			 					<td>
+			 						<div class="hp_area">
+			 							<div class="input_wrap col-w-10">
+			 								<select class="form-control">
+										        <option value="02">02</option> 
+										        <option value="031">031</option> 
+										        <option value="032">032</option>  
+										    </select>
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							<div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+			 							</div> 	
+			 						</div><!-- // hp_area --> 
+			 					</td>
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+			 					<td>
+			 						<div class="hp_area">
+			 							<div class="input_wrap col-w-10">
+			 								<select class="form-control">
+										        <option value="010">010</option> 
+										        <option value="011">011</option> 
+										        <option value="016">016</option> 
+										        <option value="017">017</option>
+										        <option value="018">018</option> 
+										        <option value="019">019</option>  
+										    </select>
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							<div class="input_wrap col-w-10">			 	 			 	 							 
+			 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+			 							</div> 		
+			 						</div><!-- // hp_area --> 
+			 					</td>
+			 				</tr> 
+			 				<tr>
+			 					<th scope="row" valign="top">주소 <span class="necessary"></span></th>
+			 					<td>
+			 						<div> 
+			 							<div class="input_wrap col-w-10">
+			 								<input type="text" title="우편번호"> 
+			 							</div>	 
+			 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default" title="우편번호">우편번호</button></div>  
+			 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+			 								<input type="text" title="주소" class="full"> 
+			 							</div>			 	 				  			 
+			 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+			 								<input type="text" title="주소" class="full"> 
+			 							</div>		 							 
+			 						</div>
+			 					</td>
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">이메일 주소 <span class="necessary"></span></th>
+			 					<td>
+			 						<div class="hp_area"> 
+			 							 <div class="input_wrap col-w-9">			 	 			 	 							 
+			 								<input type="text" title="이메일 주소" class="full" placeholder="abscs"> 
+			 							</div>
+			 							<span class="connection">@</span> 
+			 							<div class="input_wrap col-w-9">
+			 								<select class="form-control">
+										        <option value="naver.com">naver.com</option>  
+										        <option value="daum.net">daum.net</option> 
+										        <option value="nate.com">nate.com</option> 
+										        <option value="gmail.com">gmail.com</option> 
+										    </select> 
+			 							</div>
+			 							<div class="input_wrap col-w-8">			 	 			 	 							 
+			 								<input type="text" title="이메일주소 직접입력" class="full" placeholder="직접입력"> 
+			 							</div> 	
+			 						</div><!-- // hp_area --> 
+			 					</td>
+			 				</tr> 
+			 				
+			 				<tr>
+			 					<th scope="row" valign="top">SMS/E-mail 수신동의 <span class="necessary"></span></th>
+			 					<td>
+			 						<p>
+			 							<input type="radio" id="age10" name="radio_btn"> <label for="age10">수신동의</label>&nbsp;&nbsp;
+			 							<input type="radio" id="age11" name="radio_btn"> <label for="age11">수신거부</label>  
+			 						</p>	
+		 							<p class="coment mt5">
+		 								수신동의시 쇼핑몰에서 제공하는 이벤트 및 다양한 정보를 SMS/E-mail로 받아볼 수 있습니다.  <br>
+										단, 회원가입, 거래정보-결제/배송/교환/환불 등과 같은 운영정보는 수신동의 여부와 관계없이 발송됩니다.)  
+		 							</p> 
+			 					</td>
+			 				</tr>   
+			 			</tbody>
+			 		</table>  
+			 	</div>	 
+		 	</div>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;h3</span> <span class="na">class=</span><span class="s">"sub_title mt30"</span><span class="nt">&gt;</span>정보입력 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"necessary"</span><span class="nt">&gt;</span>표시가 있는 부분은 필수 입력사항입니다.<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/h3&gt;</span>				
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board_wrap"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;table</span> <span class="na">cellpadding=</span><span class="s">"0"</span> <span class="na">cellspacing=</span><span class="s">"0"</span> <span class="na">class=</span><span class="s">"board-write"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;caption&gt;</span>정보입력<span class="nt">&lt;/caption&gt;</span>
+		<span class="nt">&lt;colgroup&gt;</span>
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:180px;"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:auto;"</span><span class="nt">&gt;</span>	 				
+		<span class="nt">&lt;/colgroup&gt;</span>
+		<span class="nt">&lt;tbody&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>회원구분 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"necessary"</span><span class="nt">&gt;</span><span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>일반회원<span class="nt">&lt;/td&gt;</span>	 
+			<span class="nt">&lt;/tr&gt;</span> 
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>아이디<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"necessary"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-7"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"아이디"</span><span class="nt">&gt;</span> 
+					<span class="nt">&lt;/div&gt;</span>&nbsp;&nbsp;
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-ms btn-default"</span> <span class="na">title=</span><span class="s">"중복확인"</span><span class="nt">&gt;</span>중복확인<span class="nt">&lt;/button&gt;</span>
+					<span class="nt">&lt;/div&gt;</span>
+					<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"coment"</span><span class="nt">&gt;</span>영문 및 숫자를 사용하여 4자 이상 입력하세요.<span class="nt">&lt;/span&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>비밀번호 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"necessary"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-7"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">title=</span><span class="s">"비밀번호"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;/div&gt;</span> 
+					<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"coment"</span><span class="nt">&gt;</span>영문/숫자를 혼합하여 4자 이상 20자 이하로 입력하세요.<span class="nt">&lt;/span&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>비밀번호 확인 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"necessary"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span></span><span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-7"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">title=</span><span class="s">"비밀번호 확인"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;/div&gt;</span>  
+					<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"coment"</span><span class="nt">&gt;</span>비밀번호 확인을 위하여 다시 한번 입력하세요.<span class="nt">&lt;/span&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span> 
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span> 이름 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"necessary"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/th&gt;</span> 
+				<span class="nt">&lt;td&gt;</span>  
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-7"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"disabled"</span> <span class="na">value=</span><span class="s">"홍길동"</span> <span class="na">title=</span><span class="s">"이름"</span> <span class="na">disabled</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;/div&gt;</span>	     
+				<span class="nt">&lt;/td&gt;</span>  
+			<span class="nt">&lt;/tr&gt;</span>   
+			<span class="nt">&lt;tr&gt;</span>  
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span> 생년월일<span class="nt">&lt;/th&gt;</span>  
+				<span class="nt">&lt;td&gt;</span>  
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10"</span><span class="nt">&gt;</span> 
+						<span class="nt">&lt;select</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
+				  			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"선택"</span><span class="nt">&gt;</span>선택<span class="nt">&lt;/option&gt;</span> 
+						<span class="nt">&lt;/select&gt;</span>  
+					<span class="nt">&lt;/div&gt;</span>   
+					<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"connection"</span><span class="nt">&gt;</span> 년 <span class="nt">&lt;/span&gt;</span>   &nbsp;&nbsp; 
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;select</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
+				  			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"선택"</span><span class="nt">&gt;</span>선택<span class="nt">&lt;/option&gt;</span> 
+						<span class="nt">&lt;/select&gt;</span>     
+					<span class="nt">&lt;/div&gt;</span>    	
+					<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"connection"</span><span class="nt">&gt;</span> 월 <span class="nt">&lt;/span&gt;</span>&nbsp;&nbsp; 
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;select</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
+				  			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"선택"</span><span class="nt">&gt;</span>선택<span class="nt">&lt;/option&gt;</span> 
+						<span class="nt">&lt;/select&gt;</span>     
+					<span class="nt">&lt;/div&gt;</span>  
+				 	<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"connection"</span><span class="nt">&gt;</span> 일 <span class="nt">&lt;/span&gt;</span>&nbsp;&nbsp;
+				 	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap"</span><span class="nt">&gt;</span>	
+				  		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"age122"</span> <span class="na">name=</span><span class="s">"radio_btn2"</span><span class="nt">&gt;</span> <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"age122"</span><span class="nt">&gt;</span>양력<span class="nt">&lt;/label&gt;</span>&nbsp;&nbsp;
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"age123"</span> <span class="na">name=</span><span class="s">"radio_btn2"</span><span class="nt">&gt;</span> <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"age123"</span><span class="nt">&gt;</span>음력<span class="nt">&lt;/label&gt;</span>				 
+					<span class="nt">&lt;/div&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>  
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>성별<span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap"</span><span class="nt">&gt;</span>	
+				  		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"man"</span> <span class="na">name=</span><span class="s">"radio_btn2"</span><span class="nt">&gt;</span> <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"man"</span><span class="nt">&gt;</span>남성<span class="nt">&lt;/label&gt;</span>&nbsp;&nbsp;
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"woman"</span> <span class="na">name=</span><span class="s">"radio_btn2"</span><span class="nt">&gt;</span> <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"woman"</span><span class="nt">&gt;</span>여성<span class="nt">&lt;/label&gt;</span>				 
+					<span class="nt">&lt;/div&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span> 
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>전화번호 <span class="nt">&lt;/span&gt;</span> <span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"hp_area"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10"</span></span><span class="nt">&gt;</span>
+							<span class="nt">&lt;select</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"02"</span><span class="nt">&gt;</span>02<span class="nt">&lt;/option&gt;</span> 
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"031"</span><span class="nt">&gt;</span>031<span class="nt">&lt;/option&gt;</span> 
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"032"</span><span class="nt">&gt;</span>032<span class="nt">&lt;/option&gt;</span>  
+							<span class="nt">&lt;/select&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"connection"</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10"</span></span><span class="nt">&gt;</span>			 	 			 	 							 
+							<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"전화번호"</span> <span class="na">class=</span><span class="s">"full"</span> <span class="na">placeholder=</span><span class="s">"1234"</span><span class="nt">&gt;</span> 
+						<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"connection"</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span> 	
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10"</span></span><span class="nt">&gt;</span>				 	 			 	 							 
+							<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"전화번호"</span> <span class="na">class=</span><span class="s">"full"</span> <span class="na">placeholder=</span><span class="s">"5678"</span><span class="nt">&gt;</span> 	 
+						<span class="nt">&lt;/div&gt;</span>
+					<span class="nt">&lt;/div&gt;</span> 
+				<span class="nt">&lt;/td&gt;</span> 
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>휴대폰번호 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"necessary"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span> <span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"hp_area"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10"</span></span><span class="nt">&gt;</span>
+							<span class="nt">&lt;select</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"010"</span><span class="nt">&gt;</span>010<span class="nt">&lt;/option&gt;</span> 
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"011"</span><span class="nt">&gt;</span>011<span class="nt">&lt;/option&gt;</span> 
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"016"</span><span class="nt">&gt;</span>016<span class="nt">&lt;/option&gt;</span> 
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"017"</span><span class="nt">&gt;</span>017<span class="nt">&lt;/option&gt;</span>
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"018"</span><span class="nt">&gt;</span>018<span class="nt">&lt;/option&gt;</span>
+								<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"019"</span><span class="nt">&gt;</span>019<span class="nt">&lt;/option&gt;</span> 
+							<span class="nt">&lt;/select&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"connection"</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10"</span></span><span class="nt">&gt;</span>			 	 			 	 							 
+							<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"휴대폰번호"</span> <span class="na">class=</span><span class="s">"full"</span> <span class="na">placeholder=</span><span class="s">"1234"</span><span class="nt">&gt;</span> 
+						<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"connection"</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span> 	
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10"</span></span><span class="nt">&gt;</span>				 	 			 	 							 
+							<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"휴대폰번호"</span> <span class="na">class=</span><span class="s">"full"</span> <span class="na">placeholder=</span><span class="s">"5678"</span><span class="nt">&gt;</span> 	 
+						<span class="nt">&lt;/div&gt;</span>
+					<span class="nt">&lt;/div&gt;</span> 
+				<span class="nt">&lt;/td&gt;</span> 
+			<span class="nt">&lt;/tr&gt;</span> 
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span> <span class="na">valign=</span><span class="s">"top"</span><span class="nt">&gt;</span>주소 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"necessary"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/th&gt;</span> 
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;div&gt;</span> 
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10"</span><span class="nt">&gt;</span>
+							<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"우편번호"</span><span class="nt">&gt;</span> 
+						<span class="nt">&lt;/div&gt;</span>	 
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap"</span><span class="nt">&gt;</span> <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-ms btn-default"</span> <span class="na">title=</span><span class="s">"우편번호"</span><span class="nt">&gt;</span>우편번호<span class="nt">&lt;/button&gt;</span><span class="nt">&lt;/div&gt;</span>  
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap mt8 col-w-0"</span><span class="nt">&gt;</span>			 	 			 	 							 
+							<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"주소"</span> <span class="na">class=</span><span class="s">"full"</span><span class="nt">&gt;</span> 
+						<span class="nt">&lt;/div&gt;</span>			 	 				  			 
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap mt8 col-w-0"</span><span class="nt">&gt;</span>			 	 			 	 							 
+							<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"주소"</span> <span class="na">class=</span><span class="s">"full"</span><span class="nt">&gt;</span> 
+						<span class="nt">&lt;/div&gt;</span>		 							 
+					<span class="nt">&lt;/div&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>이메일 주소 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"necessary"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/th&gt;</span> 
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"hp_area"</span><span class="nt">&gt;</span> 
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-9"</span><span class="nt">&gt;</span>			 	 			 	 							 
+							<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"이메일 주소"</span> <span class="na">class=</span><span class="s">"full"</span> <span class="na">placeholder=</span><span class="s">"abscs"</span><span class="nt">&gt;</span> 
+						<span class="nt">&lt;/div&gt;</span> 
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"connection"</span><span class="nt">&gt;</span>@<span class="nt">&lt;/span&gt;</span> 
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-9"</span><span class="nt">&gt;</span>
+						    <span class="nt">&lt;select</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
+						    	<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"naver.com"</span><span class="nt">&gt;</span>naver.com<span class="nt">&lt;/option&gt;</span>  
+						        <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"daum.net"</span><span class="nt">&gt;</span>daum.net<span class="nt">&lt;/option&gt;</span> 
+						        <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"nate.com"</span><span class="nt">&gt;</span>nate.com<span class="nt">&lt;/option&gt;</span> 
+						        <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"gmail.com"</span><span class="nt">&gt;</span>gmail.com<span class="nt">&lt;/option&gt;</span> 
+						    <span class="nt">&lt;/select&gt;</span> 
+						<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-8"</span><span class="nt">&gt;</span>			 	 			 	 							 
+							<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"이메일주소 직접입력"</span> <span class="na">class=</span><span class="s">"full"</span> <span class="na">placeholder=</span><span class="s">"직접입력"</span><span class="nt">&gt;</span> 
+						<span class="nt">&lt;/div&gt;</span> 	
+					<span class="nt">&lt;/div&gt;</span>  
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span> 
+			
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span> <span class="na">valign=</span><span class="s">"top"</span><span class="nt">&gt;</span>SMS/E-mail 수신동의 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"necessary"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;p&gt;</span>
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"age10"</span> <span class="na">name=</span><span class="s">"radio_btn"</span><span class="nt">&gt;</span> <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"age10"</span><span class="nt">&gt;</span>수신동의<span class="nt">&lt;/label&gt;</span> &nbsp;&nbsp;
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"age11"</span> <span class="na">name=</span><span class="s">"radio_btn"</span><span class="nt">&gt;</span> <span class="nt">&lt;label</span><span class="na">for=</span><span class="s">"age11"</span><span class="nt">&gt;</span>수신거부<span class="nt">&lt;/label&gt;</span>   
+					<span class="nt">&lt;/p&gt;</span>	
+					<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"coment mt5"</span><span>&gt;</span> 
+						수신동의시 쇼핑몰에서 제공하는 이벤트 및 다양한 정보를 SMS/E-mail로 받아볼 수 있습니다.  <span class="nt">&lt;br&gt;</span> 
+						단, 회원가입, 거래정보-결제/배송/교환/환불 등과 같은 운영정보는 수신동의 여부와 관계없이 발송됩니다.)
+					<span class="nt">&lt;/p&gt;</span> 
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>  
+		<span class="nt">&lt;/tbody&gt;</span> 
+	<span class="nt">&lt;/table&gt;</span>  
+<span class="nt">&lt;/div&gt;</span> 			
+			</code>
+			</pre>
+		</figure>
+		
+		
+		<h2>게시판 list 형</h2>
+		<form class="bs-example">
+			<div class="board_info"> 
+				<p>공지사항 총 <strong>11</strong>건</p> 
+				<div class="board-search"> 
+					<input id="where" name="where" value="SUBJECT" type="hidden">
+					<input id="query" name="query" title="검색어입력" type="text" value="">
+					<button type="submit" class="btn btn-m btn-submit" title="검색">검색</button> 
+				</div> 
+			</div>
+			<div class="board_wrap"> 	
+		 		<table cellpadding="0" cellspacing="0" class="board-list">
+		 			<caption>공지사항</caption>
+		 			<colgroup> 
+			 			<col style="width:85px;"> 
+			 			<col style="width:auto;"> 
+		 			</colgroup>
+		 			<thead>
+		 				<tr>
+		 					<th scope="col">번호</th>
+		 					<th scope="col">제목</th> 
+		 					<th scope="col">작성일</th> 
+		 					<th scope="col">조회수</th> 
+		 				</tr>
+		 			</thead>
+		 			<tbody>
+		 				<tr>
+		 					<td><span class="label_notice">공지</span></td>
+		 					<td class="notice tleft"><a href="#">홈페이지 리뉴얼 오픈 이벤트 안내</a></td> 
+		 					<td>2014-11-18 </td> 
+		 					<td> 1,258 </td> 
+		 				</tr>  	 
+		 				<tr>
+		 					<td>1</td>
+		 					<td class="tleft"><a href="#">추석연휴 중 배송 알림</a></td> 
+		 					<td> 2014-08-29 </td> 
+		 					<td>189</td> 
+		 				</tr>
+		 				<tr>
+		 					<td>2</td>
+		 					<td class="tleft"><a href="#">추석연휴 중 배송 알림</a></td> 
+		 					<td> 2016-01-11 </td> 
+		 					<td>189</td> 
+		 				</tr>
+		 			</tbody>
+		 		</table>  		 
+			</div> <!-- // board_wrap E -->
+			<p class="pagination">
+				<a href="#" class="first"><img src="/content/images/btn/btn_first.gif" alt="처음페이지"></a>
+				<a href="#" class="first"><img src="/content/images/btn/btn_prev.gif" alt="이전페이지"></a>
+				<a href="#">1</a>
+				<a href="#">2</a>
+				<a href="#">3</a>
+				<a href="#">4</a>
+				<a href="#">5</a>
+				<strong>6</strong>
+				<a href="#">7</a>
+				<a href="#">8</a>
+				<a href="#">9</a>
+				<a href="#">10</a>
+				<a href="#" class="next"><img src="/content/images/btn/btn_next.gif" alt="다음페이지"></a>
+				<a href="#" class="last"><img src="/content/images/btn/btn_last.gif" alt="마지막페이지"></a>
+			</p>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board_info"</span><span class="nt">&gt;</span>  
+	<span class="nt">&lt;p&gt;</span>공지사항 총 <span class="nt">&lt;strong&gt;</span>11<span class="nt">&lt;/strong&gt;</span>건<span class="nt">&lt;/p&gt;</span> 
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board-search"</span><span class="nt">&gt;</span>  
+		<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"where"</span> <span class="na">name=</span><span class="s">"where"</span> <span class="na">value=</span><span class="s">"SUBJECT"</span> <span class="na">type=</span><span class="s">"hidden"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"query"</span> <span class="na">name=</span><span class="s">"query"</span> <span class="na">title=</span><span class="s">"검색어입력"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">class=</span><span class="s">"btn btn-m btn-submit"</span> <span class="na">title=</span><span class="s">"검색"</span><span class="nt">&gt;</span>검색<span class="nt">&lt;/button&gt;</span>  
+	<span class="nt">&lt;/div&gt;</span> 
+<span class="nt">&lt;/div&gt;</span> 
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board_wrap"</span><span class="nt">&gt;</span>   	
+	<span class="nt">&lt;table</span> <span class="na">cellpadding=</span><span class="s">"0"</span> <span class="na">cellspacing=</span><span class="s">"0"</span> <span class="na">class=</span><span class="s">"board-list"</span><span class="nt">&gt;</span>  
+		<span class="nt">&lt;caption&gt;</span>공지사항<span class="nt">&lt;/caption&gt;</span>  
+		<span class="nt">&lt;colgroup&gt;</span>  
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:85px;"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:auto;"</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;/colgroup&gt;</span> 
+		<span class="nt">&lt;thead&gt;</span> 
+			<span class="nt">&lt;tr&gt;</span> 
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>번호<span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>제목<span class="nt">&lt;/th&gt;</span> 
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>작성일<span class="nt">&lt;/th&gt;</span> 
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>조회수<span class="nt">&lt;/th&gt;</span> 
+			<span class="nt">&lt;/tr&gt;</span> 
+		<span class="nt">&lt;/thead&gt;</span> 
+		<span class="nt">&lt;tbody&gt;</span> 
+			<span class="nt">&lt;tr&gt;</span> 
+				<span class="nt">&lt;td&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"label_notice"</span><span class="nt">&gt;</span>공지</span><span class="nt">&lt;/td&gt;</span> 
+				<span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">"notice tleft"</span><span class="nt">&gt;</span> <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">title=</span><span class="s">"홈페이지 리뉴얼 오픈 이벤트 안내">홈페이지 리뉴얼 오픈 이벤트 안내</span><span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/td&gt;</span>  
+				<span class="nt">&lt;td&gt;</span> 2014-11-18 <span class="nt">&lt;/td&gt;</span>  
+				<span class="nt">&lt;td&gt;</span>1,258 <span class="nt">&lt;/td&gt;</span>  
+			<span class="nt">&lt;/tr&gt;</span>  	 
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>1<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">"tleft"</span><span class="nt">&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>추석연휴 중 배송 알림<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/td&gt;</span> 
+				<span class="nt">&lt;td&gt;</span> 2014-08-29 <span class="nt">&lt;/td&gt;</span> 
+				<span class="nt">&lt;td&gt;</span>189<span class="nt">&lt;/td&gt;</span> 
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>2<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">"tleft"</span><span class="nt">&gt;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>추석연휴 중 배송 알림<span class="nt">&lt;/a&gt;</span><span class="nt">&lt;/td&gt;</span> 
+				<span class="nt">&lt;td&gt;</span> 2016-01-11 <span class="nt">&lt;/td&gt;</span> 
+				<span class="nt">&lt;td&gt;</span>189<span class="nt">&lt;/td&gt;</span> 
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/tbody&gt;</span>
+	<span class="nt">&lt;/table&gt;</span>  		 
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"pagination"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"first"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/btn/btn_first.gif"</span> <span class="na">alt=</span><span class="s">"처음페이지"</span><span class="nt">&gt;</span><span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"first"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/btn/btn_prev.gif"</span> <span class="na">alt=</span><span class="s">"이전페이지"</span><span class="nt">&gt;</span><span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>3<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>4<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>5<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;strong&gt;</span>6<span class="nt">&lt;/strong&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>7<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>8<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>9<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>10<span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"next"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/btn/btn_next.gif"</span> <span class="na">alt=</span><span class="s">"다음페이지"</span><span class="nt">&gt;</span><span class="nt">&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"last"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/btn/btn_last.gif"</span> <span class="na">alt=</span><span class="s">"마지막페이지"</span><span class="nt">&gt;</span><span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/p&gt;</span>
+</code>
+			</pre>
+		</figure>
+		
+		<h2>게시판 view 형</h2>
+		<form class="bs-example">
+			<div class="board_wrap"> 
+		 		<div class="board_view">
+	                <div class="stit">
+						<dl class="tit">
+							<dt class="hide">제목</dt>
+	                    	<dd>Saleson 홈페이지 리뉴얼 오픈 이벤트 안내 </dd> 
+						</dl>
+						<dl class="tright">
+							<dt class="hide">등록일</dt>
+							<dd class="dd01">2012.09.14</dd>
+							<dt class="hide">조회수</dt>
+							<dd>334</dd>
+						</dl>
+	                </div> 
+	                <dl class="cont">
+	                	<dt class="hide">제목</dt>
+	                	<dd> 
+	                        안녕하세요! 세일즈온 관리자 입니다. <br>
+							세일즈온 홈페이지가 새롭가 단장하여 11월 18일(화)에 오픈 되었습니다. <br>
+							이벤트 응모만 하여도 품짐한 경품 및 다양한 혜택을 드립니다. <br>
+							11월 18일 ~ 12월 31일까지 진행되는 오픈 이벤트에 참여 및 많은 관심 부탁드립니다.  
+	                    </dd>
+	                </dl>
+                	<!--  댓글 시작 -->
+		      		<div class="board_comment">
+		            	<ul>
+		                	<li>
+		                		<p class="info">
+	                				<span class="name">홍길동</span>
+	                				<span class="time">2016.07.07 13:14:15</span>
+	                			</p>
+		                		<div class="comment">
+		                			<textarea>내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~ 내용이 나오는 영역입니다. 오오~~ 댓글의 내용
+이 나오는 영역입니다. 오오~~내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~ 
+		                			</textarea>
+	                				<p class="comment_fix">
+	                					<button type="button" class="btn bg_none" title="수정">수정</button>
+	                					<button type="button" class="btn" title="삭제">삭제</button>
+	                				</p>
+		                		</div>
+		                	</li>
+		                	<li>
+	                			<p class="info">
+	                				<span class="name">홍길동</span>
+	                				<span class="time">2016.07.07 13:14:15</span>
+	                			</p>
+		                		<div class="comment">
+		                			<div class="comment_view">
+		                				<p>내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~ 내용이 나오는 영역입니다. 오오~~ 댓글의 내용
+이 나오는 영역입니다. 오오~~내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~</p> 
+		                			</div>
+	                				<p class="comment_fix">
+	                					<button type="button" class="btn bg_none" title="수정">수정</button>
+	                					<button type="button" class="btn" title="삭제">삭제</button>
+	                				</p>
+		                		</div>
+		                	</li>
+		               		<li>
+	                			<p class="info">
+	                				<span class="name">홍길동</span>
+	                				<span class="time">2016.07.07 13:14:15</span>
+	                			</p>
+		                		<div class="comment">
+		                			<div class="comment_view">
+		                				<p>내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~ 내용이 나오는 영역입니다. 오오~~ 댓글의 내용
+이 나오는 영역입니다. 오오~~내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~</p>
+<p>내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~ 내용이 나오는 영역입니다. 오오~~ 댓글의 내용
+이 나오는 영역입니다. 오오~~내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~</p> 
+		                			</div>
+	                				<p class="comment_fix">
+	                					<button type="button" class="btn bg_none" title="수정">수정</button>
+	                					<button type="button" class="btn" title="삭제">삭제</button>
+	                				</p>
+		                		</div>
+		                	</li>
+		            	</ul> 
+		            </div><!-- // board-comment E -->   
+	                <p class="pagination_02"> 
+						<a href="#" class="first"><img src="/content/images/btn/btn_prev_02.gif" alt="이전페이지"></a>
+						<strong>1</strong>
+						<a href="#">2</a>
+						<a href="#">3</a>
+						<a href="#">4</a>
+						<a href="#">5</a> 
+						<a href="#" class="next"><img src="/content/images/btn/btn_next_02.gif" alt="다음페이지"></a> 
+					</p> 
+					<div class="comment_write">
+	                	<dl>
+	                		<dt>이름</dt>
+	                		<dd><input type="text" title="이름"></dd>
+	                		<dt>내용</dt>
+	                		<dd>
+	                			<div>
+	                				<textarea cols="20" rows="10">내용작성</textarea>
+	                				<button type="submit" class="btn" title="등록">등록</button>
+	                			</div>
+	                		</dd>
+	                	</dl>
+	                </div><!-- // comment-write E -->
+	            </div>	 <!-- // board_view E -->   
+			</div> <!-- // board_wrap E -->
+			 <dl class="prevnext">
+	             <dt class="first">이전글</dt>
+	             <dd class="first"><a href="#">추석연휴 중 배송 알림</a> <span>2014.12.31</span></dd>
+	             <dt>다음글</dt>
+	             <dd><a href="#">설 기간 배송마감 안내</a> <span>2014.12.31</span></dd>
+	        </dl>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board_wrap"</span><span class="nt">&gt;</span> 
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board_view"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"stit"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;dl</span> <span class="na">class=</span><span class="s">"tit"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"hide"</span><span class="nt">&gt;</span>제목<span class="nt">&lt;/dt&gt;</span>
+		    	<span class="nt">&lt;dd&gt;</span>Saleson 홈페이지 리뉴얼 오픈 이벤트 안내 <span class="nt">&lt;/dd&gt;</span> 
+			<span class="nt">&lt;/dl&gt;</span>
+			<span class="nt">&lt;dl</span> <span class="na">class=</span><span class="s">"tright"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"hide"</span><span class="nt">&gt;</span>등록일<span class="nt">&lt;/dt&gt;</span>
+				<span class="nt">&lt;dd</span> <span class="na">class=</span><span class="s">"dd01"</span><span class="nt">&gt;</span>2012.09.14<span class="nt">&lt;/dd&gt;</span>
+				<span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"hide"</span><span class="nt">&gt;</span>조회수<span class="nt">&lt;/dt&gt;</span>
+				<span class="nt">&lt;dd&gt;</span>334<span class="nt">&lt;/dd&gt;</span>
+			<span class="nt">&lt;/dl&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>  
+		<span class="nt">&lt;dl</span> <span class="na">class=</span><span class="s">"cont"</span><span class="nt">&gt;</span> 
+	          	<span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"hide"</span><span class="nt">&gt;</span>제목<span class="nt">&lt;/dt&gt;</span> 
+	          	<span class="nt">&lt;dd&gt;</span> 
+		            	안녕하세요! 세일즈온 관리자 입니다.  
+				세일즈온 홈페이지가 새롭가 단장하여 11월 18일(화)에 오픈 되었습니다.  
+				이벤트 응모만 하여도 품짐한 경품 및 다양한 혜택을 드립니다.  
+				11월 18일 ~ 12월 31일까지 진행되는 오픈 이벤트에 참여 및 많은 관심 부탁드립니다.  
+			<span class="nt">&lt;/dd&gt;</span>
+		<span class="nt">&lt;/dl&gt;</span>
+		<!--  댓글 시작 -->
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board_comment"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;ul&gt;</span>
+			    	<span class="nt">&lt;li&gt;</span>
+			       		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"info"</span><span class="nt">&gt;</span> 
+			            		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"name"</span><span class="nt">&gt;</span> 홍길동<span class="nt">&lt;/span&gt;</span>
+			                	<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"time"</span><span class="nt">&gt;</span> 2016.07.07 13:14:15<span class="nt">&lt;/span&gt;</span>
+			            	<span class="nt">&lt;/p&gt;</span>
+			       		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"comment"</span><span class="nt">&gt;</span> 
+				       		<span class="nt">&lt;textarea&gt;</span>
+				       		  내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~ 내용이 나오는 영역입니다. 
+				       		  오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~ 
+				       		<span class="nt">&lt;/textarea&gt;</span>
+		              			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"comment_fix"</span><span class="nt">&gt;</span>
+		             				<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn bg_none"</span> <span class="na">title=</span><span class="s">"수정"</span><span class="nt">&gt;</span>수정<span class="nt">&lt;/button&gt;</span>
+		             				<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">title=</span><span class="s">"삭제"</span><span class="nt">&gt;</span>삭제<span class="nt">&lt;/button&gt;</span>
+		             			<span class="nt">&lt;/p&gt;</span>
+					<span class="nt">&lt;/div&gt;</span>
+				<span class="nt">&lt;/li&gt;</span>
+				<span class="nt">&lt;li&gt;</span>
+			            	<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"info"</span><span class="nt">&gt;</span>
+			            		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"name"</span><span class="nt">&gt;</span>홍길동<span class="nt">&lt;/span&gt;</span>
+			            		<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"time"</span><span class="nt">&gt;</span>2016.07.07 13:14:15<span class="nt">&lt;/span&gt;</span>
+			            	<span class="nt">&lt;/p&gt;</span>
+		                	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"comment"</span><span class="nt">&gt;</span>
+		                		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"comment_view"</span><span class="nt">&gt;</span>
+		                			<span class="nt">&lt;p&gt;</span>
+		                				내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 
+		                				오오~~ 내용이 나오는 영역입니다. 
+		                		 		오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~내용이 나오는 영역입니다. 
+		                				오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~ 
+		                		 	<span class="nt">&lt;/p&gt;</span> 
+		                		<span class="nt">&lt;/div&gt;</span>
+                				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"comment_fix"</span><span class="nt">&gt;</span>
+                					<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn bg_none"</span> <span class="na">title=</span><span class="s">"수정"</span><span class="nt">&gt;</span>수정</button>
+                					<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">title=</span><span class="s">"삭제"</span><span class="nt">&gt;</span>삭제</button>
+                				<span class="nt">&lt;/p&gt;</span>
+		                	<span class="nt">&lt;/div&gt;</span>
+				 <span class="nt">&lt;/li&gt;</span>
+		   		 <span class="nt">&lt;li&gt;</span>
+                			<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"info"</span><span class="nt">&gt;</span>
+                				<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"name"</span><span class="nt">&gt;</span>홍길동<span class="nt">&lt;/span&gt;</span>
+                				<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"time"</span><span class="nt">&gt;</span>2016.07.07 13:14:15<span class="nt">&lt;/span&gt;</span>
+                			<span class="nt">&lt;/p&gt;</span>
+		                	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"comment"</span><span class="nt">&gt;</span>  
+		                		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"comment_view"</span><span class="nt">&gt;</span>   
+		                			<span class="nt">&lt;p&gt;</span>내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~ 내용이 나오는 영역입니다. 
+		                		오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다.
+		                			<span class="nt">&lt;/p&gt;</span>
+							<span class="nt">&lt;p&gt;</span>내용이 나오는 영역입니다. 오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~ 내용이 나오는 영역입니다. 
+							오오~~ 댓글의 내용E이 나오는 영역입니다. 오오~~내용이 나오는 영역입니다. 
+							오오~~ 댓글의 내용이 나오는 영역입니다. 오오~~
+							<span class="nt">&lt;/p&gt;</span> 
+		                		<span class="nt">&lt;/div&gt;</span>
+                				<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"comment_fix"</span><span class="nt">&gt;</span>   
+                					<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn bg_none"</span> <span class="na">title=</span><span class="s">"수정"</span><span class="nt">&gt;</span>수정<span class="nt">&lt;/button&gt;</span>
+                					<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">title=</span><span class="s">"삭제"</span><span class="nt">&gt;</span>삭제<span class="nt">&lt;/button&gt;</span>
+	                			<span class="nt">&lt;/p&gt;</span>
+		                	<span class="nt">&lt;/div&gt;</span>
+		                <span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;/ul&gt;</span> 
+		<span class="nt">&lt;/div&gt;</span><!-- // board-comment E -->  
+		<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"pagination_02"</span><span class="nt">&gt;</span>   
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"first"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/btn/btn_prev_02.gif"</span> <span class="na">alt=</span><span class="s">"이전페이지"</span><span class="nt">&gt;</span><span class="nt">&lt;/a&gt;</span> 
+			<span class="nt">&lt;strong&gt;</span>1<span class="nt">&lt;/strong&gt;</span> 
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/a&gt;</span> 
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>3<span class="nt">&lt;/a&gt;</span> 
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>4<span class="nt">&lt;/a&gt;</span> 
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>5<span class="nt">&lt;/a&gt;</span>  
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"next"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/btn/btn_next_02.gif"</span> <span class="na">alt=</span><span class="s">"다음페이지"</span><span class="nt">&gt;</span><span class="nt">&lt;/a&gt;</span>  
+		<span class="nt">&lt;/p&gt;</span>  
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"comment_write"</span><span class="nt">&gt;</span> 
+	        	<span class="nt">&lt;dl&gt;</span> 
+	        		<span class="nt">&lt;dt&gt;</span> 이름<span class="nt">&lt;/dt&gt;</span> 
+	        		<span class="nt">&lt;dd&gt;</span> <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"이름"</span><span class="nt">&gt;</span><span class="nt">&lt;/dd&gt;</span> 
+	        		<span class="nt">&lt;dt&gt;</span> 내용<span class="nt">&lt;/dt&gt;</span> 
+	        		<span class="nt">&lt;dd&gt;</span> 
+	        			<span class="nt">&lt;div&gt;</span> 
+	        				<span class="nt">&lt;textarea</span> <span class="na">cols=</span><span class="s">"20"</span> <span class="na">rows=</span><span class="s">"10"</span><span class="nt">&gt;</span>내용작성<span class="nt">&lt;/textarea&gt;</span> 
+	        				<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">title=</span><span class="s">"등록"</span><span class="nt">&gt;</span>등록<span class="nt">&lt;/button&gt;</span> 
+	        			<span class="nt">&lt;/div&gt;</span> 
+	        		<span class="nt">&lt;/dd&gt;</span> 
+	        	<span class="nt">&lt;/dl&gt;</span> 
+	         <span class="nt">&lt;/div&gt;</span> <!-- // comment-write E -->
+	<span class="nt">&lt;/div&gt;</span> 	 <!-- // board_view E -->   
+<span class="nt">&lt;/div&gt;</span>  <!-- // board_wrap E -->			 
+				
+<span class="nt">&lt;dl</span> <span class="na">class=</span><span class="s">"prevnext"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"first"</span><span class="nt">&gt;</span>이전글<span class="nt">&lt;/dt&gt;</span>
+	<span class="nt">&lt;dd</span> <span class="na">class=</span><span class="s">"first"</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>추석연휴 중 배송 알림<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span&gt;</span>2014.12.31<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/dd&gt;</span>
+	<span class="nt">&lt;dt&gt;</span>다음글<span class="nt">&lt;/dt&gt;</span>
+	<span class="nt">&lt;dd&gt;</span> 
+		<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>설 기간 배송마감 안내<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span&gt;</span>2014.12.31<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/dd&gt;</span>
+<span class="nt">&lt;/dl&gt;</span> 			
+</code>
+			</pre>
+		</figure> 
+		
+		
+		<h2>마이페이지 상세 게시판 1</h2>
+		<form class="bs-example">
+			<div class="board_wrap mt30">  
+				<table cellpadding="0" cellspacing="0" class="order_list">
+					<caption>주문정보</caption>
+					<colgroup>
+						<col style="width:125px;"> 
+						<col style="width:auto;">  
+						<col style="width:130px;"> 
+					</colgroup>
+					<thead>
+						<tr> 
+							<th scope="col">주문번호/일자</th>
+							<th scope="col">상품정보</th> 
+							<th scope="col">주문/배송상태</th>  
+						</tr>
+					</thead>
+					<tbody> 	 
+						<tr>
+							<td>
+								<div class="order_number">
+									<a href="#">1052-1009568</a>
+									<span class="date">(2016-11-11)</span></div>
+								<!--// order_number E-->
+							</td>
+							<td class="tleft">
+								<div class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</div><!--// item_info E-->
+							</td>
+							<td>
+								<div class="condition">
+									<p>입금대기중</p>
+									<p class="date">(2016-11-11)</p>
+									<div class="order_btnList">
+										<button type="submit" class="btn btn-s btn-default" title="주문취소">주문취소</button> 
+										<button type="submit" class="btn btn-s btn-default" title="배송추적">배송추적</button>
+										<button type="submit" class="btn btn-s btn-submit" title="구매확정">구매확정</button>
+									</div>
+								</div>
+							</td>
+						</tr> 
+					</tbody>
+				</table><!--//esthe-table E-->
+			</div>	 
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">    
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board_wrap mt30"</span><span class="nt">&gt;</span>  
+	<span class="nt">&lt;table</span> <span class="na">cellpadding=</span><span class="s">"0"</span> <span class="na">cellspacing=</span><span class="s">"0"</span> <span class="na">class=</span><span class="s">"order_list"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;caption&gt;</span>주문정보<span class="nt">&lt;/caption&gt;</span>
+		<span class="nt">&lt;colgroup&gt;</span>
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:125px;"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:auto;"</span><span class="nt">&gt;</span>  
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:130px;"</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;/colgroup&gt;</span>
+		<span class="nt">&lt;thead&gt;</span>
+			<span class="nt">&lt;tr&gt;</span> 
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>주문번호/일자<span class="nt">&lt;/th&gt;</span>  
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>상품정보<span class="nt">&lt;/th&gt;</span>   
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>주문/배송상태<span class="nt">&lt;/th&gt;</span>    
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/thead&gt;</span>
+		<span class="nt">&lt;tbody&gt;</span> 	 
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_number"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> 1052-1009568<span class="nt">&lt;/a&gt;</span>
+						<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"date"</span> (2016-11-11)<span class="nt">&lt;/span&gt;</span>
+					<span class="nt">&lt;/div&gt;</span><!--// order_number E--> 
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">"tleft"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"item_info"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"photo"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/common/item_90.gif"</span> <span class="na">alt=</span><span class="s">"item photo"</span><span class="nt">&gt;</span><span class="nt">&lt;/p&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_option"</span><span class="nt">&gt;</span>
+							<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item_name"</span><span class="nt">&gt;</span> [우드웍] 트릴로지 라지캔들 12종 중 택1<span class="nt">&lt;/p&gt;</span>
+							<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"option"</span><span class="nt">&gt;</span>
+								<span class="nt">&lt;li&gt;</span>
+									<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"choice"</span><span class="nt">&gt;</span> 옵션1 :<span class="nt">&lt;/span&gt;</span>
+									<span class="nt">&lt;span&gt;</span>아일랜드썬라이즈<span class="nt">&lt;/span&gt;</span>	
+								<span class="nt">&lt;/li&gt;</span>
+								<span class="nt">&lt;li&gt;</span>
+									<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"choice"</span><span class="nt">&gt;</span>LED 네일 라이트 : <span class="nt">&lt;/span&gt;</span>
+									<span class="nt">&lt;span&gt;</span>나비 LED 네일 라이트 8W 펄 화이트<span class="nt">&lt;/span&gt;</span>
+								<span class="nt">&lt;/li&gt;</span>
+								<span class="nt">&lt;li&gt;</span>
+									<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"choice"</span><span class="nt">&gt;</span>조립 / 설치 서비스 : <span class="nt">&lt;/span&gt;</span>
+									<span class="nt">&lt;span&gt;</span>조립 / 설치 서비스 이용<span class="nt">&lt;/span&gt;</span>
+								<span class="nt">&lt;/li&gt;</span>
+							<span class="nt">&lt;/ul&gt;</span>
+							<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"item_price"</span><span class="nt">&gt;</span>
+								<span class="nt">&lt;span&gt;</span>10,500<span class="nt">&lt;/span&gt;</span>원/ 
+								<span class="nt">&lt;span&gt;</span>3<span class="nt">&lt;/span&gt;</span>개 
+							<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+					<span class="nt">&lt;/div&gt;</span><!--// item_info E-->
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"condition"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;p&gt;</span>입금대기중<span class="nt">&lt;/p&gt;</span>
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"date"</span><span class="nt">&gt;</span>(2016-11-11)<span class="nt">&lt;/p&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_btnList"</span><span class="nt">&gt;</span>
+							<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">class=</span><span class="s">"btn btn-s btn-default"</span> <span class="na">title=</span><span class="s">"주문취소"</span><span class="nt">&gt;</span>주문취소<span class="nt">&lt;/button&gt;</span> 
+							<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">class=</span><span class="s">"btn btn-s btn-default"</span> <span class="na">title=</span><span class="s">"배송추적"</span><span class="nt">&gt;</span>배송추적<span class="nt">&lt;/button&gt;</span>
+							<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">class=</span><span class="s">"btn btn-s btn-submit"</span> <span class="na">title=</span><span class="s">"구매확정"</span><span class="nt">&gt;</span>구매확정<span class="nt">&lt;/button&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+					<span class="nt">&lt;/div&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/tbody&gt;</span>
+	<span class="nt">&lt;/table&gt;</span><!--//esthe-table E-->
+<span class="nt">&lt;/div&gt;</span>				
+				</code>
+			</pre>
+		</figure>
+		
+		<h2>마이페이지 상세 게시판 2</h2>
+		<form class="bs-example">
+			<div class="board_wrap">  
+				<table cellpadding="0" cellspacing="0" class="order_list">
+					<caption>주문 정보</caption>
+					<colgroup> 
+						
+						<col style="width:auto;">  
+						<col style="width:70px;"> 
+						<col style="width:110px;"> 
+						<col style="width:70px;"> 
+						<col style="width:135px;">  
+					</colgroup>
+					<thead>
+						<tr> 
+							<th scope="col" class="tleft">상품정보</th>
+							<th scope="col">적립포인트</th>
+							<th scope="col">상품합계</th> 
+							<th scope="col">배송비</th> 
+							<th scope="col">주문/배송상태</th> 
+						</tr>
+					</thead>
+					<tbody>
+						<tr>  
+							<td class="tleft first">
+								<div class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</div><!--// item_info E-->
+							</td>
+							<td><span>350</span>P</td>
+							<td> 
+								<strong><span>10,305,000</span>원 </strong>
+							</td>
+							<td> 
+								<span>3,000</span>원   
+							</td>  
+							<td class="order_num"> 
+								<div class="order_number"> 	
+									<p class="delivery">로젠택배</p>
+									<a href="#">1052-1009568</a> 
+								</div>   
+							</td>
+						</tr> 	
+						<tr>
+							<td colspan="5" class="delivery_info"><p><strong>배송지 정보</strong> : [12345] 서울시 구로구 디지털로27길 24  장동건(010-2345-8956)</p> </td>
+						</tr>	 
+					</tbody>
+				</table> <!--// order_list E-->	  		 
+			</div>		 
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">    
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board_wrap"</span><span class="nt">&gt;</span>  
+	<span class="nt">&lt;table</span> <span class="na">cellpadding=</span><span class="s">"0"</span> <span class="na">cellspacing=</span><span class="s">"0"</span> <span class="na">class=</span><span class="s">"order_list"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;caption&gt;</span>주문 정보<span class="nt">&lt;/caption&gt;</span>
+		<span class="nt">&lt;colgroup&gt;</span>  
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:auto;"</span><span class="nt">&gt;</span>  
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:70px;"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:110px;"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:70px;"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:135px;"</span><span class="nt">&gt;</span>  
+		<span class="nt">&lt;/colgroup&gt;</span>
+		<span class="nt">&lt;thead&gt;</span>
+			<span class="nt">&lt;tr&gt;</span> 
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="na">class=</span><span class="s">"tleft"</span><span class="nt">&gt;</span>상품정보<span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>적립포인트<span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>상품합계<span class="nt">&lt;/th&gt;</span> 
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>배송비<span class="nt">&lt;/th&gt;</span> 
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>주문/배송상태<span class="nt">&lt;/th&gt;</span> 
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/thead&gt;</span>
+		<span class="nt">&lt;tbody&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>  
+				<span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">"tleft first"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"item_info"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"photo"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/common/item_90.gif"</span> <span class="na">alt=</span><span class="s">"item photo"</span><span class="nt">&gt;</span><span class="nt">&lt;/p&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_option"</span><span class="nt">&gt;</span>
+							<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item_name"</span><span class="nt">&gt;</span>[우드웍] 트릴로지 라지캔들 12종 중 택1<span class="nt">&lt;/p&gt;</span> 
+							<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"option"</span><span class="nt">&gt;</span>
+								<span class="nt">&lt;li&gt;</span>
+									<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"choice"</span><span class="nt">&gt;</span>옵션1 :<span class="nt">&lt;/span&gt;</span>
+									<span class="nt">&lt;span&gt;</span>아일랜드썬라이즈<span class="nt">&lt;/span&gt;</span>	
+								<span class="nt">&lt;/li&gt;</span>
+								<span class="nt">&lt;li&gt;</span>
+									<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"choice"</span><span class="nt">&gt;</span>LED 네일 라이트 : <span class="nt">&lt;/span&gt;</span>
+									<span class="nt">&lt;span&gt;</span>나비 LED 네일 라이트 8W 펄 화이트<span class="nt">&lt;/span&gt;</span>	
+								<span class="nt">&lt;/li&gt;</span>
+								<span class="nt">&lt;li&gt;</span>
+									<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"choice"</span><span class="nt">&gt;</span>조립 / 설치 서비스 : <span class="nt">&lt;/span&gt;</span>
+									<span class="nt">&lt;span&gt;</span>조립 / 설치 서비스 이용<span class="nt">&lt;/span&gt;</span>	
+								<span class="nt">&lt;/li&gt;</span>
+							<span class="nt">&lt;/ul&gt;</span>
+							<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"item_price"</span><span class="nt">&gt;</span>
+								<span class="nt">&lt;span&gt;</span>10,500<span class="nt">&lt;/span&gt;</span>원/ 
+								<span class="nt">&lt;span&gt;</span>3<span class="nt">&lt;/span&gt;</span>개
+							<span class="nt">&lt;/div&gt;</span>
+						<span class="nt">&lt;/div&gt;</span>
+					<span class="nt">&lt;/div&gt;</span><!--// item_info E-->
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;span&gt;</span>350<span class="nt">&lt;/span&gt;</span>P
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span> 
+					<span class="nt">&lt;strong&gt;</span><span class="nt">&lt;span&gt;</span>10,305,000<span class="nt">&lt;/span&gt;</span>원 <span class="nt">&lt;/strong&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span> 
+					<span class="nt">&lt;span&gt;</span>3,000<span class="nt">&lt;/span&gt;</span>원   
+				<span class="nt">&lt;/td&gt;</span>  
+				<span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">"order_num"</span><span class="nt">&gt;</span> 
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_number"</span></span><span class="nt">&gt;</span>	
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"delivery"</span><span class="nt">&gt;</span>로젠택배<span class="nt">&lt;/p&gt;</span> 
+						<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>1052-1009568<span class="nt">&lt;/a&gt;</span> 
+					<span class="nt">&lt;/div&gt;</span>   
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span> 	
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">colspan=</span><span class="s">"5"</span> <span class="na">class=</span><span class="s">"delivery_info"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;p&gt;</span><span class="nt">&lt;strong&gt;</span>배송지 정보<span class="nt">&lt;/strong&gt;</span> : [12345] 서울시 구로구 디지털로27길 24  장동건(010-2345-8956)<span class="nt">&lt;/p&gt;</span> 
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span> 	 
+		<span class="nt">&lt;/tbody&gt;</span> 
+	<span class="nt">&lt;/table&gt;</span>  <!--// order_list E-->	  		 
+<span class="nt">&lt;/div&gt;</span> 				
+				</code>
+			</pre>
+		</figure>
+		
+		
+		<h2>장바구니</h2>
+		<form class="bs-example">
+			<form id="listForm">
+				<div class="board_wrap mt15"> 	
+					<table cellpadding="0" cellspacing="0" class="mypage_list">
+						<caption>장바구니 list</caption>
+						<colgroup>
+							<col style="width:40px;">
+							<col style="width:auto;">
+							<col style="width:72px;">
+							<col style="width:108px;">
+							<col style="width:109px;">
+							<col style="width:120px;"> 
+							<col style="width:100px;"> 
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col"><input type="checkbox" name="" id="tempId2" title="체크박스"></th>
+								<th scope="col" class="none_left">상품명/옵션정보</th>
+								<th scope="col">수량</th>
+								<th scope="col">상품금액</th>
+								<th scope="col">합계</th> 
+								<th scope="col">배송정보</th> 
+								<th scope="col">주문</th> 
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="checkbox" name="" id="tempId3" title="체크박스"></td>
+								<td class="tleft">	 						 
+									<div class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option noline">
+										<p class="item_name line2">[레드씰] 레드씰 프로폴리스 기능성 치약 레드씰 프로폴리스 기능성 치약 </p>
+										<!-- 상품명이 2줄일 경우 line2 클래스명 추가하기 -->
+										<ul class="option">
+											<li> 
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li> 
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li> 
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="delivery_wrap">
+											<a href="#" class="delivery_type">판매자 조건부 무료배송▶</a> 
+											<div class="delievery_tip">
+												<p class="title">판매자 조건부 무료배송 </p>
+												<p>판매자 상품 30,000원 이상 구매 시 무료,<br>미만 구매시 3,000원 부과</p> 
+												<p><strong>제주/도서산간</strong><br>(제주 4,000 /도서산간 4,000 추가)</p>
+												<a href="#" class="delievery_close"><img src="/content/images/btn/btn_tooltip_close.gif" alt="close"></a>
+											</div> 
+										</div> <!-- // delivery_wrap E -->
+										
+									</div>
+								</div>	 						 
+								</td>
+								<td>
+									<div class="input_wrap col-w-10 num_input">
+										<input type="text" title="수량" value="1"> 
+										<button type="button" class="btn btn-default btn-s" title="변경">변경</button>  
+									</div>   
+								</td>  
+								<td> 
+									<p class="price_01">16,500원</p>
+									<p class="sale_01">(-1,000 할인)</p>
+								</td> 
+								<td>
+									<div class="sum">15,250원</div> 
+								</td>
+								<td>
+									<p class="delivery_price">무료배송</p>
+									<p class="where_buy">㈜온라인파워스</p>
+								</td> 
+								<td>
+									<div class="order_btnList">
+										<button type="submit" class="btn btn-s btn-submit" title="바로구매">바로구매</button> 
+										<button type="submit" class="btn btn-s btn-default" title="관심상품">관심상품</button> 
+									</div> 	
+								</td> 
+							</tr> 	 
+						</tbody>
+					</table><!--// mypage_list E-->	  
+					<div class="boadr_total"> 
+						<div>
+							총 상품합계 금액  142,500원  +  배송비  2500원  = <span class="delivery_total">결제예정금액 <span>144,500원</span></span>					  
+						</div> 
+					</div>	<!-- // boadr_total E -->	 
+				</div>	<!-- // board_view E -->	
+			</form>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">"listForm"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board_wrap mt15"</span><span class="nt">&gt;</span> 	
+		<span class="nt">&lt;table</span> <span class="na">cellpadding=</span><span class="s">"0"</span> <span class="na">cellspacing=</span><span class="s">"0"</span> <span class="na">class=</span><span class="s">"mypage_list"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;caption&gt;</span>장바구니 list<span class="nt">&lt;/caption&gt;</span>
+			<span class="nt">&lt;colgroup&gt;</span>
+				<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:40px;"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:auto;"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:72px;"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:108px;"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:109px;"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:120px;"</span><span class="nt">&gt;</span> 
+				<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:100px;"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;/colgroup&gt;</span>
+			<span class="nt">&lt;thead&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span> <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">id=</span><span class="s">"tempId2"</span> <span class="na">title=</span><span class="s">"체크박스"</span><span class="nt">&gt;</span> <span class="nt">&lt;/th&gt;</span>
+					<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span> <span class="na">class=</span><span class="s">"none_left"</span><span class="nt">&gt;</span>상품명/옵션정보<span class="nt">&lt;/th&gt;</span>
+					<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>수량<span class="nt">&lt;/th&gt;</span>
+					<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>상품금액<span class="nt">&lt;/th&gt;</span>
+					<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>합계<span class="nt">&lt;/th&gt;</span> 
+					<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>배송정보<span class="nt">&lt;/th&gt;</span> 
+					<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>주문<span class="nt">&lt;/th&gt;</span> 
+				<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;/thead&gt;</span>
+			<span class="nt">&lt;tbody&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td&gt;</span>
+						<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">id=</span><span class="s">"tempId3"</span> </span> <span class="na">title=</span><span class="s">"체크박스"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">"tleft"</span><span class="nt">&gt;</span>	 						 
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"item_info"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"photo"</span><span class="nt">&gt;</span> <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/common/item_90.gif"</span> <span class="na">alt=</span><span class="s">"item photo"</span><span class="nt">&gt;</span><span class="nt">&lt;/p&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_option noline"</span><span class="nt">&gt;</span>
+							<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"item_name line2"</span><span class="nt">&gt;</span>[레드씰] 레드씰 프로폴리스 기능성 치약 레드씰 프로폴리스 기능성 치약 <span class="nt">&lt;/p&gt;</span>
+							<!-- 상품명이 2줄일 경우 line2 클래스명 추가하기 -->
+							<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"option"</span><span class="nt">&gt;</span>
+								<span class="nt">&lt;li&gt;</span> 
+									<span class="nt">&lt;span&gt;</span>아일랜드썬라이즈<span class="nt">&lt;/span&gt;</span>	
+								<span class="nt">&lt;/li&gt;</span>
+								<span class="nt">&lt;li&gt;</span> 
+									<span class="nt">&lt;span&gt;</span>나비 LED 네일 라이트 8W 펄 화이트<span class="nt">&lt;/span&gt;</span>	
+								<span class="nt">&lt;/li&gt;</span>
+								<span class="nt">&lt;li&gt;</span> 
+									<span class="nt">&lt;span&gt;</span>조립 / 설치 서비스 이용<span class="nt">&lt;/span&gt;</span>	
+								<span class="nt">&lt;/li&gt;</span>
+							<span class="nt">&lt;/ul&gt;</span>
+							<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"delivery_wrap"</span><span class="nt">&gt;</span>
+								<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"delivery_type"</span><span class="nt">&gt;</span>판매자 조건부 무료배송▶<span class="nt">&lt;/a&gt;</span>
+								<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"delievery_tip"</span><span class="nt">&gt;</span>
+									<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"title"</span><span class="nt">&gt;</span>판매자 조건부 무료배송 <span class="nt">&lt;/p&gt;</span>
+									<span class="nt">&lt;p&gt;</span>판매자 상품 30,000원 이상 구매 시 무료,<span class="nt">&lt;br&gt;</span>미만 구매시 3,000원 부과<span class="nt">&lt;/p&gt;</span> 
+									<span class="nt">&lt;p&gt;</span><span class="nt">&lt;strong&gt;</span>제주/도서산간<span class="nt">&lt;/strong&gt;</span><span class="nt">&lt;br&gt;</span>(제주 4,000 /도서산간 4,000 추가)<span class="nt">&lt;/p&gt;</span> 
+									<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"delievery_close"</span><span class="nt">&gt;</span><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/content/images/btn/btn_tooltip_close.gif"</span> <span class="na">alt=</span><span class="s">"close"</span><span class="nt">&gt;</span><span class="nt">&lt;/a&gt;</span>
+								<span class="nt">&lt;/div&gt;</span> 
+							<span class="nt">&lt;/div&gt;</span> <!-- // delivery_wrap E --> 
+						<span class="nt">&lt;/div&gt;</span>
+					<span class="nt">&lt;/div&gt;</span>	 						 
+					<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input_wrap col-w-10 num_input"</span><span class="nt">&gt;</span>
+							<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">title=</span><span class="s">"수량"</span> <span class="na">value=</span><span class="s">"1"</span><span class="nt">&gt;</span> 
+							<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-default btn-s"</span> <span class="na">title=</span><span class="s">"변경"</span></span><span class="nt">&gt;</span>변경<span class="nt">&lt;/button&gt;</span>  
+						<span class="nt">&lt;/div&gt;</span>   
+					<span class="nt">&lt;/td&gt;</span>  
+					<span class="nt">&lt;td&gt;</span> 
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"price_01"</span><span class="nt">&gt;</span>16,500원<span class="nt">&lt;/p&gt;</span>
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"sale_01"</span><span class="nt">&gt;</span>(-1,000 할인)<span class="nt">&lt;/p&gt;</span>
+					<span class="nt">&lt;/td&gt;</span> 
+					<span class="nt">&lt;td&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"sum"</span><span class="nt">&gt;</span>15,250원<span class="nt">&lt;/div&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"delivery_price"</span><span class="nt">&gt;</span>무료배송<span class="nt">&lt;/p&gt;</span>
+						<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"where_buy"</span><span class="nt">&gt;</span>㈜온라인파워스<span class="nt">&lt;/p&gt;</span>
+					<span class="nt">&lt;/td&gt;</span> 
+					<span class="nt">&lt;td&gt;</span>
+						<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"order_btnList"</span><span class="nt">&gt;</span>
+							<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">class=</span><span class="s">"btn btn-s btn-submit"</span> <span class="na">title=</span><span class="s">"바로구매"</span><span class="nt">&gt;</span>바로구매<span class="nt">&lt;/button&gt;</span> 
+							<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">class=</span><span class="s">"btn btn-s btn-default"</span> <span class="na">title=</span><span class="s">"관심상품"</span><span class="nt">&gt;</span>관심상품<span class="nt">&lt;/button&gt;</span> 
+						<span class="nt">&lt;/div&gt;</span> 	
+					<span class="nt">&lt;/td&gt;</span> 
+				<span class="nt">&lt;/tr&gt;</span> 	 
+			<span class="nt">&lt;/tbody&gt;</span>
+		<span class="nt">&lt;/table&gt;</span><!--// mypage_list E-->	
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"boadr_total"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;div&gt;</span>
+				총 상품합계 금액  142,500원  +  배송비  2500원  = 
+				<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"delivery_total"</span><span class="nt">&gt;</span>결제예정금액 <span class="nt">&lt;span&gt;</span>144,500원<span class="nt">&lt;/span&gt;</span><span class="nt">&lt;/span&gt;</span>					  
+			<span class="nt">&lt;/div&gt;</span> 
+		<span class="nt">&lt;/div&gt;</span>	<!-- // boadr_total E -->	   	 		 
+	<span class="nt">&lt;/div&gt;</span>	<!-- // board_view E -->	
+</form>  
+				</code>
+			</pre>
+		</figure>
+		
+		
+		
+		<h2>마이페이지 상세3</h2>
+		<form class="bs-example">
+			<div class="board_wrap">  
+				<table cellpadding="0" cellspacing="0" class="order_view">
+					<caption>배송지 1</caption>
+					<colgroup>
+						<col style="width:128px;"> 
+						<col style="width:315px;">	
+						<col style="width:128px;"> 
+						<col style="width:auto;">	 				
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="row">주문하시는 분</th>
+							<td>홍길동</td> 
+							<th scope="row">휴대폰번호</th>
+							<td>010-1234-5678</td> 
+						</tr> 
+						<tr>
+							<th scope="row">전화번호</th>
+							<td>-</td> 
+							<th scope="row">이메일</th>
+							<td>test@naver.com</td> 	
+						</tr>  
+					</tbody>
+				</table> 
+			</div>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"board_wrap"</span><span class="nt">&gt;</span>  
+	<span class="nt">&lt;table</span> <span class="na">cellpadding=</span><span class="s">"0"</span> <span class="na">cellspacing=</span><span class="s">"0"</span> <span class="na">class=</span><span class="s">"order_view"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;caption&gt;</span>배송지 1<span class="nt">&lt;/caption&gt;</span>
+		<span class="nt">&lt;colgroup&gt;</span>
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:128px;"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:315px;"</span><span class="nt">&gt;</span>	
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:128px;"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;col</span> <span class="na">style=</span><span class="s">"width:auto;"</span><span class="nt">&gt;</span>	 				
+		<span class="nt">&lt;/colgroup&gt;</span>
+		<span class="nt">&lt;tbody&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>주문하시는 분<span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>홍길동<span class="nt">&lt;/td&gt;</span> 
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>휴대폰번호<span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>010-1234-5678<span class="nt">&lt;/td&gt;</span> 
+			<span class="nt">&lt;/tr&gt;</span> 
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>전화번호<span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>-<span class="nt">&lt;/td&gt;</span> 
+				<span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;</span>이메일<span class="nt">&lt;/th&gt;</span>
+				<span class="nt">&lt;td&gt;</span>test@naver.com<span class="nt">&lt;/td&gt;</span> 	
+			<span class="nt">&lt;/tr&gt;</span>  
+		<span class="nt">&lt;/tbody&gt;</span>
+	<span class="nt">&lt;/table&gt;</span> 
+<span class="nt">&lt;/div&gt;</span>				
+</code>
+			</pre>
+		</figure> 
+		
+		
+		<h2>FAQ</h2>
+		<form class="bs-example">
+			<div class="faq_list">
+				<ul id="faq">
+					<li>
+						<div class="list">
+							<span class="q"></span><span class="txt">신용카드 결재의 경우 일시불,할부는 가능한가요??</span>  
+						</div> 
+						<div class="panel" style="display: none;">
+							<p>일시불 및 할부 모두 이용 가능합니다.<br> 할부의 지불 회수는, 3·5·6·10·12·15·18·20·24회입니다.</p> <br> 
+							<p>※ 손님과 카드 회사와의 계약에 따라서 이용하실 수 없는 경우가 있습니다.<br> 자세한 것은 해당 카드회사에 문의해 주세요.</p>
+						</div>
+					</li> 
+					<li>
+						<div class="list">
+							<span class="q"></span><span class="txt">주소, 메일 주소가 바뀌었습니다.변경방법을 알려주세요.</span>  
+						</div> 
+						<div class="panel" style="display: none;">
+							<p>일시불 및 할부 모두 이용 가능합니다.<br> 할부의 지불 회수는, 3·5·6·10·12·15·18·20·24회입니다.</p> <br> 
+							<p>※ 손님과 카드 회사와의 계약에 따라서 이용하실 수 없는 경우가 있습니다.<br> 자세한 것은 해당 카드회사에 문의해 주세요.</p>
+						</div>
+					</li>
+					<li>
+						<div class="list">
+							<span class="q"></span><span class="txt">회원으로 등록하면 할인가로 구매가 가능한가요?연회비는 없나요?</span>  
+						</div> 
+						<div class="panel" style="display: none;">
+							<p>일시불 및 할부 모두 이용 가능합니다.<br> 할부의 지불 회수는, 3·5·6·10·12·15·18·20·24회입니다.</p> <br> 
+							<p>※ 손님과 카드 회사와의 계약에 따라서 이용하실 수 없는 경우가 있습니다.<br> 자세한 것은 해당 카드회사에 문의해 주세요.</p>
+						</div>
+					</li> 
+				</ul>
+			</div>
+		</form>
+		<figure class="highlight">
+			<pre>
+				<code class="language-html">
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"faq_list"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"faq"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"list"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"q"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+				<span class="nt">&lt;span</span> <span class="na">class=</span> <span class="s">"txt"</span><span class="nt">&gt;</span>신용카드 결재의 경우 일시불,할부는 가능한가요??<span class="nt">&lt;/span&gt;</span>  
+			<span class="nt">&lt;/div&gt;</span> 
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"panel"</span> <span class="na">style=</span> <span class="s">"display: none;"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;p&gt;</span>일시불 및 할부 모두 이용 가능합니다.<span class="nt">&lt;br&gt;</span> 할부의 지불 회수는, 3·5·6·10·12·15·18·20·24회입니다.<span class="nt">&lt;/p&gt;</span> <span class="nt">&lt;br&gt;</span> 
+				<span class="nt">&lt;p&gt;</span>※ 손님과 카드 회사와의 계약에 따라서 이용하실 수 없는 경우가 있습니다.<span class="nt">&lt;br&gt;</span>  자세한 것은 해당 카드회사에 문의해 주세요.<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;/li&gt;</span> 
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"list"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"q"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+				<span class="nt">&lt;span</span> <span class="na">class=</span> <span class="s">"txt"</span><span class="nt">&gt;</span>주소, 메일 주소가 바뀌었습니다.변경방법을 알려주세요.<span class="nt">&lt;/span&gt;</span>   
+			<span class="nt">&lt;/div&gt;</span> 
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"panel"</span> <span class="na">style=</span><span class="s">"display: none;"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;p&gt;</span>일시불 및 할부 모두 이용 가능합니다.<span class="nt">&lt;br&gt;</span> 할부의 지불 회수는, 3·5·6·10·12·15·18·20·24회입니다.<span class="nt">&lt;/p&gt;</span> <span class="nt">&lt;br&gt;</span> 
+				<span class="nt">&lt;p&gt;</span>※ 손님과 카드 회사와의 계약에 따라서 이용하실 수 없는 경우가 있습니다.<span class="nt">&lt;br&gt;</span>자세한 것은 해당 카드회사에 문의해 주세요.<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"list"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"q"</span><span class="nt">&gt;</span><span class="nt">&lt;/span&gt;</span>
+				<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"txt"</span><span class="nt">&gt;</span>회원으로 등록하면 할인가로 구매가 가능한가요?연회비는 없나요?<span class="nt">&lt;/span&gt;</span>   
+			<span class="nt">&lt;/div&gt;</span> 
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"panel"</span> <span class="na">style=</span><span class="s">"display: none;</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;p&gt;</span>일시불 및 할부 모두 이용 가능합니다.<span class="nt">&lt;br&gt;</span> 할부의 지불 회수는, 3·5·6·10·12·15·18·20·24회입니다.<span class="nt">&lt;/p&gt;</span> <span class="nt">&lt;br&gt;</span> 
+				<span class="nt">&lt;p&gt;</span>※ 손님과 카드 회사와의 계약에 따라서 이용하실 수 없는 경우가 있습니다.<span class="nt">&lt;br&gt;</span> 자세한 것은 해당 카드회사에 문의해 주세요.<span class="nt">&lt;/p&gt;</span>
+			<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;/li&gt;</span> 
+	<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>				
+</code>
+			</pre>
+		</figure>
+		
+		
+		</div>
+		<!-- //bs-docs-section -->
+	</div>
+	<!-- //#container -->
+
+</div>
+<!-- //#wrap -->
+
+</body>
+</html>

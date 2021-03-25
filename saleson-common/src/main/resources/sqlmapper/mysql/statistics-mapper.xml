@@ -1,0 +1,2922 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.statistics.ShopStatisticsMapper">
+
+	<resultMap id="TotalRevenueStatisticsResult" type="saleson.shop.statistics.domain.TotalRevenueStatistics">
+		<result property="totalPayCount" column="TOTAL_PAY_COUNT" />
+		<result property="totalCostPrice" column="TOTAL_COST_PRICE" />
+		<result property="totalItemPrice" column="TOTAL_ITEM_PRICE" />
+		<result property="totalDiscountAmount" column="TOTAL_DISCOUNT_AMOUNT" />
+		<result property="totalPayAmount" column="TOTAL_PAY_AMOUNT" />
+		<result property="totalCancelCount" column="TOTAL_CANCEL_COUNT" />
+		<result property="totalCancelCostPrice" column="TOTAL_CANCEL_COST_PRICE" />
+		<result property="totalCancelItemPrice" column="TOTAL_CANCEL_ITEM_PRICE" />
+		<result property="totalCancelDiscountAmount" column="TOTAL_CANCEL_DISCOUNT_AMOUNT" />
+		<result property="totalCancelAmount" column="TOTAL_CANCEL_AMOUNT" />
+		<result property="totalRevenueCostPrice" column="TOTAL_REVENUE_COST_PRICE" />
+		<result property="totalRevenueItemPrice" column="TOTAL_REVENUE_ITEM_PRICE" />
+		<result property="totalRevenueDiscountAmount" column="TOTAL_REVENUE_DISCOUNT_AMOUNT" />
+		<result property="totalRevenueAmount" column="TOTAL_REVENUE_AMOUNT" />
+	</resultMap>
+
+	<resultMap id="TotalSellStatisticsResult" type="saleson.shop.statistics.domain.TotalSellStatistics">
+		<result property="totalPayCount" column="TOTAL_PAY_COUNT" />
+		<result property="totalItemPrice" column="TOTAL_ITEM_PRICE" />
+		<result property="totalItemCouponDiscountAmount" column="TOTAL_ITEM_COUPON_DISCOUNT_AMOUNT" />
+		<result property="totalPayAmount" column="TOTAL_PAY_AMOUNT" />
+
+		<result property="totalCancelCount" column="TOTAL_CANCEL_COUNT" />
+		<result property="totalCancelItemPrice" column="TOTAL_CANCEL_ITEM_PRICE" />
+		<result property="totalCancelItemCouponDiscountAmount" column="TOTAL_CANCEL_ITEM_COUPON_DISCOUNT_AMOUNT" />
+		<result property="totalCancelAmount" column="TOTAL_CANCEL_AMOUNT" />
+
+		<result property="totalRevenueItemPrice" column="TOTAL_REVENUE_ITEM_PRICE" />
+		<result property="totalRevenueItemCouponDiscountAmount" column="TOTAL_REVENUE_ITEM_COUPON_DISCOUNT_AMOUNT" />
+		<result property="totalRevenueAmount" column="TOTAL_REVENUE_AMOUNT" />
+	</resultMap>
+
+	<resultMap id="BaseSellStatisticsResult" type="saleson.shop.statistics.domain.BaseSellStatistics">
+
+		<result property="osType" column="OS_TYPE" />
+		<result property="payCount" column="PAY_COUNT" />
+		<result property="cancelCount" column="CANCEL_COUNT" />
+
+		<result property="itemPrice" column="ITEM_PRICE" />
+		<result property="cancelItemPrice" column="CANCEL_ITEM_PRICE" />
+
+		<result property="itemCouponDiscountAmount" column="ITEM_COUPON_DISCOUNT_AMOUNT" />
+		<result property="cancelItemCouponDiscountAmount" column="CANCEL_ITEM_COUPON_DISCOUNT_AMOUNT" />
+
+		<result property="sellerDiscountPrice" column="SELLER_DISCOUNT_PRICE" />
+		<result property="cancelSellerDiscountPrice" column="CANCEL_SELLER_DISCOUNT_PRICE" />
+
+		<result property="spotDiscountPrice" column="SPOT_DISCOUNT_PRICE" />
+		<result property="cancelSpotDiscountPrice" column="CANCEL_SPOT_DISCOUNT_PRICE" />
+
+		<result property="userLevelDiscountPrice" column="USER_LEVEL_DISCOUNT_PRICE" />
+		<result property="cancelUserLevelDiscountPrice" column="CANCEL_USER_LEVEL_DISCOUNT_PRICE" />
+
+	</resultMap>
+
+	<resultMap id="BaseRevenueStatisticsResult" type="saleson.shop.statistics.domain.BaseRevenueStatistics" >
+
+		<result property="osType" column="OS_TYPE" />
+
+		<result property="payCount" column="PAY_COUNT" />
+		<result property="cancelCount" column="CANCEL_COUNT" />
+
+		<result property="itemPrice" column="ITEM_PRICE" />
+		<result property="cancelItemPrice" column="CANCEL_ITEM_PRICE" />
+
+		<result property="couponDiscount" column="COUPON_DISCOUNT" />
+		<result property="cancelCouponDiscount" column="CANCEL_COUPON_DISCOUNT" />
+
+		<result property="spotDiscount" column="SPOT_DISCOUNT" />
+		<result property="cancelSpotDiscount" column="CANCEL_SPOT_DISCOUNT" />
+
+		<result property="sellerDiscount" column="SELLER_DISCOUNT" />
+		<result property="cancelSellerDiscount" column="CANCEL_SELLER_DISCOUNT" />
+
+		<result property="userLevelDiscount" column="USER_LEVEL_DISCOUNT" />
+		<result property="cancelUserLevelDiscount" column="CANCEL_USER_LEVEL_DISCOUNT" />
+
+		<result property="itemAmount" column="ITEM_AMOUNT" />
+		<result property="cancelItemAmount" column="CANCEL_ITEM_AMOUNT" />
+
+		<result property="shipping" column="SHIPPING" />
+		<result property="cancelShipping" column="CANCEL_SHIPPING" />
+
+		<result property="costPrice" column="COST_PRICE" />
+		<result property="cancelCostPrice" column="CANCEL_COST_PRICE" />
+
+		<result property="discountAmount" column="DISCOUNT_AMOUNT" />
+		<result property="cancelDiscountAmount" column="CANCEL_DISCOUNT_AMOUNT" />
+
+		<result property="supplyAmount" column="SUPPLY_AMOUNT" />
+		<result property="cancelSupplyAmount" column="CANCEL_SUPPLY_AMOUNT" />
+
+	</resultMap>
+
+	<resultMap id="DateStatisticsResult" type="saleson.shop.statistics.domain.ShopDateStatistics">
+		<result property="searchDate" column="SEARCH_DATE" />
+		<collection property="groupList" resultMap="BaseRevenueStatisticsResult" />
+	</resultMap>
+
+	<resultMap id="UserStatisticsResult" type="saleson.shop.statistics.domain.ShopUserStatistics">
+		<result property="customerCode" column="CUSTOMER_CODE" />
+		<result property="userName" column="USERNAME" />
+		<result property="customerTelNumber" column="CUSTOMER_TEL_NUMBER" />
+		<result property="email" column="Email" />
+		<result property="loginId" column="LOGIN_ID" />
+
+		<collection property="groupList" resultMap="BaseRevenueStatisticsResult" />
+	</resultMap>
+
+	<resultMap id="BrandStatisticsResult" type="saleson.shop.statistics.domain.ShopBrandStatistics">
+		<result property="brand" column="BRAND" />
+
+		<collection property="groupList" resultMap="BaseSellStatisticsResult" />
+	</resultMap>
+
+	<resultMap id="ItemStatisticsResult" type="saleson.shop.statistics.domain.ShopItemStatistics">
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemImage" column="ITEM_IMAGE" />
+
+		<collection property="groupList" resultMap="BaseSellStatisticsResult" />
+	</resultMap>
+
+	<resultMap id="ItemDetailStatisticsResult" type="saleson.shop.statistics.domain.ShopItemDetailStatistics">
+		<result property="userId" column="USER_ID" ></result>
+		<result property="userName" column="USERNAME" ></result>
+		<result property="loginId" column="LOGIN_ID" ></result>
+		<result property="telNumber" column="TEL_NUMBER" ></result>
+		<result property="phoneNumber" column="PHONE_NUMBER" ></result>
+		<result property="zipcode" column="ZIPCODE" ></result>
+		<result property="address" column="ADDRESS" ></result>
+		<result property="addressDetail" column="ADDRESS_DETAIL" ></result>
+		<result property="customerCode" column="CUSTOMER_CODE" ></result>
+		<result property="quantity" column="QUANTITY" ></result>
+		<result property="quantityCancel" column="QUANTITY_CANCEL" ></result>
+		<result property="itemPrice" column="ITEM_PRICE" ></result>
+		<result property="itemPriceCancel" column="ITEM_PRICE_CANCEL" ></result>
+		<result property="orderType" column="ORDER_TYPE" ></result>
+		<result property="statusCode" column="STATUS_CODE" ></result>
+	</resultMap>
+
+	<resultMap id="OrderAndItemsResult" type="saleson.shop.statistics.domain.ShopOrderStatistics">
+		<result property="orderId" column="ORDER_ID" ></result>
+		<result property="orderCode" column="ORDER_CODE" ></result>
+		<result property="orderCount" column="ORDER_COUNT" ></result>
+		<result property="itemExcisePrice" column="ITEM_EXCISE_PRICE" ></result>
+		<result property="couponDiscountAmount" column="COUPON_DISCOUNT_AMOUNT" ></result>
+		<result property="cartCouponDiscountAmount" column="CART_COUPON_DISCOUNT_AMOUNT" ></result>
+		<result property="sumUsePoint" column="SUM_USE_POINT" ></result>
+		<result property="vendorAddDiscountAmount" column="VENDOR_ADD_DISCOUNT_AMOUNT" ></result>
+		<result property="sumDeliveryPrice" column="SUM_DELIVERY_PRICE" ></result>
+		<result property="vendorAddDeliveryExtraCharge" column="VENDOR_ADD_DELIVERY_EXTRA_CHARGE" ></result>
+		<result property="orderStatus" column="ORDER_STATUS" ></result>
+		<result property="osType" column="OS_TYPE" ></result>
+		<result property="searchDate" column="SEARCH_DATE" ></result>
+		<result property="loginId" column="LOGIN_ID" ></result>
+		<result property="userName" column="USERNAME" ></result>
+		<result property="orderType" column="ORDER_TYPE" ></result>
+		<collection property="itemsList" resultMap="ItemStatisticsResult" />
+	</resultMap>
+
+	<resultMap id="ItemDateResult" type="saleson.shop.statistics.domain.ShopItemDateStatistics">
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="categoryCode" column="CATEGORY_CODE" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+		<result property="groupCode" column="GROUP_CODE" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="code" column="CODE" />
+		<result property="name" column="NAME" />
+		<collection property="dateList" resultMap="DateStatisticsResult" />
+	</resultMap>
+
+	<resultMap id="DoNotSellItemResult" type="saleson.shop.statistics.domain.DoNotSellItem">
+		<result property="categoryTeamId" column="CATEGORY_TEAM_ID" />
+		<result property="teamCode" column="TEAM_CODE" />
+		<result property="teamName" column="TEAM_NAME" />
+		<result property="categoryGroupId" column="CATEGORY_GROUP_ID" />
+		<result property="groupCode" column="GROUP_CODE" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="categoryUrl" column="CATEGORY_URL" />
+		<result property="categoryCode" column="CATEGORY_CODE" />
+		<result property="categoryClass1" column="CATEGORY_CLASS1" />
+		<result property="categoryClass2" column="CATEGORY_CLASS2" />
+		<result property="categoryClass3" column="CATEGORY_CLASS3" />
+		<result property="categoryClass4" column="CATEGORY_CLASS4" />
+		<result property="categoryLevel" column="CATEGORY_LEVEL" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="displayFlag" column="DISPLAY_FLAG" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="itemImage" column="ITEM_IMAGE" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="payCount" column="PAY_COUNT" />
+		<result property="totalItemPrice" column="TOTAL_ITEM_PRICE" />
+	</resultMap>
+
+	<resultMap id="DoNotSellUserResult" type="saleson.shop.statistics.domain.DoNotSellUser" extends="saleson.shop.user.UserMapper.UserResult">
+		<result property="payCount" column="PAY_COUNT" />
+		<result property="totalItemPrice" column="TOTAL_ITEM_PRICE" />
+	</resultMap>
+
+	<resultMap id="PaymentStatisticsResult" type="saleson.shop.statistics.domain.PaymentStatistics">
+		<result property="payDate" column="PAY_DATE" />
+		<result property="approvalType" column="APPROVAL_TYPE" />
+		<result property="deviceType" column="DEVICE_TYPE" />
+		<result property="payCount" column="PAY_COUNT" />
+		<result property="payAmount" column="PAY_AMOUNT" />
+		<result property="cancelCount" column="CANCEL_COUNT" />
+		<result property="cancelAmount" column="CANCEL_AMOUNT" />
+	</resultMap>
+
+	<resultMap id="BaseStatsResult" type="saleson.shop.statistics.domain.BaseStats">
+		<result property="deviceType" column="DEVICE_TYPE" />
+		<result property="saleCount" column="SALE_COUNT" />
+		<result property="saleAmount" column="SALE_AMOUNT" />
+		<result property="cancelCount" column="CANCEL_COUNT" />
+		<result property="cancelAmount" column="CANCEL_AMOUNT" />
+		<result property="itemPrice" column="ITEM_PRICE" />
+		<result property="cancelItemPrice" column="CANCEL_ITEM_PRICE" />
+		<result property="couponDiscountPrice" column="COUPON_DISCOUNT_PRICE" />
+		<result property="cancelCouponDiscountPrice" column="CANCEL_COUPON_DISCOUNT_PRICE" />
+		<result property="sellerDiscountPrice" column="SELLER_DISCOUNT_PRICE" />
+		<result property="cancelSellerDiscountPrice" column="CANCEL_SELLER_DISCOUNT_PRICE" />
+		<result property="spotDiscountPrice" column="SPOT_DISCOUNT_PRICE" />
+		<result property="cancelSpotDiscountPrice" column="CANCEL_SPOT_DISCOUNT_PRICE" />
+		<result property="userLevelDiscountPrice" column="LEVEL_DISCOUNT_PRICE" />
+		<result property="cancelUserLevelDiscountPrice" column="CANCEL_LEVEL_DISCOUNT_PRICE" />
+
+		<result property="shipping" column="SHIPPING" />
+		<result property="cancelShipping" column="CANCEL_SHIPPING" />
+	</resultMap>
+
+	<resultMap id="DateStatsResult" type="saleson.shop.statistics.domain.DateStatsSummary">
+		<result property="searchDate" column="SEARCH_DATE" />
+
+		<collection property="groupStats" resultMap="BaseStatsResult" />
+	</resultMap>
+
+	<resultMap id="SellerStatsResult" type="saleson.shop.statistics.domain.SellerStatsSummary">
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="sellerName" column="SELLER_NAME" />
+
+		<collection property="groupStats" resultMap="BaseStatsResult" />
+	</resultMap>
+
+	<resultMap id="ItemStatsResult" type="saleson.shop.statistics.domain.ItemStatsSummary">
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="itemImage" column="ITEM_IMAGE" />
+
+		<collection property="groupStats" resultMap="BaseStatsResult" />
+	</resultMap>
+
+	<resultMap id="CategoryStatsResult" type="saleson.shop.statistics.domain.CategoryStatsSummary">
+		<result property="teamId" column="TEAM_ID" />
+		<result property="teamCode" column="TEAM_CODE" />
+		<result property="teamName" column="TEAM_NAME" />
+
+		<result property="groupId" column="GROUP_ID" />
+		<result property="groupCode" column="GROUP_CODE" />
+		<result property="groupName" column="GROUP_NAME" />
+
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+		<result property="categoryCode" column="CATEGORY_CODE" />
+		<result property="categoryClass1" column="CATEGORY_CLASS1" />
+		<result property="categoryClass2" column="CATEGORY_CLASS2" />
+		<result property="categoryClass3" column="CATEGORY_CLASS3" />
+		<result property="categoryClass4" column="CATEGORY_CLASS4" />
+
+		<collection property="groupStats" resultMap="BaseStatsResult" />
+	</resultMap>
+
+	<resultMap id="AreaStatsResult" type="saleson.shop.statistics.domain.AreaStatsSummary">
+		<result property="sido" column="RECEIVE_SIDO" />
+		<result property="sigungu" column="RECEIVE_SIGUNGU" />
+		<result property="sidoMappingGroupKey" column="SIDO_MAPPING_GROUP_KEY" />
+
+		<collection property="groupStats" resultMap="BaseStatsResult" />
+	</resultMap>
+
+	<select id="getPaymentStatisticsListByParam" resultMap="PaymentStatisticsResult" parameterType="saleson.shop.statistics.support.StatisticsParam">
+		SELECT
+			TT.PAY_DATE,
+			TT.APPROVAL_TYPE,
+			TT.DEVICE_TYPE,
+			SUM(IF(TT.PAYMENT_TYPE = '1', 1, 0)) AS PAY_COUNT,
+			SUM(IF(TT.PAYMENT_TYPE = '1', TT.AMOUNT, 0)) AS PAY_AMOUNT,
+			SUM(IF(TT.PAYMENT_TYPE = '2', 1, 0)) AS CANCEL_COUNT,
+			SUM(IF(TT.PAYMENT_TYPE = '2', TT.CANCEL_AMOUNT, 0)) AS CANCEL_AMOUNT
+		FROM (
+			SELECT
+				T.PAY_DATE,
+				T.PAYMENT_TYPE,
+				T.APPROVAL_TYPE,
+				T.DEVICE_TYPE,
+				IF ((
+					SELECT COUNT(*)
+					FROM OP_ORDER_ITEM OI
+					WHERE
+						OI.ORDER_CODE = T.ORDER_CODE
+						AND OI.ORDER_SEQUENCE = T.ORDER_SEQUENCE
+						AND OI.SALES_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+						AND OI.PAY_DATE != '00000000000000'
+				) > 0, T.AMOUNT, 0) AS AMOUNT,
+				IF ((
+					SELECT COUNT(*)
+					FROM OP_ORDER_ITEM OI
+					WHERE
+						OI.ORDER_CODE = T.ORDER_CODE
+						AND OI.ORDER_SEQUENCE = T.ORDER_SEQUENCE
+						AND OI.CANCEL_FLAG = 'Y'
+						AND OI.SALES_CANCEL_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+						AND OI.PAY_DATE != '00000000000000'
+				) > 0, T.CANCEL_AMOUNT, 0) AS CANCEL_AMOUNT
+			FROM (
+				SELECT
+					LEFT(PAY_DATE, 8) AS PAY_DATE,
+					ORDER_CODE,
+					ORDER_SEQUENCE,
+					PAYMENT_TYPE,
+					APPROVAL_TYPE,
+					DEVICE_TYPE,
+					AMOUNT,
+					CANCEL_AMOUNT
+				FROM OP_ORDER_PAYMENT
+				<where>
+					(
+					(PAYMENT_TYPE = '1' AND IFNULL(PAY_DATE, '') != '')
+					OR (PAYMENT_TYPE = '2' AND CANCEL_AMOUNT > 0)
+					)
+					AND PAY_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+
+					<if test="approvalTypes != null and approvalTypes.length > 0">
+						AND APPROVAL_TYPE IN (
+						<foreach collection="approvalTypes" item="approvalTypes" index="i" open="" separator="," close="">
+							#{approvalTypes}
+						</foreach>
+						)
+					</if>
+				</where>
+			) T
+		) TT
+		GROUP BY TT.PAY_DATE, TT.APPROVAL_TYPE, TT.DEVICE_TYPE
+	</select>
+
+	<sql id="baseRevenueStatisticsColumnsQuery">
+		TT.OS_TYPE,
+		
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.ORDER_COUNT ELSE 0 END) AS PAY_COUNT,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.ORDER_COUNT ELSE 0 END) AS CANCEL_COUNT,
+		
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.ITEM_PRICE ELSE 0 END) AS ITEM_PRICE,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.ITEM_PRICE ELSE 0 END) AS CANCEL_ITEM_PRICE,
+	
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.COUPON_DISCOUNT ELSE 0 END) AS COUPON_DISCOUNT,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.COUPON_DISCOUNT ELSE 0 END) AS CANCEL_COUPON_DISCOUNT,
+	
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.SPOT_DISCOUNT ELSE 0 END) AS SPOT_DISCOUNT,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.SPOT_DISCOUNT ELSE 0 END) AS CANCEL_SPOT_DISCOUNT,
+		
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.SELLER_DISCOUNT ELSE 0 END) AS SELLER_DISCOUNT,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.SELLER_DISCOUNT ELSE 0 END) AS CANCEL_SELLER_DISCOUNT,
+
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.USER_LEVEL_DISCOUNT ELSE 0 END) AS USER_LEVEL_DISCOUNT,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.USER_LEVEL_DISCOUNT ELSE 0 END) AS CANCEL_USER_LEVEL_DISCOUNT,
+
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.ITEM_AMOUNT ELSE 0 END) AS ITEM_AMOUNT,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.ITEM_AMOUNT ELSE 0 END) AS CANCEL_ITEM_AMOUNT,
+		
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.SHIPPING ELSE 0 END) AS SHIPPING,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.SHIPPING ELSE 0 END) AS CANCEL_SHIPPING
+	</sql>
+
+	<sql id="baseRevenueTotalQueryHeader">
+		SELECT 
+			S.TOTAL_PAY_COUNT,
+			S.TOTAL_COST_PRICE,
+			S.TOTAL_ITEM_PRICE,
+			S.TOTAL_DISCOUNT_AMOUNT,
+			(S.TOTAL_ITEM_PRICE + S.TOTAL_DISCOUNT_AMOUNT) AS TOTAL_PAY_AMOUNT,
+			
+			S.TOTAL_CANCEL_COUNT,
+			S.TOTAL_CANCEL_COST_PRICE,
+			S.TOTAL_CANCEL_ITEM_PRICE,
+			S.TOTAL_CANCEL_DISCOUNT_AMOUNT,
+			(S.TOTAL_CANCEL_ITEM_PRICE + S.TOTAL_CANCEL_DISCOUNT_AMOUNT) AS TOTAL_CANCEL_AMOUNT,
+			
+			(S.TOTAL_COST_PRICE + S.TOTAL_CANCEL_COST_PRICE) AS TOTAL_REVENUE_COST_PRICE,
+			(S.TOTAL_ITEM_PRICE + S.TOTAL_CANCEL_ITEM_PRICE) AS TOTAL_REVENUE_ITEM_PRICE,
+			(S.TOTAL_DISCOUNT_AMOUNT + S.TOTAL_CANCEL_DISCOUNT_AMOUNT) AS TOTAL_REVENUE_DISCOUNT_AMOUNT,
+			(((S.TOTAL_ITEM_PRICE + S.TOTAL_DISCOUNT_AMOUNT)) + (S.TOTAL_CANCEL_ITEM_PRICE + S.TOTAL_CANCEL_DISCOUNT_AMOUNT)) AS TOTAL_REVENUE_AMOUNT
+		FROM (
+			SELECT  
+				SUM(PAY_COUNT) AS TOTAL_PAY_COUNT,
+				SUM(COST_PRICE) AS TOTAL_COST_PRICE,
+				SUM(ITEM_PRICE) AS TOTAL_ITEM_PRICE,
+				SUM((CASE WHEN DISCOUNT_AMOUNT > 0 THEN -DISCOUNT_AMOUNT ELSE DISCOUNT_AMOUNT END)) AS TOTAL_DISCOUNT_AMOUNT,
+				
+				SUM((CASE WHEN CANCEL_COUNT > 0 THEN -CANCEL_COUNT ELSE CANCEL_COUNT END)) AS TOTAL_CANCEL_COUNT,
+				SUM((CASE WHEN CANCEL_COST_PRICE > 0 THEN -CANCEL_COST_PRICE ELSE CANCEL_COST_PRICE END)) AS TOTAL_CANCEL_COST_PRICE,
+				SUM((CASE WHEN CANCEL_ITEM_PRICE > 0 THEN -CANCEL_ITEM_PRICE ELSE CANCEL_ITEM_PRICE END)) AS TOTAL_CANCEL_ITEM_PRICE,
+				SUM(CANCEL_DISCOUNT_AMOUNT) AS TOTAL_CANCEL_DISCOUNT_AMOUNT,
+			FROM (
+	</sql>
+
+	<sql id="baseRevenueTotalQueryFooter">
+			) TOT
+		) S
+	</sql>
+
+
+	<sql id="baseSellStatisticsColumnsQuery">
+		TT.OS_TYPE,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.COUNT ELSE 0 END) AS PAY_COUNT,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.COUNT ELSE 0 END) AS CANCEL_COUNT,
+		
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.SUM_ITEM_PRICE ELSE 0 END) AS ITEM_PRICE,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.SUM_ITEM_PRICE ELSE 0 END) AS CANCEL_ITEM_PRICE,
+		
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.SUM_ITEM_COUPON_DISCOUNT_AMOUNT ELSE 0 END) AS ITEM_COUPON_DISCOUNT_AMOUNT,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.SUM_ITEM_COUPON_DISCOUNT_AMOUNT ELSE 0 END) AS CANCEL_ITEM_COUPON_DISCOUNT_AMOUNT,
+		
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.SUM_SELLER_DISCOUNT_PRICE ELSE 0 END) AS SELLER_DISCOUNT_PRICE,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.SUM_SELLER_DISCOUNT_PRICE ELSE 0 END) AS CANCEL_SELLER_DISCOUNT_PRICE,
+		
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.SUM_SPOT_DISCOUNT_PRICE ELSE 0 END) AS SPOT_DISCOUNT_PRICE,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.SUM_SPOT_DISCOUNT_PRICE ELSE 0 END) AS CANCEL_SPOT_DISCOUNT_PRICE,
+
+		SUM(CASE WHEN TT.ORDER_TYPE = 'PAY' THEN TT.SUM_USER_LEVEL_DISCOUNT_PRICE ELSE 0 END) AS USER_LEVEL_DISCOUNT_PRICE,
+		SUM(CASE WHEN TT.ORDER_TYPE = 'CANCEL' THEN TT.SUM_USER_LEVEL_DISCOUNT_PRICE ELSE 0 END) AS CANCEL_USER_LEVEL_DISCOUNT_PRICE
+	</sql>
+
+	<sql id="baseSellSortQuery">
+		ORDER BY
+		<choose>
+			<when test="(sort != '' and sort != null) and (orderBy != '' and orderBy != null)">
+				<choose>
+					<when test='orderBy == "QUANTITY"'>(TOT.PAY_COUNT)</when>
+					<otherwise>(TOT.ITEM_PRICE)</otherwise>
+				</choose>
+				<choose>
+					<when test='sort == "ASC"'>ASC</when>
+					<otherwise>DESC</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				(TOT.ITEM_PRICE) DESC
+			</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="baseRevenueSortQuery">
+
+		<choose>
+			<when test="(sort != '' and sort != null) and (orderBy != '' and orderBy != null)">
+				<choose>
+					<when test='orderBy == "QUANTITY"'>(S.PAY_COUNT - S.CANCEL_COUNT)</when>
+					<otherwise>(S.ITEM_PRICE - S.CANCEL_ITEM_PRICE)</otherwise>
+				</choose>
+				<choose>
+					<when test='sort == "ASC"'>ASC</when>
+					<otherwise>DESC</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				(S.ITEM_PRICE - S.CANCEL_ITEM_PRICE) DESC
+			</otherwise>
+		</choose>
+	</sql>
+
+
+	<sql id="baseQuery">
+		SELECT
+			OI.DEVICE_TYPE AS OS_TYPE,
+			OI.ORDER_CODE,
+			OI.ORDER_SEQUENCE,
+			S.SELLER_NAME,
+			OI.USER_ID,
+			O.BUYER_NAME AS USER_NAME,
+			O.MOBILE AS PHONE_NUMBER,
+			'' AS CUSTOMER_CODE,
+			OSI.RECEIVE_SIDO,
+			OSI.RECEIVE_SIGUNGU,
+			OI.SELLER_ID,
+			OI.ITEM_SEQUENCE,
+			OI.ITEM_ID,
+			OI.ITEM_NAME,
+			OI.ITEM_USER_CODE,
+			OI.OPTIONS,
+			OI.BRAND,
+			OI.QUANTITY,
+			OI.SALE_PRICE AS PRICE,
+			OI.COST_PRICE,
+			OI.COMMISSION_BASE_PRICE,
+			OI.COMMISSION_PRICE,
+			IFNULL(OI.CATEGORY_TEAM_ID, 0) AS CATEGORY_TEAM_ID,
+			IFNULL(OI.CATEGORY_GROUP_ID, 0) AS CATEGORY_GROUP_ID,
+			IFNULL(OI.CATEGORY_ID, 0) AS CATEGORY_ID,
+			'PAY' AS ORDER_TYPE,
+			(OI.PURCHASE_PRICE + OI.OPTION_PRICE) * OI.QUANTITY AS ITEM_PRICE,
+			(OI.SALE_PRICE * OI.QUANTITY) AS TOTAL_ITEM_PRICE,
+			(OI.COUPON_DISCOUNT_PRICE * OI.QUANTITY) AS COUPON_DISCOUNT_AMOUNT,
+			OI.SALES_DATE AS SEARCH_DATE,
+			OSI.RECEIVE_ZIPCODE,
+			OSI.RECEIVE_ADDRESS,
+			OSI.RECEIVE_ADDRESS_DETAIL,
+			OSI.RECEIVE_NAME,
+			O.ZIPCODE,
+			O.ADDRESS,
+			O.ADDRESS_DETAIL,
+			OI.SELLER_DISCOUNT_PRICE,
+			CASE WHEN OI.SPOT_SALE_FLAG = 'Y' THEN
+				OI.SPOT_DISCOUNT_PRICE
+			ELSE
+				0
+			END AS SPOT_DISCOUNT_PRICE,
+			OI.USER_LEVEL_DISCOUNT_PRICE
+		FROM OP_ORDER_ITEM OI
+            INNER JOIN OP_ORDER O ON OI.ORDER_CODE = O.ORDER_CODE AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+            INNER JOIN OP_ORDER_SHIPPING_INFO OSI ON OI.ORDER_CODE = OSI.ORDER_CODE AND OI.ORDER_SEQUENCE = OSI.ORDER_SEQUENCE AND OI.SHIPPING_INFO_SEQUENCE = OSI.SHIPPING_INFO_SEQUENCE
+            LEFT JOIN OP_SELLER S ON OI.SELLER_ID = S.SELLER_ID
+		<where>
+
+			<if test="userId != null and userId != ''">
+				AND OI.USER_ID = #{userId}
+			</if>
+
+			<if test="userId == 0 and (userName != null and userName != '')">
+				AND O.BUYER_NAME = #{userName}
+				AND O.MOBILE = #{mobile}
+			</if>
+
+			<if test="guestFlag != null">
+				AND OI.GUEST_FLAG = #{guestFlag}
+			</if>
+
+			<if test="sellerId > 0">
+				AND OI.SELLER_ID = #{sellerId}
+			</if>
+
+			AND OI.SALES_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+			AND OI.PAY_DATE != '00000000000000'
+			<if test="(query != null and query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'ITEM_NAME'">
+						AND OI.ITEM_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+
+					<when test="where == 'CUSTOMER_NAME'">
+						AND OSI.RECEIVE_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+
+					<when test="where == 'ITEM_USER_CODE'">
+						AND (
+                            OI.ITEM_USER_CODE LIKE CONCAT(#{query}, '%')
+                            OR OI.OPTIONS LIKE CONCAT('%"optionCode":"', #{query}, '"%')
+						)
+					</when>
+				</choose>
+			</if>
+
+			<choose>
+				<when test="(categoryClass != null and categoryClass != '')">
+					AND OI.CATEGORY_ID IN (
+                        SELECT CATEGORY_ID
+                        FROM OP_CATEGORY WHERE CATEGORY_CODE LIKE CONCAT(#{categoryClass}, '%')
+					)
+				</when>
+				<otherwise>
+					<if test="(code != null and code != '')">
+						AND	OI.CATEGORY_TEAM_ID = #{code}
+					</if>
+
+					<if test="(categoryGroupId != null and categoryGroupId != '')">
+						AND OI.CATEGORY_GROUP_ID = #{categoryGroupId}
+					</if>
+				</otherwise>
+			</choose>
+
+			<if test='brand != null and brand != ""'>
+				AND OI.BRAND = #{brand}
+			</if>
+
+			<if test='itemId != null and itemId != ""'>
+				AND OI.ITEM_ID = #{itemId}
+			</if>
+
+		</where>
+
+		UNION ALL
+
+		SELECT
+			OI.DEVICE_TYPE AS OS_TYPE,
+			OI.ORDER_CODE,
+			OI.ORDER_SEQUENCE,
+			S.SELLER_NAME,
+			OI.USER_ID,
+			O.BUYER_NAME AS USER_NAME,
+			O.MOBILE AS PHONE_NUMBER,
+			'' AS CUSTOMER_CODE,
+			OSI.RECEIVE_SIDO,
+			OSI.RECEIVE_SIGUNGU,
+			OI.SELLER_ID,
+			OI.ITEM_SEQUENCE,
+			OI.ITEM_ID,
+			OI.ITEM_NAME,
+			OI.ITEM_USER_CODE,
+			OI.OPTIONS,
+			OI.BRAND,
+			OI.QUANTITY,
+			OI.SALE_PRICE AS PRICE,
+			OI.COST_PRICE,
+			OI.COMMISSION_BASE_PRICE,
+			OI.COMMISSION_PRICE,
+			IFNULL(OI.CATEGORY_TEAM_ID, 0) AS CATEGORY_TEAM_ID,
+			IFNULL(OI.CATEGORY_GROUP_ID, 0) AS CATEGORY_GROUP_ID,
+			IFNULL(OI.CATEGORY_ID, 0) AS CATEGORY_ID,
+			'CANCEL' AS ORDER_TYPE,
+			(OI.PURCHASE_PRICE + OI.OPTION_PRICE) * OI.QUANTITY AS ITEM_PRICE,
+			(OI.SALE_PRICE * OI.QUANTITY) AS TOTAL_ITEM_PRICE,
+			(OI.COUPON_DISCOUNT_PRICE * OI.QUANTITY) AS COUPON_DISCOUNT_AMOUNT,
+			OI.SALES_CANCEL_DATE AS SEARCH_DATE,
+			OSI.RECEIVE_ZIPCODE,
+			OSI.RECEIVE_ADDRESS,
+			OSI.RECEIVE_ADDRESS_DETAIL,
+			OSI.RECEIVE_NAME,
+			O.ZIPCODE,
+			O.ADDRESS,
+			O.ADDRESS_DETAIL,
+			OI.SELLER_DISCOUNT_PRICE,
+			CASE WHEN OI.SPOT_SALE_FLAG = 'Y' THEN
+				OI.SPOT_DISCOUNT_PRICE
+			ELSE
+				0
+			END AS SPOT_DISCOUNT_PRICE,
+			OI.USER_LEVEL_DISCOUNT_PRICE
+		FROM OP_ORDER_ITEM OI
+            INNER JOIN OP_ORDER O ON OI.ORDER_CODE = O.ORDER_CODE AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+            INNER JOIN OP_ORDER_SHIPPING_INFO OSI ON OI.ORDER_CODE = OSI.ORDER_CODE AND OI.ORDER_SEQUENCE = OSI.ORDER_SEQUENCE AND OI.SHIPPING_INFO_SEQUENCE = OSI.SHIPPING_INFO_SEQUENCE
+            LEFT JOIN OP_SELLER S ON OI.SELLER_ID = S.SELLER_ID
+		<where>
+
+			AND OI.CANCEL_FLAG = 'Y'
+
+			<if test="userId != null and userId != ''">
+				AND OI.USER_ID = #{userId}
+			</if>
+
+			<if test="(userId == null or userId == '') and (userName != null and userName != '')">
+				AND O.BUYER_NAME = #{userName}
+				AND O.MOBILE = #{mobile}
+			</if>
+
+			<if test="guestFlag != null">
+				AND OI.GUEST_FLAG = #{guestFlag}
+			</if>
+
+			<if test="sellerId > 0">
+				AND OI.SELLER_ID = #{sellerId}
+			</if>
+
+			AND OI.SALES_CANCEL_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+			AND OI.PAY_DATE != '00000000000000'
+			<if test="(query != null and query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'ITEM_NAME'">
+						AND OI.ITEM_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+
+					<when test="where == 'CUSTOMER_NAME'">
+						AND OSI.RECEIVE_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+
+					<when test="where == 'ITEM_USER_CODE'">
+						AND (
+                            OI.ITEM_USER_CODE LIKE CONCAT(#{query}, '%')
+                            OR OI.OPTIONS LIKE CONCAT('%"optionCode":"', #{query}, '"%')
+						)
+					</when>
+				</choose>
+			</if>
+
+			<choose>
+				<when test="(categoryClass != null and categoryClass != '')">
+					AND OI.CATEGORY_ID IN (
+                        SELECT CATEGORY_ID
+                        FROM OP_CATEGORY WHERE CATEGORY_CODE LIKE CONCAT(#{categoryClass}, '%')
+					)
+				</when>
+				<otherwise>
+					<if test="(code != null and code != '')">
+						AND	OI.CATEGORY_TEAM_ID = #{code}
+					</if>
+
+					<if test="(categoryGroupId != null and categoryGroupId != '')">
+						AND OI.CATEGORY_GROUP_ID = #{categoryGroupId}
+					</if>
+				</otherwise>
+			</choose>
+
+			<if test='brand != null and brand != ""'>
+				AND OI.BRAND = #{brand}
+			</if>
+
+			<if test='itemId != null and itemId != ""'>
+				AND OI.ITEM_ID = #{itemId}
+			</if>
+
+		</where>
+	</sql>
+
+	<sql id="defaultBrandStatisticsQuery">
+		SELECT
+		TT.BRAND,
+		(
+		SELECT
+		SUM(PAY_TOTAL - CANCEL_TOTAL) AS TOTAL_BUY_AMOUNT
+		FROM
+		(
+		SELECT
+		A.BRAND,
+		SUM(
+		CASE WHEN A.ORDER_TYPE = 'PAY' THEN A.TOTAL_ITEM_PRICE
+		ELSE 0 END
+		) AS PAY_TOTAL,
+		SUM(
+		CASE WHEN A.ORDER_TYPE = 'CANCEL' THEN A.TOTAL_ITEM_PRICE
+		ELSE 0 END
+		) AS CANCEL_TOTAL
+		FROM
+		(
+		<include refid="baseQuery" />
+		) A GROUP BY A.BRAND, A.ORDER_TYPE
+		) T
+		WHERE T.BRAND = TT.BRAND
+		GROUP BY T.BRAND
+		) AS TOTAL_BUY_AMOUNT,
+		(
+		SELECT
+		SUM(PAY_TOTAL - CANCEL_TOTAL) AS TOTAL_BUY_QUANTITY
+		FROM
+		(
+		SELECT
+		A.BRAND,
+		SUM(
+		CASE WHEN A.ORDER_TYPE = 'PAY' THEN A.QUANTITY
+		ELSE 0 END
+		) AS PAY_TOTAL,
+		SUM(
+		CASE WHEN A.ORDER_TYPE = 'CANCEL' THEN A.QUANTITY
+		ELSE 0 END
+		) AS CANCEL_TOTAL
+		FROM
+		(
+		<include refid="baseQuery" />
+		) A GROUP BY A.BRAND, A.ORDER_TYPE
+		) T
+		WHERE T.BRAND = TT.BRAND
+		GROUP BY T.BRAND
+		) AS TOTAL_BUY_QUANTITY,
+
+		<include refid="baseSellStatisticsColumnsQuery" />
+
+		FROM (
+		SELECT
+		IFNULL(OI.BRAND, '') AS BRAND,
+		OI.ORDER_TYPE,
+		SUM(OI.ITEM_PRICE) AS SUM_ITEM_PRICE,
+		SUM(OI.COUPON_DISCOUNT_AMOUNT) AS SUM_ITEM_COUPON_DISCOUNT_AMOUNT,
+		SUM(OI.COUNT) AS COUNT,
+		(CASE
+		WHEN
+		OI.OS_TYPE = '11st'
+		OR OI.OS_TYPE = 'gmarket'
+		OR OI.OS_TYPE = 'auction'
+		OR OI.OS_TYPE = 'storefarm'
+		OR OI.OS_TYPE = 'naver'
+		THEN '오픈마켓'
+		WHEN
+		OI.OS_TYPE = 'allthat'
+		OR OI.OS_TYPE = 'beautycall'
+		THEN 'Resale'
+		WHEN
+		OI.OS_TYPE = 'Admin'
+		THEN 'Call'
+		ELSE OI.OS_TYPE END
+		) AS OS_TYPE
+		FROM
+		(
+		SELECT
+		T.OS_TYPE,
+		T.ORDER_CODE,
+		T.BRAND,
+		T.ORDER_TYPE,
+		SUM(T.QUANTITY) AS COUNT,
+		SUM(T.TOTAL_ITEM_PRICE) AS ITEM_PRICE,
+		SUM(IFNULL(T.COUPON_DISCOUNT_AMOUNT, 0)) AS COUPON_DISCOUNT_AMOUNT
+		FROM
+		(
+
+		<include refid="baseQuery" />
+
+		) T GROUP BY T.ORDER_CODE, T.BRAND, T.ORDER_TYPE, T.OS_TYPE
+		) OI
+		GROUP BY OI.ORDER_TYPE, OI.BRAND, OI.OS_TYPE
+		) TT
+		GROUP BY TT.BRAND, TT.OS_TYPE
+	</sql>
+
+	<sql id="defaultUserStatisticsQuery">
+		SELECT
+		U.USER_ID,
+		TT.CUSTOMER_CODE,
+		'' AS CUSTOMER_TEL_NUMBER,
+		U.USER_NAME AS USERNAME,
+		U.EMAIL AS LOGIN_ID,
+		U.EMAIL,
+		(
+		SELECT
+		SUM(PAY_TOTAL - CANCEL_TOTAL) AS TOTAL_BUY_AMOUNT
+		FROM
+		(
+		SELECT
+		A.CUSTOMER_CODE,
+		SUM(
+		CASE WHEN A.ORDER_TYPE = 'PAY' THEN A.TOTAL_ITEM_PRICE
+		ELSE 0 END
+		) AS PAY_TOTAL,
+		SUM(
+		CASE WHEN A.ORDER_TYPE = 'CANCEL' THEN A.TOTAL_ITEM_PRICE
+		ELSE 0 END
+		) AS CANCEL_TOTAL
+		FROM
+		(
+		<include refid="baseQuery" />
+		) A GROUP BY A.CUSTOMER_CODE, A.ORDER_TYPE
+		) T
+		WHERE T.CUSTOMER_CODE = TT.CUSTOMER_CODE
+		GROUP BY T.CUSTOMER_CODE
+		) AS TOTAL_BUY_AMOUNT,
+		(
+		SELECT
+		SUM(PAY_TOTAL - CANCEL_TOTAL) AS TOTAL_BUY_QUANTITY
+		FROM
+		(
+		SELECT
+		A.CUSTOMER_CODE,
+		SUM(
+		CASE WHEN A.ORDER_TYPE = 'PAY' THEN A.QUANTITY
+		ELSE 0 END
+		) AS PAY_TOTAL,
+		SUM(
+		CASE WHEN A.ORDER_TYPE = 'CANCEL' THEN A.QUANTITY
+		ELSE 0 END
+		) AS CANCEL_TOTAL
+		FROM
+		(
+		<include refid="baseQuery" />
+		) A GROUP BY A.CUSTOMER_CODE, A.ORDER_TYPE
+		) T
+		WHERE T.CUSTOMER_CODE = TT.CUSTOMER_CODE
+		GROUP BY T.CUSTOMER_CODE
+		) AS TOTAL_BUY_QUANTITY,
+
+		<include refid="baseRevenueStatisticsColumnsQuery" />
+
+		FROM (
+
+		SELECT
+		OI.USER_ID,
+		OI.CUSTOMER_CODE,
+		OI.ORDER_TYPE,
+		(CASE
+		WHEN
+		OI.OS_TYPE = '11st'
+		OR OI.OS_TYPE = 'gmarket'
+		OR OI.OS_TYPE = 'auction'
+		OR OI.OS_TYPE = 'storefarm'
+		OR OI.OS_TYPE = 'naver'
+		THEN '오픈마켓'
+		WHEN
+		OI.OS_TYPE = 'allthat'
+		OR OI.OS_TYPE = 'beautycall'
+		THEN 'Resale'
+		WHEN
+		OI.OS_TYPE = 'Admin'
+		THEN 'Call'
+		ELSE OI.OS_TYPE END
+		) AS OS_TYPE,
+		COUNT(*) AS COUNT,
+		SUM(OI.ITEM_PRICE) AS SUM_ITEM_PRICE,
+		0 AS SUM_USE_POINT,
+		0 AS SUM_DELIVERY_PRICE,
+		0 AS SUM_DISCOUNT_AMOUNT,
+		SUM(OI.COST_PRICE) AS SUM_COST_PRICE
+		FROM
+		(
+		SELECT
+		T.OS_TYPE,
+		T.USER_ID,
+		T.USER_ID AS CUSTOMER_CODE,
+		T.ORDER_CODE,
+		T.ORDER_TYPE,
+		SUM(T.TOTAL_ITEM_PRICE) AS ITEM_PRICE,
+		SUM(T.COST_PRICE * T.QUANTITY) AS COST_PRICE,
+		SUM(T.PAY_SHIPPING) AS PAY_SHIPPING
+		FROM
+		(
+
+		<include refid="baseQuery" />
+
+		) T GROUP BY T.ORDER_CODE, T.ORDER_TYPE, T.OS_TYPE
+		) OI
+		<where>
+
+			<if test="(query != null and query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'USERNAME'">
+						AND OI.USER_ID IN (
+						SELECT USER_ID FROM OP_USER
+						WHERE
+						STATUS_CODE = 9
+						AND USERNAME LIKE CONCAT(#{query}, '%')
+						)
+					</when>
+					<when test="where == 'LOGIN_ID'">
+						AND OI.USER_ID IN (
+						SELECT USER_ID FROM OP_USER
+						WHERE
+						STATUS_CODE = 9
+						AND
+						(
+						LOGIN_ID LIKE CONCAT(#{query}, '%')
+						OR EMAIL LIKE CONCAT(#{query}, '%')
+						)
+						)
+					</when>
+				</choose>
+
+			</if>
+		</where>
+		GROUP BY OI.ORDER_TYPE, OI.CUSTOMER_CODE, OI.OS_TYPE
+		) TT
+		LEFT JOIN OP_USER U ON C.USER_ID = U.USER_ID
+		GROUP BY TT.CUSTOMER_CODE, TT.OS_TYPE
+	</sql>
+
+	<sql id="defaultSaleNoItemQuery">
+		SELECT
+		C.CATEGORY_TEAM_ID,
+		C.TEAM_CODE,
+		C.TEAM_NAME,
+		C.CATEGORY_GROUP_ID ,
+		C.GROUP_CODE,
+		C.GROUP_NAME,
+		C.CATEGORY_NAME,
+		C.CATEGORY_ID,
+		C.CATEGORY_URL,
+		C.CATEGORY_CODE,
+		C.CATEGORY_CLASS1,
+		C.CATEGORY_CLASS2,
+		C.CATEGORY_CLASS3,
+		C.CATEGORY_CLASS4,
+		C.CATEGORY_LEVEL,
+		IC.ITEM_ID,
+		I.DISPLAY_FLAG,
+		I.ITEM_NAME,
+		I.ITEM_IMAGE,
+		I.ITEM_USER_CODE,
+		I.PAY_COUNT,
+		I.TOTAL_ITEM_PRICE
+		FROM (
+		SELECT
+		CT.CATEGORY_TEAM_ID,
+		CT.CODE AS TEAM_CODE,
+		CT.NAME AS TEAM_NAME,
+		CG.CATEGORY_GROUP_ID ,
+		CG.CODE AS GROUP_CODE,
+		CG.NAME AS GROUP_NAME,
+		C2.CATEGORY_NAME,
+		C2.CATEGORY_ID ,
+		C2.CATEGORY_URL ,
+		C2.CATEGORY_CODE ,
+		C2.CATEGORY_CLASS1 ,
+		C2.CATEGORY_CLASS2 ,
+		C2.CATEGORY_CLASS3 ,
+		C2.CATEGORY_CLASS4 ,
+		C2.CATEGORY_LEVEL
+		FROM
+		OP_CATEGORY_TEAM AS CT
+		LEFT JOIN OP_CATEGORY_GROUP AS CG
+		ON CT.CATEGORY_TEAM_ID = CG.CATEGORY_TEAM_ID AND CG.CATEGORY_GROUP_FLAG = 'Y'
+		RIGHT JOIN OP_CATEGORY AS C
+		ON CG.CATEGORY_GROUP_ID = C.CATEGORY_GROUP_ID AND C.CATEGORY_FLAG = 'Y'
+		RIGHT JOIN OP_CATEGORY AS C2
+		ON C.CATEGORY_CLASS1 = C2.CATEGORY_CLASS1 AND C2.CATEGORY_FLAG = 'Y'
+		WHERE
+		CT.CATEGORY_TEAM_FLAG = 'Y'
+		<choose>
+			<when test="(categoryClass != null and categoryClass != '')">
+				AND C2.CATEGORY_CODE LIKE CONCAT(#{categoryClass}, '%')
+			</when>
+			<otherwise>
+				<if test="(code != null and code != '')">
+					AND	CT.CATEGORY_TEAM_ID = #{code}
+				</if>
+
+				<if test="(categoryGroupId != null and categoryGroupId != '')">
+					AND CG.CATEGORY_GROUP_ID = #{categoryGroupId}
+				</if>
+			</otherwise>
+		</choose>
+		) C
+		INNER JOIN OP_ITEM_CATEGORY AS IC
+		ON C.CATEGORY_ID = IC.CATEGORY_ID
+		INNER JOIN (
+		SELECT
+		I.ITEM_ID,
+		I.ITEM_NAME,
+		I.ITEM_IMAGE,
+		I.ITEM_USER_CODE,
+		I.DISPLAY_FLAG,
+		COUNT(OI.PAY_DATE) AS PAY_COUNT,
+		IFNULL(SUM(OI.TOTAL_ITEM_PRICE),0) AS TOTAL_ITEM_PRICE
+		FROM
+		OP_ITEM I
+		LEFT JOIN (
+		SELECT *
+		FROM OP_ORDER_ITEM
+		WHERE (CANCEL_DATE IS NOT NULL AND CANCEL_DATE != '')
+		AND PAY_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+		) OI ON I.ITEM_ID = OI.ITEM_ID
+		GROUP BY I.ITEM_ID, I.ITEM_NAME, I.ITEM_IMAGE, I.ITEM_USER_CODE, I.DISPLAY_FLAG
+		) I
+		ON IC.ITEM_ID = I.ITEM_ID
+		<where>
+			<if test="itemName != '' and itemName != null">
+				AND I.ITEM_NAME LIKE CONCAT('%', #{itemName}, '%')
+			</if>
+
+			<if test="salesCount !='' and salesCount !=null">
+				AND I.PAY_COUNT <![CDATA[<=]]> #{salesCount}
+			</if>
+
+			<if test="salesPrice !='' and salesPrice !=null">
+				AND I.TOTAL_ITEM_PRICE <![CDATA[<=]]> #{salesPrice}
+			</if>
+
+		</where>
+	</sql>
+
+	<select id="getBrandStatisticsListByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="BrandStatisticsResult">
+
+		<include refid="CommonMapper.paginationHeader" />
+
+		SELECT
+		TOT.BRAND,
+		TOT.OS_TYPE,
+		TOT.PAY_COUNT,
+		TOT.CANCEL_COUNT,
+		TOT.ITEM_PRICE,
+		TOT.CANCEL_ITEM_PRICE,
+		TOT.ITEM_COUPON_DISCOUNT_AMOUNT,
+		TOT.CANCEL_ITEM_COUPON_DISCOUNT_AMOUNT
+		FROM (
+
+		<include refid="defaultBrandStatisticsQuery" />
+
+		) TOT
+
+		ORDER BY
+		<choose>
+			<when test="(sort != '' and sort != null) and (orderBy != '' and orderBy != null)">
+				<choose>
+					<when test='orderBy == "QUANTITY"'>(TOT.TOTAL_BUY_QUANTITY)</when>
+					<otherwise>(TOT.TOTAL_BUY_AMOUNT)</otherwise>
+				</choose>
+				<choose>
+					<when test='sort == "ASC"'>ASC</when>
+					<otherwise>DESC</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				(TOT.TOTAL_BUY_AMOUNT) DESC
+			</otherwise>
+		</choose>
+		, TOT.BRAND DESC
+
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getShopItemDetailList" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="ItemDetailStatisticsResult">
+		SELECT
+            TT.USER_ID,
+            TT.USERNAME,
+            TT.LOGIN_ID,
+			TT.PHONE_NUMBER,
+			TT.ZIPCODE,
+			TT.ADDRESS,
+			TT.ADDRESS_DETAIL,
+			TT.CUSTOMER_CODE,
+			SUM(TT.QUANTITY) AS QUANTITY,
+			SUM(TT.TOTAL_ITEM_PRICE) AS ITEM_PRICE,
+            TT.ORDER_TYPE
+		FROM (
+			SELECT
+				T.*,
+				IFNULL(T.USER_NAME, '비회원') AS USERNAME,
+				U.LOGIN_ID
+				<!-- 이상우 [2017-04-13 추가] 엑셀 다운로드 시 전화번호 -->
+                <!-- UD.PHONE_NUMBER -->
+            FROM (
+                <include refid="baseQuery" />
+            ) AS T
+            LEFT JOIN OP_USER AS U ON T.USER_ID = U.USER_ID
+            <!-- 이상우 [2017-04-13 추가] 엑셀 다운로드 시 전화번호 -->
+			<!-- LEFT JOIN OP_USER_DETAIL AS UD ON T.USER_ID = UD.USER_ID -->
+            WHERE
+				T.ITEM_ID = #{itemId}
+        ) TT
+		GROUP BY
+			TT.USER_ID,
+			TT.ORDER_TYPE,
+            TT.USERNAME,
+            TT.LOGIN_ID
+		ORDER BY TT.TOTAL_ITEM_PRICE DESC
+	</select>
+
+	<select id="getUserTotalRevenueStatisticsByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="TotalRevenueStatisticsResult">
+
+		<include refid="baseRevenueTotalQueryHeader" />
+
+		<include refid="defaultUserStatisticsQuery" />
+
+		<include refid="baseRevenueTotalQueryFooter" />
+
+	</select>
+
+	<select id="getUserStatisticsCountByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultType="Integer">
+		SELECT COUNT(*) AS COUNT FROM (
+		<include refid="defaultUserStatisticsQuery" />
+		) T
+	</select>
+
+	<select id="getUserStatisticsListByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="UserStatisticsResult">
+		<include refid="CommonMapper.paginationHeader" />
+
+		SELECT * FROM (
+
+		<include refid="defaultUserStatisticsQuery" />
+
+		) S
+
+		ORDER BY
+		<choose>
+			<when test="(sort != '' and sort != null) and (orderBy != '' and orderBy != null)">
+				<choose>
+					<when test='orderBy == "QUANTITY"'>(S.TOTAL_BUY_QUANTITY)</when>
+					<otherwise>(S.TOTAL_BUY_AMOUNT)</otherwise>
+				</choose>
+				<choose>
+					<when test='sort == "ASC"'>ASC</when>
+					<otherwise>DESC</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				(S.TOTAL_BUY_AMOUNT) DESC
+			</otherwise>
+		</choose>
+		, S.CUSTOMER_CODE DESC
+
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getDoNotSellItemCountByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultType="Integer">
+		SELECT COUNT(*) AS COUNT FROM
+		(
+		<include refid="defaultSaleNoItemQuery" />
+		) T
+	</select>
+
+	<select id="getDoNotSellItemListByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="DoNotSellItemResult">
+
+		<include refid="CommonMapper.paginationHeader" />
+
+		<include refid="defaultSaleNoItemQuery" />
+
+		<include refid="CommonMapper.paginationFooter" />
+
+	</select>
+
+	<resultMap id="RevenueDetailResult" type="saleson.shop.statistics.domain.RevenueDetail">
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="orderSequence" column="ORDER_SEQUENCE" />
+
+		<result property="orderType" column="ORDER_TYPE" />
+		<result property="userId" column="USER_ID" />
+		<result property="osType" column="OS_TYPE" />
+
+		<result property="sumExcisePrice" column="SUM_EXCISE_PRICE" />
+		<result property="sumDeliveryPrice" column="SUM_DELIVERY_PRICE" />
+		<result property="sumUsePoint" column="SUM_USE_POINT" />
+		<result property="cartCouponDiscountAmount" column="CART_COUPON_DISCOUNT_AMOUNT" />
+		<result property="price" column="PRICE" />
+		<result property="itemAmount" column="ITEM_AMOUNT" />
+		<result property="userName" column="USER_NAME" />
+		<result property="phone" column="PHONE" />
+		<result property="mobile" column="MOBILE" />
+		<result property="email" column="EMAIL" />
+		<result property="zipcode" column="ZIPCODE" />
+		<result property="address" column="ADDRESS" />
+		<result property="addressDetail" column="ADDRESS_DETAIL" />
+		<result property="receiveZipcode" column="RECEIVE_ZIPCODE" />
+		<result property="receiveAddress" column="RECEIVE_ADDRESS" />
+		<result property="receiveAddressDetail" column="RECEIVE_ADDRESS_DETAIL" />
+		<result property="receiveName" column="RECEIVE_NAME" />
+		<result property="receivePhone" column="RECEIVE_PHONE" />
+		<result property="receiveMobile" column="RECEIVE_MOBILE" />
+		<result property="taxType" column="TAX_TYPE" />
+		<result property="vendorAddDeliveryExtraCharge" column="VENDOR_ADD_DELIVERY_EXTRA_CHARGE" />
+		<result property="date" column="DATE" />
+		<collection property="items" resultMap="RevenueDetailItemResult" />
+	</resultMap>
+
+	<resultMap id="RevenueDetailItemResult" type="saleson.shop.statistics.domain.RevenueDetailItem">
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemSequence" column="ITEM_SEQUENCE" />
+		<result property="vendorAddDiscountAmount" column="VENDOR_ADD_DISCOUNT_AMOUNT" />
+		<result property="orderItemId" column="ORDER_ITEM_ID" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="sellerName" column="SELLER_NAME" />
+		<result property="quantity" column="QUANTITY" />
+		<result property="orderType" column="ORDER_TYPE" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<result property="requiredOptions" column="REQUIRED_OPTIONS" />
+		<result property="itemPrice" column="ITEM_PRICE" />
+		<result property="totalItemPrice" column="TOTAL_ITEM_PRICE" />
+		<result property="itemCouponDiscountAmount" column="ITEM_COUPON_DISCOUNT_AMOUNT" />
+	</resultMap>
+
+	<resultMap id="RevenueBaseForDateResult" type="saleson.shop.statistics.domain.RevenueBaseForDate">
+		<result property="key" column="DATE" />
+		<collection property="list" resultMap="RevenueDetailResult" />
+	</resultMap>
+
+
+	<select id="getRevenueDetailListForDateByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="RevenueBaseForDateResult">
+		SELECT
+		DATE_FORMAT(OI.SEARCH_DATE, '%Y%m%d')        AS DATE,
+		OI.ORDER_CODE,
+		OI.ORDER_SEQUENCE,
+		OI.ORDER_TYPE,
+		OI.USER_ID,
+		OI.OS_TYPE,
+		OI.USER_NAME,
+		OI.RECEIVE_ZIPCODE,
+		OI.RECEIVE_ADDRESS,
+		OI.RECEIVE_ADDRESS_DETAIL,
+		OI.RECEIVE_NAME,
+		OI.ZIPCODE,
+		OI.ADDRESS,
+		OI.ADDRESS_DETAIL,
+		OI.ITEM_ID,
+		OI.ITEM_SEQUENCE,
+		IFNULL(( OI.SPOT_DISCOUNT_PRICE
+		+ OI.SELLER_DISCOUNT_PRICE + OI.USER_LEVEL_DISCOUNT_PRICE ) * OI.QUANTITY, 0) AS
+		VENDOR_ADD_DISCOUNT_AMOUNT,
+		OI.ITEM_NAME,
+		OI.SELLER_NAME,
+		OI.ITEM_USER_CODE,
+		OI.OPTIONS                                   AS REQUIRED_OPTIONS,
+		OI.QUANTITY,
+		OI.COMMISSION_BASE_PRICE * OI.QUANTITY       AS ITEM_PRICE,
+		OI.TOTAL_ITEM_PRICE,
+		OI.COUPON_DISCOUNT_AMOUNT                    AS
+		ITEM_COUPON_DISCOUNT_AMOUNT,
+		OI.SEARCH_DATE
+		FROM
+		(
+		<include refid="baseQuery" />
+		) OI
+
+		ORDER BY DATE DESC,
+		OI.ORDER_CODE DESC,
+		OI.ORDER_SEQUENCE DESC,
+		OI.ORDER_TYPE DESC,
+		OI.ITEM_SEQUENCE ASC
+	</select>
+
+	<select id="getShippingDetailListForDateByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="RevenueDetailResult">
+		SELECT
+			O.SEARCH_DATE AS DATE,
+			O.ORDER_CODE,
+			O.PAY_TYPE AS ORDER_TYPE,
+			O.ITEM_AMOUNT,
+			O.SHIPPING - O.ITEM_AMOUNT AS SUM_DELIVERY_PRICE,
+			O.CART_COUPON_DISCOUNT_AMOUNT,
+			O.ITEM_PRICE,
+			O.COUPON_DISCOUNT,
+			O.SPOT_DISCOUNT,
+			O.SELLER_DISCOUNT,
+			O.USER_LEVEL_DISCOUNT
+        FROM (
+			SELECT
+				'PAY' AS PAY_TYPE,
+				SEARCH_DATE,
+				ORDER_CODE,
+				SUM(ITEM_PRICE) AS ITEM_PRICE,
+				SUM(COUPON_DISCOUNT) AS COUPON_DISCOUNT,
+				SUM(SPOT_DISCOUNT) AS SPOT_DISCOUNT,
+				SUM(SELLER_DISCOUNT) AS SELLER_DISCOUNT,
+				SUM(USER_LEVEL_DISCOUNT) AS USER_LEVEL_DISCOUNT,
+				SUM(SALE_PRICE) AS ITEM_AMOUNT,
+				(
+					SELECT
+					CASE
+                        WHEN (
+                            SELECT COUNT(*)
+                            FROM OP_ORDER_PAYMENT
+                            WHERE ORDER_CODE = T.ORDER_CODE
+                                AND PAYMENT_TYPE = '1'
+                                AND PAY_DATE LIKE CONCAT(T.SEARCH_DATE, '%')
+                        ) > 0
+                        THEN IFNULL((
+                            SELECT SUM(AMOUNT)
+                            FROM OP_ORDER_PAYMENT
+                            WHERE ORDER_CODE = T.ORDER_CODE
+                                AND PAYMENT_TYPE = '1'
+                                AND (
+                                    APPROVAL_TYPE = 'walfare' OR APPROVAL_TYPE = 'giftcard' OR APPROVAL_TYPE = 'point'
+                                    OR (APPROVAL_TYPE != 'walfare' AND APPROVAL_TYPE != 'giftcard' AND APPROVAL_TYPE != 'point' AND PAY_DATE LIKE CONCAT(T.SEARCH_DATE, '%') )
+                                )
+                            GROUP BY ORDER_CODE
+                        ), 0)
+                        ELSE IFNULL((
+                            SELECT SUM(AMOUNT)
+                            FROM OP_ORDER_PAYMENT
+                            WHERE ORDER_CODE = T.ORDER_CODE
+                                AND PAYMENT_TYPE = '1'
+                                AND PAY_DATE LIKE CONCAT(T.SEARCH_DATE, '%')
+                            GROUP BY ORDER_CODE)
+                        , 0)
+                    END AS P
+				) AS SHIPPING,
+				IFNULL((
+                    SELECT SUM(DISCOUNT_SHIPPING)
+                    FROM OP_ORDER_SHIPPING
+                    WHERE ORDER_CODE = T.ORDER_CODE
+                        AND SHIPPING_PAYMENT_TYPE = '1'
+                    GROUP BY ORDER_CODE
+                ), 0) AS CART_COUPON_DISCOUNT_AMOUNT
+            FROM (
+                SELECT
+                    LEFT(OI.SALES_DATE, 8) AS SEARCH_DATE,
+                    OI.ORDER_CODE,
+                    (OI.PURCHASE_PRICE + OI.OPTION_PRICE) * OI.QUANTITY AS ITEM_PRICE,
+                    OI.COUPON_DISCOUNT_PRICE * OI.QUANTITY AS COUPON_DISCOUNT,
+                    CASE WHEN OI.SPOT_SALE_FLAG = 'Y' THEN  OI.SPOT_DISCOUNT_PRICE * OI.QUANTITY ELSE 0 END AS SPOT_DISCOUNT,
+                    OI.SELLER_DISCOUNT_PRICE * OI.QUANTITY AS SELLER_DISCOUNT,
+                    OI.USER_LEVEL_DISCOUNT_PRICE * OI.QUANTITY AS USER_LEVEL_DISCOUNT,
+                    OI.SALE_PRICE * OI.QUANTITY AS SALE_PRICE
+			FROM OP_ORDER_ITEM OI
+			<where>
+				<if test="userId != null and userId != ''">
+					AND OI.USER_ID = #{userId}
+				</if>
+
+				<if test="guestFlag != null">
+					AND OI.GUEST_FLAG = #{guestFlag}
+				</if>
+
+				<if test="sellerId > 0">
+					AND OI.SELLER_ID = #{sellerId}
+				</if>
+
+				AND OI.SALES_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+				AND OI.PAY_DATE != '00000000000000'
+				<if test="(query != null and query != '') and (where != null and where != '')">
+					<choose>
+						<when test="where == 'ITEM_NAME'">
+							AND OI.ITEM_NAME LIKE CONCAT('%', #{query}, '%')
+						</when>
+
+						<when test="where == 'ITEM_USER_CODE'">
+							AND (
+                                OI.ITEM_USER_CODE LIKE CONCAT(#{query}, '%')
+                                OR OI.OPTIONS LIKE CONCAT('%"optionCode":"', #{query}, '"%')
+							)
+						</when>
+					</choose>
+				</if>
+
+				<choose>
+					<when test="(categoryClass != null and categoryClass != '')">
+						AND OI.CATEGORY_ID IN (
+                            SELECT CATEGORY_ID
+                            FROM OP_CATEGORY WHERE CATEGORY_CODE LIKE CONCAT(#{categoryClass}, '%')
+						)
+					</when>
+					<otherwise>
+						<if test="(code != null and code != '')">
+							AND	OI.CATEGORY_TEAM_ID = #{code}
+						</if>
+
+						<if test="(categoryGroupId != null and categoryGroupId != '')">
+							AND OI.CATEGORY_GROUP_ID = #{categoryGroupId}
+						</if>
+					</otherwise>
+				</choose>
+
+				<if test='brand != null and brand != ""'>
+					AND OI.BRAND = #{brand}
+				</if>
+
+				<if test='itemId != null and itemId != ""'>
+					AND OI.ITEM_ID = #{itemId}
+				</if>
+
+			</where>
+        ) T
+		GROUP BY
+			SEARCH_DATE, ORDER_CODE
+
+		UNION ALL
+
+		SELECT
+			'CANCEL' AS PAY_TYPE,
+			SEARCH_DATE,
+			ORDER_CODE,
+			SUM(ITEM_PRICE) AS ITEM_PRICE,
+			SUM(COUPON_DISCOUNT) AS COUPON_DISCOUNT,
+			SUM(SPOT_DISCOUNT) AS SPOT_DISCOUNT,
+			SUM(SELLER_DISCOUNT) AS SELLER_DISCOUNT,
+			SUM(USER_LEVEL_DISCOUNT) AS USER_LEVEL_DISCOUNT,
+			SUM(SALE_PRICE) AS ITEM_AMOUNT,
+			IFNULL((
+                SELECT SUM(CANCEL_AMOUNT)
+                FROM OP_ORDER_PAYMENT
+                WHERE ORDER_CODE = T.ORDER_CODE
+                    AND PAYMENT_TYPE = '2'
+                    AND PAY_DATE LIKE CONCAT(T.SEARCH_DATE, '%')
+                GROUP BY ORDER_CODE
+            ), 0) AS SHIPPING,
+			IFNULL((
+                SELECT SUM(DISCOUNT_SHIPPING)
+                FROM OP_ORDER_SHIPPING
+                WHERE ORDER_CODE = T.ORDER_CODE
+                    AND SHIPPING_PAYMENT_TYPE = '1'
+                GROUP BY ORDER_CODE
+            ), 0) AS CART_COUPON_DISCOUNT_AMOUNT
+        FROM (
+            SELECT
+                LEFT(OI.SALES_CANCEL_DATE, 8) AS SEARCH_DATE,
+                OI.ORDER_CODE,
+                (OI.PURCHASE_PRICE + OI.OPTION_PRICE) * OI.QUANTITY AS ITEM_PRICE,
+                OI.COUPON_DISCOUNT_PRICE * OI.QUANTITY AS COUPON_DISCOUNT,
+                CASE WHEN OI.SPOT_SALE_FLAG = 'Y' THEN OI.SPOT_DISCOUNT_PRICE * OI.QUANTITY ELSE 0 END AS SPOT_DISCOUNT,
+                OI.SELLER_DISCOUNT_PRICE * OI.QUANTITY AS SELLER_DISCOUNT,
+                OI.USER_LEVEL_DISCOUNT_PRICE * OI.QUANTITY AS USER_LEVEL_DISCOUNT,
+                OI.SALE_PRICE * OI.QUANTITY AS SALE_PRICE
+            FROM OP_ORDER_ITEM OI
+            <where>
+                <if test="userId != null and userId != ''">
+                    AND OI.USER_ID = #{userId}
+                </if>
+
+                <if test="guestFlag != null">
+                    AND OI.GUEST_FLAG = #{guestFlag}
+                </if>
+
+                <if test="sellerId > 0">
+                    AND OI.SELLER_ID = #{sellerId}
+                </if>
+
+                AND OI.SALES_CANCEL_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+                AND OI.PAY_DATE != '00000000000000'
+                <if test="(query != null and query != '') and (where != null and where != '')">
+                    <choose>
+                        <when test="where == 'ITEM_NAME'">
+                            AND OI.ITEM_NAME LIKE CONCAT('%', #{query}, '%')
+                        </when>
+
+                        <when test="where == 'ITEM_USER_CODE'">
+                            AND (
+                                OI.ITEM_USER_CODE LIKE CONCAT(#{query}, '%')
+                                OR OI.OPTIONS LIKE CONCAT('%"optionCode":"', #{query}, '"%')
+                            )
+                        </when>
+                    </choose>
+                </if>
+
+                <choose>
+                    <when test="(categoryClass != null and categoryClass != '')">
+                        AND OI.CATEGORY_ID IN (
+                            SELECT CATEGORY_ID
+                            FROM OP_CATEGORY WHERE CATEGORY_CODE LIKE CONCAT(#{categoryClass}, '%')
+                        )
+                    </when>
+                    <otherwise>
+                        <if test="(code != null and code != '')">
+                            AND	OI.CATEGORY_TEAM_ID = #{code}
+                        </if>
+
+                        <if test="(categoryGroupId != null and categoryGroupId != '')">
+                            AND OI.CATEGORY_GROUP_ID = #{categoryGroupId}
+                        </if>
+                    </otherwise>
+                </choose>
+
+                <if test='brand != null and brand != ""'>
+                    AND OI.BRAND = #{brand}
+                </if>
+
+                <if test='itemId != null and itemId != ""'>
+                    AND OI.ITEM_ID = #{itemId}
+                </if>
+
+            </where>
+        ) T
+		GROUP BY
+			SEARCH_DATE, ORDER_CODE
+    ) O
+    ORDER  BY
+        O.ORDER_CODE DESC,
+        O.PAY_TYPE DESC
+	</select>
+
+	<select id="getOrderListByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="OrderAndItemsResult">
+		 SELECT
+		 	O2.ORDER_ID ,
+		    O2.ORDER_CODE ,
+		    O2.ORDER_COUNT ,
+		    O2.USERNAME ,
+		    O2.LOGIN_ID,
+		    ITEM_EXCISE_PRICE ,
+		    COUPON_DISCOUNT_AMOUNT ,
+		    CART_COUPON_DISCOUNT_AMOUNT ,
+		    SUM_USE_POINT ,
+		    VENDOR_ADD_DISCOUNT_AMOUNT ,
+		    SUM_DELIVERY_PRICE ,
+		    VENDOR_ADD_DELIVERY_EXTRA_CHARGE ,
+		    ORDER_STATUS,
+		    ORDER_TYPE ,
+		    OS_TYPE ,
+		    SEARCH_DATE,
+		    OI2.ORDER_ITEM_ID,
+		    OI2.QUANTITY,
+		    OI2.ITEMS_EXCISE_PRICE,
+		    OI2.ITEM_NAME ,
+		    OI2.ITEM_USER_CODE,
+			OI2.ITEM_IMAGE
+		 FROM
+		 (
+		 	SELECT
+		        O.ORDER_ID ,
+		        O.ORDER_CODE ,
+		        U.USER_NAME ,
+		        U.EMAIL AS LOGIN_ID,
+		        ORDER_COUNT ,
+		        ITEM_EXCISE_PRICE,
+		        COUPON_DISCOUNT_AMOUNT,
+		        CART_COUPON_DISCOUNT_AMOUNT,
+		        SUM_USE_POINT,
+		        IFNULL(OP.ADD_DISCOUNT_AMOUNT,0) AS VENDOR_ADD_DISCOUNT_AMOUNT,
+		        SUM_DELIVERY_PRICE,
+		        IFNULL(OP.ADD_DELIVERY_PRICE,0) AS VENDOR_ADD_DELIVERY_EXTRA_CHARGE,
+
+		        CASE
+		          WHEN OI.ORDER_STATUS IN ('1', '2', '3', '8', '9') THEN  '결제'
+		          WHEN OI.ORDER_STATUS IN ('10', '16', '99') THEN  '취소'
+		        END AS ORDER_STATUS ,
+
+		        CASE
+		          WHEN OI.ORDER_STATUS IN ('1', '2', '3', '8', '9') THEN  '1'
+		          WHEN OI.ORDER_STATUS IN ('10', '16', '99') THEN  '2'
+		        END AS ORDER_TYPE,
+
+		        OS_TYPE ,
+		        SEARCH_DATE
+		  	FROM
+		  (
+		        SELECT
+		            ORDER_ID,
+		            COUNT(ORDER_ID) AS ORDER_COUNT ,
+		            ORDER_STATUS,
+		            SUM(ITEM_EXCISE_PRICE) AS ITEM_EXCISE_PRICE,
+		            SUM(COUPON_DISCOUNT_AMOUNT) AS COUPON_DISCOUNT_AMOUNT,
+		            SEARCH_DATE
+		        FROM
+		        (
+		        <![CDATA[
+		              SELECT
+		                ORDER_ID,
+		                ORDER_STATUS ,
+		                (TOTAL_ITEM_PRICE + EXCISE_PRICE) AS ITEM_EXCISE_PRICE ,
+		                COUPON_DISCOUNT_AMOUNT ,
+		                CASE WHEN CANCEL_DATE <> '' AND CANCEL_DATE IS NOT NULL  THEN CANCEL_DATE
+		                   ELSE PAY_DATE
+		                END AS SEARCH_DATE
+
+		              FROM
+		                OP_ORDER_ITEM
+		              WHERE (PAY_DATE <> '' OR PAY_DATE IS NULL)
+		    	]]>
+		        ) AS OI2
+		        GROUP BY ORDER_ID, SEARCH_DATE
+		    ) AS OI
+		    LEFT JOIN OP_ORDER AS O ON O.ORDER_ID = OI.ORDER_ID
+		    LEFT JOIN OP_ORDER_PAYMENT AS OP ON O.ORDER_PAYMENT_ID = OP.ORDER_PAYMENT_ID
+		    LEFT JOIN OP_USER AS U ON U.USER_ID = O.USER_ID
+		    WHERE
+		    	SEARCH_DATE LIKE CONCAT(#{searchDate},'%')
+		) AS O2  LEFT JOIN
+		(
+		<![CDATA[
+			SELECT
+				OI.ORDER_ITEM_ID,
+		    	OI.ORDER_ID ,
+		        OI.QUANTITY ,
+		        (OI.TOTAL_ITEM_PRICE + OI.EXCISE_PRICE) AS ITEMS_EXCISE_PRICE ,
+		    	I.*
+		    FROM
+		    	OP_ORDER_ITEM AS OI
+		        LEFT JOIN OP_ITEM AS I ON OI.ITEM_ID = I.ITEM_ID
+		    WHERE
+		    	(
+		        	PAY_DATE LIKE CONCAT(#{searchDate},'%')
+		    		OR CANCEL_DATE LIKE CONCAT(#{searchDate},'%')
+		        )
+		    AND (PAY_DATE <> '' OR PAY_DATE IS NULL)
+		 ]]>
+		) AS OI2 ON O2.ORDER_ID = OI2.ORDER_ID
+
+	</select>
+
+
+
+	<select id="getAreaDetailList" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="ItemDetailStatisticsResult">
+		SELECT
+		USER_ID ,
+		USERNAME,
+		LOGIN_ID ,
+		TT.ZIPCODE,
+		TT.ADDRESS,
+		TT.ADDRESS_DETAIL,
+		CUSTOMER_CODE,
+		SUM(QUANTITY) AS QUANTITY,
+		SUM(ITEM_PRICE) - SUM(TT.COUPON_DISCOUNT_AMOUNT) - SUM(TT.SELLER_DISCOUNT_PRICE) - SUM(TT.SPOT_DISCOUNT_PRICE) - SUM(TT.USER_LEVEL_DISCOUNT_PRICE) AS ITEM_PRICE,
+		ORDER_TYPE
+		FROM
+		(
+		SELECT
+		T.*,
+		IFNULL(T.USER_NAME, '비회원') AS USERNAME,
+		U.EMAIL AS LOGIN_ID
+		FROM (
+		<include refid="baseQuery" />
+		) AS T LEFT JOIN OP_USER AS U ON T.USER_ID = U.USER_ID
+		LEFT JOIN OP_SIDO_MAPPING SM ON T.RECEIVE_SIDO = SM.SIDO_DATA
+		WHERE
+		<choose>
+			<when test="sidoMappingGroupKey == 0 and dodobuhyun == ''">
+				(T.RECEIVE_SIGUNGU = #{dodobuhyun}
+				OR T.RECEIVE_SIGUNGU IS NULL)
+			</when>
+			<otherwise>
+				T.RECEIVE_SIGUNGU = #{dodobuhyun}
+			</otherwise>
+		</choose>
+
+		<if test="sidoMappingGroupKey == 0">
+			AND SM.SIDO_MAPPING_GROUP_KEY IS NULL
+		</if>
+
+		<if test="sidoMappingGroupKey > 0">
+			AND SM.SIDO_MAPPING_GROUP_KEY = #{sidoMappingGroupKey}
+		</if>
+
+		) AS TT
+		GROUP BY TT.USER_ID, TT.ORDER_TYPE
+		ORDER BY TOTAL_ITEM_PRICE DESC
+	</select>
+
+
+
+	<select id="getUserOrderItemListByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="ItemStatisticsResult">
+		SELECT
+		      OI2.ORDER_ITEM_ID,
+		      OI2.QUANTITY,
+		      OI2.ITEMS_EXCISE_PRICE,
+		      OI2.ITEM_NAME ,
+		      OI2.ITEM_USER_CODE,
+		      OI2.ITEM_IMAGE
+		   FROM
+		   (
+		   	<![CDATA[
+		      SELECT 
+		          OI.ORDER_ITEM_ID,
+		          OI.ORDER_ID ,
+		          OI.QUANTITY ,
+		          (OI.TOTAL_ITEM_PRICE + OI.EXCISE_PRICE) AS ITEMS_EXCISE_PRICE ,
+		          I.*
+		      FROM 
+		          OP_ORDER_ITEM AS OI 
+		          LEFT JOIN OP_ITEM AS I ON OI.ITEM_ID = I.ITEM_ID
+		      WHERE 
+		          (
+		              PAY_DATE BETWEEN CONCAT(#{startDate},'000000') AND CONCAT(#{endDate},'595959')   
+		              OR CANCEL_DATE BETWEEN CONCAT(#{startDate},'000000') AND CONCAT(#{endDate},'595959')   
+		          )
+		      AND (PAY_DATE <> '' OR PAY_DATE IS NULL)
+		     ]]>
+		  ) AS OI2 
+		  WHERE OI2.ORDER_ID = #{orderId}
+	</select>
+
+	<resultMap id="OrderResultForVendor" type="saleson.shop.order.domain.OrderShippingInfo">
+		<result property="sumDeliveryPrice" column="SUM_DELIVERY_PRICE" ></result>
+		<result property="sumUsePoint" column="SUM_USE_POINT" ></result>
+		<result property="cartCouponDiscountAmount" column="CART_COUPON_DISCOUNT_AMOUNT" ></result>
+
+	</resultMap>
+
+	<select id="getUsetOrderTotalDetailById" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="OrderResultForVendor" >
+		SELECT 
+			O.SUM_DELIVERY_PRICE ,
+		    O.SUM_USE_POINT,
+		    O.CART_COUPON_DISCOUNT_AMOUNT,
+		    IFNULL(OP.ADD_DELIVERY_PRICE,0) AS VENDOR_ADD_DELIVERY_EXTRA_CHARGE,
+			IFNULL(OP.ADD_DISCOUNT_AMOUNT,0) AS VENDOR_ADD_DISCOUNT_AMOUNT 
+		FROM OP_ORDER AS O LEFT JOIN OP_ORDER_PAYMENT AS OP ON O.ORDER_PAYMENT_ID = OP.ORDER_PAYMENT_ID
+		WHERE O.ORDER_ID = #{orderId}
+	</select>
+
+	<select id="getUserOrderListByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="OrderAndItemsResult">
+		 SELECT
+		 	O2.ORDER_ID ,
+		    O2.ORDER_CODE ,
+		    O2.ORDER_COUNT ,
+		    O2.USERNAME ,
+		    O2.LOGIN_ID,
+		    ITEM_EXCISE_PRICE ,
+		    COUPON_DISCOUNT_AMOUNT ,
+		    CART_COUPON_DISCOUNT_AMOUNT , 
+		    SUM_USE_POINT , 
+		    VENDOR_ADD_DISCOUNT_AMOUNT , 
+		    SUM_DELIVERY_PRICE , 
+		    VENDOR_ADD_DELIVERY_EXTRA_CHARGE ,
+		    ORDER_STATUS, 
+		    ORDER_TYPE ,
+		    OS_TYPE ,
+		    SEARCH_DATE,
+		    OI2.ORDER_ITEM_ID,
+		    OI2.QUANTITY,
+		    OI2.ITEMS_EXCISE_PRICE,
+		    OI2.ITEM_NAME ,
+		    OI2.ITEM_USER_CODE,
+			OI2.ITEM_IMAGE
+		 FROM
+		 (
+		 	SELECT 
+		        O.ORDER_ID ,
+		        O.ORDER_CODE ,
+		        U.USER_NAME ,
+		        U.EMAIL AS LOGIN_ID,
+		        U.USER_ID,
+		        ORDER_COUNT ,
+		        ITEM_EXCISE_PRICE,
+		        COUPON_DISCOUNT_AMOUNT,
+		        CART_COUPON_DISCOUNT_AMOUNT,
+		        SUM_USE_POINT,
+		        IFNULL(OP.ADD_DISCOUNT_AMOUNT,0) AS VENDOR_ADD_DISCOUNT_AMOUNT,
+		        SUM_DELIVERY_PRICE,
+		        IFNULL(OP.ADD_DELIVERY_PRICE,0) AS VENDOR_ADD_DELIVERY_EXTRA_CHARGE,
+		        
+		        CASE 
+		          WHEN OI.ORDER_STATUS IN ('1', '2', '3', '8', '9') THEN  '결제'
+		          WHEN OI.ORDER_STATUS IN ('10', '16', '99') THEN  '취소' 
+		        END AS ORDER_STATUS ,
+		        
+		        CASE 
+		          WHEN OI.ORDER_STATUS IN ('1', '2', '3', '8', '9') THEN  '1'
+		          WHEN OI.ORDER_STATUS IN ('10', '16', '99') THEN  '2' 
+		        END AS ORDER_TYPE,
+		
+		        OS_TYPE ,
+		        SEARCH_DATE
+		  	FROM 
+		  (
+		        SELECT
+		            ORDER_ID,
+		            COUNT(ORDER_ID) AS ORDER_COUNT ,
+		            ORDER_STATUS,
+		            SUM(ITEM_EXCISE_PRICE) AS ITEM_EXCISE_PRICE,
+		            SUM(COUPON_DISCOUNT_AMOUNT) AS COUPON_DISCOUNT_AMOUNT,
+		            SEARCH_DATE
+		        FROM
+		        (
+		        <![CDATA[
+		              SELECT 
+		                ORDER_ID, 
+		                ORDER_STATUS ,
+		                (TOTAL_ITEM_PRICE + EXCISE_PRICE) AS ITEM_EXCISE_PRICE , 
+		                COUPON_DISCOUNT_AMOUNT ,
+		                CASE WHEN CANCEL_DATE <> '' AND CANCEL_DATE IS NOT NULL  THEN CANCEL_DATE
+		                   ELSE PAY_DATE
+		                END AS SEARCH_DATE
+		    			       
+		              FROM 
+		                OP_ORDER_ITEM
+		              WHERE (PAY_DATE <> '' OR PAY_DATE IS NULL)
+		    	]]>	       
+		        ) AS OI2
+		        GROUP BY ORDER_ID, SEARCH_DATE
+		    ) AS OI
+		    LEFT JOIN OP_ORDER AS O ON O.ORDER_ID = OI.ORDER_ID 
+		    LEFT JOIN OP_ORDER_PAYMENT AS OP ON O.ORDER_PAYMENT_ID = OP.ORDER_PAYMENT_ID
+		    LEFT JOIN OP_USER AS U ON U.USER_ID = O.USER_ID 
+		    WHERE 
+		    	SEARCH_DATE BETWEEN CONCAT(#{startDate},'000000') AND CONCAT(#{endDate},'595959')   
+		) AS O2  LEFT JOIN 
+		(
+		<![CDATA[
+			SELECT 
+				OI.ORDER_ITEM_ID,
+		    	OI.ORDER_ID ,
+		        OI.QUANTITY ,
+		        (OI.TOTAL_ITEM_PRICE + OI.EXCISE_PRICE) AS ITEMS_EXCISE_PRICE ,
+		    	I.*
+		    FROM 
+		    	OP_ORDER_ITEM AS OI 
+		        LEFT JOIN OP_ITEM AS I ON OI.ITEM_ID = I.ITEM_ID
+		    WHERE 
+		    	(
+		        	 PAY_DATE BETWEEN CONCAT(#{startDate},'000000') AND CONCAT(#{endDate},'595959')   
+		             OR CANCEL_DATE BETWEEN CONCAT(#{startDate},'000000') AND CONCAT(#{endDate},'595959')   
+		        )
+		    AND (PAY_DATE <> '' OR PAY_DATE IS NULL)
+		 ]]> 	
+		) AS OI2 ON O2.ORDER_ID = OI2.ORDER_ID
+		WHERE O2.USER_ID = #{userId}		
+	</select>
+
+
+
+
+	<select id="getNotUserCount" parameterType="saleson.shop.statistics.support.StatisticsParam" resultType="Integer" >
+		SELECT
+		    COUNT(U.USER_ID)
+		FROM 
+		    OP_USER AS U 
+		        LEFT JOIN OP_USER_DETAIL AS UD ON U.USER_ID = UD.USER_ID
+		        LEFT JOIN OP_USER_ROLE AS UR ON U.USER_ID = UR.USER_ID
+		WHERE 
+		    AUTHORITY LIKE CONCAT('ROLE_USER','%')   
+		    AND U.STATUS_CODE = '9'
+		AND 
+			BUY_COUNT > 0
+		AND 
+			( LAST_BUY_DATE IS NULL OR LAST_BUY_DATE NOT BETWEEN CONCAT(#{startDate},'000000') AND CONCAT(#{endDate},'595959') )
+	
+	</select>
+
+	<select id="getNotUserList" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="DoNotSellUserResult" >
+		<include refid="CommonMapper.paginationHeader" />
+		SELECT
+		U.*,
+		POST ,
+		ADDRESS ,
+		ADDRESS_DETAIL ,
+		TEL_NUMBER ,
+		PHONE_NUMBER ,
+		FAX_NUMBER ,
+		RECEIVE_EMAIL ,
+		RECEIVE_SMS ,
+		GENDER ,
+		POINT ,
+		BUY_COUNT ,
+		BUY_PRICE ,
+		LAST_BUY_DATE ,
+		LEAVE_REASON ,
+		SITE_FLAG ,
+		LEVEL ,
+		USE_FLAG ,
+		IFNULL(O.PAY_COUNT,0) AS PAY_COUNT,
+		IFNULL(O.TOTAL_ITEM_PRICE,0) TOTAL_ITEM_PRICE
+		FROM
+		OP_USER AS U
+		LEFT JOIN OP_USER_DETAIL AS UD ON U.USER_ID = UD.USER_ID
+		LEFT JOIN OP_USER_ROLE AS UR ON U.USER_ID = UR.USER_ID
+		LEFT JOIN (
+		SELECT
+		O.USER_ID,
+		COUNT(OI.PAY_DATE) AS PAY_COUNT,
+		IFNULL(SUM(OI.TOTAL_ITEM_PRICE),0) AS TOTAL_ITEM_PRICE
+		FROM
+		OP_ORDER AS O
+		,OP_ORDER_ITEM AS OI
+		WHERE O.ORDER_ID = OI.ORDER_ID
+		AND (OI.CANCEL_DATE IS NOT NULL AND OI.CANCEL_DATE != '')
+		AND OI.PAY_DATE BETWEEN CONCAT(#{startDate},'000000') AND CONCAT(#{endDate},'595959')
+		GROUP BY O.USER_ID
+		) AS O ON U.USER_ID = O.USER_ID
+		WHERE
+		AUTHORITY LIKE CONCAT('ROLE_USER','%')
+		AND U.STATUS_CODE = '9'
+
+		<if test="salesCount !='' and salesCount !=null">
+			AND IFNULL(O.PAY_COUNT,0) <![CDATA[<=]]> #{salesCount}
+		</if>
+
+		<if test="salesPrice !='' and salesPrice !=null">
+			AND IFNULL(O.TOTAL_ITEM_PRICE,0) <![CDATA[<=]]> #{salesPrice}
+		</if>
+
+		ORDER BY USER_ID ASC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getItemDateListByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="ItemDateResult">
+		SELECT
+		OI2.*,
+		I.ITEM_IMAGE
+		FROM
+		(
+		SELECT
+		<if test='type != "1"'>
+			PAY_DATE AS SEARCH_DATE ,
+		</if>
+		ITEM_ID,
+		ITEM_NAME,
+		ITEM_USER_CODE,
+		SUM(WEB_ITEM_PRICE) AS WEB_PRICE_TOTAL ,
+		SUM(WEB_QUANTITY) AS WEB_PAY_COUNT ,
+		CATEGORY_ID,
+		CATEGORY_CODE,
+		CATEGORY_NAME ,
+		GROUP_CODE ,
+		GROUP_NAME ,
+		CODE ,
+		NAME
+		FROM
+		(
+		SELECT
+		<if test='type == "2"'>
+			DATE_FORMAT(OI.PAY_DATE,'%Y%m') AS PAY_DATE ,
+		</if>
+		<if test='type == "3"'>
+			WEeK(OI.PAY_DATE) AS PAY_WEEK ,
+			DAYOFWEEK(OI.PAY_DATE) AS PAY_WEEK_DATE ,
+			DATE_FORMAT(OI.PAY_DATE,'%Y%m%d') AS PAY_DATE ,
+		</if>
+		<if test='type == "4"'>
+			DATE_FORMAT(OI.PAY_DATE,'%Y%m%d') AS PAY_DATE ,
+		</if>
+		OI.ITEM_ID,
+		OI.ITEM_NAME,
+		OI.ITEM_USER_CODE,
+		SUM(TOTAL_ITEM_PRICE) AS WEB_ITEM_PRICE ,
+		SUM(QUANTITY) AS WEB_QUANTITY ,
+		IFNULL(OI.CATEGORY_ID,0) AS CATEGORY_ID,
+		C.CATEGORY_CODE,
+		C.CATEGORY_NAME ,
+		CG.CODE AS GROUP_CODE ,
+		CG.NAME AS GROUP_NAME ,
+		CT.CODE ,
+		CT.NAME
+		FROM
+		OP_ORDER_ITEM AS OI
+		INNER JOIN OP_CATEGORY AS C ON OI.CATEGORY_ID = C.CATEGORY_ID
+		INNER JOIN OP_CATEGORY_GROUP AS CG ON OI.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+		INNER JOIN OP_CATEGORY_TEAM AS CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+		WHERE
+		OI.PAY_DATE BETWEEN CONCAT(#{startDate},'000000') AND CONCAT(#{endDate},'595959')
+		AND
+		OI.ORDER_STATUS IN ('1', '2', '3', '8', '9')
+		<if test="code != null and code != ''">
+			AND
+			OI.CATEGORY_TEAM_ID = #{code}
+			<if test="categoryGroupId != null and categoryGroupId != ''">
+				AND
+				OI.CATEGORY_GROUP_ID =  #{categoryGroupId}
+			</if>
+			<if test="categoryClass != null and categoryClass != ''">
+				AND
+				C.CATEGORY_CODE LIKE CONCAT(#{categoryClass},'%')
+			</if>
+		</if>
+		GROUP BY OI.ITEM_ID, PAY_DATE
+		) AS OI1
+
+		GROUP BY ITEM_ID
+
+		<if test='type == "2" or type == "4"'>
+			, PAY_DATE
+		</if>
+		<if test='type == "3"'>
+			, PAY_WEEK
+		</if>
+
+		ORDER BY ITEM_ID
+		<if test='type != "1"'>
+			, PAY_DATE
+		</if>
+		) AS OI2 LEFT JOIN OP_ITEM AS I ON OI2.ITEM_ID = I.ITEM_ID
+
+		<where>
+			<if test="query != null and query != ''">
+				<if test="where == 'ITEM_NAME'">
+					AND OI2.ITEM_NAME LIKE CONCAT('%', #{query},'%')
+				</if>
+				<if test="where == 'ITEM_USER_CODE'">
+					AND OI2.ITEM_USER_CODE LIKE CONCAT('%', #{query},'%')
+				</if>
+			</if>
+		</where>
+
+	</select>
+
+	<select id="getBrandStatisticsDetailByParam" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="RevenueBaseForDateResult">
+		SELECT
+		DATE_FORMAT(T.SEARCH_DATE,'%Y%m%d') AS DATE,
+		T.OS_TYPE,
+		T.BRAND,
+		T.ORDER_TYPE,
+		T.ITEM_NAME,
+		T.ITEM_USER_CODE,
+		SUM(T.QUANTITY) AS QUANTITY,
+		SUM(T.TOTAL_ITEM_PRICE) AS TOTAL_ITEM_PRICE,
+		SUM(IFNULL(T.COUPON_DISCOUNT_AMOUNT, 0)) AS ITEM_COUPON_DISCOUNT_AMOUNT
+		FROM
+		(
+
+		) T
+		GROUP BY DATE, T.OS_TYPE, T.BRAND, T.ORDER_TYPE, T.ITEM_USER_CODE
+		ORDER BY DATE ASC, T.OS_TYPE DESC, T.ORDER_TYPE DESC
+	</select>
+
+	<sql id="sqlStatsListFrom">
+		SELECT
+			<choose>
+				<when test='extra == "DATE"'>
+					<choose>
+						<when test='type == "year"'>LEFT(OI.SALES_DATE, 4)</when>
+						<when test='type == "month"'>LEFT(OI.SALES_DATE, 6)</when>
+						<otherwise>LEFT(OI.SALES_DATE, 8)</otherwise>
+					</choose> AS SEARCH_DATE,
+					IFNULL((
+						SELECT SUM(AMOUNT)
+						FROM OP_ORDER_PAYMENT
+						WHERE ORDER_CODE = OI.ORDER_CODE
+							AND PAYMENT_TYPE = '1'
+					), 0) - SUM(OI.SALE_PRICE * OI.QUANTITY) AS SHIPPING,
+					0 AS CANCEL_SHIPPING,
+					OI.ORDER_CODE,
+				</when>
+				<when test='extra == "SELLER"'>
+					OI.SELLER_ID,
+					(SELECT SELLER_NAME FROM OP_SELLER WHERE SELLER_ID = OI.SELLER_ID) AS SELLER_NAME,
+				</when>
+				<when test='extra == "ITEM"'>
+					OI.ITEM_ID,
+					OI.ITEM_NAME,
+					OI.ITEM_USER_CODE,
+				</when>
+				<when test='extra == "CATEGORY"'>
+					<choose>
+						<when test='type == "2"'>
+							CT.CATEGORY_TEAM_ID AS TEAM_ID,
+							CT.CODE AS TEAM_CODE,
+							CT.NAME AS TEAM_NAME,
+							CG.CATEGORY_GROUP_ID AS GROUP_ID,
+							CG.NAME AS GROUP_NAME,
+							CG.CODE AS GROUP_CODE,
+							C.CATEGORY_ID,
+							C.CATEGORY_NAME,
+							C.CATEGORY_CODE,
+							C.CATEGORY_CLASS1,
+							C.CATEGORY_CLASS2,
+							C.CATEGORY_CLASS3,
+							C.CATEGORY_CLASS4,
+						</when>
+						<otherwise>
+							<choose>
+								<when test='categorySearchMode == "team"'>
+									CT.CATEGORY_TEAM_ID AS TEAM_ID,
+									CT.CODE AS TEAM_CODE,
+									CT.NAME AS TEAM_NAME,
+									CG.CATEGORY_GROUP_ID AS GROUP_ID,
+									CG.NAME AS GROUP_NAME,
+									CG.CODE AS GROUP_CODE,
+									'' AS CATEGORY_ID,
+									'' AS CATEGORY_NAME,
+									'' AS CATEGORY_CODE,
+									'' AS CATEGORY_CLASS1,
+									'' AS CATEGORY_CLASS2,
+									'' AS CATEGORY_CLASS3,
+									'' AS CATEGORY_CLASS4,
+								</when>
+								<when test='categorySearchMode == "group"'>
+									CT.CATEGORY_TEAM_ID AS TEAM_ID,
+									CT.CODE AS TEAM_CODE,
+									CT.NAME AS TEAM_NAME,
+									CG.CATEGORY_GROUP_ID AS GROUP_ID,
+									CG.NAME AS GROUP_NAME,
+									CG.CODE AS GROUP_CODE,
+									C.CATEGORY_ID,
+									C.CATEGORY_NAME,
+									C.CATEGORY_CODE,
+									C.CATEGORY_CLASS1,
+									C.CATEGORY_CLASS2,
+									C.CATEGORY_CLASS3,
+									C.CATEGORY_CLASS4,
+								</when>
+								<when test='categorySearchMode == "category"'>
+									CT.CATEGORY_TEAM_ID AS TEAM_ID,
+									CT.CODE AS TEAM_CODE,
+									CT.NAME AS TEAM_NAME,
+									CG.CATEGORY_GROUP_ID AS GROUP_ID,
+									CG.NAME AS GROUP_NAME,
+									CG.CODE AS GROUP_CODE,
+									C.CATEGORY_ID,
+									C.CATEGORY_NAME,
+									C.CATEGORY_CODE,
+									C.CATEGORY_CLASS1,
+									C.CATEGORY_CLASS2,
+									C.CATEGORY_CLASS3,
+									C.CATEGORY_CLASS4,
+								</when>
+								<otherwise>
+									CT.CATEGORY_TEAM_ID AS TEAM_ID,
+									CT.CODE AS TEAM_CODE,
+									CT.NAME AS TEAM_NAME,
+									'' AS GROUP_ID,
+									'' AS GROUP_NAME,
+									'' AS GROUP_CODE,
+									'' AS CATEGORY_ID,
+									'' AS CATEGORY_NAME,
+									'' AS CATEGORY_CODE,
+									'' AS CATEGORY_CLASS1,
+									'' AS CATEGORY_CLASS2,
+									'' AS CATEGORY_CLASS3,
+									'' AS CATEGORY_CLASS4,
+								</otherwise>
+							</choose>
+						</otherwise>
+					</choose>
+				</when>
+				<when test='extra == "AREA"'>
+					<choose>
+						<when test='conditionType == "SIGUNGU"'>
+							IFNULL(SM.SIDO_NAME, '') AS RECEIVE_SIDO,
+							OSI.RECEIVE_SIGUNGU,
+						</when>
+						<otherwise>
+							IFNULL(SM.SIDO_NAME, '') AS RECEIVE_SIDO,
+							'' AS RECEIVE_SIGUNGU,
+						</otherwise>
+					</choose>
+					SM.SIDO_MAPPING_GROUP_KEY,
+				</when>
+			</choose>
+
+			OI.DEVICE_TYPE,
+
+			<choose>
+				<when test='extra == "DATE"'>
+					1 AS SALE_COUNT,
+					0 AS CANCEL_COUNT,
+				</when>
+				<otherwise>
+					SUM(OI.QUANTITY) AS SALE_COUNT,
+					0 AS CANCEL_COUNT,
+				</otherwise>
+			</choose>
+
+			SUM(OI.SALE_PRICE * OI.QUANTITY) AS SALE_AMOUNT,
+			0 AS CANCEL_AMOUNT,
+
+			SUM((OI.PURCHASE_PRICE + OI.OPTION_PRICE) * OI.QUANTITY)  AS ITEM_PRICE,
+			0 AS CANCEL_ITEM_PRICE,
+
+			SUM((CASE WHEN OI.COUPON_DISCOUNT_PRICE > 0 THEN -OI.COUPON_DISCOUNT_PRICE ELSE OI.COUPON_DISCOUNT_PRICE END) * OI.QUANTITY) AS COUPON_DISCOUNT_PRICE,
+			SUM((CASE WHEN OI.SELLER_DISCOUNT_PRICE > 0 THEN -OI.SELLER_DISCOUNT_PRICE ELSE OI.SELLER_DISCOUNT_PRICE END) * OI.QUANTITY) AS SELLER_DISCOUNT_PRICE,
+			SUM((
+				CASE
+					WHEN OI.SPOT_SALE_FLAG = 'N' THEN 0
+					WHEN OI.SPOT_DISCOUNT_PRICE > 0 THEN -OI.SPOT_DISCOUNT_PRICE
+					ELSE OI.SPOT_DISCOUNT_PRICE
+				END
+			) * OI.QUANTITY) AS SPOT_DISCOUNT_PRICE,
+			SUM((CASE WHEN OI.USER_LEVEL_DISCOUNT_PRICE > 0 THEN -OI.USER_LEVEL_DISCOUNT_PRICE ELSE OI.USER_LEVEL_DISCOUNT_PRICE END) * OI.QUANTITY) AS LEVEL_DISCOUNT_PRICE,
+			0 AS CANCEL_COUPON_DISCOUNT_PRICE,
+			0 AS CANCEL_SELLER_DISCOUNT_PRICE,
+			0 AS CANCEL_SPOT_DISCOUNT_PRICE,
+			0 AS CANCEL_LEVEL_DISCOUNT_PRICE
+		FROM OP_ORDER_ITEM OI
+		<choose>
+			<when test='extra == "CATEGORY"'>
+				<choose>
+					<when test='type == "2"'>
+						INNER JOIN OP_CATEGORY_TEAM CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+						INNER JOIN OP_CATEGORY_GROUP CG ON OI.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+						INNER JOIN OP_CATEGORY C ON OI.CATEGORY_ID = C.CATEGORY_ID
+					</when>
+					<otherwise>
+						<choose>
+							<when test='categorySearchMode == "team"'>
+								INNER JOIN OP_CATEGORY_TEAM CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+								INNER JOIN OP_CATEGORY_GROUP CG ON OI.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+							</when>
+							<when test='categorySearchMode == "group"'>
+								INNER JOIN OP_CATEGORY_TEAM CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+								INNER JOIN OP_CATEGORY_GROUP CG ON OI.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+								INNER JOIN OP_CATEGORY C ON OI.CATEGORY_ID = C.CATEGORY_ID
+							</when>
+							<when test='categorySearchMode == "category"'>
+								INNER JOIN OP_CATEGORY_TEAM CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+								INNER JOIN OP_CATEGORY_GROUP CG ON OI.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+								INNER JOIN OP_CATEGORY C ON OI.CATEGORY_ID = C.CATEGORY_ID
+							</when>
+							<otherwise>LEFT JOIN OP_CATEGORY_TEAM CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID</otherwise>
+						</choose>
+					</otherwise>
+				</choose>
+			</when>
+			<when test='extra == "AREA"'>
+				INNER JOIN OP_ORDER_SHIPPING_INFO OSI ON OI.ORDER_CODE = OSI.ORDER_CODE AND OI.ORDER_SEQUENCE = OSI.ORDER_SEQUENCE AND OI.SHIPPING_INFO_SEQUENCE = OSI.SHIPPING_INFO_SEQUENCE
+				LEFT JOIN OP_SIDO_MAPPING SM ON SM.SIDO_DATA = OSI.RECEIVE_SIDO
+			</when>
+		</choose>
+		WHERE
+			OI.SALES_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+			<include refid="sqlStatsWhere" />
+		GROUP BY
+			<choose>
+				<when test='extra == "DATE"'>
+					<choose>
+						<when test='type == "year"'>LEFT(OI.SALES_DATE, 4)</when>
+						<when test='type == "month"'>LEFT(OI.SALES_DATE, 6)</when>
+						<otherwise>LEFT(OI.SALES_DATE, 8)</otherwise>
+					</choose>, OI.DEVICE_TYPE, OI.ORDER_CODE
+				</when>
+				<when test='extra == "SELLER"'>
+					OI.SELLER_ID, OI.DEVICE_TYPE
+				</when>
+				<when test='extra == "ITEM"'>
+					OI.ITEM_ID, OI.DEVICE_TYPE
+				</when>
+				<when test='extra == "CATEGORY"'>
+					<choose>
+						<when test='type == "2"'>
+							CT.CATEGORY_TEAM_ID,
+							CG.CATEGORY_GROUP_ID,
+							C.CATEGORY_ID,
+						</when>
+						<otherwise>
+							<choose>
+								<when test='categorySearchMode == "team"'>
+									CT.CATEGORY_TEAM_ID,
+									CG.CATEGORY_GROUP_ID,
+								</when>
+								<when test='categorySearchMode == "group"'>
+									CT.CATEGORY_TEAM_ID,
+									CG.CATEGORY_GROUP_ID,
+									C.CATEGORY_ID,
+								</when>
+								<when test='categorySearchMode == "category"'>
+									CT.CATEGORY_TEAM_ID,
+									CG.CATEGORY_GROUP_ID,
+									C.CATEGORY_ID,
+								</when>
+								<otherwise>CT.CATEGORY_TEAM_ID,</otherwise>
+							</choose>
+						</otherwise>
+					</choose>
+					OI.DEVICE_TYPE
+				</when>
+				<when test='extra == "AREA"'>
+					<choose>
+						<when test='conditionType == "SIGUNGU"'>
+							SM.SIDO_NAME, OSI.RECEIVE_SIGUNGU
+						</when>
+						<otherwise>
+							SM.SIDO_NAME
+						</otherwise>
+					</choose>
+					, OI.DEVICE_TYPE
+				</when>
+			</choose>
+
+		UNION ALL
+
+		SELECT
+			<choose>
+				<when test='extra == "DATE"'>
+					<choose>
+						<when test='type == "year"'>LEFT(OI.SALES_CANCEL_DATE, 4)</when>
+						<when test='type == "month"'>LEFT(OI.SALES_CANCEL_DATE, 6)</when>
+						<otherwise>LEFT(OI.SALES_CANCEL_DATE, 8)</otherwise>
+					</choose> AS SEARCH_DATE,
+					0 AS SHIPPING,
+					IFNULL((
+						SELECT SUM(CANCEL_AMOUNT)
+						FROM OP_ORDER_PAYMENT
+						WHERE ORDER_CODE = OI.ORDER_CODE
+							AND PAYMENT_TYPE = '2'
+							AND PAY_DATE LIKE CONCAT(
+							<choose>
+								<when test='type == "year"'>LEFT(OI.SALES_CANCEL_DATE, 4)</when>
+								<when test='type == "month"'>LEFT(OI.SALES_CANCEL_DATE, 6)</when>
+								<otherwise>LEFT(OI.SALES_CANCEL_DATE, 8)</otherwise>
+							</choose>, '%')
+					), 0) - SUM(OI.SALE_PRICE * OI.QUANTITY) AS CANCEL_SHIPPING,
+					OI.ORDER_CODE,
+				</when>
+				<when test='extra == "SELLER"'>
+					OI.SELLER_ID,
+					(SELECT SELLER_NAME FROM OP_SELLER WHERE SELLER_ID = OI.SELLER_ID) AS SELLER_NAME,
+				</when>
+				<when test='extra == "ITEM"'>
+					OI.ITEM_ID,
+					OI.ITEM_NAME,
+					OI.ITEM_USER_CODE,
+				</when>
+				<when test='extra == "CATEGORY"'>
+					<choose>
+						<when test='type == "2"'>
+							CT.CATEGORY_TEAM_ID AS TEAM_ID,
+							CT.CODE AS TEAM_CODE,
+							CT.NAME AS TEAM_NAME,
+							CG.CATEGORY_GROUP_ID AS GROUP_ID,
+							CG.NAME AS GROUP_NAME,
+							CG.CODE AS GROUP_CODE,
+							C.CATEGORY_ID,
+							C.CATEGORY_NAME,
+							C.CATEGORY_CODE,
+							C.CATEGORY_CLASS1,
+							C.CATEGORY_CLASS2,
+							C.CATEGORY_CLASS3,
+							C.CATEGORY_CLASS4,
+						</when>
+						<otherwise>
+							<choose>
+								<when test='categorySearchMode == "team"'>
+									CT.CATEGORY_TEAM_ID AS TEAM_ID,
+									CT.CODE AS TEAM_CODE,
+									CT.NAME AS TEAM_NAME,
+									CG.CATEGORY_GROUP_ID AS GROUP_ID,
+									CG.NAME AS GROUP_NAME,
+									CG.CODE AS GROUP_CODE,
+									'' AS CATEGORY_ID,
+									'' AS CATEGORY_NAME,
+									'' AS CATEGORY_CODE,
+									'' AS CATEGORY_CLASS1,
+									'' AS CATEGORY_CLASS2,
+									'' AS CATEGORY_CLASS3,
+									'' AS CATEGORY_CLASS4,
+								</when>
+								<when test='categorySearchMode == "group"'>
+									CT.CATEGORY_TEAM_ID AS TEAM_ID,
+									CT.CODE AS TEAM_CODE,
+									CT.NAME AS TEAM_NAME,
+									CG.CATEGORY_GROUP_ID AS GROUP_ID,
+									CG.NAME AS GROUP_NAME,
+									CG.CODE AS GROUP_CODE,
+									C.CATEGORY_ID,
+									C.CATEGORY_NAME,
+									C.CATEGORY_CODE,
+									C.CATEGORY_CLASS1,
+									C.CATEGORY_CLASS2,
+									C.CATEGORY_CLASS3,
+									C.CATEGORY_CLASS4,
+								</when>
+								<when test='categorySearchMode == "category"'>
+									CT.CATEGORY_TEAM_ID AS TEAM_ID,
+									CT.CODE AS TEAM_CODE,
+									CT.NAME AS TEAM_NAME,
+									CG.CATEGORY_GROUP_ID AS GROUP_ID,
+									CG.NAME AS GROUP_NAME,
+									CG.CODE AS GROUP_CODE,
+									C.CATEGORY_ID,
+									C.CATEGORY_NAME,
+									C.CATEGORY_CODE,
+									C.CATEGORY_CLASS1,
+									C.CATEGORY_CLASS2,
+									C.CATEGORY_CLASS3,
+									C.CATEGORY_CLASS4,
+								</when>
+								<otherwise>
+									CT.CATEGORY_TEAM_ID AS TEAM_ID,
+									CT.CODE AS TEAM_CODE,
+									CT.NAME AS TEAM_NAME,
+									'' AS GROUP_ID,
+									'' AS GROUP_NAME,
+									'' AS GROUP_CODE,
+									'' AS CATEGORY_ID,
+									'' AS CATEGORY_NAME,
+									'' AS CATEGORY_CODE,
+									'' AS CATEGORY_CLASS1,
+									'' AS CATEGORY_CLASS2,
+									'' AS CATEGORY_CLASS3,
+									'' AS CATEGORY_CLASS4,
+								</otherwise>
+							</choose>
+						</otherwise>
+					</choose>
+				</when>
+				<when test='extra == "AREA"'>
+					<choose>
+						<when test='conditionType == "SIGUNGU"'>
+							IFNULL(SM.SIDO_NAME, '') AS RECEIVE_SIDO,
+							OSI.RECEIVE_SIGUNGU,
+						</when>
+						<otherwise>
+							IFNULL(SM.SIDO_NAME, '') AS RECEIVE_SIDO,
+							'' AS RECEIVE_SIGUNGU,
+						</otherwise>
+					</choose>
+					SM.SIDO_MAPPING_GROUP_KEY,
+				</when>
+			</choose>
+
+			OI.DEVICE_TYPE,
+
+			<choose>
+				<when test='extra == "DATE"'>
+					0 AS SALE_COUNT,
+					-1 AS CANCEL_COUNT,
+				</when>
+				<otherwise>
+					0 AS SALE_COUNT,
+					SUM((CASE WHEN OI.QUANTITY > 0 THEN -OI.QUANTITY ELSE OI.QUANTITY END)) AS CANCEL_COUNT,
+				</otherwise>
+			</choose>
+
+			0 AS SALE_AMOUNT,
+			SUM((CASE WHEN OI.SALE_PRICE > 0 THEN -OI.SALE_PRICE ELSE OI.SALE_PRICE END) * OI.QUANTITY) AS CANCEL_AMOUNT,
+
+			0 AS ITEM_PRICE,
+			SUM((CASE WHEN (OI.PURCHASE_PRICE + OI.OPTION_PRICE) > 0 THEN -(OI.PURCHASE_PRICE + OI.OPTION_PRICE) ELSE (OI.PURCHASE_PRICE + OI.OPTION_PRICE) END) * OI.QUANTITY)  AS CANCEL_ITEM_PRICE,
+
+			0 AS COUPON_DISCOUNT_PRICE,
+			0 AS SELLER_DISCOUNT_PRICE,
+			0 AS SPOT_DISCOUNT_PRICE,
+			0 AS LEVEL_DISCOUNT_PRICE,
+			SUM(OI.COUPON_DISCOUNT_PRICE * OI.QUANTITY) AS CANCEL_COUPON_DISCOUNT_PRICE,
+			SUM(OI.SELLER_DISCOUNT_PRICE * OI.QUANTITY) AS CANCEL_SELLER_DISCOUNT_PRICE,
+			SUM((CASE WHEN OI.SPOT_SALE_FLAG = 'N' THEN 0 ELSE OI.SPOT_DISCOUNT_PRICE END) * OI.QUANTITY) AS CANCEL_SPOT_DISCOUNT_PRICE,
+			SUM(OI.USER_LEVEL_DISCOUNT_PRICE * OI.QUANTITY) AS CANCEL_LEVEL_DISCOUNT_PRICE
+		FROM OP_ORDER_ITEM OI
+		<choose>
+			<when test='extra == "CATEGORY"'>
+				<choose>
+					<when test='type == "2"'>
+						INNER JOIN OP_CATEGORY_TEAM CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+						INNER JOIN OP_CATEGORY_GROUP CG ON OI.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+						INNER JOIN OP_CATEGORY C ON OI.CATEGORY_ID = C.CATEGORY_ID
+					</when>
+					<otherwise>
+						<choose>
+							<when test='categorySearchMode == "team"'>
+								INNER JOIN OP_CATEGORY_TEAM CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+								INNER JOIN OP_CATEGORY_GROUP CG ON OI.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+							</when>
+							<when test='categorySearchMode == "group"'>
+								INNER JOIN OP_CATEGORY_TEAM CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+								INNER JOIN OP_CATEGORY_GROUP CG ON OI.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+								INNER JOIN OP_CATEGORY C ON OI.CATEGORY_ID = C.CATEGORY_ID
+							</when>
+							<when test='categorySearchMode == "category"'>
+								INNER JOIN OP_CATEGORY_TEAM CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID
+								INNER JOIN OP_CATEGORY_GROUP CG ON OI.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+								INNER JOIN OP_CATEGORY C ON OI.CATEGORY_ID = C.CATEGORY_ID
+							</when>
+							<otherwise>LEFT JOIN OP_CATEGORY_TEAM CT ON OI.CATEGORY_TEAM_ID = CT.CATEGORY_TEAM_ID</otherwise>
+						</choose>
+					</otherwise>
+				</choose>
+			</when>
+			<when test='extra == "AREA"'>
+				INNER JOIN OP_ORDER_SHIPPING_INFO OSI ON OI.ORDER_CODE = OSI.ORDER_CODE AND OI.ORDER_SEQUENCE = OSI.ORDER_SEQUENCE AND OI.SHIPPING_INFO_SEQUENCE = OSI.SHIPPING_INFO_SEQUENCE
+				LEFT JOIN OP_SIDO_MAPPING SM ON SM.SIDO_DATA = OSI.RECEIVE_SIDO
+			</when>
+		</choose>
+		WHERE
+			OI.CANCEL_FLAG = 'Y'
+			AND OI.SALES_CANCEL_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+			<include refid="sqlStatsWhere" />
+		GROUP BY
+			<choose>
+				<when test='extra == "DATE"'>
+					<choose>
+						<when test='type == "year"'>LEFT(OI.SALES_CANCEL_DATE, 4)</when>
+						<when test='type == "month"'>LEFT(OI.SALES_CANCEL_DATE, 6)</when>
+						<otherwise>LEFT(OI.SALES_CANCEL_DATE, 8)</otherwise>
+					</choose>, OI.DEVICE_TYPE, OI.ORDER_CODE
+				</when>
+				<when test='extra == "SELLER"'>
+					OI.SELLER_ID, OI.DEVICE_TYPE
+				</when>
+				<when test='extra == "ITEM"'>
+					OI.ITEM_ID, OI.DEVICE_TYPE
+				</when>
+				<when test='extra == "CATEGORY"'>
+					<choose>
+						<when test='type == "2"'>
+							CT.CATEGORY_TEAM_ID,
+							CG.CATEGORY_GROUP_ID,
+							C.CATEGORY_ID,
+						</when>
+						<otherwise>
+							<choose>
+								<when test='categorySearchMode == "team"'>
+									CT.CATEGORY_TEAM_ID,
+									CG.CATEGORY_GROUP_ID,
+								</when>
+								<when test='categorySearchMode == "group"'>
+									CT.CATEGORY_TEAM_ID,
+									CG.CATEGORY_GROUP_ID,
+									C.CATEGORY_ID,
+								</when>
+								<when test='categorySearchMode == "category"'>
+									CT.CATEGORY_TEAM_ID,
+									CG.CATEGORY_GROUP_ID,
+									C.CATEGORY_ID,
+								</when>
+								<otherwise>CT.CATEGORY_TEAM_ID,</otherwise>
+							</choose>
+						</otherwise>
+					</choose>
+					OI.DEVICE_TYPE
+				</when>
+				<when test='extra == "AREA"'>
+					<choose>
+						<when test='conditionType == "SIGUNGU"'>
+							SM.SIDO_NAME, OSI.RECEIVE_SIGUNGU
+						</when>
+						<otherwise>
+							SM.SIDO_NAME
+						</otherwise>
+					</choose>
+					, OI.DEVICE_TYPE
+				</when>
+			</choose>
+	</sql>
+
+    <sql id="sqlStatsWhere">
+		<if test='extra == "AREA"'>
+			<if test='conditionType == "SIGUNGU"'>
+				<if test="sidoMappingGroupKey == 0">
+					AND SM.SIDO_MAPPING_GROUP_KEY IS NULL
+				</if>
+
+				<if test="sidoMappingGroupKey > 0">
+					AND SM.SIDO_MAPPING_GROUP_KEY = #{sidoMappingGroupKey}
+				</if>
+			</if>
+		</if>
+
+		AND OI.PAY_DATE != '00000000000000'
+
+		<if test="userId != null and userId != ''">
+			AND OI.USER_ID = #{userId}
+		</if>
+
+		<if test="guestFlag != null">
+			AND OI.GUEST_FLAG = #{guestFlag}
+		</if>
+
+		<if test="sellerId > 0">
+			AND OI.SELLER_ID = #{sellerId}
+		</if>
+		<if test="(query != null and query != '') and (where != null and where != '')">
+			<choose>
+				<when test="where == 'ITEM_NAME'">
+					AND OI.ITEM_NAME LIKE CONCAT('%', #{query}, '%')
+				</when>
+				<when test="where == 'ITEM_USER_CODE'">
+					AND (
+						OI.ITEM_USER_CODE LIKE CONCAT(#{query}, '%')
+						OR OI.OPTIONS LIKE CONCAT('%"optionCode":"', #{query}, '"%')
+					)
+				</when>
+			</choose>
+		</if>
+
+		<choose>
+			<when test="(categoryClass != null and categoryClass != '')">
+				AND OI.CATEGORY_ID IN (
+					SELECT CATEGORY_ID
+					FROM OP_CATEGORY WHERE CATEGORY_CODE LIKE CONCAT(#{categoryClass}, '%')
+				)
+			</when>
+			<otherwise>
+				<if test="(code != null and code != '')">
+					AND	OI.CATEGORY_TEAM_ID = #{code}
+				</if>
+
+				<if test="(categoryGroupId != null and categoryGroupId != '')">
+					AND OI.CATEGORY_GROUP_ID = #{categoryGroupId}
+				</if>
+			</otherwise>
+		</choose>
+
+		<if test='brand != null and brand != ""'>
+			AND OI.BRAND = #{brand}
+		</if>
+
+		<if test='itemId != null and itemId != ""'>
+			AND OI.ITEM_ID = #{itemId}
+		</if>
+    </sql>
+
+	<sql id="sqlStatsListGroupBy">
+		GROUP BY
+		<choose>
+			<when test='extra == "DATE"'>
+				T.SEARCH_DATE, T.DEVICE_TYPE
+			</when>
+			<when test='extra == "SELLER"'>
+				T.SELLER_ID, T.DEVICE_TYPE
+			</when>
+			<when test='extra == "ITEM"'>
+				T.ITEM_ID, T.DEVICE_TYPE
+			</when>
+			<when test='extra == "CATEGORY"'>
+				<choose>
+					<when test='type == "2"'>
+						T.TEAM_ID,
+						T.GROUP_ID,
+						T.CATEGORY_ID,
+					</when>
+					<otherwise>
+						<choose>
+							<when test='categorySearchMode == "team"'>
+								T.TEAM_ID,
+								T.GROUP_ID,
+							</when>
+							<when test='categorySearchMode == "group"'>
+								T.TEAM_ID,
+								T.GROUP_ID,
+								T.CATEGORY_ID,
+							</when>
+							<when test='categorySearchMode == "category"'>
+								T.TEAM_ID,
+								T.GROUP_ID,
+								T.CATEGORY_ID,
+							</when>
+							<otherwise>T.TEAM_ID,</otherwise>
+						</choose>
+					</otherwise>
+				</choose>
+				T.DEVICE_TYPE
+			</when>
+			<when test='extra == "AREA"'>
+				<choose>
+					<when test="conditionType == 'SIGUNGU'">T.RECEIVE_SIGUNGU</when>
+					<otherwise>T.RECEIVE_SIDO</otherwise>
+				</choose>
+				, T.DEVICE_TYPE
+				, T.SIDO_MAPPING_GROUP_KEY
+			</when>
+		</choose>
+	</sql>
+
+	<select id="getSellerStats" parameterType="saleson.shop.statistics.support.StatisticsParam" resultType="saleson.shop.statistics.domain.BaseStats">
+		SELECT
+			T.sellerId,
+			T.deviceType,
+			SUM(saleCount) AS saleCount,
+			SUM(saleAmount) AS saleAmount,
+			SUM(cancelCount) AS cancelCount,
+			SUM(cancelAmount) AS cancelAmount
+		FROM (
+			SELECT
+				OI.SELLER_ID AS sellerId,
+				OI.DEVICE_TYPE AS deviceType,
+
+				SUM(OI.QUANTITY) AS saleCount,
+				SUM(OI.SALE_PRICE * OI.QUANTITY) AS saleAmount,
+
+				0 AS cancelCount,
+				0 AS cancelAmount
+			FROM OP_ORDER_ITEM OI
+			WHERE
+				OI.SALES_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+				<include refid="sqlStatsWhere" />
+			GROUP BY OI.SELLER_ID, OI.DEVICE_TYPE
+
+			UNION ALL
+
+			SELECT
+				OI.SELLER_ID AS sellerId,
+				OI.DEVICE_TYPE AS deviceType,
+
+				0 AS saleCount,
+				0 AS saleAmount,
+				SUM((CASE WHEN OI.QUANTITY > 0 THEN -OI.QUANTITY ELSE OI.QUANTITY END)) AS cancelCount,
+				SUM((CASE WHEN (OI.SALE_PRICE * OI.QUANTITY) > 0 THEN -(OI.SALE_PRICE * OI.QUANTITY) ELSE (OI.SALE_PRICE * OI.QUANTITY) END)) AS cancelAmount
+			FROM OP_ORDER_ITEM OI
+			WHERE
+				OI.SALES_CANCEL_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+				AND OI.CANCEL_FLAG = 'Y'
+				<include refid="sqlStatsWhere" />
+			GROUP BY OI.SELLER_ID, OI.DEVICE_TYPE
+		) T
+		GROUP BY T.sellerId, T.deviceType
+	</select>
+
+	<select id="getItemStats" parameterType="saleson.shop.statistics.support.StatisticsParam" resultType="saleson.shop.statistics.domain.BaseStats">
+		SELECT
+			T.itemId,
+			T.deviceType,
+			SUM(saleCount) AS saleCount,
+			SUM(saleAmount) AS saleAmount,
+			SUM(cancelCount) AS cancelCount,
+			SUM(cancelAmount) AS cancelAmount
+		FROM (
+			SELECT
+				OI.ITEM_ID AS itemId,
+				OI.DEVICE_TYPE AS deviceType,
+
+				SUM(OI.QUANTITY) AS saleCount,
+				SUM(OI.SALE_PRICE * OI.QUANTITY) AS saleAmount,
+				0 AS cancelCount,
+				0 AS cancelAmount
+			FROM OP_ORDER_ITEM OI
+			WHERE
+				OI.SALES_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+				<include refid="sqlStatsWhere" />
+			GROUP BY OI.ITEM_ID, OI.DEVICE_TYPE
+
+			UNION ALL
+
+			SELECT
+				OI.ITEM_ID AS itemId,
+				OI.DEVICE_TYPE AS deviceType,
+
+				0 AS saleCount,
+				0 AS saleAmount,
+				SUM((CASE WHEN OI.QUANTITY > 0 THEN -OI.QUANTITY ELSE OI.QUANTITY END)) AS cancelCount,
+				SUM((CASE WHEN (OI.SALE_PRICE * OI.QUANTITY) > 0 THEN -(OI.SALE_PRICE * OI.QUANTITY) ELSE (OI.SALE_PRICE * OI.QUANTITY) END)) AS cancelAmount
+			FROM OP_ORDER_ITEM OI
+			WHERE
+				OI.SALES_CANCEL_DATE BETWEEN CONCAT(#{startDate}, '000000') AND CONCAT(#{endDate}, '595959')
+				AND OI.CANCEL_FLAG = 'Y'
+				<include refid="sqlStatsWhere" />
+			GROUP BY OI.ITEM_ID, OI.DEVICE_TYPE
+		) T
+		GROUP BY T.itemId, T.deviceType
+	</select>
+
+	<select id="getDateStatsList" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="DateStatsResult">
+		SELECT
+			T.SEARCH_DATE,
+			T.DEVICE_TYPE,
+			SUM(T.SALE_COUNT) AS SALE_COUNT,
+			SUM(T.CANCEL_COUNT) AS CANCEL_COUNT,
+			SUM(T.SALE_AMOUNT) AS SALE_AMOUNT,
+			SUM(T.CANCEL_AMOUNT) AS CANCEL_AMOUNT,
+			SUM(T.ITEM_PRICE) AS ITEM_PRICE,
+			SUM(T.CANCEL_ITEM_PRICE) AS CANCEL_ITEM_PRICE,
+			SUM(T.COUPON_DISCOUNT_PRICE) AS COUPON_DISCOUNT_PRICE,
+			SUM(T.SELLER_DISCOUNT_PRICE) AS SELLER_DISCOUNT_PRICE,
+			SUM(T.SPOT_DISCOUNT_PRICE) AS SPOT_DISCOUNT_PRICE,
+			SUM(T.LEVEL_DISCOUNT_PRICE) AS LEVEL_DISCOUNT_PRICE,
+			SUM(T.CANCEL_COUPON_DISCOUNT_PRICE) AS CANCEL_COUPON_DISCOUNT_PRICE,
+			SUM(T.CANCEL_SELLER_DISCOUNT_PRICE) AS CANCEL_SELLER_DISCOUNT_PRICE,
+			SUM(T.CANCEL_SPOT_DISCOUNT_PRICE) AS CANCEL_SPOT_DISCOUNT_PRICE,
+			SUM(T.CANCEL_LEVEL_DISCOUNT_PRICE) AS CANCEL_LEVEL_DISCOUNT_PRICE,
+			SUM(T.SHIPPING) AS SHIPPING,
+			SUM(-T.CANCEL_SHIPPING) AS CANCEL_SHIPPING
+		FROM (
+			<include refid="sqlStatsListFrom" />
+		) T
+		<include refid="sqlStatsListGroupBy" />
+		ORDER BY T.SEARCH_DATE DESC
+	</select>
+
+	<select id="getSellerStatsList" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="SellerStatsResult">
+		<include refid="CommonMapper.paginationHeader" />
+
+			SELECT
+				T.SELLER_ID,
+				T.DEVICE_TYPE,
+				T.SELLER_NAME,
+				SUM(T.SALE_COUNT) AS SALE_COUNT,
+				SUM(T.CANCEL_COUNT) AS CANCEL_COUNT,
+				SUM(T.SALE_AMOUNT) AS SALE_AMOUNT,
+				SUM(T.CANCEL_AMOUNT) AS CANCEL_AMOUNT,
+				SUM(T.ITEM_PRICE) AS ITEM_PRICE,
+				SUM(T.CANCEL_ITEM_PRICE) AS CANCEL_ITEM_PRICE,
+				SUM(T.COUPON_DISCOUNT_PRICE) AS COUPON_DISCOUNT_PRICE,
+				SUM(T.SELLER_DISCOUNT_PRICE) AS SELLER_DISCOUNT_PRICE,
+				SUM(T.SPOT_DISCOUNT_PRICE) AS SPOT_DISCOUNT_PRICE,
+				SUM(T.LEVEL_DISCOUNT_PRICE) AS LEVEL_DISCOUNT_PRICE,
+				SUM(T.CANCEL_COUPON_DISCOUNT_PRICE) AS CANCEL_COUPON_DISCOUNT_PRICE,
+				SUM(T.CANCEL_SELLER_DISCOUNT_PRICE) AS CANCEL_SELLER_DISCOUNT_PRICE,
+				SUM(T.CANCEL_SPOT_DISCOUNT_PRICE) AS CANCEL_SPOT_DISCOUNT_PRICE,
+				SUM(T.CANCEL_LEVEL_DISCOUNT_PRICE) AS CANCEL_LEVEL_DISCOUNT_PRICE
+			FROM (
+				<include refid="sqlStatsListFrom" />
+			) T
+			<include refid="sqlStatsListGroupBy" />
+			ORDER BY T.SELLER_ID DESC
+
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getItemStatsList" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="ItemStatsResult">
+		<include refid="CommonMapper.paginationHeader" />
+
+			SELECT
+				T.ITEM_ID,
+				T.DEVICE_TYPE,
+				T.ITEM_NAME,
+				T.ITEM_USER_CODE,
+				SUM(T.SALE_COUNT) AS SALE_COUNT,
+				SUM(T.CANCEL_COUNT) AS CANCEL_COUNT,
+				SUM(T.SALE_AMOUNT) AS SALE_AMOUNT,
+				SUM(T.CANCEL_AMOUNT) AS CANCEL_AMOUNT,
+				SUM(T.ITEM_PRICE) AS ITEM_PRICE,
+				SUM(T.CANCEL_ITEM_PRICE) AS CANCEL_ITEM_PRICE,
+				SUM(T.COUPON_DISCOUNT_PRICE) AS COUPON_DISCOUNT_PRICE,
+				SUM(T.SELLER_DISCOUNT_PRICE) AS SELLER_DISCOUNT_PRICE,
+				SUM(T.SPOT_DISCOUNT_PRICE) AS SPOT_DISCOUNT_PRICE,
+				SUM(T.LEVEL_DISCOUNT_PRICE) AS LEVEL_DISCOUNT_PRICE,
+				SUM(T.CANCEL_COUPON_DISCOUNT_PRICE) AS CANCEL_COUPON_DISCOUNT_PRICE,
+				SUM(T.CANCEL_SELLER_DISCOUNT_PRICE) AS CANCEL_SELLER_DISCOUNT_PRICE,
+				SUM(T.CANCEL_SPOT_DISCOUNT_PRICE) AS CANCEL_SPOT_DISCOUNT_PRICE,
+				SUM(T.CANCEL_LEVEL_DISCOUNT_PRICE) AS CANCEL_LEVEL_DISCOUNT_PRICE
+			FROM (
+				<include refid="sqlStatsListFrom"/>
+			) T
+			<include refid="sqlStatsListGroupBy" />
+			ORDER BY T.ITEM_ID DESC
+
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getCategoryStatsList" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="CategoryStatsResult">
+
+		SELECT
+			T.TEAM_ID,
+			T.TEAM_CODE,
+			T.TEAM_NAME,
+			T.GROUP_ID,
+			T.GROUP_CODE,
+			T.GROUP_NAME,
+			T.CATEGORY_ID,
+			T.CATEGORY_NAME,
+			T.CATEGORY_CODE,
+			T.CATEGORY_CLASS1,
+			T.CATEGORY_CLASS2,
+			T.CATEGORY_CLASS3,
+			T.CATEGORY_CLASS4,
+			T.DEVICE_TYPE,
+			SUM(T.SALE_COUNT) AS SALE_COUNT,
+			SUM(T.CANCEL_COUNT) AS CANCEL_COUNT,
+			SUM(T.SALE_AMOUNT) AS SALE_AMOUNT,
+			SUM(T.CANCEL_AMOUNT) AS CANCEL_AMOUNT,
+			SUM(T.ITEM_PRICE) AS ITEM_PRICE,
+			SUM(T.CANCEL_ITEM_PRICE) AS CANCEL_ITEM_PRICE,
+			SUM(T.COUPON_DISCOUNT_PRICE) AS COUPON_DISCOUNT_PRICE,
+			SUM(T.SELLER_DISCOUNT_PRICE) AS SELLER_DISCOUNT_PRICE,
+			SUM(T.SPOT_DISCOUNT_PRICE) AS SPOT_DISCOUNT_PRICE,
+			SUM(T.LEVEL_DISCOUNT_PRICE) AS LEVEL_DISCOUNT_PRICE,
+			SUM(T.CANCEL_COUPON_DISCOUNT_PRICE) AS CANCEL_COUPON_DISCOUNT_PRICE,
+			SUM(T.CANCEL_SELLER_DISCOUNT_PRICE) AS CANCEL_SELLER_DISCOUNT_PRICE,
+			SUM(T.CANCEL_SPOT_DISCOUNT_PRICE) AS CANCEL_SPOT_DISCOUNT_PRICE,
+			SUM(T.CANCEL_LEVEL_DISCOUNT_PRICE) AS CANCEL_LEVEL_DISCOUNT_PRICE
+		FROM (
+			<include refid="sqlStatsListFrom" />
+		) T
+		<include refid="sqlStatsListGroupBy" />
+
+	</select>
+
+	<select id="getAreaStatsList" parameterType="saleson.shop.statistics.support.StatisticsParam" resultMap="AreaStatsResult">
+		SELECT
+			T.RECEIVE_SIDO,
+			T.RECEIVE_SIGUNGU,
+			T.SIDO_MAPPING_GROUP_KEY,
+			T.DEVICE_TYPE,
+			SUM(T.SALE_COUNT) AS SALE_COUNT,
+			SUM(T.CANCEL_COUNT) AS CANCEL_COUNT,
+			SUM(T.SALE_AMOUNT) AS SALE_AMOUNT,
+			SUM(T.CANCEL_AMOUNT) AS CANCEL_AMOUNT,
+			SUM(T.ITEM_PRICE) AS ITEM_PRICE,
+			SUM(T.CANCEL_ITEM_PRICE) AS CANCEL_ITEM_PRICE,
+			SUM(T.COUPON_DISCOUNT_PRICE) AS COUPON_DISCOUNT_PRICE,
+			SUM(T.SELLER_DISCOUNT_PRICE) AS SELLER_DISCOUNT_PRICE,
+			SUM(T.SPOT_DISCOUNT_PRICE) AS SPOT_DISCOUNT_PRICE,
+			SUM(T.LEVEL_DISCOUNT_PRICE) AS LEVEL_DISCOUNT_PRICE,
+			SUM(T.CANCEL_COUPON_DISCOUNT_PRICE) AS CANCEL_COUPON_DISCOUNT_PRICE,
+			SUM(T.CANCEL_SELLER_DISCOUNT_PRICE) AS CANCEL_SELLER_DISCOUNT_PRICE,
+			SUM(T.CANCEL_SPOT_DISCOUNT_PRICE) AS CANCEL_SPOT_DISCOUNT_PRICE,
+			SUM(T.CANCEL_LEVEL_DISCOUNT_PRICE) AS CANCEL_LEVEL_DISCOUNT_PRICE
+		FROM (
+			<include refid="sqlStatsListFrom" />
+		) T
+		<include refid="sqlStatsListGroupBy" />
+		ORDER BY T.RECEIVE_SIDO DESC
+	</select>
+
+</mapper>

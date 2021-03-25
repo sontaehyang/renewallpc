@@ -1,0 +1,87 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?>  
+	<div class="inner login_wrap">
+		<div class="location_area">
+			<?include "../include/all_menu.html"?>
+			<div class="breadcrumbs">
+				<a href="/html/main.html" class="home"><span class="hide">home</span></a>
+				<span>로그인</span> 
+			</div>
+		</div><!-- // location_area E -->
+		
+		<div class="content_title"> 
+			<h2 class="title">로그인</h2> 
+			<p>세일즈온를 방문해주셔서 감사합니다. 다양한 혜택과 편리한 이용을 위해 로그인해주세요.</p> 
+		</div>
+		<div class="login_wrap">
+			<div class="login_area member">
+				<h3>회원 로그인</h3>
+				<div class="login_inner">
+					<div class="login">
+						<dl>
+							<dt>회원아이디</dt>
+							<dd><input type="text" title="회원아이디"></dd>
+							<dt class="mt5">비밀번호</dt>
+							<dd class="mt5"><input type="password" title="비밀번호"></dd>
+						</dl>
+						<button type="submit" class="btn btn-submit btn-login" title="로그인">로그인</button>
+					</div>
+					<div class="login_check">
+						<span><input type="checkbox" id="id"> <label for="id">아이디 저장</label></span>
+						<span><a href="/html/member/popup_member.html" title="아이디 찾기">아이디 찾기</a></span>
+						<span><a href="/html/member/popup_member.html" title="비밀번호 찾기">비밀번호 찾기</a></span>
+					</div>
+					<dl class="sns_login">
+						<dt>SNS 로그인</dt>
+						<dd>
+							<a href="#;" target="_blank" title="네이버 로그인"><img src="/content/images/btn/btn_login_naver.png" alt="네이버 로그인"></a>
+							<a href="#;" target="_blank" title="페이스북 로그인"><img src="/content/images/btn/btn_login_facebook.png" alt="페이스북 로그인"></a>
+							<a href="#;" target="_blank" title="카카오톡 로그인"><img src="/content/images/btn/btn_login_kakao.png" alt="카카오톡 로그인"></a>
+						</dd>
+					</dl>
+				</div><!--//login_wrap E-->
+				<div class="login_bottom">
+					<p>
+						아직도 회원이 아니세요?<br>
+						회원가입을 하시면 더 많은 혜택을 만나보실 수 있습니다.
+					</p>
+					<a href="/html/member/choice_join.html" class="btn btn-default btn-join" title="회원가입">회원가입</a>
+				</div><!--//login_bottom E-->
+			</div><!--// login E-->
+			
+			<div class="login_area nomember">
+				<h3>비회원 로그인(주문조회)</h3>
+				<div class="login_inner">
+					<div class="login">
+						<dl>
+							<dt>주문자명</dt>
+							<dd><input type="text" title="주문자명"></dd>
+							<dt class="mt5">휴대폰번호</dt>
+							<dd class="mt5">
+								<ul class="login_hp">
+									<li><input type="text" title="휴대폰번호" class="hpbox"></li>
+									<li class="connect">-</li>
+									<li><input type="text" title="휴대폰번호" class="hpbox"></li>
+									<li class="connect">-</li>
+									<li><input type="text" title="휴대폰번호" class="hpbox"></li>
+								</ul>
+								<a href="#" class="btn btn-w102 btn-success" title="인증번호 전송">인증번호 전송</a>
+							</dd>
+							<dt class="mt5">인증번호</dt>
+							<dd class="mt5"><input type="text" title="인증번호">
+								<button type="submit" class="btn btn-w102 btn-default" title="확인하기">확인하기</button>
+							</dd>
+						</dl> 
+					</div> 
+				</div><!--//login_wrap E-->
+				<div class="login_bottom">
+					<p>
+						비회원 주문시 입력한 이름과 휴대폰번호로 로그인해 주세요.<br>
+						세일즈온 고객센터 : <span>02-6737-9200 (내선 101)</span>
+					</p> 
+				</div><!--//login_bottom E-->
+			</div><!--// login E-->
+		</div>		
+	</div><!-- // inner E-- -->					
+<?include "../include/footer.html"?>	 
+ 

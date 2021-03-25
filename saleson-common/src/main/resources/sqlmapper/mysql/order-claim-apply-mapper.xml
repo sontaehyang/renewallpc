@@ -1,0 +1,1761 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.order.claimapply.OrderClaimApplyMapper">
+	<resultMap id="OrderCancelApplyResult" type="saleson.shop.order.claimapply.domain.OrderCancelApply">
+		<result property="claimCode" column="CLAIM_CODE" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="orderSequence" column="ORDER_SEQUENCE" />
+		<result property="itemSequence" column="ITEM_SEQUENCE" />
+		<result property="cancelApplyDate" column="CANCEL_APPLY_DATE" />
+		<result property="claimStatus" column="CLAIM_STATUS" />
+		<result property="claimApplySubject" column="CLAIM_APPLY_SUBJECT" />
+		<result property="claimApplyQuantity" column="CLAIM_APPLY_QUANTITY" />
+		<result property="cancelReason" column="CANCEL_REASON" />
+		<result property="cancelReasonText" column="CANCEL_REASON_TEXT" />
+		<result property="cancelReasonDetail" column="CANCEL_REASON_DETAIL" />
+		
+		<result property="cancelMemo" column="CANCEL_MEMO" />
+		<result property="cancelRefusalReasonText" column="CANCEL_REFUSAL_REASON_TEXT" />
+		<result property="createdDate" column="CLAIM_CREATED_DATE" />
+		
+		<result property="userId" column="USER_ID" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="buyerName" column="BUYER_NAME" />
+		<result property="receiveName" column="RECEIVE_NAME" />
+
+        <result property="shippingSequence" column="SHIPPING_SEQUENCE" />
+
+        <result property="refundCode" column="REFUND_CODE" />
+		
+		<association property="orderItem" resultMap="saleson.shop.order.OrderMapper.OrderItemResult" />
+	</resultMap>
+	
+	<resultMap id="OrderReturnApplyResult" type="saleson.shop.order.claimapply.domain.OrderReturnApply">
+		<result property="claimCode" column="CLAIM_CODE" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="orderSequence" column="ORDER_SEQUENCE" />
+		
+		<result property="itemSequence" column="ITEM_SEQUENCE" />
+		<result property="claimStatus" column="CLAIM_STATUS" />
+		<result property="claimApplyQuantity" column="CLAIM_APPLY_QUANTITY" />
+		<result property="claimApplyAmount" column="CLAIM_APPLY_AMOUNT" />
+
+		<result property="returnReason" column="RETURN_REASON" />
+		<result property="returnReasonText" column="RETURN_REASON_TEXT" />
+		<result property="returnReasonDetail" column="RETURN_REASON_DETAIL" />
+		
+		<result property="returnApplyDate" column="RETURN_APPLY_DATE" />
+		<result property="refundCode" column="REFUND_CODE" />
+		<result property="shipmentReturnId" column="SHIPMENT_RETURN_ID" />
+		<result property="shipmentReturnSellerId" column="SHIPMENT_RETURN_SELLER_ID" />
+		
+		<result property="claimApplySubject" column="CLAIM_APPLY_SUBJECT" />
+		<result property="returnReserveName" column="RETURN_RESERVE_NAME" />
+		<result property="returnReservePhone" column="RETURN_RESERVE_PHONE" />
+		<result property="returnReserveMobile" column="RETURN_RESERVE_MOBILE" />
+		<result property="returnReserveZipcode" column="RETURN_RESERVE_ZIPCODE" />
+		<result property="returnReserveSido" column="RETURN_RESERVE_SIDO" />
+		<result property="returnReserveSigungu" column="RETURN_RESERVE_SIGUNGU" />
+		<result property="returnReserveEupmyeondong" column="RETURN_RESERVE_EUPMYEONDONG" />
+		<result property="returnReserveAddress" column="RETURN_RESERVE_ADDRESS" />
+		<result property="returnReserveAddress2" column="RETURN_RESERVE_ADDRESS2" />
+		
+		<result property="returnShippingAskType" column="RETURN_SHIPPING_ASK_TYPE" />
+		<result property="returnShippingNumber" column="RETURN_SHIPPING_NUMBER" />
+		<result property="returnShippingCompanyName" column="RETURN_SHIPPING_COMPANY_NAME" />
+		<result property="returnShippingCompanyUrl" column="RETURN_SHIPPING_COMPANY_URL" />
+		
+		<result property="collectionShippingAmount" column="COLLECTION_SHIPPING_AMOUNT" />
+		<result property="returnMemo" column="RETURN_MEMO" />
+
+		<result property="returnRefusalReasonText" column="RETURN_REFUSAL_REASON_TEXT" />
+		<result property="createdDate" column="CLAIM_CREATED_DATE" />
+		
+		<result property="userId" column="USER_ID" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="buyerName" column="BUYER_NAME" />
+		<result property="receiveName" column="RECEIVE_NAME" />
+		
+		<association property="orderItem" resultMap="saleson.shop.order.OrderMapper.OrderItemResult" />
+
+	</resultMap>
+	
+	<resultMap id="OrderExchangeApplyResult" type="saleson.shop.order.claimapply.domain.OrderExchangeApply">
+		<result property="claimCode" column="CLAIM_CODE" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="orderSequence" column="ORDER_SEQUENCE" />
+		<result property="itemSequence" column="ITEM_SEQUENCE" />
+		<result property="shipmentReturnId" column="SHIPMENT_RETURN_ID" />
+		<result property="shipmentReturnSellerId" column="SHIPMENT_RETURN_SELLER_ID" />
+		<result property="claimApplyQuantity" column="CLAIM_APPLY_QUANTITY" />
+		<result property="claimStatus" column="CLAIM_STATUS" />
+		<result property="claimApplySubject" column="CLAIM_APPLY_SUBJECT" />
+		<result property="exchangeApplyDate" column="EXCHANGE_APPLY_DATE" />
+		<result property="exchangeReceiveName" column="EXCHANGE_RECEIVE_NAME" />
+		<result property="exchangeReceivePhone" column="EXCHANGE_RECEIVE_PHONE" />
+		<result property="exchangeReceiveMobile" column="EXCHANGE_RECEIVE_MOBILE" />
+		<result property="exchangeReceiveZipcode" column="EXCHANGE_RECEIVE_ZIPCODE" />
+		<result property="exchangeReceiveSido" column="EXCHANGE_RECEIVE_SIDO" />
+		<result property="exchangeReceiveSigungu" column="EXCHANGE_RECEIVE_SIGUNGU" />
+		<result property="exchangeReceiveEupmyeondong" column="EXCHANGE_RECEIVE_EUPMYEONDONG" />
+		<result property="exchangeReceiveAddress" column="EXCHANGE_RECEIVE_ADDRESS" />
+		<result property="exchangeReceiveAddress2" column="EXCHANGE_RECEIVE_ADDRESS2" />
+		<result property="exchangeDeliveryCompanyId" column="EXCHANGE_DELIVERY_COMPANY_ID" />
+		<result property="exchangeDeliveryCompanyName" column="EXCHANGE_DELIVERY_COMPANY_NAME" />
+		<result property="exchangeDeliveryNumber" column="EXCHANGE_DELIVERY_NUMBER" />
+		<result property="exchangeDeliveryCompanyUrl" column="EXCHANGE_DELIVERY_COMPANY_URL" />
+		<result property="exchangeDeliveryDate" column="EXCHANGE_DELIVERY_DATE" />
+		<result property="exchangeShippingAskType" column="EXCHANGE_SHIPPING_ASK_TYPE" />
+		<result property="exchangeShippingNumber" column="EXCHANGE_SHIPPING_NUMBER" />
+		<result property="exchangeShippingCompanyName" column="EXCHANGE_SHIPPING_COMPANY_NAME" />
+		<result property="exchangeShippingCompanyUrl" column="EXCHANGE_SHIPPING_COMPANY_URL" />
+		<result property="exchangeShippingStartDate" column="EXCHANGE_SHIPPING_START_DATE" />
+		<result property="exchangeReason" column="EXCHANGE_REASON" />
+		<result property="exchangeReasonText" column="EXCHANGE_REASON_TEXT" />
+		<result property="exchangeReasonDetail" column="EXCHANGE_REASON_DETAIL" />
+		<result property="exchangeMemo" column="EXCHANGE_MEMO" />
+		<result property="exchangeRefusalReasonText" column="EXCHANGE_REFUSAL_REASON_TEXT" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		
+		<result property="createdDate" column="CLAIM_CREATED_DATE" />
+		
+		<result property="userId" column="USER_ID" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="buyerName" column="BUYER_NAME" />
+		<result property="receiveName" column="RECEIVE_NAME" />
+		
+		<association property="orderItem" resultMap="saleson.shop.order.OrderMapper.OrderItemResult" />
+	</resultMap>
+	
+	<sql id="sqlDefaultColumnForExchange">
+		O.BUYER_NAME,
+		O.LOGIN_ID,
+		O.USER_ID,
+		OSI.RECEIVE_NAME,
+		OEA.CLAIM_CODE,
+		
+		OEA.SHIPMENT_RETURN_SELLER_ID,
+		OEA.SHIPMENT_RETURN_ID,
+		OEA.EXCHANGE_APPLY_DATE,
+		OEA.CLAIM_APPLY_SUBJECT,
+		
+		OEA.CLAIM_STATUS,
+		OEA.CLAIM_APPLY_QUANTITY,
+		OEA.EXCHANGE_REASON,
+		OEA.EXCHANGE_REASON_TEXT,
+		OEA.EXCHANGE_REASON_DETAIL,
+		
+		OEA.EXCHANGE_RECEIVE_NAME,
+		OEA.EXCHANGE_RECEIVE_PHONE,
+		OEA.EXCHANGE_RECEIVE_MOBILE,
+		OEA.EXCHANGE_RECEIVE_ZIPCODE,
+		OEA.EXCHANGE_RECEIVE_SIDO,
+		OEA.EXCHANGE_RECEIVE_SIGUNGU,
+		OEA.EXCHANGE_RECEIVE_EUPMYEONDONG,
+		OEA.EXCHANGE_RECEIVE_ADDRESS,
+		OEA.EXCHANGE_RECEIVE_ADDRESS2,
+
+		OEA.EXCHANGE_DELIVERY_COMPANY_ID,
+		OEA.EXCHANGE_DELIVERY_COMPANY_NAME,
+		OEA.EXCHANGE_DELIVERY_NUMBER,
+		OEA.EXCHANGE_DELIVERY_COMPANY_URL,
+		
+		OEA.EXCHANGE_SHIPPING_ASK_TYPE,
+		OEA.EXCHANGE_SHIPPING_NUMBER,
+		OEA.EXCHANGE_SHIPPING_COMPANY_NAME,
+		OEA.EXCHANGE_SHIPPING_COMPANY_URL,
+		OEA.EXCHANGE_SHIPPING_START_DATE,
+		OEA.EXCHANGE_MEMO,
+		OEA.EXCHANGE_REFUSAL_REASON_TEXT,
+		
+		OEA.CREATED_DATE AS CLAIM_CREATED_DATE,
+		
+		OI.*,
+		S.SELLER_NAME
+	</sql>
+	
+	<sql id="sqlDefaultFormForExchange">
+		FROM 
+			OP_ORDER_EXCHANGE_APPLY OEA
+			INNER JOIN OP_ORDER_ITEM OI
+				ON OEA.ORDER_CODE = OI.ORDER_CODE 
+				AND OEA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE
+				AND OEA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE
+			INNER JOIN OP_ORDER_SHIPPING_INFO OSI 
+				ON OI.ORDER_CODE = OSI.ORDER_CODE 
+				AND OI.ORDER_SEQUENCE = OSI.ORDER_SEQUENCE 
+				AND OI.SHIPPING_INFO_SEQUENCE = OSI.SHIPPING_INFO_SEQUENCE
+				
+			INNER JOIN OP_ORDER O 
+				ON OI.ORDER_CODE = O.ORDER_CODE 
+				AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE 
+				AND O.DATA_STATUS_CODE = '1'
+			
+			LEFT JOIN OP_SELLER S ON OI.SELLER_ID = S.SELLER_ID
+	</sql>
+	
+	<sql id="whereExchange">
+		<where>
+			
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OEA.SHIPMENT_RETURN_SELLER_ID = #{sellerId}
+					AND OI.SHIPMENT_RETURN_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+					<if test="sellerId > 0">
+						AND OEA.SHIPMENT_RETURN_SELLER_ID = #{sellerId}
+					</if>
+					
+					<if test="shipmentReturnType != null and shipmentReturnType != ''">
+						AND OI.SHIPMENT_RETURN_TYPE = #{shipmentReturnType}
+					</if>
+				</when>
+			</choose>
+			
+			<if test="claimStatus != null and claimStatus.length > 0">
+				AND OEA.CLAIM_STATUS IN (
+					<foreach collection="claimStatus" item="claimStatus" index="i" open="" separator="," close="">
+						#{claimStatus}
+					</foreach>
+				)
+			</if>
+			
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(OEA.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+			</if>
+			
+			<if test="(query != null and query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'USER_NAME'">
+						AND O.BUYER_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<when test="where == 'USER_ID'">
+						AND OI.USER_ID IN (
+							SELECT USER_ID FROM OP_USER
+							WHERE LOGIN_ID LIKE CONCAT('%', #{query},'%')
+						)
+					</when>
+					<when test='where == "CLAIM_CODE"'>
+						AND OEA.CLAIM_CODE = #{query}
+					</when>
+					<when test="where == 'ITEM_NAME'">
+						AND OI.ITEM_NAME LIKE CONCAT('%', #{query},'%')
+					</when>
+					<when test="where == 'ITEM_CODE'">
+						AND (OI.ITEM_CODE = #{query} OR OI.ITEM_USER_CODE = #{query})
+					</when>
+					
+					<when test="where == 'ORDER_CODE'">
+						AND OEA.ORDER_CODE LIKE CONCAT('%', #{query}, '%')
+					</when>
+					
+					<when test="where == 'RECEIVE_NAME'">
+						AND OSI.RECEIVE_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+					
+				</choose>
+			</if>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="getExchangeCountByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultType="Integer">
+	
+		SELECT 
+			COUNT(*) 
+		<include refid="sqlDefaultFormForExchange" />
+		<include refid="whereExchange" />
+		
+	</select>
+	
+	<select id="getExchangeListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderExchangeApplyResult">
+	
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				<include refid="sqlDefaultColumnForExchange" /> 
+			<include refid="sqlDefaultFormForExchange" />
+			<include refid="whereExchange" />
+			
+			ORDER BY OEA.CREATED_DATE DESC
+			
+		<include refid="CommonMapper.paginationFooter" />
+		
+	</select>
+	
+	<select id="getActiveExchangeListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderExchangeApplyResult">
+		
+		SELECT 
+			<include refid="sqlDefaultColumnForExchange" /> 
+		<include refid="sqlDefaultFormForExchange" />
+		<where>
+		
+			OEA.ORDER_CODE = #{orderCode}
+			AND OEA.ORDER_SEQUENCE = #{orderSequence}
+			AND OEA.CLAIM_STATUS NOT IN ('03', '04', '99')
+			
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OEA.SHIPMENT_RETURN_SELLER_ID = #{sellerId}
+					AND OI.SHIPMENT_RETURN_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+				
+				</when>
+			</choose>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+		
+	</select>
+	
+	<select id="getExchangeApplyByClaimCode" parameterType="String" resultMap="OrderExchangeApplyResult">
+		SELECT 
+			<include refid="sqlDefaultColumnForExchange" />
+			<include refid="sqlDefaultFormForExchange" />
+			<where>
+				OEA.CLAIM_CODE IN
+				<foreach collection="claimCode" item="claimCode" open="(" separator="," close=")">
+					#{claimCode}
+				</foreach>
+				AND OEA.CLAIM_STATUS IN ('03', '04', '99')
+			</where>
+	</select>
+	
+	<select id="getExchangeHistoryListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderExchangeApplyResult">
+		
+		SELECT 
+			<include refid="sqlDefaultColumnForExchange" /> 
+		<include refid="sqlDefaultFormForExchange" />
+		<where>
+		
+			OEA.ORDER_CODE = #{orderCode}
+			AND OEA.ORDER_SEQUENCE = #{orderSequence}
+			AND OEA.CLAIM_STATUS IN ('03', '04', '99')
+			
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OEA.SHIPMENT_RETURN_SELLER_ID = #{sellerId}
+					AND OI.SHIPMENT_RETURN_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+				
+				</when>
+			</choose>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+		ORDER BY OEA.CREATED_DATE DESC
+	</select>
+		
+	<sql id="sqlDefaultColumnForReturn">
+		O.BUYER_NAME,
+		O.LOGIN_ID,
+		O.USER_ID,
+		OSI.RECEIVE_NAME,
+		ORA.CLAIM_CODE,
+		ORA.SHIPMENT_RETURN_ID,
+		ORA.SHIPMENT_RETURN_SELLER_ID,
+		ORA.RETURN_APPLY_DATE,
+		ORA.CLAIM_APPLY_SUBJECT,
+		
+		ORA.CLAIM_STATUS,
+		ORA.CLAIM_APPLY_QUANTITY,
+		ORA.RETURN_REASON,
+		ORA.RETURN_REASON_TEXT,
+		ORA.RETURN_REASON_DETAIL,
+		
+		ORA.RETURN_RESERVE_NAME,
+		ORA.RETURN_RESERVE_PHONE,
+		ORA.RETURN_RESERVE_MOBILE,
+		ORA.RETURN_RESERVE_ZIPCODE,
+		ORA.RETURN_RESERVE_SIDO,
+		ORA.RETURN_RESERVE_SIGUNGU,
+		ORA.RETURN_RESERVE_EUPMYEONDONG,
+		ORA.RETURN_RESERVE_ADDRESS,
+		ORA.RETURN_RESERVE_ADDRESS2,
+
+		ORA.RETURN_SHIPPING_ASK_TYPE,
+		ORA.RETURN_SHIPPING_NUMBER,
+		ORA.RETURN_SHIPPING_COMPANY_NAME,
+		ORA.RETURN_SHIPPING_COMPANY_URL,
+		
+		ORA.COLLECTION_SHIPPING_AMOUNT,
+		ORA.RETURN_REFUSAL_REASON_TEXT,
+		ORA.CREATED_DATE AS CLAIM_CREATED_DATE,
+		
+		(ORA.CLAIM_APPLY_QUANTITY * OI.SALE_PRICE) AS CLAIM_APPLY_AMOUNT,
+		
+		OI.*,
+		S.SELLER_NAME
+	</sql>
+	
+	
+	
+	<sql id="whereReturn">
+		<where>
+			
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND ORA.SHIPMENT_RETURN_SELLER_ID = #{sellerId}
+					AND OI.SHIPMENT_RETURN_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+					<if test="sellerId > 0">
+						AND ORA.SHIPMENT_RETURN_SELLER_ID = #{sellerId}
+					</if>
+					
+					<if test="shipmentReturnType != null and shipmentReturnType != ''">
+						AND OI.SHIPMENT_RETURN_TYPE = #{shipmentReturnType}
+					</if>
+				</when>
+			</choose>
+			
+			<if test="claimStatus != null and claimStatus.length > 0">
+				AND ORA.CLAIM_STATUS IN (
+					<foreach collection="claimStatus" item="claimStatus" index="i" open="" separator="," close="">
+						#{claimStatus}
+					</foreach>
+				)
+			</if>
+			
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(ORA.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+			</if>
+			
+			<if test="(query != null and query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'USER_NAME'">
+						AND O.BUYER_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<when test="where == 'USER_ID'">
+						AND OI.USER_ID IN (
+							SELECT USER_ID FROM OP_USER
+							WHERE LOGIN_ID LIKE CONCAT('%', #{query},'%')
+						)
+					</when>
+					<when test='where == "CLAIM_CODE"'>
+						AND ORA.CLAIM_CODE = #{query}
+					</when>
+					<when test="where == 'ITEM_NAME'">
+						AND OI.ITEM_NAME LIKE CONCAT('%', #{query},'%')
+					</when>
+					<when test="where == 'ITEM_CODE'">
+						AND (OI.ITEM_CODE = #{query} OR OI.ITEM_USER_CODE = #{query})
+					</when>
+					
+					<when test="where == 'ORDER_CODE'">
+						AND ORA.ORDER_CODE LIKE CONCAT('%', #{query}, '%')
+					</when>
+					
+					<when test="where == 'RECEIVE_NAME'">
+						AND OSI.RECEIVE_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+					
+				</choose>
+			</if>
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlDefaultFormForReturn">
+		FROM 
+			OP_ORDER_RETURN_APPLY ORA
+			INNER JOIN OP_ORDER_ITEM OI
+				ON ORA.ORDER_CODE = OI.ORDER_CODE 
+				AND ORA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE
+				AND ORA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE
+			INNER JOIN OP_ORDER_SHIPPING_INFO OSI 
+				ON OI.ORDER_CODE = OSI.ORDER_CODE 
+				AND OI.ORDER_SEQUENCE = OSI.ORDER_SEQUENCE 
+				AND OI.SHIPPING_INFO_SEQUENCE = OSI.SHIPPING_INFO_SEQUENCE
+				
+			INNER JOIN OP_ORDER O 
+				ON OI.ORDER_CODE = O.ORDER_CODE 
+				AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE 
+				AND O.DATA_STATUS_CODE = '1'
+			
+			LEFT JOIN OP_SELLER S ON OI.SELLER_ID = S.SELLER_ID
+	</sql>
+	
+	<sql id="sqlDefaultColumnForCancel">
+		O.BUYER_NAME,
+		O.LOGIN_ID,
+		O.USER_ID,
+		OSI.RECEIVE_NAME,
+		OCA.CLAIM_CODE,
+		OCA.CANCEL_APPLY_DATE,
+		OCA.CLAIM_STATUS,
+		OCA.CLAIM_APPLY_SUBJECT,
+		OCA.CLAIM_APPLY_QUANTITY,
+		OCA.CANCEL_REASON,
+		OCA.CANCEL_REASON_TEXT,
+		OCA.CANCEL_REASON_DETAIL,
+		OCA.CANCEL_MEMO,
+		OCA.CANCEL_REFUSAL_REASON_TEXT,
+		OCA.CREATED_DATE AS CLAIM_CREATED_DATE,
+		OI.*,
+		S.SELLER_NAME
+	</sql>
+	
+	
+	
+	<sql id="sqlDefaultFormForCancel">
+		FROM 
+			OP_ORDER_CANCEL_APPLY OCA
+			INNER JOIN OP_ORDER_ITEM OI
+				ON OCA.ORDER_CODE = OI.ORDER_CODE 
+				AND OCA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE
+				AND OCA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE
+			
+			INNER JOIN OP_ORDER_SHIPPING_INFO OSI 
+				ON OI.ORDER_CODE = OSI.ORDER_CODE 
+				AND OI.ORDER_SEQUENCE = OSI.ORDER_SEQUENCE 
+				AND OI.SHIPPING_INFO_SEQUENCE = OSI.SHIPPING_INFO_SEQUENCE
+				
+			INNER JOIN OP_ORDER O 
+				ON OI.ORDER_CODE = O.ORDER_CODE 
+				AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE 
+				AND O.DATA_STATUS_CODE = '1'
+			
+			LEFT JOIN OP_SELLER S ON OI.SELLER_ID = S.SELLER_ID
+	</sql>
+	
+	<sql id="whereCancel">
+		<where>
+			
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+					
+					<if test="sellerId > 0">
+						AND OI.SELLER_ID = #{sellerId}
+					</if>
+					
+					<if test="deliveryType != null and deliveryType != ''">
+						AND OI.DELIVERY_TYPE = #{deliveryType}
+					</if>
+				</when>
+			</choose>
+			
+			<if test="claimStatus != null and claimStatus.length > 0">
+				AND OCA.CLAIM_STATUS IN (
+					<foreach collection="claimStatus" item="claimStatus" index="i" open="" separator="," close="">
+						#{claimStatus}
+					</foreach>
+				)
+			</if>
+			
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(OCA.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+			</if>
+			
+			<if test="(query != null and query != '') and (where != null and where != '')">
+				<choose>
+					<when test="where == 'USER_NAME'">
+						AND O.BUYER_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<when test="where == 'USER_ID'">
+						AND OI.USER_ID IN (
+							SELECT USER_ID FROM OP_USER
+							WHERE LOGIN_ID LIKE CONCAT('%', #{query},'%')
+						)
+					</when>
+					<when test='where == "CLAIM_CODE"'>
+						AND OCA.CLAIM_CODE = #{query}
+					</when>
+					<when test="where == 'ITEM_NAME'">
+						AND OI.ITEM_NAME LIKE CONCAT('%', #{query},'%')
+					</when>
+					<when test="where == 'ITEM_CODE'">
+						AND (OI.ITEM_CODE = #{query} OR OI.ITEM_USER_CODE = #{query})
+					</when>
+					
+					<when test="where == 'ORDER_CODE'">
+						AND OCA.ORDER_CODE LIKE CONCAT ('%', #{query}, '%')
+					</when>
+					
+					<when test="where == 'RECEIVE_NAME'">
+						AND OSI.RECEIVE_NAME LIKE CONCAT('%', #{query}, '%')
+					</when>
+					
+				</choose>
+			</if>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+			
+		</where>
+	</sql>
+	
+	<select id="getReturnShippingNumberCheck" parameterType="saleson.shop.order.claimapply.support.ReturnApply" resultType="String">
+		SELECT IF(COUNT(*) = 0, '0', IF(CLAIM_STATUS = '01' OR CLAIM_STATUS = '02', CLAIM_CODE, '99')) FROM OP_ORDER_RETURN_APPLY
+		WHERE
+			RETURN_SHIPPING_NUMBER = #{returnShippingNumber}
+	</select>
+	
+	<select id="getActiveReturnListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderReturnApplyResult">
+		
+		SELECT 
+			<include refid="sqlDefaultColumnForReturn" /> 
+		<include refid="sqlDefaultFormForReturn" />
+		<where>
+		
+			ORA.ORDER_CODE = #{orderCode}
+			AND ORA.ORDER_SEQUENCE = #{orderSequence}
+			AND ORA.CLAIM_STATUS NOT IN ('03', '04', '99')
+			
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND ORA.SHIPMENT_RETURN_SELLER_ID = #{sellerId}
+					AND OI.SHIPMENT_RETURN_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+				
+				</when>
+			</choose>
+		</where>
+		
+	</select>
+	
+	<select id="getReturnApplyByClaimCode" parameterType="String" resultMap="OrderReturnApplyResult">
+		SELECT 
+			<include refid="sqlDefaultColumnForReturn" /> 
+		<include refid="sqlDefaultFormForReturn" />
+		<where>
+			ORA.CLAIM_CODE IN
+			<foreach collection="claimCode" item="claimCode" open="(" separator="," close=")">
+				#{claimCode}
+			</foreach>
+			AND ORA.CLAIM_STATUS IN ('03', '04', '99')
+		</where>
+		
+	</select>
+	
+	<select id="getReturnHistoryListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderReturnApplyResult">
+		
+		SELECT 
+			<include refid="sqlDefaultColumnForReturn" /> 
+		<include refid="sqlDefaultFormForReturn" />
+		<where>
+		
+			ORA.ORDER_CODE = #{orderCode}
+			AND ORA.ORDER_SEQUENCE = #{orderSequence}
+			AND ORA.CLAIM_STATUS IN ('03', '04', '99')
+			
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND ORA.SHIPMENT_RETURN_SELLER_ID = #{sellerId}
+					AND OI.SHIPMENT_RETURN_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+				
+				</when>
+			</choose>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+		ORDER BY ORA.CREATED_DATE DESC
+	</select>
+	
+	<select id="getReturnCountByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultType="Integer">
+	
+		SELECT 
+			COUNT(*) 
+		<include refid="sqlDefaultFormForReturn" />
+		<include refid="whereReturn" />
+		
+	</select>
+	
+	<select id="getReturnListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderReturnApplyResult">
+	
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				<include refid="sqlDefaultColumnForReturn" /> 
+			<include refid="sqlDefaultFormForReturn" />
+			<include refid="whereReturn" />
+			
+			ORDER BY ORA.CREATED_DATE DESC
+			
+		<include refid="CommonMapper.paginationFooter" />
+		
+	</select>
+	
+	<select id="getOrderReturnApplyListByRefundCode" parameterType="String"
+		resultMap="OrderReturnApplyResult">
+	
+		SELECT 
+			 <include refid="sqlDefaultColumnForReturn" /> 
+		<include refid="sqlDefaultFormForReturn" />
+		WHERE
+			ORA.REFUND_CODE = #{value}
+			
+	</select>
+	
+	<select id="getOrderReturnApplyListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderReturnApplyResult">
+	
+		SELECT 
+			 <include refid="sqlDefaultColumnForReturn" /> 
+		<include refid="sqlDefaultFormForReturn" />
+		WHERE
+			ORA.ORDER_CODE = #{orderCode}
+			AND ORA.ORDER_SEQUENCE = #{orderSequence}
+			
+			<if test="sellerId > 0">
+			AND ORA.SHIPMENT_RETURN_SELLER_ID = #{sellerId}
+			</if>
+	</select>
+	
+	<insert id="insertOrderReturnApply" parameterType="saleson.shop.order.claimapply.domain.OrderReturnApply">
+		<selectKey keyProperty="claimCode" resultType="String" order="BEFORE">
+			SELECT CONCAT('R-', <include refid="CommonMapper.date" />, '-', COUNT(*) + 1) 
+			FROM OP_ORDER_RETURN_APPLY
+			WHERE
+				RETURN_APPLY_DATE = <include refid="CommonMapper.date" />
+		</selectKey>
+		
+		INSERT INTO OP_ORDER_RETURN_APPLY (
+			CLAIM_CODE, 
+			ORDER_CODE, 
+			ORDER_SEQUENCE, 
+			ITEM_SEQUENCE,
+			RETURN_APPLY_DATE, 
+			REFUND_CODE, 
+			SHIPMENT_RETURN_SELLER_ID,
+			SHIPMENT_RETURN_ID,
+			CLAIM_APPLY_SUBJECT, 
+			CLAIM_STATUS,
+			CLAIM_APPLY_QUANTITY,
+			RETURN_RESERVE_NAME, 
+			RETURN_RESERVE_PHONE, 
+			RETURN_RESERVE_MOBILE, 
+			RETURN_RESERVE_ZIPCODE, 
+			RETURN_RESERVE_SIDO, 
+			RETURN_RESERVE_SIGUNGU, 
+			RETURN_RESERVE_EUPMYEONDONG, 
+			RETURN_RESERVE_ADDRESS, 
+			RETURN_RESERVE_ADDRESS2, 
+			RETURN_SHIPPING_ASK_TYPE,
+			RETURN_SHIPPING_NUMBER, 
+			RETURN_SHIPPING_COMPANY_NAME, 
+			RETURN_SHIPPING_COMPANY_URL, 
+			
+			RETURN_REASON,
+			RETURN_REASON_TEXT,
+			RETURN_REASON_DETAIL,
+
+			RETURN_MEMO, 
+			RETURN_REFUSAL_REASON_TEXT,
+			CREATED_DATE
+		) VALUES (
+			#{claimCode}, 
+			#{orderCode}, 
+			#{orderSequence}, 
+			#{itemSequence},
+			<include refid="CommonMapper.date" />, 
+			#{refundCode}, 
+			#{shipmentReturnSellerId},
+			#{shipmentReturnId},
+			#{claimApplySubject},
+			#{claimStatus},
+			#{claimApplyQuantity}, 
+			#{returnReserveName}, 
+			#{returnReservePhone}, 
+			#{returnReserveMobile}, 
+			#{returnReserveZipcode}, 
+			#{returnReserveSido}, 
+			#{returnReserveSigungu}, 
+			#{returnReserveEupmyeondong}, 
+			#{returnReserveAddress}, 
+			#{returnReserveAddress2}, 
+
+			#{returnShippingAskType},
+			#{returnShippingNumber}, 
+			#{returnShippingCompanyName}, 
+			#{returnShippingCompanyUrl}, 
+			
+			#{returnReason},
+			#{returnReasonText},
+			#{returnReasonDetail},
+ 
+			#{returnMemo}, 
+			#{returnRefusalReasonText},
+			<include refid="CommonMapper.datetime" />
+		)
+		
+	</insert>
+	
+	<!-- 상품정보 복사 - 일부 주문취소 -->
+	<insert id="copyOrderItemForReturnApply" parameterType="saleson.shop.order.claimapply.domain.OrderReturnApply">
+		<selectKey keyProperty="copyItemSequence" resultType="Integer" order="BEFORE">
+			SELECT IFNULL(MAX(ITEM_SEQUENCE), 0) + 1 FROM OP_ORDER_ITEM 
+			WHERE 
+				ORDER_CODE = #{orderCode}
+				AND ORDER_SEQUENCE = #{orderSequence}
+		</selectKey>
+	
+		INSERT INTO OP_ORDER_ITEM (
+			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
+			ORDER_STATUS,
+			ITEM_SEQUENCE,
+			QUANTITY,
+			CLAIM_QUANTITY,
+			ORDER_QUANTITY,
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			SHIPPING_READY_DATE,
+			SHIPPING_DATE,
+			SHIPPING_FINISH_DATE,
+			CANCEL_REQUEST_DATE,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			CANCEL_FLAG,
+			REFUND_STATUS,
+			UPDATED_ADMIN_USER_NAME,
+			CREATED_DATE,
+			PARENT_ITEM_ID,
+			PARENT_ITEM_OPTIONS,
+			QUICK_DELIVERY_FLAG,
+			ERP_ORIGIN_UNIQUE
+		) SELECT 
+			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
+			'60',
+			#{copyItemSequence},
+			#{claimApplyQuantity},
+			#{claimApplyQuantity},
+			#{claimApplyQuantity},
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			SHIPPING_READY_DATE,
+			SHIPPING_DATE, 
+			SHIPPING_FINISH_DATE,
+			CANCEL_REQUEST_DATE,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			<include refid="CommonMapper.datetime" />,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			CANCEL_FLAG,
+			<choose>
+				<when test="refundCode != null and refundCode != ''">1</when>
+				<otherwise>0</otherwise>
+			</choose>,
+			UPDATED_ADMIN_USER_NAME,
+			<include refid="CommonMapper.datetime" />,
+			PARENT_ITEM_ID,
+			PARENT_ITEM_OPTIONS,
+			QUICK_DELIVERY_FLAG,
+			ERP_ORIGIN_UNIQUE
+		FROM OP_ORDER_ITEM
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</insert>
+	
+	<update id="updateReturnStatus" parameterType="saleson.shop.order.claimapply.domain.OrderReturnApply">
+		UPDATE OP_ORDER_RETURN_APPLY
+		SET
+			CLAIM_STATUS = #{claimStatus},
+			RETURN_REFUSAL_REASON_TEXT = #{returnRefusalReasonText},
+			REFUND_CODE = #{refundCode}
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<update id="updateClaimQuantityForReturn" parameterType="saleson.shop.order.claimapply.domain.OrderReturnApply">
+		UPDATE OP_ORDER_ITEM
+		SET
+			CLAIM_QUANTITY = IFNULL((
+				SELECT SUM(T.CLAIM_QUANTITY) FROM ( 
+					SELECT SUM(ORA.CLAIM_APPLY_QUANTITY) AS CLAIM_QUANTITY 
+						FROM OP_ORDER_RETURN_APPLY ORA
+					WHERE
+						ORA.ORDER_CODE = #{orderCode}
+						AND ORA.ORDER_SEQUENCE = #{orderSequence}
+						AND ORA.ITEM_SEQUENCE = #{itemSequence}
+						AND ORA.CLAIM_STATUS != '99'
+				) T
+			), 0), 
+			<choose>
+				<when test='refundCancelFlag == "Y"'>
+                    ORDER_STATUS = '60',
+                    REFUND_STATUS = '0'
+				</when>
+				<otherwise>
+					ORDER_STATUS = '69'
+				</otherwise>
+			</choose>
+			<if test="parentItemSequence > 0">
+				, PARENT_ITEM_SEQUENCE = #{parentItemSequence}
+			</if>
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<!-- 클레임 수량 수정 -->
+	<update id="updateClaimQuantityForReturnApply" parameterType="saleson.shop.order.claimapply.domain.OrderReturnApply">
+		UPDATE OP_ORDER_ITEM
+		SET
+			CLAIM_QUANTITY = (
+				SELECT SUM(T.CLAIM_QUANTITY) FROM (
+					SELECT SUM(ORA.CLAIM_APPLY_QUANTITY) AS CLAIM_QUANTITY 
+						FROM OP_ORDER_RETURN_APPLY ORA
+					WHERE
+						ORA.ORDER_CODE = #{orderCode}
+						AND ORA.ORDER_SEQUENCE = #{orderSequence}
+						AND ORA.ITEM_SEQUENCE = #{itemSequence}
+						AND ORA.CLAIM_STATUS != '99'
+				) T
+			), RETURN_REQUEST_DATE = <include refid="CommonMapper.datetime" />,
+			ORDER_STATUS = '60'
+			<if test="refundCode != null and refundCode != ''">
+				, REFUND_STATUS = '1'
+			</if>
+			<if test="parentItemSequence > 0">
+				, PARENT_ITEM_SEQUENCE = #{parentItemSequence}
+			</if>
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<update id="updateOrderReturnApply" parameterType="saleson.shop.order.claimapply.domain.OrderReturnApply">
+		UPDATE OP_ORDER_RETURN_APPLY SET
+			REFUND_CODE = #{refundCode}, 
+			CLAIM_STATUS = #{claimStatus},
+			RETURN_RESERVE_NAME = #{returnReserveName}, 
+			RETURN_RESERVE_PHONE = #{returnReservePhone}, 
+			RETURN_RESERVE_MOBILE = #{returnReserveMobile},
+			RETURN_RESERVE_ZIPCODE = #{returnReserveZipcode}, 
+			RETURN_RESERVE_SIDO = #{returnReserveSido}, 
+			RETURN_RESERVE_SIGUNGU = #{returnReserveSigungu}, 
+			RETURN_RESERVE_EUPMYEONDONG = #{returnReserveEupmyeondong}, 
+			RETURN_RESERVE_ADDRESS = #{returnReserveAddress}, 
+			RETURN_RESERVE_ADDRESS2 = #{returnReserveAddress2},
+			
+			RETURN_SHIPPING_ASK_TYPE = #{returnShippingAskType}, 
+			RETURN_SHIPPING_NUMBER = #{returnShippingNumber}, 
+			RETURN_SHIPPING_COMPANY_NAME = #{returnShippingCompanyName}, 
+			RETURN_SHIPPING_COMPANY_URL = #{returnShippingCompanyUrl}, 
+			COLLECTION_SHIPPING_AMOUNT = #{collectionShippingAmount},
+			
+			RETURN_REASON = #{returnReason},
+			RETURN_REASON_TEXT = #{returnReasonText},
+			RETURN_REASON_DETAIL = #{returnReasonDetail},
+			RETURN_REFUSAL_REASON_TEXT = #{returnRefusalReasonText}
+		WHERE
+			CLAIM_CODE = #{claimCode}
+			AND ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<select id="getCancelCountByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultType="Integer">
+	
+		SELECT 
+			COUNT(*) 
+		<include refid="sqlDefaultFormForCancel" />
+		<include refid="whereCancel" />
+		
+	</select>
+	
+	<select id="getCancelListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderCancelApplyResult">
+	
+		<include refid="CommonMapper.paginationHeader" />
+			
+			SELECT 
+				<include refid="sqlDefaultColumnForCancel" /> 
+			<include refid="sqlDefaultFormForCancel" />
+			<include refid="whereCancel" />
+			
+			ORDER BY OCA.CREATED_DATE DESC
+
+		<include refid="CommonMapper.paginationFooter" />
+		
+	</select>
+	
+	<select id="getActiveCancelListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderCancelApplyResult">
+			
+		SELECT 
+			<include refid="sqlDefaultColumnForCancel" /> 
+		<include refid="sqlDefaultFormForCancel" />
+		<where>
+		
+			OCA.ORDER_CODE = #{orderCode}
+			AND OCA.ORDER_SEQUENCE = #{orderSequence}
+			AND OCA.CLAIM_STATUS NOT IN ('03', '04', '99')
+			
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+					
+				</when>
+			</choose>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getCancelHistoryListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderCancelApplyResult">
+			
+		SELECT 
+			<include refid="sqlDefaultColumnForCancel" /> 
+		<include refid="sqlDefaultFormForCancel" />
+		<where>
+		
+			OCA.ORDER_CODE = #{orderCode}
+			AND OCA.ORDER_SEQUENCE = #{orderSequence}
+			AND OCA.CLAIM_STATUS IN ('03', '04', '99')
+			
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+					
+				</when>
+			</choose>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+		</where>
+		ORDER BY OCA.CREATED_DATE DESC
+	</select>
+	
+	<select id="getOrderCancelApplyListByRefundCode" parameterType="String"
+		resultMap="OrderCancelApplyResult">
+	
+		SELECT 
+			 <include refid="sqlDefaultColumnForCancel" /> 
+		<include refid="sqlDefaultFormForCancel" />
+		WHERE
+			OCA.REFUND_CODE = #{value}
+			
+	</select>
+	
+	<select id="getOrderCancelApplyListByParam" parameterType="saleson.shop.order.claimapply.support.ClaimApplyParam"
+		resultMap="OrderCancelApplyResult">
+	
+		SELECT 
+			 <include refid="sqlDefaultColumnForCancel" /> 
+		<include refid="sqlDefaultFormForCancel" />
+		WHERE
+			OCA.ORDER_CODE = #{orderCode}
+			AND OCA.ORDER_SEQUENCE = #{orderSequence}
+		
+		<if test='conditionType == "SELLER"'>
+			AND OI.SELLER_ID = #{sellerId}
+			AND OI.DELIVERY_TYPE = '2'
+		</if>
+		
+	</select>
+	
+	<insert id="insertOrderCancelApply" parameterType="saleson.shop.order.claimapply.domain.OrderCancelApply">
+		<selectKey keyProperty="claimCode" resultType="String" order="BEFORE">
+			SELECT CONCAT('C-', <include refid="CommonMapper.date" />, '-', COUNT(*) + 1) 
+			FROM OP_ORDER_CANCEL_APPLY
+			WHERE
+				CANCEL_APPLY_DATE = <include refid="CommonMapper.date" />
+		</selectKey>
+		
+		INSERT INTO OP_ORDER_CANCEL_APPLY (
+			CLAIM_CODE,
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			ITEM_SEQUENCE,
+			REFUND_CODE,
+			CANCEL_APPLY_DATE,
+			CLAIM_STATUS,
+			CLAIM_APPLY_SUBJECT,
+			CLAIM_APPLY_QUANTITY,
+			CANCEL_REASON,
+			CANCEL_REASON_TEXT,
+			CANCEL_REASON_DETAIL,
+			CANCEL_MEMO,
+			CANCEL_REFUSAL_REASON_TEXT,
+			CREATED_DATE
+		) VALUES (
+			#{claimCode},
+			#{orderCode},
+			#{orderSequence},
+			#{itemSequence},
+			#{refundCode},
+			<include refid="CommonMapper.date" />,
+			#{claimStatus},
+			#{claimApplySubject},
+			#{claimApplyQuantity},
+			#{cancelReason},
+			#{cancelReasonText},
+			#{cancelReasonDetail},
+			#{cancelMemo},
+			#{cancelRefusalReasonText},
+			<include refid="CommonMapper.datetime" />
+		)
+		
+	</insert>
+	
+	<!-- 주문 수량 수정 -->
+	<update id="updateOrderItemQuantityForCancel" parameterType="saleson.shop.order.claimapply.domain.OrderCancelApply">
+		UPDATE OP_ORDER_ITEM
+		SET
+			QUANTITY = QUANTITY - #{claimApplyQuantity},
+			ORDER_QUANTITY = ORDER_QUANTITY - #{claimApplyQuantity},
+			CLAIM_QUANTITY = 0
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<!-- 주문 수량 수정 -->
+	<update id="updateOrderItemQuantityForReturn" parameterType="saleson.shop.order.claimapply.domain.OrderReturnApply">
+		UPDATE OP_ORDER_ITEM
+		SET
+			QUANTITY = QUANTITY - #{claimApplyQuantity},
+			ORDER_QUANTITY = ORDER_QUANTITY - #{claimApplyQuantity},
+			CLAIM_QUANTITY = 0
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<!-- 주문 수량 수정 -->
+	<update id="updateOrderItemQuantityForExchange" parameterType="saleson.shop.order.claimapply.domain.OrderExchangeApply">
+		UPDATE OP_ORDER_ITEM
+		SET
+			QUANTITY = QUANTITY - #{claimApplyQuantity},
+			ORDER_QUANTITY = ORDER_QUANTITY - #{claimApplyQuantity},
+			CLAIM_QUANTITY = 0
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<!-- 상품정보 복사 - 일부 주문취소 -->
+	<insert id="copyOrderItemForCancelApply" parameterType="saleson.shop.order.claimapply.domain.OrderCancelApply">
+		<selectKey keyProperty="copyItemSequence" resultType="Integer" order="BEFORE">
+			SELECT IFNULL(MAX(ITEM_SEQUENCE), 0) + 1 FROM OP_ORDER_ITEM 
+			WHERE 
+				ORDER_CODE = #{orderCode}
+				AND ORDER_SEQUENCE = #{orderSequence}
+		</selectKey>
+	
+		INSERT INTO OP_ORDER_ITEM (
+			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
+			
+			ORDER_STATUS,
+			ITEM_SEQUENCE,
+			QUANTITY,
+			CLAIM_QUANTITY,
+			ORDER_QUANTITY,
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			SHIPPING_READY_DATE,
+			SHIPPING_DATE,
+			SHIPPING_FINISH_DATE,
+			CANCEL_REQUEST_DATE,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			CANCEL_FLAG,
+			REFUND_STATUS,			
+			UPDATED_ADMIN_USER_NAME,
+			CREATED_DATE,
+			PARENT_ITEM_ID,
+			PARENT_ITEM_OPTIONS,
+			QUICK_DELIVERY_FLAG,
+			ERP_ORIGIN_UNIQUE
+		) SELECT 
+			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
+			
+			<choose>
+				<when test="isSalesCancel == true">'75'</when>
+				<otherwise>'70'</otherwise>
+			</choose>,
+			#{copyItemSequence},
+			#{claimApplyQuantity},
+			#{claimApplyQuantity},
+			#{claimApplyQuantity},
+			PAY_DATE,
+			SALES_DATE, 
+			<choose>
+				<when test="isSalesCancel == true"><include refid="CommonMapper.datetime" /></when>
+				<otherwise>SALES_CANCEL_DATE</otherwise>
+			</choose>,
+			SHIPPING_READY_DATE,
+			SHIPPING_DATE, 
+			SHIPPING_FINISH_DATE,
+			<include refid="CommonMapper.datetime" />,
+			<choose>
+				<when test="isSalesCancel == true"><include refid="CommonMapper.datetime" /></when>
+				<otherwise>CANCEL_REQUEST_FINISH_DATE</otherwise>
+			</choose>,
+			
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			<choose>
+				<when test="isSalesCancel == true">'Y'</when>
+				<otherwise>CANCEL_FLAG</otherwise>
+			</choose>,
+			<choose>
+				<when test="refundCode != null and refundCode != ''">
+					<choose>
+						<when test="isSalesCancel == true">2</when>
+						<otherwise>1</otherwise>
+					</choose>
+				</when>
+				<otherwise>0</otherwise>
+			</choose>,
+			UPDATED_ADMIN_USER_NAME,
+
+			<include refid="CommonMapper.datetime" />,
+			PARENT_ITEM_ID,
+			PARENT_ITEM_OPTIONS,
+			QUICK_DELIVERY_FLAG,
+			ERP_ORIGIN_UNIQUE
+		FROM OP_ORDER_ITEM
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</insert>
+	
+	<update id="updateOrderCancelApply" parameterType="saleson.shop.order.claimapply.domain.OrderCancelApply">
+		UPDATE OP_ORDER_CANCEL_APPLY
+		SET
+			CANCEL_REASON = #{cancelReason},
+			CANCEL_REASON_TEXT = #{cancelReasonText},
+			CANCEL_REASON_DETAIL = #{cancelReasonDetail},
+			CLAIM_STATUS = #{claimStatus},
+			CANCEL_REFUSAL_REASON_TEXT = #{cancelRefusalReasonText},
+			REFUND_CODE = #{refundCode}
+		WHERE
+			CLAIM_CODE = #{claimCode}
+			AND ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+			
+	</update>
+	
+	<update id="updateClaimQuantityForCancel" parameterType="saleson.shop.order.claimapply.domain.OrderCancelApply">
+		UPDATE OP_ORDER_ITEM
+		SET
+			CLAIM_QUANTITY = IFNULL((
+				SELECT SUM(T.CLAIM_QUANTITY) FROM ( 
+					SELECT SUM(CLAIM_APPLY_QUANTITY) AS CLAIM_QUANTITY FROM OP_ORDER_CANCEL_APPLY
+					WHERE
+						ORDER_CODE = #{orderCode}
+						AND ORDER_SEQUENCE = #{orderSequence}
+						AND ITEM_SEQUENCE = #{itemSequence}
+						AND CLAIM_STATUS != '99'
+				) T
+			), 0),
+			<choose>
+				<when test='refundCancelFlag == "Y"'>
+                    ORDER_STATUS = '70',
+                    REFUND_STATUS = '0'
+				</when>
+				<otherwise>
+					ORDER_STATUS = (
+						CASE 
+							WHEN SHIPPING_FINISH_DATE != '00000000000000' THEN '35' 
+							WHEN SHIPPING_DATE != '00000000000000' THEN '30'
+							WHEN SHIPPING_READY_DATE != '00000000000000' THEN '20'
+							ELSE '10'
+						END
+					)
+				</otherwise>
+			</choose>
+
+			<if test="parentItemSequence > 0">
+				, PARENT_ITEM_SEQUENCE = #{parentItemSequence}
+			</if>
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<!-- 클레임 수량 수정 -->
+	<update id="updateClaimQuantityForCancelApply" parameterType="saleson.shop.order.claimapply.domain.OrderCancelApply">
+		UPDATE OP_ORDER_ITEM
+		SET
+			CLAIM_QUANTITY = (
+				SELECT SUM(T.CLAIM_QUANTITY) FROM (
+					SELECT SUM(CLAIM_APPLY_QUANTITY) AS CLAIM_QUANTITY FROM OP_ORDER_CANCEL_APPLY
+					WHERE
+						ORDER_CODE = #{orderCode}
+						AND ORDER_SEQUENCE = #{orderSequence}
+						AND ITEM_SEQUENCE = #{itemSequence}
+						AND CLAIM_STATUS != '99'
+				) T
+			), CANCEL_REQUEST_DATE = <include refid="CommonMapper.datetime" />
+			<if test="refundCode != null and refundCode != ''">
+				<choose>
+					<when test="isSalesCancel == true">
+						, REFUND_STATUS = '2'
+					</when>
+					<otherwise>
+						, REFUND_STATUS = '1'
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="isSalesCancel == true">
+					, CANCEL_REQUEST_FINISH_DATE = <include refid="CommonMapper.datetime" />
+					, SALES_CANCEL_DATE = <include refid="CommonMapper.datetime" />
+					, ORDER_STATUS = '75'
+					, CANCEL_FLAG = 'Y'
+				</when>
+				<otherwise>
+					, ORDER_STATUS = '70'
+				</otherwise>
+			</choose>
+
+			<if test="parentItemSequence > 0">
+				, PARENT_ITEM_SEQUENCE = #{parentItemSequence}
+			</if>
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<!-- 교환 신청 -->
+	<insert id="insertOrderExchangeApply" parameterType="saleson.shop.order.claimapply.domain.OrderExchangeApply">
+		
+		<selectKey keyProperty="claimCode" resultType="String" order="BEFORE">
+			SELECT CONCAT('E-', <include refid="CommonMapper.date" />, '-', COUNT(*) + 1) 
+			FROM OP_ORDER_EXCHANGE_APPLY
+			WHERE
+				EXCHANGE_APPLY_DATE = <include refid="CommonMapper.date" />
+		</selectKey>
+		
+		INSERT INTO OP_ORDER_EXCHANGE_APPLY (
+			CLAIM_CODE, 
+			ORDER_CODE, 
+			ORDER_SEQUENCE, 
+			ITEM_SEQUENCE, 
+			CLAIM_APPLY_QUANTITY,
+			SHIPMENT_RETURN_SELLER_ID,
+			SHIPMENT_RETURN_ID,
+			CLAIM_STATUS,
+			CLAIM_APPLY_SUBJECT,
+			EXCHANGE_APPLY_DATE, 
+			EXCHANGE_RECEIVE_NAME, 
+			EXCHANGE_RECEIVE_PHONE, 
+			EXCHANGE_RECEIVE_MOBILE, 
+			EXCHANGE_RECEIVE_ZIPCODE, 
+			EXCHANGE_RECEIVE_SIDO, 
+			EXCHANGE_RECEIVE_SIGUNGU, 
+			EXCHANGE_RECEIVE_EUPMYEONDONG, 
+			EXCHANGE_RECEIVE_ADDRESS, 
+			EXCHANGE_RECEIVE_ADDRESS2, 
+			EXCHANGE_DELIVERY_COMPANY_ID, 
+			EXCHANGE_DELIVERY_COMPANY_NAME, 
+			EXCHANGE_DELIVERY_NUMBER, 
+			EXCHANGE_DELIVERY_COMPANY_URL, 
+			EXCHANGE_DELIVERY_DATE,
+			
+			EXCHANGE_SHIPPING_ASK_TYPE, 
+			EXCHANGE_SHIPPING_NUMBER, 
+			EXCHANGE_SHIPPING_COMPANY_NAME, 
+			EXCHANGE_SHIPPING_COMPANY_URL, 
+			EXCHANGE_SHIPPING_START_DATE, 
+			EXCHANGE_REASON, 
+			EXCHANGE_REASON_TEXT, 
+			EXCHANGE_REASON_DETAIL,
+			EXCHANGE_MEMO, 
+			EXCHANGE_REFUSAL_REASON_TEXT, 
+			CREATED_DATE
+		) VALUES (
+			#{claimCode}, 
+			#{orderCode}, 
+			#{orderSequence}, 
+			#{itemSequence}, 
+			#{claimApplyQuantity},
+			#{shipmentReturnSellerId},
+			#{shipmentReturnId},
+			#{claimStatus},
+			#{claimApplySubject},
+			<include refid="CommonMapper.date" />, 
+			#{exchangeReceiveName}, 
+			#{exchangeReceivePhone}, 
+			#{exchangeReceiveMobile}, 
+			#{exchangeReceiveZipcode}, 
+			#{exchangeReceiveSido}, 
+			#{exchangeReceiveSigungu}, 
+			#{exchangeReceiveEupmyeondong}, 
+			#{exchangeReceiveAddress}, 
+			#{exchangeReceiveAddress2}, 
+			#{exchangeDeliveryCompanyId}, 
+			#{exchangeDeliveryCompanyName}, 
+			#{exchangeDeliveryNumber}, 
+			#{exchangeDeliveryCompanyUrl}, 
+			#{exchangeDeliveryDate}, 
+			#{exchangeShippingAskType},
+			#{exchangeShippingNumber}, 
+			#{exchangeShippingCompanyName}, 
+			#{exchangeShippingCompanyUrl}, 
+			#{exchangeShippingStartDate}, 
+			#{exchangeReason}, 
+			#{exchangeReasonText}, 
+			#{exchangeReasonDetail},
+			#{exchangeMemo}, 
+			#{exchangeRefusalReasonText}, 
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+	
+	<update id="updateOrderExchangeApply" parameterType="saleson.shop.order.claimapply.domain.OrderExchangeApply">
+		UPDATE OP_ORDER_EXCHANGE_APPLY SET
+			CLAIM_STATUS = #{claimStatus},
+			EXCHANGE_RECEIVE_NAME = #{exchangeReceiveName},
+			EXCHANGE_RECEIVE_PHONE = #{exchangeReceivePhone},
+			EXCHANGE_RECEIVE_MOBILE = #{exchangeReceiveMobile},
+			EXCHANGE_RECEIVE_ZIPCODE = #{exchangeReceiveZipcode},
+			EXCHANGE_RECEIVE_SIDO = #{exchangeReceiveSido},
+			EXCHANGE_RECEIVE_SIGUNGU = #{exchangeReceiveSigungu},
+			EXCHANGE_RECEIVE_EUPMYEONDONG = #{exchangeReceiveEupmyeondong},
+			EXCHANGE_RECEIVE_ADDRESS = #{exchangeReceiveAddress},
+			EXCHANGE_RECEIVE_ADDRESS2 = #{exchangeReceiveAddress2},
+			EXCHANGE_DELIVERY_COMPANY_ID = #{exchangeDeliveryCompanyId},
+			EXCHANGE_DELIVERY_COMPANY_NAME = #{exchangeDeliveryCompanyName},
+			EXCHANGE_DELIVERY_NUMBER = #{exchangeDeliveryNumber},
+			EXCHANGE_DELIVERY_COMPANY_URL = #{exchangeDeliveryCompanyUrl},
+			EXCHANGE_DELIVERY_DATE = #{exchangeDeliveryDate},
+			EXCHANGE_SHIPPING_ASK_TYPE = #{exchangeShippingAskType},
+			EXCHANGE_SHIPPING_NUMBER = #{exchangeShippingNumber},
+			EXCHANGE_SHIPPING_COMPANY_NAME = #{exchangeShippingCompanyName},
+			EXCHANGE_SHIPPING_COMPANY_URL = #{exchangeShippingCompanyUrl},
+			EXCHANGE_SHIPPING_START_DATE = #{exchangeShippingStartDate},
+			EXCHANGE_REASON = #{exchangeReason},
+			EXCHANGE_REASON_TEXT = #{exchangeReasonText},
+			EXCHANGE_REASON_DETAIL = #{exchangeReasonDetail},
+			EXCHANGE_MEMO = #{exchangeMemo},
+			EXCHANGE_REFUSAL_REASON_TEXT = #{exchangeRefusalReasonText}
+		WHERE
+			CLAIM_CODE = #{claimCode}
+			AND ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<!-- 상품정보 복사 - 일부 주문취소 -->
+	<insert id="copyOrderItemForExchangeApply" parameterType="saleson.shop.order.claimapply.domain.OrderExchangeApply">
+		<selectKey keyProperty="copyItemSequence" resultType="Integer" order="BEFORE">
+			SELECT IFNULL(MAX(ITEM_SEQUENCE), 0) + 1 FROM OP_ORDER_ITEM 
+			WHERE 
+				ORDER_CODE = #{orderCode}
+				AND ORDER_SEQUENCE = #{orderSequence}
+		</selectKey>
+	
+		INSERT INTO OP_ORDER_ITEM (
+			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
+			ORDER_STATUS,
+			ITEM_SEQUENCE,
+			QUANTITY,
+			CLAIM_QUANTITY,
+			ORDER_QUANTITY,
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			SHIPPING_READY_DATE,
+			SHIPPING_DATE,
+			SHIPPING_FINISH_DATE,
+			CANCEL_REQUEST_DATE,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			CANCEL_FLAG,
+			CREATED_DATE,
+			REFUND_STATUS,
+			PARENT_ITEM_ID,
+			PARENT_ITEM_OPTIONS,
+			QUICK_DELIVERY_FLAG,
+			ERP_ORIGIN_UNIQUE
+		) SELECT 
+			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
+			'50',
+			#{copyItemSequence},
+			#{claimApplyQuantity},
+			#{claimApplyQuantity},
+			#{claimApplyQuantity},
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			SHIPPING_READY_DATE,
+			SHIPPING_DATE, 
+			SHIPPING_FINISH_DATE,
+			<include refid="CommonMapper.datetime" />,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			CANCEL_FLAG,
+			<include refid="CommonMapper.datetime" />,
+			REFUND_STATUS,
+			PARENT_ITEM_ID,
+			PARENT_ITEM_OPTIONS,
+			QUICK_DELIVERY_FLAG,
+			ERP_ORIGIN_UNIQUE
+		FROM OP_ORDER_ITEM
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</insert>
+	
+	<update id="updateClaimQuantityForExchange" parameterType="saleson.shop.order.claimapply.domain.OrderExchangeApply">
+		UPDATE OP_ORDER_ITEM
+		SET
+			CLAIM_QUANTITY = IFNULL((
+				SELECT SUM(T.CLAIM_QUANTITY) FROM (
+				 
+					SELECT SUM(OEA.CLAIM_APPLY_QUANTITY) AS CLAIM_QUANTITY 
+						FROM OP_ORDER_EXCHANGE_APPLY OEA
+					WHERE
+						OEA.ORDER_CODE = #{orderCode}
+						AND OEA.ORDER_SEQUENCE = #{orderSequence}
+						AND OEA.ITEM_SEQUENCE = #{itemSequence}
+						AND OEA.CLAIM_STATUS NOT IN ('99', '03')
+				) T
+			), 0), ORDER_STATUS = '59'
+			<if test="parentItemSequence > 0">
+				, PARENT_ITEM_SEQUENCE = #{parentItemSequence}
+			</if>
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<!-- 클레임 수량 수정 -->
+	<update id="updateClaimQuantityForExchangeApply" parameterType="saleson.shop.order.claimapply.domain.OrderExchangeApply">
+		UPDATE OP_ORDER_ITEM
+		SET
+			CLAIM_QUANTITY = (
+				SELECT SUM(T.CLAIM_QUANTITY) FROM (
+					SELECT SUM(OEA.CLAIM_APPLY_QUANTITY) AS CLAIM_QUANTITY 
+						FROM OP_ORDER_EXCHANGE_APPLY OEA
+					WHERE
+						OEA.ORDER_CODE = #{orderCode}
+						AND OEA.ORDER_SEQUENCE = #{orderSequence}
+						AND OEA.ITEM_SEQUENCE = #{itemSequence}
+						AND OEA.CLAIM_STATUS != '99'
+				) T
+			), EXCHANGE_REQUEST_DATE = <include refid="CommonMapper.datetime" />, 
+			ORDER_STATUS = '50'
+			<if test="parentItemSequence > 0">
+				, PARENT_ITEM_SEQUENCE = #{parentItemSequence}
+			</if>
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<update id="updateCancelStatusForRefund" parameterType="String">
+		UPDATE OP_ORDER_CANCEL_APPLY SET
+			CLAIM_STATUS = '04',
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		WHERE
+			REFUND_CODE = #{value}
+	</update>
+	
+	<update id="updateReturnStatusForRefund" parameterType="String">
+		UPDATE OP_ORDER_RETURN_APPLY SET
+			CLAIM_STATUS = '04',
+			UPDATED_DATE = <include refid="CommonMapper.datetime" />
+		WHERE
+			REFUND_CODE = #{value}
+	</update>
+	
+	<select id="getAdminApplyCancelListByParam" parameterType="java.util.List" resultMap="OrderCancelApplyResult">
+		SELECT OCA.*, OI.SHIPPING_SEQUENCE FROM OP_ORDER_CANCEL_APPLY OCA 
+		INNER JOIN OP_ORDER_ITEM OI ON OCA.ORDER_CODE = OI.ORDER_CODE AND OCA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE AND OCA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE
+		<where>
+			<foreach collection="list" item="item" index="i" open="(" separator="OR" close=")">
+				OCA.ORDER_CODE = #{item.orderCode} 
+				AND OCA.ORDER_SEQUENCE = #{item.orderSequence} 
+				AND OCA.ITEM_SEQUENCE = #{item.itemSequence}
+				AND CLAIM_STATUS = '01'
+			</foreach>
+		</where>	
+	</select>
+	
+	<!-- 교환, 반품 거절 사유 불러오기 -->
+	<select id="getClaimRefusalReasonText" parameterType="saleson.shop.order.domain.OrderItem" resultType="String">
+		SELECT 
+		<choose>
+			<when test='orderStatus == "59"'>
+				EXCHANGE_REFUSAL_REASON_TEXT AS CLAIM_REFUSAL_REASON_TEXT 
+			FROM
+				OP_ORDER_EXCHANGE_APPLY
+			</when>
+			<when test='orderStatus == "69"'>
+				RETURN_REFUSAL_REASON_TEXT AS CLAIM_REFUSAL_REASON_TEXT 
+			FROM
+				OP_ORDER_RETURN_APPLY
+			</when>
+		</choose>
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ITEM_SEQUENCE = #{itemSequence}
+		ORDER BY 
+			CREATED_DATE DESC 
+		LIMIT 0,1
+	</select>
+	
+	<!-- 환불신청 취소정보 가져오기 -->
+	<select id="getOrderRefundCancel" parameterType="String" resultMap="OrderCancelApplyResult">		
+		SELECT
+            OCA.CLAIM_CODE,
+            OCA.ORDER_CODE,
+            OCA.ORDER_SEQUENCE,
+            OCA.ITEM_SEQUENCE,
+            OI.SHIPPING_SEQUENCE,
+            OCA.CANCEL_REASON,
+            OCA.CANCEL_REASON_TEXT,
+            OCA.CANCEL_REASON_DETAIL,
+            OCA.REFUND_CODE
+        FROM OP_ORDER_CANCEL_APPLY OCA
+        INNER JOIN OP_ORDER_ITEM OI
+            ON OCA.ORDER_CODE = OI.ORDER_CODE
+            AND OCA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE
+            AND OCA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE
+		<where>
+			REFUND_CODE = #{refundCode}
+			AND CLAIM_STATUS = '03'
+		</where>
+	</select>
+	
+	<!-- 환불신청 취소정보 가져오기 -->
+	<select id="getOrderRefundReturn" parameterType="String" resultMap="OrderReturnApplyResult">		
+		SELECT
+            ORA.CLAIM_CODE,
+            ORA.ORDER_CODE,
+            ORA.ORDER_SEQUENCE,
+            ORA.ITEM_SEQUENCE,
+            OI.SHIPPING_SEQUENCE,
+            ORA.RETURN_REASON,
+            ORA.RETURN_REASON_TEXT,
+            ORA.RETURN_REASON_DETAIL,
+            ORA.RETURN_RESERVE_NAME,
+            ORA.RETURN_RESERVE_PHONE,
+            ORA.RETURN_RESERVE_MOBILE,
+            ORA.RETURN_RESERVE_ZIPCODE,
+            ORA.RETURN_RESERVE_SIDO,
+            ORA.RETURN_RESERVE_SIGUNGU,
+            ORA.RETURN_RESERVE_EUPMYEONDONG,
+            ORA.RETURN_RESERVE_ADDRESS,
+            ORA.RETURN_RESERVE_ADDRESS2,
+            ORA.RETURN_SHIPPING_ASK_TYPE,
+            ORA.RETURN_SHIPPING_NUMBER,
+            ORA.RETURN_SHIPPING_COMPANY_NAME,
+            ORA.RETURN_SHIPPING_COMPANY_URL,
+            ORA.COLLECTION_SHIPPING_AMOUNT,
+            ORA.REFUND_CODE
+		FROM OP_ORDER_RETURN_APPLY ORA
+        INNER JOIN OP_ORDER_ITEM OI
+            ON ORA.ORDER_CODE = OI.ORDER_CODE
+            AND ORA.ORDER_SEQUENCE = OI.ORDER_SEQUENCE
+            AND ORA.ITEM_SEQUENCE = OI.ITEM_SEQUENCE
+		<where>
+			REFUND_CODE = #{refundCode}
+			AND CLAIM_STATUS = '03'
+		</where>
+	</select>
+
+	<!-- ERP 주문 상태 임시 테이블과 맵핑하여 OP_ORDER_EXCHANGE_APPLY 테이블의 교환 배송정보를 업데이트 한다. -->
+	<update id="updateOrderExchangeWithErpTempTable" parameterType="saleson.shop.order.support.BatchKey">
+		UPDATE OP_ORDER_EXCHANGE_APPLY OEA
+			INNER JOIN ERP_ORDER_ITEM EOI ON OEA.ORDER_CODE = EOI.ORDER_CODE
+			AND OEA.ORDER_SEQUENCE = EOI.ORDER_SEQUENCE
+			AND OEA.ITEM_SEQUENCE = EOI.ITEM_SEQUENCE
+		SET
+			OEA.CLAIM_STATUS = '03',
+			OEA.EXCHANGE_DELIVERY_DATE = <include refid="CommonMapper.datetime"/>,
+			OEA.EXCHANGE_DELIVERY_COMPANY_ID = EOI.DELIVERY_COMPANY_ID,
+			OEA.EXCHANGE_DELIVERY_COMPANY_NAME = EOI.DELIVERY_COMPANY_NAME,
+			OEA.EXCHANGE_DELIVERY_NUMBER = EOI.DELIVERY_NUMBER
+		WHERE
+			EOI.BATCH_KEY = #{batchKey} AND EOI.ORDER_STATUS = #{orderStatus}
+	</update>
+
+	<update id="updateOrderExchangeByIfOrderListPutData" parameterType="saleson.erp.domain.OrderLineStatus">
+		UPDATE OP_ORDER_EXCHANGE_APPLY
+		<set>
+			CLAIM_STATUS = '03',
+			EXCHANGE_DELIVERY_DATE = <include refid="CommonMapper.datetime"/>,
+			EXCHANGE_DELIVERY_COMPANY_ID = #{carrNo},
+			EXCHANGE_DELIVERY_COMPANY_NAME = #{carrName},
+			EXCHANGE_DELIVERY_NUMBER = #{invoiceNo},
+			EXCHANGE_DELIVERY_COMPANY_URL = #{deliveryCompanyUrl}
+		</set>
+		WHERE ORDER_CODE = #{orderCode}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+</mapper>

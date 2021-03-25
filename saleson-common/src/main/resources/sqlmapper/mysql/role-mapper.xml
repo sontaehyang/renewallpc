@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.onlinepowers.framework.web.opmanager.role.RoleMapper">
+
+<resultMap id="RoleResult" type="com.onlinepowers.framework.web.opmanager.role.domain.Role" >
+	<result property="authority" column="AUTHORITY" />
+	<result property="roleName" column="ROLE_NAME" />
+	<result property="roleDesc" column="ROLE_DESC" />
+	<result property="createdDate" column="CREATED_DATE" />
+	<result property="createdUserId" column="CREATED_USER_ID" />
+	<result property="updatedDate" column="UPDATED_DATE" />
+	<result property="updatedUserId" column="UPDATE_USER_ID" />
+</resultMap>
+
+<resultMap id="RoleResult2" type="com.onlinepowers.framework.web.opmanager.role.domain.Role" >
+	<result property="roleId" column="ROLE_ID" />
+	<result property="roleName" column="ROLE_NAME" />
+	<result property="roleDesc" column="ROLE_DESC" />
+	<!-- 
+	<collection property="roleParentIdList" column="ROLE_ID" javaType="java.util.List" select="getParentIdList"/>
+	 -->
+	<collection property="roleParentIds" ofType="Role">
+		<result property="roleId" column="P_ROLE_ID" />
+		<result property="roleName" column="P_ROLE_NAME" />
+		<result property="roleDesc" column="P_ROLE_DESC" />
+	</collection>
+</resultMap>
+    
+<select id="getRoleCountByParam" parameterType="com.onlinepowers.framework.web.domain.SearchParam" resultType="int">
+	SELECT COUNT(*)
+	FROM OP_ROLE
+	<include refid="sqlRoleWhere" />
+</select>
+
+
+<select id="getRoleListByParam" parameterType="com.onlinepowers.framework.web.domain.SearchParam" resultMap="RoleResult">
+	<include refid="CommonMapper.paginationHeader" />
+	SELECT *
+	FROM OP_ROLE
+	<include refid="sqlRoleWhere" />
+	ORDER BY CREATED_DATE DESC
+	<include refid="CommonMapper.paginationFooter" />
+</select> 
+
+<sql id="sqlRoleWhere">
+	<where>
+		<if test='conditionType == "ROLE_ADMIN"'>
+			AND (
+				AUTHORITY LIKE 'ROLE_ADMIN%'
+				OR AUTHORITY = 'ROLE_MALL_SUPERVISOR'
+				<!--MD 구분 추가 minae.yun-->
+				OR AUTHORITY LIKE 'ROLE_MD'
+				<!-- ISMS 구분 추가 SANGHYUN.CHOI -->
+				OR AUTHORITY LIKE 'ROLE_ISMS'
+				<!-- EXCEL 구분 추가 SANGHYUN.CHOI -->
+				OR AUTHORITY LIKE 'ROLE_EXCEL'
+			)
+		</if>
+		<if test='query != null and query != ""'>
+			<choose>
+				<when test='where == "AUTHORITY"'>
+					AND AUTHORITY LIKE CONCAT('%', #{query}, '%')
+				</when>
+				<when test='where == "ROLE_NAME"'>
+					AND ROLE_NAME LIKE CONCAT('%', #{query}, '%')
+				</when>
+			</choose>
+		</if>
+		<!-- 
+		<if test='authority != null and authority != ""'>
+			AND AUTHORITY LIKE CONCAT('%', #{authority}, '%')
+		</if>
+		 -->
+	</where>
+</sql>
+    
+    
+<select id="getRoleList" resultMap="RoleResult2">
+	SELECT A.ROLE_ID, A.ROLE_NAME, A.ROLE_DESC, B.ROLE_ID P_ROLE_ID, B.ROLE_NAME P_ROLE_NAME, B.ROLE_DESC P_ROLE_DESC
+	FROM OP_ROLE A left outer join OP_ROLE B ON A.ROLE_PARENT_ID = B.ROLE_ID
+	ORDER BY A.ROLE_SEQ
+</select> 
+
+<select id="getRole" parameterType="String" resultMap="RoleResult2">
+	SELECT A.ROLE_ID, A.ROLE_NAME, A.ROLE_DESC, B.ROLE_ID P_ROLE_ID, B.ROLE_NAME P_ROLE_NAME, B.ROLE_DESC P_ROLE_DESC
+	FROM OP_ROLE A left outer join OP_ROLE B ON A.ROLE_PARENT_ID = B.ROLE_ID
+	WHERE A.ROLE_ID = #{value}
+	ORDER BY A.ROLE_SEQ
+</select> 
+
+<select id="getRoleByAuthority" parameterType="String" resultMap="RoleResult">
+	SELECT *
+	FROM OP_ROLE
+	WHERE AUTHORITY = #{value}
+</select> 
+
+
+<select id="getParentIdList" parameterType="String" resultType="java.util.List">
+	SELECT ROLE_PARENT_ID FROM OP_ROLE 
+	WHERE ROLE_ID = #{roleId}
+</select> 
+
+<insert id="insert" parameterType="Role">
+	INSERT INTO OP_ROLE (AUTHORITY, ROLE_NAME, ROLE_DESC, CREATED_DATE, CREATED_USER_ID, UPDATED_DATE, UPDATED_USER_ID)
+	VALUES (#{authority}, #{roleName}, #{roleDesc}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), 0, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), 0)
+</insert>
+
+<insert id="updateRole" parameterType="Role">
+	UPDATE OP_ROLE SET
+		ROLE_NAME = #{roleName}, 
+		ROLE_DESC = #{roleDesc}, 
+		UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+	WHERE
+		AUTHORITY = #{authority}
+</insert>
+
+<delete id="delete" parameterType="String">
+	DELETE FROM OP_ROLE
+	WHERE ROLE_ID = #{value}
+</delete>
+
+<delete id="deleteRoleByAuthority" parameterType="String">
+	DELETE FROM OP_ROLE
+	WHERE AUTHORITY = #{value}
+</delete>
+
+
+<select id="getHierarchy" resultType="String">
+	SELECT CONCAT('ROLE_SUPERVISOR > ', AUTHORITY) AS HIERARCHY  
+	FROM OP_ROLE
+	WHERE AUTHORITY NOT IN ('ROLE_USER', 'ROLE_SUPERVISOR')
+	
+	UNION
+	SELECT CONCAT(AUTHORITY , ' > ' , PARENT_AUTHORITY) AS HIERARCHY  FROM OP_ROLE_HIERARCHY
+</select>
+
+
+</mapper>

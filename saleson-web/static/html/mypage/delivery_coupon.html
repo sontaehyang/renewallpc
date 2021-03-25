@@ -1,0 +1,328 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?> 
+<div class="inner deliveryCoupon_wrap">
+	<div class="location_area">
+		<?include "../include/all_menu.html"?>
+		<div class="breadcrumbs">
+			<a href="#" class="home"><span class="hide">home</span></a>
+			<a href="#">마이페이지</a> 
+			<a href="#">쇼핑내역</a> 
+			<span>주문/배송조회</span> 
+		</div>
+	</div><!-- // location_area E --> 
+	
+	<!-- 주문/배송조회 정보 박스 -->	
+	<div class="order_info">
+		<div class="member_level">
+			<p class="level"><img src="/content/images/icon/icon_gold.png" alt="등급"></p>
+			<p class="name"><span>홍길동</span>님</p>
+			<p class="rating">일반등급</p>
+			<a href="#" class="btn_benefit" title="혜택보기">혜택보기</a>
+		</div><!--// member_level E-->
+		<div class="info_list">
+			<ul class="info">
+				<li>
+					<p class="item point">포인트</p>
+					<p class="remainder"><span>9,999,999</span>P</p>
+				</li>
+				<li>
+					<p class="item coupons">쿠폰 <a href="#" class="btn_down_confirm">다운가능쿠폰</a></p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item delivery">배송비 쿠폰</p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item cash">캐시</p>
+					<p class="remainder"><span>9,999,999</span>원</p>
+				</li>
+			</ul>
+			<div class="condition_wrap">
+				<div class="order_condition">
+					<span class="title">주문/배송</span>
+					<ol>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step01.gif" alt="order"></span>
+							<p>주문접수 <span><a href="#">30</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"> </li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step02.gif" alt="order"></span>
+							<p>결제완료  <span><a href="#">10</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step03.gif" alt="order"></span>
+							<p>상품준비중 <span><a href="#">0</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step04.gif" alt="order"></span>
+							<p>배송중 <span><a href="#" class="ing">1</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step05.gif" alt="order"></span>
+							<p>배송완료 <span><a href="#">5</a>건</span></p> 
+						</li>
+					</ol>
+				</div> <!--// order_condition E--> 
+				<div class="order_refund">
+					<p class="title">취소/교환/반품</p>
+					<ul>
+						<li>취소 <span><a href="#">0</a>건</span></li>  
+						<li>교환 <span><a href="#" class="ing">2</a>건</span></li>  
+						<li>반품 <span><a href="#">0</a>건</span></li>  
+					</ul>
+				</div><!--// order_refund E--> 
+			</div><!--// condition_wrap E--> 
+		</div><!--// info_list E-->
+	</div><!--// order_info E-->
+	
+	<div id="contents" class="pt0"> 
+		<?include "../include/mypage_lnb.html"?>
+		<div class="contents_inner"> 	   
+			<h2>배송비 쿠폰</h2>
+			<div class="mypage_search_area"> 
+				<fieldset>
+					<dl>
+						<dt>기간별 조회</dt>
+						<dd>
+							<div class="date_box">
+								<span><input type="text" id="datepicker"></span>
+								<span>~</span>
+								<span><input type="text" id="datepicker2"></span>
+							</div>
+							<div class="search_term">
+								<button type="button" class="btn date_search" title="1주일">1주일</button> 
+								<button type="button" class="btn date_search" title="1개월">1개월</button> 
+								<button type="button" class="btn date_search" title="3개월">3개월</button> 
+								<button type="button" class="btn date_search"   title="6개월">6개월</button>  
+							</div>
+							<button type="button" class="btn btn_search_min" title="조회">조회</button>
+						</dd> 
+					</dl> 
+				</fieldset>	 
+			</div> <!-- // mypage_search_area E --> 
+			<div class="btn_wrap pt10">
+				<div class="btn_left">
+					<button type="button" class="btn btn-m btn-default"><img src="/content/images/icon/icon_reset.png" alt="초기화">초기화</button>
+				</div> 
+			</div><!--// btn_wrap E-->
+			<!-- 배송비 쿠폰 적립내역 S -->
+			<div class="tabs tabs-2">
+				<ul> 
+					<li><a href="#" class="on">적립내역</a></li> 
+					<li><a href="#">사용내역</a></li> 
+				</ul> 
+			</div>		
+			<!-- 적립된 배송비 쿠폰가 없는 경우 S -->
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-list">
+		 			<caption>배송비 쿠폰</caption>
+		 			<colgroup>
+		 				<col style="width:170px;">
+		 				<col style="width:auto;">
+		 				<col style="width:110px;">
+		 				<col style="width:110px;">
+		 				<col style="width:150px;">
+		 			</colgroup>
+		 			<thead>
+		 				<tr>
+		 					<th scope="col">날짜</th>
+		 					<th scope="col">적립내역</th>
+		 					<th scope="col">적립</th>
+		 					<th scope="col">잔여</th>
+		 					<th scope="col">소멸예정일</th>
+		 				</tr>
+		 			</thead>
+		 			<tbody>
+		 				<tr> 
+		 					<td colspan="5">
+		 						<div class="coupon_not">‘적립 내역이 없습니다.’</div>
+		 					</td>
+		 				</tr> 
+		 			</tbody>
+		 		</table><!--//view E-->
+		 	</div><!-- // board_wrap E -->
+			<!-- 적립된 배송비 쿠폰가 없는 경우 E -->
+			<!-- 적립된 배송비 쿠폰가 있는 경우 S -->
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-list">
+		 			<caption>배송비 쿠폰</caption>
+		 			<colgroup>
+		 				<col style="width:170px;">
+		 				<col style="width:auto;">
+		 				<col style="width:110px;">
+		 				<col style="width:110px;">
+		 				<col style="width:150px;">
+		 			</colgroup>
+		 			<thead>
+		 				<tr>
+		 					<th scope="col">날짜</th>
+		 					<th scope="col">적립내역</th>
+		 					<th scope="col">적립</th>
+		 					<th scope="col">잔여</th>
+		 					<th scope="col">소멸예정일</th>
+		 				</tr>
+		 			</thead>
+		 			<tbody>
+		 				<tr>
+		 					<td class="date"><b>2014-12-31</b></td>
+		 					<td>리뷰채택 적립금 적립</td>
+		 					<td class="color_23ade3"><b>+500</b></td>
+		 					<td>500</td>
+		 					<td>2017-09-01</td>
+		 				</tr>
+		 				<tr>
+		 					<td class="date"><b>2014-12-31</b></td>
+		 					<td>상품구매 적립금 적립</td>
+		 					<td class="color_23ade3"><b>+1000</b></td>
+		 					<td>1000</td>
+		 					<td>2017-09-01</td>
+		 				</tr>
+		 				<tr>
+		 					<td class="date"><b>2014-12-31</b></td>
+		 					<td>상품구매 적립금 적립</td>
+		 					<td class="color_23ade3"><b>+1000</b></td>
+		 					<td>1000</td>
+		 					<td>2017-09-01</td>
+		 				</tr>
+		 				<tr>
+		 					<td class="date"><b>2014-12-31</b></td>
+		 					<td>상품구매 적립금 적립</td>
+		 					<td class="color_23ade3"><b>+1000</b></td>
+		 					<td>1000</td>
+		 					<td>2017-09-01</td>
+		 				</tr>
+		 				<tr>
+		 					<td class="date"><b>2014-12-31</b></td>
+		 					<td>회원가입 적립금 적립</td>
+		 					<td class="color_23ade3"><b>+800</b></td>
+		 					<td>소멸(200)</td>
+		 					<td>2017-09-01</td>
+		 				</tr>		 				
+		 			</tbody>
+		 		</table><!--//view E-->	
+		 		<p class="pagination">
+					<a href="#" class="first"><img src="/content/images/btn/btn_first.gif" alt="처음페이지"></a>
+					<a href="#" class="first"><img src="/content/images/btn/btn_prev.gif" alt="이전페이지"></a>
+					<a href="#">1</a>
+					<a href="#">2</a>
+					<a href="#">3</a>
+					<a href="#">4</a>
+					<a href="#">5</a>
+					<strong>6</strong>
+					<a href="#">7</a>
+					<a href="#">8</a>
+					<a href="#">9</a>
+					<a href="#">10</a>
+					<a href="#" class="next"><img src="/content/images/btn/btn_next.gif" alt="다음페이지"></a>
+					<a href="#" class="last"><img src="/content/images/btn/btn_last.gif" alt="마지막페이지"></a>
+				</p><!--//pagination E-->			
+		 	</div><!-- // board_wrap E -->
+		 	<!-- 적립된 배송비 쿠폰가 있는 경우 E -->
+		 	<!-- 배송비 쿠폰 적립내역 E -->
+
+		 	<!-- 배송비 쿠폰 사용내역 S -->
+		 	<div class="tabs tabs-2">
+				<ul> 
+					<li><a href="#">적립내역</a></li> 
+					<li><a href="#" class="on">사용내역</a></li> 
+				</ul> 
+			</div>		
+			<!-- 사용된 배송비 쿠폰가 없는 경우 S -->
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-list">
+		 			<caption>배송비 쿠폰</caption>
+		 			<colgroup>
+		 				<col style="width:170px;">
+		 				<col style="width:auto;">
+		 				<col style="width:170px;">
+		 			</colgroup>
+		 			<thead>
+		 				<tr>
+		 					<th scope="col">날짜</th>
+		 					<th scope="col">사용내역</th>
+		 					<th scope="col">사용</th>
+		 				</tr>
+		 			</thead>
+		 			<tbody>
+		 				<tr> 
+		 					<td colspan="3">
+		 						<div class="coupon_not">‘사용 내역이 없습니다.’</div>
+		 					</td>
+		 				</tr> 
+		 			</tbody>
+		 		</table><!--//view E-->
+		 	</div><!-- // board_wrap E -->
+			<!-- 사용된 배송비 쿠폰가 없는 경우 E -->
+			<!-- 사용된 배송비 쿠폰가 있는 경우 S -->
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-list">
+		 			<caption>배송비 쿠폰</caption>
+		 			<colgroup>
+		 				<col style="width:170px;">
+		 				<col style="width:auto;">
+		 				<col style="width:110px;">
+		 			</colgroup>
+		 			<thead>
+		 				<tr>
+		 					<th scope="col">날짜</th>
+		 					<th scope="col">사용내역</th>
+		 					<th scope="col">사용</th>
+		 				</tr>
+		 			</thead>
+		 			<tbody>
+		 				<tr>
+		 					<td class="date"><b>2014-12-31</b></td>
+		 					<td>주문번호 :K1000015791 사용</td>
+		 					<td class="color_23ade3"><b>-324,000P</b></td>
+		 				</tr>
+		 				<tr>
+		 					<td class="date"><b>2014-12-31</b></td>
+		 					<td>주문번호 :K1000015791 사용</td>
+		 					<td class="color_23ade3"><b>-324,000P</b></td>
+		 				</tr>
+		 				<tr>
+		 					<td class="date"><b>2014-12-31</b></td>
+		 					<td>주문번호 :K1000015791 사용</td>
+		 					<td class="color_23ade3"><b>-324,000P</b></td>
+		 				</tr>
+		 				<tr>
+		 					<td class="date"><b>2014-12-31</b></td>
+		 					<td>주문번호 :K1000015791 사용</td>
+		 					<td class="color_23ade3"><b>-324,000P</b></td>
+		 				</tr>
+		 				<tr>
+		 					<td class="date"><b>2014-12-31</b></td>
+		 					<td>주문번호 :K1000015791 사용</td>
+		 					<td class="color_23ade3"><b>-324,000P</b></td>
+		 				</tr>		 				
+		 			</tbody>
+		 		</table><!--//view E-->	
+		 		<p class="pagination">
+					<a href="#" class="first"><img src="/content/images/btn/btn_first.gif" alt="처음페이지"></a>
+					<a href="#" class="first"><img src="/content/images/btn/btn_prev.gif" alt="이전페이지"></a>
+					<a href="#">1</a>
+					<a href="#">2</a>
+					<a href="#">3</a>
+					<a href="#">4</a>
+					<a href="#">5</a>
+					<strong>6</strong>
+					<a href="#">7</a>
+					<a href="#">8</a>
+					<a href="#">9</a>
+					<a href="#">10</a>
+					<a href="#" class="next"><img src="/content/images/btn/btn_next.gif" alt="다음페이지"></a>
+					<a href="#" class="last"><img src="/content/images/btn/btn_last.gif" alt="마지막페이지"></a>
+				</p><!--//pagination E-->		 				
+		 	</div><!-- // board_wrap E -->
+		 	<!-- 사용된 배송비 쿠폰가 있는 경우 E -->
+		 	<!-- 배송비 쿠폰 사용내역 E -->
+		</div>
+	</div><!-- // contents E -->	
+</div><!--// inner E-->	  
+<?include "../include/footer.html"?>	 
+ 

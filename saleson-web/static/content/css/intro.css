@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+/* 
+	Copyright(c) 2017 Onlinepowers Development Team
+ 	http://www.onlinepowers.com
+*/
+
+/* 회사개요 */
+.intro_map{width:844px; margin:15px auto 0; border:1px solid #c9c9c9;}
+.intro_map .cont{padding:20px; overflow:hidden;}
+.intro_map .cont>p{font-size:15px; font-weight:bold;}   
+.intro_map dl{margin-top:10px;}
+.intro_map dl:after{content:''; display:block; clear:both;}
+.intro_map dt,
+.intro_map dd{float:left; line-height:24px;}
+.intro_map dt{width:14%; padding:0 0 0 10px; color:#666; font-weight: bold; background: url(/content/images/icon/icon_blet_square.gif) no-repeat 0 center;}
+.intro_map dd{width:86%;}
+.intro_map .lightGreen{color: #889823; font-weight: bold;}
+.intro_map .skyBlue{color:#3366cc; font-weight: bold;}
+.intro_map .green{color:#30bb37;font-weight: bold;} 
+.company th{padding:8px 0 8px 30px;}
+.company td{color:#666;}
+
+/* 회사소개 추가 */
+/*img.company_img {width: 100%;}*/
+
+/* 이용약관 */
+#container .individual{position:relative; overflow:hidden; padding:20px; margin-top:15px; border:1px solid #c9c9c9; border-top:2px solid #333; font-size:13px;}
+#container .individual:after {content:''; display:block; clear:both;}
+#container .individual .titles{color:#333; font-weight:bold;} 
+#container .individual h2{color:#333; font-size:13px; margin-top:25px;} 
+#container .individual h2:first-child{margin:0;}
+#container .individual div{overflow:hidden; margin-top:5px; color:#666; line-height:18px;}
+#container .individual div ul li ul li{color:#888; font-size:12px;}
+#container .individual div .type02{color:#666; font-weight:bold; margin-top:30px;}
+
+#container .individual-sm{padding:0; border:0; margin:0; font-size:12px;}
+#container .individual-sm .titles{font-size:14px;}
+#container .individual-sm h2{font-size:12px}

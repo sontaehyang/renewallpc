@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.featured.FeaturedMapperBatch">
+	<update id="updateFeaturedOrdering" parameterType="saleson.shop.featured.domain.Featured">
+		UPDATE OP_FEATURED SET ORDERING = #{ordering}
+		WHERE FEATURED_ID = #{featuredId}
+	</update>
+</mapper>

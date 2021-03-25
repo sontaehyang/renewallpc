@@ -1,0 +1,55 @@
+<? include "../include/headHtml.html" ?>
+<body>
+<div id="wrap">	
+	<!-- header : s -->
+	<? include "../include/header.html" ?>
+	<!-- header : e -->
+		<div class="title">
+			<h2>비밀번호 변경</h2>
+			<span class="his_back"><a href="#" class="ir_pm">뒤로가기</a></span>
+		</div>
+		<!-- //title -->
+		
+		<!-- 내용 : s -->
+		<div class="con login_wrap">
+			<div class="pop_con">				
+				<!-- //login_tab -->				
+				<div class="login_con">
+					<!-- 회원 로그인 s -->
+					<div class="member">
+						<div class="login_input">
+							<div class="input_area">
+								<input type="password" name="password" class="required" title="비밀번호" placeholder="비밀번호">
+							</div>
+							<div class="input_area">
+								<input type="password" name="changePassword" class="required _password _duplicated" title="변경할 비밀번호" placeholder="변경할 비밀번호">
+							</div>
+							<div class="input_area">
+								<input type="password" name="changePassword" class="required _password _duplicated" title="변경할 비밀번호 재입력" placeholder="변경할 비밀번호 재입력">
+							</div>
+						</div>
+						<!-- //login_input -->
+						
+						<div class="pw_btn">
+							<button type="submit" class="btn_st1 decision">변경</button>						
+							<button type="submit" class="btn_st1 reset">연장</button>						
+						</div>
+						<!-- //login_btn -->
+					</div>
+					<!-- 회원 로그인 e -->									
+				</div>
+				<!-- //login_con -->				
+			</div>
+			<!-- //pop_con -->
+		</div>
+		<!-- 내용 : e -->		
+	</div>
+	<!-- //#container -->
+	<!-- footer : s -->
+	<? include "../include/footer.html" ?>
+	<!-- footer : e -->	
+</div>
+<!-- //#wrap -->
+</body>
+</html>
+	

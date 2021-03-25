@@ -1,0 +1,165 @@
+﻿@charset "utf-8";
+/* Font */
+/*@import url('https://cdn.rawgit.com/theeluwin/NotoSansKR-Hestia/master/stylesheets/NotoSansKR-Hestia.css');*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');*/
+
+/* Gmarket Sans */
+@font-face {
+	font-family: 'Gmarket Sans';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Gmarket Sans Bold'), local('GmarketSans-Bold'),
+	url('http://script.ebay.co.kr/fonts/GmarketSansBold.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+	url('http://script.ebay.co.kr/fonts/GmarketSansBold.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+@font-face {
+	font-family: 'Gmarket Sans';
+	font-style: normal;
+	font-weight: 500;
+	src: local('Gmarket Sans Medium'), local('GmarketSans-Medium'),
+	url('http://script.ebay.co.kr/fonts/GmarketSansMedium.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+	url('http://script.ebay.co.kr/fonts/GmarketSansMedium.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+@font-face {
+	font-family: 'Gmarket Sans';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Gmarket Sans Light'), local('GmarketSans-Light'),
+	url('http://script.ebay.co.kr/fonts/GmarketSansLight.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+	url('http://script.ebay.co.kr/fonts/GmarketSansLight.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* S-CoreDream */
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+@font-face {
+     font-family: 'S-CoreDream-4Regular';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+@font-face {
+     font-family: 'S-CoreDream-5Medium';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
+
+
+/* Front-end Dev Mino Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 12px;
+	letter-spacing: -0.5px;
+	vertical-align: middle;
+	font-family:"Noto Sans KR","Montserrat", Open Sans, Malgun Gothic, sans-serif;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+html {
+	box-sizing: border-box;
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+body {
+	line-height: 1;
+	text-align: left; 
+	word-break: break-word;
+}
+* { 
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+/*
+li,p,dt,dd,div,span {
+	word-break:break-all
+}
+*/
+
+
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+caption, legend{font-size:0; line-height:0; height:0}
+img, fieldset, iframe {
+	border: 0 none;
+}
+a {color: #000; text-decoration: none; }
+a:hover {text-decoration: none; }
+a:active, a:focus {outline: none; }
+/* a:active {background-color: yellow;} */
+
+::-webkit-input-placeholder {color:#999; }
+::-moz-placeholder {color:#999; } /* firefox 19+ */
+:-moz-placeholder {color:#999; }
+:-ms-input-placeholder {color:#999; } /* ie */
+
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+button {
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+	font-family: 'Noto Sans KR';
+	outline: none;
+}
+button::-moz-focus-inner {border:0; padding:0; }
+
+/* Start of "Micro clearfix" */
+.cf:before,
+.cf:after {content: " "; display: table; }
+.cf:after {clear: both; }
+.cf {*zoom: 1; }
+/* End of "Micro clearfix" */
+
+/* Start of Mobile Form Default */
+input[type='text'],input[type='password'],input[type='image'],input[type='search']{-webkit-appearance:none; -webkit-border-radius:0}
+/* End of Mobile Form Default */
+
+ /* 대체 텍스트 숨김 */
+.ir_pm {display:block; overflow:hidden; font-size:0px; line-height:0; text-indent:-9999px; } /* 사용된 이미지내 의미있는 텍스트의 대체텍스트를 제공할때 */
+.ir_wa {display:block; overflow:hidden; position:relative; z-index:-1; width:100%; height:100%; } /* 중요한 이미지 대체텍스트로 이미지off시에도 대체 텍스트를 보여주고자 할때 */
+.screen_out {overflow:hidden; position:absolute; width:0; height:0; line-height:0; text-indent:-9999px; } /* 대체텍스트가 아닌 접근성을 위한 숨김텍스트를 제공할때 */

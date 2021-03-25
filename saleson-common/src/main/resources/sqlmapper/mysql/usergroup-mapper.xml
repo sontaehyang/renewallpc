@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.usergroup.UserGroupMapper">
+	
+	<resultMap id="GroupResult" type="saleson.shop.group.domain.Group">
+		<result property="groupId" column="GROUP_ID" />
+		<result property="userId" column="USER_ID" />
+	
+	</resultMap>
+	
+	<resultMap id="UserGroupLogResult" type="saleson.shop.usergroup.domain.UserGroupLog">
+		<result property="userId" column="USER_ID" />
+		<result property="groupCode" column="GROUP_CODE" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="adminUserName" column="ADMIN_USER_NAME" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<insert id="insertUserGroups" parameterType="java.util.Map">
+		INSERT INTO OP_USER_GROUP (GROUP_ID, USER_ID)
+		VALUES
+		<foreach collection="groupIds" item="groupIds" separator=" , " >
+			 (#{groupIds}, #{userId})
+		</foreach>
+	</insert> 
+	
+	<delete id="deleteUserGroupByUserId" parameterType="Integer" >
+		DELETE FROM	OP_USER_GROUP 
+	 	WHERE USER_ID = #{userId}
+	</delete>  
+	
+	<insert id="insertGroupsOfUsers" parameterType="java.util.Map">
+		
+			INSERT INTO OP_USER_GROUP (GROUP_ID, USER_ID)
+			VALUES
+			<foreach collection="userIds" item="userId" separator=",">
+					<foreach collection="groupIds" item="groupId"  separator=",">
+						 (#{groupId}, #{userId})
+					</foreach>
+			</foreach>	
+	</insert> 
+	
+	<delete id="deleteGroupsOfUsers" parameterType="java.util.Map" >
+
+			DELETE FROM	OP_USER_GROUP 
+	 		WHERE 
+	 		<foreach collection="userIds" item="userIds" separator="or">	
+	 			USER_ID = #{userIds} 
+		 	</foreach>
+			 
+	</delete>  
+	
+	<update id="updateUserGroupCodeForUserDetail" parameterType="saleson.shop.usergroup.domain.UserGroup">
+		UPDATE OP_USER_DETAIL SET
+			GROUP_CODE = #{groupCode}
+		WHERE
+			USER_ID = #{userId}
+	</update>
+	
+	<update id="deleteUserGroupCodeForUserDetail" parameterType="String">
+		UPDATE OP_USER_DETAIL SET
+			GROUP_CODE = ''
+		WHERE
+			GROUP_CODE = #{groupCode}
+	</update>
+	
+	<insert id="insertUserGroupLog" parameterType="saleson.shop.usergroup.domain.UserGroupLog">
+		INSERT INTO OP_USER_GROUP_LOG (USER_ID, GROUP_CODE, GROUP_NAME, ADMIN_USER_NAME, CREATED_DATE)
+		VALUES (#{userId}, #{groupCode}, #{groupName}, #{adminUserName}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+</mapper>

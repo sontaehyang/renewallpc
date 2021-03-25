@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.onlinepowers.framework.security.mapper.SecurityMapper">
+	<resultMap id="userResultMap" type="com.onlinepowers.framework.security.userdetails.User">
+		<id property="userId" column="USER_ID" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="statusCode" column="STATUS_CODE" />
+		<result property="password" column="PASSWORD" />
+		<result property="userName" column="USER_NAME" />
+		<result property="loginCount" column="LOGIN_COUNT" />
+		<result property="loginDate" column="LOGIN_DATE" />
+		<result property="modifyDate" column="MODIFY_DATE" />
+		<result property="denyDate" column="DENY_DATE" />
+		<result property="leaveDate" column="LEAVE_DATE" />
+		<result property="loginFailCount" column="LOGIN_FAIL_COUNT" />
+		<result property="loginTryDate" column="LOGIN_TRY_DATE" />
+		<result property="passwordType" column="PASSWORD_TYPE" />
+		<result property="passwordExpiredDate" column="PASSWORD_EXPIRED_DATE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="phoneNumber" column="PHONE_NUMBER"/>
+
+		<collection property="userRoles" javaType="ArrayList" column="USER_ID" ofType="com.onlinepowers.framework.security.userdetails.UserRole" select="getUserRoleListByUserId" />
+		
+	</resultMap>
+	
+	<resultMap id="userRoleResultMap" type="com.onlinepowers.framework.security.userdetails.UserRole">
+		<result property="userId" column="USER_ID" />
+		<result property="authority" column="AUTHORITY" />
+	</resultMap>
+	
+	
+	
+	<select id="getUserById" parameterType="long" resultMap="userResultMap">
+		<![CDATA[
+			SELECT * FROM OP_USER 
+			WHERE USER_ID = #{userId} AND STATUS_CODE = '9'
+		]]>
+	</select>
+	
+	<select id="getUserByLoginId" parameterType="String" resultMap="userResultMap">
+		<![CDATA[
+			SELECT * FROM OP_USER 
+			WHERE LOGIN_ID = #{loginId} AND STATUS_CODE IN ('9', '4')
+		]]>
+	</select>
+	
+	
+	
+	<select id="getUserRoleListByUserId" parameterType="long" resultMap="userRoleResultMap">
+		<![CDATA[
+			SELECT * FROM OP_USER_ROLE 
+			WHERE USER_ID = #{userId}
+		]]>
+	</select>
+	
+	
+	<update id="updateLoginCount" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER SET
+			LOGIN_COUNT = LOGIN_COUNT + 1,
+			LOGIN_DATE = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			SLEEP_MAIL_SEND_DATE = ''
+		WHERE
+			USER_ID = #{userId}
+			AND STATUS_CODE = '9'
+	</update>	
+	
+	
+	<select id="getManagerByLoginId" parameterType="String" resultMap="userResultMap">
+		<![CDATA[
+			SELECT * FROM OP_MANAGER
+			WHERE LOGIN_ID = #{loginId} AND STATUS_CODE = '9'
+		]]>
+	</select>
+	
+	
+	<update id="updateManagerLoginCount" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_MANAGER SET
+			LOGIN_COUNT = LOGIN_COUNT + 1,
+			LOGIN_DATE = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+		WHERE
+			USER_ID = #{userId}
+	</update>
+
+	<select id="getSellerUserByLoginId" parameterType="String" resultMap="userResultMap">
+		<![CDATA[
+			SELECT SU.*
+			FROM (
+				SELECT
+					SU.* ,
+					REPLACE(UR.AUTHORITY, 'ROLE_SELLER_', '') AS SELLER_ID
+				FROM (
+					SELECT * FROM OP_SELLER_USER
+					WHERE LOGIN_ID = #{loginId} AND STATUS_CODE = '9'
+				) SU
+				INNER JOIN OP_USER_ROLE UR
+				ON UR.USER_ID = SU.USER_ID
+				AND UR.AUTHORITY LIKE 'ROLE_SELLER_%'
+				AND UR.AUTHORITY != 'ROLE_SELLER_MASTER'
+			) SU
+			INNER JOIN OP_SELLER S
+			ON S.SELLER_ID = SU.SELLER_ID
+			AND S.STATUS_CODE = '2'
+		]]>
+	</select>
+
+
+	<update id="updateSellerUserLoginCount" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_SELLER_USER SET
+			LOGIN_COUNT = LOGIN_COUNT + 1,
+			LOGIN_DATE = <include refid="CommonMapper.datetime" />
+		WHERE
+		USER_ID = #{userId}
+	</update>
+
+	<!--ISMS USER LOCK-->
+	<update id="updateLoginFailCountForUser" parameterType="String">
+		UPDATE OP_USER SET
+			LOGIN_FAIL_COUNT = LOGIN_FAIL_COUNT + 1,
+			LOGIN_TRY_DATE = <include refid="CommonMapper.datetime" />
+		WHERE LOGIN_ID = #{loginId}
+	</update>
+
+	<update id="updateClearLoginFailCountForUser" parameterType="String">
+		UPDATE OP_USER SET
+			LOGIN_FAIL_COUNT = 0,
+			LOGIN_TRY_DATE = <include refid="CommonMapper.datetime" />
+		WHERE LOGIN_ID = #{loginId}
+	</update>
+
+	<!--ISMS MANAGER LOCK-->
+	<update id="updateLoginFailCountForManager" parameterType="String">
+		UPDATE OP_MANAGER SET
+			LOGIN_FAIL_COUNT = LOGIN_FAIL_COUNT + 1,
+			LOGIN_TRY_DATE = <include refid="CommonMapper.datetime" />
+		WHERE LOGIN_ID = #{loginId}
+	</update>
+
+	<update id="updateClearLoginFailCountForManager" parameterType="String">
+		UPDATE OP_MANAGER SET
+			LOGIN_FAIL_COUNT = 0,
+			LOGIN_TRY_DATE = <include refid="CommonMapper.datetime" />
+		WHERE LOGIN_ID = #{loginId}
+	</update>
+
+	<!--ISMS SELLER_USER LOCK-->
+	<update id="updateLoginFailCountForSellerUser" parameterType="String">
+		UPDATE OP_SELLER_USER SET
+			LOGIN_FAIL_COUNT = LOGIN_FAIL_COUNT + 1,
+			LOGIN_TRY_DATE = <include refid="CommonMapper.datetime" />
+		WHERE LOGIN_ID = #{loginId}
+	</update>
+
+	<update id="updateClearLoginFailCountForSellerUser" parameterType="String">
+		UPDATE OP_SELLER_USER SET
+			LOGIN_FAIL_COUNT = 0,
+			LOGIN_TRY_DATE = <include refid="CommonMapper.datetime" />
+		WHERE LOGIN_ID = #{loginId}
+	</update>
+</mapper>

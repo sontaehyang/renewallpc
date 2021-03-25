@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.usersns.UserSnsMapper">
+	<resultMap type="saleson.shop.usersns.domain.UserSns" id="userSnsResult">
+		<id property="snsUserId" column="SNS_USER_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="certifiedDate" column="CERTIFIED_DATE" />
+		<result property="snsType" column="SNS_TYPE" />
+		<result property="snsId" column="SNS_ID" />
+		<result property="snsName" column="SNS_NAME" />
+		<result property="email" column="EMAIL" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="loginId" column="LOGIN_ID" />
+	</resultMap>
+
+	<select id="getUserSnsInfo" parameterType="saleson.shop.usersns.domain.UserSns" resultMap="userSnsResult">
+		SELECT
+			US.SNS_USER_ID
+			, US.SNS_TYPE
+			, US.SNS_ID
+			, US.SNS_NAME
+			, US.EMAIL
+			, US.CREATED_DATE
+			, US.CERTIFIED_DATE
+			, U.LOGIN_ID
+			, U.USER_ID
+		FROM OP_USER_SNS US
+			LEFT JOIN OP_USER U ON US.USER_ID = U.USER_ID
+		<where>
+			1 = 1
+			<if test='snsId != null'>
+				AND SNS_ID = #{snsId}
+			</if>
+			<if test='snsType != null'>
+				AND SNS_TYPE = #{snsType}
+			</if>
+			<if test='snsUserId != null and snsUserId != 0'>
+				AND SNS_USER_ID = #{snsUserId}
+			</if>
+		</where>
+	</select>
+
+	<select id="getDuplicatedUserCount" parameterType="saleson.shop.usersns.domain.UserSns" resultType="integer">
+		SELECT COUNT(*) CNT FROM OP_USER U WHERE LOGIN_ID = #{loginId}
+	</select>
+
+	<insert id="insertUserSnsInfo" parameterType="saleson.shop.usersns.domain.UserSns">
+		INSERT INTO OP_USER_SNS (SNS_USER_ID, SNS_ID, USER_ID, SNS_TYPE, SNS_NAME, EMAIL, CREATED_DATE, CERTIFIED_DATE)
+			VALUES (#{snsUserId}, #{snsId}, #{userId}, #{snsType}, #{snsName}, #{email}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{certifiedDate})
+	</insert>
+
+	<select id="getUserSns" parameterType="saleson.shop.usersns.domain.UserSns" resultMap="userSnsResult">
+		SELECT
+			SNS_USER_ID
+			, USER_ID
+			, CERTIFIED_DATE
+			, SNS_TYPE
+			, SNS_ID
+			, SNS_NAME
+			, EMAIL
+			, CREATED_DATE
+		 FROM OP_USER_SNS
+		 WHERE USER_ID = #{userId}
+	</select>
+
+	<select id="getUserSnsList" parameterType="saleson.shop.usersns.domain.UserSns" resultMap="userSnsResult">
+		SELECT
+			SNS_USER_ID
+			, USER_ID
+			, CERTIFIED_DATE
+			, SNS_TYPE
+			, SNS_ID
+			, SNS_NAME
+			, EMAIL
+			, CREATED_DATE
+		 FROM OP_USER_SNS
+		 WHERE USER_ID = #{userId}
+	</select>
+
+	<delete id="disconnectSns" parameterType="saleson.shop.usersns.domain.UserSns">
+		DELETE FROM OP_USER_SNS WHERE SNS_USER_ID = #{snsUserId}
+	</delete>
+	
+	<update id="updateUser" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER 
+			SET LOGIN_ID = #{loginId}
+				<if test='password != "" and password != null'>
+					, PASSWORD= #{password}
+				</if>
+				, USER_NAME= #{userName}
+			WHERE USER_ID = #{userId} 
+	</update>
+
+	<update id="updateUserSns" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		UPDATE OP_USER_SNS
+			SET CERTIFIED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+			WHERE USER_ID = #{userId}
+	</update>
+
+	<delete id="secedeSnsProcess" parameterType="com.onlinepowers.framework.security.userdetails.User">
+		DELETE FROM OP_USER_SNS
+			WHERE USER_ID = #{userId}
+	</delete>
+
+	<select id="getUserSnsCount" parameterType="saleson.shop.user.domain.AuthUserInfo" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_USER_SNS US
+		WHERE US.USER_ID =
+			  (
+				  SELECT U.USER_ID
+			      FROM OP_USER U
+				  	INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID AND UD.PHONE_NUMBER = #{fullPhoneNumber}
+				  WHERE U.USER_NAME = #{userName}
+				  LIMIT 1
+			  )
+	</select>
+
+	<select id="getUserSnsCertifyCount" parameterType="com.onlinepowers.framework.security.userdetails.User" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_USER_SNS
+		WHERE USER_ID =  #{userId}
+		  AND CERTIFIED_DATE IS NOT NULL OR CERTIFIED_DATE != ''
+	</select>
+
+</mapper>

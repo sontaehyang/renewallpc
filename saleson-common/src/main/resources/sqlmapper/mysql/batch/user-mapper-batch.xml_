@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sevenesthe.web.user.UserMapperBatch">
+	<!-- UserId로 강사정보를 UPDATE -->
+	<update id="updateInstructor" parameterType="sevenesthe.web.user.domain.KbUser">
+		UPDATE OP_KB_USER SET
+			INSTRUCTOR = #{instructor}
+		WHERE
+			USER_ID = #{userId}
+	</update>
+</mapper>

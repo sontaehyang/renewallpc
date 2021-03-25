@@ -1,0 +1,172 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?> 
+<div class="inner deliveryList_wrap">
+	<div class="location_area">
+		<?include "../include/all_menu.html"?>
+		<div class="breadcrumbs">
+			<a href="#" class="home"><span class="hide">home</span></a>
+			<a href="#">마이페이지</a> 
+			<a href="#">쇼핑내역</a> 
+			<span>주문/배송조회</span> 
+		</div>
+	</div><!-- // location_area E --> 
+	
+	<!-- 주문/배송조회 정보 박스 -->	
+	<div class="order_info">
+		<div class="member_level">
+			<p class="level"><img src="/content/images/icon/icon_gold.png" alt="등급"></p>
+			<p class="name"><span>홍길동</span>님</p>
+			<p class="rating">일반등급</p>
+			<a href="#" class="btn_benefit" title="혜택보기">혜택보기</a>
+		</div><!--// member_level E-->
+		<div class="info_list">
+			<ul class="info">
+				<li>
+					<p class="item point">포인트</p>
+					<p class="remainder"><span>9,999,999</span>P</p>
+				</li>
+				<li>
+					<p class="item coupons">쿠폰 <a href="#" class="btn_down_confirm">다운가능쿠폰</a></p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item delivery">배송비 쿠폰</p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item cash">캐시</p>
+					<p class="remainder"><span>9,999,999</span>원</p>
+				</li>
+			</ul>
+			<div class="condition_wrap">
+				<div class="order_condition">
+					<span class="title">주문/배송</span>
+					<ol>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step01.gif" alt="order"></span>
+							<p>주문접수 <span><a href="#">30</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"> </li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step02.gif" alt="order"></span>
+							<p>결제완료  <span><a href="#">10</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step03.gif" alt="order"></span>
+							<p>상품준비중 <span><a href="#">0</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step04.gif" alt="order"></span>
+							<p>배송중 <span><a href="#" class="ing">1</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step05.gif" alt="order"></span>
+							<p>배송완료 <span><a href="#">5</a>건</span></p> 
+						</li>
+					</ol>
+				</div> <!--// order_condition E--> 
+				<div class="order_refund">
+					<p class="title">취소/교환/반품</p>
+					<ul>
+						<li>취소 <span><a href="#">0</a>건</span></li>  
+						<li>교환 <span><a href="#" class="ing">2</a>건</span></li>  
+						<li>반품 <span><a href="#">0</a>건</span></li>  
+					</ul>
+				</div><!--// order_refund E--> 
+			</div><!--// condition_wrap E--> 
+		</div><!--// info_list E-->
+	</div><!--// order_info E-->
+	
+	<div id="contents" class="pt0"> 
+		<?include "../include/mypage_lnb.html"?>
+		<div class="contents_inner"> 	   
+			<h2>배송주소록 관리</h2>
+			<p class="table_top">고객님께서 주문시 사용하셨던 배송지 목록입니다.</p>
+			<!-- 배송지 정보가 없는 경우 S -->
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-list">
+		 			<caption>배송주소록 관리</caption>
+		 			<colgroup>
+		 				<col style="width:50px;">
+		 				<col style="width:100px;">
+		 				<col style="width:auto;">
+		 				<col style="width:120px;">
+		 				<col style="width:100px;">
+		 				<col style="width:140px;">
+		 				<col style="width:140px;">
+		 			</colgroup>
+		 			<thead>
+		 				<tr>
+		 					<th scope="col">선택</th>
+		 					<th scope="col">배송지</th>
+		 					<th scope="col">주소</th>
+		 					<th scope="col">회사명</th>
+		 					<th scope="col">받는사람</th>
+		 					<th scope="col">전화번호</th>
+		 					<th scope="col">휴대전화번호</th>
+		 				</tr>
+		 			</thead>
+		 			<tbody>
+		 				<td colspan="7">
+		 						<div class="coupon_not">‘등록된 배송지 정보가 없습니다.’</div>
+		 					</td>
+		 			</tbody>
+		 		</table><!--//view E-->	
+		 	</div><!--//board_wrap E-->
+			<!-- 배송지 정보가 없는 경우 E -->
+			<!-- 배송지 정보가 있는 경우 S -->
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-list">
+		 			<caption>배송주소록 관리</caption>
+		 			<colgroup>
+		 				<col style="width:50px;">
+		 				<col style="width:100px;">
+		 				<col style="width:auto;">
+		 				<col style="width:120px;">
+		 				<col style="width:100px;">
+		 				<col style="width:140px;">
+		 				<col style="width:140px;">
+		 			</colgroup>
+		 			<thead>
+		 				<tr>
+		 					<th scope="col">선택</th>
+		 					<th scope="col">배송지</th>
+		 					<th scope="col">주소</th>
+		 					<th scope="col">회사명</th>
+		 					<th scope="col">받는사람</th>
+		 					<th scope="col">전화번호</th>
+		 					<th scope="col">휴대전화번호</th>
+		 				</tr>
+		 			</thead>
+		 			<tbody>
+		 				<tr>
+		 					<td><input type="radio"></td>
+		 					<td>기본주소<p class="color_23ade3">(기본)</p></td>
+		 					<td class="tleft">서울시 구로구 구로3동 벽산디지털밸리 1차 405호</td>
+		 					<td>온라인파워스</td>
+		 					<td>홍길동</td>
+		 					<td>02-1234-5678</td>
+		 					<td>010-1234-5678</td>
+		 				</tr>
+		 			</tbody>
+		 		</table><!--//view E-->	
+		 	</div><!--//board_wrap E-->
+		 	<!-- 배송지 정보가 있는 경우 E -->
+			<div class="btn_wrap pt10">
+				<div class="btn_left">
+					<button type="button" class="btn btn-default btn-m" title="배송지로 선택">배송지로 선택</button>
+					<button type="button" class="btn btn-normal btn-m" title="수정">수정</button>
+					<button type="button" class="btn btn-normal btn-m" title="삭제">삭제</button>
+				</div>
+				<div class="btn_right">
+					<button type="button" class="btn btn-success btn-m btn_right" title="배송지 추가">배송지 추가</button>
+				</div> 
+			</div>
+		</div>
+	</div><!-- // contents E -->	
+</div><!--// inner E-->
+<?include "../include/footer.html"?>	 
+ 

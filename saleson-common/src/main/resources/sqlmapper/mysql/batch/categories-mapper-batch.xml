@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.categories.CategoriesMapperBatch">
+
+	<!-- 이동하는 카테고리의 자식놈의 정보를 수정함. -->
+	<update id="updateChildCategoryFromJsTree" parameterType="saleson.shop.categories.domain.Categories">
+		UPDATE OP_CATEGORY SET
+			<if test='categoryGroupId != null and categoryGroupId != "" and categoryGroupId != 0'>
+			CATEGORY_GROUP_ID = #{categoryGroupId},
+			</if>
+			CATEGORY_CODE = #{categoryCode},
+			CATEGORY_CODE = #{categoryCode},
+			CATEGORY_CLASS1 = #{categoryClass1},
+			CATEGORY_CLASS2 = #{categoryClass2},
+			CATEGORY_CLASS3 = #{categoryClass3},
+			CATEGORY_CLASS4 = #{categoryClass4},
+			CATEGORY_LEVEL = #{categoryLevel}
+		WHERE 
+			CATEGORY_ID = #{categoryId} 
+	</update>
+	
+</mapper>

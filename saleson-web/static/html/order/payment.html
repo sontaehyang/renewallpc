@@ -1,0 +1,969 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?> 
+<div class="inner payment_wrap"> 
+	<div class="location_area">
+		<?include "../include/all_menu.html"?>
+		<div class="breadcrumbs">
+			<a href="/html/main.html" class="home"><span class="hide">home</span></a> 
+			<span>장바구니</span> 
+		</div>
+	</div><!-- // location_area E -->
+	 
+	<div class="content_title">
+		<h2 class="title">주문/결제</h2>
+	</div>	 	
+	<div class="order_step">
+		<ul>
+			<li class="off"><span class="number">01</span> 장바구니</li>
+			<li class="on"><span class="number">02</span> 주문결제</li>
+			<li><span class="number">03</span> 주문완료</li> 
+		</ul>
+	</div>
+	
+	<h3 class="sub_title mt30">주문상품</h3>
+	<form id="buy" name="buy" method="post">
+		<div class="board_wrap"> 	
+			<table cellpadding="0" cellspacing="0" class="mypage_list mt10">
+				<caption>주문상품</caption>
+				<colgroup> 
+					<col style="width:auto;">
+					<col style="width:72px;">
+					<col style="width:110px;">
+					<col style="width:110px;">
+					<col style="width:110px;">
+					<col style="width:110px;">  
+				</colgroup>
+				<thead>
+					<tr> 
+						<th scope="col" class="none_left">상품명/옵션정보</th>
+						<th scope="col">수량</th>
+						<th scope="col">상품금액</th>
+						<th scope="col">할인금액</th> 
+						<th scope="col">할인금액적용</th> 
+						<th scope="col">배송정보</th>  
+					</tr>
+				</thead>
+				<tbody>
+					<tr> 
+						<td class="tleft">	 						 
+							<div class="item_info">
+								<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+								<div class="order_option noline">
+									<p class="item_name">[레드씰] 레드씰 프로폴리스 기능성 치약 레드씰 프로폴리스 기능성 치약</p>
+									<ul class="option">
+										<li> 
+											<span>아일랜드썬라이즈</span>	
+										</li>
+										<li> 
+											<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+										</li> 
+									</ul> 
+									<div class="delivery_wrap">
+										<a href="#" class="delivery_type">무료배송▶</a>  
+										<div class="delievery_tip">
+											<p class="title">무료배송</p>
+											<p>조건없이 무료배송 상품입니다. </p> 
+											<a href="#" class="delievery_close"><img src="/content/images/btn/btn_tooltip_close.gif" alt="close"></a>
+										</div> 
+									</div> <!-- // delivery_wrap E -->
+								</div>
+							</div> 		 
+						</td>
+						<td>1개</td> 
+						<td><span class="price02">16,500원</span></td>
+						<td>-15,250원</td>
+						<td><div class="sum"><span class="price">15,250원</span></div></td> 
+						<td>
+							<span class="delivery_price">2,500원</span> 
+							<p class="where_buy"><input type="checkbox" id="free"> <label for="free">배송비 쿠폰 </label></p>
+						</td>  
+					</tr> 		 
+				</tbody>
+			</table><!--//esthe-table E-->	
+			<div class="boadr_total"> 
+				<div>
+					총 상품합계 금액  142,500원  +  배송비  2500원  = <span class="delivery_total">결제예정금액 <span>144,500원</span></span>					  
+				</div> 
+			</div><!--//boadr_total E-->  	 		 
+		</div>	<!-- // board_wrap E -->	
+	</form>
+
+	<div class="btn_wrap pt10">
+			<div class="btn_left">
+				<button type="button" class="btn btn-default btn-m" title="장바구니 돌아가기">장바구니 돌아가기</button> 
+			</div> <!-- // btn_left E --> 
+		</div>
+	 
+ 	<!-- 비회원 주문자 정보 S -->
+ 	<h3 class="sub_title mt30">비회원 주문자 정보  <span>표시가 있는 부분은 필수 입력사항입니다.</span></h3>
+	<div class="board_wrap">  
+ 		<table cellpadding="0" cellspacing="0" class="board-write">
+ 			<caption>비회원 주문자 정보</caption>
+ 			<colgroup>
+ 				<col style="width:160px;">
+ 				<col style="width:auto;">	 				
+ 			</colgroup>
+ 			<tbody>
+ 				<tr>
+ 					<th scope="row">주문자명 <span class="necessary"></span></th>
+ 					<td>
+ 						<div class="input_wrap col-w-7">
+								<input type="text" title="받으시는 분"> 
+							</div>
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row">연락처 <span class="necessary"></span></th>
+ 					<td>
+ 						<div class="hp_area">
+ 							<div class="input_wrap col-w-10">
+ 								<select class="form-control">
+							        <option value="010">010</option> 
+							        <option value="011">011</option> 
+							        <option value="016">016</option> 
+							        <option value="017">017</option>
+							        <option value="018">018</option> 
+							        <option value="019">019</option>  
+							    </select>
+ 							</div>
+ 							<span class="connection"> - </span>
+ 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+ 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+ 							</div>
+ 							<span class="connection"> - </span>
+ 							<div class="input_wrap col-w-10">			 	 			 	 							 
+ 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+ 							</div> 		
+ 						</div>
+ 					</td>
+ 				</tr>  
+ 			</tbody>
+ 		</table><!--//view E-->	 	
+ 	</div> <!-- // board_wrap -->
+ 	<!-- 비회원 주문자 정보 E -->
+ 	<!-- 회원 주문자 정보 S -->
+ 	<h3 class="sub_title mt30">주문자 정보  <span>표시가 있는 부분은 필수 입력사항입니다.</span></h3>
+	<div class="board_wrap">  
+ 		<table cellpadding="0" cellspacing="0" class="board-write">
+ 			<caption>주문자 정보 </caption>
+ 			<colgroup>
+ 				<col style="width:160px;">
+ 				<col style="width:auto;">	 				
+ 			</colgroup>
+ 			<tbody>
+ 				<tr>
+ 					<th scope="row">주문자명 <span class="necessary"></span></th>
+ 					<td> 
+						<div class="input_wrap col-w-7">
+							<input type="text" maxlength="50" title="주문자명">
+						</div> 
+					</td>
+ 				</tr>  
+ 				<tr>
+ 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+ 					<td>
+ 						<div> 
+ 							<div class="input_wrap col-w-10">
+ 								<input type="text" title="우편번호"> 
+ 							</div>	 
+ 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default" title="검색">검색</button></div>&nbsp;  
+ 							<span class="address_basic"><input type="checkbox" id="aa"> <label for="aa">이 주소를 기본으로 설정함</label></span>
+ 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+ 								<input type="text" title="주소" class="full"> 
+ 							</div>			 	 				  			 
+ 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+ 								<input type="text" title="주소" class="full"> 
+ 							</div>		 							 
+ 						</div>
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+ 					<td>
+ 						<div class="hp_area">
+ 							<div class="input_wrap col-w-10">
+ 								<select class="form-control">
+							        <option value="010">010</option> 
+							        <option value="011">011</option> 
+							        <option value="016">016</option> 
+							        <option value="017">017</option>
+							        <option value="018">018</option> 
+							        <option value="019">019</option>  
+							    </select>
+ 							</div>
+ 							<span class="connection"> - </span>
+ 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+ 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+ 							</div>
+ 							<span class="connection"> - </span>
+ 							<div class="input_wrap col-w-10">			 	 			 	 							 
+ 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+ 							</div> 		
+ 						</div>
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<th scope="row">전화번호 <span class="necessary"></span></th>
+ 					<td>
+ 						<div class="hp_area">
+ 							<div class="input_wrap col-w-10">
+ 								<select class="form-control">
+							        <option value="02">02</option> 
+							        <option value="031">031</option> 
+							        <option value="032">032</option>  
+							    </select>
+ 							</div>
+ 							<span class="connection"> - </span>
+ 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+ 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+ 							</div>
+ 							<span class="connection"> - </span>
+ 							<div class="input_wrap col-w-10">			 	 			 	 							 
+ 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+ 							</div> 	
+ 						</div>
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<th scope="row">이메일 <span class="necessary"></span></th>
+ 					<td>
+ 						<div class="hp_area"> 
+ 							 <div class="input_wrap col-w-9">			 	 			 	 							 
+ 								<input type="text" title="이메일 주소" class="full" placeholder="abscs"> 
+ 							</div>
+ 							<span class="connection">@</span> 
+ 							<div class="input_wrap col-w-9">
+ 								<select class="form-control">
+							        <option value="naver.com">naver.com</option>  
+							        <option value="daum.net">daum.net</option> 
+							        <option value="nate.com">nate.com</option> 
+							        <option value="gmail.com">gmail.com</option> 
+							    </select> 
+ 							</div>
+ 							<div class="input_wrap col-w-8">			 	 			 	 							 
+ 								<input type="text" title="이메일주소 직접입력" class="full" placeholder="직접입력"> 
+ 							</div> 	
+ 						</div>
+ 					</td>
+ 				</tr>
+ 			</tbody>
+ 		</table><!--//view E-->	 	
+ 	</div> <!-- // board_wrap -->
+	<!-- 회원 주문자 정보 E -->
+
+	<!-- 비회원 배송지 정보 S -->
+	<h3 class="sub_title mt30">비회원 배송지 
+		<span>표시가 있는 부분은 필수 입력사항입니다.</span>		 
+	</h3>
+ 	<div class="board_wrap">  
+ 		<table cellpadding="0" cellspacing="0" class="board-write">
+ 			<caption>배송지</caption>
+ 			<colgroup>
+ 				<col style="width:160px;">
+ 				<col style="width:auto;">	 				
+ 			</colgroup>
+ 			<tbody> 
+	 				<tr>
+	 					<th scope="row">받으시는 분 <span class="necessary"></span></th>
+	 					<td>
+	 						<div class="input_wrap col-w-7">
+ 								<input type="text" title="받으시는 분"> 
+ 							</div>
+	 					</td>
+	 				</tr> 
+	 				<tr>
+	 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+	 					<td>
+	 						<div> 
+	 							<div class="input_wrap col-w-10">
+	 								<input type="text" title="우편번호"> 
+	 							</div>	 
+	 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default">검색</button></div>  
+	 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+	 								<input type="text" title="주소" class="full"> 
+	 							</div>			 	 				  			 
+	 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+	 								<input type="text" title="주소" class="full"> 
+	 							</div>		 							 
+	 						</div>
+	 					</td>
+	 				</tr>
+	 				<tr>
+	 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+	 					<td>
+	 						<div class="hp_area">
+	 							<div class="input_wrap col-w-10">
+	 								<select class="form-control">
+								        <option value="010">010</option> 
+								        <option value="011">011</option> 
+								        <option value="016">016</option> 
+								        <option value="017">017</option>
+								        <option value="018">018</option> 
+								        <option value="019">019</option>  
+								    </select>
+	 							</div>
+	 							<span class="connection"> - </span>
+	 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+	 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+	 							</div>
+	 							<span class="connection"> - </span>
+	 							<div class="input_wrap col-w-10">			 	 			 	 							 
+	 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+	 							</div> 		
+	 						</div>
+	 					</td>
+	 				</tr>
+	 				<tr>
+	 					<th scope="row">전화번호 <span class="necessary"></span></th>
+	 					<td>
+	 						<div class="hp_area">
+	 							<div class="input_wrap col-w-10">
+	 								<select class="form-control">
+								        <option value="02">02</option> 
+								        <option value="031">031</option> 
+								        <option value="032">032</option>  
+								    </select>
+	 							</div>
+	 							<span class="connection"> - </span>
+	 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+	 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+	 							</div>
+	 							<span class="connection"> - </span>
+	 							<div class="input_wrap col-w-10">			 	 			 	 							 
+	 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+	 							</div> 	
+	 						</div>
+	 					</td>
+	 				</tr>
+	 				<tr>
+	 					<th scope="row">배송시 요구사항 <span class="necessary"></span></th>
+	 					<td>
+	 						<div class="input_wrap type02 col-w-1">			 	 			 	 							 
+ 								<input type="text" title="배송시 요구사항" class="full" placeholder="부재시 경비실에 맡겨주세요. "> 
+ 							</div>
+	 					</td>
+	 				</tr>
+	 			</tbody>
+ 		</table><!--//view E-->	 	
+ 	</div> <!-- // board_wrap -->
+	<!-- 비회원 배송지 정보 E -->
+
+	<!-- 회원 배송지 정보 S -->
+	<h3 class="sub_title mt30">배송지 
+		<span>표시가 있는 부분은 필수 입력사항입니다.</span>
+		<div class="many_delivery"> 
+			<p>최대 10곳까지 가능</p> 
+			<select id="multiple-delivery-set-count"> 
+				<option value="2">2</option> 
+				<option value="3">3</option> 
+				<option value="4">4</option> 
+			</select> 
+			<button type="button" class="btn btn-m btn-default hide" id="cancel-multiple-delivery" onclick="Order.cancelMultipleDelivery()">한곳으로 보내기</button>  
+			<div class="input_wrap"><button type="button" class="btn btn-m btn-default" onclick="Order.multipleDelivery()" title="복수배송지 선택">복수배송지 선택</button></div> 
+		</div> 
+	</h3>
+ 	<div class="board_wrap">  
+ 		<table cellpadding="0" cellspacing="0" class="board-write">
+ 			<caption>배송지</caption>
+ 			<colgroup>
+ 				<col style="width:160px;">
+ 				<col style="width:auto;">	 				
+ 			</colgroup>
+ 			<tbody>
+ 				<tr>
+ 					<th scope="row">배송지 선택</th>
+ 					<td>
+ 						<div class="input_wrap col-w-3">
+ 							<input type="radio" id="Express" name="radio_btn" checked="checked"> <label for="Express">기본 배송지</label>&nbsp;&nbsp;
+ 							<input type="radio" id="mail" name="radio_btn"> <label for="mail">새로운 배송지</label>&nbsp;&nbsp;
+ 							<input type="radio" id="a3" name="radio_btn"> <label for="a3">주문자정보와 동일</label>&nbsp;&nbsp;
+ 							<input type="radio" id="a4" name="radio_btn"> <label for="a4">최근배송지</label>&nbsp;&nbsp; 
+ 							<button type="button" class="btn btn-ms btn-default" title="배송지 목록">배송지 목록</button>
+ 						</div> 
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row">받으시는 분 <span class="necessary"></span></th>
+ 					<td>
+ 						<div class="input_wrap col-w-7">
+							<input type="text" title="받으시는 분"> 
+						</div>
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+ 					<td>
+ 						<div> 
+ 							<div class="input_wrap col-w-10">
+ 								<input type="text" title="우편번호"> 
+ 							</div>	 
+ 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default" title="검색">검색</button></div>  
+ 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+ 								<input type="text" title="주소" class="full"> 
+ 							</div>			 	 				  			 
+ 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+ 								<input type="text" title="주소" class="full"> 
+ 							</div>		 							 
+ 						</div>
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+ 					<td>
+ 						<div class="hp_area">
+ 							<div class="input_wrap col-w-10">
+ 								<select class="form-control">
+							        <option value="010">010</option> 
+							        <option value="011">011</option> 
+							        <option value="016">016</option> 
+							        <option value="017">017</option>
+							        <option value="018">018</option> 
+							        <option value="019">019</option>  
+							    </select>
+ 							</div>
+ 							<span class="connection"> - </span>
+ 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+ 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+ 							</div>
+ 							<span class="connection"> - </span>
+ 							<div class="input_wrap col-w-10">			 	 			 	 							 
+ 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+ 							</div> 		
+ 						</div>
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<th scope="row">전화번호 </th>
+ 					<td>
+ 						<div class="hp_area">
+ 							<div class="input_wrap col-w-10">
+ 								<select class="form-control">
+							        <option value="02">02</option> 
+							        <option value="031">031</option> 
+							        <option value="032">032</option>  
+							    </select>
+ 							</div>
+ 							<span class="connection"> - </span>
+ 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+ 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+ 							</div>
+ 							<span class="connection"> - </span>
+ 							<div class="input_wrap col-w-10">			 	 			 	 							 
+ 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+ 							</div> 	
+ 						</div>
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<th scope="row">배송시 요구사항 <span class="necessary"></span></th>
+ 					<td>
+ 						<div class="input_wrap col-w-0">			 	 			 	 							 
+							<input type="text" title="배송시 요구사항" placeholder="부재시 경비실에 맡겨주세요. "> 
+						</div>
+ 					</td>
+ 				</tr>
+ 			</tbody>
+ 		</table><!--//view E-->	 	
+ 	</div> <!-- // board_wrap -->
+ 	
+	<h4 class="title_type04 mt15">배송지1</h4>
+	<div class="board_wrap">
+		<table cellpadding="0" cellspacing="0" class="board-write">
+ 			<caption>복수배송지 등록</caption>
+ 			<colgroup> 
+	 			<col style="width:160px;"> 
+	 			<col style="width:auto;"> 
+	 			<col style="width:130px;"> 
+ 			</colgroup>
+ 			<tbody>
+ 				<tr>
+ 					<th scope="row">받으시는 분</th>
+ 					<td colspan="2">
+ 						<div class="input_wrap col-w-7">
+ 							홍길동
+ 						</div> 
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+ 					<td colspan="2">
+ 						<div> 
+ 							<div class="input_wrap">
+ 								(123-456) 서울시 구로구 구로3동 벽산디지털밸리 405호 
+ 							</div>
+ 						</div>
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+ 					<td colspan="2">
+ 						<div class="hp_area">
+ 							<div class="input_wrap">
+ 								010-1234-5678
+ 							</div>
+ 						</div><!-- // hp_area --> 
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row">전화번호</th>
+ 					<td colspan="2">
+ 						<div class="hp_area">
+ 							<div class="input_wrap">
+ 								010-1234-5678
+ 							</div>
+ 						</div><!-- // hp_area --> 
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<th scope="row">배송시 요구사항</th>
+ 					<td colspan="2">
+ 						<div class="input_wrap">
+ 							부재 시 경비실에 맡겨주세요.
+ 						</div> 
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row" rowspan="2" valign="top" class="noline_bottom">배송<br>상품선택</th>
+ 					<td class="address_add" colspan="2">
+ 						 <div class="item_info">
+							<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+							<div class="order_option">
+								<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+								<ul class="option">
+									<li>
+										<span class="choice">옵션1 :</span>
+										<span>아일랜드썬라이즈</span>	
+									</li>
+									<li>
+										<span class="choice">LED 네일 라이트 : </span>
+										<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+									</li>
+									<li>
+										<span class="choice">조립 / 설치 서비스 : </span>
+										<span>조립 / 설치 서비스 이용</span>	
+									</li>
+								</ul>
+								<div class="item_price">
+									<span>10,500</span>원/ <span>3</span>개
+								</div>
+							</div>
+						</div>  
+ 					</td>
+ 				</tr> 
+ 				<tr> 
+ 					<td class="address_add" colspan="2">
+ 						 <div class="item_info">
+							<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+							<div class="order_option">
+								<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+								<ul class="option">
+									<li>
+										<span class="choice">옵션1 :</span>
+										<span>아일랜드썬라이즈</span>	
+									</li>
+									<li>
+										<span class="choice">LED 네일 라이트 : </span>
+										<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+									</li>
+									<li>
+										<span class="choice">조립 / 설치 서비스 : </span>
+										<span>조립 / 설치 서비스 이용</span>	
+									</li>
+								</ul>
+								<div class="item_price">
+									<span>10,500</span>원/ <span>3</span>개
+								</div>
+							</div>
+						</div>  
+ 					</td>
+ 				</tr> 
+ 			</tbody>
+ 		</table>  
+ 	</div> <!-- // board_wrap E -->
+ 	
+	<h4 class="title_type04 mt15">배송지2</h4>
+	<div class="board_wrap">
+		<table cellpadding="0" cellspacing="0" class="board-write">
+ 			<caption>복수배송지 등록</caption>
+ 			<colgroup> 
+	 			<col style="width:160px;"> 
+	 			<col style="width:auto;"> 
+	 			<col style="width:130px;"> 
+ 			</colgroup>
+ 			<tbody>
+ 				<tr>
+ 					<th scope="row">받으시는 분</th>
+ 					<td colspan="2">
+ 						<div class="input_wrap col-w-7">
+ 							홍길동
+ 						</div> 
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+ 					<td colspan="2">
+ 						<div> 
+ 							<div class="input_wrap">
+ 								(123-456) 서울시 구로구 구로3동 벽산디지털밸리 405호 
+ 							</div>
+ 						</div>
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+ 					<td colspan="2">
+ 						<div class="hp_area">
+ 							<div class="input_wrap">
+ 								010-1234-5678
+ 							</div>
+ 						</div><!-- // hp_area --> 
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row">전화번호</th>
+ 					<td colspan="2">
+ 						<div class="hp_area">
+ 							<div class="input_wrap">
+ 								010-1234-5678
+ 							</div>
+ 						</div><!-- // hp_area --> 
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<th scope="row">배송시 요구사항</th>
+ 					<td colspan="2">
+ 						<div class="input_wrap">
+ 							부재 시 경비실에 맡겨주세요.
+ 						</div> 
+ 					</td>
+ 				</tr> 
+ 				<tr>
+ 					<th scope="row" rowspan="2" valign="top" class="noline_bottom">배송<br>상품선택</th>
+ 					<td class="address_add" colspan="2">
+ 						 <div class="item_info">
+							<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+							<div class="order_option">
+								<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+								<ul class="option">
+									<li>
+										<span class="choice">옵션1 :</span>
+										<span>아일랜드썬라이즈</span>	
+									</li>
+									<li>
+										<span class="choice">LED 네일 라이트 : </span>
+										<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+									</li>
+									<li>
+										<span class="choice">조립 / 설치 서비스 : </span>
+										<span>조립 / 설치 서비스 이용</span>	
+									</li>
+								</ul>
+								<div class="item_price">
+									<span>10,500</span>원/ <span>3</span>개
+								</div>
+							</div>
+						</div>  
+ 					</td>
+ 				</tr> 
+ 			</tbody>
+ 		</table>  
+ 	</div> <!-- // board_wrap E --> 	
+ 	<!-- 회원 배송지 정보 E -->
+	
+	<!-- 비회원 할인혜택 사용 S -->
+	<h3 class="sub_title mt30">비회원 할인혜택</h3> 
+ 	<div class="board_wrap">  
+ 		<table cellpadding="0" cellspacing="0" class="board-write">
+ 			<caption>할인혜택 사용</caption>
+ 			<colgroup>
+ 				<col style="width:160px;">
+ 				<col style="width:auto;">	 				
+ 			</colgroup>
+ 			<tbody>
+ 				<tr>
+ 					<th scope="row">쿠폰할인</th>
+ 					<td>비회원은 쿠폰할인을 하실 수 없습니다</td>
+ 				</tr>
+ 				<tr>
+ 					<th scope="row">포인트 할인</th>
+ 					<td>비회원은 포인트 할인을 하실 수 없습니다</td>
+ 				</tr>
+ 			</tbody>
+ 		</table><!--//view E-->	 	
+ 	</div> <!-- // board_wrap -->
+	<!-- 비회원 할인혜택 사용 E -->
+	<!-- 회원 할인혜택 사용 S -->
+ 	<h3 class="sub_title mt30">할인혜택 사용</h3> 
+ 	<div class="board_wrap">  
+ 		<table cellpadding="0" cellspacing="0" class="board-write">
+ 			<caption>할인혜택 사용</caption>
+ 			<colgroup>
+ 				<col style="width:160px;">
+ 				<col style="width:auto;">	 				
+ 			</colgroup>
+ 			<tbody>
+ 				<tr>
+ 					<th scope="row">쿠폰할인</th>
+ 					<td>
+ 						<div class="input_wrap col-w-9">			 	 			 	 							 
+							<input type="text" title="포인트 할인" class="full tar bold" placeholder="1,000"> 
+						</div> 원 &nbsp; &nbsp;
+						<div class="input_wrap"><button type="button" class="btn btn-ms btn-default" title="쿠폰 조회 및 적용">쿠폰 조회 및 적용</button></div>
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<th scope="row">포인트 할인</th>
+ 					<td>
+ 						<div class="input_wrap col-w-9">			 	 			 	 							 
+							<input type="text" title="포인트 할인" class=" tar bold" placeholder="1,000"> 
+						</div> 원 &nbsp; &nbsp; 
+						<div class="input_wrap point_area">
+							<input type="checkbox" id="aa2" class="check01"> <label for="aa2">모두사용</label>	
+						</div><!--//point_area E--> 
+						<div class="input_wrap point_area"><p>(보유 포인트 :<strong class="color_23ade3">1,500P</strong> /1P=1원)</p>  </div>
+ 					</td>
+ 				</tr>
+ 			</tbody>
+ 		</table><!--//view E-->	 	
+ 	</div> <!-- // board_wrap -->
+ 	<!-- 회원 할인혜택 사용 E -->
+ 	<div class="order_pay">
+	 	<div class="type01">
+	 		<h3 class="sub_title">결제 정보 선택</h3> 
+		 	<div class="pay_kind"> 
+				<ul> 
+					<li> 
+						<input type="radio" id="payType-bank" value="bank" name="payType"> 
+						<label for="payType-bank">무통장입금</label> </li> 
+					<li> 
+						<input type="radio" id="payType-card" value="card" name="payType" checked="checked"> 
+						<label for="payType-card">신용카드</label> 
+					</li> 
+					<li> 
+						<input type="radio" id="payType-vbank" name="payType" value="vbank"> 
+						<label for="payType-vbank">가상계좌</label> 
+					</li> 
+					<li>
+						<input type="radio" id="payType-hp" name="payType" value="hp"> 
+						<label for="payType-hp">휴대전화</label> 
+					</li> 
+					<li> 
+						<input type="radio" id="payType-realtimebank" name="payType" value="realtimebank"> 
+						<label for="payType-realtimebank">실시간 계좌이체</label> 
+					</li> 
+				</ul> 
+			</div> 
+		 	
+			<div class="payType-input">
+				<h3 class="sub_title mt30">무통장 입금</h3> 
+				<div class="board_wrap">  
+					<table cellpadding="0" cellspacing="0" class="board-write">
+						<caption>결제 정보 선택</caption>
+						<colgroup> 
+							<col style="width:158px;">	
+							<col style="width:auto;">	 				
+						</colgroup>
+						<tbody>
+							<tr> 
+								<th scope="row">결제금액</th> 
+								<td> 
+									<div class="input_wrap col-w-7"> 
+										<input id="buyPayments'bank'.amount" name="buyPayments['bank'].amount" paymenttype="bank" value="0" class="_number payAmounts defaultPayment" type="text"> 
+									</div> 원 
+								</td> 
+							</tr>
+							<tr> 
+								<th scope="row">입금은행</th> 
+								<td> 
+									<div class="input_wrap col-w-2"> 
+										<select id="buyPayments'bank'.bankVirtualNo" name="buyPayments['bank'].bankVirtualNo" title="입금은행" class="form-control bank">
+											<option value="국민은행 계좌번호： 9996-66-66643 ((주)온라인파워스)">국민은행 계좌번호： 9996-66-66643 ((주)온라인파워스)</option>
+										</select>
+									</div> 
+								</td> 
+							</tr>
+							<tr> 
+								<th scope="row">입금자명</th> 
+								<td>
+									<div class="input_wrap col-w-7"> 
+										<input id="buyPayments'bank'.bankInName" name="buyPayments['bank'].bankInName" title="입금자명" class="full" type="text" value="">
+									</div> 
+								</td> 
+							</tr>
+							<tr> 
+								<th scope="row">입금예정일</th> 
+								<td> 
+									<div class="input_wrap col-w-7"> 
+										<select id="buyPayments'bank'.bankExpirationDate" name="buyPayments['bank'].bankExpirationDate" title="입금예정일">
+											<option value="2016-11-16">2016-11-16</option>
+											<option value="2016-11-17">2016-11-17</option>
+											<option value="2016-11-18">2016-11-18</option>
+											<option value="2016-11-19">2016-11-19</option>
+											<option value="2016-11-20">2016-11-20</option>
+											<option value="2016-11-21">2016-11-21</option>
+											<option value="2016-11-22">2016-11-22</option>
+										</select>
+									</div>
+								</td> 
+							</tr>
+							<tr> 
+								<th scope="row" valign="top">입금시 유의사항</th> 
+								<td> 
+									<div class="box_list_02 pt0">
+										<ul> 
+											<li>무통장 입금시 발생하는 수수료는 손님 부담입니다.</li> 
+											<li>인터넷 뱅킹 또는 은행창구 입금시 의뢰인(송금인)명은 ‘입금인 입력’란에 입금하신 성함과 동일하게 기재해 주시기 바랍니다. ( 만약 다를 경우 고객센터 <span>1544-2880</span>로 꼭 연락주시기 바랍니다.) </li> 
+											<li>무통장 입금시 입금자와 입금 예정일을 입력해주세요.</li> 
+											<li>현금영수증 미신청시 현금영수증 발급이 되지 않습니다.</li> 
+										</ul> 
+									</div>
+								</td> 
+							</tr>
+						</tbody>
+					</table><!--//write_pay E-->	 	
+				</div> <!-- // board_wrap -->
+			</div><!--// payType-input E-->
+			<div class="payType-input" style="display:block;">
+				<h3 class="sub_title mt30">신용카드 결제</h3>
+				<div class="board_wrap">  
+					<table cellpadding="0" cellspacing="0" class="board-write">
+						<caption>신용카드 결제</caption>
+						<colgroup> 
+							<col style="width:158px;">	
+							<col style="width:auto;">	 				
+						</colgroup>
+						<tbody>
+							<tr> 
+								<th scope="row">결제금액</th> 
+								<td> 
+									<div class="input_wrap col-w-7"> 
+										<input id="buyPayments'bank'.amount" name="buyPayments['bank'].amount" paymenttype="bank" value="0" class="_number payAmounts defaultPayment" type="text"> 
+									</div> 원 
+								</td> 
+							</tr> 
+						</tbody>
+					</table><!--//write_pay E-->	 	
+				</div> <!--// 신용카드 결제 E-->
+			</div><!--// payType-input E-->
+			<div class="payType-input" style="display:block;">
+				<h3 class="sub_title mt30">가상계좌 결제</h3>
+				<div class="board_wrap">  
+					<table cellpadding="0" cellspacing="0" class="board-write">
+						<caption>가상계좌 결제</caption>
+						<colgroup> 
+							<col style="width:158px;">	
+							<col style="width:auto;">	 				
+						</colgroup>
+						<tbody>
+							<tr> 
+								<th scope="row">결제금액</th> 
+								<td> 
+									<div class="input_wrap col-w-7"> 
+										<input id="buyPayments'bank'.amount" name="buyPayments['bank'].amount" paymenttype="bank" value="0" class="_number payAmounts defaultPayment" type="text"> 
+									</div> 원 
+								</td> 
+							</tr> 
+						</tbody>
+					</table><!--//write_pay E-->	 	
+				</div> <!--// 가상계좌 결제 E-->
+			</div><!--// payType-input E-->
+
+			<div class="payType-input" style="display:block;">
+				<h3 class="sub_title mt30">휴대전화 결제</h3>
+				<div class="board_wrap">  
+					<table cellpadding="0" cellspacing="0" class="board-write">
+						<caption>휴대전화 결제</caption>
+						<colgroup> 
+							<col style="width:158px;">	
+							<col style="width:auto;">	 				
+						</colgroup>
+						<tbody>
+							<tr> 
+								<th scope="row">결제금액</th> 
+								<td> 
+									<div class="input_wrap col-w-7"> 
+										<input id="buyPayments'bank'.amount" name="buyPayments['bank'].amount" paymenttype="bank" value="0" class="_number payAmounts defaultPayment" type="text"> 
+									</div> 원 
+								</td> 
+							</tr> 
+						</tbody>
+					</table> 	
+				</div> <!--// 휴대전화 결제 E-->
+			</div><!--// payType-input E-->
+
+			<div class="payType-input" style="display:block;">
+				<h3 class="sub_title mt30">실시간 계좌이체 결제</h3>
+				<div class="board_wrap">  
+					<table cellpadding="0" cellspacing="0" class="board-write">
+						<caption>실시간 계좌이체 결제</caption>
+						<colgroup> 
+							<col style="width:158px;">	
+							<col style="width:auto;">	 				
+						</colgroup>
+						<tbody>
+							<tr> 
+								<th scope="row">결제금액</th> 
+								<td> 
+									<div class="input_wrap col-w-7"> 
+										<input id="buyPayments'bank'.amount" name="buyPayments['bank'].amount" paymenttype="bank" value="0" class="_number payAmounts defaultPayment" type="text"> 
+									</div> 원 
+								</td> 
+							</tr> 
+						</tbody>
+					</table>  	
+				</div> <!--// 실시간 계좌이체 결제 E-->
+			</div><!--// payType-input E-->	
+		</div><!--//type01 E--> 
+	 	<div class="type02">
+	 		<h3 class="sub_title">결제하기</h3> 
+		 	<div class="last_pay">
+		 		<div class="cont">
+			 		 <div class="cont_inner">
+			 		 	<span>총 상품합계 금액</span>
+			 		 	<span class="color_4a4a4a">223,200원</span> 
+			 		 </div>
+			 		 <div class="cont_inner sale">
+			 		 	<p>
+			 		 		<span>할인금액</span>
+			 		 		<span class="color_23ade3">(-) 2000원</span> 
+			 		 	</p>
+			 		 	<p class="point_sale">
+			 		 		<span>쿠폰할인</span> 
+			 		 		<span>1000원</span>
+			 		 	</p> 
+			 		 	<p class="point_sale">
+			 		 		<span>포인트할인</span> 
+			 		 		<span>1000원</span>
+			 		 	</p> 
+			 		 </div>
+			 		 <div class="cont_inner delevery_money">
+			 		 	<span>배송비</span>
+			 		 	<span class="color_4a4a4a">(+) 2500원</span> 
+			 		 </div>
+		 		 </div><!--// cont E-->
+		 		 <div class="pay_money">
+		 		 	<p>총 결제금액</p>
+				 	<p class="total_price">144,500<span>원</span></p> 
+		 		 </div><!--// pay_money E-->
+		 		 <div class="point_will"> 
+			 		 	<ul>
+			 		 		<li>적립예정 포인트</li>
+			 		 		<li><span class="color_23ade3">4,450P</span></li>
+			 		 	</ul> 
+			 	 </div><!--// point E-->
+			 	 <div class="cont">
+			 	 	<p class="guide">주문할 상품의 상품명, 상품가격, 배송 정보를 확인하였으며, 구매에 동의 하시겠습니까?</p>
+			 	 	<p class="agree"><input type="checkbox" id="agree"> <label for="agree">동의합니다.</label></p>
+			 	 </div> 
+		 	</div><!--//last_pay E-->
+		 	<div class="btn_end"> 
+				<button type="submit" class="btn btn-success btn-w154" title="결제하기"> <span><img src="/content/images/icon/icon_pay.png" alt="결제하기"></span>결제하기 </button> 
+				<button type="button" class="btn btn-default btn-w154" onclick="location.href='/cart'" title="취소하기">취소하기</button> 
+			</div>
+	 	</div><!--//type02 E-->
+ 	</div><!--//order_pay E--> 
+</div><!--// inner E-->
+	
+	 	
+<?include "../include/footer.html"?>	 
+ 

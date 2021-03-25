@@ -1,0 +1,39 @@
+<? include "../include/headHtml.html" ?>
+<body>
+	<div id="wrap">	
+		<!-- header : s -->
+		<? include "../include/header.html" ?>
+		<div class="title">
+			<h2>오프라인 쿠폰 전환</h2>
+			<span class="his_back"><a href="#" class="ir_pm">뒤로가기</a></span>
+		</div>
+		<!-- //title -->		
+		<!-- 내용 : s -->
+		<div class="con offCoupon_wrap">
+			<!-- 오프라인 쿠폰전환 : s -->				
+			<div class="mypage_wrap">				
+				<div class="tab_container">
+					<div class="g_number">
+						<p class="tit">쿠폰 번호</p>
+						<div>
+							<input type="text" class="coupon_input" title="'-'없이 발급받은 쿠폰번호를 입력해주세요.">
+						</div>
+						<div>
+							<button type="button" onclick="validator();" class="btn_large">검색</button>
+						</div>
+					</div>
+				</div>				
+			</div>
+			<!-- 오프라인 쿠폰전환 : e -->			
+		</div>
+		<!-- 내용 : e -->		
+	</div>
+	<!-- //#container -->
+	<!-- container : e -->	
+	<!-- footer : s -->
+	<? include "../include/footer.html" ?>
+	<!-- footer : e -->	
+</div>
+<!-- //#wrap -->
+</body>
+</html>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.group.GroupMapper">
+	
+	<resultMap id="GroupResult" type="saleson.shop.group.domain.Group">
+		<result property="groupCode" column="GROUP_CODE" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="groupExp" column="GROUP_EXPLANATION" />
+		<result property="createdUserId" column="GROUP_USER_ID" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+		<result property="updatedUserId" column="UPDATED_USER_ID" />
+		<result property="userCount" column="USER_COUNT" />
+	</resultMap>
+
+	<select id="getGroupCount" parameterType="saleson.shop.group.support.GroupSearchParam" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM OP_GROUP
+		<where>
+			<if test="where == 'GROUP_NAME' and (query != null and query != '')">
+				#{where} LIKE CONCAT('%', #{query}, '%')
+			</if>
+			<if test="groupCode != null and groupCode != ''">
+				GROUP_CODE = #{groupCode}
+			</if>
+			<if test="groupName != null and groupName != ''">
+				AND GROUP_NAME = TRIM(#{groupName})
+			</if>
+		</where>
+	</select>
+	
+
+	<select id="getGroupList" parameterType="saleson.shop.group.support.GroupSearchParam" resultMap="GroupResult" >
+		<include refid="CommonMapper.paginationHeader" /> 
+			
+			<choose>
+				<when test='conditionType == "OPMANAGER"'>
+					SELECT * FROM (
+						SELECT G.*, COUNT(UD.USER_ID) AS USER_COUNT
+						FROM OP_GROUP G
+							LEFT JOIN OP_USER_DETAIL UD ON G.GROUP_CODE = UD.GROUP_CODE
+							LEFT JOIN OP_USER U ON UD.USER_ID = U.USER_ID AND U.STATUS_CODE = '9'
+						<where>
+							<if test="where == 'GROUP_NAME' and (query != null and query != '')">
+								#{where} LIKE CONCAT('%', #{query}, '%')
+							</if>
+							<if test="groupCode != null and groupCode != ''">
+								GROUP_CODE = #{groupCode}
+							</if>
+						</where>
+						GROUP BY G.GROUP_CODE
+					) G ORDER BY CREATED_DATE DESC
+				</when>
+				<when test='conditionType == "PRIVATE_TYPE"'>
+					SELECT CONCAT(#{prefix}, GROUP_CODE) AS GROUP_CODE, GROUP_NAME
+					FROM OP_GROUP
+					ORDER BY CREATED_DATE DESC
+				</when>
+				<otherwise>
+					SELECT * FROM OP_GROUP 
+					<where>
+						<if test="groupCode != null and groupCode != ''">
+							GROUP_CODE = #{groupCode}
+						</if>
+					</where>
+					ORDER BY CREATED_DATE DESC
+					
+				</otherwise>
+			</choose>
+		
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getAllGroupList" parameterType="saleson.shop.group.support.GroupSearchParam" resultMap="GroupResult" >
+			SELECT
+			*
+			FROM OP_GROUP 
+			ORDER BY CREATED_DATE DESC
+	</select>
+	
+ 	<select id="getGroupDetail" parameterType="saleson.shop.group.support.GroupSearchParam" resultMap="GroupResult" >
+		SELECT * FROM (
+			SELECT G.*, COUNT(UD.USER_ID) AS USER_COUNT
+			FROM OP_GROUP G
+				LEFT JOIN OP_USER_DETAIL UD ON G.GROUP_CODE = UD.GROUP_CODE
+				LEFT JOIN OP_USER U ON UD.USER_ID = U.USER_ID AND U.STATUS_CODE = '9'
+			GROUP BY G.GROUP_CODE 
+		) G
+		<where>
+			GROUP_CODE = #{groupCode}
+		</where>
+	</select> 
+	
+	<insert id="insertGroup" parameterType="saleson.shop.group.domain.Group">
+		INSERT INTO OP_GROUP (GROUP_CODE, GROUP_NAME, GROUP_EXPLANATION, CREATED_DATE, CREATED_USER_ID)
+		VALUES (#{groupCode}, #{groupName}, #{groupExp}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), #{createdUserId})
+	</insert> 
+	
+	<delete id="deleteGroup" parameterType="String" >
+		DELETE FROM	OP_GROUP 
+	 	WHERE GROUP_CODE = #{groupCode}
+	</delete> 
+	
+	
+	<update id="updateGroup" parameterType="saleson.shop.group.domain.Group">
+		UPDATE OP_GROUP SET
+			GROUP_NAME = #{groupName}, 
+			GROUP_EXPLANATION = #{groupExp},
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),
+			UPDATED_USER_ID = #{updatedUserId}
+		WHERE GROUP_CODE = #{groupCode}
+	</update>
+	
+	<select id="getGroupIdByuserId" parameterType="Integer" resultMap="GroupResult" >
+		SELECT
+		*
+		FROM OP_GROUP G 
+		JOIN OP_USER_GROUP UG ON G.GROUP_CODE = UG.GROUP_CODE
+		WHERE UG.USER_ID = #{userId}
+	</select>
+	
+
+    <!-- 그룹과 회원등급 목록을 조회함. -->
+    <select id="getGroupsAll" resultMap="GroupResult">
+        SELECT * FROM (
+            SELECT
+                G.GROUP_CODE,
+                G.GROUP_NAME,
+                G.GROUP_EXPLANATION
+            FROM OP_GROUP G
+
+            UNION ALL
+
+            SELECT
+                'default' AS GROUP_NAME,
+                '기본그룹' AS GROUP_NAME,
+                '기본그룹' AS GROUP_EXPLANATION
+            FROM DUAL
+
+        ) T
+        ORDER BY GROUP_CODE
+
+    </select>
+
+</mapper>

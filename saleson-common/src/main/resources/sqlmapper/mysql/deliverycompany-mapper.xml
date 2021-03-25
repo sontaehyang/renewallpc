@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.deliverycompany.DeliveryCompanyMapper">
+	<resultMap id="DeliveryCompanyResult" type="saleson.shop.deliverycompany.domain.DeliveryCompany">
+		<id property="deliveryCompanyId" column="DELIVERY_COMPANY_ID" />
+		<result property="deliveryCompanyName" column="DELIVERY_COMPANY_NAME" />
+		<result property="telNumber" column="TEL_NUMBER" />
+		<result property="deliveryCompanyUrl" column="DELIVERY_COMPANY_URL" />
+		<result property="sendFlag" column="SEND_FLAG" />
+		<result property="deliveryNumberParameter" column="DELIVERY_NUMBER_PARAMETER" />
+		<result property="useFlag" column="USE_FLAG" />
+	</resultMap>
+	
+	<sql id="sqlCompanyWhere">
+		<where>
+			<if test='query != null and query != ""'>
+				<choose>
+					<when test='where == "DELIVERY_COMPANY_NAME"'>
+						AND DELIVERY_COMPANY_NAME LIKE CONCAT('%', #{query} , '%')
+					</when>
+					<when test='where == "TEL_NUMBER"'>
+						AND TEL_NUMBER LIKE CONCAT('%', #{query} , '%')
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+		
+	<select id="getDeliveryCompanyCount" parameterType="saleson.shop.deliverycompany.support.DeliveryCompanyParam" resultType="Integer" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT COUNT(*)
+			FROM OP_DELIVERY_COMPANY 
+			<include refid="sqlCompanyWhere" />
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+
+	<select id="getActiveDeliveryCompanyListAll" resultMap="DeliveryCompanyResult">
+		SELECT 
+			DELIVERY_COMPANY_ID, 
+			DELIVERY_COMPANY_NAME, 
+			TEL_NUMBER, 
+			DELIVERY_COMPANY_URL, 
+			SEND_FLAG, 
+			DELIVERY_NUMBER_PARAMETER, 
+			USE_FLAG
+		FROM OP_DELIVERY_COMPANY
+		WHERE 
+			USE_FLAG = 'Y'
+		ORDER BY DELIVERY_COMPANY_ID DESC
+	</select>
+
+	<select id="getDeliveryCompanyList" parameterType="saleson.shop.deliverycompany.support.DeliveryCompanyParam" resultMap="DeliveryCompanyResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+				DELIVERY_COMPANY_ID, 
+				DELIVERY_COMPANY_NAME, 
+				TEL_NUMBER, 
+				DELIVERY_COMPANY_URL, 
+				SEND_FLAG, 
+				DELIVERY_NUMBER_PARAMETER, 
+				USE_FLAG
+			FROM OP_DELIVERY_COMPANY 
+			<include refid="sqlCompanyWhere" />
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+
+	<select id="getDeliveryCompanyById" parameterType="Integer" resultMap="DeliveryCompanyResult" >
+		SELECT 
+			DELIVERY_COMPANY_ID, 
+			DELIVERY_COMPANY_NAME, 
+			TEL_NUMBER, 
+			DELIVERY_COMPANY_URL, 
+			SEND_FLAG, 
+			DELIVERY_NUMBER_PARAMETER, 
+			USE_FLAG
+		FROM OP_DELIVERY_COMPANY 
+ 		WHERE DELIVERY_COMPANY_ID = #{value}
+	</select>
+
+
+	<insert id="insertDeliveryCompany" parameterType="saleson.shop.deliverycompany.domain.DeliveryCompany">
+		INSERT INTO OP_DELIVERY_COMPANY (DELIVERY_COMPANY_ID, DELIVERY_COMPANY_NAME, TEL_NUMBER, DELIVERY_COMPANY_URL, USE_FLAG)
+		VALUES (#{deliveryCompanyId}, #{deliveryCompanyName}, #{telNumber}, #{deliveryCompanyUrl}, #{useFlag})
+	</insert>
+
+
+	<update id="updateDeliveryCompanyById" parameterType="saleson.shop.deliverycompany.domain.DeliveryCompany">
+		UPDATE OP_DELIVERY_COMPANY SET
+			DELIVERY_COMPANY_NAME = #{deliveryCompanyName}, 
+			TEL_NUMBER = #{telNumber}, 
+			DELIVERY_COMPANY_URL = #{deliveryCompanyUrl}, 
+			SEND_FLAG = #{sendFlag}, 
+			DELIVERY_NUMBER_PARAMETER = #{deliveryNumberParameter}, 
+			USE_FLAG = #{useFlag}
+		WHERE DELIVERY_COMPANY_ID = #{deliveryCompanyId}
+	</update>
+
+
+	<delete id="deleteDeliveryCompanyById" parameterType="Integer" >
+		DELETE FROM OP_DELIVERY_COMPANY 
+		WHERE DELIVERY_COMPANY_ID = #{value}
+	</delete>
+</mapper>

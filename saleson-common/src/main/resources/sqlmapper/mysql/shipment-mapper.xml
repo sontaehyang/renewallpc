@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.shipment.ShipmentMapper">
+	<resultMap id="ShipmentResult" type="saleson.shop.shipment.domain.Shipment">
+		<result property="shipmentId" column="SHIPMENT_ID" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="addressName" column="ADDRESS_NAME" />
+		<result property="name" column="NAME" />
+		<result property="telephoneNumber" column="TELEPHONE_NUMBER" />
+		<result property="zipcode" column="ZIPCODE" />
+		<result property="address" column="ADDRESS" />
+		<result property="addressDetail" column="ADDRESS_DETAIL" />
+		<result property="defaultAddressFlag" column="DEFAULT_ADDRESS_FLAG" />
+		<result property="shipping" column="SHIPPING" />
+		<result property="shippingFreeAmount" column="SHIPPING_FREE_AMOUNT" />
+		<result property="shippingExtraCharge1" column="SHIPPING_EXTRA_CHARGE1" />
+		<result property="shippingExtraCharge2" column="SHIPPING_EXTRA_CHARGE2" />
+		<result property="shipmentGroupCode" column="SHIPMENT_GROUP_CODE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="updatedDate" column="UPDATED_DATE" />
+	</resultMap>
+	
+	<!-- 판매자 출고지/배송비 목록 조회. -->
+	<select id="getShipmentListBySellerId" parameterType="int" resultMap="ShipmentResult" >
+		SELECT *
+		FROM OP_SHIPMENT 
+		<if test='value > 0'>
+			WHERE SELLER_ID = #{value}
+		</if>
+		ORDER BY SHIPMENT_ID DESC
+	</select>
+
+
+	<!-- 출고지/배송비 조회. -->
+	<select id="getShipmentById" parameterType="int" resultMap="ShipmentResult" >
+		SELECT *
+		FROM OP_SHIPMENT 
+		WHERE SHIPMENT_ID = #{value}
+	</select>
+	
+	<!-- 출고지/배송비 조회.(Param) -->
+	<select id="getShipmentByParam" parameterType="saleson.shop.shipment.support.ShipmentParam" resultMap="ShipmentResult" >
+		SELECT *
+		FROM OP_SHIPMENT 
+		<where>
+			<if test='shipmentId > 0'>
+				AND SHIPMENT_ID = #{shipmentId}
+			</if>
+			<if test='sellerId > 0'>
+				AND SELLER_ID = #{sellerId}
+			</if>
+			
+			<if test='defaultAddressFlag == "Y" or defaultAddressFlag == "N"'>
+				AND DEFAULT_ADDRESS_FLAG = #{defaultAddressFlag}
+			</if>
+		</where>
+		
+		ORDER BY SHIPMENT_ID DESC LIMIT 1
+	</select>
+
+
+	<!-- 출고지/배송비 등록 -->
+	<insert id="insertShipment" parameterType="saleson.shop.shipment.domain.Shipment">
+		INSERT INTO OP_SHIPMENT (SHIPMENT_ID, SELLER_ID, ADDRESS_NAME, NAME, TELEPHONE_NUMBER, ZIPCODE, ADDRESS, ADDRESS_DETAIL, DEFAULT_ADDRESS_FLAG, SHIPPING, SHIPPING_FREE_AMOUNT, SHIPPING_EXTRA_CHARGE1, SHIPPING_EXTRA_CHARGE2, SHIPMENT_GROUP_CODE, CREATED_DATE, UPDATED_DATE)
+		VALUES (#{shipmentId}, #{sellerId}, #{addressName}, #{name}, #{telephoneNumber}, #{zipcode}, #{address}, #{addressDetail}, #{defaultAddressFlag}, #{shipping}, #{shippingFreeAmount}, #{shippingExtraCharge1}, #{shippingExtraCharge2}, #{shipmentGroupCode}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+
+	<!-- 출고지/배송비 수정 -->
+	<update id="updateShipment" parameterType="saleson.shop.shipment.domain.Shipment">
+		UPDATE OP_SHIPMENT SET
+			ADDRESS_NAME = #{addressName}, 
+			NAME = #{name}, 
+			TELEPHONE_NUMBER = #{telephoneNumber}, 
+			ZIPCODE = #{zipcode}, 
+			ADDRESS = #{address}, 
+			ADDRESS_DETAIL = #{addressDetail}, 
+			DEFAULT_ADDRESS_FLAG = #{defaultAddressFlag}, 
+			SHIPPING = #{shipping}, 
+			SHIPPING_FREE_AMOUNT = #{shippingFreeAmount}, 
+			SHIPPING_EXTRA_CHARGE1 = #{shippingExtraCharge1}, 
+			SHIPPING_EXTRA_CHARGE2 = #{shippingExtraCharge2},
+			SHIPMENT_GROUP_CODE = #{shipmentGroupCode},
+			UPDATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE SHIPMENT_ID = #{shipmentId}
+	</update>
+
+
+	<!-- 출고지/배송비 삭제 -->
+	<delete id="deleteShipmentById" parameterType="int" >
+		DELETE FROM OP_SHIPMENT 
+		WHERE SHIPMENT_ID = #{value}
+	</delete>
+	
+	
+	<!-- 기본주소 수정 -->
+	<update id="updateDefaultAddressFlag" parameterType="saleson.shop.shipment.domain.Shipment">
+		UPDATE OP_SHIPMENT SET
+			DEFAULT_ADDRESS_FLAG = 'N'
+		WHERE SHIPMENT_ID != #{shipmentId} AND SELLER_ID = #{sellerId}
+	</update>
+	
+	<!-- 출고지/배송비 조회. -->
+	<select id="getDefaultShipment" parameterType="saleson.shop.shipment.domain.Shipment" resultMap="ShipmentResult" >
+		SELECT *
+		FROM OP_SHIPMENT 
+		WHERE DEFAULT_ADDRESS_FLAG = 'Y' AND SELLER_ID = #{sellerId}
+	</select>
+</mapper>

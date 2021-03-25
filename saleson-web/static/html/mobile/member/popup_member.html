@@ -1,0 +1,191 @@
+<? include "../include/headHtml.html" ?>
+<body>
+	<div id="wrap" class="popup_wrap">
+		<!-- container : s -->
+		<div id="container">
+			<!-- 내용 : s -->
+			<!-- 아이디 찾기 s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>아이디 찾기</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->
+				<div class="pop_con">
+					<div class="join_area">
+						<p class="ob_txt">회원가입 시 등록한 <br>본인명의 휴대폰 번호로 인증 후<br>ID(E-mail)를 확인하실수 있습니다.</p>
+						<div class="bd_table typeB -login">
+							<ul>
+								<li>
+									<label class="del_tit t_gray">이름</label>
+									<div class="input_area">
+										<input type="text" name="userName" id="userName" class="required" title="이름">
+									</div>
+								</li>
+								<li>
+									<label class="del_tit t_gray star">휴대폰번호</label>
+									<div class="num">
+										<div class="in_td">
+											<div class="input_area">
+												<input type="text" name="phoneNumber1" id="phoneNumber1" class="required _number" maxlength="3" title="휴대폰번호">							
+											</div>
+											<div class="in_td dash"></div>
+											<div class="input_area">
+												<input type="text" name="phoneNumber2" id="phoneNumber2" class="required _number" maxlength="4" title="휴대폰번호">							
+											</div>
+											<div class="in_td dash"></div>
+											<div class="input_area">
+												<input type="text" name="phoneNumber3" id="phoneNumber3" class="required _number" maxlength="4" title="휴대폰번호">							
+											</div>
+										</div>
+									</div>
+									<div class="in_td bar">
+										<button type="button" onclick="sendAuthNumber()" class="btn_st2 t_lgray02">인증번호 발송</button>	 
+									</div>
+								</li>
+								<li>
+									<label class="del_tit t_gray">인증번호</label>
+									<div class="input_area">
+										<input type="text" name="smsAuthNumber" id="smsAuthNumber" title="인증번호" disabled="disabled" placeholder="인증번호를 입력해 주세요.">
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="pw_sh">
+							<span>비밀번호를 잊으셨나요?</span>
+							<button class="btn_st1" type="button" title="비밀번호 찾기" onclick="location.href='/m/users/find-password'">비밀번호 찾기</button>
+						</div>
+					</div>
+					<div class="btn_wrap">
+						<button class="btn_st1 reset">취소</button>
+						<button class="btn_st1 decision">확인</button>
+					</div>
+					<!-- //join_area -->
+				</div>
+				<!-- //pop_con -->
+			</div>
+			<!-- 아이디 찾기 e -->
+			<!-- 아이디 찾기 결과 s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>아이디 찾기</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->
+				<div class="pop_con">
+					<div class="join_area">
+						<p class="ob_txt result_box">등록된 아이디는 <span class="user_id">hong1234</span>입니다.</p>
+						<div class="btn_area02">
+							<button class="btn_st1 decision" type="button" title="로그인">로그인</button>
+						</div>
+						<div class="pw_sh dash">
+							<span>비밀번호를 잊으셨나요?</span>
+							<button class="btn_st1" type="button" title="비밀번호 찾기">비밀번호 찾기</button>
+						</div>
+					</div>
+					<!-- //join_area -->				
+				</div>
+				<!-- //pop_con -->
+			</div>
+			<!-- 아이디 찾기 결과 e -->
+			<!-- 비밀번호 찾기 s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>비밀번호 찾기</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->			
+				<p class="code_tit">비밀번호를 잊으셨나요?<br/>회원가입 시 등록한 본인명의 휴대폰 번호로 인증 후 비밀번호를 새로 설정하실 수 있습니다.</p>
+				<div class="bd_table">
+					<ul class="del_info">
+						<li>
+							<label for="a1" class="del_tit t_gray star">아이디</label>
+							<div class="input_area">
+								<input id="a1" type="text">
+							</div>
+						</li>
+						<li>
+							<label for="a2" class="del_tit t_gray star">이름</label>
+							<div class="input_area">
+								<input id="a2" type="text">
+							</div>
+						</li>
+						<li>
+							<label for="a3" class="del_tit t_gray star">휴대폰</label>
+							<div class="num">
+								<div class="in_td">
+									<div class="input_area">
+										<select name="" id="">
+											<option value="010">010</option>
+											<option value="010">010</option>
+											<option value="010">010</option>
+										</select>
+									</div>
+									<div class="in_td dash"></div>
+									<div class="input_area">
+										<input type="text" maxlength="4">
+									</div>
+									<div class="in_td dash"></div>
+									<div class="input_area">
+										<input type="text" maxlength="4">
+									</div>
+								</div>
+							</div>
+							<div class="in_td agree">
+								<button type="button" class="btn_st3 t_lgray02 b_lgray static">인증번호 전송</button>
+							</div>
+						</li>
+						<li>
+							<label for="a4" class="del_tit t_gray star">인증번호</label>
+							<div class="input_area">
+								<input id="a4" type="text">
+								<span class="e-info">입력하신 번호로 인증번호가 발송되었습니다.</span>
+								<span class="e-info">인증번호가 잘못 입력되었습니다. 다시 확인해주세요.</span>
+								<span class="e-info">입력하신 정보와 일치하는 회원정보가 없습니다. 해당 정보를 다시 확인하시거나 회원가입을 진행해주세요.</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="btn_area02">
+					<button class="btn_st1 decision" type="button" title="확인">확인</button>
+				</div>
+			</div>
+			<!-- 비밀번호 찾기 e -->
+			<!-- 비밀번호 재설정 s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>비밀번호 찾기</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->			
+				<p class="code_tit">새로운 비밀번호를 입력해 주세요.</p>
+				<div class="bd_table typeB">
+					<ul class="del_info">
+						<li>
+							<label for="a1" class="del_tit t_gray none">새로운<br>비밀번호</label>
+							<div class="input_area">
+								<input id="a1" type="password">
+							</div>
+						</li>
+						<li>
+							<label for="a2" class="del_tit t_gray none">새로운<br>비밀번호 확인</label>
+							<div class="input_area">
+								<input id="a2" type="password" class="pw_re">
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="btn_area02">
+					<button class="btn_st1 decision" type="button" title="확인">확인</button>
+				</div>
+			</div>
+			<!-- 비밀번호 재설정 e -->
+
+			<!-- 내용 : e -->		
+		</div>
+		<!-- //#container -->
+		<!-- container : e -->	
+	</div>
+	<!-- //#wrap -->
+</body>
+</html>

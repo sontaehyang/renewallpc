@@ -1,0 +1,215 @@
+<?include "../include/head.html"?>	
+	<style>
+		.guideLine{border:1px solid #262626; width: 600px;margin:10px 0;}
+		.guideLine_large{border:1px solid #262626; width: 846px;margin:10px 0;}
+	</style>
+	<!-- GuideLine S -->	
+	<div class="guideLine">		
+		<!-- 아이디찾기 S -->		
+		<div class="popup_wrap">
+			<h1 class="popup_title">아이디(이메일) 찾기</h1>
+			<div class="popup_contents"> 
+				<p class="id_txt">아래의 항목을 입력하시면 ID 일부를  찾을 수 있습니다.</p>
+				<div class="board_wrap">  
+			 		<table class="board-write">
+			 			<caption>아이디(이메일) 찾기</caption>
+			 			<colgroup>
+			 				<col style="width:110px;">
+			 				<col style="width:auto;">	 				
+			 			</colgroup>
+			 			<tbody> 
+			 				<tr>
+			 					<th scope="row">이름</th>
+			 					<td>
+		 							<div class="input_wrap col-w-5">	
+		 								<input type="text" title="이름"> 
+		 							</div>
+			 					</td>
+			 				</tr> 
+			 				<tr>
+			 					<th scope="row">휴대폰번호</th>
+			 					<td> 
+				 					<div class="hp_area">
+			 							<div class="input_wrap col-w-8">
+			 								<select class="form-control">
+										        <option value="010">010</option> 
+										        <option value="011">011</option> 
+										        <option value="016">016</option> 
+										        <option value="017">017</option>
+										        <option value="018">018</option> 
+										        <option value="019">019</option>  
+										    </select>
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							<div class="input_wrap col-w-9">			 	 			 	 							 
+			 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							<div class="input_wrap col-w-9">			 	 			 	 							 
+			 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+			 							</div> 		
+			 							<button type="button" onclick="sendAuthNumber()" class="btn btn-default btn-ms" title="인증번호 발송">인증번호 발송</button>
+			 						</div><!-- // hp_area -->  
+			 					</td>
+			 				</tr> 
+			 				<tr>
+			 					<th scope="row">인증번호</th>
+			 					<td>
+			 						<div class="input_wrap col-w-2">
+		 								<input type="text" disabled="disabled" placeholder="인증번호를 입력해 주세요." class="_number" title="인증번호"> 
+		 							</div>
+		 							<p class="guide_txt">입력하신 번호로 인증번호가 발송되었습니다.</p>
+		 							<p class="guide_txt">인증번호가 잘못 입력되었습니다. 다시 확인해 주세요.</p> 
+		 							<p class="guide_txt">입력하신 정보와 일치하는 회원정보가 없습니다.</p>  
+			 					</td>
+			 				</tr>
+			 			</tbody>
+			 		</table>	
+				</div>  <!--//bd_table E-->
+			</div><!--//popup_contents E-->
+			
+			<div class="btn_wrap">
+				<button type="submit" class="btn btn-success btn-lg" title="확인하기">확인하기</button>
+			</div>
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 아이디찾기 E -->		
+		<!-- 아이디찾기 결과 S -->
+		<div class="popup_wrap">
+			<h1 class="popup_title">아이디(이메일) 찾기</h1>
+			<div class="popup_contents">
+				<div class="popup_id"> 
+					<p>등록된 아이디는 <span>hong2014</span> 입니다.</p> 
+				</div><!--//popup_id E-->
+			</div><!--//popup_contents E-->
+			
+			<div class="btn_wrap">
+				<a href="#" class="btn btn-success btn-lg" title="로그인">로그인</a> 
+				<a href="#" class="btn btn-default btn-lg" title="비밀번호 찾기">비밀번호 찾기</a> 
+			</div>
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>		
+		<!-- 아이디찾기 결과 E -->		
+		<!-- 비밀번호찾기 S -->	
+		<div class="popup_wrap">
+			<h1 class="popup_title">비밀번호 찾기</h1>
+			<div class="popup_contents"> 
+				<p class="id_txt">비밀번호를 잊으셨나요? <br>회원가입 시 등록한 본인명의 휴대폰 번호로 인증 후 비밀번호를 새로 설정하실 수 있습니다.</p>
+				<div class="board_wrap">  
+			 		<table cellpadding="0" cellspacing="0" class="board-write">
+			 			<caption>비밀번호 찾기</caption>
+			 			<colgroup>
+			 				<col style="width:110px;">
+			 				<col style="width:auto;">	 				
+			 			</colgroup>
+			 			<tbody> 
+			 				<tr>
+			 					<th scope="row">아이디</th>
+			 					<td>
+			 						<div class="input_wrap col-w-3">
+		 								<input type="text" class="full" title="아이디"> 
+		 							</div>
+			 					</td>
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">이름</th>
+			 					<td>
+			 						<div class="input_wrap col-w-3">
+		 								<input type="text" class="full" title="이름"> 
+		 							</div>
+			 					</td>
+			 				</tr> 
+			 				<tr>
+			 					<th scope="row">휴대폰번호</th>
+			 					<td> 
+				 					<div class="hp_area">
+			 							<div class="input_wrap col-w-8">
+			 								<select class="form-control">
+										        <option value="010">010</option> 
+										        <option value="011">011</option> 
+										        <option value="016">016</option> 
+										        <option value="017">017</option>
+										        <option value="018">018</option> 
+										        <option value="019">019</option>  
+										    </select>
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							<div class="input_wrap col-w-9">			 	 			 	 							 
+			 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+			 							</div>
+			 							<span class="connection"> - </span>
+			 							<div class="input_wrap col-w-9">			 	 			 	 							 
+			 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+			 							</div> 		
+			 							<button type="button" onclick="sendAuthNumber()" class="btn btn-default btn-ms" title="인증번호 발송">인증번호 발송</button>
+			 						</div><!-- // hp_area --> 
+			 					</td>
+			 				</tr> 
+			 				<tr>
+			 					<th scope="row">인증번호</th>
+			 					<td>
+			 						<div class="input_wrap col-w-3">
+		 								<input type="text" class="full" title="인증번호" disabled="disabled"> 
+		 							</div>
+		 							<p class="guide_txt">입력하신 번호로 인증번호가 발송되었습니다.</p>  
+		 							<p class="guide_txt">인증번호가 잘못 입력되었습니다. 다시 확인해 주세요.</p>
+		 							<p class="guide_txt">입력하신 정보와 일치하는 회원정보가 없습니다.</p>
+			 					</td>
+			 				</tr>
+			 			</tbody>
+			 		</table><!--//write E-->	 	
+				</div>  
+					 
+			</div><!--//popup_contents E-->
+			
+			<div class="btn_wrap"> 
+				<button type="submit" class="btn btn-success btn-lg" title="확인하기">확인하기</button> 
+			</div>
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>	
+		<!-- 비밀번호찾기 E -->		
+		<!-- 비밀번호찾기 결과 S -->		
+		<div class="popup_wrap">
+			<h1 class="popup_title">비밀번호 찾기</h1>
+			<div class="popup_contents"> 
+				<p class="id_txt">새로운 비밀번호를 입력해 주세요.</p>
+				<div class="board_wrap">  
+			 		<table cellpadding="0" cellspacing="0" class="board-write">
+			 			<caption>비밀번호 찾기</caption>
+			 			<colgroup>
+			 				<col style="width:170px;">
+			 				<col style="width:auto;">	 				
+			 			</colgroup>
+			 			<tbody> 
+			 				<tr>
+			 					<th scope="row">새로운 비밀번호</th>
+			 					<td>
+			 						<div class="input_wrap col-w-1">
+		 								<input type="password" class="full" title="새로운 비밀번호"> 
+		 							</div>
+			 					</td>
+			 				</tr>
+			 				<tr>
+			 					<th scope="row">새로운 비밀번호 확인</th>
+			 					<td class="bL0">
+			 						<div class="input_wrap col-w-1">
+		 								<input type="password" class="full" title="새로운 비밀번호 확인"> 
+		 							</div>
+			 					</td>
+			 				</tr>  
+			 			</tbody>
+			 		</table><!--//write E-->	 	
+				</div>  
+					 
+			</div><!--//popup_contents E-->
+			
+			<div class="btn_wrap"> 
+				<button type="submit" class="btn btn-success btn-lg" title="확인하기">확인하기</button> 
+			</div>
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+		<!-- 비밀번호찾기 결과 E -->		
+	</div>
+	<!-- GuideLine E -->	
+</body>
+</html> 

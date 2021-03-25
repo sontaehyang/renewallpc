@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.ranking.RankingMapper">
+	<resultMap id="RankingResult" type="saleson.shop.ranking.domain.Ranking">
+		<id property="rankingId" column="RANKING_ID" />
+		<result property="categoryUrl" column="CATEGORY_URL" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="ordering" column="ORDERING" />
+		
+		<association property="item" resultMap="saleson.shop.item.ItemMapper.ItemRankingResult" />
+	</resultMap>
+	
+	
+	<resultMap id="RankingMainResult" type="saleson.shop.categoriesteamgroup.domain.CategoriesTeam">
+		<result property="categoryTeamId" column="CATEGORY_TEAM_ID" />
+		<result property="name" column="NAME" />
+		<result property="code" column="CODE" />
+		<collection property="rankingItems" resultMap="saleson.shop.item.ItemMapper.ItemBaseResult" />
+	</resultMap>	
+	
+	<resultMap id="RankingGroupResult" type="saleson.shop.categoriesteamgroup.domain.CategoriesGroup">
+		<result property="name" column="NAME" />
+		<result property="code" column="CODE" />
+		<collection property="rankingItems" resultMap="saleson.shop.item.ItemMapper.ItemResult" />
+	</resultMap>	
+	
+	<resultMap id="RankingScoreResult" type="saleson.shop.ranking.domain.Ranking">
+		<id property="rankingId" column="RANKING_ID" />
+		<result property="categoryUrl" column="CATEGORY_URL" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="ordering" column="ORDERING" />
+		
+		<association property="item" resultMap="saleson.shop.item.ItemMapper.ItemResult" />
+	</resultMap>
+	
+	<select id="getBestItemListByParamTargetDisplayItem" parameterType="saleson.shop.ranking.support.RankingParam"
+		resultMap="saleson.shop.item.ItemMapper.ItemResult">
+		
+		SELECT 
+			<include refid="saleson.shop.item.ItemMapper.baseItemColumns" />,
+			<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />
+		FROM OP_DISPLAY_ITEM DI
+			INNER JOIN OP_ITEM I ON DI.ITEM_ID = I.ITEM_ID
+			INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+			<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+		<where> 
+			DI.DISPLAY_GROUP_CODE = 'best'
+			AND DI.DISPLAY_SUB_CODE = #{rankingCode}
+			AND DI.VIEW_TARGET IN ('ALL', #{viewTarget})
+			<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+		</where>	
+		ORDER BY DI.ORDERING ASC
+		LIMIT #{limit}
+		
+	</select>
+	
+	<select id="getBestItemListByParamTargetRankingBatch" parameterType="saleson.shop.ranking.support.RankingParam"
+		resultMap="saleson.shop.item.ItemMapper.ItemResult">
+		
+		
+		SELECT 
+			<include refid="saleson.shop.item.ItemMapper.baseItemColumns" />,
+			<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />
+		FROM OP_RANKING_BATCH RB
+			INNER JOIN OP_ITEM I ON RB.ITEM_ID = I.ITEM_ID
+			INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+			<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+		<where> 
+			RB.RANKING_CODE = #{rankingCode}
+			AND RB.DATA_STATUS_CODE = '1'
+			AND RB.ITEM_ID NOT IN (
+				SELECT ITEM_ID FROM OP_DISPLAY_ITEM 
+				<where>
+					DISPLAY_GROUP_CODE = 'best'
+					AND DISPLAY_SUB_CODE = #{rankingCode}
+					AND VIEW_TARGET IN ('ALL', #{viewTarget})
+				</where>
+			)
+			<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+		</where>	
+		ORDER BY RB.ORDERING ASC
+		LIMIT #{limit}
+	</select>
+	
+	
+	<select id="getBestItemsForFrontByGroups" parameterType="saleson.shop.ranking.support.RankingParam"
+		resultMap="saleson.shop.item.ItemMapper.GroupAndItemResult">
+		
+		<foreach item="group" index="index" collection="groups" open="" separator="UNION ALL" close="">
+			SELECT * FROM (
+				SELECT 
+					#{group.url} AS CODE,
+					<include refid="saleson.shop.item.ItemMapper.baseItemColumns" />
+				FROM OP_DISPLAY_ITEM DI
+					INNER JOIN OP_ITEM I ON DI.ITEM_ID = I.ITEM_ID
+					INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+				<where> 
+					DI.DISPLAY_GROUP_CODE = 'best'
+					AND DI.DISPLAY_SUB_CODE = #{group.url}
+					AND DI.VIEW_TARGET IN ('ALL', #{viewTarget})
+					<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+				</where>	
+				ORDER BY DI.ORDERING ASC
+				LIMIT #{limit}
+			) T${index}
+			
+			UNION ALL
+			
+			SELECT * FROM (
+				SELECT 
+					#{group.url} AS CODE,
+					<include refid="saleson.shop.item.ItemMapper.baseItemColumns" />
+				FROM OP_RANKING_BATCH RB
+					INNER JOIN OP_ITEM I ON RB.ITEM_ID = I.ITEM_ID
+					INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2'
+				<where> 
+					RB.RANKING_CODE = #{group.url}
+					AND RB.DATA_STATUS_CODE = '1'
+					AND RB.ITEM_ID NOT IN (
+						SELECT ITEM_ID FROM OP_DISPLAY_ITEM 
+						<where>
+							DISPLAY_GROUP_CODE = 'best'
+							AND DISPLAY_SUB_CODE = #{group.url}
+							AND VIEW_TARGET IN ('ALL', #{viewTarget})
+						</where>
+					)
+					<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+				</where>	
+				ORDER BY RB.ORDERING ASC
+				LIMIT #{limit}
+			) Z${index}
+		</foreach>
+	</select>
+	
+	
+	<!-- 팀별 상품 랭킹 목록 -->
+	<select id="getRankingListForMain" parameterType="Integer" resultMap="RankingMainResult">
+		<![CDATA[
+				SELECT 
+					CT.CATEGORY_TEAM_ID, CT.CODE, CT.NAME, 
+					I.ITEM_ID, I.ITEM_USER_CODE, I.ITEM_NAME, 
+					I.NONMEMBER_ORDER_TYPE, 
+					I.ITEM_TYPE,
+					I.ITEM_PRICE, I.SALE_PRICE, I.SALE_PRICE_NONMEMBER,
+					I.ITEM_IMAGE,
+					I.SEO_INDEX_FLAG
+				FROM OP_CATEGORY_TEAM CT 
+					INNER JOIN OP_RANKING R ON CT.CODE = R.CATEGORY_URL AND CT.CATEGORY_TEAM_FLAG = 'Y' AND CT.CODE <> 'sale_outlets'
+					INNER JOIN OP_ITEM I ON R.ITEM_ID = I.ITEM_ID AND I.DISPLAY_FLAG = 'Y'
+				WHERE (
+					SELECT COUNT(*) from OP_RANKING R2
+					INNER JOIN OP_ITEM I ON R2.ITEM_ID = I.ITEM_ID AND I.DISPLAY_FLAG = 'Y'
+					WHERE R2.CATEGORY_URL = R.CATEGORY_URL AND R2.ORDERING <= R.ORDERING
+				) <= #{value}
+				ORDER BY R.CATEGORY_URL, R.ORDERING ASC
+		]]>
+	</select>
+	
+	
+	<select id="getRankingList" parameterType="saleson.shop.ranking.support.RankingParam" resultMap="RankingResult">
+		SELECT 
+			R.RANKING_ID,
+			R.CATEGORY_URL, 
+			<include refid="saleson.shop.item.ItemMapper.baseItemColumns" />,
+			<include refid="saleson.shop.item.ItemMapper.itemReviewColumns" />
+			
+		FROM OP_RANKING R 
+			INNER JOIN OP_ITEM I ON R.ITEM_ID = I.ITEM_ID
+			INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID AND S.STATUS_CODE = '2' 
+		<where>
+			
+			<choose>
+				<when test='categoryUrl != ""'>
+					AND R.CATEGORY_URL = #{categoryUrl}
+				</when>
+				<when test='categoryGroupCode != ""'>
+					AND R.CATEGORY_URL = #{categoryGroupCode}
+				</when>
+				<when test='categoryTeamCode != ""'>
+					AND R.CATEGORY_URL = #{categoryTeamCode}
+				</when>
+			
+			</choose>
+			
+			<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+		</where>
+			
+		ORDER BY
+			R.ORDERING ASC
+		LIMIT #{limit}
+	</select>
+	
+	
+	<sql id="sqlGetItemIdsByCategoryUrl">
+		SELECT I.ITEM_ID
+		FROM OP_CATEGORY_TEAM CT
+			INNER JOIN OP_CATEGORY_GROUP CG ON CT.CATEGORY_TEAM_ID = CG.CATEGORY_TEAM_ID AND CT.CATEGORY_TEAM_FLAG = 'Y'
+			INNER JOIN OP_CATEGORY C1 ON CG.CATEGORY_GROUP_ID = C1.CATEGORY_GROUP_ID AND CG.CATEGORY_GROUP_FLAG = 'Y'
+			INNER JOIN OP_CATEGORY C ON C1.CATEGORY_CLASS1 = C.CATEGORY_CLASS1
+			INNER JOIN OP_ITEM_CATEGORY IC ON IC.CATEGORY_ID = C.CATEGORY_ID 
+			INNER JOIN OP_ITEM I ON IC.ITEM_ID = I.ITEM_ID AND DISPLAY_FLAG = 'Y' AND I.DATA_STATUS_CODE = '1'
+		<where>
+			 C.CATEGORY_FLAG = 'Y' AND
+			<choose>
+				<when test='categoryUrl != ""'>
+					C.CATEGORY_CLASS1 IN (
+						SELECT SUBSTRING(CATEGORY_CODE, 1, 3 * CATEGORY_LEVEL) 
+						FROM OP_CATEGORY 
+						WHERE CATEGORY_URL = #{categoryUrl}
+					)
+				</when>
+				<when test='categoryGroupCode != ""'>
+					CG.CODE = #{categoryGroupCode}
+				</when>
+				<when test='categoryTeamCode != ""'>
+					CT.CODE = #{categoryTeamCode}
+				</when>
+			</choose>
+		</where>
+		
+		GROUP BY ITEM_ID
+		
+	</sql>
+	
+	<sql id="defaultOnSaleFromQuery">
+		<include refid="saleson.shop.item.ItemMapper.defaultOnSaleFromQuery" />
+	</sql>
+		
+	<select id="getSaleRankingList" parameterType="saleson.shop.ranking.support.RankingParam" resultMap="saleson.shop.item.ItemMapper.ItemRankingResult">
+		 	
+		SELECT 
+			<include refid="saleson.shop.item.ItemMapper.baseItemColumns" />
+		FROM OP_ITEM I
+		INNER JOIN (
+			SELECT 
+				IFNULL(OI.SALE_PRICE_POINT, 0) + IFNULL(OI2.SALE_COUNT_POINT, 0) AS RANKING_POINT,
+				I.ITEM_ID,
+				I.HITS
+			FROM
+				<include refid="saleson.shop.item.ItemMapper.sqlItemListFrom" />
+				LEFT JOIN (
+					SELECT ITEM_ID, @RNUM := @RNUM + 1 AS SALE_PRICE_POINT
+					FROM (
+						SELECT ITEM_ID, SUM(SALE_PRICE * QUANTITY) AS TOTAL_SALE_PRICE
+						FROM OP_ORDER_ITEM 
+						WHERE CANCEL_FLAG = 'N' 
+							AND 	PAY_DATE BETWEEN DATE_FORMAT(DATE_ADD(NOW(), interval -1 week), '%Y%m%d%H%i%s') 
+													AND DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+						GROUP BY ITEM_ID
+						ORDER BY TOTAL_SALE_PRICE ASC 
+					) T1, ( SELECT @RNUM := 0 ) R
+				 
+				) OI ON I.ITEM_ID = OI.ITEM_ID
+				LEFT JOIN (
+					SELECT ITEM_ID, @RNUM := @RNUM + 1 AS SALE_COUNT_POINT
+					FROM (
+						SELECT ITEM_ID, COUNT(*) AS TOTAL_SALE_COUNT
+						FROM OP_ORDER_ITEM 
+						WHERE CANCEL_FLAG = 'N'  
+							AND PAY_DATE BETWEEN DATE_FORMAT(DATE_ADD(NOW(), interval -1 week), '%Y%m%d%H%i%s') 
+													AND DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+						GROUP BY ITEM_ID
+						ORDER BY TOTAL_SALE_COUNT ASC 
+					) T1, ( SELECT @RNUM := 0 ) R
+				 
+				) OI2 ON I.ITEM_ID = OI2.ITEM_ID
+			<where>
+				<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+			</where>
+		
+			ORDER BY RANKING_POINT DESC, I.HITS DESC
+			LIMIT #{limit}
+		) T ON I.ITEM_ID = T.ITEM_ID
+	</select>
+	
+	<delete id="deleteRankingByParam" parameterType="saleson.shop.ranking.support.RankingParam">
+		DELETE FROM OP_RANKING
+		<where>
+			<choose>
+				<when test='categoryUrl != ""'>
+					CATEGORY_URL = #{categoryUrl}
+				</when>
+				<when test='categoryGroupCode != ""'>
+					CATEGORY_URL = #{categoryGroupCode}
+				</when>
+				<when test='categoryTeamCode != ""'>
+					CATEGORY_URL = #{categoryTeamCode}
+				</when>
+			
+			</choose>
+		</where>
+	</delete>
+	
+	
+	<insert id="insertRankingByParam"  parameterType="saleson.shop.ranking.support.RankingParam">
+		<selectKey keyProperty="rankingId" resultType="int" order="BEFORE">
+			SELECT SEQUENCE_ID FROM OP_SEQUENCE
+			WHERE SEQUENCE_KEY = 'OP_RANKING'
+		</selectKey>
+		
+		INSERT INTO OP_RANKING (RANKING_ID, CATEGORY_URL, ITEM_ID, ORDERING)
+		VALUES 
+		<foreach item="itemId" index="ordering" collection="itemIds" open="" separator="," close=""> 
+			(#{rankingId} + #{ordering} + 1, #{categoryCode}, #{itemId}, #{ordering} + 1)
+		</foreach>
+	
+	</insert>
+	
+	<select id="getGroupRankingList" parameterType="String" resultMap="RankingGroupResult">
+		SELECT 
+			U.*,
+		    IFNULL(IR.SCORE,0) AS REVIEW_SCORE
+		FROM (
+		  SELECT 
+		        CG.NAME,
+		        CG.CODE,
+		        I.ITEM_ID, 
+		        I.SELLER_ID, 
+		        I.ITEM_CODE, 
+		        I.ITEM_USER_CODE, 
+		        I.ITEM_NAME, 
+		        I.ITEM_TYPE, 
+		        I.ITEM_LABEL, 
+		        I.SOLD_OUT, 
+		        I.ITEM_TYPE1, 
+		        I.ITEM_TYPE2, 
+		        I.ITEM_TYPE3, 
+		        I.ITEM_TYPE4, 
+		        I.ITEM_TYPE5, 
+		        I.NONMEMBER_ORDER_TYPE, 
+		        I.TAX_TYPE, 
+		        I.ITEM_PRICE, 
+		        I.SALE_PRICE, 
+		        I.SALE_PRICE_NONMEMBER, 
+		        I.ITEM_IMAGE 
+		    FROM
+		        OP_CATEGORY_TEAM AS CT LEFT JOIN  OP_CATEGORY_GROUP AS CG ON CT.CATEGORY_TEAM_ID = CG.CATEGORY_TEAM_ID
+		        LEFT JOIN OP_RANKING R ON CG.CODE = R.CATEGORY_URL 
+		        INNER JOIN OP_ITEM I ON R.ITEM_ID = I.ITEM_ID
+		    
+		    WHERE 
+		        CT.CODE = #{code}
+		    ORDER BY 
+		        CG.ORDERING ASC, R.ORDERING ASC
+		    ) AS U LEFT JOIN
+		    ( 
+		    	SELECT
+		        	ITEM_ID, 
+		        	SUM(SCORE)/COUNT(SCORE) AS SCORE
+		        FROM 
+		        	OP_ITEM_REVIEW
+		        GROUP BY ITEM_ID
+		    ) AS IR ON U.ITEM_ID = IR.ITEM_ID
+        	
+	</select>
+	
+	
+	<select id="getSaleRankingListForGroupAndCategory" parameterType="saleson.shop.ranking.support.RankingParam" resultMap="saleson.shop.item.ItemMapper.ItemResult">
+		SELECT
+			U.*,
+			IFNULL(IR.SCORE,0) AS REVIEW_SCORE
+		FROM
+			(
+				SELECT 
+					I.ITEM_ID, 
+					I.SELLER_ID, 
+					I.ITEM_CODE, 
+					I.ITEM_USER_CODE, 
+					I.ITEM_NAME, 
+					I.ITEM_TYPE, 
+					I.ITEM_LABEL, 
+					I.SOLD_OUT, 
+					I.ITEM_TYPE1, 
+					I.ITEM_TYPE2, 
+					I.ITEM_TYPE3, 
+					I.ITEM_TYPE4, 
+					I.ITEM_TYPE5, 
+					I.NONMEMBER_ORDER_TYPE, 
+					I.TAX_TYPE, 
+					I.ITEM_PRICE,
+					I.SALE_PRICE, 
+					I.SELLER_DISCOUNT_FLAG,
+					I.SELLER_DISCOUNT_TYPE,
+					I.SELLER_DISCOUNT_AMOUNT,
+					I.SPOT_FLAG,
+					I.SPOT_TYPE,
+					I.SPOT_DISCOUNT_AMOUNT, 
+					I.SPOT_START_DATE, 
+					I.SPOT_END_DATE, 
+					I.SPOT_START_TIME, 
+					I.SPOT_END_TIME, 
+					I.SPOT_WEEK_DAY, 
+					I.ITEM_IMAGE,
+					I.ITEM_SUMMARY
+				FROM (
+					SELECT 
+					  	P.ITEM_ID, 
+					  	P.SALE_PRICE_RANKING + C.SALE_COUNT_RANKING AS RANKING_POINT
+					FROM (
+					  	SELECT ITEM_ID, @RNUM := @RNUM + 1 AS SALE_PRICE_RANKING
+					  	FROM (
+						
+					    	SELECT I.ITEM_ID, SUM(SALE_AMOUNT) AS TOTAL_SALE_PRICE
+					    	FROM (
+						 		<include refid="sqlGetItemIdsByCategoryUrl" />
+							) I
+							INNER JOIN OP_ORDER_ITEM OI ON I.ITEM_ID = OI.ITEM_ID
+						    GROUP BY I.ITEM_ID
+						    ORDER BY TOTAL_SALE_PRICE DESC 
+						 	LIMIT 50
+					  	) T1, ( SELECT @RNUM := 0 ) R
+				  
+					) P INNER JOIN (
+					  	SELECT ITEM_ID, @RNUM2 := @RNUM2 + 1 AS SALE_COUNT_RANKING
+					  	FROM (
+					    	SELECT I.ITEM_ID, SUM(QUANTITY) AS TOTAL_SALE_COUNT
+					    	FROM (
+						 		<include refid="sqlGetItemIdsByCategoryUrl" />
+						 	) I
+						 	INNER JOIN OP_ORDER_ITEM OI ON I.ITEM_ID = OI.ITEM_ID
+					    	GROUP BY I.ITEM_ID
+					    	ORDER BY TOTAL_SALE_COUNT DESC 
+						 	LIMIT 50
+					  	) T2, ( SELECT @RNUM2 := 0 ) R2
+					) C ON P.ITEM_ID = C.ITEM_ID
+					
+					ORDER BY RANKING_POINT ASC
+					LIMIT #{limit}
+					
+				) A LEFT JOIN OP_ITEM I ON A.ITEM_ID = I.ITEM_ID
+			) AS U LEFT JOIN
+		    ( 
+		    	SELECT
+		        	ITEM_ID, 
+		        	SUM(SCORE)/COUNT(SCORE) AS SCORE
+		        FROM 
+		        	OP_ITEM_REVIEW
+		        GROUP BY ITEM_ID
+		    ) AS IR ON U.ITEM_ID = IR.ITEM_ID
+	
+	</select>
+	
+	<select id="getRankingItemListByParam" parameterType="saleson.shop.ranking.support.RankingParam" resultMap="saleson.shop.item.ItemMapper.ItemBaseResult">
+		<include refid="CommonMapper.paginationHeader" />
+		
+		SELECT
+			<include refid="saleson.shop.item.ItemMapper.defaultItemColumns" />, 
+			<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />,
+			RB.ORDERING
+		FROM OP_RANKING_BATCH RB
+			INNER JOIN OP_ITEM I ON RB.ITEM_ID = I.ITEM_ID
+			INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+			<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+				
+		<where>
+			AND RB.RANKING_TYPE = #{rankingType}
+			AND RB.RANKING_CODE = #{rankingCode}
+			AND RB.DATA_STATUS_CODE = '1'
+			<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+			AND I.FRONT_DISPLAY_FLAG = 'Y'
+			AND S.STATUS_CODE = '2'
+		</where>
+		
+		ORDER BY RB.ORDERING ASC
+		
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+</mapper>

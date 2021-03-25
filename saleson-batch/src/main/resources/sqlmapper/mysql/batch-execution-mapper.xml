@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.batch.BatchExecutionMapper">
+    <insert id="mergeBatchExecution" parameterType="saleson.common.scheduling.domain.BatchExecution">
+
+		INSERT INTO OP_BATCH_EXECUTION (BATCH_TYPE, EXECUTION_DATE, START_TIME, END_TIME, RESULT, MESSAGE)
+		VALUES (#{batchType}, #{executionDate}, #{startTime}, #{endTime}, #{result}, #{message})
+
+		ON DUPLICATE KEY
+		UPDATE
+			START_TIME = #{startTime},
+			END_TIME = #{endTime},
+			RESULT = #{result},
+			MESSAGE = #{message}
+
+	</insert>
+</mapper>

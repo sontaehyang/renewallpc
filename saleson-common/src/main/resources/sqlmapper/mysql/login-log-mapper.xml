@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.log.LoginLogMapper">
+	
+	
+	<resultMap id="LoginLogResult" type="saleson.shop.log.domain.LoginLog">
+		<result property="loginLogId" column="LOGIN_LOG_ID"/>
+		<result property="loginType" column="LOGIN_TYPE"/>
+		<result property="loginId" column="LOGIN_ID"/>
+		<result property="successFlag" column="SUCCESS_FLAG"/>
+		<result property="remoteAddr" column="REMOTE_ADDR"/>
+		<result property="memo" column="MEMO"/>
+		<result property="loginDate" column="LOGIN_DATE"/>
+	</resultMap>
+	
+	<insert id="insertLoginLog" parameterType="saleson.shop.log.domain.LoginLog">
+		INSERT INTO OP_LOGIN_LOG (
+			LOGIN_TYPE,
+			LOGIN_ID,
+			SUCCESS_FLAG,
+			REMOTE_ADDR,
+			MEMO,
+			LOGIN_DATE
+		) VALUES (
+			#{loginType},
+			#{loginId},
+			#{successFlag},
+			#{remoteAddr},
+			#{memo},
+			<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+
+	<insert id="insertLoginLogByUser" parameterType="saleson.shop.log.domain.LoginLog">
+		INSERT INTO OP_USER_LOGIN_LOG (
+			LOGIN_TYPE,
+			LOGIN_ID,
+			SUCCESS_FLAG,
+			REMOTE_ADDR,
+			MEMO,
+			LOGIN_DATE
+		) VALUES (
+			#{loginType},
+			#{loginId},
+			#{successFlag},
+			#{remoteAddr},
+			#{memo},
+			<include refid="CommonMapper.datetime"/>
+		)
+	</insert>
+
+	<sql id="baseLoginLogWhere">
+		<where>
+			<if test="loginType != null and loginType != ''">
+				AND LL.LOGIN_TYPE = #{loginType}
+			</if>
+			<if test="loginId != null and loginId != ''">
+				AND LL.LOGIN_ID = #{loginId}
+			</if>
+			<if test="successFlag != null and successFlag != ''">
+				AND LL.SUCCESS_FLAG = #{successFlag}
+			</if>
+			<if test='searchStartDate != null and searchStartDate != ""'>
+				AND LL.LOGIN_DATE >= #{searchStartDate}|| '000000'
+			</if>
+			
+			<if test='searchEndDate != null and searchEndDate != ""'>
+				AND LL.LOGIN_DATE <![CDATA[<=]]> #{searchEndDate}||'235959'
+			</if>
+		</where>
+	</sql>
+	
+	<select id="getLoginLogListCountByParam" parameterType="saleson.shop.log.support.LoginLogParam" resultType="int">
+		SELECT
+			COUNT(*) AS CNT
+		FROM OP_LOGIN_LOG LL
+		<include refid="baseLoginLogWhere"/>
+	</select>
+	
+	
+	<select id="getLoginLogListByParam" parameterType="saleson.shop.log.support.LoginLogParam" resultMap="LoginLogResult">
+		
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT
+				LOGIN_LOG_ID,
+				LOGIN_TYPE,
+				LOGIN_ID,
+				SUCCESS_FLAG,
+				REMOTE_ADDR,
+				MEMO,
+				LOGIN_DATE
+			FROM OP_LOGIN_LOG LL
+			<include refid="baseLoginLogWhere"/>
+			ORDER BY LOGIN_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+		
+	</select>
+	
+</mapper>

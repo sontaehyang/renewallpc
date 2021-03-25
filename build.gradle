@@ -1,0 +1,166 @@
+buildscript {
+    ext {
+        springBootVersion = "2.3.4.RELEASE"
+    }
+    repositories {
+        mavenCentral()
+        maven {url "https://plugins.gradle.org/m2/"}
+        maven {url "https://repo.spring.io/milestone"}
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        // 1. jspc-gradle-plugin
+        classpath "gradle.plugin.com.liferay:gradle-plugins-jasper-jspc:2.0.6"
+
+        // 2. tomcat-plugin
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
+    }
+}
+
+plugins {
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id "org.sonarqube" version "2.7"
+    id 'jacoco'
+    id 'java'
+}
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "idea"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "jacoco"
+
+
+    group = 'com.onlinepowers'
+    version = '3.13.0'
+    sourceCompatibility = '1.8'
+
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/milestone" }
+    }
+
+    task initSourceFolders {
+        sourceSets*.java.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+
+        sourceSets*.resources.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+    }
+
+    task unpack(type: Copy) {
+        dependsOn bootJar
+        from(zipTree(tasks.bootJar.outputs.files.singleFile))
+        into("build/dependency")
+    }
+
+    sonarqube {
+        properties {
+            property 'sonar.projectName', 'SalesOn3'
+            property 'sonar.projectKey', 'SalesOn3'
+            property 'sonar.host.url', 'http://sonarqube.onlinepowers.com:9000'
+            property 'sonar.login', 'saleson3'
+        }
+    }
+
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'org.springframework.boot:spring-boot-devtools'
+
+        //providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+        //
+        implementation 'javax.xml.bind:jaxb-api'
+        implementation 'javax.xml.soap:javax.xml.soap-api:1.4.0'
+
+
+        // lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+
+        // Junit5
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+    test {
+        useJUnitPlatform()
+    }
+
+    jacoco {
+        toolVersion = "0.8.4"
+        reportsDir = file("$buildDir/customJacocoReportDir")
+    }
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            csv.enabled false
+            html.destination file("${buildDir}/jacocoHtml")
+        }
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    configure("querydsl-sample") {
+        apply plugin: "io.spring.dependency-management"
+
+        dependencies {
+            compile("com.querydsl:querydsl-core")
+            compile("com.querydsl:querydsl-jpa")
+            compile("com.querydsl:querydsl-apt")
+
+            annotationProcessor("com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa") // querydsl JPAAnnotationProcessor 사용 지정
+            annotationProcessor("jakarta.persistence:jakarta.persistence-api") // java.lang.NoClassDefFoundError(javax.annotation.Entity) 발생 대응
+            annotationProcessor("jakarta.annotation:jakarta.annotation-api") // java.lang.NoClassDefFoundError (javax.annotation.Generated) 발생 대응
+        }
+
+        // Gradle clean을 하게되면 생성된 generated 아래 Q클래스 파일삭제
+        clean {
+            delete file('src/main/generated') // 인텔리J Q클래스 경로
+            delete file('out') // 인텔리J build output 경로
+        }
+    }
+
+}
+
+sonarqube {
+    properties {
+        property 'sonar.projectName', 'SalesOn3'
+        property 'sonar.projectKey', 'SalesOn3'
+        property 'sonar.host.url', 'http://sonarqube.onlinepowers.com:9000'
+        property 'sonar.login', 'd0dc0d8b6575ed382467d60f56cf64aa7ac74f6e'
+    }
+}
+
+
+task buildSalesonStatic(type: Zip){
+    from ('saleson-web/static') {
+        exclude('common')
+        exclude('guide')
+        exclude('html')
+        exclude('*.html')
+    }
+    archiveFileName = provider {
+        "saleson-static.zip"
+    }
+}
+
+
+build.dependsOn buildSalesonStatic
+//build.dependsOn buildSalesonFrontend

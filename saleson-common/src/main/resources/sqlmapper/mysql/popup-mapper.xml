@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.popup.PopupMapper">
+	<resultMap id="PopupResult" type="saleson.shop.popup.domain.Popup">
+		<result property="popupId" column="POPUP_ID" />
+		<result property="popupClose" column="POPUP_CLOSE" />
+		<result property="popupType" column="POPUP_TYPE" />
+		<result property="popupStyle" column="POPUP_STYLE" />
+		<result property="subject" column="SUBJECT" />
+		<result property="content" column="CONTENT" />
+		<result property="startDate" column="START_DATE" />
+		<result property="startTime" column="START_TIME" />
+		<result property="endDate" column="END_DATE" />
+		<result property="endTime" column="END_TIME" />
+		<result property="width" column="WIDTH" />
+		<result property="height" column="HEIGHT" />
+		<result property="topPosition" column="TOP_POSITION" />
+		<result property="leftPosition" column="LEFT_POSITION" />
+		<result property="popupImage" column="POPUP_IMAGE" />
+		<result property="imageLink" column="IMAGE_LINK" />
+		<result property="backgroundColor" column="BACKGROUND_COLOR" />
+	</resultMap>
+
+
+	<sql id="sqlPopupWhere">
+		<where>
+			<if test='popupClose != "0" and popupClose != null'>
+				AND POPUP_CLOSE = #{popupClose}
+			</if>
+			<if test='popupStyle != "0" and popupStyle != null'>
+				AND POPUP_STYLE = #{popupStyle}
+			</if>
+			<if test="startDate != '' and startDate != null">
+				AND START_DATE >= #{startDate}
+			</if>
+			<if test="endDate != '' and endDate != null">
+				AND END_DATE <![CDATA[<=]]> #{endDate}
+			</if>
+			<if test='query != null and query != ""'>
+				AND SUBJECT LIKE CONCAT('%', #{query}, '%')
+			</if>
+		</where>
+	</sql>
+	
+
+	<select id="popupCount" parameterType="saleson.shop.popup.domain.PopupSearchParam" resultType="Integer" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT COUNT(*)
+			FROM OP_POPUP 
+			<include refid="sqlPopupWhere" />
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+
+	<select id="popupList" parameterType="saleson.shop.popup.domain.PopupSearchParam" resultMap="PopupResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT *
+			FROM OP_POPUP 
+			<include refid="sqlPopupWhere" />
+			ORDER BY POPUP_ID DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+
+	<select id="getPopup" parameterType="Integer" resultMap="PopupResult" >
+		SELECT *
+		FROM OP_POPUP 
+ 		WHERE POPUP_ID = #{value}
+	</select>
+
+
+	<insert id="insertPopup" parameterType="saleson.shop.popup.domain.Popup">
+		INSERT INTO OP_POPUP (POPUP_ID, POPUP_CLOSE, POPUP_TYPE, POPUP_STYLE, SUBJECT, CONTENT, START_DATE, START_TIME, END_DATE, END_TIME, WIDTH, HEIGHT, IMAGE_LINK, TOP_POSITION, LEFT_POSITION, POPUP_IMAGE, BACKGROUND_COLOR)
+		VALUES (#{popupId}, #{popupClose}, #{popupType}, #{popupStyle}, #{subject}, #{content}, #{startDate}, #{startTime}, #{endDate}, #{endTime}, #{width}, #{height}, #{imageLink}, #{topPosition}, #{leftPosition}, #{popupImage}, #{backgroundColor})
+	</insert>
+
+
+	<update id="updatePopup" parameterType="saleson.shop.popup.domain.Popup">
+		UPDATE OP_POPUP SET
+			POPUP_CLOSE = #{popupClose}, 
+			POPUP_TYPE = #{popupType}, 
+			POPUP_STYLE = #{popupStyle}, 
+			SUBJECT = #{subject}, 
+			CONTENT = #{content}, 
+			START_DATE = #{startDate},
+			START_TIME = #{startTime},  
+			END_DATE = #{endDate},
+			END_TIME = #{endTime},  
+			WIDTH = #{width}, 
+			HEIGHT = #{height}, 
+			IMAGE_LINK = #{imageLink}, 
+			TOP_POSITION = #{topPosition}, 
+			LEFT_POSITION = #{leftPosition},
+			POPUP_IMAGE = #{popupImage},
+			BACKGROUND_COLOR = #{backgroundColor}
+		WHERE POPUP_ID = #{popupId}
+	</update>
+
+
+	<delete id="deletePopup" parameterType="Integer" >
+		DELETE FROM OP_POPUP 
+		WHERE POPUP_ID = #{value}
+	</delete>
+	
+	<update id="updatePopupImage" parameterType="Integer">
+		UPDATE OP_POPUP SET
+			POPUP_IMAGE = null
+		WHERE POPUP_ID = #{value}
+	</update>
+	
+	<select id="displayPopupList" resultMap="PopupResult" >
+		SELECT *
+		FROM OP_POPUP 
+		WHERE CONCAT(END_DATE, END_TIME) >= DATE_FORMAT(NOW(),'%Y%m%d%H') AND POPUP_CLOSE = 1 
+	</select>
+</mapper>

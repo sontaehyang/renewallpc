@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.log.LogManageMapper">
+
+    <select id="getTodayLogCount" resultType="int">
+        SELECT COUNT(*)
+        FROM OP_LOG_MANAGE
+        WHERE
+        CREATED_DATE LIKE CONCAT(<include refid="CommonMapper.date"/>,'%')
+    </select>
+
+    <insert id="insertTodayLog">
+        INSERT INTO OP_LOG_MANAGE (
+            CREATED_DATE
+        ) VALUES (
+            <include refid="CommonMapper.datetime"/>
+        )
+    </insert>
+
+    <delete id="deleteManagerActionLog" parameterType="string">
+        DELETE FROM OP_MANAGER_ACTION_LOG
+        WHERE CREATED_DATE <![CDATA[<=]]> #{value}
+    </delete>
+
+    <delete id="deleteQueryLog" parameterType="string">
+        DELETE FROM OP_QUERY_LOG
+        WHERE CREATED_DATE <![CDATA[<=]]> #{value}
+    </delete>
+
+    <delete id="deleteManagerChangeLog" parameterType="string">
+        DELETE FROM OP_MANAGER_CHANGE_LOG
+        WHERE CREATED_DATE <![CDATA[<=]]> #{value}
+    </delete>
+
+    <delete id="deleteUserChangeLog" parameterType="string">
+        DELETE FROM OP_USER_CHANGE_LOG
+        WHERE CREATED_DATE <![CDATA[<=]]> #{value}
+    </delete>
+
+    <delete id="deleteUserLoginLog" parameterType="string">
+        DELETE FROM OP_USER_LOGIN_LOG
+        WHERE LOGIN_DATE <![CDATA[<=]]> #{value}
+    </delete>
+
+    <delete id="deleteLoginLog" parameterType="string">
+        DELETE FROM OP_LOGIN_LOG
+        WHERE LOGIN_DATE <![CDATA[<=]]> #{value}
+    </delete>
+
+</mapper>

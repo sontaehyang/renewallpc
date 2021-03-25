@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.rankingconfig.RankingConfigMapper">
+	
+	<resultMap id="rankingConfigResult" type="saleson.shop.rankingconfig.domain.RankingConfig">
+		<result property="rankConfigCode" column="RANK_CONFIG_CODE" />
+		<result property="salePriceDays" column="SALE_PRICE_DAYS" />
+		<result property="salePriceWeight" column="SALE_PRICE_WEIGHT" />
+		<result property="saleCountDays" column="SALE_COUNT_DAYS" />
+		<result property="saleCountWeight" column="SALE_COUNT_WEIGHT" />
+		<result property="itemReviewDays" column="ITEM_REVIEW_DAYS" />
+		<result property="itemReviewWeight" column="ITEM_REVIEW_WEIGHT" />
+		<result property="itemHitWeight" column="ITEM_HIT_WEIGHT" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<select id="getRankingConfigByRankConfigCode" parameterType="String" resultMap="rankingConfigResult">
+		
+		SELECT * FROM (
+			SELECT 
+				RC.*, 
+				0 AS ORDERING 
+			FROM OP_RANKING_CONFIG RC
+			WHERE RC.RANK_CONFIG_CODE = #{rankConfigCode}
+			
+			UNION ALL
+			
+			SELECT 
+				RC.*, 
+				1 AS ORDERING 
+			FROM OP_RANKING_CONFIG RC
+			WHERE RC.RANK_CONFIG_CODE = 'default'
+		)T
+		ORDER BY ORDERING
+		LIMIT 1
+		
+	</select>
+	
+	<update id="updateItemRankingConfig" parameterType="saleson.shop.rankingconfig.domain.RankingConfig">
+		UPDATE OP_RANKING_CONFIG
+		SET
+			SALE_PRICE_DAYS = #{salePriceDays},
+			SALE_PRICE_WEIGHT = #{salePriceWeight},
+			SALE_COUNT_DAYS = #{saleCountDays},
+			SALE_COUNT_WEIGHT = #{saleCountWeight},
+			ITEM_REVIEW_DAYS = #{itemReviewDays},
+			ITEM_REVIEW_WEIGHT = #{itemReviewWeight},
+			ITEM_HIT_WEIGHT = #{itemHitWeight},
+			CREATED_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+			
+		WHERE RANK_CONFIG_CODE = #{rankConfigCode}
+	</update>
+	
+</mapper>

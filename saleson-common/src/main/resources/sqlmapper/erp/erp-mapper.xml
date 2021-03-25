@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.erp.domain.ErpMapper">
+
+	<select id="test" resultType="long">
+		SELECT 1
+	</select>
+
+    <select id="findHPR100TByItemCode" parameterType="String" resultType="saleson.erp.domain.HPR100T">
+        SELECT
+            ITEM_CODE AS itemCode,
+            CASE WHEN ISNULL(ITEM_NAME1, '') = '' THEN
+                ITEM_NAME
+            ELSE
+                ITEM_NAME1
+            END AS itemName
+        FROM
+            UNILITE.BPR100T
+        WHERE
+            ITEM_CODE = #{value}
+
+    </select>
+
+
+    <select id="findOrderLineAll" resultType="saleson.erp.domain.OrderLineStatus">
+        SELECT
+            SOL_NO	AS solNo,
+            UNIQ	AS uniq,
+            ORI_UNIQ	AS oriUniq,
+            BUNDLE_NO	AS bundleNo,
+            ORD_STATUS	AS ordStatus,
+            SKU_CD	AS skuCd,
+            CARR_NO	AS carrNo,
+            CARR_NAME	AS carrName,
+            INVOICE_NO	AS invoiceNo
+        FROM
+            UNILITE.IF_ORDER_LIST_PUT
+        WHERE
+            UNIQ IN (
+                <foreach item="uniq" index="i" collection="list" open="" separator="," close="">
+                    #{uniq}
+                </foreach>
+            )
+        AND APPLY_FLAG = 'N'
+        ORDER BY INSERT_DB_TIME DESC
+    </select>
+
+
+    <insert id="saveOrderListGet">
+        INSERT INTO UNILITE.IF_ORDER_LIST_GET (
+            SOL_NO,
+            UNIQ,
+            ORI_UNIQ,
+            BUNDLE_NO,
+            ORD_STATUS,
+            SKU_CD,
+            CARR_NO,
+            CARR_NAME,
+            INVOICE_NO,
+            SHIP_PLAN_DATE,
+            SHOP_CD,
+            SHOP_NAME,
+            SHOP_ID,
+            SELLER_NICK,
+            SHOP_ORD_NO,
+            SHOP_SALE_NO,
+            SHOP_SALE_NAME,
+            SHOP_OPT_NAME,
+            SALE_CNT,
+            SHOP_ADD_OPT_NAME,
+            SHIP_METHOD,
+            OUT_TIME,
+            WDATE,
+            ORD_TIME,
+            PAY_TIME,
+            ORD_CONFIRM_TIME,
+            SALES,
+            SALES_TAX,
+            SHOP_COST_PRICE,
+            SHOP_SUPPLY_PRICE,
+            SHIP_DELAY_YN,
+            ORDER_NAME,
+            ORDER_ID,
+            ORDER_TEL,
+            ORDER_HTEL,
+            ORDER_EMAIL,
+            SHIP_MSG,
+            OUT_ORDER_TIME,
+            TO_CTRY_CD,
+            TO_NAME,
+            TO_TEL,
+            TO_HTEL,
+            TO_ADDR1,
+            TO_ADDR2,
+            TO_ZIPCD,
+            SHIP_COST,
+            C_SALE_CD,
+            ORD_CURR_CD,
+            GPRIVATE_NO,
+            BARCODE,
+            DEPOT_NO,
+            DEPOT_NAME,
+            INVOICE_SEND_TIME,
+            GIFT_NAME,
+            GIFT_PROD_NAME,
+            MAP_YN,
+            SHIP_AVAIL_YN,
+            SHIP_UNABLE_REASON,
+            ORD_STATUS_MSG,
+            EXCHANGE_YN,
+            MEMO_YN,
+            BUNDLE_AVAIL_YN,
+            SET_NO,
+            SET_PACK_UNIT,
+            SET_NAME,
+            PAY_METHOD,
+            MISC1,
+            RECORDSTOTAL,
+            BILL_TYPE,
+            APPLY_FLAG
+        )
+        <foreach item="orderLine" index="index" collection="list" open="" separator="UNION ALL" close="">
+        SELECT
+            #{orderLine.solNo},
+            #{orderLine.uniq},
+            #{orderLine.oriUniq},
+            #{orderLine.bundleNo},
+            #{orderLine.ordStatus},
+            #{orderLine.skuCd},
+            #{orderLine.carrNo},
+            #{orderLine.carrName},
+            #{orderLine.invoiceNo},
+            #{orderLine.shipPlanDate},
+            #{orderLine.shopCd},
+            #{orderLine.shopName},
+            #{orderLine.shopId},
+            #{orderLine.sellerNick},
+            #{orderLine.shopOrdNo},
+            #{orderLine.shopSaleNo},
+            #{orderLine.shopSaleName},
+            #{orderLine.shopOptName},
+            #{orderLine.saleCnt},
+            #{orderLine.shopAddOptName},
+            #{orderLine.shipMethod},
+            #{orderLine.outTime},
+            #{orderLine.wdate},
+            #{orderLine.ordTime},
+            #{orderLine.payTime},
+            #{orderLine.ordConfirmTime},
+            #{orderLine.sales},
+            #{orderLine.salesTax},
+            #{orderLine.shopCostPrice},
+            #{orderLine.shopSupplyPrice},
+            #{orderLine.shipDelayYn},
+            #{orderLine.orderName},
+            #{orderLine.orderId},
+            #{orderLine.orderTel},
+            #{orderLine.orderHtel},
+            #{orderLine.orderEmail},
+            #{orderLine.shipMsg},
+            #{orderLine.outOrderTime},
+            #{orderLine.toCtryCd},
+            #{orderLine.toName},
+            #{orderLine.toTel},
+            #{orderLine.toHtel},
+            #{orderLine.toAddr1},
+            #{orderLine.toAddr2},
+            #{orderLine.toZipcd},
+            #{orderLine.shipCost},
+            #{orderLine.cSaleCd},
+            #{orderLine.ordCurrCd},
+            #{orderLine.gprivateNo},
+            #{orderLine.barcode},
+            #{orderLine.depotNo},
+            #{orderLine.depotName},
+            #{orderLine.invoiceSendTime},
+            #{orderLine.giftName},
+            #{orderLine.giftProdName},
+            #{orderLine.mapYn},
+            #{orderLine.shipAvailYn},
+            #{orderLine.shipUnableReason},
+            #{orderLine.ordStatusMsg},
+            #{orderLine.exchangeYn},
+            #{orderLine.memoYn},
+            #{orderLine.bundleAvailYn},
+            #{orderLine.setNo},
+            #{orderLine.setPackUnit},
+            #{orderLine.setName},
+            #{orderLine.payMethod},
+            #{orderLine.misc1},
+            #{orderLine.recordstotal},
+            #{orderLine.billType},
+            #{orderLine.applyFlag}
+        </foreach>
+    </insert>
+
+    <update id="updateApplyFlagIfOrderListPut">
+        UPDATE UNILITE.IF_ORDER_LIST_PUT
+        SET APPLY_FLAG = 'Y'
+        WHERE
+        UNIQ IN (
+        <foreach item="uniq" index="i" collection="list" open="" separator="," close="">
+            #{uniq}
+        </foreach>
+        )
+        AND SOL_NO = '9999'
+    </update>
+
+    <select id="findIfOrderListPutAll" resultType="saleson.erp.domain.OrderLineStatus">
+        SELECT
+            SOL_NO	AS solNo,
+            UNIQ	AS uniq,
+            ORI_UNIQ	AS oriUniq,
+            BUNDLE_NO	AS bundleNo,
+            ORD_STATUS	AS ordStatus,
+            SKU_CD	AS skuCd,
+            CARR_NO	AS carrNo,
+            CARR_NAME	AS carrName,
+            INVOICE_NO	AS invoiceNo
+        FROM UNILITE.IF_ORDER_LIST_PUT
+            WHERE SOL_NO = '9999' AND APPLY_FLAG = 'N'
+        ORDER BY UNIQ
+    </select>
+
+
+</mapper>

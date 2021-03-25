@@ -1,0 +1,545 @@
+<? include "../include/headHtml.html" ?>
+<body>
+<div id="wrap">	
+	<!-- header : s -->
+	<? include "../include/header.html" ?>
+		<div class="title">
+			<h2>주문/결제</h2>
+			<span class="his_back"><a href="#" class="ir_pm">뒤로가기</a></span>
+		</div>
+		<!-- //title -->		
+		<!-- 내용 : s -->
+		<div class="con payment_wrap">
+			<div class="order_wrap">
+				<div class="order_info">
+					<div class="order_tit">
+						<h3>주문자 정보</h3>
+					</div>
+					<!-- //order_tit -->					
+					<div class="order_con">
+						<ul class="del_info">
+							<li>
+								<strong class="del_tit t_lgray star">주문자명</strong>
+								<span class="del_detail">홍길동</span>
+							</li>
+							<li class="chunk">
+								<label for="address01" class="del_tit t_lgray star">배송지 주소</label>
+								<div class="user_info">
+									<div class="in_td">
+										<div class="input_area">
+											<input type="text" title="우편번호">
+										</div>
+									</div>
+									<div class="in_td bar"></div>
+									<div class="in_td address">
+										<button type="button" id="address01" class="btn_st3">우편번호</button>
+									</div>
+								</div>
+								<div class="input_area">
+									<input type="text" title="상세 주소 입력">
+								</div>
+								<div class="input_area">
+									<input type="text" title="나머지 주소 입력">
+								</div>
+							</li>
+							<li>
+								<strong class="del_tit t_lgray star">휴대폰 번호</strong>
+								<span class="del_detail">010-3333-4444</span>
+							</li>
+							<li>
+								<strong class="del_tit t_lgray star">전화번호</strong>
+								<span class="del_detail">02-7777-8888</span>
+							</li>
+							<li>
+								<strong class="del_tit t_lgray star">이메일</strong>
+								<span class="del_detail">test01@naver.com</span>
+							</li>
+						</ul>
+					</div>
+					<!-- //order_con -->
+				</div>
+				<!-- //order_info -->				
+				<div class="order_get">
+					<div class="order_tit">
+						<h3>받는사람 정보1</h3>
+						<div class="shipping_pl">
+							<label for="shipping_num">복수배송지 선택</label>
+							<select name="" id="">
+								<option value="10">10</option>
+								<option value="9">9</option>
+								<option value="8">8</option>
+							</select>
+							<button type="button" class="btn_st3 t_small ">복수배송지 추가</button>
+						</div>
+						<!-- //shipping_pl -->
+					</div>
+					<!-- //order_tit -->					
+					<div class="order_con">
+						<ul class="del_info type-view">
+							<li>
+								<span class="del_tit t_lgray">배송지 선택</span>
+								<div class="info-view">배송지01</div>
+							</li>
+							<li>
+								<span class="del_tit star t_lgray">받으시는 분</span>
+								<div class="info-view">홍길동</div>
+							</li>
+							<li class="chunk">
+								<span class="del_tit t_lgray star">배송지 주소</span>
+								<div class="info-view address">(12345) 서울시 구로구 디지털로27길 24 405호</div> 
+							</li>
+							<li>
+								<span class="del_tit t_lgray star">휴대폰 번호</span>
+								<div class="info-view">010-1234-5678</div>
+							</li>
+							<li>
+								<span class="del_tit t_lgray">배송시 요구사항</span>
+								<div class="info-view">부재 시 경비실에 맡겨주세요.</div>
+							</li>
+						</ul>
+					</div>
+					<!-- //order_con -->					
+					<div class="order_item">
+						<ul class="item_list">
+							<li>
+								<div class="item">
+									<div class="order_img">
+										<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+									</div>
+									<div class="order_name">
+										<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+										<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+									</div>
+									<div class="order_price">
+										<p class="price">상품가격 <span>21,254,000</span>원 / </p>
+										<p class="quantity">수량 <span>1</span>개</p>
+									</div>
+								</div>
+								<!-- //item -->
+							</li>
+							<li>
+								<div class="item">
+									<div class="order_img">
+										<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+									</div>
+									<div class="order_name">
+										<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+										<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+									</div>
+									<div class="order_price">
+										<p class="price">상품가격 <span>21,254,000</span>원 / </p>
+										<p class="quantity">수량 <span>1</span>개</p>
+									</div>
+								</div>
+								<!-- //item -->
+							</li>
+						</ul>
+						<!-- //item_list -->
+						<div class="shipping_coupon">
+							<span class="del_tit t_gray">배송비 쿠폰</span>
+							<span class="check">
+							 	<input id="shipping_coupon_use01" type="checkbox" name="checkbox">
+								<label for="shipping_coupon_use01">사용</label>
+							</span>
+							<div class="shipping_price"><span>2,500</span>원</div>
+						</div>
+						<!-- //shipping_coupon -->
+						<div class="shipping_coupon">
+							<span class="del_tit t_gray">배송비</span>
+							<div class="shipping_price"><span>2,500</span>원</div>
+						</div>
+						<!-- //shipping_coupon -->
+					</div>
+					<!-- //order_item -->
+				</div>
+				<!-- //order_get -->				
+				<div class="order_get">
+					<div class="order_tit">
+						<h3>받는사람 정보2</h3>
+						<div class="shipping_pl">
+							<label for="shipping_num">복수배송지 선택</label>
+							<select name="" id="">
+								<option value="10">10</option>
+								<option value="9">9</option>
+								<option value="8">8</option>
+							</select>
+							<button type="button" class="btn_st3 t_small ">복수배송지 추가</button>
+						</div>
+						<!-- //shipping_pl -->
+					</div>
+					<!-- //order_tit -->					
+					<div class="order_con">
+						<ul class="del_info">
+							<li>
+								<label for="chs_addr" class="del_tit t_lgray">배송지 선택</label>
+								<div name="chs_addr" id="chs_addr" class="user_info">
+									<select name="" id="">
+										<option value="배송지를 선택해주세요.">배송지를 선택해주세요.</option>
+										<option value="배송지01">배송지01</option>
+										<option value="배송지02">배송지02</option>
+									</select>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_lgray star">받으시는 분</span>
+								<div class="input_area">
+									<input type="text">
+								</div>
+							</li>
+							<li class="chunk">
+								<label for="address02" class="del_tit t_lgray star">배송지 주소</label>
+								<div class="user_info">
+									<div class="in_td">
+										<div class="input_area">
+											<input type="text" title="우편번호">
+										</div>
+									</div>
+									<div class="in_td bar"></div>
+									<div class="in_td address">
+										<button type="button" id="address02" class="btn_st3">우편번호</button>
+									</div>
+								</div>
+								<div class="input_area">
+									<input type="text" title="상세 주소 입력">
+								</div>
+								<div class="input_area">
+									<input type="text" title="나머지 주소 입력">
+								</div>
+								<div class="add_addr">
+									<span class="check">
+									 	<input id="add_addr" type="checkbox" name="checkbox" value="">
+										<label for="add_addr">기본 배송지에 추가</label>
+									</span>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_lgray star">휴대폰 번호</span>
+								<div class="num">
+									<div class="in_td">
+										<div class="input_area">
+											<select name="" id="" class="transparent">
+												<option value="010">010</option>
+												<option value="010">010</option>
+												<option value="010">010</option>
+											</select>
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4" title="전화번호 중간자리">
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4" title="전화번호 끝자리">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_lgray">배송시 요구사항</span>
+								<div class="input_area">
+									<input type="text" placeholder="ex) 부재시 경비실에 맡겨주세요.">
+								</div>
+							</li>
+						</ul>
+					</div>
+					<!-- //order_con -->					
+					<div class="order_item">
+						<ul class="item_list">
+							<li>
+								<div class="item">
+									<div class="order_img">
+										<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+									</div>
+									<div class="order_name">
+										<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+										<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+									</div>
+									<div class="order_price">
+										<p class="price">상품가격 <span>21,254,000</span>원 / </p>
+										<p class="quantity">수량 <span>1</span>개</p>
+									</div>
+								</div>
+								<!-- //item -->
+							</li>
+							<li>
+								<div class="item">
+									<div class="order_img">
+										<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+									</div>
+									<div class="order_name">
+										<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+										<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+									</div>
+									<div class="order_price">
+										<p class="price">상품가격 <span>21,254,000</span>원 / </p>
+										<p class="quantity">수량 <span>1</span>개</p>
+									</div>
+								</div>
+								<!-- //item -->
+							</li>
+						</ul>
+						<!-- //item_list -->
+						<div class="shipping_coupon">
+							<span class="del_tit t_gray">배송비 쿠폰</span>
+							<span class="check">
+							 	<input id="shipping_coupon_use02" type="checkbox" name="checkbox">
+								<label for="shipping_coupon_use02">사용</label>
+							</span>
+							<div class="shipping_price"><span>2,500</span>원</div>
+						</div>
+						<!-- //shipping_coupon -->
+					</div>
+					<!-- //order_item -->
+				</div>
+				<!-- //order_get -->				
+				<div class="point_dis">
+					<div class="order_tit">
+						<h3>포인트 할인</h3>
+						<p class="tit_desc">100P 단위로 사용가능</p>
+					</div>
+					<!-- //order_tit -->
+					<div class="point_con">
+						<label for="point" class="del_tit t_gray">포인트</label>
+						<div class="user_info">
+							<div class="in_td">
+								<div class="input_area">
+									<input type="text" placeholder="0" title="포인트">
+								</div>
+							</div>
+							<span>원</span>
+							<div class="in_td point_all">
+								<button type="button" id="point" class="btn_st3">모두사용</button>
+							</div>
+						</div>
+					</div>
+					<!-- //order_tit -->
+					<div class="point_rst">
+						<span class="del_tit t_gray t_gray">사용가능 포인트</span>
+						<p class="point_total"><span>35,000</span>P</p>
+					</div>
+					<!-- //point_rst -->
+				</div>
+				<!-- //point_dis -->
+				<div class="cart_order">
+					<div class="txt_wrap">
+						<div class="order total">
+							<span class="tit">총 상품금액</span>
+							<p class="total_price"><span>21,344,000</span>원</p>  
+						</div>
+						<div class="sale total"> 
+							<span class="tit">총 할인혜택</span>
+							<p class="total_price"><span>-0</span>원</p>  
+						</div>
+						<div class="shipping total"> 
+							<span class="tit">배송비</span>
+							<p class="total_price"><span>2,500</span>원</p>  
+						</div>
+						<div class="sum">
+							<span class="tit">최종 결제금액</span>
+							<p class="total_price"><span>21,346,500</span>원</p>
+						</div>
+						<div class="point_desc">
+							<p>적립예정 포인트 <span>15,680</span>P</p>
+						</div>
+					</div>
+					<!-- //txt_wrap -->
+				</div>
+				<!-- //cart_order -->				
+				<div class="payment_method">
+					<div class="order_tit">
+						<h3>결제 정보</h3>
+					</div>
+					<!-- //order_tit -->
+					<div class="method_tab">
+						<ul>
+							<li><span>신용카드</span></li>
+							<li><span>가상계좌</span></li>
+							<li class="last"><span>무통장 입금</span></li>	
+							<li><span>실시간 계좌이체</span></li>
+							<li><span>휴대폰 결제</span></li>
+						</ul>
+					</div>
+					<!-- //method_tab -->					
+					<div class="method_con_wrap">
+						<div class="method_con">
+							<span class="del_tit t_gray">신용카드 결제금액</span>
+							<p class="method_price"><span>160,000</span>원</p>
+						</div>
+						<!-- //method_con -->						
+						<div class="method_con">
+							<span class="del_tit t_gray">가상계좌 결제금액</span>
+							<p class="method_price"><span>160,000</span>원</p>
+						</div>
+						<!-- //method_con -->						
+						<div class="method_con">
+							<span class="del_tit t_gray">무통장입금 결제금액</span>
+							<p class="method_price"><span>160,000</span>원</p>
+							<ul class="method_detail">
+								<li>고객님만의 고유한 우리은행 전용 계좌가 발급됩니다.</li>
+								<li>가상계좌는 주문 후 7일 이내 입금이 되지 않으면 주문은 자동 취소됩니다.</li>
+							</ul>
+							<div class="user_info_wrap">
+								<label for="order_bank" class="del_tit t_gray">입금은행</label>
+								<div class="user_info">
+									<div class="in_td">
+										<select name="" id="">
+											<option value="우리은행">우리은행</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<!-- //user_info_wrap -->
+							<div class="user_info_wrap">
+								<label for="deposit_name" class="del_tit t_gray">입금자명</label>
+								<div class="user_info">
+									<div class="in_td">
+										<select name="" id="">
+											<option value="홍길동">홍길동</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<!-- //user_info_wrap -->
+							<div class="cashbill">
+								<span class="del_tit t_gray">현금영수증</span>
+								<ul class="cashbill_list">
+								    <li>
+								        <input id="receipt_none" type="radio" name="cashbill" val="발급안함" checked="checked">
+								        <label for="receipt_none"><span><span></span></span>발급안함</label>
+								    </li>
+								    <li>
+								        <input id="receipt_evidence" type="radio" name="cashbill" val="사업자증빙용">
+								        <label for="receipt_evidence"><span><span></span></span>사업자증빙용</label>
+								    </li>
+								    <li class="last">
+								        <input id="receipt_personal" type="radio" name="cashbill" val="개인소득공제">
+								        <label for="receipt_personal"><span><span></span></span>개인소득공제</label>
+								    </li>
+								</ul>
+							</div>
+							<!-- //cashbill -->							
+							<div class="cashbill_con">
+								<div class="receipt_evidence_con">
+									<span class="tit t_gray t_medium">사업자 등록번호</span>
+									<div class="num">
+										<div class="in_td">
+											<div class="input_area">
+												<input type="text" maxlength="4" placeholder="1234" title="사업자 등록번호 앞자리">
+											</div>
+											<div class="in_td dash"></div>
+											<div class="input_area">
+												<input type="text" maxlength="3" placeholder="123" title="사업자 등록번호 중간자리">
+											</div>
+											<div class="in_td dash"></div>
+											<div class="input_area">
+												<input type="text" maxlength="4" placeholder="1234" title="사업자 등록번호 끝자리">
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- //receipt_evidence_con -->
+								<div class="receipt_personal_con">
+									<div class="user_info">
+										<div class="in_td">
+											<select name="" id="">
+												<option value="휴대폰 번호">휴대폰 번호</option>
+											</select>
+										</div>
+									</div>
+									<div class="num">
+										<div class="in_td">
+											<div class="input_area">
+												<input type="text" maxlength="4" placeholder="1234" title="사업자 등록번호 앞자리">
+											</div>
+											<div class="in_td dash"></div>
+											<div class="input_area">
+												<input type="text" maxlength="3" placeholder="123" title="사업자 등록번호 중간자리">
+											</div>
+											<div class="in_td dash"></div>
+											<div class="input_area">
+												<input type="text" maxlength="4" placeholder="1234" title="사업자 등록번호 끝자리">
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- //receipt_personal_con -->
+							</div>
+							<!-- //cashbill_con -->							
+							<div class="cashbill_desc">
+								<ul>
+									<li><a href="#" class="t_lgray t_medium">무통장입금 이용안내</a></li>
+									<li><a href="#" class="t_lgray t_medium">현금영수증 안내</a></li>
+								</ul>
+							</div>
+							<!-- //cashbill_desc -->
+						</div>
+						<!-- //method_con -->						
+						<div class="method_con">
+							<span class="del_tit t_gray">에스크로 결제금액</span>
+							<p class="method_price"><span>160,000</span>원</p>
+						</div>
+						<!-- //method_con -->						
+						<div class="method_con">
+							<span class="del_tit t_gray">실시간 계좌이체 결제금액</span>
+							<p class="method_price"><span>160,000</span>원</p>
+							<div class="cashbill_desc">
+								<ul>
+									<li><a href="#" class="t_lgray t_medium">실시간 계좌이체 안내</a></li>
+								</ul>
+							</div>
+							<!-- //cashbill_desc -->
+						</div>
+						<!-- //method_con -->						
+						<div class="method_con">
+							<span class="del_tit t_gray">휴대폰 결제금액</span>
+							<p class="method_price"><span>160,000</span>원</p>
+							<ul class="method_detail">
+								<li>휴대폰 결제 한도가 30만원에서 50만원으로 변경되었습니다.</li>
+								<li>단, 결제한도는 통신사별 회원등급에 따라 적용됩니다.</li>
+							</ul>
+						</div>
+						<!-- //method_con -->
+					</div>
+					<!-- //method_con_wrap -->					
+				</div>
+				<!-- //payment_method -->				
+				<div class="agree_wrap">
+					<div class="check">
+					 	<input id="agree_check" type="checkbox" name="checkbox">
+						<label for="agree_check">주문 상품의 상품명, 상품가격, 배송정보를 확인하였으며, 구매에 동의 하시겠습니까?</label>
+					</div>
+					<div class="agree_con">
+						<p class="tit t_medium t_black">개인정보 제3자 제공 및 수집/이용동의</p>
+						<div class="desc"><p class="t_medium t_gray">개인정보 제3자 제공 및 수집/이용</p><a href="javascript:;" class="open_btn t_medium t_gray"><span class="txt">펼쳐보기</span><span class="arr"></span></a></div>
+						<div class="agree_box">
+							<ul>
+								<li>개인정보를 제공받는 자 : 세일즈온</li>
+								<li>개인정보를 제공받는 자의 개인정보 이용 목적 : 주문상품의 배송, 고객상담 의 불만처리</li>
+								<li>제공하는 개인정보의 항목 : 성명,주소,연락처(안심번호 적용시 연락처는 제외)</li>
+								<li>개인정보를 제공받는 자의 개인정보 보유 및 이용기간 : 이용목적 달성 시 까지 제공정보는 주문처리 및 배송을 위한 목적으로만 사용됩니다.</li>
+								<li>고객님께서는 동의를 거부하실 수 있으며, 거부하실 경우 거래가 제한되며 고객님의 정보는 판매자에게 제공되지 않습니다.</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- //agree_wrap -->				
+				<div class="order_btn_wrap">
+					<button type="button" class="btn_st1 b_gray">돌아가기</button>
+					<button type="submit" class="btn_st1 b_pink">결제하기</button>
+				</div>
+				<!-- //order_btn_wrap -->				
+			</div>
+			<!-- //order_wrap -->
+		</div>
+		<!-- 내용 : e -->		
+	</div>
+	<!-- //#container -->
+	<!-- container : e -->	
+	<!-- footer : s -->
+	<? include "../include/footer.html" ?>
+	<!-- footer : e -->	
+</div>
+<!-- //#wrap -->
+
+</body>
+</html>

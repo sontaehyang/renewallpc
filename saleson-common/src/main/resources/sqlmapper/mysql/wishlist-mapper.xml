@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.wishlist.WishlistMapper">
+	
+	<resultMap id="WishlistResult" type="saleson.shop.wishlist.domain.Wishlist">
+		<id property="wishlistId" column="WISHLIST_ID" />
+		<result property="wishlistGroupId" column="WISHLIST_GROUP_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemOption" column="ITEM_OPTION" />
+		<result property="itemOptionGroupName" column="ITEM_OPTION_GROUP_NAME" />
+		<result property="itemOptionName" column="ITEM_OPTION_NAME" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<resultMap id="WishlistAndItemResult" type="saleson.shop.wishlist.domain.Wishlist" extends="WishlistResult">
+		<association property="item" resultMap="saleson.shop.item.ItemMapper.ItemResult" />
+	</resultMap>
+
+
+	<select id="getWishlistList" parameterType="saleson.shop.wishlist.support.WishlistParam" resultMap="WishlistResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+				WISHLIST_ID, 
+				WISHLIST_GROUP_ID, 
+				ITEM_ID, 
+				ITEM_OPTION, 
+				ITEM_OPTION_GROUP_NAME,
+				ITEM_OPTION_NAME,
+				CREATED_DATE
+			FROM OP_WISHLIST 
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+
+	<select id="getWishlistById" parameterType="Integer" resultMap="WishlistResult" >
+		SELECT 
+			WISHLIST_ID, 
+			WISHLIST_GROUP_ID, 
+			ITEM_ID, 
+			ITEM_OPTION, 
+			ITEM_OPTION_GROUP_NAME,
+			ITEM_OPTION_NAME,
+			CREATED_DATE
+		FROM OP_WISHLIST 
+ 		WHERE WISHLIST_ID = #{value}
+	</select>
+
+
+	<!-- 해당 관련상품 그룹에 동일한 상품이 있는 가? -->
+	<select id="getWishlistDuplicateCount" parameterType="saleson.shop.wishlist.domain.Wishlist" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_WISHLIST
+		WHERE 
+			USER_ID = #{userId}
+			AND ITEM_ID = #{itemId}
+	</select>
+	
+	
+	<select id="getWishlistDuplicate" parameterType="saleson.shop.wishlist.domain.Wishlist" resultMap="WishlistResult">
+		SELECT 
+			WISHLIST_ID, 
+			WISHLIST_GROUP_ID, 
+			ITEM_ID, 
+			ITEM_OPTION, 
+			ITEM_OPTION_GROUP_NAME,
+			ITEM_OPTION_NAME,
+			CREATED_DATE
+		FROM OP_WISHLIST
+		WHERE 
+			USER_ID = #{userId}
+			AND ITEM_ID = #{itemId}
+	</select>
+
+	<insert id="insertWishlist" parameterType="saleson.shop.wishlist.domain.Wishlist">
+		INSERT INTO OP_WISHLIST (WISHLIST_ID, WISHLIST_GROUP_ID, ITEM_ID, ITEM_OPTION, ITEM_OPTION_GROUP_NAME, ITEM_OPTION_NAME,USER_ID, CREATED_DATE)
+		VALUES (#{wishlistId}, #{wishlistGroupId}, #{itemId}, #{itemOption}, #{itemOptionGroupName}, #{itemOptionName}, #{userId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+
+
+	<update id="updateWishlist" parameterType="saleson.shop.wishlist.domain.Wishlist">
+		UPDATE OP_WISHLIST SET
+			WISHLIST_GROUP_ID = #{wishlistGroupId}, 
+			ITEM_ID = #{itemId}, 
+			ITEM_OPTION = #{itemOption},
+			ITEM_OPTION_GROUP_NAME = #{itemOptionGroupName},
+			ITEM_OPTION_NAME = #{itemOptionName}
+		WHERE WISHLIST_ID = #{wishlistId}
+	</update>
+
+
+	
+	<delete id="deleteWishlistById" parameterType="Integer" >
+		DELETE FROM OP_WISHLIST 
+		WHERE WISHLIST_ID = #{value}
+	</delete>
+
+	
+	<sql id="selectWishlistWhere">
+		<where> 
+			AND W.USER_ID = #{userId}
+			<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+			AND I.FRONT_DISPLAY_FLAG = 'Y'
+			AND S.STATUS_CODE = '2'
+		</where>
+	</sql>
+	
+	<!-- 관심상품 카운트 -->
+	<select id="getWishlistCountByUserId" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_WISHLIST  W
+			INNER JOIN OP_ITEM I ON W.ITEM_ID = I.ITEM_ID
+					INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+					<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+		<where> 
+			AND W.USER_ID = #{userId}
+			AND I.DATA_STATUS_CODE = '1'
+			AND I.DISPLAY_FLAG = 'Y'
+			AND I.ITEM_DATA_TYPE = '1'
+			AND I.ITEM_TYPE = '1'
+			AND I.FRONT_DISPLAY_FLAG = 'Y'
+			AND S.STATUS_CODE = '2'
+		</where>
+	</select>
+	
+	<!-- 관심상품 조건 추가로 인해 분기 2017-06-02 yulsun.yoo -->
+	<select id="getWishlistCountByParam" parameterType="saleson.shop.wishlist.support.WishlistParam" resultType="Integer">
+		SELECT COUNT(*)
+		FROM OP_WISHLIST  W
+			INNER JOIN OP_ITEM I ON W.ITEM_ID = I.ITEM_ID
+					INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+					<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+		<where> 
+			AND W.USER_ID = #{userId}
+			<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+			AND I.FRONT_DISPLAY_FLAG = 'Y'
+			AND S.STATUS_CODE = '2'
+		</where>
+	</select>
+
+	<select id="getWishlistListByUserId" parameterType="saleson.shop.wishlist.support.WishlistParam" resultMap="WishlistAndItemResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+				W.WISHLIST_ID, 
+				W.WISHLIST_GROUP_ID, 
+				<include refid="saleson.shop.item.ItemMapper.defaultItemColumns" />, 
+				<include refid="saleson.shop.item.ItemMapper.defaultStockColumns" />,
+				W.CREATED_DATE
+			FROM OP_WISHLIST  W
+				INNER JOIN OP_ITEM I ON W.ITEM_ID = I.ITEM_ID
+						INNER JOIN OP_SELLER S ON I.SELLER_ID = S.SELLER_ID
+						<include refid="saleson.shop.item.ItemMapper.itemOptionSoldOutFlagFromQuery" />
+			<where> 
+				AND W.USER_ID = #{userId}
+				<include refid="saleson.shop.item.ItemMapper.defaultOnSaleWhereQuery" />
+				AND I.FRONT_DISPLAY_FLAG = 'Y'
+				AND S.STATUS_CODE = '2'			
+			</where>
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+
+			<!-- 	//LCH-WishlistMobile  - 위시리스트  선택삭제  <수정>-->
+	
+	
+	<delete id="deleteWishlistByListParam" parameterType="saleson.shop.wishlist.support.WishlistListParam">
+		DELETE FROM OP_WISHLIST
+		
+		WHERE WISHLIST_ID IN 
+		<foreach item="wishlistId" index="index" collection="id" open="(" separator="," close=")"> 
+			#{wishlistId}
+		</foreach>
+		
+		AND USER_ID = #{userId}
+	</delete>
+	
+	
+	
+		<!-- 	//LCH-WishlistMobile  - 위시리스트  전체삭제  <추가>-->
+	
+	
+	<delete id="alldeleteWishlistByListParam" parameterType="saleson.shop.wishlist.support.WishlistListParam">
+		DELETE FROM OP_WISHLIST
+		
+		
+		WHERE USER_ID = #{userId}
+		
+			<!--  
+			WHERE WISHLIST_ID IN 
+			<foreach item="wishlistId" index="index" collection="id" open="(" separator="," close=")"> 
+				#{wishlistId}
+			</foreach> -->
+	</delete>
+	
+	
+</mapper>

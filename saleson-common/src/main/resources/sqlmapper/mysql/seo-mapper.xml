@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.seo.SeoMapper">
+	<resultMap id="SeoResult" type="saleson.shop.seo.domain.Seo">
+		<result property="seoId" column="SEO_ID" />
+		<result property="seoUrl" column="SEO_URL" />
+		<result property="title" column="TITLE" />
+		<result property="keywords" column="KEYWORDS" />
+		<result property="description" column="DESCRIPTION" />
+		<result property="headerContents1" column="HEADER_CONTENTS1" />
+		<result property="headerContents2" column="HEADER_CONTENTS2" />
+		<result property="headerContents3" column="HEADER_CONTENTS3" />
+		<result property="themawordTitle" column="THEMAWORD_TITLE" />
+		<result property="themawordDescription" column="THEMAWORD_DESCRIPTION" />
+		<result property="indexFlag" column="INDEX_FLAG" />
+		<result property="createdUserId" column="CREATED_USER_ID" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+
+	<select id="getSeoCountBySeoUrl" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM OP_SEO
+		WHERE SEO_URL = #{value}
+	</select>
+	
+	<select id="getSeoById" parameterType="Integer" resultMap="SeoResult">
+		SELECT *  
+		FROM OP_SEO 
+		WHERE SEO_ID = #{value}
+	</select>
+	
+	
+	<sql id="sqlSeoListWhere">
+		<where>
+			<if test='(where != null and where != "") and (query != null and query != "")'>
+				<if test='where == "URL"'>
+					AND SEO_URL LIKE CONCAT('%', #{query}, '%')		
+				</if>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="getSeoCount" parameterType="SearchParam" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM OP_SEO
+		<include refid="sqlSeoListWhere" />
+	</select>
+	
+	<select id="getSeoList" parameterType="SearchParam" resultMap="SeoResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+				SEO_ID, 
+				SEO_URL, 
+				TITLE, 
+				KEYWORDS, 
+				DESCRIPTION, 
+				HEADER_CONTENTS1, 
+				HEADER_CONTENTS2, 
+				HEADER_CONTENTS3, 
+				THEMAWORD_TITLE, 
+				THEMAWORD_DESCRIPTION, 
+				INDEX_FLAG, 
+				CREATED_USER_ID, 
+				CREATED_DATE
+			FROM OP_SEO 
+			<include refid="sqlSeoListWhere" />
+			ORDER BY SEO_ID DESC
+			
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+
+	<insert id="insertSeo" parameterType="saleson.shop.seo.domain.Seo">
+		INSERT INTO OP_SEO (SEO_ID, SEO_URL, TITLE, KEYWORDS, DESCRIPTION, HEADER_CONTENTS1, HEADER_CONTENTS2, HEADER_CONTENTS3, THEMAWORD_TITLE, THEMAWORD_DESCRIPTION, INDEX_FLAG, CREATED_USER_ID, CREATED_DATE)
+		VALUES (#{seoId}, #{seoUrl}, #{title}, #{keywords}, #{description}, #{headerContents1}, #{headerContents2}, #{headerContents3}, #{themawordTitle}, #{themawordDescription}, #{indexFlag}, #{createdUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+
+	<update id="updateSeo" parameterType="saleson.shop.seo.domain.Seo">
+		UPDATE OP_SEO SET
+			
+			TITLE = #{title}, 
+			KEYWORDS = #{keywords}, 
+			DESCRIPTION = #{description}, 
+			HEADER_CONTENTS1 = #{headerContents1}, 
+			HEADER_CONTENTS2 = #{headerContents2}, 
+			HEADER_CONTENTS3 = #{headerContents3}, 
+			THEMAWORD_TITLE = #{themawordTitle}, 
+			THEMAWORD_DESCRIPTION = #{themawordDescription}, 
+			INDEX_FLAG = #{indexFlag}
+		WHERE SEO_ID = #{seoId}
+	</update>
+
+
+	<delete id="deleteSeoById" parameterType="Integer">
+		DELETE FROM OP_SEO 
+		WHERE SEO_ID = #{value}
+	</delete>
+
+</mapper>

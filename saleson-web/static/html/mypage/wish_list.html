@@ -1,0 +1,173 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?> 
+<div class="inner wish_wrap">
+	<div class="location_area">
+		<?include "../include/all_menu.html"?>
+		<div class="breadcrumbs">
+			<a href="#" class="home"><span class="hide">home</span></a>
+			<a href="#">마이페이지</a> 
+			<a href="#">쇼핑내역</a> 
+			<span>주문/배송조회</span> 
+		</div>
+	</div><!-- // location_area E --> 
+	
+	<!-- 주문/배송조회 정보 박스 -->	
+	<div class="order_info">
+		<div class="member_level">
+			<p class="level"><img src="/content/images/icon/icon_gold.png" alt="등급"></p>
+			<p class="name"><span>홍길동</span>님</p>
+			<p class="rating">일반등급</p>
+			<a href="#" class="btn_benefit" title="혜택보기">혜택보기</a>
+		</div><!--// member_level E-->
+		<div class="info_list">
+			<ul class="info">
+				<li>
+					<p class="item point">포인트</p>
+					<p class="remainder"><span>9,999,999</span>P</p>
+				</li>
+				<li>
+					<p class="item coupons">쿠폰 <a href="#" class="btn_down_confirm">다운가능쿠폰</a></p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item delivery">배송비 쿠폰</p>
+					<p class="remainder"><span>999</span>개</p>
+				</li>
+				<li>
+					<p class="item cash">캐시</p>
+					<p class="remainder"><span>9,999,999</span>원</p>
+				</li>
+			</ul>
+			<div class="condition_wrap">
+				<div class="order_condition">
+					<span class="title">주문/배송</span>
+					<ol>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step01.gif" alt="order"></span>
+							<p>주문접수 <span><a href="#">30</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"> </li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step02.gif" alt="order"></span>
+							<p>결제완료  <span><a href="#">10</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step03.gif" alt="order"></span>
+							<p>상품준비중 <span><a href="#">0</a>건</span></p>  
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step04.gif" alt="order"></span>
+							<p>배송중 <span><a href="#" class="ing">1</a>건</span></p> 
+						</li>
+						<li class="btn_order_next"></li>
+						<li>
+							<span  class="icon"><img src="/content/images/icon/icon_oreder_step05.gif" alt="order"></span>
+							<p>배송완료 <span><a href="#">5</a>건</span></p> 
+						</li>
+					</ol>
+				</div> <!--// order_condition E--> 
+				<div class="order_refund">
+					<p class="title">취소/교환/반품</p>
+					<ul>
+						<li>취소 <span><a href="#">0</a>건</span></li>  
+						<li>교환 <span><a href="#" class="ing">2</a>건</span></li>  
+						<li>반품 <span><a href="#">0</a>건</span></li>  
+					</ul>
+				</div><!--// order_refund E--> 
+			</div><!--// condition_wrap E--> 
+		</div><!--// info_list E-->
+	</div><!--// order_info E-->
+	
+	<div id="contents" class="pt0"> 
+		<?include "../include/mypage_lnb.html"?>
+		<div class="contents_inner"> 	 
+			<h2>관심상품</h2>		 
+			<div class="guide_box mt20">
+			 	<ul class="order_guide02">
+			 		<li>상품 상세페이지에서 관심상품으로 등록하신 상품들의 리스트입니다.</li>
+					<li>자주 구입하시는 상품이나 구입하신 상품을 등록해두면 다음번에 쉽게 주문하실 수 있습니다.</li> 
+				</ul>	
+			</div><!--// guide_box E-->
+			<div class="list_info clear">
+				<p>관심상품 총 <span>100</span>건</p>
+			</div><!--// list_info E-->
+			<div class="board_wrap">  
+				<table cellpadding="0" cellspacing="0" class="order_list">
+					<caption>상품정보</caption>
+					<colgroup>
+						<col style="width:44px;">
+						<col style="width:auto;">
+						<col style="width:108px;"> 
+						<col style="width:100px;"> 
+						<col style="width:108px;"> 
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col"><input type="checkbox"></th>
+							<th scope="col">상품명/옵션정보</th>
+							<th scope="col">상품금액</th>  
+							<th scope="col">재고</th>
+							<th scope="col">삭제</th>  
+						</tr>
+					</thead>
+					<tbody> 	 
+						<tr>
+							<td><input type="checkbox"></td>
+							<td class="tleft">
+								<a href="#a;" class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>										
+									</div>
+								</a><!--// item_info E-->
+							</td>
+							<td class="price_down">
+								<span class="down">60,000원</span>
+								<span>57,000원</span>
+							</td>
+							<td>재고 없음</td>
+							<td><button type="button" class="btn btn-s btn-default" title="삭제">삭제</button></td>
+						</tr> 	 
+						<tr>
+							<td><input type="checkbox"></td>
+							<td class="tleft">
+								<a href="#a;" class="item_info">
+									<p class="photo"><img src="/content/images/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>										
+									</div>
+								</a><!--// item_info E-->
+							</td>
+							<td class="price_down"><span class="down">60,000원</span>57,000원</td>
+							<td>재고 없음</td>
+							<td><button type="button" class="btn btn-s btn-default" title="삭제">삭제</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div><!--// board_wrap E-->
+			<div class="btn_wrap pt10">
+				<button type="button" class="btn btn-m btn-default btn_left">선택삭제</button>
+			</div><!--// btn_wrap E-->
+			<p class="pagination">
+				<a href="#" class="first"><img src="/content/images/btn/btn_first.gif" alt="처음페이지"></a>
+				<a href="#" class="first"><img src="/content/images/btn/btn_prev.gif" alt="이전페이지"></a>
+				<a href="#">1</a>
+				<a href="#">2</a>
+				<a href="#">3</a>
+				<a href="#">4</a>
+				<a href="#">5</a>
+				<strong>6</strong>
+				<a href="#">7</a>
+				<a href="#">8</a>
+				<a href="#">9</a>
+				<a href="#">10</a>
+				<a href="#" class="next"><img src="/content/images/btn/btn_next.gif" alt="다음페이지"></a>
+				<a href="#" class="last"><img src="/content/images/btn/btn_last.gif" alt="마지막페이지"></a>
+			</p><!--// pagination E-->
+		</div>	
+	</div><!-- // contents E -->	
+</div><!--// inner E-->	  
+<?include "../include/footer.html"?>	 
+ 

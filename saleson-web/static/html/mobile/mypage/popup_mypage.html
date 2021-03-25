@@ -1,0 +1,882 @@
+<? include "../include/headHtml.html" ?>
+<body>
+	<div id="wrap" class="popup_wrap">
+		<!-- container : s -->
+		<div id="container">
+			<!-- 내용 : s -->
+			<!-- 배송지 추가 : s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>배송지 추가</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->
+				<div class="pop_con">
+					<div class="bd_table">
+						<ul class="del_info">
+							<li>
+								<span class="del_tit t_gray">배송지 이름</span>
+								<div class="input_area">
+									<input type="text">
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray star">받으시는 분</span>
+								<div class="input_area">
+									<input type="text">
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray star">휴대폰</span>
+								<div class="num">
+									<div class="in_td">
+										<div class="input_area">
+											<select name="" id="">
+												<option value="010">010</option>
+												<option value="010">010</option>
+												<option value="010">010</option>
+											</select>
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">전화번호</span>
+								<div class="num">
+									<div class="in_td">
+										<div class="input_area">
+											<select name="" id="">
+												<option value="010">010</option>
+												<option value="010">010</option>
+												<option value="010">010</option>
+											</select>
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="chunk">
+								<label class="del_tit t_gray star">주소</label>
+								<div class="user_info">
+									<div class="in_td">
+										<input type="text">
+									</div>
+									<div class="in_td address">
+										<button type="button" class="btn_st3">우편번호</button>
+									</div>
+								</div>
+								<div class="input_area">
+									<input type="text">
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray star">상세주소</span>
+								<input type="text">
+							</li>
+						</ul>
+					</div>
+					<!-- //bd_table -->
+					<div class="set">
+						<span class="tit">기본배송지 설정</span>
+						<label class="btn_st5">
+							<input type="checkbox">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<!-- //set -->
+					<div class="btn_wrap">
+						<button type="button" class="btn_st1 reset">취소</button>
+						<button type="button" class="btn_st1 decision">등록</button>
+					</div>
+					<!-- //btn_wrap -->
+				</div>
+				<!-- //pop_con -->
+			</div>
+			<!-- 배송지 추가 : e -->
+			<!-- 배송지 수정 : s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>배송지 수정</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->
+				<div class="pop_con">
+					<div class="bd_table">
+						<ul class="del_info">
+							<li>
+								<span class="del_tit t_gray">배송지 이름</span>
+								<div class="input_area">
+									<input type="text" value="회사">
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray star">받으시는 분</span>
+								<div class="input_area">
+									<input type="text" value="김길동" readonly>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray star">휴대폰</span>
+								<div class="input_area">
+									<input type="text" value="01012345678">
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">전화번호</span>
+								<div class="input_area">
+									<input type="text" value="0212345678">
+								</div>
+
+							</li>
+							<li class="chunk">
+								<label class="del_tit t_gray star">주소</label>
+								<div class="user_info">
+									<div class="in_td">
+										<input type="text" value="08381">
+									</div>
+									<div class="in_td address">
+										<button type="button" class="btn_st3">우편번호</button>
+									</div>
+								</div>
+								<div class="input_area">
+									<input type="text" value="서울시 구로구 디지털로27길 24">
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray star">상세주소</span>
+								<input type="text" value="벽산디지털밸리 1차 405호">
+							</li>
+						</ul>
+					</div>
+					<!-- //bd_table -->
+					<div class="set">
+						<span class="tit">기본배송지 설정</span>
+						<label class="btn_st5">
+							<input type="checkbox">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<!-- //set -->
+					<div class="btn_wrap">
+						<button type="button" class="btn_st1 reset">취소</button>
+						<button type="button" class="btn_st1 decision">수정</button>
+					</div>
+					<!-- //btn_wrap -->
+				</div>
+				<!-- //pop_con -->
+			</div>
+			<!-- 배송지 수정 : e -->
+			<!-- 취소 신청 : s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>취소 신청</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->
+				<div class="pop_con pop_conA">
+					<h4>취소신청 상품 정보</h4>
+					<div class="cart_list bd mg0">
+						<ul class="list del_info">
+							<li>
+								<span class="check">
+									<input id="checkbox2" type="checkbox" name="checkbox" value="">
+									<label for="checkbox2">선택</label>
+								</span>
+								<div class="inner">
+									<div class="con_top pd0 cf">
+										<div class="cart_img">
+											<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+										</div>
+										<div class="cart_name">
+											<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+											<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+										</div>
+									</div>
+									<div class="con_bot">
+										<div class="cacul fr">
+											<a href="#" class="minus">감소</a>
+											<input type="text" class="num" value="1">
+											<a href="#" class="plus">증가</a>
+											<button type="button" class="btn_st3">변경</button>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="check">
+									<input id="checkbox3" type="checkbox" name="checkbox" value="">
+									<label for="checkbox3">선택</label>
+								</span>
+								<div class="inner">
+									<div class="con_top pd0 cf">
+										<div class="cart_img">
+											<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+										</div>
+										<div class="cart_name">
+											<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+											<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+										</div>
+									</div>
+									<div class="con_bot">
+										<div class="cacul fr">
+											<a href="#" class="minus">감소</a>
+											<input type="text" class="num" value="1">
+											<a href="#" class="plus">증가</a>
+											<button type="button" class="btn_st3">변경</button>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<!-- //cart_list -->
+
+					<div class="single_input bd_table">
+						<span class="del_tit t_gray">취소사유</span>
+						<div class="select_area">
+							<select name="" id="" class="cancel_reason">
+								<option value="상품이 잘못 배송됨">상품이 잘못 배송됨</option>
+								<option value="구매의사 취소">구매의사 취소</option>
+								<option value="상품파손">상품파손</option>
+								<option value="기타">기타</option>
+							</select>
+						</div>
+						<div class="text_area etc_area">
+							<textarea name="" id="" cols="30" rows="6" placeholder="내용을 입력해주세요"></textarea>
+						</div>
+					</div>
+					<!-- //single_input -->
+
+					<div class="desc_list">
+						<ul>
+							<li>위 상품은 배송을 준비한다는 판매자의 연락이 있었으며, 현재 상품이 발송되었을 수도 있습니다.</li>
+							<li>이미 상품이 발송된 것으로 확인되면 취소 요청이 자동으로 철회되며, 이 경우 상품을 받으신 후 반품신청을 하실 수 있습니다.</li>
+						</ul>
+					</div>
+					<!-- //desc_list -->
+
+					<h4>환불 정보 입력</h4>
+					<div class="bd_table pd0">
+						<ul class="del_info ">
+							<li>
+								<span class="del_tit t_gray">환불방법</span>
+								<div class="radio_area">
+									<input id="cancel_agree" type="radio" name="cancel_agree" checked="checked">
+									<label for="cancel_agree"><span><span></span></span>신청하기</label>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">환불총액</span>
+								<div class="price_wrap">
+									<p class="total_price"><span>28,000</span>원</p>
+									<p class="detail_price">상품금액[<span>25,000</span>원] + 배송비[<span>3,000</span>원]</p>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">은행명</span>
+								<div class="input_area">
+									<select name="" id="">
+										<option value="산업은행">산업은행</option>
+										<option value="산업은행">산업은행</option>
+										<option value="산업은행">산업은행</option>
+									</select>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">예금주</span>
+								<input type="text">
+							</li>
+							<li>
+								<span class="del_tit t_gray">계좌번호</span>
+								<input type="text">
+							</li>
+						</ul>
+					</div>
+					<!-- //bd_table -->
+
+					<div class="desc_list">
+						<ul>
+							<li><span>부분취소가 불가능한 결제방식(카드)</span>의 경우 위에 입력하신 계좌로 취소금액을 입금해드립니다.</li>
+							<li>통장입금의 경우 <span>택배가 판매자에게 도착 후 2~3일 이후</span> 환불 신청하신 계좌로 입금됩니다.</li>
+						</ul>
+					</div>
+					<!-- //desc_list -->
+
+					<div class="btn_wrap">
+						<button type="button" class="btn_st1 reset">취소</button>
+						<button type="submit" class="btn_st1 decision">신청</button>
+					</div>
+					<!-- //btn_wrap -->			
+				</div>
+				<!-- //pop_con -->
+			</div>
+			<!-- 취소 신청 : e -->
+			<!-- 교환 신청 : s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>교환 신청</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->
+				<div class="pop_con pop_conA">
+					<h4>교환신청 상품 정보</h4>
+					<div class="cart_list bd mg0">
+						<ul class="list pd0 del_info">
+							<li>
+								<div class="inner02">
+									<div class="con_top pd0 cf">
+										<div class="cart_img">
+											<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+										</div>
+										<div class="cart_name">
+											<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+											<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+										</div>
+									</div>
+									<div class="con_bot">
+										<div class="cacul fr">
+											<a href="#" class="minus">감소</a>
+											<input type="text" class="num" value="1">
+											<a href="#" class="plus">증가</a>
+											<button type="button" class="btn_st3">변경</button>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<!-- //cart_list -->				
+					<h4 class="mt10">반송 송장 정보</h4>
+					<div class="bd_table pd0">
+						<ul class="del_info ">
+							<li>
+								<span class="del_tit t_gray">화수요청구분</span>
+								<ul class="radio_list">
+									<li>
+										<input id="request01" type="radio" name="request" checked="checked">
+										<label for="request01"><span><span></span></span>지정택배사 이용하기</label>
+									</li>
+									<li>
+										<input id="request02" type="radio" name="request">
+										<label for="request02"><span><span></span></span>직접발송</label>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<span class="del_tit t_gray">택배사</span>
+								<div class="input_area">
+									<select name="" id="">
+										<option value="CJ 대한통운">CJ 대한통운</option>
+										<option value="CJ 대한통운">CJ 대한통운</option>
+										<option value="CJ 대한통운">CJ 대한통운</option>
+									</select>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">반송송장번호</span>
+								<input type="text">
+							</li>
+						</ul>
+					</div>
+					<!-- //bd_table -->					
+					<h4 class="mt10">반송지 정보</h4>
+					<div class="bd_table">
+						<ul class="del_info">
+							<li>
+								<span class="del_tit t_gray">배송지 이름</span>
+								<span class="del_detail">홍길동</span>
+							</li>
+							<li>
+								<span class="del_tit t_gray star">휴대폰</span>
+								<div class="num">
+									<div class="in_td">
+										<div class="input_area">
+											<select name="" id="">
+												<option value="010">010</option>
+												<option value="010">010</option>
+												<option value="010">010</option>
+											</select>
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">전화번호</span>
+								<div class="num">
+									<div class="in_td">
+										<div class="input_area">
+											<select name="" id="">
+												<option value="010">010</option>
+												<option value="010">010</option>
+												<option value="010">010</option>
+											</select>
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="chunk">
+								<label class="del_tit t_gray star">배송지 주소</label>
+								<div class="user_info">
+									<div class="in_td">
+										<input type="text">
+									</div>
+									<div class="in_td address">
+										<button type="button" class="btn_st3 static">우편번호</button>
+									</div>
+								</div>
+								<div class="input_area">
+									<input type="text">
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray star">상세주소</span>
+								<input type="text">
+							</li>
+						</ul>
+					</div>
+					<!-- //bd_table -->				
+					<div class="btn_wrap">
+						<button type="button" class="btn_st1 reset">취소</button>
+						<button type="submit" class="btn_st1 decision">신청</button>
+					</div>
+					<!-- //btn_wrap -->			
+				</div>
+				<!-- //pop_con -->
+			</div>
+			<!-- 교환 신청 : e -->
+			<!-- 반품 신청 : s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>반품 신청</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->
+				<div class="pop_con pop_conA">
+					<h4>반품신청 상품 정보</h4>
+					<div class="cart_list bd mg0">
+						<ul class="list pd0 del_info">
+							<li>
+								<div class="inner02">
+									<div class="con_top pd0 cf">
+										<div class="cart_img">
+											<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+										</div>
+										<div class="cart_name">
+											<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+											<p class="detail">01 첫눈의 화사함 파우더 팩트 15g 2호 추가구성품 리필2호(+10,000원)</p>
+										</div>
+									</div>
+									<div class="con_bot">
+										<div class="cacul fr">
+											<a href="#" class="minus">감소</a>
+											<input type="text" class="num" value="1">
+											<a href="#" class="plus">증가</a>
+											<button type="button" class="btn_st3">변경</button>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<!-- //cart_list -->
+					<div class="single_input bd_table">
+						<span class="del_tit t_gray">반품사유</span>
+						<div class="select_area">
+							<select name="" id="" class="cancel_reason">
+								<option value="상품이 잘못 배송됨">상품이 잘못 배송됨</option>
+								<option value="구매의사 취소">구매의사 취소</option>
+								<option value="상품파손">상품파손</option>
+								<option value="기타">기타</option>
+							</select>
+						</div>
+						<div class="text_area etc_area">
+							<textarea name="" id="" cols="30" rows="6" placeholder="내용을 입력해주세요"></textarea>
+						</div>
+					</div>
+					<!-- //single_input -->				
+					<h4 class="mt10">반송 송장 정보</h4>
+					<div class="bd_table pd0">
+						<ul class="del_info">
+							<li>
+								<span class="del_tit t_gray">화수요청구분</span>
+								<ul class="radio_list">
+									<li>
+										<input id="request01" type="radio" name="request" checked="checked">
+										<label for="request01"><span><span></span></span>지정택배사 이용하기</label>
+									</li>
+									<li>
+										<input id="request02" type="radio" name="request">
+										<label for="request02"><span><span></span></span>직접발송</label>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<span class="del_tit t_gray">택배사</span>
+								<div class="input_area">
+									<select name="" id="">
+										<option value="CJ 대한통운">CJ 대한통운</option>
+										<option value="CJ 대한통운">CJ 대한통운</option>
+										<option value="CJ 대한통운">CJ 대한통운</option>
+									</select>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">반송송장번호</span>
+								<input type="text">
+							</li>
+						</ul>
+					</div>
+					<!-- //bd_table -->				
+					<h4 class="mt10">반송지 정보</h4>
+					<div class="bd_table pd0">
+						<ul class="del_info">
+							<li>
+								<span class="del_tit t_gray">배송지 이름</span>
+								<span class="del_detail">홍길동</span>
+							</li>
+							<li>
+								<span class="del_tit t_gray star">휴대폰</span>
+								<div class="num">
+									<div class="in_td">
+										<div class="input_area">
+											<select name="" id="">
+												<option value="010">010</option>
+												<option value="010">010</option>
+												<option value="010">010</option>
+											</select>
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">전화번호</span>
+								<div class="num">
+									<div class="in_td">
+										<div class="input_area">
+											<select name="" id="">
+												<option value="010">010</option>
+												<option value="010">010</option>
+												<option value="010">010</option>
+											</select>
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+										<div class="in_td dash"></div>
+										<div class="input_area">
+											<input type="text" maxlength="4">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="chunk">
+								<label class="del_tit t_gray star">배송지 주소</label>
+								<div class="user_info">
+									<div class="in_td">
+										<input type="text">
+									</div>
+									<div class="in_td address">
+										<button type="button" class="btn_st3 static">우편번호</button>
+									</div>
+								</div>
+								<div class="input_area">
+									<input type="text">
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray star">상세주소</span>
+								<input type="text">
+							</li>
+						</ul>
+					</div>
+					<!-- //bd_table -->				
+					<h4 class="mt10">환불 정보 입력</h4>
+					<div class="bd_table pd0">
+						<ul class="del_info ">
+							<li>
+								<span class="del_tit t_gray">은행명</span>
+								<div class="input_area">
+									<select name="" id="">
+										<option value="산업은행">산업은행</option>
+										<option value="산업은행">산업은행</option>
+										<option value="산업은행">산업은행</option>
+									</select>
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">반송송장번호</span>
+								<input type="text">
+							</li>
+							<li>
+								<span class="del_tit t_gray">반송송장번호</span>
+								<input type="text">
+							</li>
+						</ul>
+					</div>
+					<!-- //bd_table -->				
+					<div class="desc_list">
+						<ul>
+							<li><span>부분취소가 불가능한 결제방식(카드)</span>의 경우 위에 입력하신 계좌로 취소금액을 입금해드립니다.</li>
+							<li>통장입금의 경우 <span>택배가 판매자에게 도착 후 2~3일 이후</span> 환불 신청하신 계좌로 입금됩니다.</li>
+						</ul>
+					</div>
+					<!-- //desc_list -->				
+					<div class="btn_wrap">
+						<button type="button" class="btn_st1 reset">취소</button>
+						<button type="submit" class="btn_st1 decision">신청</button>
+					</div>
+					<!-- //btn_wrap -->			
+				</div>
+				<!-- //pop_con -->
+			</div>
+			<!-- 반품 신청 : e -->
+			<!-- 이용후기 작성 : s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>이용후기 작성</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->
+				<div class="pop_con">
+					<div class="write_top">
+						<div class="inner">
+							<div class="write_img">
+								<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+							</div>
+							<div class="write_name">
+								<p>[브랜드명]피부미백/피부유연/생기있고 화사한 피부 블루베리 유기농 피부미백/피부유연/생기있고 화사한 피부 블루베리 유기농</p>
+							</div>
+						</div>
+					</div>
+					<!-- //write_top -->				
+					<div class="bd_table">
+						<ul class="del_info">
+							<li>
+								<span class="del_tit t_gray">평가</span>
+								<input type="hidden" class="rating_point" title="별점정보">
+								<div class="review_rating_info">
+									<a href="#;" class="star_box">
+										<span class="star"><img src="/content/mobile/images/common/star_rating_off.gif" alt="1"></span>
+										<span class="star"><img src="/content/mobile/images/common/star_rating_off.gif" alt="2"></span>
+										<span class="star"><img src="/content/mobile/images/common/star_rating_off.gif" alt="3"></span>
+										<span class="star"><img src="/content/mobile/images/common/star_rating_off.gif" alt="4"></span>
+										<span class="star"><img src="/content/mobile/images/common/star_rating_off.gif" alt="5"></span>
+									</a>
+								</div> 
+							</li>
+							<li>
+								<span class="del_tit t_gray">제목</span>
+								<div class="input_area">
+									<input type="text" placeholder="제목을 입력해주세요">
+								</div>
+							</li>
+							<li>
+								<span class="del_tit t_gray">내용</span>
+								<div class="text_area">
+									<textarea name="" id="" cols="30" rows="6" placeholder="내용을 입력해주세요"></textarea>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<!-- //bd_table -->			
+					<div class="btn_wrap">
+						<button type="button" class="btn_st1 reset">취소</button>
+						<button type="submit" class="btn_st1 decision">등록</button>
+					</div>
+					<!-- //btn_wrap -->				
+				</div>
+				<!-- //pop_con -->
+			</div>
+			<!-- 이용후기 작성 : e -->
+			<!-- 회원 등급 안내 : s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>회원 등급 안내</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<div class="mypage_wrap">
+					<div class="grade_detail">
+						<h4>등급 및 금액/혜택 안내</h4>
+						<ul class="detail_list">
+							<li>
+								<span class="ico"><img src="/content/mobile/images/common/grade_ico_normal.png" alt="일반등급"></span>
+								<p class="grade_name">일반</p>
+								<p class="grade_txt t_medium t_gray">구매금액 30만원 미만 (등업일로부터 6개월 기준)</p>
+								<ul>
+									<li>적립금 없음</li>
+									<li>할인쿠폰 없음</li>
+									<li>무료배송쿠폰 없음</li>
+								</ul>
+							</li>
+							<li>
+								<span class="ico"><img src="/content/mobile/images/common/grade_ico_good.png" alt="우수등급"></span>
+								<p class="grade_name">우수</p>
+								<p class="grade_txt t_medium t_gray">구매금액 30만원 미만 (등업일로부터 6개월 기준)</p>
+								<ul>
+									<li>적립금 없음</li>
+									<li>할인쿠폰 없음</li>
+									<li>무료배송쿠폰 없음</li>
+								</ul>
+							</li>
+							<li>
+								<span class="ico"><img src="/content/mobile/images/common/grade_ico_premium.png" alt="프리미엄등급"></span>
+								<p class="grade_name">프리미엄</p>
+								<p class="grade_txt t_medium t_gray">구매금액 30만원 미만 (등업일로부터 6개월 기준)</p>
+								<ul>
+									<li>적립금 없음</li>
+									<li>할인쿠폰 없음</li>
+									<li>무료배송쿠폰 없음</li>
+								</ul>
+							</li>
+							<li>
+								<span class="ico"><img src="/content/mobile/images/common/grade_ico_vip.png" alt="VIP등급"></span>
+								<p class="grade_name">VIP</p>
+								<p class="grade_txt t_medium t_gray">구매금액 30만원 미만 (등업일로부터 6개월 기준)</p>
+								<ul>
+									<li>적립금 없음</li>
+									<li>할인쿠폰 없음</li>
+									<li>무료배송쿠폰 없음</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<!-- //grade_detail -->
+					<div class="grade_desc">
+						<span class="t_medium t_gray">※ 회원 등급 선정 기준 및 혜택 이용안내</span>
+						<ul>
+							<li>회원등급은 등급산정일로부터 6개월간의 구매확정 된 구매실적을 기준으로 산정 됩니다.</li>
+							<li>구매실적은 쿠폰, 포인트 등을 할인적용한 후의 최종 결제 금액을 기준으로 산정 됩니다.</li>
+							<li>적립은 '상품 적립', '등급 별 추가 적립'순으로 적립됩니다.</li>
+							<li>쿠폰은 등급 변경 후 매월 1일 00:00 시에 적립됩니다.</li>
+							<li>회원 등급, 쿠폰, 적립금 이용에 대한 궁금하신 사항은 고객센터의 FAQ를 참고 해 주시기 바랍니다.</li>
+						</ul>
+					</div>
+					<!-- //grade_desc -->
+				</div>
+				<!-- //mypage_wrap -->
+			</div>
+			<!-- 회원 등급 안내 : e -->
+			<!-- 쿠폰적용가능대상 : s -->
+			<div class="con">
+				<div class="pop_title">
+					<h3>쿠폰 적용가능 대상</h3>
+					<a href="#" class="history_back">뒤로가기</a>
+				</div>
+				<!-- //pop_title -->
+				<div class="pop_con bg">
+					<div class="pop_coupon">
+						<div class="inner">
+							<div class="img">
+								<p class="coupon coupon_blue"><span>5</span>%</p>
+							</div>
+							<div class="txt">
+								<p class="coupon_desc">1만원 이상 상품 사용가능</p>
+								<p class="coupon_name">세일즈온 5% 더블쿠폰</p>
+								<p class="coupon_date">2016.02.09~2016.12.31</p>
+							</div>
+						</div>
+					</div>
+					<!-- //pop_coupon -->				
+					<div class="pop_coupon_list">
+						<div class="title">
+							<p>쿠폰으로 구입 가능한 제품(<span>10</span>)</p>
+						</div>
+						<div class="active_con">
+							<ul>
+								<li>
+									<div class="item">
+										<div class="order_img">
+											<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+										</div>
+										<div class="order_name">
+											<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+										</div>
+										<div class="order_price">
+											<p><span>21,254,000</span>원</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item">
+										<div class="order_img">
+											<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+										</div>
+										<div class="order_name">
+											<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+										</div>
+										<div class="order_price">
+											<p><span>21,254,000</span>원</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item">
+										<div class="order_img">
+											<img src="/content/mobile/images/common/cart_noimage.jpg" alt="제품이미지">
+										</div>
+										<div class="order_name">
+											<p class="tit">[자연의벗] 첫 눈의 화사함 파우더 팩트 2호 (베이지,15g)</p>
+										</div>
+										<div class="order_price">
+											<p><span>21,254,000</span>원</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<div class="load_more"><button type="button" class="btn_st2"><span>더보기</span></button></div>
+						</div>
+						<!-- //active_con -->					
+					</div>
+					<!-- //pop_coupon_list -->				
+				</div>
+				<!-- //pop_con -->
+			</div>
+			<!-- 쿠폰적용가능대상 : e -->			
+			<!-- 내용 : e -->		
+		</div>
+		<!-- //#container -->
+		<!-- container : e -->	
+	</div>
+	<!-- //#wrap -->
+</body>
+</html>

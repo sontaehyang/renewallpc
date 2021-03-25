@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.code.CodeMapper">
+
+	<resultMap id="CodeTypeResult" type="saleson.shop.code.domain.CodeType">
+		<result property="codeType" column="CODE_TYPE" />
+		<result property="codeTypeCnt" column="CODE_TYPE_CNT" />
+	</resultMap>
+	
+	<resultMap id="CodeResult" type="saleson.shop.code.domain.Code">
+		<result property="codeType" column="CODE_TYPE" />
+		<result property="language" column="LANGUAGE" />
+		<result property="id" column="ID" />
+		<result property="label" column="LABEL" />
+		<result property="detail" column="DETAIL" />
+		<result property="ordering" column="ORDERING" />
+		<result property="useYn" column="USE_YN" />
+		<result property="upId" column="UP_ID" />
+		<result property="codeValue" column="CODE_VALUE" />
+		<result property="extentionCode" column="EXTENSION_CODE" />
+		<result property="mappingCode" column="MAPPING_CODE" />
+	</resultMap>
+	
+	<sql id="sqlCodeWhere">
+		<where>
+			AND LANGUAGE = 'ko'
+			<if test='codeType != null and codeType != ""'>
+				 AND CODE_TYPE = #{codeType}
+			</if>
+			<if test='query != null or query != ""'>
+				<choose>
+					<when test='where == "ID"'>
+						AND ID LIKE CONCAT('%', #{query}, '%')
+					</when>
+					<when test='where == "LABEL"'>
+						AND LABEL LIKE CONCAT('%', #{query}, '%')
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+
+	<select id="getCodeTypeCount" parameterType="saleson.shop.code.support.CodeParam" resultType="Integer">
+		SELECT COUNT(CODE_TYPE)
+		FROM (
+			SELECT CODE_TYPE
+				FROM OP_COMMON_CODE
+			WHERE
+				LANGUAGE = 'ko' AND USE_YN = 'Y'
+			GROUP BY CODE_TYPE, LANGUAGE, USE_YN
+		) T
+	</select>
+	
+	<select id="getCodeCount" parameterType="saleson.shop.code.support.CodeParam" resultType="Integer">
+		SELECT COUNT(LANGUAGE)
+		FROM OP_COMMON_CODE
+		<include refid="sqlCodeWhere" />
+	</select>
+	
+	<select id="getCodeTypeList" parameterType="saleson.shop.code.support.CodeParam" resultMap="CodeTypeResult">
+		SELECT CODE_TYPE, COUNT(CODE_TYPE) AS CODE_TYPE_CNT
+		FROM OP_COMMON_CODE
+		WHERE
+			LANGUAGE = 'ko' AND USE_YN = 'Y'
+		GROUP BY CODE_TYPE
+		ORDER BY 1
+	</select>
+
+	<select id="getCodeList" parameterType="saleson.shop.code.support.CodeParam" resultMap="CodeResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT CODE_TYPE, LANGUAGE, ID, LABEL, DETAIL, ORDERING, USE_YN,
+				 UP_ID, CODE_VALUE, EXTENSION_CODE, MAPPING_CODE
+			FROM OP_COMMON_CODE
+			<include refid="sqlCodeWhere" />
+			ORDER BY ORDERING
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getCodeById" parameterType="java.util.HashMap" resultMap="CodeResult">
+		SELECT CODE_TYPE, LANGUAGE, ID, LABEL, DETAIL, ORDERING, USE_YN,
+		 	UP_ID, CODE_VALUE, EXTENSION_CODE, MAPPING_CODE
+		FROM OP_COMMON_CODE
+		WHERE CODE_TYPE = #{codeType}
+			AND LANGUAGE = 'ko' AND ID = #{id}
+	</select>
+
+	<insert id="insertCode" parameterType="saleson.shop.code.domain.Code">
+		INSERT INTO OP_COMMON_CODE (
+			CODE_TYPE, LANGUAGE, ID,
+			LABEL, DETAIL, ORDERING,
+			USE_YN,
+			UP_ID, CODE_VALUE, EXTENSION_CODE, MAPPING_CODE
+		)
+		VALUES (
+			#{codeType}, #{language}, #{id},
+			#{label}, #{detail}, #{ordering},
+			#{useYn},
+			#{upId}, #{codeValue}, #{extentionCode}, #{mappingCode}
+		)
+	</insert>
+
+	<update id="updateCode" parameterType="saleson.shop.code.domain.Code">
+		UPDATE OP_COMMON_CODE
+		SET CODE_TYPE      = #{codeType},
+			LANGUAGE       = #{language},
+			ID             = #{id},
+			LABEL          = #{label},
+			DETAIL         = #{detail},
+			ORDERING       = #{ordering},
+			USE_YN         = #{useYn},
+			UP_ID          = #{upId},
+			CODE_VALUE     = #{codeValue},
+			EXTENSION_CODE = #{extentionCode},
+			MAPPING_CODE   = #{mappingCode}
+		WHERE CODE_TYPE = #{whereCodeType}
+			AND LANGUAGE = 'ko'
+			AND ID = #{whereId}
+	</update>
+	
+	<delete id="deleteCode" parameterType="saleson.shop.code.domain.Code">
+		DELETE FROM OP_COMMON_CODE
+		WHERE
+			CODE_TYPE = #{codeType}
+			AND LANGUAGE = 'ko'
+			AND ID = #{id}
+	</delete>
+	
+	<select id="getCodeChildList" parameterType="saleson.shop.code.support.CodeParam" resultMap="CodeResult">
+
+		SELECT CODE_TYPE, LANGUAGE, ID, LABEL, DETAIL, ORDERING, USE_YN,
+			 UP_ID, CODE_VALUE, EXTENSION_CODE, MAPPING_CODE
+		FROM OP_COMMON_CODE
+		WHERE CODE_TYPE = #{codeType}
+		<if test='upId != null and upId != ""'>
+			 AND UP_ID = #{upId}
+		</if>
+		<choose>
+			<when test='useYn != null and useYn != ""'>
+				AND USE_YN = #{useYn}
+			</when>
+			<otherwise>
+				AND USE_YN = 'Y'
+			</otherwise>
+		</choose>
+		<choose>
+			<when test='language != null and language != ""'>
+				AND LANGUAGE = #{language}
+			</when>
+			<otherwise>
+				AND LANGUAGE = 'ko'
+			</otherwise>
+		</choose>
+		ORDER BY ORDERING
+	</select>
+</mapper>
+
+
+
+

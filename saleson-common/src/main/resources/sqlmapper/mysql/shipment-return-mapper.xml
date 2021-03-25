@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.shipmentreturn.ShipmentReturnMapper">
+	<resultMap id="ShipmentReturnResult" type="saleson.shop.shipmentreturn.domain.ShipmentReturn">
+		<result property="shipmentReturnId" column="SHIPMENT_RETURN_ID" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="addressName" column="ADDRESS_NAME" />
+		<result property="name" column="NAME" />
+		<result property="telephoneNumber" column="TELEPHONE_NUMBER" />
+		<result property="zipcode" column="ZIPCODE" />
+		<result property="address" column="ADDRESS" />
+		<result property="addressDetail" column="ADDRESS_DETAIL" />
+		<result property="defaultAddressFlag" column="DEFAULT_ADDRESS_FLAG" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<!-- 판매자 교환/반송지 목록 조회. -->
+	<select id="getShipmentReturnListBySellerId" parameterType="int" resultMap="ShipmentReturnResult" >
+		SELECT *
+		FROM OP_SHIPMENT_RETURN 
+		<if test='value > 0'>
+			WHERE SELLER_ID = #{value}
+		</if>
+		ORDER BY SHIPMENT_RETURN_ID DESC
+	</select>
+
+
+	<!-- 교환/반송지 조회. -->
+	<select id="getShipmentReturnById" parameterType="int" resultMap="ShipmentReturnResult" >
+		SELECT *
+		FROM OP_SHIPMENT_RETURN 
+		WHERE SHIPMENT_RETURN_ID = #{value}
+	</select>
+	
+	<!-- 교환/반송지 조회.(Param) -->
+	<select id="getShipmentReturnByParam" parameterType="saleson.shop.shipmentreturn.support.ShipmentReturnParam" resultMap="ShipmentReturnResult" >
+		SELECT *
+		FROM OP_SHIPMENT_RETURN 
+		<where>
+			
+			<if test='sellerId > 0'>
+				AND SELLER_ID = #{sellerId}
+			</if>
+			
+			<if test='defaultAddressFlag == "Y" or defaultAddressFlag == "N"'>
+				AND DEFAULT_ADDRESS_FLAG = #{defaultAddressFlag}
+			</if>
+			
+			<choose>
+				<when test="itemId > 0">
+					AND SHIPMENT_RETURN_ID = (
+						 
+						CASE WHEN (SELECT SHIPMENT_RETURN_ID FROM OP_ITEM WHERE ITEM_ID = #{itemId} LIMIT 1) IS NULL THEN
+							#{shipmentReturnId}
+						ELSE 
+							(SELECT SHIPMENT_RETURN_ID FROM OP_ITEM WHERE ITEM_ID = #{itemId} LIMIT 1)
+						END
+					
+					)
+				</when>
+				<otherwise>
+					<if test='shipmentReturnId > 0'>
+						AND SHIPMENT_RETURN_ID = #{shipmentReturnId}
+					</if>
+				</otherwise>
+			</choose>
+		</where>
+		
+		ORDER BY SHIPMENT_RETURN_ID DESC LIMIT 1
+	</select>
+
+
+	<!-- 교환/반송지 등록 -->
+	<insert id="insertShipmentReturn" parameterType="saleson.shop.shipmentreturn.domain.ShipmentReturn">
+		INSERT INTO OP_SHIPMENT_RETURN (SHIPMENT_RETURN_ID, SELLER_ID, ADDRESS_NAME, NAME, TELEPHONE_NUMBER, ZIPCODE, ADDRESS, ADDRESS_DETAIL, DEFAULT_ADDRESS_FLAG, CREATED_DATE)
+		VALUES (#{shipmentReturnId}, #{sellerId}, #{addressName}, #{name}, #{telephoneNumber}, #{zipcode}, #{address}, #{addressDetail}, #{defaultAddressFlag}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+
+	<!-- 교환/반송지 수정 -->
+	<update id="updateShipmentReturn" parameterType="saleson.shop.shipmentreturn.domain.ShipmentReturn">
+		UPDATE OP_SHIPMENT_RETURN SET
+			ADDRESS_NAME = #{addressName}, 
+			NAME = #{name}, 
+			TELEPHONE_NUMBER = #{telephoneNumber}, 
+			ZIPCODE = #{zipcode}, 
+			ADDRESS = #{address}, 
+			ADDRESS_DETAIL = #{addressDetail}, 
+			DEFAULT_ADDRESS_FLAG = #{defaultAddressFlag}
+		WHERE SHIPMENT_RETURN_ID = #{shipmentReturnId}
+	</update>
+
+
+	<!-- 교환/반송지 삭제 -->
+	<delete id="deleteShipmentReturnById" parameterType="int" >
+		DELETE FROM OP_SHIPMENT_RETURN 
+		WHERE SHIPMENT_RETURN_ID = #{value}
+	</delete>
+	
+	
+	<!-- 기본주소 수정 -->
+	<update id="updateDefaultAddressFlag" parameterType="saleson.shop.shipmentreturn.domain.ShipmentReturn">
+		UPDATE OP_SHIPMENT_RETURN SET
+			DEFAULT_ADDRESS_FLAG = 'N'
+		WHERE SHIPMENT_RETURN_ID != #{shipmentReturnId} AND SELLER_ID = #{sellerId}
+	</update>
+	
+	<!-- 기본 교환/반송지 조회 -->
+	<select id="getDefaultShipmentReturn" parameterType="saleson.shop.shipmentreturn.domain.ShipmentReturn" resultMap="ShipmentReturnResult" >
+		SELECT *
+		FROM OP_SHIPMENT_RETURN 
+		WHERE DEFAULT_ADDRESS_FLAG = 'Y' AND SELLER_ID = #{sellerId}
+	</select>
+	
+</mapper>

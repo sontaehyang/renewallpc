@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.api.search.SearchMapper">
+
+	<resultMap id="BestKeywordResult" type="saleson.api.search.domain.BestKeywordInfo">
+		<result property="keyword" column="KEYWORD" />
+		<result property="keywordType" column="KEYWORD_TYPE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="keywordSeperation" column="KEYWORD_SEPERATION" />
+		<result property="weight" column="WEIGHT" />
+	</resultMap>
+
+	<select id="bestKeyword" resultMap="BestKeywordResult">
+		SELECT
+			KEYWORD
+			, KEYWORD_TYPE
+			, CREATED_DATE
+			, KEYWORD_SEPERATION
+			, SUM(WEIGHT) AS WEIGHT
+		FROM OP_KEYWORD
+		WHERE KEYWORD_TYPE = '2'
+			AND CREATED_DATE BETWEEN DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -24 HOUR), "%Y%m%d") AND DATE_FORMAT(NOW(), "%Y%m%d")
+		GROUP BY KEYWORD
+		ORDER BY WEIGHT DESC
+		LIMIT 30
+	</select>
+
+</mapper>

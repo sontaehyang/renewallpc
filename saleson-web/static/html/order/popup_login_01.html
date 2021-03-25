@@ -1,0 +1,97 @@
+<?include "../include/head.html"?>
+		<!-- 본문 -->
+		<!-- 팝업사이즈 550*435-->
+		<div class="popup_wrap" style="width:550px; height:435px;">
+			<h1 class="popup_title">로그인</h1>
+			<div class="popup_contents"> 
+				<div class="login_tab">
+					<ul>
+						<li><a href="#" class="on">회원</a></li>
+						<li><a href="#">비회원</a></li>	
+					</ul>
+				</div><!--//login_tab E-->
+				
+				<!-- 회원 로그인 -->
+				<div class="login_wrap" style="display:block;">
+					<div class="login">
+						<dl>
+							<dt>회원아이디</dt>
+							<dd><input type="text" title="회원아이디"></dd>
+							<dt class="mt10">비밀번호</dt>
+							<dd class="mt10"><input type="password" title="비밀번호"></dd>
+						</dl>
+						<button type="submit" class="btn btn-submit btn-login" title="로그인">로그인</button>
+					</div>
+					<div class="login_check">
+						<span><input type="checkbox" id="id"> <label for="id">아이디 저장</label></span>
+						<span><a href="">아이디 찾기</a></span>
+						<span><a href="">비밀번호 찾기</a></span>
+					</div>
+					<div class="login_bottom">
+						<p>
+							아직도 회원이 아니세요?<br>
+							회원가입을 하시면 더 많은 혜택을 만나보실 수 있습니다.
+						</p>
+						<a href="#" class="btn btn-default btn-join" title="회원가입">회원가입</a>
+					</div>
+				</div><!--//login_wrap E-->
+				
+				
+				<!-- 비회원 로그인-->
+				<div class="login_wrap no_member" style="display:none;">
+					<div class="login">
+						<dl>
+							<dt>주문자명</dt>
+							<dd><input type="text" title="주문자명"></dd>
+							<dt class="mt8">휴대폰번호</dt>
+							<dd class="mt8">
+								<ul class="login_hp">
+									<li><input type="text" title="휴대폰번호" class="hpbox"></li>
+									<li class="connect">-</li>
+									<li><input type="text" title="휴대폰번호" class="hpbox"></li>
+									<li class="connect">-</li>
+									<li><input type="text" title="휴대폰번호" class="hpbox"></li>
+								</ul>
+								<a href="#" class="btn btn-w102 btn-success" title="인증번호 전송">인증번호 전송</a>
+							</dd>
+							<dt class="mt10">인증번호</dt>
+							<dd class="mt10"><input type="text" title="인증번호">
+								<button type="submit" class="btn btn-w102 btn-default" title="확인하기">확인하기</button>
+							</dd>
+						</dl> 
+					</div>
+					<div class="login_bottom">
+						<p>
+							비회원 주문시 입력한 이름과 휴대폰번호로 로그인해 주세요.<br>
+							세일즈온 고객센터 : <span>02-6737-9200 (내선 101)</span>
+						</p> 
+					</div>
+				</div><!--//login_wrap E-->
+				
+				
+				
+				<!-- 비회원 로그인
+				<div class="login_wrap" style="display:block;">
+					<div class="nomember">
+						<p> 비회원으로 구매서비스를 이용하시려면 비회원구매 약관동의하셔야 합니다. </p>
+						<p>	다음 단계로 이동 버튼을 클릭해 주십시오.</p>
+						<p>비회원 주문 시에는 쿠폰할인 및 포인트적립 혜택을 받으실 수 없습니다.  </p>
+						<a href="">다음단계로 이동</a>
+					</div> 
+					<div class="login_bottom">
+						<p>
+							아직도 회원이 아니세요?<br>
+							회원가입을 하시면 더 많은 혜택을 만나보실 수 있습니다.
+						</p>
+						<a href="#" class="login_join">회원가입</a>
+					</div>
+				</div><!--//login_wrap E-->
+				 
+			</div><!--//popup_contents E-->
+			 
+			
+			<a href="#" class="popup_close">창 닫기</a>
+		</div>
+
+ </body>
+</html>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.qna.QnaMapper">
+
+	<resultMap id="QnaResult" type="saleson.shop.qna.domain.Qna">
+		<result property="qnaId" column="QNA_ID" />
+		<result property="qnaGroup" column="QNA_GROUP" />
+		<result property="qnaType" column="QNA_TYPE" />
+		<result property="subject" column="SUBJECT" />
+		<result property="question" column="QUESTION" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="sellerId" column="SELLER_ID" />
+		<result property="sellerName" column="SELLER_NAME" />
+		<result property="email" column="EMAIL" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="answerCount" column="ANSWER_COUNT" />
+		<result property="secretFlag" column="SECRET_FLAG" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="qnaImage" column="QNA_IMAGE" />
+	</resultMap>
+	
+	<resultMap id="QnaAnswerResult" type="saleson.shop.qna.domain.QnaAnswer">	
+		<result property="qnaAnswerId" column="QNA_ANSWER_ID" />
+		<result property="qnaId" column="QNA_ID" />
+		<result property="answer" column="ANSWER" />
+		<result property="userId" column="USER_ID" />
+		<result property="title" column="TITLE" />
+		<result property="sendSmsFlag" column="SEND_SMS_FLAG" />
+		<result property="sendMailFlag" column="SEND_MAIL_FLAG" />
+		<result property="answerDate" column="ANSWER_DATE" />
+		<result property="userNm" column="USER_NM" />
+	</resultMap>
+	
+	<resultMap id="QnaAndAnswerResult" type="saleson.shop.qna.domain.Qna" extends="QnaResult">
+		<result property="displayFlag" column="DISPLAY_FLAG" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="itemImage" column="ITEM_IMAGE" />
+		<result property="itemUserCode" column="ITEM_USER_CODE" />
+		<collection property="qnaAnswer" resultMap="QnaAnswerResult" />
+	</resultMap>
+		
+	
+	
+	
+	<insert id="insertQna" parameterType="saleson.shop.qna.domain.Qna">
+		INSERT INTO OP_QNA (QNA_ID, QNA_GROUP, QNA_TYPE, SUBJECT, QUESTION, USER_ID, USER_NAME, EMAIL, ITEM_ID, SELLER_ID, ORDER_CODE, ANSWER_COUNT, SECRET_FLAG, DISPLAY_FLAG, CREATED_DATE, DATA_STATUS_CODE, QNA_IMAGE)
+		VALUES (#{qnaId}, #{qnaGroup}, #{qnaType}, #{subject}, #{question}, #{userId}, #{userName}, #{email}, #{itemId},  #{sellerId}, #{orderCode}, #{answerCount}, #{secretFlag}, 'Y', DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), '0', #{qnaImage})
+	</insert>
+	
+	<update id="updatesQna" parameterType="saleson.shop.qna.domain.Qna">
+		UPDATE OP_QNA SET
+			QNA_TYPE = #{qnaType}, 
+			SUBJECT = #{subject},
+			DISPLAY_FLAG = "Y"
+		WHERE QNA_ID = #{qnaId}
+	</update>
+	
+	<delete id="deleteQna" parameterType="saleson.shop.qna.domain.Qna">
+		UPDATE OP_QNA
+		SET
+			DATA_STATUS_CODE = '1'
+		WHERE QNA_ID = #{qnaId}
+	</delete>
+	
+	<insert id="insertQnaAnswer" parameterType="saleson.shop.qna.domain.QnaAnswer">
+		INSERT INTO OP_QNA_ANSWER (QNA_ANSWER_ID, QNA_ID, ANSWER, USER_ID, TITLE, SEND_SMS_FLAG, SEND_MAIL_FLAG, ANSWER_DATE, DATA_STATUS_CODE)
+		VALUES (#{qnaAnswerId}, #{qnaId}, #{answer}, #{userId}, #{title}, #{sendSmsFlag}, #{sendMailFlag}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), '0')
+	</insert>
+	
+	<update id="updateQnaAnswer" parameterType="saleson.shop.qna.domain.QnaAnswer" >
+		UPDATE OP_QNA_ANSWER SET
+			ANSWER = #{answer},
+			TITLE = #{title}, 
+			SEND_SMS_FLAG = #{sendSmsFlag},	
+			SEND_MAIL_FLAG = #{sendMailFlag},
+			ANSWER_DATE = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		WHERE 
+			QNA_ANSWER_ID = #{qnaAnswerId}
+	</update>
+	
+	<!-- 문의사항 QNA -->
+	<sql id="whereQna">
+		<where>
+			AND Q.DATA_STATUS_CODE = '0'
+			AND Q.DISPLAY_FLAG = 'Y'
+			
+			<if test='qnaType != null and qnaType != ""'>
+				AND Q.QNA_TYPE = #{qnaType}
+			</if>
+			
+			<if test='itemId > 0'>	
+				AND Q.ITEM_ID = #{itemId}
+			</if>
+			
+			<if test='userId != null and userId != ""'>	
+				AND Q.USER_ID = #{userId}
+			</if>
+			<if test='searchStartDate != null and searchStartDate != ""'>
+				AND Q.CREATED_DATE >= CONCAT(#{searchStartDate}, "000000") 
+			</if>
+			
+			<if test='searchEndDate != null and searchEndDate != ""'>
+				AND Q.CREATED_DATE <![CDATA[<=]]> CONCAT(#{searchEndDate}, "235959") 
+			</if>
+			
+			<if test='sellerId > 0'>	
+				AND Q.SELLER_ID = #{sellerId}
+			</if>
+			
+			<if test="answerCount == 1">
+				AND Q.ANSWER_COUNT > 0
+			</if>
+			<if test="answerCount == 2">
+				AND Q.ANSWER_COUNT = 0
+			</if>
+			
+			<if test='query != null and query != ""'>
+				<choose>
+					<when test='where == "USER_NAME"'>
+						AND Q.USER_NAME LIKE CONCAT('%', #{query} , '%')
+					</when>
+					<when test='where == "EMAIL"'>
+						AND Q.EMAIL LIKE CONCAT('%', #{query} , '%')
+					</when>
+					<when test='where == "SUBJECT"'>
+						AND Q.SUBJECT LIKE CONCAT('%', #{query} ,  '%')					
+					</when>
+					<when test='where == "QUESTION"'>
+						AND Q.QUESTION LIKE CONCAT('%', #{query} , '%')
+					</when>
+					<when test='where == "QNA_GROUP"'>
+						AND Q.QNA_GROUP LIKE CONCAT('%', #{query} , '%')
+					</when>
+				</choose>
+			</if>
+
+			<if test="displayFlag != null and displayFlag != ''">
+				AND Q.DISPLAY_FLAG = #{displayFlag}
+			</if>
+			
+		</where>
+	</sql>
+	
+	<select id="getQnaListByParam" parameterType="saleson.shop.qna.support.QnaParam" resultMap="QnaAndAnswerResult">
+			
+		SELECT
+			Q.*,
+			QA.*,
+			I.ITEM_NAME,
+			I.ITEM_USER_CODE,
+			I.ITEM_IMAGE,
+			S.SELLER_NAME
+		FROM (
+			<include refid="CommonMapper.paginationHeader" />
+				SELECT
+					Q.*
+				FROM OP_QNA Q
+				LEFT JOIN OP_USER U ON Q.USER_ID = U.USER_ID
+				<include refid="whereQna" />
+				ORDER BY CREATED_DATE DESC
+			<include refid="CommonMapper.paginationFooter" />
+		) Q
+		LEFT JOIN OP_QNA_ANSWER QA ON Q.QNA_ID = QA.QNA_ID
+		LEFT JOIN OP_ITEM I ON Q.ITEM_ID = I.ITEM_ID
+		LEFT JOIN OP_SELLER S ON S.SELLER_ID = Q.SELLER_ID
+		<!-- 상품Q&A 상품명으로 검색 2017-04-26 yulsun.yoo -->
+		<where>
+			<if test='query != null and query != ""'>
+				<if test='where == "ITEM_NAME"'>
+					AND I.ITEM_NAME LIKE CONCAT('%', #{query} , '%')
+				</if>
+			</if>
+			<if test='query != null and query != ""'>
+				<if test='where == "SUBJECT"'>
+					AND Q.SUBJECT LIKE CONCAT('%', #{query} , '%')
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="getQnaListCountByParam" parameterType="saleson.shop.qna.support.QnaParam" resultType="int">
+		<!-- SELECT
+			COUNT(*) AS CNT
+		FROM OP_QNA Q
+		INNER JOIN OP_USER U ON Q.USER_ID = U.USER_ID -->
+		SELECT
+			COUNT(*) AS CNT
+		FROM (
+			SELECT
+				Q.*
+			FROM OP_QNA Q
+			LEFT JOIN OP_USER U ON Q.USER_ID = U.USER_ID
+		) Q
+		LEFT JOIN OP_QNA_ANSWER QA ON Q.QNA_ID = QA.QNA_ID
+		LEFT JOIN OP_ITEM I ON Q.ITEM_ID = I.ITEM_ID		
+		<include refid="whereQna" />
+		<!-- 상품Q&A 상품명으로 검색 2017-04-26 yulsun.yoo -->
+		<if test='query != null and query != ""'>
+			<if test='where == "ITEM_NAME"'>
+				AND I.ITEM_NAME LIKE CONCAT('%', #{query} , '%')
+			</if>
+		</if>
+	</select>
+	
+	<select id="getQnaAnswerListByQnaId" parameterType="int" resultMap="QnaAnswerResult">
+		SELECT
+			QA.*
+		FROM OP_QNA_ANSWER QA
+		WHERE QA.QNA_ID = #{qnaId}		
+	</select>
+	
+	<select id="getQnaAnswerByQnaId" parameterType="int" resultMap="QnaAnswerResult">
+		SELECT 
+			B.* , 
+			IFNULL(
+				(SELECT 
+					M.USER_NAME
+				 FROM OP_MANAGER M
+				 WHERE M.USER_ID = B.USER_ID),
+				 (SELECT 
+					S.SELLER_NAME
+				  FROM OP_SELLER S
+				  WHERE S.SELLER_ID = B.USER_ID)
+			) USER_NM
+		FROM OP_QNA_ANSWER B  
+		WHERE B.QNA_ID = #{value}	
+	</select>
+	
+	
+	
+	<select id="getQnaByQnaId" parameterType="int" resultMap="QnaAndAnswerResult">
+		SELECT
+			Q.*,
+			QA.*,
+			I.ITEM_NAME,
+			I.ITEM_USER_CODE
+		FROM (
+			SELECT
+				Q.*
+			FROM OP_QNA Q
+			LEFT JOIN OP_USER U ON Q.USER_ID = U.USER_ID
+			WHERE QNA_ID = #{qnaId}		
+		) Q
+		LEFT JOIN OP_QNA_ANSWER QA ON Q.QNA_ID = QA.QNA_ID
+		LEFT JOIN OP_ITEM I ON Q.ITEM_ID = I.ITEM_ID	
+	</select>
+	
+	<update id="updateQnaAnswerCount" parameterType="int">
+		UPDATE OP_QNA
+		SET ANSWER_COUNT = (SELECT COUNT(*) FROM OP_QNA_ANSWER WHERE QNA_ID = #{qnaId} )
+		WHERE QNA_ID = #{qnaId}		
+	</update>
+	
+</mapper>

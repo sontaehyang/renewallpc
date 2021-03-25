@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.userlevel.UserLevelMapper">
+	
+	<resultMap id="UserLevelResult" type="saleson.shop.userlevel.domain.UserLevel">
+		<result property="levelId" column="LEVEL_ID" />
+		<result property="groupCode" column="GROUP_CODE" />
+		<result property="depth" column="DEPTH" />
+		<result property="levelName" column="LEVEL_NAME" />
+		<result property="fileName" column="FILE_NAME" />
+		
+		<result property="priceStart" column="PRICE_START" />
+		<result property="priceEnd" column="PRICE_END" />
+		
+		<result property="discountRate" column="DISCOUNT_RATE" />
+		<result property="pointRate" column="POINT_RATE" />
+		
+		<result property="shippingCouponCount" column="SHIPPING_COUPON_COUNT" />
+		
+		<result property="retentionPeriod" column="RETENTION_PERIOD" />
+		<result property="referencePeriod" column="REFERENCE_PERIOD" />
+		<result property="exceptReferencePeriod" column="EXCEPT_REFERENCE_PERIOD" />
+		
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="userCount" column="USER_COUNT" />
+	</resultMap>
+	
+	<resultMap id="UserLevelLogResult" type="saleson.shop.userlevel.domain.UserLevelLog">
+		<result property="userId" column="USER_ID" />
+		<result property="levelId" column="LEVEL_ID" />
+		<result property="groupCode" column="GROUP_CODE" />
+		<result property="levelName" column="LEVEL_NAME" />
+		
+		<result property="adminUserName" column="ADMIN_USER_NAME" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<sql id="defaultUserLevelWhere">
+		<where>
+			
+			<if test="groupCode != null and groupCode != ''">
+				AND UL.GROUP_CODE = #{groupCode}
+			</if>
+			
+			<if test="levelId != null and levelId != ''">
+				AND UL.LEVEL_ID = #{levelId}
+			</if>
+			
+			<if test="levelName != null and levelName != ''">
+				AND UL.LEVEL_NAME = TRIM(#{levelName})
+			</if>
+			
+		</where>
+	</sql>
+	
+	<select id="getUserLevelListForGiftShippingCoupon" resultMap="UserLevelResult">
+		SELECT * FROM OP_USER_LEVEL 
+		WHERE SHIPPING_COUPON_COUNT > 0
+	</select>
+	
+	<select id="getUserLevelCount" parameterType="saleson.shop.userlevel.support.UserLevelSearchParam" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM OP_USER_LEVEL UL
+		<include refid="defaultUserLevelWhere" />
+	</select>
+	
+	<select id="getUserLevelList" parameterType="saleson.shop.userlevel.support.UserLevelSearchParam" resultMap="UserLevelResult" >
+        SELECT
+            UL.*,
+            (CASE WHEN U.USER_COUNT IS NULL THEN 0 ELSE U.USER_COUNT END) AS USER_COUNT
+        FROM OP_USER_LEVEL UL
+            LEFT JOIN(
+                SELECT
+                    UD.LEVEL_ID,
+                    COUNT(*) USER_COUNT
+                FROM OP_USER_DETAIL UD
+                    INNER JOIN OP_USER U ON UD.USER_ID = U.USER_ID AND  U.STATUS_CODE = '9'
+                WHERE UD.LEVEL_ID > 0
+                    <if test="groupCode != null and groupCode != ''">
+                        AND UD.GROUP_CODE = #{groupCode}
+                    </if>
+                GROUP BY UD.LEVEL_ID
+            )U ON UL.LEVEL_ID = U.LEVEL_ID
+        <include refid="defaultUserLevelWhere" />
+        ORDER BY UL.GROUP_CODE, UL.DEPTH ASC, UL.PRICE_END ASC
+
+<!--
+        SELECT UL.*, COUNT(U.USER_ID) AS USER_COUNT
+		FROM OP_USER_LEVEL UL
+			LEFT JOIN OP_USER_DETAIL UD ON UL.LEVEL_ID = UD.LEVEL_ID
+			LEFT JOIN OP_USER U ON UD.USER_ID = U.USER_ID AND U.STATUS_CODE = '9'
+			LEFT JOIN OP_USER_ROLE UR ON U.USER_ID = UR.USER_ID AND UR.AUTHORITY LIKE CONCAT('%', 'ROLE_USER', '%')
+		<include refid="defaultUserLevelWhere" />
+		GROUP BY UL.LEVEL_ID
+		ORDER BY UL.DEPTH ASC
+        -->
+	</select>
+	
+	<select id="getUserLevelListByGroupCode" parameterType="String" resultMap="UserLevelResult" >
+		SELECT UL.*
+		FROM 
+			OP_USER_LEVEL UL
+		WHERE 
+			UL.GROUP_CODE = #{groupCode}
+			
+		ORDER BY UL.DEPTH ASC
+	</select>
+	
+	<select id="getUserLevelDetail" parameterType="saleson.shop.userlevel.support.UserLevelSearchParam" resultMap="UserLevelResult" >
+		SELECT
+            UL.*,
+            (
+                SELECT COUNT(*)
+                FROM OP_USER_DETAIL UD
+                    INNER JOIN OP_USER U ON UD.USER_ID = U.USER_ID AND  U.STATUS_CODE = '9'
+                WHERE UD.LEVEL_ID = UL.LEVEL_ID
+            ) AS USER_COUNT
+        FROM OP_USER_LEVEL UL
+        WHERE UL.LEVEL_ID = #{levelId}
+	</select>
+	
+	<select id="getLevelToBeSettingToUser" parameterType="saleson.shop.userlevel.support.UserLevelSearchParam" resultMap="UserLevelResult">
+		SELECT 
+			T.* 
+		FROM (
+			SELECT
+                UL.GROUP_CODE,
+				UL.LEVEL_ID,
+				UL.LEVEL_NAME,
+				UL.PRICE_START,
+				UL.PRICE_END,
+				UL.DEPTH,
+				UL.RETENTION_PERIOD,
+				(
+					SELECT SUM(REMAINING_AMOUNT) AS TOTAL_AMOUNT 
+					FROM OP_ORDER O 
+						INNER JOIN OP_ORDER_PAYMENT OP 
+						ON O.ORDER_CODE = OP.ORDER_CODE
+					WHERE
+						O.USER_ID = #{userId}
+						AND O.DATA_STATUS_CODE = '1'
+						AND DATE_FORMAT(OP.PAY_DATE, '%Y%m%d') BETWEEN 
+							DATE_FORMAT(DATE_ADD(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -UL.EXCEPT_REFERENCE_PERIOD DAY), '%Y%m%d'), INTERVAL -UL.REFERENCE_PERIOD MONTH), '%Y%m%d')
+							AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -UL.EXCEPT_REFERENCE_PERIOD DAY), '%Y%m%d') 
+				) AS TOTAL_PAY_AMOUNT
+			FROM OP_USER_LEVEL UL
+			<where> 
+				<choose>
+					<when test="groupCode != null and groupCode != ''">
+						UL.GROUP_CODE = (
+							IF ((SELECT DISTINCT GROUP_CODE FROM OP_USER_LEVEL WHERE GROUP_CODE = #{groupCode}) IS NULL, 'default', #{groupCode})
+						)	
+					</when>
+					<otherwise>
+						UL.GROUP_CODE = 'default'
+					</otherwise>
+				</choose>
+			</where>
+		) T 
+		WHERE 
+			(T.PRICE_END > T.TOTAL_PAY_AMOUNT OR T.PRICE_END = -1)
+			AND T.TOTAL_PAY_AMOUNT >= T.PRICE_START
+		ORDER BY T.DEPTH DESC
+		LIMIT 1
+	</select>
+	
+	<insert id="insertUserLevel" parameterType="saleson.shop.userlevel.domain.UserLevel">
+		INSERT INTO OP_USER_LEVEL (LEVEL_ID, GROUP_CODE, DEPTH, LEVEL_NAME, FILE_NAME, PRICE_START, PRICE_END, DISCOUNT_RATE, POINT_RATE, SHIPPING_COUPON_COUNT, RETENTION_PERIOD, REFERENCE_PERIOD, EXCEPT_REFERENCE_PERIOD, CREATED_DATE)
+		VALUES (#{levelId}, #{groupCode}, #{depth}, #{levelName}, #{fileName}, #{priceStart}, #{priceEnd}, #{discountRate}, #{pointRate}, #{shippingCouponCount}, #{retentionPeriod}, #{referencePeriod}, #{exceptReferencePeriod}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<insert id="insertUserLevelLog" parameterType="saleson.shop.userlevel.domain.UserLevelLog">
+		INSERT INTO OP_USER_LEVEL_LOG (USER_ID, GROUP_CODE, LEVEL_ID, LEVEL_NAME, ADMIN_USER_NAME, CREATED_DATE)
+		VALUES (#{userId}, #{groupCode}, #{levelId}, #{levelName}, #{adminUserName}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<update id="updateUserLevel" parameterType="saleson.shop.userlevel.domain.UserLevel">
+		UPDATE OP_USER_LEVEL SET
+			LEVEL_NAME = #{levelName},
+			DEPTH = #{depth}, 
+			PRICE_START = #{priceStart},
+			PRICE_END = #{priceEnd},
+			DISCOUNT_RATE = #{discountRate},
+			POINT_RATE = #{pointRate},
+			SHIPPING_COUPON_COUNT = #{shippingCouponCount},
+			RETENTION_PERIOD = #{retentionPeriod},
+			REFERENCE_PERIOD = #{referencePeriod},
+			EXCEPT_REFERENCE_PERIOD = #{exceptReferencePeriod}
+			<if test="fileName != null and fileName != ''">
+				, FILE_NAME = #{fileName}
+			</if>
+		WHERE LEVEL_ID = #{levelId}
+	</update>
+	
+	<update id="updateUserLevelFileDelete" parameterType="Integer">
+		UPDATE OP_USER_LEVEL SET
+			FILE_NAME = ''
+		WHERE LEVEL_ID = #{levelId}
+	</update>
+	
+	<delete id="deleteUserLevel" parameterType="Integer" >
+		DELETE FROM	OP_USER_LEVEL 
+	 	WHERE LEVEL_ID = #{levelId}
+	</delete>
+	
+	<update id="updateUser" parameterType="saleson.shop.user.domain.UserDetail">
+		UPDATE OP_USER_DETAIL SET
+		    GROUP_CODE = #{groupCode},
+			LEVEL_ID = #{levelId},
+			USER_LEVEL_EXPIRATION_DATE = #{userLevelExpirationDate}
+		WHERE
+			USER_ID = #{userId}
+	</update>
+
+	<select id="getUserLevelById" parameterType="Integer" resultMap="UserLevelResult">
+		SELECT *
+		FROM OP_USER_LEVEL 
+		WHERE LEVEL_ID = #{value}
+	</select>
+
+    <!-- 회원 등급 설정 정보 조회 (등급산정시 사용) -->
+    <select id="getUserLevelsAll" resultMap="UserLevelResult">
+        SELECT *
+        FROM OP_USER_LEVEL
+		ORDER BY GROUP_CODE DESC, DEPTH DESC
+    </select>
+
+</mapper>

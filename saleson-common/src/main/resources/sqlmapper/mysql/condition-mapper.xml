@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.condition.ConditionMapper">
+	<resultMap id="categoryConditionResult" type="saleson.shop.condition.domain.CategoryCondition">
+		<id property="categoryGroupId" column="CATEGORY_GROUP_ID"/>
+		<association property="categoriesGroup" javaType="saleson.shop.condition.domain.CategoriesGroupForCondition">
+			<result property="categoryGroupId" column="CATEGORY_GROUP_ID"/>
+			<result property="name" column="NAME"/>
+			<collection property="categoriesForCondition" resultMap="categoriesResult"/>
+		</association>
+<!-- 		<collection property="conditions" resultMap="conditionDetailResult"/> -->
+	</resultMap>
+	
+	<resultMap id="categoriesResult" type="saleson.shop.condition.domain.CategoriesForCondition">
+		<id property="categoryCode" column="CATEGORY_CODE" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="categoryGroupId" column="CATEGORY_GROUP_ID" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+		<collection property="conditions" resultMap="conditionResult"/>
+	</resultMap>
+	
+	<resultMap id="conditionResult" type="saleson.shop.condition.domain.Condition">
+		<id property="conditionId" column="CONDITION_ID"/>
+		<result property="categoryCode" column="CATEGORY_CODE"/>
+		<result property="conditionTitle" column="CONDITION_TITLE"/>
+		<result property="useYn" column="USE_YN"/>
+		<result property="updatedDate" column="UPDATED_DATE"/>
+		<result property="createdDate" column="CREATED_DATE"/>
+		<collection property="details" resultMap="conditionDetailResult"/>
+	</resultMap>
+	
+	<resultMap id="conditionDetailResult" type="saleson.shop.condition.domain.ConditionDetail">
+		<result property="detailId" column="DETAIL_ID"/>
+		<result property="conditionId" column="CONDITION_ID"/>
+		<result property="detailTitle" column="DETAIL_TITLE"/>
+		<result property="useYn" column="DETAIL_USE_YN"/>
+		<result property="updatedDate" column="DETAIL_UPDATED_DATE"/>
+		<result property="createdDate" column="DETAIL_CREATED_DATE"/>
+	</resultMap>
+	
+	
+	<select id="getCategoryConditionList" resultMap="categoryConditionResult">
+		SELECT 
+			CG.CATEGORY_GROUP_ID
+			, CG.NAME
+			, C.CATEGORY_ID
+			, C.CATEGORY_CODE
+			, C.CATEGORY_NAME
+			, CO.CONDITION_ID
+			, CO.CATEGORY_CODE
+			, CO.CONDITION_TITLE
+			, CO.USE_YN
+			, CO.UPDATED_DATE
+			, CO.CREATED_DATE
+		FROM OP_CATEGORY_GROUP CG
+			INNER JOIN OP_CATEGORY C ON C.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+			LEFT JOIN OP_CONDITION CO ON CO.CATEGORY_CODE = C.CATEGORY_CODE AND CO.USE_YN = 'Y'
+		WHERE C.CATEGORY_FLAG = 'Y' 
+			AND C.CATEGORY_LEVEL = '1'
+		ORDER BY C.CATEGORY_CODE ASC, C.ORDERING ASC
+	</select>
+	
+	<select id="getCategoryInfo" parameterType="saleson.shop.condition.support.ConditionParam" resultMap="categoryConditionResult">
+		SELECT 
+			CG.CATEGORY_GROUP_ID
+			, CG.NAME
+			, C.CATEGORY_ID
+			, C.CATEGORY_CODE
+			, C.CATEGORY_NAME
+		FROM OP_CATEGORY_GROUP CG
+			INNER JOIN OP_CATEGORY C ON C.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+		WHERE C.CATEGORY_FLAG = 'Y' 
+			AND C.CATEGORY_LEVEL = '1'
+		AND C.CATEGORY_CODE = #{categoryCode}
+	</select>
+	
+	<select id="getCategoryCondition" parameterType="saleson.shop.condition.support.ConditionParam" resultMap="categoryConditionResult">
+		SELECT 
+			CG.CATEGORY_GROUP_ID
+			, CG.NAME
+			, C.CATEGORY_ID
+			, C.CATEGORY_CODE
+			, C.CATEGORY_NAME
+			, CO.CONDITION_ID
+			, CO.CATEGORY_CODE
+			, CO.CONDITION_TITLE
+			, CO.USE_YN
+			, CO.UPDATED_DATE
+			, CO.CREATED_DATE
+			, COD.DETAIL_ID
+			, COD.CONDITION_ID
+			, COD.DETAIL_TITLE
+			, COD.USE_YN DETAIL_USE_YN
+			, COD.UPDATED_DATE DETAIL_UPDATED_DATE
+			, COD.CREATED_DATE DETAIL_CREATED_DATE
+		FROM OP_CATEGORY_GROUP CG
+			INNER JOIN OP_CATEGORY C ON C.CATEGORY_GROUP_ID = CG.CATEGORY_GROUP_ID
+			LEFT JOIN OP_CONDITION CO ON CO.CATEGORY_CODE = C.CATEGORY_CODE AND CO.USE_YN = 'Y'
+			LEFT JOIN OP_CONDITION_DETAIL COD ON CO.CONDITION_ID = COD.CONDITION_ID
+			<if test='useYn != "" and useYn != null and useYn != "all"'>
+				AND COD.USE_YN = #{useYn}
+			</if>
+		WHERE C.CATEGORY_FLAG = 'Y' 
+			AND C.CATEGORY_LEVEL = '1'
+			AND CO.CONDITION_ID = #{conditionId}
+			ORDER BY COD.ORDERING ASC
+	</select>
+	
+	<insert id="insertCondition" parameterType="saleson.shop.condition.domain.Condition">
+		INSERT INTO OP_CONDITION (CONDITION_ID, CATEGORY_CODE, CONDITION_TITLE, USE_YN, CREATED_DATE)
+					VALUES (#{conditionId}, #{categoryCode}, #{conditionTitle}, #{useYn}, <include refid="CommonMapper.datetime"/>)
+	</insert>
+	
+	<update id="updateCondition" parameterType="saleson.shop.condition.domain.Condition">
+		UPDATE OP_CONDITION
+			SET 
+				CONDITION_TITLE = #{conditionTitle}
+				, USE_YN = #{useYn}
+				, UPDATED_DATE = <include refid="CommonMapper.datetime"/>
+			WHERE CONDITION_ID = #{conditionId}
+	</update>
+	
+	<insert id="insertConditionDetail" parameterType="saleson.shop.condition.domain.ConditionDetail">
+		INSERT INTO OP_CONDITION_DETAIL (DETAIL_ID, CONDITION_ID, DETAIL_TITLE, USE_YN, ORDERING, CREATED_DATE)
+					VALUES (#{detailId}, #{conditionId}, #{detailTitle}, #{useYn}, #{ordering}, <include refid="CommonMapper.datetime"/>)
+	</insert>
+	
+	<update id="updateConditionDetail" parameterType="saleson.shop.condition.domain.ConditionDetail">
+		UPDATE OP_CONDITION_DETAIL
+			SET 
+				DETAIL_TITLE = #{detailTitle}
+				, USE_YN = #{useYn}
+				, UPDATED_DATE = <include refid="CommonMapper.datetime"/>
+			WHERE DETAIL_ID = #{detailId}
+	</update>
+	
+	<update id="updateDetailOrdering" parameterType="hashMap">
+		UPDATE OP_CONDITION_DETAIL
+			SET ORDERING = 
+	           CASE DETAIL_ID
+				<foreach collection="detailIdArray" item="detailId" index="index">
+	                WHEN #{detailId} THEN #{index+1}
+				</foreach>
+	           END
+	 		WHERE DETAIL_ID IN (#{detailIds})
+	</update>
+	
+	<!-- DETAIL_ID 
+	CONDITION_ID
+	DETAIL_TITLE
+	USE_YN
+	UPDATED_DATE
+	CREATED_DATE -->
+</mapper>

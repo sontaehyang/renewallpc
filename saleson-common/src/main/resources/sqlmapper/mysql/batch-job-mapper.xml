@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.batch.BatchJobMapper">
+
+    <resultMap id="BatchJobResult" type="saleson.batch.domain.BatchJob">
+        <result property="batchJobId" 			    column="BATCH_JOB_ID" />
+        <result property="jobName" 					column="JOB_NAME" />
+        <result property="jobMethod" 				column="JOB_METHOD" />
+        <result property="triggerType" 				column="TRIGGER_TYPE" />
+        <result property="triggerRepeatSeconds" 	column="TRIGGER_REPEAT_SECONDS" />
+        <result property="triggerCronExpression" 	column="TRIGGER_CRON_EXPRESSION" />
+        <result property="batchStatus" 		        column="BATCH_STATUS" />
+        <result property="batchExcuteDate" 	        column="BATCH_EXCUTE_DATE" />
+        <result property="batchApplyFlag" 		    column="BATCH_APPLY_FLAG" />
+    </resultMap>
+
+    <select id="getBatchJobList" parameterType="saleson.batch.support.BatchJobParam" resultMap="BatchJobResult">
+
+        SELECT
+            BATCH_JOB_ID,
+            JOB_NAME,
+            JOB_METHOD,
+            CASE WHEN TRIGGER_TYPE = '1' THEN '심플'
+                WHEN TRIGGER_TYPE = '2' THEN '크론'
+                ELSE '-'
+            END AS TRIGGER_TYPE,
+            TRIGGER_REPEAT_SECONDS,
+            TRIGGER_CRON_EXPRESSION,
+            CASE WHEN BATCH_STATUS = '1' THEN '실행중'
+                WHEN BATCH_STATUS = '2' THEN '정지'
+                ELSE '-'
+            END AS BATCH_STATUS,
+            BATCH_EXCUTE_DATE,
+            CASE WHEN BATCH_APPLY_FLAG = '0' THEN '적용전'
+                WHEN BATCH_APPLY_FLAG = '1' THEN '적용완료'
+                ELSE '-'
+            END AS BATCH_APPLY_FLAG
+        FROM OP_BATCH_JOB
+        <where>
+            <if test='query != null and query != ""'>
+                <choose>
+                    <when test='searchType == "ID"'>
+                        AND JOB_METHOD LIKE CONCAT('%', #{query}, '%')
+                    </when>
+                    <when test='searchType == "LABEL"'>
+                        AND JOB_NAME LIKE CONCAT('%', #{query}, '%')
+                    </when>
+                </choose>
+            </if>
+            <if test='triType != null and triType != ""'>
+                <choose>
+                    <when test='triType == "1"'>
+                        AND TRIGGER_TYPE = #{triType}
+                    </when>
+                    <when test='triType == "2"'>
+                        AND TRIGGER_TYPE = #{triType}
+                    </when>
+                </choose>
+            </if>
+            <if test='batchType != null and batchType != ""'>
+                <choose>
+                    <when test='batchType == "1"'>
+                        AND BATCH_STATUS = #{batchType}
+                    </when>
+                    <when test='batchType == "2"'>
+                        AND BATCH_STATUS = #{batchType}
+                    </when>
+                </choose>
+            </if>
+        </where>
+        ORDER BY ORDERING, BATCH_JOB_ID
+
+    </select>
+
+    <select id="getBatchJobDetailList" parameterType="saleson.batch.domain.BatchJob" resultMap="BatchJobResult">
+
+        SELECT
+            BATCH_JOB_ID,
+            JOB_NAME,
+            JOB_METHOD,
+            TRIGGER_TYPE,
+            TRIGGER_REPEAT_SECONDS,
+            TRIGGER_CRON_EXPRESSION,
+            BATCH_STATUS,
+            BATCH_EXCUTE_DATE,
+            BATCH_APPLY_FLAG
+        FROM OP_BATCH_JOB
+        <where>
+            <if test='batchJobId != null and batchJobId != ""'>
+                BATCH_JOB_ID = #{batchJobId}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateBatchJob" parameterType="hashMap">
+        UPDATE OP_BATCH_JOB SET
+            JOB_NAME 	                    =  #{jobName},
+            JOB_METHOD 			            =  #{jobMethod},
+            TRIGGER_TYPE 			        =  #{triggerType},
+            TRIGGER_REPEAT_SECONDS      =  #{triggerRepeatSeconds},
+            TRIGGER_CRON_EXPRESSION = #{triggerCronExpression},
+            BATCH_STATUS 		        =  #{batchStatus},
+            BATCH_APPLY_FLAG 	        =  '0'
+        WHERE BATCH_JOB_ID = #{batchJobId}
+    </update>
+
+    <delete id="deleteBatchJob" parameterType="String">
+	    DELETE FROM OP_BATCH_JOB
+		WHERE BATCH_JOB_ID = #{batchJobId}
+	</delete>
+
+    <select id="getBatchJobListByParam" parameterType="saleson.batch.support.BatchJobParam" resultMap="BatchJobResult">
+		SELECT *
+		FROM OP_BATCH_JOB
+	</select>
+
+    <insert id="insertBatchJob" parameterType="saleson.batch.domain.BatchJob">
+		INSERT INTO OP_BATCH_JOB (BATCH_JOB_ID, JOB_NAME, JOB_METHOD, TRIGGER_TYPE, TRIGGER_REPEAT_SECONDS, TRIGGER_CRON_EXPRESSION, BATCH_STATUS, BATCH_EXCUTE_DATE, BATCH_APPLY_FLAG)
+		VALUES (#{batchJobId}, #{jobName}, #{jobMethod}, #{triggerType}, #{triggerRepeatSeconds}, #{triggerCronExpression}, #{batchStatus}, '', '0')
+	</insert>
+
+    <update id="updateBatchApplyFlagInBatchJob" parameterType="int">
+		UPDATE OP_BATCH_JOB SET
+			BATCH_APPLY_FLAG = '1'
+		WHERE BATCH_JOB_ID = #{value}
+	</update>
+
+    <update id="updateBatchApplyFlagInitialize">
+		UPDATE OP_BATCH_JOB
+		SET BATCH_APPLY_FLAG = 0
+	</update>
+
+    <insert id="mergeBatchExecution" parameterType="saleson.common.scheduling.domain.BatchExecution">
+		INSERT INTO OP_BATCH_EXECUTION (BATCH_TYPE, EXECUTION_DATE, START_TIME, END_TIME, RESULT, MESSAGE)
+		VALUES (#{batchType}, #{executionDate}, #{startTime}, #{endTime}, #{result}, #{message})
+		ON DUPLICATE KEY
+		UPDATE
+			START_TIME = #{startTime},
+			END_TIME = #{endTime},
+			RESULT = #{result},
+			MESSAGE = #{message}
+	</insert>
+
+</mapper>

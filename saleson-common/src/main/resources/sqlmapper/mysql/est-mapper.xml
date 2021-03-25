@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.mall.est.EstMapper">
+	
+	<select id="getMallOrderCancel" parameterType="saleson.shop.mall.est.domain.Product"
+		resultMap="saleson.shop.mall.MallMapper.MallOrderCancelResult">
+
+		SELECT 
+			MO.MALL_ORDER_ID,
+			MO.ORDER_CODE,
+			MOCA.CLAIM_CODE,
+			MOCA.CLAIM_QUANTITY,
+			MOCA.CLAIM_STATUS,
+			MOCA.CLAIM_APPLY_SUBJECT,
+			MOCA.CANCEL_REASON,
+			MOCA.CANCEL_REASON_TEXT,
+			MOCA.CANCEL_REFUSAL_RESON,
+			MOCA.CANCEL_REFUSAL_RESON_TEXT,
+			MOCA.CANCEL_APPLY_DATE
+		FROM OP_MALL_ORDER MO 
+			LEFT JOIN OP_MALL_ORDER_CANCEL MOCA 
+				ON MO.MALL_ORDER_ID = MOCA.MALL_ORDER_ID AND MOCA.CLAIM_CODE = #{ordPrdCnSeq}
+		<where>
+			MO.MALL_CONFIG_ID = #{mallConfigId}
+			AND MO.ORDER_CODE = #{ordNo}
+			AND MO.ORDER_INDEX = #{ordPrdSeq}
+		</where>
+		
+	</select>
+	
+	<select id="getMallOrderReturn" parameterType="saleson.shop.mall.est.domain.Product"
+		resultMap="saleson.shop.mall.MallMapper.MallOrderReturnResult">
+		
+		SELECT 
+			MO.MALL_ORDER_ID,
+			MO.ORDER_CODE,
+			MORA.CLAIM_CODE,
+			CLAIM_QUANTITY,
+			RT_REASON,
+			RT_REASON_TEXT,
+			RT_COLLECTION_NAME,
+			RT_COLLECTION_TEL_NUMBER,
+			RT_COLLECTION_PHONE_NUMBER,
+			RT_COLLECTION_ZIPCODE,
+			RT_COLLECTION_ZIPCODE_SEQ,
+			RT_COLLECTION_ADDRESS,
+			RT_COLLECTION_ADDRESS_DETAIL,
+			RT_COLLECTION_ADDRESS_TYPE,
+			RT_COLLECTION_ADDRESS_BILNO,
+			RT_SHIPPING_TYPE,
+			RT_SHIPPING_AMOUNT,
+			RT_SHIPPING_PAYMENT_TYPE,
+			RT_SHIPPING_NUMBER,
+			RT_SHIPPING_COMPANY_CODE,
+			RT_APPLY_DATE
+		FROM OP_MALL_ORDER MO 
+		LEFT JOIN OP_MALL_ORDER_RETURN MORA 
+			ON MO.MALL_ORDER_ID = MORA.MALL_ORDER_ID AND MORA.CLAIM_CODE = #{clmReqSeq}
+		<where>
+			MO.MALL_CONFIG_ID = #{mallConfigId}
+			AND MO.ORDER_CODE = #{ordNo}
+			AND MO.ORDER_INDEX = #{ordPrdSeq}
+		</where>
+		
+	</select>
+	
+	<select id="getMallOrderExchange" parameterType="saleson.shop.mall.est.domain.Product"
+		resultMap="saleson.shop.mall.MallMapper.MallOrderExchangeResult">
+		
+		SELECT 
+			MO.MALL_ORDER_ID,
+			MO.ORDER_CODE,
+			MOEA.CLAIM_CODE,
+			CLAIM_QUANTITY,
+			EX_REASON, 
+			EX_REASON_TEXT, 
+			EX_COLLECTION_NAME, 
+			EX_COLLECTION_TEL_NUMBER, 
+			EX_COLLECTION_PHONE_NUMBER, 
+			EX_COLLECTION_ZIPCODE, 
+			EX_COLLECTION_ZIPCODE_SEQ, 
+			EX_COLLECTION_ADDRESS, 
+			EX_COLLECTION_ADDRESS_DETAIL, 
+			EX_COLLECTION_ADDRESS_TYPE, 
+			EX_COLLECTION_ADDRESS_BILNO, 
+			EX_SHIPPING_TYPE, 
+			EX_RECEIVER_NAME, 
+			EX_RECEIVER_TEL_NUMBER, 
+			EX_RECEIVER_PHONE_NUMBER, 
+			EX_RECEIVER_ZIPCODE, 
+			EX_RECEIVER_ZIPCODE_SEQ, 
+			EX_RECEIVER_ADDRESS, 
+			EX_RECEIVER_ADDRESS_DETAIL, 
+			EX_RECEIVER_ADDRESS_TYPE, 
+			EX_RECEIVER_ADDRESS_BILNO, 
+			EX_SHIPPING_AMOUNT, 
+			EX_ADD_SHIPPING_AMOUNT, 
+			EX_SHIPPING_PAYMENT_TYPE, 
+			EX_SHIPPING_NUMBER, 
+			EX_SHIPPING_COMPANY_CODE, 
+			EX_APPLY_DATE, 
+			EX_END_DATE
+		FROM OP_MALL_ORDER MO 
+		LEFT JOIN OP_MALL_ORDER_EXCHANGE MOEA 
+			ON MO.MALL_ORDER_ID = MOEA.MALL_ORDER_ID AND MOEA.CLAIM_CODE = #{clmReqSeq}
+		<where>
+			MO.MALL_CONFIG_ID = #{mallConfigId}
+			AND MO.ORDER_CODE = #{ordNo}
+			AND MO.ORDER_INDEX = #{ordPrdSeq}
+		</where>
+		
+	</select>
+	
+	<select id="getMallOrderCount" resultType="Integer" parameterType="saleson.shop.mall.est.domain.Product">
+		SELECT COUNT(*) FROM OP_MALL_ORDER
+		WHERE
+			MALL_CONFIG_ID = #{mallConfigId}
+			AND ORDER_CODE = #{ordNo}
+			AND ORDER_INDEX = #{ordPrdSeq}
+	</select>
+	
+	<insert id="insertMallOrder" parameterType="saleson.shop.mall.est.domain.Product">
+		INSERT INTO OP_MALL_ORDER (
+			MALL_ORDER_ID,
+			ITEM_ID,
+			MATCHED_OPTIONS,
+			MALL_CONFIG_ID, 
+			MALL_TYPE, 
+			ORDER_ITEM_STATUS,
+			ORDER_ITEM_STATUS_LABEL, 
+			ORDER_CODE, 
+			ORDER_INDEX,
+			SHIPPING_GROUP_CODE, 
+			SHIPPING_GROUP_FLAG, 
+			ADDITION_ITEM_FLAG,
+			PARENT_PRODUCT_CODE,
+			SHIPPING_CODE, 
+			PRODUCT_CODE, 
+			OPTION_CODE, 
+			PRODUCT_NAME, 
+			OPTION_NAME, 
+			SELL_PRICE, 
+			OPTION_AMOUNT,
+			QUANTITY, 
+			SELLER_DISCOUNT_AMOUNT, 
+			SALE_AMOUNT, 
+			PAY_SHIPPING,
+			PAY_SHIPPING_TYPE,
+			ISLAND_PAY_SHIPPING,
+			ISLAND_PAY_SHIPPING_TYPE,
+			MALL_PRODUCT_CODE, 
+			MEMBER_ID, 
+			MEMBER_TYPE,
+			MEMBER_NO, 
+			BUYER_NAME, 
+			BUYER_TELEPHONE_NUMBER, 
+			BUYER_PHONE_NUMBER, 
+			BUYER_ZIPCODE, 
+			BUYER_ADDRESS, 
+			BUYER_ADDRESS_DETAIL, 
+			RECEIVER_NAME, 
+			RECEIVER_TELEPHONE_NUMBER, 
+			RECEIVER_PHONE_NUMBER, 
+			RECEIVER_ZIPCODE, 
+			RECEIVER_ADDRESS, 
+			RECEIVER_ADDRESS_DETAIL, 
+			CONTENT, 
+			PAY_DATE,
+			CREATED_DATE
+		) VALUES (
+			#{mallOrderId},
+			#{itemId},
+			#{matchedOptions},
+			#{mallConfigId}, 
+			#{mallType}, 
+			#{ordPrdStat}, 
+			#{ordPrdStatNm},
+			#{ordNo}, 
+			#{ordPrdSeq},
+			#{bndlDlvSeq}, 
+			#{bndlDlvYN}, 
+			#{addPrdYn},
+			#{addPrdNo},
+			#{dlvNo},
+ 			#{prdNo}, 
+ 			#{prdStckNo}, 
+ 			#{prdNm}, 
+ 			#{slctPrdOptNm}, 
+ 			#{selPrc},
+ 			#{ordOptWonStl},  
+ 			#{ordQty}, 
+ 			#{sellerDscPrc}, 
+ 			#{ordAmt}, 
+ 			#{dlvCst},
+ 			#{dlvCstType},
+ 			#{bmDlvCst},
+ 			#{bmDlvCstType},
+ 			#{sellerPrdCd}, 
+ 			#{memID},
+ 			#{custGrdNm},  
+ 			#{memNo}, 
+ 			#{ordNm}, 
+ 			#{ordTlphnNo}, 
+ 			#{ordPrtblTel}, 
+ 			#{ordMailNo}, 
+ 			#{ordBaseAddr}, 
+ 			#{ordDtlsAddr}, 
+ 			#{rcvrNm}, 
+ 			#{rcvrTlphn}, 
+ 			#{rcvrPrtblNo}, 
+ 			#{rcvrMailNo}, 
+ 			#{rcvrBaseAddr}, 
+ 			#{rcvrDtlsAddr}, 
+ 			#{ordDlvReqCont}, 
+ 			DATE_FORMAT(#{ordStlEndDt},'%Y%m%d%H%i%s'),
+ 			DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+ 		)
+	</insert>
+
+	<insert id="insertMallOrderCancel" parameterType="saleson.shop.mall.est.domain.Product">
+		INSERT INTO OP_MALL_ORDER_CANCEL (
+			MALL_ORDER_ID,
+			CLAIM_CODE,
+			CLAIM_STATUS,
+			CLAIM_QUANTITY,
+			CLAIM_APPLY_SUBJECT,
+			CANCEL_REASON,
+			CANCEL_REASON_TEXT,
+			CANCEL_APPLY_DATE
+		) VALUES (
+			#{mallOrderId},
+			#{ordPrdCnSeq},
+			#{ordCnStatCd},
+			#{ordCnQty},
+			#{ordCnMnbdCd},
+			#{ordCnRsnCd},
+			#{ordCnDtlsRsn},
+			DATE_FORMAT(#{createDt}, '%Y%m%d%H%i%s')
+		)
+	</insert>
+
+	<update id="updateMallOrderCancel" parameterType="saleson.shop.mall.est.domain.Product">
+		UPDATE OP_MALL_ORDER_CANCEL
+		SET
+			CLAIM_CODE = #{ordPrdCnSeq},
+			CLAIM_QUANTITY = #{ordCnQty},
+			CLAIM_STATUS = #{ordCnStatCd},
+			CLAIM_APPLY_SUBJECT = #{ordCnMnbdCd},
+			CANCEL_REASON = #{ordCnRsnCd},
+			CANCEL_REASON_TEXT = #{ordCnDtlsRsn},
+			CANCEL_APPLY_DATE = DATE_FORMAT(#{createDt}, '%Y%m%d%H%i%s')
+		WHERE
+			CLAIM_CODE = #{ordPrdCnSeq}
+			AND MALL_ORDER_ID = #{mallOrderId}
+	</update>
+
+	<insert id="insertMallOrderReturn" parameterType="saleson.shop.mall.est.domain.Product">
+		INSERT INTO OP_MALL_ORDER_RETURN (
+			MALL_ORDER_ID, 
+			CLAIM_CODE,
+			CLAIM_STATUS, 
+			CLAIM_QUANTITY, 
+			RT_REASON, 
+			RT_REASON_TEXT, 
+			RT_COLLECTION_NAME, 
+			RT_COLLECTION_TEL_NUMBER, 
+			RT_COLLECTION_PHONE_NUMBER, 
+			RT_COLLECTION_ZIPCODE, 
+			RT_COLLECTION_ZIPCODE_SEQ, 
+			RT_COLLECTION_ADDRESS, 
+			RT_COLLECTION_ADDRESS_DETAIL, 
+			RT_COLLECTION_ADDRESS_TYPE, 
+			RT_COLLECTION_ADDRESS_BILNO, 
+			RT_SHIPPING_TYPE, 
+			RT_SHIPPING_AMOUNT, 
+			RT_DEFAULT_SHIPPING_AMOUNT, 
+			RT_SHIPPING_PAYMENT_TYPE, 
+			RT_SHIPPING_NUMBER, 
+			RT_SHIPPING_COMPANY_CODE, 
+			RT_APPLY_DATE
+		) VALUES (
+			#{mallOrderId}, 
+			#{clmReqSeq},
+			#{clmStat}, 
+			#{clmReqQty}, 
+			#{clmReqRsn}, 
+			#{clmReqCont}, 
+			#{ordNm}, 
+			#{ordTlphnNo}, 
+			#{ordPrtblTel}, 
+			#{rcvrMailNo}, 
+			#{rcvrMailNoSeq}, 
+			#{rcvrBaseAddr}, 
+			#{rcvrDtlsAddr}, 
+			#{rcvrTypeAdd}, 
+			#{rcvrTypeBilNo}, 
+			#{twMthd}, 
+			#{clmLstDlvCst}, 
+			#{appmtDlvCst}, 
+			#{clmDlvCstMthd}, 
+			#{twPrdInvcNo}, 
+			#{dlvEtprsCd}, 
+			DATE_FORMAT(#{reqDt}, '%Y%m%d%H%i%s')
+		)
+	</insert>
+
+	<update id="updateMallOrderReturn" parameterType="saleson.shop.mall.est.domain.Product">
+		UPDATE OP_MALL_ORDER_RETURN
+		SET
+			CLAIM_STATUS = #{clmStat},
+			CLAIM_QUANTITY = #{clmReqQty}, 
+			RT_REASON = #{clmReqRsn}, 
+			RT_REASON_TEXT = #{clmReqCont}, 
+			RT_ADD_SHIPPING_AMOUNT = #{addDlvCst},
+			RT_ADD_SHIPPING_TYPE = #{dlvCstRespnClf},
+			RT_DEDUCTION_SHIPPING_AMOUNT = #{stlDlvCst},
+			RT_APPLY_DATE = DATE_FORMAT(#{reqDt}, '%Y%m%d%H%i%s'),
+			RT_END_DATE = DATE_FORMAT(#{trtEndDt}, '%Y%m%d%H%i%s')
+		WHERE
+			CLAIM_CODE = #{clmReqSeq}
+			AND MALL_ORDER_ID = #{mallOrderId}
+	</update>
+
+	<insert id="insertMallOrderExchange" parameterType="saleson.shop.mall.est.domain.Product">
+		INSERT INTO OP_MALL_ORDER_EXCHANGE (
+			MALL_ORDER_ID, 
+			CLAIM_CODE, 
+			CLAIM_QUANTITY, 
+			CLAIM_STATUS, 
+			EX_REASON, 
+			EX_REASON_TEXT, 
+			EX_COLLECTION_NAME, 
+			EX_COLLECTION_TEL_NUMBER, 
+			EX_COLLECTION_PHONE_NUMBER, 
+			EX_COLLECTION_ZIPCODE, 
+			EX_COLLECTION_ZIPCODE_SEQ, 
+			EX_COLLECTION_ADDRESS, 
+			EX_COLLECTION_ADDRESS_DETAIL, 
+			EX_COLLECTION_ADDRESS_TYPE, 
+			EX_COLLECTION_ADDRESS_BILNO, 
+			EX_SHIPPING_TYPE, 
+			EX_RECEIVER_NAME, 
+			EX_RECEIVER_TEL_NUMBER, 
+			EX_RECEIVER_PHONE_NUMBER, 
+			EX_RECEIVER_ZIPCODE, 
+			EX_RECEIVER_ZIPCODE_SEQ, 
+			EX_RECEIVER_ADDRESS, 
+			EX_RECEIVER_ADDRESS_DETAIL, 
+			EX_RECEIVER_ADDRESS_TYPE, 
+			EX_RECEIVER_ADDRESS_BILNO, 
+			EX_SHIPPING_AMOUNT, 
+			EX_ADD_SHIPPING_AMOUNT, 
+			EX_SHIPPING_PAYMENT_TYPE, 
+			EX_SHIPPING_NUMBER, 
+			EX_SHIPPING_COMPANY_CODE, 
+			EX_APPLY_DATE, 
+			EX_END_DATE
+		) VALUES (
+			#{mallOrderId}, 
+			#{clmReqSeq}, 
+			#{clmReqQty}, 
+			#{clmStat}, 
+			#{clmReqRsn}, 
+			#{clmReqCont}, 
+			#{ordNm}, 
+			#{ordTlphnNo}, 
+			#{ordPrtblTel}, 
+			#{rcvrMailNo}, 
+			#{rcvrMailNoSeq}, 
+			#{rcvrBaseAddr}, 
+			#{rcvrDtlsAddr}, 
+			#{rcvrTypeAdd}, 
+			#{rcvrTypeBilNo}, 
+			#{twMthd}, 
+			#{exchNm}, 
+			#{exchTlphnNo}, 
+			#{exchPrtblTel}, 
+			#{exchMailNo}, 
+			#{exchMailNoSeq}, 
+			#{exchBaseAddr}, 
+			#{exchDtlsAddr}, 
+			#{exchTypeAdd}, 
+			#{exchTypeBilNo}, 
+			#{clmLstDlvCst}, 
+			#{appmtDlvCst}, 
+			#{clmDlvCstMthd}, 
+			#{twPrdInvcNo}, 
+			#{dlvEtprsCd}, 
+			DATE_FORMAT(#{reqDt}, '%Y%m%d%H%i%s'), 
+			DATE_FORMAT(#{trtEndDt}, '%Y%m%d%H%i%s')
+		)
+	</insert>
+
+	<update id="updateMallOrderExchange" parameterType="saleson.shop.mall.est.domain.Product">
+		UPDATE OP_MALL_ORDER_EXCHANGE
+		SET
+			CLAIM_QUANTITY = #{clmReqQty}, 
+			CLAIM_STATUS = #{clmStat}, 
+			EX_REASON = #{clmReqRsn}, 
+			EX_REASON_TEXT = #{clmReqCont}, 
+			EX_APPLY_DATE = DATE_FORMAT(#{reqDt}, '%Y%m%d%H%i%s'), 
+			EX_END_DATE = DATE_FORMAT(#{trtEndDt}, '%Y%m%d%H%i%s')
+		WHERE
+			CLAIM_CODE = #{clmReqSeq}
+			AND MALL_ORDER_ID = #{mallOrderId}
+	</update>
+
+	<update id="updateMallOrder" parameterType="saleson.shop.mall.est.domain.Product">
+		UPDATE OP_MALL_ORDER
+		SET
+			<if test="ordPrdStat != null and ordPrdStat != ''">
+				ORDER_ITEM_STATUS = #{ordPrdStat},
+				ORDER_ITEM_STATUS_LABEL = #{ordPrdStatNm},
+				QUANTITY = #{ordQty},
+			</if>
+			
+			SALE_AMOUNT = #{ordAmt},
+			PAY_SHIPPING = #{lstDlvCst},
+			PAY_SHIPPING_TYPE = #{dlvCstType},
+			ISLAND_PAY_SHIPPING = #{bmDlvCst},
+			ISLAND_PAY_SHIPPING_TYPE = #{bmDlvCstType},
+			SYSTEM_MESSAGE = #{systemMessage}
+		WHERE
+			MALL_ORDER_ID = #{mallOrderId}
+	</update>
+
+	<update id="updateReturnHoldForApply" parameterType="saleson.shop.mall.est.domain.Product"> 
+		UPDATE OP_MALL_ORDER_RETURN
+		SET 
+			CLAIM_STATUS = #{clmStat},
+			RT_HOLD_REASON = #{rtHoldReson},
+			RT_HOLD_REASON_TEXT = #{rtHoldResonText}
+		<where>
+			CLAIM_CODE = #{clmReqSeq}
+			AND MALL_ORDER_ID = #{mallOrderId}
+		</where> 
+	</update>
+	
+	<update id="updateExchangeRefusalForApply" parameterType="saleson.shop.mall.est.domain.Product"> 
+		UPDATE OP_MALL_ORDER_EXCHANGE
+		SET 
+			CLAIM_STATUS = #{clmStat},
+			EX_REFUSAL_REASON = #{exRefusalReson},
+			EX_REFUSAL_REASON_TEXT = #{exRefusalResonText}
+		<where>
+			CLAIM_CODE = #{clmReqSeq}
+			AND MALL_ORDER_ID = #{mallOrderId}
+		</where> 
+	</update>
+	
+	<update id="updateReturnRefusalForApply" parameterType="saleson.shop.mall.est.domain.Product"> 
+		UPDATE OP_MALL_ORDER_RETURN
+		SET 
+			CLAIM_STATUS = #{clmStat},
+			RT_REFUSAL_REASON = #{rtRefusalReson},
+			RT_REFUSAL_REASON_TEXT = #{rtRefusalResonText}
+		<where>
+			CLAIM_CODE = #{clmReqSeq}
+			AND MALL_ORDER_ID = #{mallOrderId}
+		</where> 
+	</update>
+	
+	<update id="updateReturnConfirmForApply" parameterType="saleson.shop.mall.est.domain.Product"> 
+		UPDATE OP_MALL_ORDER_RETURN
+		SET 
+			CLAIM_STATUS = #{clmStat},
+			RT_END_DATE = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+		<where>
+			CLAIM_CODE = #{clmReqSeq}
+			AND MALL_ORDER_ID = #{mallOrderId}
+		</where>
+	</update>
+	
+	<update id="updateExchangeConfirmForApply" parameterType="saleson.shop.mall.est.domain.Product"> 
+		UPDATE OP_MALL_ORDER_EXCHANGE
+		SET 
+			CLAIM_STATUS = #{clmStat},
+			RESEND_DELIVERY_COMPANY_CODE = #{resendDeliveryCompanyCode},
+			RESEND_DELIVERY_NUMBER = #{resendDeliveryNumber},
+			EX_END_DATE = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+		<where>
+			CLAIM_CODE = #{clmReqSeq}
+			AND MALL_ORDER_ID = #{mallOrderId}
+		</where>
+	</update>
+	
+</mapper>

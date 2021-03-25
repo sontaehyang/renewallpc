@@ -1,0 +1,223 @@
+<?include "../include/head.html"?>
+<?include "../include/header.html"?>  
+	<div class="inner join_wrap"> 
+		<div class="location_area">
+			<?include "../include/all_menu.html"?>
+			<div class="breadcrumbs">
+				<a href="/html/main.html" class="home"><span class="hide">home</span></a>
+				<span>회원가입</span> 
+			</div>
+		</div><!-- // location_area E -->
+		
+		<div class="content_title"> 
+			<h2 class="title">회원가입</h2>  
+		</div>
+		<div class="join_step step03">
+			<ul>
+				<li><span>01</span> 본인인증</li>
+				<li><span>02</span> 약관동의</li>
+				<li class="on"><span>03</span> 정보입력</li>
+				<li><span>04</span> 가입완료</li>
+			</ul>
+		</div> <!-- // join_step E -->	
+		
+		<h3 class="sub_title mt30">정보입력 <span class="necessary">표시가 있는 부분은 필수 입력사항입니다.</span></h3>
+		<div class="board_wrap">
+ 			<table cellpadding="0" cellspacing="0" class="board-write">
+	 			<caption>정보입력</caption>
+	 			<colgroup>
+	 				<col style="width:190px;">
+	 				<col style="width:auto;">	 				
+	 			</colgroup>
+	 			<tbody>
+	 				<tr>
+	 					<th scope="row">회원구분 <span class="necessary"></span></th>
+	 					<td>일반회원</td>
+	 				</tr>
+	 				<tr>
+	 					<th scope="row">아이디 <span class="necessary"></span></th>
+	 					<td>
+	 						<div class="input_wrap col-w-7">
+	 							<input type="text" title="아이디">
+	 						</div>&nbsp;&nbsp;
+	 						<div class="input_wrap">
+	 							<button type="button" class="btn btn-ms btn-default" title="중복확인">중복확인</button>
+	 						</div>
+	 						<span class="coment">영문 및 숫자를 사용하여 4자 이상 입력하세요.</span> 
+	 					</td>
+	 				</tr>
+	 				<tr>
+	 					<th scope="row">비밀번호 <span class="necessary"></span></th>
+	 					<td>
+	 						<div class="input_wrap col-w-7">
+	 							<input type="password" title="비밀번호">
+	 						</div> 
+	 						<span class="coment">영문/숫자를 혼합하여 4자 이상 20자 이하로 입력하세요. </span>
+	 					</td>
+	 				</tr>
+	 				<tr>
+	 					<th scope="row">비밀번호 확인<span class="necessary"></span></th>
+	 					<td>
+	 						<div class="input_wrap col-w-7">
+	 							<input type="password" title="비밀번호 확인">
+	 						</div> 
+	 						<span class="coment">비밀번호 확인을 위하여 다시 한번 입력하세요. </span>
+	 					</td>
+	 				</tr> 
+	 				<tr>
+	 					<th scope="row">이름 <span class="necessary"></span></th>
+	 					<td>
+	 						<div class="input_wrap col-w-7">
+	 							<input type="text" class="disabled" value="홍길동" title="이름" disabled="">
+	 						</div> 
+	 					</td>
+	 				</tr>
+	 				<tr>
+	 					<th scope="row">생년월일</th>
+	 					<td>
+	 						<div class="input_wrap col-w-10"> 
+	 							<select class="form-control">
+							        <option value="">선택</option> 
+							  	</select>  
+							</div> 
+							<span class="connection"> 년 </span> &nbsp;&nbsp; 
+							<div class="input_wrap col-w-10">
+							    <select class="form-control">
+							        <option value="">선택</option> 
+							  	</select>  
+	 						</div> 	
+	 						<span class="connection"> 월 </span>&nbsp;&nbsp; 
+	 						<div class="input_wrap col-w-10">	
+	 							<select class="form-control">
+							        <option value="">선택</option> 
+							  	</select>  
+							 </div> 
+							 <span class="connection"> 일 </span>&nbsp;&nbsp;  
+							 <div class="input_wrap">	
+							  	<input type="radio" id="age122" name="radio_btn2"> <label for="age122">양력</label>&nbsp;&nbsp;
+	 							<input type="radio" id="age123" name="radio_btn2"> <label for="age123">음력</label>				 
+	 						</div>
+	 					</td>
+	 				</tr>
+	 				<tr>
+	 					<th scope="row">성별</th>
+	 					<td>
+	 						 <div class="input_wrap">	
+							  	<input type="radio" id="man" name="radio_btn2"> <label for="man">남성</label>&nbsp;&nbsp;
+	 							<input type="radio" id="woman" name="radio_btn2"> <label for="woman">여성</label>				 
+	 						</div>
+	 					</td>
+	 				</tr> 
+	 				<tr>
+	 					<th scope="row">전화번호</th>
+	 					<td>
+	 						<div class="hp_area">
+	 							<div class="input_wrap col-w-9">
+	 								<select class="form-control">
+								        <option value="02">02</option> 
+								        <option value="031">031</option> 
+								        <option value="032">032</option>  
+								    </select>
+	 							</div>
+	 							<span class="connection"> - </span>
+	 							 <div class="input_wrap col-w-9">			 	 			 	 							 
+	 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+	 							</div>
+	 							<span class="connection"> - </span>
+	 							<div class="input_wrap col-w-9">			 	 			 	 							 
+	 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+	 							</div> 	
+	 						</div><!-- // hp_area --> 
+	 					</td>
+	 				</tr>
+	 				<tr>
+	 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+	 					<td>
+	 						<div class="hp_area">
+	 							<div class="input_wrap col-w-9">
+	 								<select class="form-control">
+								        <option value="010">010</option> 
+								        <option value="011">011</option> 
+								        <option value="016">016</option> 
+								        <option value="017">017</option>
+								        <option value="018">018</option> 
+								        <option value="019">019</option>  
+								    </select>
+	 							</div>
+	 							<span class="connection"> - </span>
+	 							 <div class="input_wrap col-w-9">			 	 			 	 							 
+	 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+	 							</div>
+	 							<span class="connection"> - </span>
+	 							<div class="input_wrap col-w-9">			 	 			 	 							 
+	 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+	 							</div> 		
+	 						</div><!-- // hp_area --> 
+	 					</td>
+	 				</tr> 
+	 				<tr>
+	 					<th scope="row" valign="top">주소 <span class="necessary"></span></th>
+	 					<td>
+	 						<div> 
+	 							<div class="input_wrap col-w-10">
+	 								<input type="text" title="우편번호"> 
+	 							</div>	 
+	 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default" title="우편번호">우편번호</button></div>  
+	 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+	 								<input type="text" title="주소" class="full"> 
+	 							</div>			 	 				  			 
+	 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+	 								<input type="text" title="주소" class="full"> 
+	 							</div>		 							 
+	 						</div>
+	 					</td>
+	 				</tr>
+	 				<tr>
+	 					<th scope="row">이메일 주소 <span class="necessary"></span></th>
+	 					<td>
+	 						<div class="hp_area"> 
+	 							 <div class="input_wrap col-w-9">			 	 			 	 							 
+	 								<input type="text" title="이메일 주소" class="full" placeholder="abscs"> 
+	 							</div>
+	 							<span class="connection">@</span> 
+	 							<div class="input_wrap col-w-9">
+	 								<select class="form-control">
+								        <option value="naver.com">naver.com</option>  
+								        <option value="daum.net">daum.net</option> 
+								        <option value="nate.com">nate.com</option> 
+								        <option value="gmail.com">gmail.com</option> 
+								    </select> 
+	 							</div>
+	 							<div class="input_wrap col-w-8">			 	 			 	 							 
+	 								<input type="text" title="이메일주소 직접입력" class="full" placeholder="직접입력"> 
+	 							</div> 	
+	 						</div><!-- // hp_area --> 
+	 					</td>
+	 				</tr> 
+	 				
+	 				<tr>
+	 					<th scope="row" valign="top">SMS/E-mail 수신동의 <span class="necessary"></span></th>
+	 					<td>
+	 						<p>
+	 							<input type="radio" id="age10" name="radio_btn"> <label for="age10">수신동의</label>&nbsp;&nbsp;
+	 							<input type="radio" id="age11" name="radio_btn"> <label for="age11">수신거부</label>  
+	 						</p>	
+ 							<p class="coment mt5">
+ 								수신동의시 쇼핑몰에서 제공하는 이벤트 및 다양한 정보를 SMS/E-mail로 받아볼 수 있습니다.  <br>
+								단, 회원가입, 거래정보-결제/배송/교환/환불 등과 같은 운영정보는 수신동의 여부와 관계없이 발송됩니다.)
+
+ 							</p> 
+	 					</td>
+	 				</tr>   
+	 			</tbody>
+	 		</table>  
+	 	</div><!--// board_wrap E-->
+		
+		<div class="btn_wrap">
+ 			<button type="button" class="btn btn-default btn-lg" title="가입취소">가입취소</button>
+			<a href="/html/member/join_step04.html" class="btn btn-success btn-lg" title="다음단계">다음단계</a>
+ 		</div>  
+
+	</div><!--// inner E--> 
+<?include "../include/footer.html"?>	 
+ 

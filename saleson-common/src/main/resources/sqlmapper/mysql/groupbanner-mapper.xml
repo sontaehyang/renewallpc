@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.groupbanner.GroupBannerMapper">
+	
+	<resultMap id="GroupBannerResult" type="saleson.shop.groupbanner.domain.GroupBanner">
+		<result property="categoryGroupBannerId" column="CATEGORY_GROUP_BANNER_ID" />
+		<result property="categoryGroupId" column="BANNER_CATEGORY_GROUP_ID" />
+		<result property="title" column="TITLE" />
+		<result property="linkUrl" column="LINK_URL" />
+		<result property="fileName" column="FILE_NAME" />
+		<result property="displayOrder" column="DISPLAY_ORDER" />
+		<result property="createdDate" column="BANNER_CREATED_DATE" />
+	</resultMap>
+	
+	<select id="getGroupBannerByCategoryGroupId" parameterType="Integer" resultMap="GroupBannerResult">
+		SELECT 
+			 CATEGORY_GROUP_BANNER_ID,
+			 CATEGORY_GROUP_ID AS BANNER_CATEGORY_GROUP_ID,
+			 TITLE,
+			 LINK_URL,
+			 FILE_NAME,
+			 DISPLAY_ORDER,
+			 CREATED_DATE AS BANNER_CREATED_DATE
+		FROM OP_CATEGORY_GROUP_BANNER
+		WHERE 
+			CATEGORY_GROUP_ID = #{categoryGroupId}
+		ORDER BY DISPLAY_ORDER ASC
+	</select>
+	
+	<insert id="insertGroupBanner" parameterType="saleson.shop.groupbanner.domain.GroupBanner">
+		INSERT INTO OP_CATEGORY_GROUP_BANNER (CATEGORY_GROUP_BANNER_ID, CATEGORY_GROUP_ID, TITLE, LINK_URL, FILE_NAME, DISPLAY_ORDER, CREATED_DATE)
+		VALUES (#{categoryGroupBannerId}, #{categoryGroupId}, #{title}, #{linkUrl}, #{fileName}, #{displayOrder}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+	
+	<update id="updateGroupBanner" parameterType="saleson.shop.groupbanner.domain.GroupBanner">
+		UPDATE OP_CATEGORY_GROUP_BANNER SET
+			DISPLAY_ORDER = #{displayOrder},
+			TITLE = #{title},
+			LINK_URL = #{linkUrl}
+			<if test="fileName != null and fileName != ''">
+			, FILE_NAME = #{fileName}
+			</if>
+		WHERE
+			CATEGORY_GROUP_BANNER_ID = #{categoryGroupBannerId}
+	</update>
+	
+	<delete id="deleteGroupBannerById" parameterType="Integer">
+		DELETE FROM OP_CATEGORY_GROUP_BANNER 
+		WHERE
+			CATEGORY_GROUP_BANNER_ID = #{value}
+	</delete>
+	
+</mapper>

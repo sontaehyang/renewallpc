@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.payinfo.PayInfoMapper">
+
+    <resultMap type="saleson.shop.payinfo.domain.PayInfo" id="PayInfoResult">
+        <result property="payUserName" column="BUYER_NAME" /><!-- 결제자 -->
+        <result property="orderDate" column="CREATED_DATE" /><!-- 주문일 -->
+        <result property="payDate" column="PAY_DATE" /><!-- 결제일 -->
+        <result property="approvalType" column="APPROVAL_TYPE" />
+        <result property="amount" column="AMOUNT" />
+        <result property="orderCode" column="ORDER_CODE" />
+        <result property="orderSequence" column="ORDER_SEQUENCE" />
+    </resultMap>
+
+    <sql id="sqlPayInfoWhere">
+        <where>
+            OP.PAY_DATE <![CDATA[<>]]> '' AND OP.PAY_DATE IS NOT NULL
+            <if test="approvalType != null and approvalType != ''">
+                AND OP.APPROVAL_TYPE = #{approvalType}
+            </if>
+            <if test="searchDate != null and searchDate != ''">
+                <choose>
+                    <when test="searchDate == 'orderDate'">
+                        AND substr(OP.CREATED_DATE, 1, 8) >= #{searchStartDate}
+                        AND substr(OP.CREATED_DATE, 1, 8) <![CDATA[<=]]> #{searchEndDate}
+                    </when>
+                    <when test="searchDate == 'payDate'">
+                        AND substr(OP.PAY_DATE, 1, 8) >= #{searchStartDate}
+                        AND substr(OP.PAY_DATE, 1, 8) <![CDATA[<=]]> #{searchEndDate}
+                    </when>
+                </choose>
+            </if>
+            <if test="query != null and query != ''">
+                <choose>
+                    <when test="where == 'payUserName'">
+                        AND OP.ORDER_CODE IN (
+                        SELECT DISTINCT OI.ORDER_CODE
+                        FROM OP_ORDER_ITEM OI
+                        INNER JOIN OP_ORDER OO
+                        ON OI.ORDER_CODE = OO.ORDER_CODE
+                        WHERE
+                        OO.BUYER_NAME LIKE CONCAT('%', #{query}, '%')
+                        )
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="sqlPayInfoFrom">
+        FROM OP_ORDER_PAYMENT OP
+    </sql>
+
+    <select id="getPayInfoList" parameterType="saleson.shop.payinfo.support.PayInfoParam" resultMap="PayInfoResult">
+        SELECT
+        OO.ORDER_CODE,
+        OO.ORDER_SEQUENCE,
+        OO.BUYER_NAME,
+        date_format(OP.CREATED_DATE, "%Y-%m-%d") AS CREATED_DATE,
+        date_format(OP.PAY_DATE, "%Y-%m-%d")     AS PAY_DATE,
+        OP.APPROVAL_TYPE,
+        OP.AMOUNT
+        FROM OP_ORDER OO
+        INNER JOIN OP_ORDER_PAYMENT OP
+        ON OO.ORDER_CODE = OP.ORDER_CODE
+        <include refid="sqlPayInfoWhere" />
+        <choose>
+            <when test="conditionType != null and conditionType != ''">
+                ORDER BY ORDER_CODE ASC
+            </when>
+            <otherwise>
+                ORDER BY CREATED_DATE DESC
+            </otherwise>
+        </choose>
+        <include refid="CommonMapper.paginationFooter" />
+    </select>
+
+    <select id="getPayInfoListCount" parameterType="saleson.shop.payinfo.support.PayInfoParam" resultType="Integer">
+        SELECT COUNT(*)
+        <include refid="sqlPayInfoFrom" />
+        <include refid="sqlPayInfoWhere" />
+    </select>
+
+</mapper>

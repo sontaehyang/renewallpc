@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.common.userauth.UserAuthMapper">
+	
+	<resultMap id="UserAuthResult" type="saleson.common.userauth.domain.UserAuth">
+		<result property="appKey" column="APP_KEY" />
+		<result property="serviceType" column="SERVICE_TYPE" />
+		<result property="serviceMode" column="SERVICE_MODE" />
+		<result property="serviceTarget" column="SERVICE_TARGET" />
+		<result property="userIp" column="USER_IP" />
+		<result property="authKey" column="AUTH_KEY" />
+		<result property="authName" column="AUTH_NAME" />
+		<result property="authSex" column="AUTH_SEX" />
+		<result property="authBirthDay" column="AUTH_BIRTH_DAY" />
+		<result property="dataStatusCode" column="DATA_STATUS_CODE" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+	
+	<select id="getCountUserAuthTemp" parameterType="saleson.common.userauth.domain.UserAuth" resultType="Integer">
+		SELECT COUNT(*) FROM OP_USER_AUTH
+		<where>
+			APP_KEY = #{appKey}
+			AND SERVICE_TYPE = #{serviceType}
+			AND DATA_STATUS_CODE = 0
+			AND SERVICE_MODE = #{serviceMode}
+		</where>	
+	</select>
+	
+	<select id="getUserAuth" parameterType="saleson.common.userauth.domain.UserAuth" resultMap="UserAuthResult">
+		SELECT * FROM OP_USER_AUTH
+		<where>
+			APP_KEY = #{appKey}
+			AND SERVICE_TYPE = #{serviceType}
+			AND DATA_STATUS_CODE = #{dataStatusCode}
+		</where>	
+	</select>
+	
+	<insert id="insertUserAuth" parameterType="saleson.common.userauth.domain.UserAuth">
+		INSERT OP_USER_AUTH (
+			APP_KEY,
+			SERVICE_TYPE,
+			SERVICE_MODE,
+			SERVICE_TARGET,
+			USER_IP,
+			DATA_STATUS_CODE,
+			CREATED_DATE
+		) VALUES (
+			#{appKey},
+			#{serviceType},
+			#{serviceMode},
+			#{serviceTarget},
+			#{userIp},
+			0,
+			DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		)
+		
+	</insert>
+	
+	<update id="updateUserAuth" parameterType="saleson.common.userauth.domain.UserAuth">
+		UPDATE OP_USER_AUTH SET
+			AUTH_KEY = #{authKey},
+			AUTH_NAME = #{authName},
+			AUTH_SEX = #{authSex},
+			AUTH_BIRTH_DAY = #{authBirthDay},
+			DATA_STATUS_CODE = #{dataStatusCode}
+		WHERE
+			APP_KEY = #{appKey}
+			AND SERVICE_TYPE = #{serviceType}
+			AND DATA_STATUS_CODE = 0
+			AND SERVICE_MODE = #{serviceMode}
+	</update>
+	
+</mapper>

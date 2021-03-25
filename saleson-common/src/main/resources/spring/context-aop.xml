@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="logManageDao" class="com.onlinepowers.framework.log.service.LogAspect">
+		<property name="position" value="Dao" />
+	</bean>
+	
+	<bean id="logManageSvc" class="com.onlinepowers.framework.log.service.LogAspect">
+		<property name="position" value="Svc" />
+	</bean>
+
+	<aop:config>
+		<aop:aspect id="logManageSvcAspect" ref="logManageSvc">
+			<aop:around pointcut="execution(public * com.onlinepowers.web..*Impl.*(..))" method="log" />
+			<aop:around pointcut="execution(public * com.onlinepowers.framework.web..*Impl.*(..))" method="log" />
+			<aop:around pointcut="execution(public * saleson..*Impl.*(..))" method="log" />
+		</aop:aspect>
+				
+		<aop:aspect id="logManageDaoAspect" ref="logManageDao">
+			<!-- 
+			<aop:around pointcut="execution(public * com.onlinepowers.framework.security..mapper.*Mapper.*(..))" method="log" />
+			<aop:around pointcut="execution(public * com.onlinepowers.web..*Mapper.*(..))" method="log" />
+			 -->
+			<aop:around pointcut="execution(public * com.onlinepowers..*Mapper.*(..))" method="log" />
+			<aop:around pointcut="execution(public * saleson..*Mapper.*(..))" method="log" />
+		</aop:aspect>
+		
+		<!-- 
+		<aop:aspect ref="sendEmailForResaleBatchLog">
+			<aop:pointcut id="sendEmailForResalePointcut" expression="execution(public * saleson.common.scheduling.SchedulingServiceImpl.sendEmailForResaleBatch(..))" />
+			<aop:before pointcut-ref="sendEmailForResalePointcut"  method="before" />
+			<aop:after-returning pointcut-ref="sendEmailForResalePointcut"  method="afterReturning" />
+			<aop:after-throwing pointcut-ref="sendEmailForResalePointcut"  method="afterThrowing" throwing="cause" />
+		</aop:aspect>
+		
+		<aop:aspect ref="hrUserBatchLog">
+			<aop:pointcut id="hrUserPointcut" expression="execution(public * saleson.common.scheduling.SchedulingServiceImpl.hrUserBatch(..))" />
+			<aop:before pointcut-ref="hrUserPointcut"  method="before" />
+			<aop:after-returning pointcut-ref="hrUserPointcut"  method="afterReturning" />
+			<aop:after-throwing pointcut-ref="hrUserPointcut"  method="afterThrowing" throwing="cause" />
+		</aop:aspect>
+		
+		<aop:aspect ref="hrGroupBatchLog">
+			<aop:pointcut id="hrGroupPointcut" expression="execution(public * saleson.common.scheduling.SchedulingServiceImpl.hrGroupBatch(..))" />
+			<aop:before pointcut-ref="hrGroupPointcut" method="before" />
+			<aop:after-returning pointcut-ref="hrGroupPointcut" method="afterReturning" />
+			<aop:after-throwing pointcut-ref="hrGroupPointcut" method="afterThrowing" throwing="cause" />
+		</aop:aspect>
+		
+		<aop:aspect ref="kbHeadcountBatchLog">
+			<aop:pointcut id="kbHeadcountPointcut" expression="execution(public * saleson.common.scheduling.SchedulingServiceImpl.kbHeadcountBatch(..))" />
+			<aop:before pointcut-ref="kbHeadcountPointcut" method="before" />
+			<aop:after-returning pointcut-ref="kbHeadcountPointcut" method="afterReturning" />
+			<aop:after-throwing pointcut-ref="kbHeadcountPointcut" method="afterThrowing" throwing="cause" />
+		</aop:aspect>
+		
+		
+		<aop:aspect ref="userApproverBatchLog">
+			<aop:pointcut id="userApproverPointcut" expression="execution(public * saleson.common.scheduling.SchedulingServiceImpl.userApproverBatch(..))" />
+			<aop:before pointcut-ref="userApproverPointcut" method="before" />
+			<aop:after-returning pointcut-ref="userApproverPointcut" method="afterReturning" />
+			<aop:after-throwing pointcut-ref="userApproverPointcut" method="afterThrowing" throwing="cause" />
+		</aop:aspect>
+		
+
+		<aop:aspect ref="proposalDonationMailBatchLog">
+			<aop:pointcut id="proposalDonationMailPointcut" expression="execution(public * saleson.common.scheduling.SchedulingServiceImpl.proposalDonationMailBatch(..))" />
+			<aop:before pointcut-ref="proposalDonationMailPointcut" method="before" />
+			<aop:after-returning pointcut-ref="proposalDonationMailPointcut" method="afterReturning" />
+			<aop:after-throwing pointcut-ref="proposalDonationMailPointcut" method="afterThrowing" throwing="cause" />
+		</aop:aspect>
+	
+		
+		
+		<aop:aspect ref="deleteExpiredStarPointLog">
+			<aop:pointcut id="deleteExpiredStarPointPointcut" expression="execution(public * saleson.common.scheduling.SchedulingServiceImpl.deleteExpiredStarPointBatch(..))" />
+			<aop:before pointcut-ref="deleteExpiredStarPointPointcut" method="before" />
+			<aop:after-returning pointcut-ref="deleteExpiredStarPointPointcut" method="afterReturning" />
+			<aop:after-throwing pointcut-ref="deleteExpiredStarPointPointcut" method="afterThrowing" throwing="cause" />
+		</aop:aspect>
+		
+		<aop:aspect ref="updateBoardNoticeLog">
+			<aop:pointcut id="updateBoardNoticePointcut" expression="execution(public * saleson.common.scheduling.SchedulingServiceImpl.updateBoardNoticeBatch(..))" />
+			<aop:before pointcut-ref="updateBoardNoticePointcut" method="before" />
+			<aop:after-returning pointcut-ref="updateBoardNoticePointcut" method="afterReturning" />
+			<aop:after-throwing pointcut-ref="updateBoardNoticePointcut" method="afterThrowing" throwing="cause" />
+		</aop:aspect>
+		
+		<aop:aspect ref="bankingAccountTransferResultLog">
+			<aop:pointcut id="bankingAccountTransferResultPointcut" expression="execution(public * saleson.common.scheduling.SchedulingServiceImpl.bankingAccountTransferResultBatch(..))" />
+			<aop:before pointcut-ref="bankingAccountTransferResultPointcut" method="before" />
+			<aop:after-returning pointcut-ref="bankingAccountTransferResultPointcut" method="afterReturning" />
+			<aop:after-throwing pointcut-ref="bankingAccountTransferResultPointcut" method="afterThrowing" throwing="cause" />
+		</aop:aspect>
+		
+		<aop:aspect ref="ngoAccountTransferResultLog">
+			<aop:pointcut id="ngoAccountTransferResultPointcut" expression="execution(public * saleson.common.scheduling.SchedulingServiceImpl.ngoAccountTransferResultBatch(..))" />
+			<aop:before pointcut-ref="ngoAccountTransferResultPointcut" method="before" />
+			<aop:after-returning pointcut-ref="ngoAccountTransferResultPointcut" method="afterReturning" />
+			<aop:after-throwing pointcut-ref="ngoAccountTransferResultPointcut" method="afterThrowing" throwing="cause" />
+		</aop:aspect>
+		 -->	
+	</aop:config>
+	
+	
+
+
+	<!-- 배치 로그 
+	<bean id="sendEmailForResaleBatchLog" class="saleson.common.scheduling.aspect.BatchLogAspect">
+		<property name="batchType" value="SEND_EMAIL_FOR_RESALE" />
+	</bean>
+	
+	<bean id="hrGroupBatchLog" class="saleson.common.scheduling.aspect.BatchLogAspect">
+		<property name="batchType" value="HR_GROUP" />
+	</bean>
+	
+	<bean id="hrUserBatchLog" class="saleson.common.scheduling.aspect.BatchLogAspect">
+		<property name="batchType" value="HR_USER" />
+	</bean>
+	
+	<bean id="kbHeadcountBatchLog" class="saleson.common.scheduling.aspect.BatchLogAspect">
+		<property name="batchType" value="KB_HEADCOUNT" />
+	</bean>
+	
+	<bean id="userApproverBatchLog" class="saleson.common.scheduling.aspect.BatchLogAspect">
+		<property name="batchType" value="USER_APPROVAL" />
+	</bean>
+	
+	<bean id="proposalDonationMailBatchLog" class="saleson.common.scheduling.aspect.BatchLogAspect">
+		<property name="batchType" value="PROPOSAL_DONATION_MAIL" />
+	</bean>
+	
+	
+	
+
+	<bean id="deleteExpiredStarPointLog" class="saleson.common.scheduling.aspect.BatchLogAspect">
+		<property name="batchType" value="STAR_POINT" />
+	</bean>
+	
+	<bean id="updateBoardNoticeLog" class="saleson.common.scheduling.aspect.BatchLogAspect">
+		<property name="batchType" value="KB_BOARD" />
+	</bean>
+	
+	<bean id="bankingAccountTransferResultLog" class="saleson.common.scheduling.aspect.BatchLogAspect">
+		<property name="batchType" value="BANKING_ACCOUNT_TRANSFER" />
+	</bean>
+	
+	<bean id="ngoAccountTransferResultLog" class="saleson.common.scheduling.aspect.BatchLogAspect">
+		<property name="batchType" value="NGO_ACCOUNT_TRANSFER" />
+	</bean>
+ -->
+</beans>

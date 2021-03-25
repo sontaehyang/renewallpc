@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--<util:properties id="application" location="classpath*:application.properties" />
+
+    <context:property-placeholder location="classpath*:*.properties" />-->
+
+	<context:component-scan base-package="saleson,com.onlinepowers,com.onlinepowers.framework">
+	   <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+		
+	<bean id="messageSource" class="com.onlinepowers.framework.context.support.ReloadableResourceBundleMessageSourceWithDatabase">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="basenames">
+			<list>
+				<value>classpath:/messages/message</value>
+				<value>classpath:/properties/application</value>
+				<value>classpath:/properties/config</value>
+			</list>
+		</property>
+		<property name="i18nResolverUsingDatabase" ref="i18nResolverUsingDatabase" />
+		<property name="reloadableDatabaseMessageYn" value="N" />
+		<property name="cacheSeconds" value="60"/>
+	</bean>
+	 
+	<!-- 
+	<bean id="messageSource"
+     class="org.springframework.context.support.ResourceBundleMessageSource">
+	    <property name="basenames">
+	        <list>
+				<value>classpath:/messages/message</value>
+				<value>classpath:/messages/validation</value>
+				<value>classpath:/messages/status</value>
+			</list>
+	    </property>
+	 </bean>
+	-->
+	<bean id="MessageFactoryBean" class="com.onlinepowers.framework.repository.message.MessageFactoryBean" factory-method="getInstance">
+		<!-- 
+		<property name="messageResolverUsingDatabase" ref="i18nResolverUsingDatabase"></property>
+		 -->
+		<property name="messageResolver" ref="i18nResolverUsingSpring"></property>
+	</bean>
+	
+	<bean id="i18nResolverUsingDatabase" class="com.onlinepowers.framework.i18n.support.I18nResolverUsingDatabase">
+		<property name="codeInfoRepository" ref="codeInfoRepository"></property>
+		<property name="messageInfoRepository" ref="messageInfoRepository"></property>
+	</bean>
+
+
+  	<bean id="i18nResolverUsingSpring" class="com.onlinepowers.framework.i18n.support.I18nResolverUsingSpring">
+  		<property name="messageSource" ref="messageSource"></property>
+	</bean>
+	
+	<bean id="codeResolver" class="com.onlinepowers.framework.i18n.support.CodeResolver">
+  		<property name="i18nResolverUsingDatabase" ref="i18nResolverUsingDatabase"></property>
+	</bean>
+	
+	<bean id="messageResolver" class="com.onlinepowers.framework.i18n.support.MessageResolver">
+  		<property name="i18nResolverUsingSpring" ref="i18nResolverUsingSpring"></property>
+	</bean>
+	
+	
+	<bean id="CodeFactoryBean" class="com.onlinepowers.framework.repository.code.CodeFactoryBean" factory-method="getInstance">
+		<property name="codeResolver" ref="codeResolver"></property>
+	</bean>
+
+
+	<bean id="antPathMatcher" class="org.springframework.util.AntPathMatcher" />
+	
+	<!-- 암호화 -->
+	<bean id="cipherService" class="com.onlinepowers.framework.file.security.service.CipherServiceImpl">
+		<property name="crypto">
+			<bean class="com.onlinepowers.framework.file.security.OpCrypto"/>
+		</property>
+	</bean>
+	<bean id="fileDownloadView" class="com.onlinepowers.framework.file.view.FileDownloadView" />
+
+
+
+	<!-- File Upload -->
+	<bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+		<property name="defaultEncoding" value="UTF-8"/>
+	</bean>
+
+</beans>

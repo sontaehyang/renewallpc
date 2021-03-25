@@ -1,0 +1,130 @@
+@charset "utf-8";
+
+/* 
+	Copyright(c) 2017 Onlinepowers Development Team
+ 	http://www.onlinepowers.com
+*/
+
+/* 비회원 약관동의 */
+.noMember_guide{margin-top:30px; padding:30px; border:1px solid #c9c9c9;}
+.noMember_guide:after{content:""; display:block; clear:both;}
+.noMember_guide p{float:left; color:#666; font-size:13px;}
+.noMember_guide .btnZone{float:right;}
+.noMember_guide .btnZone .btn-submit {background:#222;border-bottom:solid 1px #222;}
+
+
+
+/* 상품금액합계 */
+.price_box{margin-top:30px; text-align:center; padding:0; border:2px solid #222;  }
+.price_inner{padding:30px 25px;}
+.price_box .money{display:inline-block; text-align:center; width:21%;  max-width:170px; margin-left:-2px; vertical-align:middle;   }
+.price_box .money p{ color:#333; line-height:1.1em; }
+.price_box .money .txt01{font-size:13px; }
+.price_box .money .prices{padding-top:15px;font-size:20px; }
+.price_box .money .prices span{font-size:23px; font-family:"Verdana";}
+.price_box .icons{display:inline-block; line-height:53px;   vertical-align:middle;margin-left:-4px; }
+.price_box .prices.total{font-weight:bold; color:#ff7101; }
+.price_box.min .money{width:20%;  margin-left:0; margin-right:5px; }
+.price_box.min .prices span{font-size:22px; font-family:"Verdana";  }
+.add_point{padding:0 25px; height:54px; line-height:54px; border-top:1px solid #ccc;}
+.add_point p{text-align:right; color:#333; font-size:13px; }
+.add_point p span{font-weight:bold;}
+
+/* 장바구니 배송안내 */
+.delivery_wrap{position:relative; }
+.delievery_tip{display:none;position:absolute; top:18px; left:0px; padding:30px 15px; min-width:210px; background:#fff; border:1px solid #808080; z-index:100;}
+.delievery_tip.show{display:block;}
+.delievery_tip p{padding-top:10px; color:#666; font-size:12px;}
+.delievery_tip .title{padding-top:0;  color:#333; font-weight:bold;}
+.delievery_tip .delievery_close{ position:absolute; top:10px; right:10px; display:block;}
+.delivery_type{color:#ff7101; font-size: 12px; text-decoration:underline !important;  }
+
+/* 장바구니 상품없음 */
+.cart_none {width:100%; background:#fff url('/content/images/icon/cart_none_bg.png') no-repeat center 50px;  padding:170px 0 100px; text-align:center; }
+.cart_none p {font-size:24px;  color:#999;  }
+
+.cart_wrap .btn_wrap.pt30 .btn-success {background:#f7f7f7;border:solid 1px #d1d1d1;color:#4d4d4d;}
+.cart_wrap .btn_wrap.pt30 .btn-submit {background:#222;border-bottom:solid 1px #222;}
+.cart_wrap .btn_wrap.pt30 .npay_box {display:inline-block;width:300px;margin-left:10px;vertical-align:top;}
+
+/* 결제정보선택 */
+.receipt span{margin-right:5px;}
+.hp_area{color:#666;}
+.hp_area span{font-size:12px; color:#999;}
+.point_area p{color:#888; }
+.point_area p span{}
+.order_pay{margin-top:30px;}
+.order_pay:after{content:''; display:block; clear:both; }
+.order_pay .type01{/*width:755px;*/width:calc(100% - 325px); float:left; margin-right:12px; }
+.order_pay .type02 {width: 313px; float: left; }
+.esthe-table td.pay_kind{padding:15px 20px 15px 30px;font-weight:bold;color:#333;background:#f8f8f8; }
+.pay_kind{margin-top:10px; padding:25px 0; text-align:center; background:#f7f7f7; }
+.pay_kind ul{overflow:hidden; padding:2px 0;}
+.pay_kind ul:after{content:''; display:block; clear:both; }
+.pay_kind ul li{display:inline-block; font-size:13px; margin-right:30px;}
+.pay_kind ul li label{color:#666;}
+.last_pay{ margin-top:10px; border:2px solid #222; }
+.last_pay:after{content:''; display:block; clear:both; }
+.last_pay .cont{padding:10px 24px 10px 24px;border-bottom:1px solid #c9c9c9;}
+.last_pay .cont .cont_inner{padding:12px 0; border-bottom:1px dashed #c9c9c9; background:url('/content/images/order/pay_bg.gif') repeat-x 0 bottom;}
+.last_pay .cont .delevery_money{padding:15px 0; background:0;}
+.last_pay .cont .cont_inner:after{content:''; display:block; clear:both; }
+.last_pay .cont .cont_inner.sale{ border-bottom:1px dashed #c9c9c9;}
+.last_pay .cont .cont_inner:last-child{border-bottom:0;}
+.last_pay .cont .cont_inner p{line-height:1.8em;}
+.last_pay .cont .cont_inner p:after{content:''; display:block; clear:both; }
+.last_pay .cont .cont_inner span{color:#333;font-size:14px;}
+.last_pay .cont .cont_inner span:first-child{float:left;font-size:14px; }
+.last_pay .cont .cont_inner span:last-child{float:right; color:#4a4a4a; font-weight:bold; font-family:"Verdana"; }
+.last_pay .cont .cont_inner .point_sale span{color:#888; font-size:13px; font-weight: normal}
+.last_pay .cont div .type02{margin-top:5px;}
+.last_pay .cont div .type02:after{content:''; display:block; clear:both; }
+.last_pay .cont div .type02 li{float:right;color:#888;font-size:12px;font-weight:bold;line-height:16px;}
+.last_pay .cont .type02 li:first-child{ float:left; font-weight:normal;}
+.pay_money{padding:20px 24px;border-bottom:1px solid #c9c9c9;}
+.pay_money p{color:#1f1f1f; font-weight:bold; font-size:14px;}
+.pay_money .total_price{display:block; margin-top:10px; width:260px; padding:10px 0; font-size:30px; font-weight:bold; color:#fff; font-family:"Verdana"; text-align:center; background:#222; border-radius:3px;}
+.pay_money a span{font-size:24px;}
+.point_will{padding:15px 24px; }
+.point_will ul:after{content:''; display:block; clear:both; }
+.point_will ul li{float:right;font-weight:bold;color:#4a4a4a; font-size:14px;}
+.point_will ul li:first-child{float:left;color:#666; font-size:13.99px; }
+.point_will ul li span{font-family:"Verdana";}
+.order_pay .btn_end{margin-top:6px;}
+.out_reason textarea{height:90px; color:#999; font-size:13px;}
+.last_pay .cont .guide {margin-bottom:5px; font-size:12px; line-height:16px; color:#666;}
+.last_pay .cont .agree {font-size: 14px; font-weight:600; color:#333;}
+.pay_agree{}
+
+
+/* 주문완료 */
+.order_thank{padding:30px 0; text-align:center;}
+.order_thank:after{content:''; display:block; clear:both;}
+.order_thank .txt01{font-size:24px; color:#ff7101; font-weight:bold;}
+.order_thank .txt02{font-size:38px; color:#1c2957; }
+.order_thank .txt03{padding-top:20px; font-size:15px; color: #808080;}
+.order_thank a{color:#333; }
+.order_confirm{margin-top:20px; padding:40px 0; text-align:center; color:#333;  background:#f7f7f7; }
+.order_confirm p{line-height:1.1em;}
+.order_confirm p.number{font-size:17px; font-weight:bold;}
+.order_confirm p.thank{padding-top:18px;  font-size:25px; }
+.order_confirm p.guide{padding-top:12px; color:#666;  font-size:13px; }
+
+/* 배송지 추가 수정 */
+.address_basic{display:inline-block; color:#999; font-size:12px;}
+
+
+/* skc */
+.op-used-coupon {
+    text-align: center;
+}
+.op-used-coupon span {
+    border: 1px solid #ff0000;
+    border-radius: 3px;
+    color: #ff0000;
+    font-size: 11px;
+    display: inline-block;
+    padding: 1px 5px;
+    margin: 0 auto;
+
+}

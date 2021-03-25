@@ -1,0 +1,979 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.point.PointMapper">
+	<resultMap id="PointConfigResult" type="saleson.shop.point.domain.PointConfig">
+		<id property="pointConfigId" column="POINT_CONFIG_ID" />
+		<result property="configType" column="CONFIG_TYPE" />
+		<result property="periodType" column="PERIOD_TYPE" />
+		<result property="pointType" column="POINT_TYPE" />
+		<result property="point" column="POINT" />
+		<result property="startDate" column="START_DATE" />
+		<result property="startTime" column="START_TIME" />
+		<result property="endDate" column="END_DATE" />
+		<result property="endTime" column="END_TIME" />
+		<result property="repeatDay" column="REPEAT_DAY" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="statusCode" column="STATUS_CODE" />
+		<result property="createdUserId" column="CREATED_USER_ID" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>	
+	
+	<resultMap id="PointPolicyResult" type="saleson.shop.point.domain.PointPolicy">
+		<result property="pointType" column="POINT_TYPE" />
+		<result property="configType" column="CONFIG_TYPE" />
+		<result property="point" column="POINT" />
+		<result property="rank" column="RANKING" />
+		<result property="pointLog" column="POINT_LOG" />
+	</resultMap>
+	
+	<resultMap id="PointResult" type="saleson.shop.point.domain.Point">
+		<id property="pointId" column="POINT_ID" />
+		<result property="pointType" column="POINT_TYPE" />
+		<result property="savedType" column="SAVED_TYPE" />
+		<result property="savedYear" column="SAVED_YEAR" />
+		<result property="savedMonth" column="SAVED_MONTH" />
+		<result property="savedPoint" column="SAVED_POINT" />
+		<result property="point" column="POINT" />
+		<result property="reason" column="REASON" />
+		<result property="userId" column="USER_ID" />
+		<result property="managerUserId" column="MANAGER_USER_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="orderSequence" column="ORDER_SEQUENCE" />
+		<result property="itemSequence" column="ITEM_SEQUENCE" />
+		<result property="expirationDate" column="EXPIRATION_DATE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="expirationPoint" column="EXPIRATION_POINT" />
+	</resultMap>
+	
+	<resultMap id="PointUsedResult" type="saleson.shop.point.domain.PointUsed">
+		<result property="pointUsedId" column="POINT_USED_ID" />
+		<result property="pointId" column="POINT_ID" />
+		<result property="pointUsedGroupId" column="POINT_USED_GROUP_ID" />
+		<result property="usedType" column="USED_TYPE" />
+		<result property="point" column="POINT" />
+		<result property="details" column="DETAILS" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="remainingPoint" column="REMAINING_POINT" />
+	</resultMap>
+	
+	<resultMap id="PointHistoryResult" type="saleson.shop.point.domain.PointHistory">
+		<result property="point" column="POINT" />
+		<result property="reason" column="REASON" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="managerName" column="MANAGER_NAME" />
+		<result property="expirationDate" column="EXPIRATION_DATE" />
+		<result property="sign" column="SIGN" />
+		
+		<result property="userId" column="USER_ID" />
+		<result property="loginId" column="LOGIN_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="subject" column="SUBJECT" />
+		<result property="userType" column="USER_TYPE" />
+		<result property="statusCode" column="STATUS_CODE" />
+	</resultMap>
+	
+	<resultMap id="PublicationPointResult" type="saleson.shop.point.domain.PublicationPoint">
+		<id property="userId" column="USER_ID" />
+		<id property="loginId" column="LOGIN_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="statusCode" column="STATUS_CODE" />
+		<result property="savedPoint" column="SAVED_POINT" />
+		<result property="usedPoint" column="USED_POINT" />
+	</resultMap>
+	
+	<resultMap id="PointDayGroupResult" type="saleson.shop.point.domain.PointDayGroup">
+		<id property="groupKey" column="GROUP_KEY" />
+		<result property="savedPoint" column="SAVED_POINT" />
+		<result property="usedPoint" column="USED_POINT" />
+	</resultMap>
+
+	<resultMap id="ExpirationPointResult" type="saleson.shop.point.domain.Point">
+		<id property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="phoneNumber" column="PHONE_NUMBER" />
+		<result property="totalPoint" column="TOTAL_POINT" />
+		<result property="expirationPoint" column="EXPIRATION_POINT" />
+	</resultMap>
+
+	<sql id="publicationPointWhere">
+		
+		<if test="query != null and query != ''">
+			<if test="where == 'USER_NAME'">
+				AND U.USER_NAME LIKE CONCAT('%', #{query}, '%')
+			</if>
+			<if test="where == 'LOGIN_ID'">
+				AND U.LOGIN_ID LIKE CONCAT('%', #{query}, '%')
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="publicationPointQuery">
+		SELECT 
+			TT.USER_ID, 
+            TT.LOGIN_ID, 
+            TT.USER_NAME, 
+            TT.STATUS_CODE, 
+            TT.SAVED_POINT, 
+            TT.USED_POINT
+		FROM (
+			SELECT 
+				T.USER_ID, 
+                T.LOGIN_ID, 
+                T.USER_NAME, 
+                T.STATUS_CODE,
+                T.SAVED_POINT,
+                T.USED_POINT
+			FROM (
+				SELECT 
+					T.USER_ID,
+					T.USER_NAME,
+					T.LOGIN_ID,
+					T.STATUS_CODE,
+					SUM(CASE WHEN POINT_TYPE = '1' THEN POINT ELSE 0 END) AS SAVED_POINT,
+					SUM(CASE WHEN POINT_TYPE = '2' THEN POINT ELSE 0 END) AS USED_POINT
+				FROM (
+					SELECT 
+						P.USER_ID,
+						'1' AS POINT_TYPE,
+						SUM(P.SAVED_POINT) AS POINT,
+						U.USER_NAME,
+						U.LOGIN_ID, 
+						U.STATUS_CODE
+					FROM OP_POINT P
+					INNER JOIN OP_USER U ON P.USER_ID = U.USER_ID AND P.POINT_TYPE='point' AND U.STATUS_CODE IN ('4', '9')
+					INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+					<where>
+						DATE_FORMAT(P.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+						<include refid="publicationPointWhere" />
+					</where>
+					GROUP BY P.USER_ID
+					
+					UNION ALL
+					
+					SELECT
+						P.USER_ID,
+						'2' AS POINT_TYPE,
+						SUM(PU.POINT) AS POINT,
+						U.USER_NAME,
+						U.LOGIN_ID, 
+						U.STATUS_CODE
+					FROM OP_POINT P
+					INNER JOIN OP_POINT_USED PU ON P.POINT_ID = PU.POINT_ID AND P.POINT_TYPE='point' 
+					INNER JOIN OP_USER U ON P.USER_ID = U.USER_ID AND U.STATUS_CODE IN ('4', '9')
+					INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+					<where>
+						DATE_FORMAT(PU.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+						<include refid="publicationPointWhere" />
+					</where>
+					GROUP BY P.USER_ID
+				) T GROUP BY T.USER_ID
+				ORDER BY T.USER_ID DESC
+			) T GROUP BY T.USER_ID
+		) TT GROUP BY TT.USER_ID
+	</sql>
+	
+	<sql id="pointHistoryQuery">
+		SELECT
+			P.CREATED_DATE,
+			U.USER_ID, 
+			U.LOGIN_ID,
+			U.USER_NAME, 
+			'적립' AS SUBJECT, 
+			P.SAVED_POINT AS POINT,
+			P.REASON,
+			U.STATUS_CODE,
+			P.ORDER_CODE
+		FROM OP_POINT P
+			INNER JOIN OP_USER U ON P.USER_ID = U.USER_ID AND P.POINT_TYPE='point' AND U.STATUS_CODE IN ('4', '9')
+			INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		<where>
+			DATE_FORMAT(P.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+			<include refid="publicationPointWhere" />
+		</where>
+		UNION ALL
+		
+		SELECT
+			PU.CREATED_DATE,
+			U.USER_ID, 
+			U.LOGIN_ID,
+			U.USER_NAME, 
+			(CASE WHEN PU.USED_TYPE = '1' THEN '사용' ELSE '소멸' END) AS SUBJECT, 
+			SUM(PU.POINT) AS POINT,
+			PU.DETAILS AS REASON,
+			U.STATUS_CODE, 
+			PU.ORDER_CODE
+		FROM OP_POINT P
+			INNER JOIN OP_POINT_USED PU ON P.POINT_ID = PU.POINT_ID AND P.POINT_TYPE='point' 
+			INNER JOIN OP_USER U ON P.USER_ID = U.USER_ID AND U.STATUS_CODE IN ('4', '9')
+			INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+		<where>
+			DATE_FORMAT(PU.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+			<include refid="publicationPointWhere" />
+		</where>
+		GROUP BY PU.POINT_USED_GROUP_ID
+	</sql>
+	
+	<sql id="pointDayGroupQuery">
+		SELECT 
+			TT.GROUP_KEY, 
+			SUM(SAVED_POINT) AS SAVED_POINT,
+			SUM(USED_POINT) AS USED_POINT
+		FROM (
+				SELECT 
+					T.GROUP_KEY,
+					SUM(CASE WHEN POINT_TYPE = '1' THEN POINT ELSE 0 END) AS SAVED_POINT,
+					SUM(CASE WHEN POINT_TYPE = '2' THEN POINT ELSE 0 END) AS USED_POINT
+				FROM (
+					SELECT 
+						DATE_FORMAT(P.CREATED_DATE, '%Y%m%d') AS GROUP_KEY,
+						'1' AS POINT_TYPE,
+						SUM(P.SAVED_POINT) AS POINT 
+					FROM OP_POINT P
+					INNER JOIN OP_USER U ON P.USER_ID = U.USER_ID AND P.POINT_TYPE='point' AND U.STATUS_CODE IN ('4', '9')
+					INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+					<where>
+						DATE_FORMAT(P.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+						<include refid="publicationPointWhere" />
+					</where>
+					GROUP BY P.CREATED_DATE
+					
+					UNION ALL
+					
+					SELECT
+						DATE_FORMAT(PU.CREATED_DATE, '%Y%m%d') AS GROUP_KEY,
+						'2' AS POINT_TYPE,
+						SUM(PU.POINT) AS POINT 
+					FROM OP_POINT P
+					INNER JOIN OP_POINT_USED PU ON P.POINT_ID = PU.POINT_ID AND P.POINT_TYPE='point' 
+					INNER JOIN OP_USER U ON P.USER_ID = U.USER_ID AND U.STATUS_CODE IN ('4', '9')
+					INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+					<where>
+						DATE_FORMAT(PU.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+						<include refid="publicationPointWhere" />
+					</where>
+					GROUP BY PU.CREATED_DATE
+					
+				) T GROUP BY T.GROUP_KEY
+				ORDER BY T.GROUP_KEY DESC
+		) TT GROUP BY TT.GROUP_KEY
+	</sql>
+	
+	<!-- 포인트 발행 내역 카운트 -->
+	<select id="getPublicationPointCountByParamForManager" parameterType="saleson.shop.point.support.PointParam" resultType="Integer">
+		SELECT COUNT(*) FROM (
+			<include refid="publicationPointQuery" />
+		) TT
+	</select>
+	
+	<!-- 포인트 발행 내역 목록 -->
+	<select id="getPublicationPointListByParamForManager" parameterType="saleson.shop.point.support.PointParam" resultMap="PublicationPointResult">
+		<include refid="CommonMapper.paginationHeader" />
+			<include refid="publicationPointQuery" />
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<!-- 포인트 사용 내역 카운트 -->
+	<select id="getPointTotalHistoryCountByParam" parameterType="saleson.shop.point.support.PointParam" resultType="Integer">
+	
+		SELECT COUNT(*) FROM (
+			<include refid="pointHistoryQuery" />
+		) T 
+		
+	</select>
+	
+	<!-- 포인트 사용 내역 목록 -->
+	<select id="getPointTotalHistoryListByParam" parameterType="saleson.shop.point.support.PointParam" resultMap="PointHistoryResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT * FROM (
+				<include refid="pointHistoryQuery" />
+			) T ORDER BY T.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<!-- 포인트 일별 발생/사용현황 카운트 -->
+	<select id="getPointDayGroupCountByParam" parameterType="saleson.shop.point.support.PointParam" resultType="Integer">
+		SELECT COUNT(*) FROM (
+			<include refid="pointDayGroupQuery" />
+		) G
+	</select>
+	
+	<!-- 포인트 일별 발생/사용현황 목록 -->
+	<select id="getPointDayGroupListByParam" parameterType="saleson.shop.point.support.PointParam" resultMap="PointDayGroupResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT * FROM (
+				<include refid="pointDayGroupQuery" />
+			) T ORDER BY T.GROUP_KEY DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	<select id="getNextMonthExpirationPointAmountByParam" parameterType="saleson.shop.point.support.PointParam" resultType="Integer">
+		SELECT IFNULL(SUM(POINT), 0) AS POINT
+		FROM OP_POINT
+		<where> 
+			USER_ID = #{userId}
+			AND POINT_TYPE = #{pointType}
+			AND POINT > 0 
+			AND EXPIRATION_DATE LIKE CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 MONTH), '%Y%m'), '__')
+		</where>
+		
+	</select>
+	
+	<!-- 이번달 포인트 만료 안내 대상자 -->
+	<select id="getExpirationPointSendMessageTargetListAll" resultType="Integer">
+		SELECT DISTINCT USER_ID
+		FROM OP_POINT
+		WHERE 
+			POINT > 0 
+			AND EXPIRATION_DATE LIKE CONCAT(DATE_FORMAT(NOW(), '%Y%m'), '__')
+	</select>
+	
+	<!-- 이번달 포인트 만료 안내 처리 대상 포인트 목록 -->
+	<select id="getExpirationSendMessageListByParam" parameterType="saleson.shop.point.support.PointParam" resultMap="PointResult">
+		SELECT POINT_TYPE, SUM(POINT) AS POINT
+		FROM OP_POINT
+		<where> 
+			USER_ID = #{userId}
+			AND POINT > 0 
+			AND EXPIRATION_DATE LIKE CONCAT(DATE_FORMAT(NOW(), '%Y%m'), '__')
+		</where>
+		GROUP BY POINT_TYPE
+	</select>
+	
+	<!-- 이번달 포인트 만료 안내 처리 대상 포인트 목록 -->
+	<select id="getExpirationPointAmountByParam" parameterType="saleson.shop.point.support.PointParam" resultMap="PointResult">
+		SELECT POINT_TYPE, SUM(POINT) AS POINT
+		FROM OP_POINT
+		<where> 
+			USER_ID = #{userId}
+			AND POINT_TYPE = #{pointType}
+			AND POINT > 0 
+			AND EXPIRATION_DATE LIKE CONCAT(DATE_FORMAT(NOW(), '%Y%m'), '__')
+		</where>
+	</select>
+	
+	<!-- 만료처리때문에 선입선출의 기준을 만료일 기준으로 변경함 -->
+	<select id="getAvailablePointListByParam" parameterType="saleson.shop.point.support.OrderPointParam" resultMap="PointResult">
+		SELECT 
+			POINT_ID,
+			POINT_TYPE,
+			SAVED_TYPE,
+			SAVED_YEAR,
+			SAVED_MONTH,
+			SAVED_POINT,
+			POINT,
+			REASON,
+			USER_ID,
+			MANAGER_USER_ID,
+			ORDER_CODE,
+			ORDER_SEQUENCE,
+			ITEM_SEQUENCE,
+			EXPIRATION_DATE,
+			CREATED_DATE
+		FROM OP_POINT
+		<where>
+			USER_ID = #{userId}
+			AND POINT_TYPE = #{pointType}
+			AND POINT != 0
+		</where>
+		ORDER BY EXPIRATION_DATE ASC, POINT_ID ASC
+	</select>
+	
+	<select id="getPointTheoremPointTypesByUserId" resultType="String" parameterType="Long">
+		SELECT T.POINT_TYPE FROM (
+			SELECT 
+				POINT_TYPE, 
+				SUM(IF(POINT > 0, POINT, 0)) AS PLUS, 
+				SUM(IF(POINT <![CDATA[<]]> 0, POINT, 0)) AS MINUS 
+			FROM OP_POINT
+			WHERE 
+				USER_ID = #{userId}
+				AND POINT != 0
+			GROUP BY POINT_TYPE
+		) T 
+		WHERE
+			T.PLUS > 0
+			AND T.MINUS <![CDATA[<]]> 0
+	</select>
+	
+	<!-- 오늘자 만료 처리 대상 포인트 목록 -->
+	<select id="getExpirationListByParam" parameterType="saleson.shop.point.support.PointParam" resultMap="PointResult">
+		SELECT *
+		FROM OP_POINT
+		<where> 
+			USER_ID = #{userId}
+			<if test="pointType != null and pointType != ''">
+				AND POINT_TYPE = #{pointType}
+			</if>
+			AND POINT > 0 
+			AND EXPIRATION_DATE <![CDATA[<=]]> #{searchStartDate}
+		</where>
+		ORDER BY POINT_ID
+	</select>
+	
+	<!-- 오늘자 만료 처리 대상자 -->
+	<select id="getExpirationPointTargetListByParam" parameterType="saleson.shop.point.support.PointParam" resultType="Integer">
+		SELECT DISTINCT USER_ID
+		FROM OP_POINT
+		WHERE 
+			POINT > 0 
+			AND EXPIRATION_DATE <![CDATA[<=]]> #{searchStartDate}
+	</select>
+	
+	<select id="getPointPolicyByOrderPointParam" parameterType="saleson.shop.point.support.OrderPointParam" resultMap="PointPolicyResult">
+		SELECT  
+			T.POINT_TYPE,
+			T.CONFIG_TYPE,
+			T.POINT,
+			T.RANKING,
+			T.POINT_LOG
+		FROM (
+			SELECT 
+				T.POINT_TYPE, T.CONFIG_TYPE, T.POINT, T.RANKING, CONCAT('POINT_CONFIG_ID : ', POINT_CONFIG_ID, ', RANKING : ', RANKING ,', CONFIG_TYPE : ', CONFIG_TYPE, ', PERIOD_TYPE : ', PERIOD_TYPE, ', START : ', START_DATE, START_TIME, ', END : ', END_DATE, END_TIME) AS POINT_LOG
+			FROM (
+				SELECT T.*, 1 AS RANKING FROM (
+					SELECT * FROM OP_POINT_CONFIG
+					WHERE 
+						STATUS_CODE = '1'
+						AND CONCAT(START_DATE) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+						AND CONCAT(END_DATE) >= DATE_FORMAT(NOW(), '%Y%m%d%H')
+						AND ITEM_ID = #{itemId}
+						AND CONFIG_TYPE = '2' 
+						AND PERIOD_TYPE = '2'
+						AND CONCAT(RIGHT(CONCAT('0', REPEAT_DAY), 2), #{repeatDayStartTime}, '00') <![CDATA[<=]]> DATE_FORMAT(NOW(), '%d%H%i')
+						AND RIGHT(CONCAT(DATE_ADD(DATE_FORMAT(CONCAT(DATE_FORMAT(NOW(), '%Y%m'), RIGHT(CONCAT('0', REPEAT_DAY), 2)), '%Y%m%d'), INTERVAL 1 DAY), #{repeatDayEndTime}, '59'), 6) >= DATE_FORMAT(NOW(), '%d%H%i')
+					ORDER BY POINT_CONFIG_ID DESC
+					LIMIT 0, 1
+				) T
+				
+				UNION
+				
+				SELECT T.*, 2 AS RANKING FROM (
+					SELECT * FROM OP_POINT_CONFIG
+					WHERE
+						STATUS_CODE = '1'
+						AND ITEM_ID = #{itemId}
+						AND CONFIG_TYPE = '2' 
+						AND PERIOD_TYPE = '1'
+					ORDER BY POINT_CONFIG_ID DESC
+					LIMIT 0, 1
+				) T
+				
+				UNION
+				
+				SELECT T.*, 3 AS RANKING FROM (
+					SELECT * FROM OP_POINT_CONFIG
+					WHERE
+						STATUS_CODE = '1'
+						AND CONCAT(START_DATE, START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+						AND CONCAT(END_DATE, END_TIME) >= DATE_FORMAT(NOW(), '%Y%m%d%H')
+		
+						AND CONFIG_TYPE = '1' 
+						AND PERIOD_TYPE = '2'
+						AND CONCAT(RIGHT(CONCAT('0', REPEAT_DAY), 2), #{repeatDayStartTime}, '00') <![CDATA[<=]]> DATE_FORMAT(NOW(), '%d%H%i')
+						AND RIGHT(CONCAT(DATE_ADD(DATE_FORMAT(CONCAT(DATE_FORMAT(NOW(), '%Y%m'), RIGHT(CONCAT('0', REPEAT_DAY), 2)), '%Y%m%d'), INTERVAL 1 DAY), #{repeatDayEndTime}, '59'), 6) >= DATE_FORMAT(NOW(), '%d%H%i')
+
+					ORDER BY POINT_CONFIG_ID DESC
+					LIMIT 0, 1
+				) T
+			
+				UNION
+				
+				SELECT T.*, 4 AS RANKING FROM (
+					SELECT * FROM OP_POINT_CONFIG
+					WHERE
+						STATUS_CODE = '1'
+						AND CONCAT(START_DATE, START_TIME) <![CDATA[<=]]> DATE_FORMAT(NOW(), '%Y%m%d%H')
+						AND CONCAT(END_DATE, END_TIME) >= DATE_FORMAT(NOW(), '%Y%m%d%H')
+		
+						AND CONFIG_TYPE = '1'
+						AND PERIOD_TYPE = '1'
+					ORDER BY POINT_CONFIG_ID DESC
+					LIMIT 0, 1
+				) T
+			) T
+			
+			UNION
+			
+			SELECT POINT_DEFAULT_TYPE AS POINT_TYPE, '1' AS CONFIG_TYPE, POINT_DEFAULT AS POINT, 5 AS RANKING, 'SHOP-DEFAULT' AS POINT_LOG
+			FROM OP_CONFIG WHERE SHOP_CONFIG_ID = '1'
+		) T ORDER BY RANKING ASC
+		LIMIT 0, 1
+	</select>
+	
+	<sql id="defaultPointSavedWhereQuery">
+		AND USER_ID = #{userId}
+		AND POINT_TYPE = #{pointType}
+		AND SAVED_POINT > 0
+		<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+			AND DATE_FORMAT(P.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+		</if>
+	</sql>
+	
+	<select id="getPointCountByParam" parameterType="saleson.shop.point.support.PointParam" resultType="Integer">
+		SELECT COUNT(*) FROM OP_POINT P
+		<where>
+			<include refid="defaultPointSavedWhereQuery" />
+		</where>
+			
+	</select>
+
+	<select id="getPointListByParam" parameterType="saleson.shop.point.support.PointParam" resultMap="PointResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT P.*, (SELECT SUM(POINT) FROM OP_POINT_USED WHERE POINT_ID = P.POINT_ID AND USED_TYPE = '2') AS EXPIRATION_POINT
+			FROM OP_POINT P
+			<where>
+				<include refid="defaultPointSavedWhereQuery" />
+			</where>
+			ORDER BY P.POINT_ID DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<sql id="defaultPointUsedQuery">
+		SELECT 
+			SUM(PU.POINT) AS POINT, PU.DETAILS, PU.ORDER_CODE, PU.CREATED_DATE, PU.MANAGER_USER_ID, PU.USED_TYPE
+		FROM OP_POINT_USED PU 
+			INNER JOIN OP_POINT P ON PU.POINT_ID = P.POINT_ID
+		<where>
+			P.USER_ID = #{userId}
+			AND P.POINT_TYPE = #{pointType}
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(PU.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+			</if>
+		</where>
+		GROUP BY PU.POINT_USED_GROUP_ID, PU.USED_TYPE
+		
+		UNION ALL
+		
+		SELECT 
+			P.SAVED_POINT AS POINT, P.REASON AS DETAILS, '', P.CREATED_DATE, P.MANAGER_USER_ID, '' AS USED_TYPE
+		FROM OP_POINT P
+		WHERE
+			P.USER_ID = #{userId}
+			AND P.POINT_TYPE = #{pointType}
+			AND P.SAVED_POINT <![CDATA[<]]> 0
+			<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+				AND DATE_FORMAT(P.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+			</if>
+	</sql>
+
+	<select id="getPointUsedCountByParam" parameterType="saleson.shop.point.support.PointParam" resultType="Integer">
+		
+		SELECT COUNT(*) FROM (
+			<include refid="defaultPointUsedQuery" />
+		) G
+		
+	</select>
+
+	<select id="getPointUsedListByParam" parameterType="saleson.shop.point.support.PointParam" resultMap="PointUsedResult">
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT G.* FROM (
+				<include refid="defaultPointUsedQuery" />
+			) G ORDER BY G.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<select id="getPointConfigList" parameterType="saleson.shop.point.support.PointParam" resultMap="PointConfigResult" >
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+				POINT_CONFIG_ID, 
+				CONFIG_TYPE, 
+				PERIOD_TYPE, 
+				POINT_TYPE, 
+				POINT, 
+				START_DATE, 
+				START_TIME, 
+				END_DATE, 
+				END_TIME, 
+				ITEM_ID, 
+				STATUS_CODE, 
+				CREATED_USER_ID, 
+				CREATED_DATE
+			FROM OP_POINT_CONFIG 
+			WHERE STATUS_CODE = '1'
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+
+	<sql id="basePointHistoryList">
+		SELECT
+			SAVED_POINT AS POINT, REASON, ORDER_CODE, CREATED_DATE, '+' AS SIGN,
+			MANAGER_USER_ID, EXPIRATION_DATE
+		FROM OP_POINT
+		WHERE
+			USER_ID = #{userId}
+		AND POINT_TYPE = #{pointType}
+		<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+			AND DATE_FORMAT(CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+		</if>
+
+		UNION ALL
+
+		SELECT
+			SUM(PU.POINT) AS POINT, PU.DETAILS AS REASON, PU.ORDER_CODE, PU.CREATED_DATE, '-' AS SIGN,
+			PU.MANAGER_USER_ID, '' AS EXPIRATION_DATE
+		FROM OP_POINT_USED PU
+		INNER JOIN OP_POINT P ON PU.POINT_ID = P.POINT_ID
+		WHERE
+			P.USER_ID = #{userId}
+		AND P.POINT_TYPE = #{pointType}
+		<if test="(searchStartDate != null and searchStartDate != '') and (searchEndDate != null and searchEndDate != '')">
+			AND DATE_FORMAT(PU.CREATED_DATE, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+		</if>
+
+		GROUP BY PU.POINT_USED_GROUP_ID
+	</sql>
+
+	<select id="getPointHistoryCountByParam" parameterType="saleson.shop.point.support.PointParam" resultType="Integer">
+		SELECT COUNT(*) FROM (
+			<include refid="basePointHistoryList"/>
+		) T
+	</select>
+	
+
+	<select id="getPointHistoryListByParam" parameterType="saleson.shop.point.support.PointParam" resultMap="PointHistoryResult">
+		<include refid="CommonMapper.paginationHeader" />
+		SELECT
+			 POINT,
+			 REASON,
+			 ORDER_CODE,
+			 CREATED_DATE,
+			 (CASE WHEN MANAGER_USER_ID > 0 THEN (SELECT USER_NAME FROM OP_USER WHERE USER_ID = T.MANAGER_USER_ID) ELSE '' END) AS MANAGER_NAME,
+			 SIGN,
+			 EXPIRATION_DATE
+		FROM (
+			<include refid="basePointHistoryList"/>
+		) T 
+
+		ORDER BY T.CREATED_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<select id="getPointConfigListByItemId" parameterType="Integer" resultMap="PointConfigResult" >
+		SELECT * FROM OP_POINT_CONFIG 
+		WHERE STATUS_CODE = '1' AND ITEM_ID = #{value}
+	</select>
+	
+	<select id="getAvailablePointListByUserId" parameterType="Integer" resultMap="PointResult">
+		SELECT 
+			POINT_ID,
+			SAVED_TYPE,
+			SAVED_YEAR,
+			SAVED_MONTH,
+			SAVED_POINT,
+			POINT,
+			REASON,
+			USER_ID,
+			MANAGER_USER_ID,
+			ORDER_CODE,
+			ORDER_ITEM_ID,
+			CREATED_DATE
+		FROM OP_POINT
+		<where>
+			USER_ID = #{value}
+			AND POINT > 0
+		</where>
+		ORDER BY POINT_ID ASC	
+	</select>
+
+	<select id="getPointConfigById" parameterType="Integer" resultMap="PointConfigResult" >
+		SELECT 
+			POINT_CONFIG_ID, 
+			CONFIG_TYPE, 
+			PERIOD_TYPE, 
+			POINT_TYPE, 
+			POINT, 
+			START_DATE, 
+			START_TIME, 
+			END_DATE, 
+			END_TIME, 
+			ITEM_ID, 
+			STATUS_CODE, 
+			CREATED_USER_ID, 
+			CREATED_DATE
+		FROM OP_POINT_CONFIG 
+ 		WHERE POINT_CONFIG_ID = #{pointConfigId}
+	</select>
+	
+	<resultMap id="OrderPointResult" type="saleson.shop.point.domain.OrderPoint">
+		<id property="orderCode" column="ORDER_CODE" />
+		<id property="orderSequence" column="ORDER_SEQUENCE" />
+		<id property="itemSequence" column="ITEM_SEQUENCE" />
+		<result property="point" column="POINT" />
+	</resultMap>
+	
+	<select id="getOrderPointByParam" parameterType="saleson.shop.point.support.OrderPointParam" resultMap="OrderPointResult">
+	
+		SELECT 
+			T.ORDER_CODE,
+			T.ORDER_SEQUENCE,
+			T.ITEM_SEQUENCE,
+			SUM(EARN_POINT) AS POINT 
+		FROM (
+			SELECT 
+				OI.ORDER_CODE,
+				OI.ORDER_SEQUENCE,
+				OI.ITEM_SEQUENCE,
+				(OI.EARN_POINT * OI.QUANTITY) AS EARN_POINT
+			FROM OP_ORDER_ITEM OI
+				INNER JOIN OP_ORDER O 
+					ON OI.ORDER_CODE = O.ORDER_CODE 
+					AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE
+					AND O.DATA_STATUS_CODE = '1'
+			WHERE 
+				OI.USER_ID = #{userId} 
+				AND OI.EARN_POINT > 0 
+				AND OI.EARN_POINT_FLAG = 'N' 
+				AND (OI.RETURN_POINT_FLAG != 'Y' OR OI.RETURN_POINT_FLAG IS NULL)
+				AND <include refid="saleson.shop.order.OrderMapper.defaultConfirmOrderWhereQuery" />
+		) T
+		GROUP BY T.ORDER_CODE, T.ITEM_SEQUENCE
+		
+	</select>
+	
+	<insert id="insertPoint" parameterType="saleson.shop.point.domain.Point">
+		INSERT INTO OP_POINT (POINT_TYPE, SAVED_TYPE, SAVED_YEAR, SAVED_MONTH, SAVED_POINT, POINT, REASON, USER_ID, MANAGER_USER_ID, ORDER_CODE, ORDER_SEQUENCE, ITEM_SEQUENCE, EXPIRATION_DATE, CREATED_DATE)
+		VALUES (#{pointType}, #{savedType}, #{savedYear}, #{savedMonth}, #{savedPoint}, #{point}, #{reason}, #{userId}, #{managerUserId}, #{orderCode}, #{orderSequence}, #{itemSequence}, #{expirationDate}, #{createdDate})
+		<!-- DATE_FORMAT(NOW(),'%Y%m%d%H%i%s') -->
+	</insert>
+	
+	
+	<!-- 지정회원 포인트 지급 (엑셀) -->
+	<insert id="insertPointByList">
+		INSERT INTO OP_POINT (POINT_TYPE, SAVED_TYPE, SAVED_YEAR, SAVED_MONTH, SAVED_POINT, POINT, REASON, USER_ID, MANAGER_USER_ID, ORDER_CODE, ORDER_SEQUENCE, ITEM_SEQUENCE, EXPIRATION_DATE, CREATED_DATE)
+		VALUES 
+		<foreach item="point" index="index" collection="list" open="" separator="," close=""> 
+			(#{point.pointType}, #{point.savedType}, #{point.savedYear}, #{point.savedMonth}, #{point.savedPoint}, #{point.point}, #{point.reason}, #{point.userId}, #{point.managerUserId}, #{point.orderCode}, #{point.orderSequence}, #{point.itemSequence}, #{point.expirationDate}, #{point.createdDate})
+		</foreach>
+	</insert>
+	
+
+	<insert id="insertPointUsed" parameterType="saleson.shop.point.domain.PointUsed">
+		INSERT INTO OP_POINT_USED (POINT_USED_ID, POINT_ID, POINT_USED_GROUP_ID, USED_TYPE, POINT, DETAILS, ORDER_CODE, MANAGER_USER_ID, CREATED_DATE, REMAINING_POINT)
+		VALUES (#{pointUsedId}, #{pointId}, #{pointUsedGroupId}, #{usedType}, #{point}, #{details}, #{orderCode}, #{managerUserId}, #{createdDate}, #{remainingPoint})
+		<!-- DATE_FORMAT(NOW(),'%Y%m%d%H%i%s') -->
+	</insert>
+
+	<insert id="insertPointConfig" parameterType="saleson.shop.point.domain.PointConfig">
+		INSERT INTO OP_POINT_CONFIG (POINT_CONFIG_ID, CONFIG_TYPE, PERIOD_TYPE, POINT_TYPE, POINT, START_DATE, START_TIME, END_DATE, END_TIME, REPEAT_DAY, ITEM_ID, STATUS_CODE, CREATED_USER_ID, CREATED_DATE)
+		VALUES (#{pointConfigId}, #{configType}, #{periodType}, #{pointType}, #{point}, #{startDate}, #{startTime}, #{endDate}, #{endTime}, #{repeatDay}, #{itemId}, #{statusCode}, #{createdUserId}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+	</insert>
+
+
+	<update id="updatePointConfig" parameterType="saleson.shop.point.domain.PointConfig">
+		UPDATE OP_POINT_CONFIG SET
+			CONFIG_TYPE = #{configType}, 
+			PERIOD_TYPE = #{periodType}, 
+			POINT_TYPE = #{pointType}, 
+			POINT = #{point}, 
+			START_DATE = #{startDate}, 
+			START_TIME = #{startTime}, 
+			END_DATE = #{endDate}, 
+			END_TIME = #{endTime}, 
+			ITEM_ID = #{itemId}, 
+			REPEAT_DAY = #{repeatDay},
+			STATUS_CODE = #{statusCode}, 
+			CREATED_USER_ID = #{createdUserId}, 
+			CREATED_DATE = #{createdDate}
+		WHERE POINT_CONFIG_ID = #{pointConfigId}
+	</update>
+
+	<update id="updateAvailablePointByParam" parameterType="saleson.shop.point.domain.Point">
+		UPDATE OP_POINT
+		SET POINT = #{point}
+		<where>
+			USER_ID = #{userId}
+			AND POINT_TYPE = #{pointType}
+			AND POINT_ID = #{pointId}
+		</where>
+	</update>
+
+	<delete id="deletePointConfigById" parameterType="Integer">
+		UPDATE OP_POINT_CONFIG SET
+			STATUS_CODE = '2' 
+		WHERE POINT_CONFIG_ID = #{value}
+	</delete>
+	
+	
+	<delete id="deletePointConfigByItemId" parameterType="Integer">
+		DELETE FROM  OP_POINT_CONFIG 
+		WHERE ITEM_ID = #{value}
+	</delete>
+	
+	<resultMap id="ReturnPointResult" type="saleson.shop.point.domain.ReturnPoint">
+		<result property="savedPoint" column="SAVED_POINT" />
+		<result property="point" column="POINT" />
+	</resultMap>
+	
+	<select id="getOrderReturnPointByParam" parameterType="saleson.shop.point.support.ReturnPointParam" resultMap="ReturnPointResult">
+		SELECT SUM(SAVED_POINT) AS SAVED_POINT, SUM(POINT) AS POINT
+		FROM OP_POINT 
+		WHERE 
+			USER_ID = #{userId} 
+			AND ORDER_ITEM_ID = #{orderItemId}
+	</select>
+	
+	<resultMap id="ReturnPointTargetUsedHistoryResult" type="saleson.shop.point.domain.ReturnPointTargetUsedHistory">
+		<result property="orderItemId" column="ORDER_ITEM_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="usePoint" column="USE_POINT" />
+	</resultMap>
+	
+	<select id="getOrderReturnPointTargetUsedHistoryByParam" parameterType="saleson.shop.point.support.ReturnPointParam" resultMap="ReturnPointTargetUsedHistoryResult">
+		SELECT 
+			O.ORDER_ITEM_ID, 
+			O.ORDER_CODE, 
+			O.CREATED_DATE, 
+			SUM(PU.POINT) AS USE_POINT
+		FROM OP_POINT P 
+			INNER JOIN OP_POINT_USED PU ON P.POINT_ID = PU.POINT_ID
+			INNER JOIN OP_ORDER_ITEM OI ON PU.ORDER_ITEM_ID = O.ORDER_ITEM_ID
+		WHERE 
+			P.USER_ID = #{userId}  
+			AND P.ORDER_CODE = #{orderCode}
+		GROUP BY O.ORDER_ITEM_ID, O.ORDER_CODE, O.CREATED_DATE
+		ORDER BY O.CREATED_DATE ASC
+	</select>
+	
+	<select id="getReturnPointListByParam" parameterType="saleson.shop.point.support.ReturnPointParam" resultMap="PointResult">
+		SELECT 
+			POINT_ID,
+			SAVED_TYPE,
+			SAVED_YEAR,
+			SAVED_MONTH,
+			SAVED_POINT,
+			POINT,
+			REASON,
+			USER_ID,
+			MANAGER_USER_ID,
+			ORDER_ID,
+			CREATED_DATE
+		FROM OP_POINT
+		<where>
+			USER_ID = #{userId}
+			AND ORDER_ID = #{orderId}
+			AND POINT > 0
+		</where>
+		ORDER BY POINT_ID ASC	
+	</select>
+	
+	<select id="getShopPointConfig" resultMap="PointConfigResult">
+		SELECT * 
+		FROM OP_POINT_CONFIG 
+		WHERE CONFIG_TYPE = 1
+	</select>
+	
+	<delete id="deleteShopPointConfig" parameterType="saleson.shop.point.domain.PointConfig">
+		DELETE FROM OP_POINT_CONFIG 
+		<where>
+			CONFIG_TYPE = #{configType}
+			<if test='itemId != null and itemId != ""'>
+				AND ITEM_ID = #{itemId}
+			</if>
+		</where>
+	</delete>
+
+	<!--LCH-point-mapper   <수정>-->
+	
+	<insert id="insertPointAllUser" parameterType="saleson.shop.point.domain.Point">
+		INSERT INTO OP_POINT (SAVED_TYPE, SAVED_YEAR, SAVED_MONTH, SAVED_POINT, POINT, REASON, USER_ID, MANAGER_USER_ID, EXPIRATION_DATE, CREATED_DATE)
+		SELECT 
+			'1', DATE_FORMAT(NOW(),'%Y'), DATE_FORMAT(NOW(),'%m'), #{point}, #{point}, #{reason}, U.USER_ID, 1, #{expirationDate}, DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		FROM OP_USER U
+		WHERE U.STATUS_CODE = '9'
+	</insert>
+	
+	<update id="updatePointSequence">
+		UPDATE OP_SEQUENCE SET
+			SEQUENCE_ID = (SELECT MAX(POINT_ID) FROM OP_POINT)
+		WHERE SEQUENCE_KEY = 'OP_POINT'
+	</update>
+	
+	<insert id="insertShippingCouponByUserLevel" parameterType="saleson.shop.userlevel.domain.UserLevel">
+		INSERT INTO OP_POINT (
+			POINT_TYPE,
+			SAVED_TYPE, 
+			SAVED_YEAR, 
+			SAVED_MONTH, 
+			SAVED_POINT, 
+			POINT, 
+			REASON, 
+			USER_ID,
+			EXPIRATION_DATE, 
+			CREATED_DATE
+		)
+		SELECT 
+			'shipping',
+			'1', 
+			DATE_FORMAT(NOW(),'%Y'), 
+			DATE_FORMAT(NOW(),'%m'), 
+			#{shippingCouponCount}, 
+			#{shippingCouponCount}, 
+			#{shippingCouponReason}, 
+			U.USER_ID,
+			#{shippingCouponExpirationDate}, 
+			DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+		FROM  OP_USER U
+            INNER JOIN OP_USER_DETAIL UD ON U.USER_ID = UD.USER_ID
+        WHERE
+            U.STATUS_CODE = '9'
+            AND UD.LEVEL_ID = #{levelId}
+	</insert>
+
+	<select id="getPointExpirationDateByPointId" parameterType="Integer" resultType="String">
+		SELECT
+			EXPIRATION_DATE
+		FROM
+			OP_POINT
+		WHERE
+			POINT_ID = #{pointId}
+	</select>
+
+	<select id="getPointUsedListByOrderCode" parameterType="String" resultMap="PointUsedResult">
+		SELECT * FROM
+			OP_POINT_USED
+		WHERE ORDER_CODE = #{orderCode}
+		ORDER BY POINT_USED_ID ASC
+	</select>
+
+	<update id="updateRemainingPointByPointUsed" parameterType="saleson.shop.point.domain.PointUsed">
+		UPDATE OP_POINT_USED
+		SET
+			REMAINING_POINT = #{remainingPoint}
+		WHERE POINT_USED_ID = #{pointUsedId}
+	</update>
+
+	<!-- 포인트 만료 day일 전 -->
+	<select id="getExpirationPointSendMessage" parameterType="Integer" resultMap="ExpirationPointResult">
+		SELECT
+		   T.*,
+		   U.USER_NAME,
+		   UD.PHONE_NUMBER
+		FROM (
+				 SELECT
+						P.USER_ID,
+						SUM(P.POINT) AS TOTAL_POINT,
+						(	SELECT SUM(POINT)
+							FROM OP_POINT
+							WHERE P.USER_ID = USER_ID
+								AND POINT > 0
+								AND POINT_TYPE = 'point'
+								AND EXPIRATION_DATE = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL + #{day} DAY), '%Y%m%d')
+						) AS EXPIRATION_POINT
+				 FROM OP_POINT P
+				 GROUP BY USER_ID
+			 ) T
+		INNER JOIN OP_USER U ON T.USER_ID = U.USER_ID
+		INNER JOIN OP_USER_DETAIL UD ON T.USER_ID = UD.USER_ID
+		WHERE T.EXPIRATION_POINT > 0
+	</select>
+</mapper>

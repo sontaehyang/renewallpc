@@ -1,0 +1,330 @@
+<?include "../include/head.html"?>
+	<!-- 본문 -->
+	<!-- 팝업사이즈 814*293-->
+	<div class="popup_wrap">
+		<h1 class="popup_title">복수배송지 등록</h1>
+		<div class="popup_contents"> 
+			<h2>배송지1</h2>
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-write">
+		 			<caption>복수배송지 등록</caption>
+		 			<colgroup> 
+			 			<col style="width:160px;"> 
+			 			<col style="width:auto;"> 
+			 			<col style="width:130px;"> 
+		 			</colgroup>
+		 			<tbody>
+		 				<tr>
+		 					<th scope="row">배송지 선택</th>
+		 					<td colspan="2"> 
+			 					<div class="input_wrap col-w-0"> 
+				 					<input type="radio" id="op-new-0" name="infoCopy" value="clear"> <label for="op-new-0">새로운 배송지</label>&nbsp;&nbsp; 		 					
+				 					<input type="radio" id="op-same-0" name="infoCopy" value="copy"> <label for="op-same-0">주문자정보와 동일</label> &nbsp;&nbsp; 
+				 					<button type="button" class="btn btn-ms btn-default" title="배송지 목록">배송지 목록</button>  
+			 					</div>
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">받으시는 분</th>
+		 					<td colspan="2">
+		 						<div class="input_wrap col-w-7">
+		 							<input type="text" title="받으시는 분" placeholder="받으시는 분">
+		 						</div> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row">전화번호</th>
+		 					<td colspan="2">
+		 						<div class="hp_area">
+		 							<div class="input_wrap col-w-10">
+		 								<select class="form-control">
+									        <option value="02">02</option> 
+									        <option value="031">031</option> 
+									        <option value="032">032</option>  
+									    </select>
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							<div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+		 							</div> 	
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+		 					<td colspan="2">
+		 						<div class="hp_area">
+		 							<div class="input_wrap col-w-10">
+		 								<select class="form-control">
+									        <option value="010">010</option> 
+									        <option value="011">011</option> 
+									        <option value="016">016</option> 
+									        <option value="017">017</option>
+									        <option value="018">018</option> 
+									        <option value="019">019</option>  
+									    </select>
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							<div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+		 							</div> 		
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+		 					<td colspan="2">
+		 						<div> 
+		 							<div class="input_wrap col-w-10">
+		 								<input type="text" title="우편번호"> 
+		 							</div>	 
+		 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default" title="우편번호">우편번호</button></div>  
+		 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+		 								<input type="text" title="주소" class="full"> 
+		 							</div>			 	 				  			 
+		 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+		 								<input type="text" title="주소" class="full"> 
+		 							</div>		 							 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row">배송시 요구사항</th>
+		 					<td colspan="2">
+		 						<div class="input_wrap col-w-0">
+		 							<input type="text" title="배송시 요구사항" placeholder="ex)부재 시 경비실에 맡겨주세요.">
+		 						</div> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row" rowspan="2" valign="top" class="noline_bottom">배송<br>상품선택</th>
+		 					<td class="address_add">
+		 						 <div class="item_info">
+									<p class="photo"><img src="/content/image/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</div>  
+		 					</td>
+		 					<td>
+		 						<div class="input_wrap col-w-0"> 
+			 						<select title="수량 선택" name="buyQuantity" itemsequence="0" receverindex="0"> 
+			 							<option value="0">0개</option> 
+			 							<option value="1" selected="selected">1개</option> 
+			 						</select> 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 				<tr> 
+		 					<td class="address_add">
+		 						 <div class="item_info">
+									<p class="photo"><img src="/content/image/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</div>  
+		 					</td>
+		 					<td>
+		 						<div class="input_wrap col-w-0"> 
+			 						<select title="수량 선택" name="buyQuantity" itemsequence="0" receverindex="0"> 
+			 							<option value="0">0개</option> 
+			 							<option value="1" selected="selected">1개</option> 
+			 						</select> 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 			</tbody>
+		 		</table>  
+		 	</div> <!-- // board_wrap E -->
+		 	<h2 class="mt30">배송지2</h2>
+			<div class="board_wrap">
+	 			<table cellpadding="0" cellspacing="0" class="board-write">
+		 			<caption>복수배송지 등록</caption>
+		 			<colgroup> 
+			 			<col style="width:160px;"> 
+			 			<col style="width:auto;"> 
+			 			<col style="width:130px;"> 
+		 			</colgroup>
+		 			<tbody>
+		 				<tr>
+		 					<th scope="row">배송지 선택</th>
+		 					<td colspan="2"> 
+			 					<div class="input_wrap col-w-0"> 
+				 					<input type="radio" id="op-new-0" name="infoCopy" value="clear"> <label for="op-new-0">새로운 배송지</label>&nbsp;&nbsp; 		 					
+				 					<input type="radio" id="op-same-0" name="infoCopy" value="copy"> <label for="op-same-0">주문자정보와 동일</label> &nbsp;&nbsp; 
+				 					<button type="button" class="btn btn-ms btn-default" title="배송지 목록">배송지 목록</button>  
+			 					</div>
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">받으시는 분</th>
+		 					<td colspan="2">
+		 						<div class="input_wrap col-w-7">
+		 							<input type="text" title="받으시는 분" placeholder="받으시는 분">
+		 						</div> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row">전화번호</th>
+		 					<td colspan="2">
+		 						<div class="hp_area">
+		 							<div class="input_wrap col-w-10">
+		 								<select class="form-control">
+									        <option value="02">02</option> 
+									        <option value="031">031</option> 
+									        <option value="032">032</option>  
+									    </select>
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="전화번호" class="full" placeholder="1234"> 
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							<div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="전화번호" class="full" placeholder="5678"> 
+		 							</div> 	
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr>
+		 				<tr>
+		 					<th scope="row">휴대폰번호 <span class="necessary"></span></th>
+		 					<td colspan="2">
+		 						<div class="hp_area">
+		 							<div class="input_wrap col-w-10">
+		 								<select class="form-control">
+									        <option value="010">010</option> 
+									        <option value="011">011</option> 
+									        <option value="016">016</option> 
+									        <option value="017">017</option>
+									        <option value="018">018</option> 
+									        <option value="019">019</option>  
+									    </select>
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							 <div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="휴대폰번호" class="full" placeholder="1234"> 
+		 							</div>
+		 							<span class="connection"> - </span>
+		 							<div class="input_wrap col-w-10">			 	 			 	 							 
+		 								<input type="text" title="휴대폰번호" class="full" placeholder="5678"> 
+		 							</div> 		
+		 						</div><!-- // hp_area --> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row" valign="top">배송지 주소 <span class="necessary"></span></th>
+		 					<td colspan="2">
+		 						<div> 
+		 							<div class="input_wrap col-w-10">
+		 								<input type="text" title="우편번호"> 
+		 							</div>	 
+		 							<div class="input_wrap"><button type="button" class="btn btn-ms btn-default" title="우편번호">우편번호</button></div>  
+		 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+		 								<input type="text" title="주소" class="full"> 
+		 							</div>			 	 				  			 
+		 							<div class="input_wrap mt8 col-w-0">			 	 			 	 							 
+		 								<input type="text" title="주소" class="full"> 
+		 							</div>		 							 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row">배송시 요구사항</th>
+		 					<td colspan="2">
+		 						<div class="input_wrap col-w-0">
+		 							<input type="text" title="배송시 요구사항" placeholder="ex)부재 시 경비실에 맡겨주세요.">
+		 						</div> 
+		 					</td>
+		 				</tr> 
+		 				<tr>
+		 					<th scope="row" valign="top">배송<br>상품선택</th>
+		 					<td class="address_add">
+		 						 <div class="item_info">
+									<p class="photo"><img src="/content/image/common/item_90.gif" alt="item photo"></p>
+									<div class="order_option">
+										<p class="item_name">[우드웍] 트릴로지 라지캔들 12종 중 택1</p>
+										<ul class="option">
+											<li>
+												<span class="choice">옵션1 :</span>
+												<span>아일랜드썬라이즈</span>	
+											</li>
+											<li>
+												<span class="choice">LED 네일 라이트 : </span>
+												<span>나비 LED 네일 라이트 8W 펄 화이트</span>	
+											</li>
+											<li>
+												<span class="choice">조립 / 설치 서비스 : </span>
+												<span>조립 / 설치 서비스 이용</span>	
+											</li>
+										</ul>
+										<div class="item_price">
+											<span>10,500</span>원/ <span>3</span>개
+										</div>
+									</div>
+								</div>  
+		 					</td>
+		 					<td>
+		 						<div class="input_wrap col-w-0"> 
+			 						<select title="수량 선택" name="buyQuantity" itemsequence="0" receverindex="0"> 
+			 							<option value="0">0개</option> 
+			 							<option value="1" selected="selected">1개</option> 
+			 						</select> 
+		 						</div>
+		 					</td>
+		 				</tr> 
+		 			</tbody>
+		 		</table>  
+		 	</div> <!-- // board_wrap E -->
+		 	
+		 	<div class="btn_wrap pt30">  
+ 				<button type="button" class="btn btn-success btn-lg" title="적용하기">적용하기</button>   
+ 				<button type="button" class="btn btn-default btn-lg" title="취소하기">취소하기</button>  
+			</div>
+		</div><!--//popup_contents E--> 
+		<a href="#" class="popup_close">창 닫기</a>
+	</div>
+
+ </body>
+</html>

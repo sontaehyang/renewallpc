@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="saleson.shop.order.shipping.OrderShippingMapper">
+	
+	<select id="getOrderShippingByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultMap="saleson.shop.order.OrderMapper.OrderShippingResult">
+	
+		SELECT * FROM OP_ORDER_SHIPPING 
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND SHIPPING_SEQUENCE = #{shippingSequence}
+	
+	</select>
+	
+	<!-- CJH 2017.01.03 반품에서 같은 배송정책의 취소되지 않은 상품을 조회하는 용도로만 사용 -->
+	<select id="getOrderItemListByShippingParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultMap="saleson.shop.order.OrderMapper.OrderItemResult">
+	
+		SELECT * FROM OP_ORDER_ITEM
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND SHIPPING_SEQUENCE = #{shippingSequence}
+			AND CANCEL_FLAG = 'N'
+			AND REFUND_STATUS != '1'
+			
+	</select>
+	
+	<select id="getBuyConfirmDelayListByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultMap="saleson.shop.order.OrderMapper.OrderItemResult">
+		
+		SELECT OI.* FROM OP_ORDER_ITEM OI
+			INNER JOIN OP_ORDER O 
+				ON OI.ORDER_CODE = O.ORDER_CODE AND OI.ORDER_SEQUENCE = O.ORDER_SEQUENCE AND O.DATA_STATUS_CODE = '1'
+		WHERE
+			OI.CANCEL_FLAG = 'N'
+			AND OI.ORDER_STATUS IN ('30', '55')
+			AND LEFT(OI.SHIPPING_DATE, 8) <![CDATA[<]]> DATE_FORMAT(DATE_ADD(NOW(), interval -#{confirmPurchaseDate} DAY) ,'%Y%m%d')
+	</select>
+	
+	
+	
+	<sql id="whereNewOrder">
+		<where>
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+					
+					<if test="sellerId > 0">
+						AND OI.SELLER_ID = #{sellerId}
+					</if>
+					
+					<if test="deliveryType != null and deliveryType != ''">
+						<if test="sellerId == 0">
+							AND OI.SELLER_ID > #{sellerId}
+						</if>
+						
+						AND OI.DELIVERY_TYPE = #{deliveryType}
+					</if>
+				
+				</when>
+			</choose>
+		
+			<if test='conditionType == "OPMANAGER"'>
+				<if test="sellerId != null and sellerId > 0">
+					AND OI.SELLER_ID = #{sellerId}
+				</if>
+			</if>
+
+			<if test="additionItemFlag != null and additionItemFlag != ''">
+				AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+			</if>
+			
+			AND <include refid="saleson.shop.order.OrderMapper.defaultNewOrderWhereQuery" />
+			<include refid="saleson.shop.order.OrderMapper.sqlDefaultWhereQuery" />
+		</where>
+	</sql>
+
+
+	<sql id="sqlNewOrderJoinPayment">
+		INNER JOIN OP_ORDER_PAYMENT OP
+           ON OP.ORDER_CODE = O.ORDER_CODE
+          AND OP.ORDER_SEQUENCE = O.ORDER_SEQUENCE
+		INNER JOIN (
+			SELECT
+				ORDER_CODE,
+				ORDER_SEQUENCE,
+			MIN(PAYMENT_SEQUENCE) AS PAYMENT_SEQUENCE
+			FROM OP_ORDER_PAYMENT
+			WHERE PAYMENT_TYPE = '1'
+			GROUP BY ORDER_CODE, ORDER_SEQUENCE
+		) OP_BASE
+			ON OP_BASE.ORDER_CODE = OP.ORDER_CODE
+			AND OP_BASE.ORDER_SEQUENCE = OP.ORDER_SEQUENCE
+			AND OP_BASE.PAYMENT_SEQUENCE = OP.PAYMENT_SEQUENCE
+	</sql>
+	<!-- 신규주문 카운트 -->
+	<select id="getNewOrderCountByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultType="Integer">
+		
+		SELECT COUNT(*) 
+		<include refid="saleson.shop.order.OrderMapper.sqlDefaultFormForOrder" />
+		<include refid="sqlNewOrderJoinPayment"/>
+		<include refid="whereNewOrder" />
+		
+	</select>
+	
+	<!-- 신규주문 리스트 -->
+	<select id="getNewOrderListByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultMap="saleson.shop.order.OrderMapper.OrderListResult">
+		
+		<include refid="CommonMapper.paginationHeader" />
+
+			SELECT
+				<include refid="saleson.shop.order.OrderMapper.sqlDefaultColumnForOrderList" />
+				, OP.APPROVAL_TYPE AS APPROVAL_TYPE
+                , (SELECT COUNT(APPROVAL_TYPE) FROM OP_ORDER_PAYMENT WHERE ORDER_CODE = OP.ORDER_CODE AND APPROVAL_TYPE = 'point' AND PAYMENT_TYPE = 1) AS IS_POINT
+			<include refid="saleson.shop.order.OrderMapper.sqlDefaultFormForOrder" />
+
+			<include refid="sqlNewOrderJoinPayment"/>
+
+			<include refid="whereNewOrder" />
+			ORDER BY OI.PAY_DATE DESC
+			
+		<include refid="CommonMapper.paginationFooter" />
+		
+	</select>
+	
+	<sql id="whereShippingReady">
+		<where>
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+					
+					<if test="sellerId > 0">
+						AND OI.SELLER_ID = #{sellerId}
+					</if>
+					
+					<if test="deliveryType != null and deliveryType != ''">
+						<if test="sellerId == 0">
+							AND OI.SELLER_ID > #{sellerId}
+						</if>
+						
+						AND OI.DELIVERY_TYPE = #{deliveryType}
+					</if>
+
+					<if test="additionItemFlag != null and additionItemFlag != ''">
+						AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+					</if>
+				
+				</when>
+			</choose>
+			
+			AND <include refid="saleson.shop.order.OrderMapper.defaultShippingReadyOrderWhereQuery" />
+			<include refid="saleson.shop.order.OrderMapper.sqlDefaultWhereQuery" />
+		</where>
+	</sql>
+	
+	<!-- 배송준비중 카운트 -->
+	<select id="getShippingReadyCountByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultType="Integer">
+		
+		SELECT COUNT(*)
+		<include refid="saleson.shop.order.OrderMapper.sqlDefaultFormForOrder" />
+		<include refid="whereShippingReady" />
+		
+	</select>
+	
+	<!-- 배송준비중 목록 -->
+	<select id="getShippingReadyListByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultMap="saleson.shop.order.OrderMapper.OrderListResult">
+		
+		<include refid="CommonMapper.paginationHeader" />
+
+			SELECT <include refid="saleson.shop.order.OrderMapper.sqlDefaultColumnForOrderList" />
+				<include refid="saleson.shop.order.OrderMapper.sqlDefaultFormForOrder" />
+				<include refid="whereShippingReady" />
+
+			ORDER BY OI.SHIPPING_READY_DATE DESC
+			
+		<include refid="CommonMapper.paginationFooter" />
+		
+	</select>
+	
+	<sql id="whereShipping">
+		<where>
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+					
+					<if test="sellerId > 0">
+						AND OI.SELLER_ID = #{sellerId}
+					</if>
+					
+					<if test="deliveryType != null and deliveryType != ''">
+						<if test="sellerId == 0">
+							AND OI.SELLER_ID > #{sellerId}
+						</if>
+						
+						AND OI.DELIVERY_TYPE = #{deliveryType}
+					</if>
+
+					<if test="additionItemFlag != null and additionItemFlag != ''">
+						AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+					</if>
+				
+				</when>
+			</choose>
+			
+			AND <include refid="saleson.shop.order.OrderMapper.defaultShippingOrderWhereQuery" />
+			<include refid="saleson.shop.order.OrderMapper.sqlDefaultWhereQuery" />
+			
+		</where>
+	</sql>
+	
+	<!-- 배송중 카운트 -->
+	<select id="getShippingCountByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultType="Integer">
+		
+		SELECT COUNT(*) 
+
+		<include refid="saleson.shop.order.OrderMapper.sqlFormOrderListForManager" />
+		<include refid="whereShipping" />
+		
+	</select>
+	
+	<!-- 배송중 목록 -->
+	<select id="getShippingListByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultMap="saleson.shop.order.OrderMapper.OrderListResult">
+
+		SELECT
+			OI.*,
+			IFNULL(U.USER_NAME, '') AS USER_NAME,
+			IFNULL(S.SELLER_NAME,  '') AS SELLER_NAME
+		FROM (
+			<include refid="CommonMapper.paginationHeader" />
+
+			SELECT
+				O.LOGIN_ID,
+				O.BUYER_NAME,
+				O.PHONE,
+				O.MOBILE,
+				OSI.RECEIVE_ZIPCODE,
+				OSI.RECEIVE_NEW_ZIPCODE,
+				OSI.RECEIVE_SIDO,
+				OSI.RECEIVE_SIGUNGU,
+				OSI.RECEIVE_EUPMYEONDONG,
+				OSI.RECEIVE_ADDRESS,
+				OSI.RECEIVE_ADDRESS_DETAIL,
+				OSI.RECEIVE_NAME,
+				OSI.RECEIVE_PHONE,
+				OSI.RECEIVE_MOBILE,
+				OSI.MEMO,
+				OI.*
+
+			<include refid="saleson.shop.order.OrderMapper.sqlFormOrderListForManager" />
+			<include refid="whereShipping" />
+
+			ORDER BY OI.SHIPPING_DATE DESC
+
+			<include refid="CommonMapper.paginationFooter" />
+		) OI
+		LEFT JOIN OP_USER U ON OI.USER_ID = U.USER_ID
+		LEFT JOIN OP_SELLER S ON OI.SELLER_ID = S.SELLER_ID
+		
+	</select>
+	
+	<sql id="whereConfirm">
+		<where>
+			<choose>
+				<when test='conditionType == "SELLER"'>
+					AND OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</when>
+				<when test='conditionType == "OPMANAGER"'>
+					
+					<if test="sellerId > 0">
+						AND OI.SELLER_ID = #{sellerId}
+					</if>
+					
+					<if test="deliveryType != null and deliveryType != ''">
+						<if test="sellerId == 0">
+							AND OI.SELLER_ID > #{sellerId}
+						</if>
+						
+						AND OI.DELIVERY_TYPE = #{deliveryType}
+					</if>
+
+					<if test="additionItemFlag != null and additionItemFlag != ''">
+						AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
+					</if>
+				
+				</when>
+			</choose>
+			
+			AND <include refid="saleson.shop.order.OrderMapper.defaultConfirmOrderWhereQuery" />
+			<include refid="saleson.shop.order.OrderMapper.sqlDefaultWhereQuery" />
+			
+		</where>
+	</sql>
+	
+	<!-- 구매확정 카운트 -->
+	<select id="getConfirmCountByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultType="Integer">
+		
+		SELECT COUNT(*) 
+
+		<include refid="saleson.shop.order.OrderMapper.sqlDefaultFormForOrder" />
+		<include refid="whereConfirm" />
+		
+	</select>
+	
+	<!-- 구매확정 목록 -->
+	<select id="getConfirmListByParam" parameterType="saleson.shop.order.support.OrderParam"
+		resultMap="saleson.shop.order.OrderMapper.OrderListResult">
+		
+		<include refid="CommonMapper.paginationHeader" />
+			SELECT 
+				<include refid="saleson.shop.order.OrderMapper.sqlDefaultColumnForOrderList" />
+			
+			<include refid="saleson.shop.order.OrderMapper.sqlDefaultFormForOrder" />
+			<include refid="whereConfirm" />
+			
+			ORDER BY OI.CONFIRM_DATE DESC
+		<include refid="CommonMapper.paginationFooter" />	
+		
+	</select>
+	
+	<!-- 상품정보 복사 - 배송지시 -->
+	<insert id="copyOrderItemForShippingReady" parameterType="saleson.shop.order.domain.OrderItem">
+		<selectKey keyProperty="copyItemSequence" resultType="Integer" order="BEFORE">
+			SELECT IFNULL(MAX(ITEM_SEQUENCE), 0) + 1 FROM OP_ORDER_ITEM 
+			WHERE 
+				ORDER_CODE = #{orderCode}
+				AND ORDER_SEQUENCE = #{orderSequence}
+		</selectKey>
+	
+		INSERT INTO OP_ORDER_ITEM (
+			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
+			ORDER_STATUS,
+			ITEM_SEQUENCE,
+			QUANTITY,
+			CLAIM_QUANTITY,
+			ORDER_QUANTITY,
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			SHIPPING_READY_DATE,
+			SHIPPING_DATE,
+			SHIPPING_FINISH_DATE,
+			CANCEL_REQUEST_DATE,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			CANCEL_FLAG,
+			CREATED_DATE,
+			REFUND_STATUS
+			
+		) SELECT
+			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />, 
+			'20',
+			#{copyItemSequence},
+			#{quantity},
+			0,
+			#{quantity},
+			
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			<include refid="CommonMapper.datetime" />,
+			SHIPPING_DATE,
+			SHIPPING_FINISH_DATE,
+			CANCEL_REQUEST_DATE,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			CANCEL_FLAG,
+			<include refid="CommonMapper.datetime" />,
+			REFUND_STATUS
+			
+		FROM OP_ORDER_ITEM
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</insert>
+	
+	<!-- 상품정보 복사 - 직접수령 -->
+	<insert id="copyOrderItemForShippingDirect" parameterType="saleson.shop.order.domain.OrderItem">
+		<selectKey keyProperty="copyItemSequence" resultType="Integer" order="BEFORE">
+			SELECT IFNULL(MAX(ITEM_SEQUENCE), 0) + 1 FROM OP_ORDER_ITEM 
+			WHERE 
+				ORDER_CODE = #{orderCode}
+				AND ORDER_SEQUENCE = #{orderSequence}
+		</selectKey>
+	
+		INSERT INTO OP_ORDER_ITEM (
+			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
+			ORDER_STATUS,
+			ITEM_SEQUENCE,
+			QUANTITY,
+			CLAIM_QUANTITY,
+			ORDER_QUANTITY,
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			SHIPPING_READY_DATE,
+			SHIPPING_DATE,
+			SHIPPING_FINISH_DATE,
+			CANCEL_REQUEST_DATE,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			CANCEL_FLAG,
+			CREATED_DATE,
+			REFUND_STATUS
+		) SELECT
+			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />, 
+			'35',
+			#{copyItemSequence},
+			#{quantity},
+			0,
+			#{quantity},
+			
+			PAY_DATE,
+			SALES_DATE, 
+			SALES_CANCEL_DATE,
+			<include refid="CommonMapper.datetime" />,
+			<include refid="CommonMapper.datetime" />,
+			<include refid="CommonMapper.datetime" />,
+			CANCEL_REQUEST_DATE,
+			CANCEL_REQUEST_FINISH_DATE,
+			CONFIRM_DATE,
+			RETURN_REQUEST_DATE,
+			RETURN_REQUEST_FINISH_DATE,
+			EXCHANGE_REQUEST_DATE,
+			CANCEL_FLAG,
+			<include refid="CommonMapper.datetime" />,
+			REFUND_STATUS
+		FROM OP_ORDER_ITEM
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</insert>
+
+	<!-- 출고 지시 -->
+	<update id="updateShippingReady" parameterType="saleson.shop.order.shipping.support.ShippingReadyParam">
+		UPDATE OP_ORDER_ITEM OI
+		SET
+			OI.SHIPPING_READY_DATE = <include refid="CommonMapper.datetime" />,
+			OI.SALES_DATE = (CASE WHEN OI.REVENUE_SALES_STATUS = '20' THEN <include refid="CommonMapper.datetime" /> ELSE OI.SALES_DATE END),
+			OI.UPDATED_ADMIN_USER_NAME = #{adminUserName},
+			OI.ORDER_STATUS = '20'
+		<where>
+			<!--
+			[KSH 2019-02-01] Fix #19 관리자가 판매자의 상품 주문 배송 반품 처리
+			<choose>
+				<when test='conditionType == "OPMANAGER"'>
+					OI.DELIVERY_TYPE = '1'
+				</when>
+				<otherwise>
+					OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</otherwise>
+			</choose>
+			-->
+			<if test='conditionType != "OPMANAGER"'>
+				OI.SELLER_ID = #{sellerId}
+				AND OI.DELIVERY_TYPE = '2'
+			</if>
+			AND OI.ORDER_CODE = #{orderCode}
+			AND OI.ORDER_SEQUENCE = #{orderSequence}
+			AND OI.ITEM_SEQUENCE = #{itemSequence}
+		</where>
+	</update>
+	
+	<!-- 현장 수령 -->
+	<update id="updateShippingDirect" parameterType="saleson.shop.order.shipping.support.ShippingReadyParam">
+		UPDATE OP_ORDER_ITEM OI
+		SET
+			OI.SHIPPING_READY_DATE = <include refid="CommonMapper.datetime" />,
+			OI.SHIPPING_DATE = <include refid="CommonMapper.datetime" />,
+			OI.SALES_DATE = (CASE WHEN OI.REVENUE_SALES_STATUS = '20' THEN <include refid="CommonMapper.datetime" /> ELSE OI.SALES_DATE END),
+			OI.UPDATED_ADMIN_USER_NAME = #{adminUserName},
+			OI.ORDER_STATUS = '35'
+		<where>
+			<!--
+			[KSH 2019-02-01] Fix #19 관리자가 판매자의 상품 주문 배송 반품 처리
+			<choose>
+				<when test='conditionType == "OPMANAGER"'>
+					OI.DELIVERY_TYPE = '1'
+				</when>
+				<otherwise>
+					OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</otherwise>
+			</choose>
+			-->
+			<if test='conditionType != "OPMANAGER"'>
+				OI.SELLER_ID = #{sellerId}
+				AND OI.DELIVERY_TYPE = '2'
+			</if>
+			AND OI.ORDER_CODE = #{orderCode}
+			AND OI.ORDER_SEQUENCE = #{orderSequence}
+			AND OI.ITEM_SEQUENCE = #{itemSequence}
+		</where>
+</update>
+
+<!-- 출고 지시 취소 -->
+	<update id="updateShippingReadyCancel" parameterType="saleson.shop.order.shipping.support.ShippingParam">
+		
+		UPDATE OP_ORDER_ITEM OI
+		SET
+			OI.SHIPPING_READY_DATE = '00000000000000',
+			OI.SALES_DATE = (CASE WHEN OI.REVENUE_SALES_STATUS = '20' THEN '' ELSE OI.SALES_DATE END),
+			OI.UPDATED_ADMIN_USER_NAME = #{adminUserName},
+			OI.ORDER_STATUS = '10'
+		<where>
+			<!--
+			[KSH 2019-02-01] Fix #19 관리자가 판매자의 상품 주문 배송 반품 처리
+			<choose>
+				<when test='conditionType == "OPMANAGER"'>
+					OI.DELIVERY_TYPE = '1'
+				</when>
+				<otherwise>
+					OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</otherwise>
+			</choose>
+			-->
+			<if test='conditionType != "OPMANAGER"'>
+				OI.SELLER_ID = #{sellerId}
+				AND OI.DELIVERY_TYPE = '2'
+			</if>
+			AND OI.ORDER_CODE = #{orderCode}
+			AND OI.ORDER_SEQUENCE = #{orderSequence}
+			AND OI.ITEM_SEQUENCE = #{itemSequence}
+		</where>
+	</update>
+	
+	<!-- 배송 시작 -->
+	<update id="updateShippingStart" parameterType="saleson.shop.order.shipping.support.ShippingParam">
+		UPDATE OP_ORDER_ITEM OI
+		SET
+			OI.SHIPPING_DATE = <include refid="CommonMapper.datetime" />,
+			OI.DELIVERY_COMPANY_ID = #{deliveryCompanyId},
+			OI.DELIVERY_COMPANY_NAME = #{deliveryCompanyName},
+			OI.DELIVERY_NUMBER = #{deliveryNumber},
+			OI.DELIVERY_COMPANY_URL = #{deliveryCompanyUrl},
+			OI.UPDATED_ADMIN_USER_NAME = #{adminUserName}
+			
+			<choose>
+				<when test='mode == "EXCHANGE"'>
+					, OI.CLAIM_QUANTITY = 0
+					, OI.EXCHANGE_REQUEST_DATE = '00000000000000'
+					, OI.ORDER_STATUS = '55'
+				</when>
+				<otherwise>
+					, OI.ORDER_STATUS = '30'
+				</otherwise>
+			</choose>
+		<where>
+			
+			<if test='mode != "EXCHANGE"'>
+				<!--
+				[KSH 2019-02-01] Fix #19 관리자가 판매자의 상품 주문 배송 반품 처리
+				<choose>
+					<when test='conditionType == "OPMANAGER"'>
+						OI.DELIVERY_TYPE = '1'
+					</when>
+					<otherwise>
+						OI.SELLER_ID = #{sellerId}
+						AND OI.DELIVERY_TYPE = '2'
+					</otherwise>
+				</choose>
+				-->
+				<if test='conditionType != "OPMANAGER"'>
+					OI.SELLER_ID = #{sellerId}
+					AND OI.DELIVERY_TYPE = '2'
+				</if>
+			</if>
+			AND OI.ORDER_CODE = #{orderCode}
+			AND OI.ORDER_SEQUENCE = #{orderSequence}
+			AND OI.ITEM_SEQUENCE = #{itemSequence}
+		</where>
+	</update>
+	
+	<!-- 배송 취소(배송준비중으로 수정) -->
+	<update id="updateShippingCancel" parameterType="saleson.shop.order.shipping.support.ShippingParam">
+		UPDATE OP_ORDER_ITEM 
+		SET SHIPPING_DATE = '00000000000000',
+			DELIVERY_COMPANY_ID = #{deliveryCompanyId},
+			DELIVERY_COMPANY_NAME = #{deliveryCompanyName},
+			DELIVERY_NUMBER = null,
+			DELIVERY_COMPANY_URL = null,
+			ORDER_STATUS = '20'
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	
+	<update id="updateShippingNumber" parameterType="saleson.shop.order.shipping.support.ShippingParam">
+		UPDATE OP_ORDER_ITEM SET
+			DELIVERY_COMPANY_ID = #{deliveryCompanyId},
+			DELIVERY_COMPANY_NAME = #{deliveryCompanyName},
+			DELIVERY_NUMBER = #{deliveryNumber},
+			DELIVERY_COMPANY_URL = #{deliveryCompanyUrl}
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND ITEM_SEQUENCE = #{itemSequence}
+	</update>
+	
+	<!-- 구매 확정 - 사용자 -->
+	<update id="updateConfirmPurchase" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE OP_ORDER_ITEM OI
+			INNER JOIN OP_SELLER S ON OI.SELLER_ID = S.SELLER_ID
+		SET 
+			OI.SHIPPING_FINISH_DATE = (
+				CASE WHEN OI.SHIPPING_FINISH_DATE = '00000000000000' THEN 
+					<include refid="CommonMapper.datetime" /> 
+				ELSE 
+					OI.SHIPPING_FINISH_DATE 
+				END
+			),
+			OI.CONFIRM_DATE = <include refid="CommonMapper.datetime" />,
+			OI.REMITTANCE_TYPE = (CASE WHEN OI.REMITTANCE_STATUS_CODE = '1' THEN S.REMITTANCE_TYPE ELSE OI.REMITTANCE_TYPE END),
+			OI.REMITTANCE_DAY = (CASE WHEN OI.REMITTANCE_STATUS_CODE = '1' THEN S.REMITTANCE_DAY ELSE OI.REMITTANCE_DAY END),
+			OI.REMITTANCE_EXPECTED_DATE = (CASE WHEN OI.REMITTANCE_STATUS_CODE = '1' THEN #{remittanceDate} ELSE OI.REMITTANCE_EXPECTED_DATE END),
+			OI.ORDER_STATUS = '40'
+		WHERE
+			OI.ORDER_CODE = #{orderCode}
+			AND OI.ORDER_SEQUENCE = #{orderSequence}
+			AND OI.ITEM_SEQUENCE = #{itemSequence}
+			
+			<if test='conditionType != "AUTO_CONFIRM"'>
+				<choose>
+					<when test="isLogin == true">
+						AND OI.USER_ID = #{userId}
+						AND OI.GUEST_FLAG = 'N'
+					</when>
+					<otherwise>
+						AND OI.GUEST_FLAG = 'Y'
+					</otherwise>
+				</choose>
+			</if>
+	</update>
+	
+	<update id="updateShippingRemittanceDate" parameterType="saleson.shop.order.support.OrderParam">
+		UPDATE OP_ORDER_SHIPPING SET
+			REMITTANCE_EXPECTED_DATE = #{remittanceDate}
+		WHERE
+			ORDER_CODE = #{orderCode}
+			AND ORDER_SEQUENCE = #{orderSequence}
+			AND SHIPPING_SEQUENCE = #{shippingSequence}
+			AND REMITTANCE_AMOUNT > 0
+			AND REMITTANCE_STATUS_CODE = '1'
+			AND IFNULL(REMITTANCE_EXPECTED_DATE, '') = ''
+	</update>
+
+    <!-- 배송비 정보 수정 -->
+    <update id="updateCancelShipping" parameterType="saleson.shop.order.domain.OrderShipping">
+        UPDATE OP_ORDER_SHIPPING
+        SET
+        PAY_SHIPPING = #{payShipping},
+        REAL_SHIPPING = #{realShipping},
+        SHIPPING_PAYMENT_TYPE = #{shippingPaymentType},
+        REMITTANCE_AMOUNT = #{remittanceAmount},
+        RETURN_SHIPPING = #{returnShipping}
+
+        <if test='conditionType == "UPDATE_REMITTANCE"'>
+            , REMITTANCE_STATUS_CODE = #{remittanceStatusCode}
+            , REMITTANCE_EXPECTED_DATE = #{remittanceExpectedDate}
+            , REMITTANCE_DATE = ''
+            , RETURN_FLAG = #{returnFlag}
+        </if>
+
+        WHERE
+        ORDER_CODE = #{orderCode}
+        AND ORDER_SEQUENCE = #{orderSequence}
+        AND SHIPPING_SEQUENCE = #{shippingSequence}
+
+        <if test='remittanceStatusCode == "2"'>
+            AND REMITTANCE_STATUS_CODE = '9'
+        </if>
+    </update>
+
+    <!-- 배송비 정보 백업 -->
+    <update id="updatePreviousShipping" parameterType="saleson.shop.order.support.OrderParam">
+        UPDATE OP_ORDER_SHIPPING
+        SET
+            PREVIOUS_REAL_SHIPPING = REAL_SHIPPING,
+            PREVIOUS_PAY_SHIPPING = PAY_SHIPPING,
+            PREVIOUS_REMITTANCE_AMOUNT = REMITTANCE_AMOUNT,
+            PREVIOUS_RETURN_SHIPPING = RETURN_SHIPPING
+        WHERE
+            ORDER_CODE = #{orderCode}
+            AND ORDER_SEQUENCE = #{orderSequence}
+    </update>
+
+    <!-- 배송비 정보 변경전으로 되돌림 -->
+    <update id="updateShippingForCancelRefund" parameterType="saleson.shop.order.domain.OrderShipping">
+        UPDATE OP_ORDER_SHIPPING
+        SET
+            REAL_SHIPPING = PREVIOUS_REAL_SHIPPING,
+            PAY_SHIPPING = PREVIOUS_PAY_SHIPPING,
+            REMITTANCE_AMOUNT = PREVIOUS_REMITTANCE_AMOUNT,
+            RETURN_SHIPPING = PREVIOUS_RETURN_SHIPPING
+        WHERE
+            ORDER_CODE = #{orderCode}
+            AND ORDER_SEQUENCE = #{orderSequence}
+            AND SHIPPING_SEQUENCE = #{shippingSequence}
+    </update>
+
+    <select id="getPreShippingCount" parameterType="saleson.shop.order.shipping.support.ShippingParam" resultType="Integer">
+        SELECT COUNT(*)
+        FROM OP_ORDER_ITEM
+        WHERE ORDER_CODE = #{orderCode}
+        AND ORDER_STATUS <![CDATA[<]]> 30
+        AND ITEM_SEQUENCE != #{itemSequence};
+    </select>
+
+</mapper>
