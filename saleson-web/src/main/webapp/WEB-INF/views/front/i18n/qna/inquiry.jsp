@@ -13,7 +13,7 @@
 		<div class="breadcrumbs">
 			<a href="#" class="home"><span class="hide">home</span></a>
 			<a href="#">고객센터</a>
-			<span>1:1문의</span> 
+			<span>1:1문의   </span> 
 		</div>
 	</div><!-- // location_area E --> 
 	
