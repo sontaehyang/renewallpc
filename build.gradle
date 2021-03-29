@@ -19,8 +19,6 @@ buildscript {
 
 plugins {
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    id "org.sonarqube" version "2.7"
-    id 'jacoco'
     id 'java'
 }
 
@@ -29,7 +27,7 @@ subprojects {
     apply plugin: "idea"
     apply plugin: "org.springframework.boot"
     apply plugin: "io.spring.dependency-management"
-    apply plugin: "jacoco"
+
 
 
     group = 'com.onlinepowers'
@@ -61,23 +59,11 @@ subprojects {
         into("build/dependency")
     }
 
-    sonarqube {
-        properties {
-            property 'sonar.projectName', 'SalesOn3'
-            property 'sonar.projectKey', 'SalesOn3'
-            property 'sonar.host.url', 'http://sonarqube.onlinepowers.com:9000'
-            property 'sonar.login', 'saleson3'
-        }
-    }
-
-
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-validation'
         implementation 'org.springframework.boot:spring-boot-devtools'
-
-        //providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
         //
         implementation 'javax.xml.bind:jaxb-api'
@@ -99,17 +85,6 @@ subprojects {
         useJUnitPlatform()
     }
 
-    jacoco {
-        toolVersion = "0.8.4"
-        reportsDir = file("$buildDir/customJacocoReportDir")
-    }
-    jacocoTestReport {
-        reports {
-            xml.enabled true
-            csv.enabled false
-            html.destination file("${buildDir}/jacocoHtml")
-        }
-    }
 
     configurations {
         compileOnly {
@@ -137,15 +112,6 @@ subprojects {
         }
     }
 
-}
-
-sonarqube {
-    properties {
-        property 'sonar.projectName', 'SalesOn3'
-        property 'sonar.projectKey', 'SalesOn3'
-        property 'sonar.host.url', 'http://sonarqube.onlinepowers.com:9000'
-        property 'sonar.login', 'd0dc0d8b6575ed382467d60f56cf64aa7ac74f6e'
-    }
 }
 
 

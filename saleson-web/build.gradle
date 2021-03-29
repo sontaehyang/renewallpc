@@ -8,24 +8,11 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    //compile "org.hibernate:hibernate-validator:6.0.14.Final"
-    //compile "com.googlecode.htmlcompressor:htmlcompressor:1.5.2"
-    // compile "rhino:js:1.6R7"
-    //compile "com.yahoo.platform.yui:yuicompressor:2.4.8"
-
     // tomcat-gradle-plugin
     compile("org.apache.tomcat.embed:tomcat-embed-jasper")
 
     compile("javax.servlet:jstl:1.2")
     compile("org.apache.tiles:tiles-jsp:3.0.8")
-
-
-    //compile group: 'xerces', name: 'xercesImpl', version: '2.12.0'
-    //compile group: 'xml-apis', name: 'xml-apis', version: '1.4.01'
-
-    // jspc-gradle-plugin
-//    jspCTool group: "com.liferay", name: "com.liferay.jasper.jspc", version: "1.0.11"
-//    jspCTool group: "org.apache.ant", name: "ant", version: "1.9.4"
 
 
 
@@ -54,24 +41,6 @@ task copyDeps(type: Copy) {
     from configurations.runtime
     into 'build/jars'
 }
-// 1. jspc-gradle-plugin
-/*generateJSPJava {
-    //ßclasspath = files("org")
-    //jspCClasspath = files("org.apache.jasper.JspC")
-}
-compileJSP {
-
-    print buildDir
-    destinationDir = new File(buildDir, "compiled-jsps3")
-    print project.configurations.jspC
-
-    //jspCClasspath = files("org.apache.jasper.JspC")
-}
-
-task CompileJSPTask(type: JavaExec) {
-    main = "org.apache.jasper.JspC"
-//    destinationDir = new File(buildDir, "compiled-jsps4")
-}*/
 
 // 2. tomcat-plugin
 tomcat {
@@ -85,57 +54,7 @@ tomcat {
         //destinationDir = file("$buildDir/jasper-classes")
     }
 }
-/*task compileJsps(type: JavaCompile) {
-    //dependsOn tomcatJasper
-    group = 'build'
-    description = 'Translates and compiles JSPs'
-    classpath = configurations.tomcat + sourceSets.main.output + sourceSets.main.runtimeClasspath
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
-    destinationDir = file("$buildDir/jasper-classes")
-    sourceSets {
-        main {
-            java {
-                srcDir "$buildDir/jasper1"
-            }
-        }
-    }
-}*/
 
-/* 3. preCompileJsps
-configurations {
-    jasper
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    def tomcatVersion = '9.0.2'
-    jasper "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
-            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",
-            "javax.servlet:jstl:1.2",
-            "org.apache.tiles:tiles-jsp:3.0.8",
-            'taglibs:standard:1.1.2',
-            'org.springframework:spring-webmvc:5.2.0.RELEASE',
-            'org.springframework.security:spring-security-taglibs:5.0.0.RELEASE',
-            project(':saleson-common')
-
-}
-task preCompileJsps {
-    print "asdfasdf" + configurations.jasper.asPath
-    doLast {
-        ant.taskdef(classname: 'org.apache.jasper.JspC',
-                name: 'jasper',
-                classpath: configurations.jasper.asPath)
-        ant.jasper(validateXml: false,
-                uriroot: file('src/main/webapp'),
-                outputDir: file("$buildDir/compiled-jsps2"))
-
-    }
-}*/
 
 
 
@@ -152,10 +71,3 @@ task compileOne (type: JavaCompile) {
 
 //compileOne.options.compilerArgs = ["-sourcepath", "$buildDir/jasper1"]
 compileOne.options.sourcepath = files("$buildDir/jasper1")
-
-
-
-/*
-톰캣과 같은 서블릿 컨테이너는 JSP파일이 요청이 되면 변환된 서블릿이 있는지 확인하고 JSP와 변환된 서블릿과의 업데이트 시간을 비교해서 서블릿이 더 최신이면 그 서블릿의 실행결과를 response로 클라이언트에게 보내준다.
-JSP가 변경되고 저장되면 해당 주소 요청시 JSP를 다시 서블릿으로 변환하고 컴파일해서 실행한다. 해당 주소에 해당하는 파일이 없으면 Response의 Status 값으로 404 Page Not Found 를 보내주게 된다.
-*/

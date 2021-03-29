@@ -7,11 +7,4 @@ bootRun{
 
 dependencies {
     compile project(':saleson-common')
-
-    //implementation 'org.springframework.boot:spring-boot-starter-actuator'
-}
-sonarqube {
-    properties {
-        property "sonar.branch", "saleson-batch"
-    }
 }
