@@ -86,6 +86,7 @@ import saleson.shop.userlevel.domain.UserLevel;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service("jobService")
@@ -971,8 +972,16 @@ public class JobServiceImpl implements JobService {
 
 
 		if (!uniqs.isEmpty()) {
-			// 5. IF_ORDER_LIST_PUT 업데이트
-			erpMapper.updateApplyFlagIfOrderListPut(uniqs);
+			final AtomicInteger counter = new AtomicInteger(0);
+
+			List<List<String>> groupList = new ArrayList<>(uniqs.stream()
+					.collect(Collectors.groupingBy(i -> counter.getAndIncrement() / 500))
+					.values());
+
+			for (List<String> gl : groupList) {
+				// 5. IF_ORDER_LIST_PUT 업데이트
+				erpMapper.updateApplyFlagIfOrderListPut(gl);
+			}
 		}
 	}
 
