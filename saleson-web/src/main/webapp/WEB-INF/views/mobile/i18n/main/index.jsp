@@ -40,7 +40,7 @@
 		<div class="on_air_content">
 			<div class="left">
 				<div class="play_box">
-					<a href="/m/products/view/G2000002228">
+					<a href="/m/pages/pick">
 						<img src="/content/mobile/images/common/mv_live_img.png" alt="mv_live_img">
 					</a>
 				</div>
@@ -53,7 +53,7 @@
 				</div>
 				<div class="on_air_views">
 					<div class="live">
-						<a href="/m/products/view/G2000002228">
+						<a href="/m/pages/pick">
 							<span>TV광고 상품</span>
 							<span>보러가기</span>
 						</a>
