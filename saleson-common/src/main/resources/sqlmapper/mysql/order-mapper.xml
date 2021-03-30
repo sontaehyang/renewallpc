@@ -3444,6 +3444,7 @@
 			ORDER_STATUS IN ('20', '10')
 			AND CANCEL_FLAG != 'Y'
 			AND SHIPPING_DATE = '00000000000000'
+			AND ADDITION_ITEM_FLAG = 'N'
 			AND (
 					CASE WHEN ORDER_STATUS = '20'
 					THEN  DATE_FORMAT(SHIPPING_READY_DATE, '%y-%m-%d')
@@ -3467,6 +3468,7 @@
 			DATE_FORMAT(OEA.EXCHANGE_APPLY_DATE, '%y-%m-%d') <![CDATA[<]]>= CURDATE() - INTERVAL #{exchangeDelay} DAY
 			AND ORDER_STATUS = '50'
 			AND OI.CANCEL_FLAG != 'Y'
+			AND OI.ADDITION_ITEM_FLAG = 'N'
 			AND OEA.CLAIM_STATUS IN ('01', '02')
 			<if test='sellerId != 0 and sellerId != null'>
 				AND OI.SELLER_ID = #{sellerId}
@@ -3485,6 +3487,7 @@
 			DATE_FORMAT(ORA.RETURN_APPLY_DATE, '%y-%m-%d') <![CDATA[<]]>= CURDATE() - INTERVAL #{returnDelay} DAY
 			AND ORDER_STATUS = '60'
 			AND OI.CANCEL_FLAG != 'Y'
+			AND OI.ADDITION_ITEM_FLAG = 'N'
 			AND ORA.CLAIM_STATUS IN ('01', '02')
 			<if test='sellerId != 0 and sellerId != null'>
 				AND OI.SELLER_ID = #{sellerId}
