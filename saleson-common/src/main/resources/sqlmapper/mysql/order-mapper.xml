@@ -1693,7 +1693,7 @@
 					OP.PAYMENT_TYPE = '1'
 					AND OP.NOW_PAYMENT_FLAG = 'N'
 					AND OP.CANCEL_AMOUNT = 0
-					AND OI.ORDER_STATUS = '0' 
+					AND OI.ORDER_STATUS = '0'
 					AND OI.USER_ID = #{userId}
 				</where>
 				
@@ -1720,6 +1720,7 @@
 					AND OI.CREATED_DATE BETWEEN CONCAT(#{searchStartDate} , '000000') AND CONCAT(#{searchEndDate} , '235959')
 				</if>
 
+				AND OI.ADDITION_ITEM_FLAG =  'N'
 			</where>
 			
 			UNION ALL
@@ -1738,6 +1739,8 @@
 						AND OI.DELIVERY_TYPE = '2'
 					</when>
 				</choose>
+
+				AND OI.ADDITION_ITEM_FLAG =  'N'
 			</where>
 			
 			UNION ALL
@@ -1761,6 +1764,7 @@
 					AND OI.CREATED_DATE BETWEEN CONCAT(#{searchStartDate} , '000000') AND CONCAT(#{searchEndDate} , '235959')
 				</if>
 
+				AND OI.ADDITION_ITEM_FLAG =  'N'
 			</where>
 				
 			UNION ALL
@@ -1788,6 +1792,7 @@
 					AND OI.CREATED_DATE BETWEEN CONCAT(#{searchStartDate} , '000000') AND CONCAT(#{searchEndDate} , '235959')
 				</if>
 
+				AND OI.ADDITION_ITEM_FLAG =  'N'
 			</where>
 			
 			UNION ALL
@@ -1808,6 +1813,8 @@
 						AND OI.DELIVERY_TYPE = '2'
 					</when>
 				</choose>
+
+				AND OI.ADDITION_ITEM_FLAG =  'N'
 			</where>
 
 			<!-- 반품 처리 COUNT -->
@@ -1851,6 +1858,7 @@
 						AND OI.DELIVERY_TYPE = '2'
 					</when>
 				</choose>
+				AND OI.ADDITION_ITEM_FLAG =  'N'
 			</where>
 				
 			UNION ALL
@@ -1871,6 +1879,7 @@
 						AND OI.DELIVERY_TYPE = '2'
 					</when>
 				</choose>
+				AND OI.ADDITION_ITEM_FLAG =  'N'
 			</where>
 
 			<!-- 취소 처리 COUNT -->
@@ -1923,6 +1932,7 @@
 						AND OI.DELIVERY_TYPE = '2'
 					</when>
 				</choose>
+				AND OI.ADDITION_ITEM_FLAG =  'N'
 			</where>
 
 			UNION ALL
@@ -1941,6 +1951,7 @@
 						AND OI.DELIVERY_TYPE = '2'
 					</when>
 				</choose>
+				AND OI.ADDITION_ITEM_FLAG =  'N'
 			</where>
 
 			UNION ALL
@@ -1959,6 +1970,7 @@
 						AND OI.DELIVERY_TYPE = '2'
 					</when>
 				</choose>
+				AND OI.ADDITION_ITEM_FLAG =  'N'
 			</where>
 
 		</trim>
@@ -3892,6 +3904,13 @@
 		UPDATE OP_ORDER_ITEM
 		<set>
 			ORDER_STATUS = #{orderStatus},
+			<if test='orderStatus == "20"'>
+				SHIPPING_READY_DATE = <include refid="CommonMapper.datetime"/>,
+			</if>
+			<if test='orderStatus == "55"'>
+				CLAIM_QUANTITY = 0,
+				EXCHANGE_REQUEST_DATE = '00000000000000',
+			</if>
 		    <if test='orderStatus == "30" or orderStatus == "55"'>
 				SHIPPING_DATE = <include refid="CommonMapper.datetime"/>,
 				DELIVERY_COMPANY_ID = #{carrNo},

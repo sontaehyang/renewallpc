@@ -1706,6 +1706,10 @@ Common.DateButtonEvent = {
         } else if (mode == 'day') {
             date.setDate(date.getDate() - value);
         } else if (mode == 'month') {
+            var lastDayofLastMonth = (new Date(date.getYear(), date.getMonth(), 0)).getDate();
+            if(date.getDate() > lastDayofLastMonth) {
+                date.setDate(lastDayofLastMonth);
+            }
             date.setMonth(date.getMonth() - value);
         } else if (mode == 'year') {
             date.setFullYear(date.getFullYear() - value);
