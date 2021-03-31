@@ -15,6 +15,21 @@
 .pd_tit {position:absolute; width:100%; left:0; bottom:0; padding:18px 0 20px; background: url(/content/mobile/images/common/bg_op.png); text-align: center;}
 .pd_tit h2 {margin-bottom: 9px; color:#333; font-size: 16px;}
 .pd_tit p {color: #808080; font-size:11px; }
+/* 종료상태 추가 - lmo 21.03.31 */
+.pd_tit:before {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 23px;
+    background-image: url(/content/mobile/images/common/ico_ing.png);
+    background-repeat: no-repeat;
+    background-size: 50px 23px;
+    position: absolute;
+    top: -11px;
+    left: 20px;
+}
+.pd_list.end > img {opacity: 0.5;}
+.pd_list.end .pd_tit:before {background-image: url(/content/mobile/images/common/ico_end.png);}
 .product_list.typeA {padding:0 10px 30px; border:0;display:flex;flex-wrap:wrap;width:100%;justify-content:space-between;}
 .product_list.typeA li {/*float:left;*/ width:48.5%; margin-top:15px; border:0;}
 .product_list.typeA li:nth-child(2n) {/*float:right;*/}

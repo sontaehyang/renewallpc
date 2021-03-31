@@ -194,6 +194,11 @@
 	-webkit-transition: -webkit-transform ease-out 1.5s;
 	-moz-transition: -moz-transform ease-out 1.5s;
 }
+/* 종료상태 추가 - lmo 21.03.31 */
+.event_list ul li a .thumbnail_wrap:before {content:"진행중";position:absolute;right:20px;bottom:-15px;width:65px;background:#1f1f1f;border-radius:25px;font-size:13px;font-weight:500;color:#fff;text-align:center;line-height:30px;z-index:1;}
+.event_list ul li a.end .thumbnail {opacity: 0.5;}
+.event_list ul li a.end .thumbnail_wrap:before {content:"종료";background:#555;}
+
 .event_list ul li .event_info{padding:20px 0; text-align:center; }
 .event_list ul li .event_info .name{font-size:17px; font-weight:bold;  overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; word-wrap: break-word; line-height: 1.2em; height: 1.2em;}
 .event_list ul li a:hover .name{text-decoration:underline; }
