@@ -22,13 +22,17 @@
     // 가상계좌입금만료일 설정 (today +1)
     function getTomorrow(){
         var today = new Date();
+
+        today.setDate(today.getDate()+1);
+
         var yyyy = today.getFullYear().toString();
         var mm = (today.getMonth()+1).toString();
-        var dd = (today.getDate()+1).toString();
+        var dd = today.getDate().toString();
 
         if (mm.length < 2) {mm = '0' + mm;}
         if (dd.length < 2) {dd = '0' + dd;}
 
         return (yyyy + mm + dd);
     }
+
 </script>
