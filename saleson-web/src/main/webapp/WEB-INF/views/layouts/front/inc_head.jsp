@@ -27,6 +27,7 @@
 
 <!-- 20210315 21:44  son 수정 / ST -->
 <!--네이버소유권-->
+<meta name="viewport" content="width=device-width">
 <meta name="naver-site-verification" content="dbf36f0c218e82445272e072961b4eb467b343f3" />
 <!-- 20210315 21:44  son 수정 / END -->
 
