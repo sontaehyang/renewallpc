@@ -4,7 +4,7 @@
 
 <c:set var="ogTitle" value="${shopContext.seo.title}"/>
 <c:set var="ogType" value="website"/>
-<c:set var="ogImage" value="리뉴올pc"/>
+<c:set var="ogImage" value="https://www.renewallpc.co.kr/content/images/common/renewallpc_img_og.jpg"/>
 <c:set var="ogDescription" value="${shopContext.seo.description}"/>
 <c:set var="ogUrl" value="${op:property('saleson.url.shoppingmall')}"/>
 <c:set var="ogKeywords" value="${shopContext.seo.keywords}"/>
