@@ -59,7 +59,7 @@
 	<c:set var="noFollowFlag" value="Y" />
 </c:if>
 
-<meta name="robots" content=""/>
+<%-- <meta name="robots" content=""/>--%>
 <%--<c:if test="${shopContext.seo.indexFlag == 'N' || noFollowFlag == 'Y'}"><meta name="robots" content="noindex,noarchive"/></c:if>--%>
 <c:if test="${!empty shopContext.seo.keywords}"><meta name="keywords" content="${shopContext.seo.keywords}" /></c:if>
 <c:if test="${!empty shopContext.seo.description}"><meta name="description" content="${shopContext.seo.description}" /></c:if>
