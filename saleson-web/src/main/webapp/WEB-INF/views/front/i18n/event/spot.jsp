@@ -20,7 +20,7 @@
 	</div><!-- // location_area E -->
 	<div id="contents" class="pt10">
 		<div class="event_banner02">
-			<img src="/content/images/common/event_visual_06.png" alt="타임세일">
+			<img src="/content/images/common/timeSale1.jpg" alt="타임세일">
 		</div>
 
 	<form:form modelAttribute="itemParam" method="get">
