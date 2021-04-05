@@ -38,7 +38,7 @@
 		"@context": "http://schema.org",
 		"@type": "Person",
 		"name": "리뉴올PC",
-		"url": "https://renewallpc.co.kr",
+		"url": "https://www.renewallpc.co.kr",
 		"sameAs": [
 			"https://blog.naver.com/kaceroo4",
 			"https://www.instagram.com/renewallpc",
