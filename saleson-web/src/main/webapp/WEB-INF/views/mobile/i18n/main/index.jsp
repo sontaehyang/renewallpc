@@ -35,7 +35,7 @@
 	<!-- 온에어 : s -->
 	<div class="on_air">
 		<div class="title">
-			<h3>TV광고 PC<!--b>상품</b--></h3>
+			<h3>시언Pick<!--b>상품</b--></h3>
 		</div>
 		<div class="on_air_content">
 			<div class="left">
@@ -54,7 +54,7 @@
 				<div class="on_air_views">
 					<div class="live">
 						<a href="/m/pages/pick">
-							<span>TV광고 상품</span>
+							<span>시언Pick</span>
 							<span>보러가기</span>
 						</a>
 					</div>
