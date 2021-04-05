@@ -49,14 +49,14 @@
 
 			<!-- 2021.03.22 11:56 / son 수정  / ST -->
 			<div class="mlive">
-				<p class="tit">TV광고 상품</p>
+				<p class="tit">시언Pick</p>
 				<a href="/pages/pick" class="ml_thumb">
 					<img src="/content/images/common/mv_live_img.png">
 				</a>
 				<div class="ml_btm">
 					<!--a href="/products/view/G2000002228">경매 PC <br>보러가기</a>
 					<a href="/pages/open">이벤트 <br>바로가기</a-->
-					<a href="/pages/pick">TV광고 상품 <br>바로가기</a>
+					<a href="/pages/pick">시언Pick <br>바로가기</a>
 				</div><!--// ml_btm -->
 			</div><!--// mlive -->
 			<!-- 2021.03.22 11:56 / son 수정  / END -->
