@@ -909,15 +909,19 @@ Order.getApprovalType = function(array, type) {
  * 포인트 사용금액은 재한 금액
  */
 Order.checkPayAmount = function() {
-	
+
 	var amount = 0;
-	
+	var checkedCard = false;
+	if ($('#payType-card').is(':checked') || $('input#op-payType-card').prop('checked')) {
+		checkedCard = true;
+	}
+
 	$.each($('input.op-order-payAmounts', $('form#buy')), function(i) {
-		if ($('input[name="payType"][value="'+$(this).attr('paymentType')+'"]').prop('checked') == true) {
-			amount += Number($(this).val()); 
+		if ($('input[name="payType"][value="'+$(this).attr('paymentType')+'"]').prop('checked') == true || checkedCard) {
+			amount += Number($(this).val());
 		}
 	});
-		
+
 	if (Order.buy.orderPayAmount != amount) {
 		alert('결제금액을 확인해주세요.');
 		return false;

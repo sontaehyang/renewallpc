@@ -606,6 +606,9 @@
 						</c:if>
 						<c:if test="${ not empty buy.buyPayments['card'] && cashDiscountFlag == 'N'}">
 							<li>
+								<input type="radio" id="payType-naverpayCard" value="card" name="payType"> <label for="payType-naverpayCard">네이버페이</label>
+							</li>
+							<li>
 								<input type="radio" id="payType-card" value="card" name="payType"
 									   <c:if test="${ buy.defaultPaymentType == 'card' }">checked="checked"</c:if>> <label for="payType-card">신용카드</label>
 							</li>
@@ -866,10 +869,10 @@
 
 				<c:if test="${ not empty buy.buyPayments['card'] }">
 					<div class="payType-input" id="payType-card-input" <c:if test="${ buy.defaultPaymentType != 'card' }">style="display:none;"</c:if>>
-						<h3 class="sub_title mt30">신용카드 결제</h3>
+						<h3 class="sub_title mt30 card_title">신용카드 결제</h3>
 						<div class="board_wrap">
 							<table cellpadding="0" cellspacing="0" class="board-write">
-								<caption>KakaoPay 결제</caption>
+								<caption>신용카드 결제</caption>
 								<colgroup>
 									<col style="width:158px;">
 									<col style="width:auto;">
@@ -1789,6 +1792,12 @@
                     document.getElementById('naver-payment-button').style = 'display:none';
                     document.getElementById('payment-button').style = 'display:inline-block';
                 }
+
+                if (this.id == 'payType-naverpayCard') {
+                	$(".card_title").text("네이버페이 결제");
+				} else if (this.id == 'payType-card') {
+					$(".card_title").text("신용카드 결제");
+				}
 
                 var notMixPayTypeSelectCount = 0;
                 $.each(Order.notMixPayType, function(i, payType) {

@@ -654,6 +654,16 @@
 				<!-- //order_tit -->
 				<div class="method_tab">
 					<ul>
+						<c:if test="${ cashDiscountFlag == 'N'}">
+							<li class="op-pay-type-select op-pay-type-naverpay-card-select">
+								<span>
+									<a href="javascript:;" onclick="payTypeSelect('naverpayCard')">
+										<input type="checkbox" id="op-payType-naverpayCard" value="card" name="payType" class="hide" />
+										네이버페이
+									</a>
+								</span>
+							</li>
+						</c:if>
 						<c:if test="${ not empty buy.buyPayments['card'] && cashDiscountFlag == 'N'}">
 							<li class="op-pay-type-select op-pay-type-card-select <c:if test="${ buy.defaultPaymentType == 'card' }">on</c:if>">
 								<span>
@@ -789,7 +799,7 @@
 						</div>
 						
 						<div class="method_con op-payType-input" id="op-payType-card-input" <c:if test="${ buy.defaultPaymentType != 'card' }">style="display:none;"</c:if>>
-							<span class="del_tit t_gray">신용카드 결제금액</span>
+							<span class="del_tit t_gray card_title">신용카드 결제금액</span>
 							<p class="method_price">
 								<span class="op-order-payAmount-text">
 									${buy.defaultPaymentType == 'card' ? buy.orderPrice.orderPayAmount : 0 }
@@ -1722,7 +1732,7 @@ function retentionPointUseAll(){
 function payTypeSelect(payType) {
 	
 	$_this = $('input#op-payType-' + payType);
-	
+
 	if ($_this.prop('checked') == true) {
 		if ($('input[name="payType"]:checked').size() == 1) {
 			return;
@@ -1731,11 +1741,11 @@ function payTypeSelect(payType) {
 	} else {
 		$_this.prop('checked', true);
 	}
-	
+
 	if ($('input[name="payType"]:checked').size() > 1) { // 프론트랑 마찬가지로 복합결제는 안되게. 나중에 사용시 이 부분 지우면 됨. 2016.01.20 kye
 		$('input[name="payType"]:checked').not($_this).prop('checked', false);
 	}
-	
+
 	var notMixPayTypeSelectCount = 0;
 	var isOfflinePayError = false;
 	$.each(Order.notMixPayType, function(i, payType) {
@@ -1785,6 +1795,17 @@ function payTypeSelect(payType) {
         $('#op-payType-' + $(this).val() + '-input').show();
 		$('.pay-type-' + $(this).val() + '-sub-input').show();
 	});
+
+	if (payType == 'naverpayCard') {
+		$(".card_title").text("네이버페이 결제");
+		$(".op-pay-type-naverpay-card-select").addClass("on");
+		$(".op-pay-type-card-select").removeClass("on");
+
+	} else if (payType == 'card') {
+		$(".card_title").text("신용카드 결제");
+		$(".op-pay-type-naverpay-card-select").removeClass("on");
+		$(".op-pay-type-card-select").addClass("on");
+	}
 	
 	Order.setOrderPayAmountClear();
 
