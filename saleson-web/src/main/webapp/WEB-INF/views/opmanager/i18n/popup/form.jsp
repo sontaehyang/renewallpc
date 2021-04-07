@@ -66,8 +66,8 @@
 								<td class="label">${op:message('M00744')}</td> <!-- 팝업타입 --> 
 								<td>
 									<div>
-										<form:radiobutton path="popupType" label="${op:message('M00747')}" value="1" checked="checked"/> <!-- 윈도우 --> 
-										<form:radiobutton path="popupType" label="${op:message('M00748')}" value="2"/> <!-- 레이어 --> 
+										<form:radiobutton path="popupType" label="${op:message('M00747')}" value="1" checked="checked"/> (PC 적용) <!-- 윈도우 -->
+										<form:radiobutton path="popupType" label="${op:message('M00748')}" value="2"/>(PC, Mobile 적용) <!-- 레이어 -->
 									</div>
 								</td>						 
 							</tr>

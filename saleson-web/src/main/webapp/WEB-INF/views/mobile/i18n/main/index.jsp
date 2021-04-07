@@ -417,7 +417,8 @@
 				$('#popup_' + popupId).show();
 				return;
 			} else if (popupType == 1 && ck_popup != 1) {
-				Common.popup(url("/popup/index/" + popupId), 'openPopup' + popupId, width, height, 0, leftPosition, topPosition);
+				// 윈도우 팝업일 경우 모바일에서는 띄워주지 않음
+				// Common.popup(url("/m/popup/index/" + popupId), 'openPopup' + popupId, width, height, 0, leftPosition, topPosition);
 			}
 		}
 

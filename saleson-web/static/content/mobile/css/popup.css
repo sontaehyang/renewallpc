@@ -278,7 +278,9 @@
 
 
 /* ======= 관리자등록 팝업 ======= */
-.m-admin-popup {left: 20px !important;top: 5px !important;z-index: 99999 !important;}
+.m-admin-popup {left: 20px !important;top: 5px !important;width: calc(100% - 40px) !important;height: auto !important;z-index: 99999 !important;}
+.m-admin-popup .content {width: 100% !important;}
+.m-admin-popup .content table {width: 100% !important;height: auto !important;}
 .m-admin-popup img {width: auto !important;max-width: calc(100vw - 40px);}
 .m-admin-popup input[type=checkbox] {display: inline-block !important;margin: 0 !important;}
 .m-admin-popup label {color:#fff;text-shadow:0 0 3px #000;}
