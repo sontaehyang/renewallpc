@@ -294,7 +294,7 @@ public class CampaignQueryConst {
             "\tCAMPAIGN_ID,\n" +
             "\tCOALESCE(SUM(REDIRECTION),0) AS REDIRECTION \n" +
             "FROM OP_EVENT_CODE\n" +
-            "WHERE CAMPAIGN_ID NOT NULL\n"+
+            "WHERE CAMPAIGN_ID IS NOT NULL\n"+
             "GROUP BY CAMPAIGN_ID";
 
     public static final String UPDATE_CAMPAIGN_ORDER_INFO_FOR_USER = "UPDATE OP_CAMPAIGN_USER \n" +
