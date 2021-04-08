@@ -258,9 +258,9 @@
 .item_info_view .view_sale_price .sale_price_info .price{margin-right:5px;}
 .item_info_view .view_sale_price .sale_price_info .cost{font-weight:bold; line-height:13px;}
 .item_info_view .view_sale_price .sale_price_info .cost span{text-decoration:line-through;}
-.item_info_view .view_sale_price .sale{display:inline-block; margin-right:16px; font-size:15px;  color:#333; font-weight:600; }
+.item_info_view .view_sale_price .sale{display:inline-block; margin-right:16px; font-size:28px; /*font-size:15px;*/ color:#333; font-weight:400; }
 .item_info_view .view_sale_price.typeA .sale{line-height:1.7em; }
-.item_info_view .view_sale_price .sale span{font-size:20px; font-family:'Verdana'; font-weight:normal;  letter-spacing:-1px; vertical-align:bottom;}
+.item_info_view .view_sale_price .sale span{font-size:32px; /*font-size:20px;*/ font-family:'Verdana'; font-weight:normal;  letter-spacing:-1px; vertical-align:bottom;}
 .item_info_view .view_sale_price .sale.inline{display:inline-block; margin-right:20px;}
 .item_info_view .view_sale_price .sale.strong{color:#e73535; }
 .item_info_view .view_sale_price .sale.strong span{color:#e73535; font-weight:600;}
