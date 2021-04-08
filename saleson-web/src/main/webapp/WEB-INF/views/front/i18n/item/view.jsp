@@ -533,10 +533,13 @@
 								</div>
 
 								<div class="box_list info-item-pay">
-									<ul>
-										<li>신용카드 결제 선택시 다양한 간편결제로 결제가 가능합니다.</li>
-										<li>지원하는 결제수단 : 네이버페이, 삼성페이, 카카오페이, PAYCO, SSGPAY, L.pay, SK pay</li>
-									</ul>
+									<div class="pay_box01">
+										<p>결제 가능한 <strong>페이안내<i>!</i></strong><span>주문/결제시 다양한 간편결제로 결제가 가능합니다.</span></p>
+										<ul>
+											<li><span><img src="/content/images/common/pay_img_01.png"></span><span><img src="/content/images/common/pay_img_02.png"></span></li>
+											<li><img src="/content/images/common/pay_img_03.png"></li>
+										</ul>
+									</div>
 								</div>
 							</div><!--// bfs_btm -->
 						</div><!--// btm_fix_sec -->

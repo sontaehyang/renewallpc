@@ -23,6 +23,16 @@
 .wish_item .bx-wrapper .bx-next{right:10px; background: url('/content/images/btn/wish_next_off.png') no-repeat 0 0;}
 .wish_item .bx-wrapper .bx-next:hover{background: url('/content/images/btn/wish_next_on.png') no-repeat 0 0;}
 
+/* 페이안내 */
+.pay_box01{width: 680px;}
+.pay_box01>p{font-size: 22px; color:#000; line-height: 21px; font-weight: 400; letter-spacing: -1px;}
+.pay_box01>p>strong{font-weight: 600;}
+.pay_box01>p>span{font-size: 15px; display: inline-block; color:#666; margin-left: 20px; font-weight: 400;}
+.pay_box01>ul{ margin-top: 10px;}
+.pay_box01>ul>li{display: block;}
+.pay_box01>ul>li>span{display: inline-block; margin-right: 5px;}
+.pay_box01>ul>li:last-child{padding: 20px 0; border-bottom: 1px solid #d7d7d7;}
+
 /* 상품상세 */
 .item_title{font-size:15px; color:#333;}
 .item_title span{color:#ff7101; }
