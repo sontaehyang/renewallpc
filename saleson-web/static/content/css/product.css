@@ -31,7 +31,7 @@
 .pay_box01>ul{ margin-top: 10px;}
 .pay_box01>ul>li{display: block; padding: 0; background: none;}
 .pay_box01>ul>li>span{display: inline-block; margin-right: 5px;}
-.pay_box01>ul>li:last-child{padding: 20px 0; border-bottom: 1px solid #d7d7d7; margin-bottom: 20px;}
+.pay_box01>ul>li:last-child{padding: 20px 0; margin-bottom: 20px;}
 
 /* 상품상세 */
 .item_title{font-size:15px; color:#333;}
