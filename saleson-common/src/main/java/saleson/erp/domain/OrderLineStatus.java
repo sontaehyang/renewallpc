@@ -30,10 +30,15 @@ public class OrderLineStatus {
 	}
 
 	public int getItemSequence() {
-		if (bundleNo == null || bundleNo.length() < 14) {
-			throw new IllegalStateException("bundleNo length error!");
+		if (uniq == null || uniq.length() < 18) {
+			throw new IllegalStateException("uniq length error!");
 		}
-		return Integer.parseInt(bundleNo.substring(12, 14));
+
+		String sequence = uniq.substring(12, 14);
+		if ("0".equals(uniq.substring(12, 13))) {
+			sequence = uniq.substring(13, 14);
+		}
+		return Integer.parseInt(sequence);
 	}
 	
 	public String getOrderStatus() {
