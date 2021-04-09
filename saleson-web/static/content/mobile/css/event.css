@@ -34,7 +34,7 @@
 .product_list.typeA li {/*float:left;*/ width:48.5%; margin-top:15px; border:0;}
 .product_list.typeA li:nth-child(2n) {/*float:right;*/}
 .product_list.typeA li .product {padding:0; border:0;}
-.product_list.typeA li .product .product_img {position:relative; width:auto; height:auto;}
+.product_list.typeA li .product .product_img {position:relative; width:auto; height:auto;border: solid 1px #e6e6e6;}
 .product_list.typeA li.sold-out .product .product_img:before {content:"";position:absolute;right:5px;top:5px;width:50px;height:15px;background:url(/content/mobile/images/common/product_soldout_ico.png) no-repeat right center;background-size:auto 100%;z-index:1;}
 .product_list.typeA li .product .product_info .tit {margin:10px 0 12px;}
 .product_list.typeA li .product .product_rank {top:-5px;}
