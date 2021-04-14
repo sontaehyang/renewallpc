@@ -373,7 +373,7 @@
 .def_option_sec .def_box > ul:last-child {border-bottom:none;}
 .def_option_sec .def_box > ul > li {display:table-cell;width:140px;padding:5px 0;font-size:14px;font-weight:500;color:#1f1f1f;line-height:20px;vertical-align:middle;}
 .def_option_sec .def_box > ul > li:first-child {padding:5px 10px 5px 20px;}
-.def_option_sec .def_box > ul > li:nth-child(2) {width:calc(100% - 280px);font-weight:400;color:#757575;}
+.def_option_sec .def_box > ul > li:nth-child(2) {width:calc(100% - 280px);font-weight:300; font-size: 16px; color:#757575;}
 .def_option_sec .def_box > ul > li:last-child {padding:5px 10px;}
 .def_option_sec .def_box .etc_price {height:40px;padding:0;border:none;font-size:14px;font-weight:500;color:#ff4000;text-align:center;line-height:40px;}
 .def_option_sec .def_box > ul.head {background:#fafafa;border-bottom:solid 1px #d9d9d9;text-align:center;}
@@ -382,7 +382,7 @@
 .option_info{position:relative;}
 .option-select-box,
 .addition-select-box{position:relative; display:block; padding:0 10px; border:1px solid #bfbfbf; font-size:14px; color:#1f1f1f;line-height:38px; background:#fff url(../images/common/arr_top.png) no-repeat 95% center;background-size:10px auto;}
-.option-select-box .selected-option{color:#1f1f1f;}
+.option-select-box .selected-option{color:#000;}
 .option-select-box.selected,
 .addition-select-box.selected{border:1px solid #68ade8;}
 .option-box{ display: none;  position:absolute; width:100%; margin-top:-30px; border:2px solid #1c2957; background:#fff; z-index:5;}
