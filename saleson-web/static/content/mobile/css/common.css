@@ -176,6 +176,7 @@ html, body {width:100%; min-width:320px; }
 .side_menu .gnb .twoDepthBox > ul > li > a {display:block; position: relative; padding:14px 15px 14px 40px; color:#868890; font-size:12px; font-weight:600; border-bottom:1px solid #dddddd; background:#f2f3f8; overflow:hidden; }
 .side_menu .gnb .twoDepthBox > ul > li > a .arr {position: absolute; left: 0; top: 0; width:100%; height:100%; background:url(../images/common/gnb_bullet_2dep_new01.png) no-repeat 15px 50%;}
 
+
 .side_menu .gnb .twoDepthBox > ul > li > a.on {color:#444; border-bottom:none; }
 .side_menu .gnb .twoDepthBox > ul > li > a.on .arr {background-position:0 -10px; }
 .side_menu .threeDepthPop {display:none; position:fixed; top:0; left:0; height:100%; background:#fff; /*border-top-right-radius:20px;*/ }
