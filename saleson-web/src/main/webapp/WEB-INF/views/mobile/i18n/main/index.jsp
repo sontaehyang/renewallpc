@@ -383,6 +383,7 @@
 
 				// 로그인 웹 링크 -> 모바일 링크로 변경
 				popupContent = popupContent.replaceAll("renewallpc.co.kr/users/login", "renewallpc.co.kr/m/users/login");
+				popupContent = popupContent.replace("renewallpc.co.kr/", "renewallpc.co.kr/m/");
 
 				rawHtml = rawHtml.replaceAll('{{popupId}}', popup.popupId)
 						.replaceAll('{{popupStyle}}', popupStyle)
