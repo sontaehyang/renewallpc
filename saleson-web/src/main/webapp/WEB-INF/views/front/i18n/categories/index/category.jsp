@@ -223,7 +223,7 @@
 				<div class="sort_right">
 					<form:select path="itemsPerPage">
 
-						<c:forEach var="i" begin="20"  end="100" step="20" >
+						<c:forEach var="i" begin="100"  end="20" step="20" >
 							<form:option value="${i }" label="${i }${op:message('M00844')}" /> <!-- 개 보기 -->
 						</c:forEach>
 
