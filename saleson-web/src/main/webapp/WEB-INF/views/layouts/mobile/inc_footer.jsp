@@ -14,6 +14,7 @@
 		<a href="/m/notice/list">고객센터</a>
 		<a href="#">쇼핑몰이용안내</a>
 		<a href="javascript:Mobile.moveToWebsite()">PC버전</a>
+		<a href="/m/pages/dealer_shop">딜러샵</a>
 	</div>
 	<dl class="ft_info">
 		<dt>리뉴올PC 고객서비스센터</dt>
