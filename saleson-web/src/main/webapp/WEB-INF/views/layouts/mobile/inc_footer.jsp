@@ -14,7 +14,6 @@
 		<a href="/m/notice/list">고객센터</a>
 		<a href="#">쇼핑몰이용안내</a>
 		<a href="javascript:Mobile.moveToWebsite()">PC버전</a>
-		<a href="/m/pages/dealer_shop">딜러샵</a>
 	</div>
 	<dl class="ft_info">
 		<dt>리뉴올PC 고객서비스센터</dt>
@@ -44,6 +43,7 @@
 		<dd>
 			<a href="/m/pages/etc_protect">개인정보취급방침</a>
 			<a href="/m/store-inquiry/inquiry">입점문의</a>
+			<a href="/m/pages/dealer_shop">딜러샵</a>
 		</dd>
 		<dd class="copy">COPYRIGHT &copy; RE.NEW.ALL PC. ALL RIGHT RESERVED</dd>
 	</dl>
