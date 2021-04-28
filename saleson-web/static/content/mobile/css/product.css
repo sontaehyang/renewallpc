@@ -318,6 +318,8 @@
 .view_info .item_detail table tr td .price_box .price .rst_price.op {
     font-size: 24px;
     font-weight: 300;
+    line-height: 100%;
+    color: #fb5020;
 }
 .view_info .item_detail table tr td .price_box .price .rst_price.op span {
     font-size: 30px;
