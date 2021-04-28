@@ -563,13 +563,23 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+/* 초기메뉴
 .goods_product .goods_tab .inner ul li:nth-of-type(1) a:before{background-image: url(/content/mobile/images/common/ico_best_01.png);}
 .goods_product .goods_tab .inner ul li:nth-of-type(2) a:before{background-image: url(/content/mobile/images/common/ico_best_02.png);}
 .goods_product .goods_tab .inner ul li:nth-of-type(3) a:before{background-image: url(/content/mobile/images/common/ico_best_03.png);}
 .goods_product .goods_tab .inner ul li:nth-of-type(4) a:before{background-image: url(/content/mobile/images/common/ico_best_04.png);}
 .goods_product .goods_tab .inner ul li:nth-of-type(5) a:before{background-image: url(/content/mobile/images/common/ico_best_05.png);}
+*/
 
-.goods_product .goods_list {padding:0 20px; display:none; }
+.goods_product .goods_tab .inner ul li:nth-of-type(1) a:before{background-image: url(/content/mobile/images/common/ms04_ico01.png);}
+.goods_product .goods_tab .inner ul li:nth-of-type(2) a:before{background-image: url(/content/mobile/images/common/ms04_ico02.png);}
+.goods_product .goods_tab .inner ul li:nth-of-type(3) a:before{background-image: url(/content/mobile/images/common/ms04_ico08.png);}
+.goods_product .goods_tab .inner ul li:nth-of-type(4) a:before{background-image: url(/content/mobile/images/common/ms04_ico07.png);}
+.goods_product .goods_tab .inner ul li:nth-of-type(5) a:before{background-image: url(/content/mobile/images/common/ms04_ico11.png);}
+
+
+.goods_product .goods_list {padding:0 20px; display: block !important;}
 .goods_product .goods_list ul {font-size:0; }
 .goods_product .goods_list ul li {display:inline-block; width:48.4%; margin-right:3.2%; margin-bottom:25px; vertical-align:top;}
 .goods_product .goods_list ul li.right {margin-right:0; }
