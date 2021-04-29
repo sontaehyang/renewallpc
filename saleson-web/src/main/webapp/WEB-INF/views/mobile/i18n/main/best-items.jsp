@@ -14,7 +14,9 @@
 			<div class="inner">
 				<ul>
 					<c:forEach items="${breadcrumbs}" var="breadcrumb" varStatus="i">
-						<li ${i.count == 1 ? 'class="on"' : ''} data-url="${breadcrumb.groupUrl}"><a href="javascript:;"><span>${breadcrumb.groupName}</span></a></li>
+						<li ${i.count == 1 ? 'class="on"' : ''} data-url="${breadcrumb.groupUrl}">
+							<a href="javascript:;" id="${breadcrumb.groupUrl}"><span>${breadcrumb.groupName}</span></a>
+						</li>
 					</c:forEach>
 				</ul>
 			</div>
@@ -23,6 +25,7 @@
 		<div class="goods_con">
 			<c:forEach items="${breadcrumbs}" var="breadcrumb" varStatus="i">
 				<div class="goods_list" data-url="${breadcrumb.groupUrl}">
+					<p class="${breadcrumb.groupUrl} groupp"></p>
 					<ul>
 						<c:forEach items="${displayItemMap[breadcrumb.groupUrl]}" var="item" varStatus="k">
 							<li${item.itemSoldOut ? ' class="sold-out"' : ''}>
@@ -51,4 +54,44 @@
 			</c:forEach>
 		</div><!--// goods_con -->
 	</div><!--// goods_product -->
+	
+
+<!-- 탭메뉴 클릭시 하단 이동 및 각 컨텐츠별 배너 생성 // st -->
+<script>
+	$(function() {
+	  $("p.price_pc").prepend("<a href='/m/products/view/G2000002353'><img src='/content/mobile/images/common/1_price.jpg'></a>");
+	  $("p.needs_pc").prepend("<a href='/m/products/view/G2000002374'><img src='/content/mobile/images/common/2_use.jpg'></a>");
+	  $("p.laptop_aio_pc").prepend("<a href='/m/products/view/G2000002395'><img src='/content/mobile/images/common/3_laptop.jpg'></a>");
+	  $("p.MonitorAll").prepend("<a href='/m/products/view/G2000002456'><img src='/content/mobile/images/common/4_monitor.jpg'></a>");
+	  $("p.appliance").prepend("<a href='/m/products/view/G2000002559'><img src='/content/mobile/images/common/5_life.jpg'></a>");
+	});
+</script>
+<style>
+	p.groupp{padding: 60px 0 20px 0;}
+	.goods_product .goods_tab{margin-bottom: -35px;}
+</style>
+<script>
+$(document).ready(function(){
+	$('#price_pc').click(function(){
+		var offset = $('.price_pc').offset();
+		$('html').animate({scrollTop : offset.top}, 400);
+	});
+	$('#needs_pc').click(function(){
+		var offset = $('.needs_pc').offset();
+		$('html').animate({scrollTop : offset.top}, 400);
+	});
+	$('#laptop_aio_pc').click(function(){
+		var offset = $('.laptop_aio_pc').offset();
+		$('html').animate({scrollTop : offset.top}, 400);
+	});
+	$('#MonitorAll').click(function(){
+		var offset = $('.MonitorAll').offset();
+		$('html').animate({scrollTop : offset.top}, 400);
+	});
+	$('#appliance').click(function(){
+		var offset = $('.appliance').offset();
+		$('html').animate({scrollTop : offset.top}, 400);
+	});
+});
+</script><!-- 탭메뉴 클릭시 하단 이동 및 각 컨텐츠별 배너 생성 // end -->
 </c:if>

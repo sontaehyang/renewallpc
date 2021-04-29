@@ -715,6 +715,9 @@ select.transparent {/*border:0; padding-left:10px; background-position:right cen
 .ft_info.fti03 > dd.txt > p > a {display: inline-block;font-size: 11px;color: #b3b3b3;text-decoration: underline;vertical-align: top;}
 .ft_info.fti03 > dd > a {display:inline-block;padding:0 10px;font-size:11px;color:#5c5c5c;text-decoration:underline;vertical-align:top;}
 .ft_info.fti03 > dd > a:first-child {margin-left:-10px;font-weight:500;color:#1f1f1f;}
+.ft_info.fti03 > dd > a.btn_smu01 {text-decoration:none; padding: 5px 10px; border: 1px solid #e0e0e0; border-radius: 3px;}
+.ft_info.fti03 > dd > a.btn_smu02 {text-decoration:none; padding: 5px 15px; margin-left: 5px; background-color: #ffaf62; color: #fff; border-radius: 3px;}
+.ft_info.fti03 > dd > a.btn_smu03 {text-decoration:none; padding: 5px 15px; margin-left: 5px; background-color: #303030; color: #fff; border-radius: 3px;}
 .ft_info.fti03 .copy {margin-top:5px;font-family:"Montserrat";font-size:10px;color:#b3b3b3;}
 
 /*---------------푸터 옵션 영역----------*/

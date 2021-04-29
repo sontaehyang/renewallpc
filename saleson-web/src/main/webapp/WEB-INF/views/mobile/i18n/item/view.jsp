@@ -181,7 +181,7 @@
 								<td>
 									<div class="price_box cf">
 										<div class="price">
-											<p class="rst_price"><span>${op:numberFormat(item.exceptUserDiscountPresentPrice)}</span>원</p>
+											<p class="rst_price op"><span>${op:numberFormat(item.exceptUserDiscountPresentPrice)}</span>원</p>
 										</div>
 										<c:if test="${item.totalDiscountAmount > 0 && item.discountRate > 0}">
 											<p class="percentage"><span>${item.discountRate}</span>%</p>

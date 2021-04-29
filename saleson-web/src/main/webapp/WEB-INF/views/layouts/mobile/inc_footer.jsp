@@ -41,8 +41,9 @@
 			<p>이메일. <a href="mailto:${shopContext.config.adminEmail}" target="_blank">${shopContext.config.adminEmail}</a></p>
 		</dd>
 		<dd>
-			<a href="/m/pages/etc_protect">개인정보취급방침</a>
-			<a href="/m/store-inquiry/inquiry">입점문의</a>
+			<a href="/m/pages/etc_protect" class="btn_smu01">개인정보취급방침</a>
+			<a href="/m/store-inquiry/inquiry" class="btn_smu02">입점문의</a>
+			<a href="/m/pages/dealer_shop" class="btn_smu03">딜러샵</a>
 		</dd>
 		<dd class="copy">COPYRIGHT &copy; RE.NEW.ALL PC. ALL RIGHT RESERVED</dd>
 	</dl>

@@ -315,6 +315,16 @@
     color: #1f1f1f;
     font-family: Montserrat;
 }
+.view_info .item_detail table tr td .price_box .price .rst_price.op {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 100%;
+    color: #fb5020;
+}
+.view_info .item_detail table tr td .price_box .price .rst_price.op span {
+    font-size: 30px;
+    color: #fb5020;
+}
 .view_info .item_detail table tr td .price_box .price .rst_price.red {color:#e73535; font-weight:800; }
 .view_info .item_detail table tr td .price_box .price .rst_price.red span {color:#e73535; font-weight:600; }
 .view_info .item_detail table tr td .price_box .percentage {position:absolute; bottom:1px; right:-53px;  font-size:16px; font-weight:600; color:#fb5020; background:url(../images/common/percentage_arr.gif) no-repeat right center; background-size:9px 12px; margin:0 0 0 15px; padding-right:12px; }

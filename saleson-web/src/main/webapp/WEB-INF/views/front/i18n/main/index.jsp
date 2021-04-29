@@ -137,10 +137,10 @@
 		<div class="inner">
 			<div class="top_ico">
 				<a href="/categories/index/office_online__pc" class="ti01">인터넷/사무용PC</a>
-				<a href="/categories/index/rpg" class="ti02">게임용PC</a>
+				<a href="/categories/index/gaming" class="ti02">게임용PC</a>
 				<a href="/categories/index/win10__pc" class="ti03">윈 탑재PC</a>
-				<a href="/categories/index/graphic_design" class="ti04">고성능PC</a>
-				<a href="/categories/index/live_broadcasting" class="ti05">방송용</a>
+				<a href="/categories/index/diy" class="ti04">고성능PC</a>
+				<a href="/pages/high_professional" class="ti05">방송용</a>
 				<a href="/categories/index/full_set__pc" class="ti06">풀셋트PC</a>
 				<a href="/categories/index/premium__pc" class="ti10">프리미엄PC</a>
 				<a href="/categories/index/laptop_all" class="ti08">노트북</a>
