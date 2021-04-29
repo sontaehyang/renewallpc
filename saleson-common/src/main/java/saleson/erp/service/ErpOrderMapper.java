@@ -50,7 +50,7 @@ public class ErpOrderMapper {
 						buyItem.setOptions("N");
 					}
 
-					OrderLine orderLine = this.toOrderLine(buyItem, additionBundleNo);
+					OrderLine orderLine = this.toOrderLine(buyItem, additionBundleNo, buyItem.getItem().getStockCode());
 
 					if ("N".equals(orderLine.getAdditionItemFlag())) {
 						additionBundleNo = orderLine.getBundleNo();
@@ -96,9 +96,6 @@ public class ErpOrderMapper {
 						itemPrice.setCostPrice(optionCostPrice * orderQuantity);
 						itemPrice.setOptionPrice(optionPrice * orderQuantity);
 
-						Item item = buyItem.getItem();
-						item.setStockCode(optionStockCode);
-
 						buyItem.setItemPrice(itemPrice);
 						buyItem.setOptionIndex(optionIndex);
 
@@ -111,7 +108,7 @@ public class ErpOrderMapper {
 						buyItem.setOptions("");
 
 
-						orderLines.add(this.toOrderLine(buyItem, additionBundleNo));
+						orderLines.add(this.toOrderLine(buyItem, additionBundleNo, optionStockCode));
 						optionIndex++;
 
 						if (!"C".equals(optionType)) {
@@ -235,7 +232,7 @@ public class ErpOrderMapper {
 		return orderLines;
 	}
 
-	private OrderLine toOrderLine(BuyItem buyItem, String additionBundleNo) {
+	private OrderLine toOrderLine(BuyItem buyItem, String additionBundleNo, String stockCode) {
 		OrderLine orderLine = OrderLine.builder()
 				.orderCode(buyItem.getOrderCode())
 				.orderSequence(buyItem.getOrderSequence())
@@ -289,7 +286,7 @@ public class ErpOrderMapper {
 
 		// 값을 mapping
 		//orderLine.setCarrName(buyItem.getDeliveryCompanyName());
-		orderLine.setSkuCd(buyItem.getItem().getStockCode());
+		orderLine.setSkuCd(stockCode);
 		orderLine.setShopSaleNo(buyItem.getItemUserCode());
 		orderLine.setShopSaleName(additionItemName + buyItem.getItemName());
 		orderLine.setShopOptName(ShopUtils.viewOptionTextNoUl(buyItem.getOptions()));
