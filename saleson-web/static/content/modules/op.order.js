@@ -1102,7 +1102,8 @@ Order.setAmountText = function(isClear) {
 		if (Shop.isMobilePage == true) {
 			$('.op-quick-delivery-text').html(Common.numberFormat(Order.buy.totalShippingAmount) + '원 (착불)');
 		} else {
-			$('.op-quick-delivery-text').html('<b class="delv_price op-total-delivery-charge-text">' + Common.numberFormat(Order.buy.totalShippingAmount) + '</b>원 (착불)');
+			//원본 $('.op-quick-delivery-text').html('<b class="delv_price op-total-delivery-charge-text">' + Common.numberFormat(Order.buy.totalShippingAmount) + '</b>원 (착불)');
+			$('.op-quick-delivery-text').html('<b class="delv_price op-total-delivery-charge-text">착불</b>');
 		}
 	} else {
 		if (Shop.isMobilePage == true) {
