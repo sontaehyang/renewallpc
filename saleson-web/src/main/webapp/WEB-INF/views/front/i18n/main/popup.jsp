@@ -62,7 +62,7 @@ function popClose(){
 	        <div class="fieldset_area">
 	            <input type="hidden" name="num" value="1" />
 	            <input type="checkbox" id="close" onclick="setCookie('${popup.popupId}')" onkeypress="setCookie('${popup.popupId}')" style="margin-bottom:1px" /><label for="close">${op:message('M01475')}<!-- 오늘하루 이창을 열지 않음 --></label> &nbsp;
-	            <a href="javascript:popClose();"><img src="/content/images/btn/btn_close2.gif" width="11" height="10" style="cursor:hand" /></a>
+	            <a href="javascript:popClose();"><img src="/content/images/btn/btn_close2.gif" style="cursor:hand" /></a>
 	        </div>
 	    </fieldset>
 	</div>
