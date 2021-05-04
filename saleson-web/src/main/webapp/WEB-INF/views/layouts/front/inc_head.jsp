@@ -50,6 +50,16 @@
 </script>
 
 
+<!-- 구글 전환추적 로그분석 Global site tag (gtag.js) - Google Ads: 754482062 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-754482062"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'AW-754482062');
+</script>
+
+
 <c:set var="noFollowFlag" value="N" />
 <c:if test="${!empty pagination && pagination.currentPage > 1}">
 	<c:set var="noFollowFlag" value="N" />
