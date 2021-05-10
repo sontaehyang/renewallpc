@@ -75,7 +75,9 @@ html, body {width:100%; min-width:320px; }
 #header_wrap .his_back a {display:inline-block; width:100%; height:100%; }
 /*상품페이지 상단 바*/
 .tab_list_top { margin:0 8px 0 43px !important;display: flex; width: calc(100% - 51px) !important;  background-color: #fff;overflow: hidden;}
-.tab_list_top li {display:block; height: 43px !important; width: 25%;padding-right: 0 !important;}
+.tab_list_top li {display:block; height: 43px !important; width: 22%;padding-right: 0 !important;}
+.tab_list_top li:nth-child(3) {width: 28%;}
+.tab_list_top li:nth-child(4) {width: 28%;}
 .tab_list_top li a {width: max-content !important; padding: 0 0px; display: block !important; height: 43px !important; font-size: 14px; font-weight: 400;font-family: 'Noto Sans KR' !important;}
 .tab_list_top li.on a {color: #1a1a1a;border-bottom: 2px solid;}
 .tab_list_top li.on a span {color:#1a1a1a; }
