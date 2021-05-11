@@ -689,7 +689,7 @@
 									<li><img src="/content/mobile/images/common/pay_icon_02.png"></li>
 								</ul>
 							</li>
-							<li>삼성페이·페이코·SSG페이·L페이·SK페이</li>
+							<li>삼성·페이코·SSG·L페이·SK페이</li>
 						</ul>
 					</div>
 				</div>
