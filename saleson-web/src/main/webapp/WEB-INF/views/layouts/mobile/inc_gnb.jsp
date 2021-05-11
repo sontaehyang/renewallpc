@@ -10,8 +10,8 @@
 			<ul class="tab_list03 tab_list_top">
 				<li class="on"><a href="#tab_detail">상세정보</a></li>
 				<li><a href="#tab_info;">구매안내</a></li>
-				<li><a href="#tab_review;">상품후기</a></li>
-				<li><a href="#tab_qna;">상품문의</a></li>
+				<li><a href="#tab_review;">상품후기 <span class="item-review-count" style="display:inline-block;">0</span></a></li>
+				<li><a href="#tab_qna;">상품문의 <span class="item-qna-count">0</span></a></li>
 			</ul>
 		</div>
 		<!--  상품 상세 페이지 헤더 -->

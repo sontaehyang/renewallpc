@@ -91,19 +91,19 @@
 		<div class="nav_bar_content">
 			<ul>
 				<li class="nav_item">
-					<a href="#"><span>보상판매</span></a>
+					<a href="javascript:;" onclick="javascript:OpenMainLayer('layer-ms010201');"><span>보상판매</span></a>
 				</li>
 				<li class="nav_item">
-					<a href="#"><span>대량문의</span></a>
+					<a href="javascript:;" onclick="javascript:OpenMainLayer('layer-ms010202');"><span>대량문의</span></a>
 				</li>
 				<li class="nav_item">
-					<a href="#"><span>3년 A/S</span></a>
+					<a href="javascript:;" onclick="javascript:OpenMainLayer('layer-ms010203');"><span>3년 A/S</span></a>
 				</li>
 				<li class="nav_item">
-					<a href="#"><span>지점안내</span></a>
+					<a href="javascript:;" onclick="javascript:OpenMainLayer('layer-ms010204');"><span>지점안내</span></a>
 				</li>
 				<li class="nav_item">
-					<a href="#"><span>이시언</span></a>
+					<a href="javascript:;" onclick="javascript:OpenMainLayer('layer-ms010205');"><span>이시언</span></a>
 				</li>
 			</ul>
 		</div>
@@ -247,6 +247,91 @@
 		</div>
 	</div>
 </div><!--// main_con E-->
+
+
+<!--// 메인 컨텐츠팝업 추가 - 210504 - lmo -->
+<div class="main-layer layer-ms010201">
+	<p class="layer-title">보상판매</p>
+	<div class="layer-content">
+		<img src="/content/images/common/main-layer-ms010201.jpg" alt="보상판매">
+	</div><!--// layer-content -->
+	<button type="button" class="close-layer" title="보상판매 레이어팝업 닫기">보상판매 레이어팝업 닫기</button>
+</div><!--// main-layer -->
+
+<div class="main-layer layer-ms010202">
+	<p class="layer-title">대량문의</p>
+	<div class="layer-content">
+		<img src="/content/images/common/main-layer-ms010202.jpg" alt="대량문의">
+	</div><!--// layer-content -->
+	<button type="button" class="close-layer" title="대량문의 레이어팝업 닫기">대량문의 레이어팝업 닫기</button>
+</div><!--// main-layer -->
+
+<div class="main-layer layer-ms010203">
+	<p class="layer-title">3년 A/S</p>
+	<div class="layer-content">
+		<img src="/content/images/common/main-layer-ms010203.jpg" alt="3년 A/S">
+	</div><!--// layer-content -->
+	<button type="button" class="close-layer" title="3년 A/S 레이어팝업 닫기">3년 A/S 레이어팝업 닫기</button>
+</div><!--// main-layer -->
+
+<div class="main-layer layer-ms010204">
+	<p class="layer-title">지점안내</p>
+	<div class="layer-content">
+		<dl class="sub-layout">
+			<dt>
+				<p class="tit">본사</p>
+				<p class="txt">리뉴올PC 본사에서도 직접 구매하세요!</p>
+				<p class="img"><img src="/content/images/common/main-layer-ms010204-map.jpg"></p>
+				<dl class="info">
+					<dt>경기도 고양시 덕양구 화랑로139</dt>
+					<dd>상담시간 : 매일 AM 10:00 ~ PM 10:00 (공휴일 휴무) <br>점심시간 : PM 12:30 ~ PM 01:30</dd>
+					<dd class="tel">02-334-3989</dd>
+				</dl>
+				<a href="http://kko.to/e1F-lywD0" target="_blank" class="btn-map" title="본사 지도 새창으로 바로가기">지도보기</a>
+			</dt>
+			<dd>
+				<p class="tit">이마트 영등포점</p>
+				<dl class="info">
+					<dt>서울 영등포구 영중로 15 타임스퀘어</dt>
+					<dd>상담시간 : 매일 AM 10:00 ~ PM 10:00 (둘째,넷째 일요일 휴무)</dd>
+					<dd class="tel">02-2633-2432</dd>
+				</dl>
+				<a href="http://kko.to/K_Er2ywDT" target="_blank" class="btn-map" title="이마트 영등포점 지도 새창으로 바로가기">지도보기</a>
+				<p class="tit">이마트 킨텍스점</p>
+				<dl class="info">
+					<dt>경기 고양시 일산서구 킨텍스로 171</dt>
+					<dd>상담시간 : 매일 AM 10:00 ~ PM 10:00 (둘째,넷째 수요일 휴무)</dd>
+					<dd class="tel">031-924-2432</dd>
+				</dl>
+				<a href="http://kko.to/rl7Sly6DH" target="_blank" class="btn-map" title="이마트 킨텍스점 지도 새창으로 바로가기">지도보기</a>
+				<p class="tit">이마트 연수점</p>
+				<dl class="info">
+					<dt>인천 연수구 경원대로 184</dt>
+					<dd>상담시간 : 매일 AM 10:00 ~ PM 10:00 (둘째,넷째 수요일 휴무)</dd>
+					<dd class="tel">032-811-2432</dd>
+				</dl>
+				<a href="http://kko.to/I4nPly6Do" target="_blank" class="btn-map" title="이마트 연수점 지도 새창으로 바로가기">지도보기</a>
+			</dd>
+		</dl><!--// sub-layout -->
+		<p class="btm-txt">지금 리뉴올PC를 방문해주세요! <br>친절하게 상담해드립니다!</p>
+	</div><!--// layer-content -->
+	<button type="button" class="close-layer" title="지점안내 레이어팝업 닫기">지점안내 레이어팝업 닫기</button>
+</div><!--// main-layer -->
+
+<div class="main-layer layer-ms010205">
+	<p class="layer-title">전속모델 이시언</p>
+	<div class="layer-content">
+		<div class="youtube-box">
+			<iframe width="580" height="325" src="https://www.youtube.com/embed/_1PczAu_LPs?enablejsapi=1&version=3&playerapiid=ytplayer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div><!--// youtube-box -->
+		<p class="cont-title">이시언 인터뷰!</p>
+		이시언이 직접 밝히는 리뉴올PC, 이래서 좋다! <br>이시언의 리뉴올PC 생생 인터뷰 구매는 리뉴올PC에서…
+		<a href="https://www.youtube.com/watch?v=_1PczAu_LPs&ab_channel=%EB%A6%AC%EB%89%B4%EC%98%ACPC" target="_blank" class="btn-youtube">유튜브 더보기</a>
+	</div><!--// layer-content -->
+	<button type="button" class="close-layer" title="전속모델 이시언 레이어팝업 닫기">전속모델 이시언 레이어팝업 닫기</button>
+</div><!--// main-layer -->
+
+<div class="main-overlay"></div><!--// main-overlay -->
 
 <page:javascript>
 	<script type="text/javascript">

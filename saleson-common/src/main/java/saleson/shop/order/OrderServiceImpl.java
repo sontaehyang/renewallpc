@@ -3000,6 +3000,19 @@ public class OrderServiceImpl implements OrderService {
 
 					pgData = easypayService.init(data, session);
 				} else if("nicepay".equals(pgType)) {
+
+					// 휴대폰 결제일 경우 length 체크 (필드 길이 에러 발생)
+					if ("hp".equals(key)) {
+						productName = buy.getItems().get(0).getItem().getItemName();
+						if (productName.length() > 20) {
+							productName = productName.substring(0, 20) + "...";
+						}
+
+						if (buy.getItems().size() > 1) {
+							productName += " 외 " + (buy.getItems().size() - 1) + "개";
+						}
+					}
+
 					data.setApprovalType(key);
 					data.setGoodsName(productName);
 					data.setAmt(Integer.toString(buy.getPgPayAmount()));

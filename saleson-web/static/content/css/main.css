@@ -794,3 +794,127 @@
 .main_conts .customer .info_01 .time span:last-child{font-size:12px;}
 .main_conts .customer .info_02{margin-top:30px;}
 .main_conts .customer .info_02 span{margin-right:20px; font-size:13px;}
+
+
+/* 메인 레이어팝업 5개 추가 - 210504 - lmo */
+.main-overlay {
+	display: none;position: fixed;left: 0;top: 0;width: 100%;height: 100%;
+	background: rgba(0,0,0,0.5);
+	z-index: 2001;
+}
+.main-layer {
+	display: none;position: fixed;left: 50vw;top: 50vh;
+	width: auto;max-width: 580px;max-height: 90vh;
+	background: #fff;
+	transform: translate(-50%,-50%);z-index: 2002;
+}
+.main-layer .layer-title {
+	padding: 20px;
+	border-bottom: solid 1px #ececec;
+	font-size: 24px;font-weight: 500;color: #1f1f1f;text-align: center;line-height: 30px;
+}
+.main-layer .close-layer {
+	position: absolute;right: 0;top: 0;width: 70px;height: 70px;
+	background: url(/content/mobile/images/common/btn_close.png) no-repeat center center;
+	background-size: 70% auto;
+	font-size: 0;line-height: 0;
+}
+/*.main-layer .close-layer:before {
+     content: "X";
+     display: block;padding-top: 10px;
+     font-family: 'Gmarket Sans';font-size: 30px;font-weight: 100;color: #1f1f1f;line-height: 60px;
+}*/
+
+.main-layer .layer-content {
+	font-size: 16px;color: #757575;text-align: center;
+}
+.main-layer .layer-content > img {width: auto;max-width: 100%;height: auto;max-height: calc(90vh - 71px);}
+/* 지점안내 */
+.layer-ms010204 .sub-layout {
+	display: flex;width: 100%;height: 500px;
+	font-size: 13px;text-align: left;
+}
+.layer-ms010204 .sub-layout > dt {
+	width: 55%;padding: 20px 10px 20px 20px;
+}
+.layer-ms010204 .sub-layout > dd {
+	width: 45%;padding: 20px 20px 20px 10px;
+	background: #f7f7f7;
+	overflow-y: auto;
+}
+.layer-ms010204 .sub-layout .tit {
+	margin-top: 30px;
+	font-family: 'S-CoreDream-5Medium';font-size: 18px;font-weight: 700;color: #1f1f1f;
+}
+.layer-ms010204 .sub-layout > dt .tit {
+	margin-top: 0;
+	font-size: 24px;
+}
+.layer-ms010204 .sub-layout > dd .tit:first-child {margin-top: 0;}
+.layer-ms010204 .sub-layout .txt {
+	margin-top: 10px;
+	font-size: 14px;
+}
+.layer-ms010204 .sub-layout .img {margin: 20px -10px 20px -20px;}
+.layer-ms010204 .sub-layout .img > img {width: 100%;}
+.layer-ms010204 .sub-layout .info {
+	margin-top: 10px;
+	color: #b3b3b3;
+}
+.layer-ms010204 .sub-layout .info > dt {
+	margin-bottom: 5px;
+	font-size: 14px;font-weight: 500;color: #1f1f1f;
+}
+.layer-ms010204 .sub-layout .info > dd.tel {
+	margin-top: 5px;
+	font-weight: 500;color: #757575;line-height: 20px;
+}
+.layer-ms010204 .sub-layout .info > dd.tel:before {
+	content: "";
+	display: inline-block;width: 20px;height: 20px;
+	background: url(../images/common/ico-tel.png) no-repeat left center;
+	background-size: 14px auto;
+	vertical-align: top;
+}
+.layer-ms010204 .sub-layout .btn-map {
+	display: block;margin-top: 20px;
+	background: #fff;border: solid 1px #1f1f1f;
+	font-weight: 500;color: #1f1f1f;text-align: center;line-height: 38px;
+	transition: background 0.4s;
+}
+.layer-ms010204 .sub-layout .btn-map:before {
+	content: "";
+	display: inline-block;width: 20px;height: 38px;
+	background: url(../images/common/ico-map.png) no-repeat left center;
+	background-size: 14px auto;
+	vertical-align: top;
+}
+.layer-ms010204 .sub-layout .btn-map:hover,
+.layer-ms010204 .sub-layout .btn-map:focus {background: #ddd;}
+.layer-ms010204 .btm-txt {
+	padding: 20px;
+	border-top: solid 1px #ececec;
+	font-size: 14px;text-align: center;
+}
+.layer-ms010204 .btm-txt > br {display: none;}
+/* 전속모델 이시언 */
+.layer-ms010205 .layer-content .cont-title {
+	margin-bottom: 20px;
+	font-family: 'S-CoreDream-5Medium';font-size: 34px;font-weight: 700;color: #1f1f1f;
+}
+.layer-ms010205 .youtube-box {margin-bottom: 30px;}
+.layer-ms010205 .btn-youtube {
+	display: block;margin: 30px 20px;
+	background: #ff7101;border-radius: 60px;
+	font-size: 20px;font-weight: 500;color: #fff;line-height: 60px;
+	transition: background 0.4s;
+}
+.layer-ms010205 .btn-youtube:after {
+	content: "";
+	display: inline-block;width: 30px;height: 60px;
+	background: url(../images/common/mv_next.png) no-repeat center center;
+	background-size: 10px auto;
+	vertical-align: top;
+}
+.layer-ms010205 .btn-youtube:hover,
+.layer-ms010205 .btn-youtube:focus {background: #cc5a00;}

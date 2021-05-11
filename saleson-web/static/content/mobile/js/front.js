@@ -182,6 +182,24 @@ function mains(){
 
 	// 카테고리 랭킹
 	// mainBestItemsEvent();
+
+	/* Main LayerPopup - 210504 - lmo */
+	$(".close-layer, .main-overlay").on("click", function() {
+		if($(".main-layer").hasClass("layer-ms010205")) {
+			$(".layer-ms010205 iframe")[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+			console.log("stop");
+		}
+		$(".main-layer").stop().fadeOut(0);
+		$(".main-overlay").hide();
+		$("html, body").css("overflow-y", "visible");
+	});
+}
+
+/* Main LayerPopup - 210504 - lmo */
+function OpenMainLayer(popupName) {
+	$("."+popupName).stop().fadeIn(400);
+	$(".main-overlay").stop().fadeIn(400);
+	$("html, body").css("overflow-y", "hidden");
 }
 
 function setMainVisual() {
