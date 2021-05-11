@@ -680,6 +680,18 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
+					<div class="fixed_pay_box">
+						<ul>
+							<li>간편결제</li>
+							<li>
+								<ul class="fixed_pay_img">
+									<li><img src="/content/mobile/images/common/pay_icon_01.png"></li>
+									<li><img src="/content/mobile/images/common/pay_icon_02.png"></li>
+								</ul>
+							</li>
+							<li>삼성페이·페이코·SSG페이·L페이·SK페이</li>
+						</ul>
+					</div>
 				</div>
 			</form>
 		</div>
