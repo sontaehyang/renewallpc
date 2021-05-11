@@ -1608,7 +1608,15 @@
 			<include refid="itemReviewColumns" />,
 
 			S.SELLER_NAME,
-			S.LOGIN_ID AS SELLER_LOGIN_ID
+			S.LOGIN_ID AS SELLER_LOGIN_ID,
+
+			(
+				CASE
+					WHEN I.SPOT_FLAG = 'Y'  THEN I.SALE_PRICE - I.SPOT_DISCOUNT_AMOUNT
+				ELSE
+					I.SALE_PRICE - I.SELLER_DISCOUNT_AMOUNT
+				END
+			) AS ITEM_FINAL_PRICE
 		</trim>
 		FROM (
 
@@ -1616,6 +1624,9 @@
 
 		SELECT
 		I.ITEM_ID
+		<if test='orderBy == "ORDERING" and ((groupCategoryClassCodes != null) or (categoryClass != null and categoryClass != ""))'>
+			, IO2.ORDERING
+		</if>
 		FROM
 		<include refid="sqlItemListFrom" />
 
@@ -1628,6 +1639,7 @@
 		<where>
 			<include refid="sqlItemListWhere" />
 		</where>
+
 		GROUP BY I.ITEM_ID
 
 		<include refid="sqlItemListOrderBy" />
@@ -1639,6 +1651,57 @@
 
 		<include refid="itemOptionSoldOutFlagFromQuery" />
 
+		<if test='conditionType != "EXCEL_DOWNLOAD" and conditionType != "EXCEL_ITEM_USER_CODE_FIX"'>
+			<if test='sort == "DESC" or sort == "ASC" or sort == "" or sort == null'>
+
+				<trim prefix="ORDER BY" suffixOverrides=",">
+					<if test='displayNewItemListTop == "1" and orderBy == "ORDERING"'>
+
+					</if>
+
+					<if test='sort == "DESC" or sort == "" or sort == null'>
+						<choose>
+							<when test='orderBy == "ORDERING" and ((groupCategoryClassCodes != null) or (categoryClass != null and categoryClass != ""))'>
+								IT.ORDERING DESC, I.ITEM_ID DESC,
+							</when>
+							<when test='orderBy == "SALE_PRICE"'>
+								(ITEM_FINAL_PRICE) DESC,
+							</when>
+							<when test='orderBy == "HITS"'>
+								I.HITS DESC,
+							</when>
+							<when test='orderBy == "ITEM_ID"'>
+								I.ITEM_ID DESC,
+							</when>
+							<otherwise>
+								I.ITEM_ID DESC
+							</otherwise>
+						</choose>
+					</if>
+					<if test='sort == "ASC"'>
+						<choose>
+							<when test='orderBy == "ORDERING" and ((groupCategoryClassCodes != null) or (categoryClass != null and categoryClass != ""))'>
+								IT.ORDERING ASC, I.ITEM_ID DESC,
+							</when>
+							<when test='orderBy == "SALE_PRICE"'>
+								(ITEM_FINAL_PRICE) ASC,
+							</when>
+							<when test='orderBy == "HITS"'>
+								I.HITS ASC,
+							</when>
+							<when test='orderBy == "ITEM_ID"'>
+								I.ITEM_ID ASC,
+							</when>
+							<otherwise>
+								I.ITEM_ID DESC
+							</otherwise>
+						</choose>
+					</if>
+				</trim>
+			</if>
+		</if>
+
+
 		<if test='conditionType == "EXCEL_DOWNLOAD" or conditionType == "EXCEL_ITEM_USER_CODE_FIX"'>
 			LEFT JOIN OP_ITEM_OPTION IO ON I.ITEM_ID = IO.ITEM_ID AND IO.OPTION_DISPLAY_FLAG = 'Y'
 			LEFT JOIN OP_ITEM_IMAGE II ON I.ITEM_ID = II.ITEM_ID
@@ -1649,6 +1712,7 @@
 			INNER JOIN OP_CATEGORY C ON IC.CATEGORY_ID = C.CATEGORY_ID AND C.CATEGORY_FLAG = 'Y'
 
 		</if>
+
 		<trim prefix="ORDER BY" suffixOverrides=",">
 			<if test='conditionType == "EXCEL_DOWNLOAD" or conditionType == "EXCEL_ITEM_USER_CODE_FIX"'>
 				I.ITEM_CODE DESC,
@@ -1661,6 +1725,8 @@
 				I.ITEM_ID DESC, IC.ORDERING ASC
 			</if>
 		</trim>
+
+
 	</select>
 
 	<!-- 전시상품 조회 -->
