@@ -319,8 +319,8 @@ public class ErpOrderMapper {
 		int sales = 0;
 		int shopSupplyPrice = 0;
 		if (!"".equals(orderItem.getOptions()) || "Y".equals(orderItem.getAdditionItemFlag()) || "N".equals(orderItem.getOptions())) {
-			sales = orderItem.getPurchasePrice();
-			shopSupplyPrice = orderItem.getPrice();
+			sales = orderItem.getPurchasePrice() * quantity;
+			shopSupplyPrice = orderItem.getPrice() * quantity;
 
 		// 옵션 상품
 		} else {
