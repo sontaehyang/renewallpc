@@ -987,7 +987,7 @@
 .fixed_pay_box>ul{line-height:34px; height:34px;}
 .fixed_pay_box>ul:after{content:''; display:block; clear:both;}
 .fixed_pay_box>ul>li {width: calc(85% / 2); color:#212121; background-color:#fff; float: left;}
-.fixed_pay_box>ul>li:first-child {width:15%; letter-spacing: -1px; text-align:right; padding-right:5px; font-size:12px; font-weight:600;}
+.fixed_pay_box>ul>li:first-child {width:15%; letter-spacing: -1px; text-align:right; font-size:12px; font-weight:600;}
 .fixed_pay_box>ul>li:last-child {padding-left:5px; letter-spacing: -1px; padding-top:7px; font-size:11px; line-height:120%; font-weight:500;}
 
 .fixed_pay_img:after{content:''; display:block; clear:both;}
