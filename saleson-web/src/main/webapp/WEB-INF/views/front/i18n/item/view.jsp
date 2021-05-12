@@ -558,7 +558,7 @@
 								 data-item-addition-id="${itemAddition.itemAdditionId}" data-item-id="${itemAddition.item.itemId}"
 								 data-item-price="${itemAddition.item.exceptUserDiscountPresentPrice}" data-stock-flag="${itemAddition.item.stockFlag}"
 								 data-stock-quantity="${itemAddition.item.stockQuantity}">
-								<button class="sel_btn addition-select-box">구매</button>
+								<button class="sel_btn addition-select-box">추가구매</button>
 								<a href="${itemAddition.item.link}" class="det_btn" target="_blank">상품상세</a>
 							</div><!--// ov_sel -->
 							<p class="img"><img src="${shop:loadImageBySrc(itemAddition.item.imageSrc, 'XS')}" alt="${itemAddition.item.itemName}"></p>

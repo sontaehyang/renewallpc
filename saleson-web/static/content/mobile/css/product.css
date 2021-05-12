@@ -980,3 +980,20 @@
 .search_result_txt .result_none {margin-top:20px; padding:18px; background:#f0f0f0; }
 .search_result_txt .result_none ul {}
 .search_result_txt .result_none ul li {font-size:11px; font-weight:600; color:#666; background:url(../images/common/search_result_b.gif) no-repeat left 10px; background-size:3px; padding-left:6px; line-height:19px; }
+
+
+/* pay 안내 */
+.fixed_pay_box{margin-bottom:5px; padding:0 10px 5px 10px;}
+.fixed_pay_box>ul{line-height:34px; height:34px;}
+.fixed_pay_box>ul:after{content:''; display:block; clear:both;}
+.fixed_pay_box>ul>li {width: calc(85% / 2); color:#212121; background-color:#fff; float: left;}
+.fixed_pay_box>ul>li:first-child {width:15%; letter-spacing: -1.5px; text-align:right; padding-right:5px; font-size:12px; font-weight:600;}
+.fixed_pay_box>ul>li:last-child {padding-left:5px; letter-spacing: -1.5px; padding-top:7px; font-size:11px; line-height:120%; font-weight:500;}
+
+.fixed_pay_img:after{content:''; display:block; clear:both;}
+.fixed_pay_img>li {float: left; height:34px; padding:5px 20px; text-align:center; box-sizing:border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box;}
+#wrap .fixed_pay_img>li>img{width:auto; max-width:100% ; height:100%; vertical-align:top;}
+.fixed_pay_img>li:first-child {width: calc(50% - 5px); margin-left:5px; background-color:#00c73c;}
+.fixed_pay_img>li:last-child {width: calc(50% - 5px); margin-left:5px; background-color:#ffdf00;}
+
+
