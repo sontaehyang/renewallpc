@@ -287,7 +287,7 @@ public class ShopHandlerInterceptor extends HandlerInterceptorAdapter {
 
 			// www 없는 도메인 접속이 가능한 경우. www로 전환 처리 (세션문제 처리)
 			String redirect = environment.getProperty("saleson.url.shoppingmall");
-			String queryString = (String) request.getAttribute("javax.servlet.forward.query_string");
+			String queryString = request.getQueryString();
 
 			if (isApiView() && !isPassFrontRequest(request)) {
 
@@ -366,15 +366,9 @@ public class ShopHandlerInterceptor extends HandlerInterceptorAdapter {
 				}
 			} else {
 
-				String redirectUri = mobilePrefix;
-
-				if (requestUri.indexOf("/categories/index") > -1
-						|| requestUri.indexOf("/products/view") > -1
-						|| requestUri.indexOf("/ev") > -1) {
-					redirectUri = mobilePrefix + requestUri;
-
-					alternateBaseUri = requestUri;
-				}
+				// 모바일로 pc링크 접속 시 무조건 mobilePrefix 붙여서 이동
+				String redirectUri = mobilePrefix + requestUri;
+				alternateBaseUri = requestUri;
 
 				// 모바일 디바이스 체크
 				if (ShopUtils.isMobile(request)
