@@ -847,8 +847,7 @@ function delievery_tip(){
 //FAQ
 function faq(){
 	//FAQ 리스트
-	$('.faq_list ul li a').on('click', function(e){
-		e.preventDefault();
+	$('.faq_list ul li .oneDepth').on('click', function(){
 		$('.faq_list .oneDepth').removeClass('on');
 		$('.faq_list .twoDepthBox').slideUp('fast');
 		if (!$(this).next('.twoDepthBox').is(':visible')) {

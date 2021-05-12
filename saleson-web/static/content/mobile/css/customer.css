@@ -75,10 +75,10 @@
 .faq_list .select {padding:9px 10px; border-bottom:1px solid #e4e4e4; }
 .faq_list .list {margin-bottom:15px; }
 .faq_list .list ul li {border-bottom:1px solid #e4e4e4; }
-.faq_list .list ul > li a.oneDepth {display:block; background-size:14px 13px; overflow:hidden; margin:0 15px; padding: 15px 0; }
-.faq_list .list ul > li a.oneDepth p {float:left; display:block; width:94%; font-size:14px; font-weight:600; color:#666; line-height:17px; background:url(../images/common/faq_tit_b.gif) no-repeat left 3px; background-size:14px 13px; overflow:hidden; padding-left:20px; }
-.faq_list .list ul > li a.oneDepth .arr {float:right; display:inline-block; width:11px; height:7px; background:url(../images/common/faq_tit_arr.gif) no-repeat 0 0; background-size:cover; margin-top:6px; }
-.faq_list .list ul > li a.on .arr {background-position:0 -7px; }
+.faq_list .list ul > li .oneDepth {display:block; background-size:14px 13px; overflow:hidden; margin:0 15px; padding: 15px 0; cursor: pointer;}
+.faq_list .list ul > li .oneDepth p {float:left; display:block; width:94%; font-size:14px; font-weight:600; color:#666; line-height:17px; background:url(../images/common/faq_tit_b.gif) no-repeat left 3px; background-size:14px 13px; overflow:hidden; padding-left:20px; }
+.faq_list .list ul > li .oneDepth .arr {float:right; display:inline-block; width:11px; height:7px; background:url(../images/common/faq_tit_arr.gif) no-repeat 0 0; background-size:cover; margin-top:6px; }
+.faq_list .list ul > li .oneDepth.on .arr {background-position:0 -7px; }
 .faq_list .list ul .twoDepthBox {display:none; width:100%; padding:15px; border-top:1px dotted #e4e4e4; background:#f9faff; }
 .faq_list .list ul .twoDepthBox p {font-size:12px; font-weight:600; color:#808080; line-height:17px; }
 
