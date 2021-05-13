@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
+import saleson.common.enumeration.DeliveryMethodType;
 import saleson.common.utils.ShopUtils;
 import saleson.model.GiftItem;
 import saleson.shop.cart.domain.OrderQuantity;
@@ -265,8 +266,8 @@ public class BuyItem implements Cloneable {
 	// 퀵배송 추가요금 설정
 	private String quickDeliveryExtraChargeFlag;
 
-	// 퀵배송 여부 (Y:퀵배송, N:일반택배)
-	private String quickDeliveryFlag;
+	// 배송 방법 (일반택배, 퀵서비스, 방문수령)
+	private DeliveryMethodType deliveryMethodType;
 
 	private String erpOriginUnique;
 
@@ -839,11 +840,11 @@ public class BuyItem implements Cloneable {
 	public void setQuickDeliveryExtraChargeFlag(String quickDeliveryExtraChargeFlag) {
 		this.quickDeliveryExtraChargeFlag = quickDeliveryExtraChargeFlag;
 	}
-	public String getQuickDeliveryFlag() {
-		return quickDeliveryFlag;
+	public DeliveryMethodType getDeliveryMethodType() {
+		return deliveryMethodType;
 	}
-	public void setQuickDeliveryFlag(String quickDeliveryFlag) {
-		this.quickDeliveryFlag = quickDeliveryFlag;
+	public void setDeliveryMethodType(DeliveryMethodType deliveryMethodType) {
+		this.deliveryMethodType = deliveryMethodType;
 	}
 	public String getCashDiscountFlag() {
 		return cashDiscountFlag;

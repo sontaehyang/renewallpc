@@ -849,7 +849,7 @@
 			CREATED_DATE,
 			PARENT_ITEM_ID,
 			PARENT_ITEM_OPTIONS,
-			QUICK_DELIVERY_FLAG,
+			DELIVERY_METHOD_TYPE,
 			ERP_ORIGIN_UNIQUE
 		) SELECT 
 			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
@@ -879,7 +879,7 @@
 			<include refid="CommonMapper.datetime" />,
 			PARENT_ITEM_ID,
 			PARENT_ITEM_OPTIONS,
-			QUICK_DELIVERY_FLAG,
+			DELIVERY_METHOD_TYPE,
 			ERP_ORIGIN_UNIQUE
 		FROM OP_ORDER_ITEM
 		WHERE
@@ -1220,7 +1220,7 @@
 			CREATED_DATE,
 			PARENT_ITEM_ID,
 			PARENT_ITEM_OPTIONS,
-			QUICK_DELIVERY_FLAG,
+			DELIVERY_METHOD_TYPE,
 			ERP_ORIGIN_UNIQUE
 		) SELECT 
 			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
@@ -1270,7 +1270,7 @@
 			<include refid="CommonMapper.datetime" />,
 			PARENT_ITEM_ID,
 			PARENT_ITEM_OPTIONS,
-			QUICK_DELIVERY_FLAG,
+			DELIVERY_METHOD_TYPE,
 			ERP_ORIGIN_UNIQUE
 		FROM OP_ORDER_ITEM
 		WHERE
@@ -1533,7 +1533,7 @@
 			REFUND_STATUS,
 			PARENT_ITEM_ID,
 			PARENT_ITEM_OPTIONS,
-			QUICK_DELIVERY_FLAG,
+			DELIVERY_METHOD_TYPE,
 			ERP_ORIGIN_UNIQUE
 		) SELECT 
 			<include refid="saleson.shop.order.OrderMapper.defaultOrderItemColumnForCopy" />,
@@ -1559,7 +1559,7 @@
 			REFUND_STATUS,
 			PARENT_ITEM_ID,
 			PARENT_ITEM_OPTIONS,
-			QUICK_DELIVERY_FLAG,
+			DELIVERY_METHOD_TYPE,
 			ERP_ORIGIN_UNIQUE
 		FROM OP_ORDER_ITEM
 		WHERE

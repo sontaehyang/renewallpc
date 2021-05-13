@@ -3,6 +3,7 @@ package saleson.shop.order.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import saleson.common.enumeration.DeliveryMethodType;
 import saleson.model.OrderGiftItem;
 import saleson.shop.order.claimapply.domain.OrderCancelShipping;
 import saleson.shop.order.claimapply.domain.OrderReturnApply;
@@ -69,14 +70,14 @@ public class Order {
 	private String returnVirtualNo;
 	private List<BuyItem> additionItemList;
 
-	// 퀵배송 여부 (Y:퀵배송, N:일반택배)
-	private String quickDeliveryFlag;
+	// 배송 방법 (일반택배, 퀵서비스, 방문수령)
+	private DeliveryMethodType deliveryMethodType;
 
-	public String getQuickDeliveryFlag() {
-		return quickDeliveryFlag;
+	public DeliveryMethodType getDeliveryMethodType() {
+		return deliveryMethodType;
 	}
-	public void setQuickDeliveryFlag(String quickDeliveryFlag) {
-		this.quickDeliveryFlag = quickDeliveryFlag;
+	public void setDeliveryMethodType(DeliveryMethodType deliveryMethodType) {
+		this.deliveryMethodType = deliveryMethodType;
 	}
 	public String getReturnBankName() {
 		return returnBankName;

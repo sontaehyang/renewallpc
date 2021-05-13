@@ -140,7 +140,7 @@ Order.setItemAmountText = function(item) {
 Order.setOrderPayAmount = function(isClear) {
 	var orderPayAmount = Order.buy.totalItemSaleAmount + Order.buy.totalShippingAmount - Order.buy.totalCartCouponDiscountAmount - Order.buy.totalPointDiscountAmount;
 	Order.buy.orderPayAmount = orderPayAmount;
-	
+
 	if (isClear == true) {
 		Order.setOrderPayAmountClear();
 	}
@@ -552,7 +552,7 @@ Order.setShippingAmount = function() {
 
 	// 배송비 계산전 초기화
 	Order.buy.totalShippingAmount = 0;
-	var quickDeliveryFlag = $('input[name=quickDeliveryFlag]:checked').val();
+	var deliveryMethodType = $('input[name=deliveryMethodType]:checked').val();
 
 	$.each(Order.buy.receivers, function(i, receiver) {
 		
@@ -658,8 +658,8 @@ Order.setShippingAmount = function() {
 			shipping.realShipping = realShipping;
 			shipping.addDeliveryCharge = addDeliveryCharge;
 
-			// 퀵배송일 경우 배송비 0
-			if (quickDeliveryFlag == 'Y') {
+			// 퀵배송, 방문수령일 경우 배송비 0
+			if (deliveryMethodType == 'QUICK' || deliveryMethodType == 'PICK_UP') {
 				shipping.realShipping = 0;
 				shipping.addDeliveryCharge = 0;
 			}
@@ -725,8 +725,10 @@ Order.setShippingAmount = function() {
 			receiverDeliveryChargeText = '무료배송';
 		}
 
-		if (quickDeliveryFlag == 'Y') {
-			receiverDeliveryChargeText = "퀵 (착불)";
+		if (deliveryMethodType == 'QUICK') {
+			receiverDeliveryChargeText = "퀵서비스 (착불)";
+		} else if (deliveryMethodType == 'PICK_UP') {
+			receiverDeliveryChargeText = "방문수령";
 		}
 
 		$('#deliveryCharge-receiver-' + receiver.shippingIndex).html(receiverDeliveryChargeText);
@@ -1022,7 +1024,7 @@ Order.setAmountText = function(isClear) {
 		});
 	});
 
-	var quickDeliveryFlag = $('input[name=quickDeliveryFlag]:checked').val();
+	var deliveryMethodType = $('input[name=deliveryMethodType]:checked').val();
 	$.each(groupShippings, function(i, shipping) {
 		var realShipping = Common.numberFormat(shipping.realShipping) + "원";
 
@@ -1034,8 +1036,10 @@ Order.setAmountText = function(isClear) {
 			realShipping = "무료배송";
 		}
 
-		if (quickDeliveryFlag == 'Y') {
-			realShipping = "퀵 (착불)"
+		if (deliveryMethodType == 'QUICK') {
+			realShipping = "퀵서비스 (착불)";
+		} else if (deliveryMethodType == 'PICK_UP') {
+			realShipping = "방문수령";
 		}
 
 		$('.op-shipping-text-' + shipping.shippingSequence).html(realShipping);
@@ -1052,7 +1056,7 @@ Order.setAmountText = function(isClear) {
     var totalCouponDiscountAmount = totalItemCouponDiscountAmount + totalCartCouponDiscountAmount;
     var totalDiscountAmount = totalItemDiscountAmount + totalUserLevelDiscountAmount + totalItemCouponDiscountAmount + totalCartCouponDiscountAmount + totalPointDiscountAmount + totalShippingCouponDiscountAmount;
 
-	 
+
 	// 상품 금액 - 상품 쿠폰 적용 금액
 	$('.op-total-item-sale-Amount-text').html(Common.numberFormat(Order.buy.totalItemSaleAmount));
 
@@ -1098,16 +1102,17 @@ Order.setAmountText = function(isClear) {
 	// 총 적립 금액
 	$('.op-earn-point-text').html(Common.numberFormat(Order.buy.totalEarnPoint) + "P");
 
-	if (quickDeliveryFlag == 'Y') {
-		if (Shop.isMobilePage == true) {
-			$('.op-quick-delivery-text').html(Common.numberFormat(Order.buy.totalShippingAmount) + '원 (착불)');
+	if (Shop.isMobilePage == true) {
+		if (deliveryMethodType == 'QUICK') {
+			$('.op-quick-delivery-text').html('착불');
 		} else {
+			$('.op-quick-delivery-text').html(Common.numberFormat(Order.buy.totalShippingAmount) + '원');
+		}
+
+	} else {
+		if (deliveryMethodType == 'QUICK') {
 			//원본 $('.op-quick-delivery-text').html('<b class="delv_price op-total-delivery-charge-text">' + Common.numberFormat(Order.buy.totalShippingAmount) + '</b>원 (착불)');
 			$('.op-quick-delivery-text').html('<b class="delv_price op-total-delivery-charge-text">착불</b>');
-		}
-	} else {
-		if (Shop.isMobilePage == true) {
-			$('.op-quick-delivery-text').html(Common.numberFormat(Order.buy.totalShippingAmount) + '원');
 		} else {
 			$('.op-quick-delivery-text').html('<b class="delv_price op-total-delivery-charge-text">' + Common.numberFormat(Order.buy.totalShippingAmount) + '</b>원');
 		}
@@ -1116,6 +1121,11 @@ Order.setAmountText = function(isClear) {
 
 
 Order.multipleDelivery = function() {
+	if ($('input[name=deliveryMethodType]:checked').val() != 'NORMAL') {
+		alert('복수배송지 선택은 일반택배만 가능합니다.');
+		return false;
+	}
+
 	var message = "복수배송지 설정 하시겠습니까?\n배송지에 입력한 내용이 모두 초기화 됩니다.\n추가 배송비가 발생할수 있습니다.";
 	if (Order.useShippingCoupon > 0) {
 		var message = "복수배송지는 배송비쿠폰 적용이 불가합니다.\n복수배송지 설정 하시겠습니까?\n배송지에 입력한 내용이 모두 초기화 됩니다.\n추가 배송비가 발생할수 있습니다.";

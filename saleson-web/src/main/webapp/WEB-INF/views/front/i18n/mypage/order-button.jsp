@@ -14,16 +14,7 @@
 		<%-- 배송중 / 배송완료 / 교환거절 / 반품거절 --%>
 		<c:choose>
 			<c:when test="${empty orderItem.deliveryNumber}">
-				<p class="mt5">
-					<c:choose>
-						<c:when test="${orderItem.quickDeliveryFlag == 'Y'}">
-							퀵 배송
-						</c:when>
-						<c:otherwise>
-							직접수령
-						</c:otherwise>
-					</c:choose>
-				</p>
+				<p class="mt5">${orderItem.deliveryMethodType.title}</p>
 			</c:when>
 			<c:otherwise>
 				<p class="mt5">${orderItem.deliveryCompanyName}</p>
@@ -54,16 +45,7 @@
 		
 		<c:choose>
 			<c:when test="${empty orderItem.deliveryNumber}">
-				<p class="mt5">
-					<c:choose>
-						<c:when test="${orderItem.quickDeliveryFlag == 'Y'}">
-							퀵 배송
-						</c:when>
-						<c:otherwise>
-							직접수령
-						</c:otherwise>
-					</c:choose>
-				</p>
+				<p class="mt5">${orderItem.deliveryMethodType.title}</p>
 			</c:when>
 			<c:otherwise>
 				<p class="mt5">${orderItem.deliveryCompanyName}</p>

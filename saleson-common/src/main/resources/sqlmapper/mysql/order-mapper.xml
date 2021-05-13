@@ -317,7 +317,7 @@
 
 		<result property="parentItemId" column="PARENT_ITEM_ID" />
 		<result property="parentItemOptions" column="PARENT_ITEM_OPTIONS" />
-		<result property="quickDeliveryFlag" column="QUICK_DELIVERY_FLAG" />
+		<result property="deliveryMethodType" column="DELIVERY_METHOD_TYPE" />
 		<result property="erpOriginUnique" column="ERP_ORIGIN_UNIQUE" />
 	</resultMap>
 
@@ -524,7 +524,7 @@
 		<result property="parentItemOptions" column="PARENT_ITEM_OPTIONS" />
 		<result property="campaignCode" column="CAMPAIGN_CODE" />
 		<result property="quickDeliveryExtraChargeFlag" column="QUICK_DELIVERY_EXTRA_CHARGE_FLAG" />
-		<result property="quickDeliveryFlag" column="QUICK_DELIVERY_FLAG" />
+		<result property="deliveryMethodType" column="DELIVERY_METHOD_TYPE" />
 		<result property="cashDiscountFlag" column="CASH_DISCOUNT_FLAG" />
 
 		<association property="itemPrice" javaType="saleson.shop.order.domain.ItemPrice">
@@ -1007,7 +1007,7 @@
 		OI.USER_LEVEL_DISCOUNT_PRICE,
 		OI.PARENT_ITEM_ID,
 		OI.PARENT_ITEM_OPTIONS,
-		OI.QUICK_DELIVERY_FLAG,
+		OI.DELIVERY_METHOD_TYPE,
 		OI.ERP_ORIGIN_UNIQUE,
 		
 		OSI.SHIPPING_INFO_SEQUENCE,
@@ -1603,7 +1603,7 @@
 			OIT.CREATED_DATE AS ORDER_ITEM_TEMP_CREATED_DATE,
 			S.SELLER_NAME,
 			OIT.CAMPAIGN_CODE,
-			OIT.QUICK_DELIVERY_FLAG
+			OIT.DELIVERY_METHOD_TYPE
 		FROM
 			OP_ORDER_ITEM_BUY_TEMP OIT
 				INNER JOIN OP_ITEM I ON OIT.ITEM_ID = I.ITEM_ID
@@ -2043,7 +2043,7 @@
 			PREVIOUS_REAL_SHIPPING,
 			PREVIOUS_PAY_SHIPPING,
 			PREVIOUS_REMITTANCE_AMOUNT,
-			QUICK_DELIVERY_FLAG
+			DELIVERY_METHOD_TYPE
 		) VALUES (
 			#{orderCode},
 			#{orderSequence},
@@ -2067,7 +2067,7 @@
 			#{realShipping},
 			#{payShipping},
 			#{remittanceAmount},
-			#{quickDeliveryFlag}
+			#{deliveryMethodType}
 		)
 	</insert>
 	
@@ -2264,7 +2264,7 @@
 			CAMPAIGN_CODE,
 			PARENT_ITEM_ID,
 			PARENT_ITEM_OPTIONS,
-			QUICK_DELIVERY_FLAG,
+			DELIVERY_METHOD_TYPE,
 			ERP_ORIGIN_UNIQUE
 		) VALUES (
 			#{orderCode}, 
@@ -2353,7 +2353,7 @@
 			#{campaignCode},
 			#{parentItemId},
 			#{parentItemOptions},
-		    #{quickDeliveryFlag},
+		    #{deliveryMethodType},
 			#{erpOriginUnique}
 		)
 	</insert>
@@ -2573,8 +2573,8 @@
 	</insert>
 	
 	<insert id="insertOrderItemBuyTemp" parameterType="saleson.shop.order.domain.BuyItem">
-		INSERT INTO OP_ORDER_ITEM_BUY_TEMP (USER_ID, SESSION_ID, ORDER_CODE, ITEM_SEQUENCE, SHIPPING_INDEX, ITEM_ID, QUANTITY, OPTIONS, COUPON_USER_ID, ADD_COUPON_USER_ID, SHIPPING_PAYMENT_TYPE, ADDITION_ITEM_FLAG, PARENT_ITEM_SEQUENCE, PARENT_ITEM_ID, PARENT_ITEM_OPTIONS, ESCROW_STATUS, CREATED_DATE, CAMPAIGN_CODE, QUICK_DELIVERY_FLAG)
-		VALUES(#{userId}, #{sessionId}, #{orderCode}, #{itemSequence}, #{shippingIndex}, #{itemId}, #{itemPrice.quantity}, #{options}, #{couponUserId}, #{addCouponUserId}, #{shippingPaymentType}, #{additionItemFlag}, #{parentItemSequence}, #{parentItemId}, #{parentItemOptions}, 'N', #{createdDate}, #{campaignCode}, #{quickDeliveryFlag})
+		INSERT INTO OP_ORDER_ITEM_BUY_TEMP (USER_ID, SESSION_ID, ORDER_CODE, ITEM_SEQUENCE, SHIPPING_INDEX, ITEM_ID, QUANTITY, OPTIONS, COUPON_USER_ID, ADD_COUPON_USER_ID, SHIPPING_PAYMENT_TYPE, ADDITION_ITEM_FLAG, PARENT_ITEM_SEQUENCE, PARENT_ITEM_ID, PARENT_ITEM_OPTIONS, ESCROW_STATUS, CREATED_DATE, CAMPAIGN_CODE, DELIVERY_METHOD_TYPE)
+		VALUES(#{userId}, #{sessionId}, #{orderCode}, #{itemSequence}, #{shippingIndex}, #{itemId}, #{itemPrice.quantity}, #{options}, #{couponUserId}, #{addCouponUserId}, #{shippingPaymentType}, #{additionItemFlag}, #{parentItemSequence}, #{parentItemId}, #{parentItemOptions}, 'N', #{createdDate}, #{campaignCode}, #{deliveryMethodType})
 	</insert>
 	
 	<insert id="insertOrderItemBuyTempForEscrow" parameterType="saleson.shop.order.domain.BuyItem">

@@ -173,8 +173,8 @@
 			 								<c:choose>
 			 									<c:when test="${orderItem.orderShipping.shippingPaymentType == '2'}">
 			 										<c:choose>
-														<c:when test="${orderItem.quickDeliveryFlag == 'Y'}">
-															퀵
+														<c:when test="${orderItem.deliveryMethodType == 'QUICK'}">
+															${orderItem.deliveryMethodType.title}<br/>
 														</c:when>
 														<c:otherwise>
 															${op:numberFormat(orderItem.orderShipping.realShipping)}원
@@ -184,7 +184,8 @@
 			 									</c:when>
 			 									<c:otherwise>
 			 										<c:choose>
-			 											<c:when test="${orderItem.orderShipping.payShipping == 0}">무료배송</c:when>
+														<c:when test="${orderItem.orderShipping.payShipping == 0 && orderItem.deliveryMethodType == 'NORMAL'}">무료배송</c:when>
+														<c:when test="${orderItem.deliveryMethodType == 'PICK_UP'}">${orderItem.deliveryMethodType.title}</c:when>
 			 											<c:otherwise>
 			 												${op:numberFormat(orderItem.orderShipping.payShipping)}원
 			 											</c:otherwise>
@@ -194,8 +195,11 @@
 			 							</c:when>
 			 							<c:otherwise>
 											<c:choose>
-												<c:when test="${orderItem.quickDeliveryFlag == 'Y'}">
-													퀵 (착불)
+												<c:when test="${orderItem.deliveryMethodType != 'NORMAL'}">
+													${orderItem.deliveryMethodType.title}
+													<c:if test="orderItem.deliveryMethodType == 'QUICK'">
+														<br/>(착불)
+													</c:if>
 												</c:when>
 												<c:otherwise>
 													무료배송
@@ -226,24 +230,19 @@
 			<tbody>
 			<tr>
 				<th scope="row">배송방법</th>
-				<td>
-					<c:choose>
-						<c:when test="${order.quickDeliveryFlag == 'Y'}">
-							퀵서비스
-						</c:when>
-						<c:otherwise>
-							일반택배
-						</c:otherwise>
-					</c:choose>
-				</td>
+				<td>${order.deliveryMethodType.title}</td>
 			</tr>
 			<tr>
 				<th scope="row">배송비</th>
-				<td><b class="delv_price">${op:numberFormat(order.totalShippingAmount)}</b>
-					원
-					<c:if test="${order.quickDeliveryFlag == 'Y'}">
-						(착불)
-					</c:if>
+				<td>
+					<c:choose>
+						<c:when test="${order.deliveryMethodType == 'QUICK'}">
+							착불
+						</c:when>
+						<c:otherwise>
+							<b class="delv_price">${op:numberFormat(order.totalShippingAmount)}</b>원
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			<tr>
@@ -251,8 +250,8 @@
 				<td>
 					<div class="box_list_02 pt0">
 						<ul>
-							<li><span class="tit">택배</span>평일 00시까지 결제완료하시면 당일 발송됩니다.</li>
-							<li><span class="tit">퀵서비스</span>평일 00시까지 결제완료하시면 당일 발송됩니다.<br>퀵서비스 특성상 다품목, 대량 주문 시 결제하신 운송비보다 초과할 경우 착불처리되오니 이용에 참고부탁드립니다.</li>
+							<li><span class="tit">택배</span>제작상품이기에 출고까지 1~2일 소요됩니다.</li>
+							<li><span class="tit">퀵서비스</span>평일 오전 11시까지 결제 후 전화주시면 당일발송 됩니다. 퀵서비스 비용은 착불이며, 지역에 따라 비용은 상이합니다.</li>
 						</ul>
 					</div>
 				</td>

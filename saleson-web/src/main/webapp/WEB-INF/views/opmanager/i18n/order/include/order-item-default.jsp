@@ -72,11 +72,22 @@
  							<c:when test="${orderItem.isShippingView == 'Y'}">
  								<c:choose>
  									<c:when test="${orderItem.orderShipping.shippingPaymentType == '2'}">
- 										<span style="color:red">${op:numberFormat(orderItem.orderShipping.realShipping)}원 (착불)</span>
+										<span style="color:red">
+											<c:choose>
+												<c:when test="${orderItem.deliveryMethodType == 'QUICK'}">
+													${orderItem.deliveryMethodType.title}
+												</c:when>
+												<c:otherwise>
+													${op:numberFormat(orderItem.orderShipping.realShipping)}원
+												</c:otherwise>
+											</c:choose>
+											(착불)
+										</span>
  									</c:when>
  									<c:otherwise>
  										<c:choose>
- 											<c:when test="${orderItem.orderShipping.payShipping == 0}">무료</c:when>
+											<c:when test="${orderItem.orderShipping.payShipping == 0 && orderItem.deliveryMethodType == 'NORMAL'}">무료</c:when>
+											<c:when test="${orderItem.deliveryMethodType == 'PICK_UP'}">${orderItem.deliveryMethodType.title}</c:when>
  											<c:otherwise>
  												${op:numberFormat(orderItem.orderShipping.payShipping)}원
  											</c:otherwise>
@@ -84,7 +95,14 @@
  									</c:otherwise>
  								</c:choose>
  							</c:when>
- 							<c:otherwise>묶음배송</c:otherwise>
+ 							<c:otherwise>
+								<c:choose>
+									<c:when test="${orderItem.deliveryMethodType != 'NORMAL'}">${orderItem.deliveryMethodType.title}</c:when>
+									<c:otherwise>
+										묶음배송
+									</c:otherwise>
+								</c:choose>
+							</c:otherwise>
  						</c:choose>
 					</td>
 					<td class="text-center"> 
