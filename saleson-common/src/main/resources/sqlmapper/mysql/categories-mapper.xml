@@ -286,6 +286,7 @@
 		  SELECT CATEGORY_CLASS1, COUNT(CATEGORY_CLASS1) AS CATEGORY_COUNT FROM OP_CATEGORY
 		  GROUP BY CATEGORY_CLASS1
 		) AS C2 ON C1.CATEGORY_CLASS1 = C2.CATEGORY_CLASS1
+		ORDER BY C1.ORDERING ASC
 	</select>
 	
 	<select id="getCategoiesListByLevels" parameterType="saleson.shop.categories.support.CategoriesSearchParam" resultMap="CategoriesResult">
