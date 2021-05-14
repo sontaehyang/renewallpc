@@ -459,33 +459,47 @@
 			<div class="add_product">
 				<div class="inner">
 					<h4>추가상품</h4>
-					<div class="add_product_slider">
-						<div class="swiper-wrapper op-item-addition-info">
-							<c:forEach items="${item.itemAdditions}" var="itemAddition">
-								<div class="swiper-slide op-addition-item-box"
-									 data-item-addition-id="${itemAddition.itemAdditionId}" data-item-id="${itemAddition.item.itemId}"
-									 data-item-price="${itemAddition.item.exceptUserDiscountPresentPrice}" data-stock-flag="${itemAddition.item.stockFlag}"
-									 data-stock-quantity="${itemAddition.item.stockQuantity}">
-									<a href="${itemAddition.item.link}" class="img">
-										<img src="${shop:loadImageBySrc(itemAddition.item.imageSrc, 'XS')}" alt="${itemAddition.item.itemName}">
-									</a>
-									<div class="btn_wrap">
-										<button class="btn_buy op-addition-select-box">구매</button>
-										<button class="btn_detail" onclick="location.href='${itemAddition.item.link}'">상세정보</button>
-									</div>
-									<div class="txt">
-										<a href="${itemAddition.item.link}" class="name">${itemAddition.item.itemName}</a>
-										<div class="price_wrap">
-											<p class="price"><span>${op:numberFormat(itemAddition.item.exceptUserDiscountPresentPrice)}</span>원</p>
-											<c:if test="${itemAddition.item.totalDiscountAmount > 0 && itemAddition.item.discountRate > 0}">
-												<p class="percentage"><span>${itemAddition.item.discountRate}</span><sub>%</sub></p>
-											</c:if>
-										</div>
-									</div>
+					<h5>상품을 선택하면 주문상품에 추가됩니다.</h5>
+					<select>
+						<c:forEach items="${additionCategory}" var="category">
+							<option value="#">${category.value}</option>
+						</c:forEach>
+					</select>
+					<div class="ap_slider_sec">
+						<c:forEach items="${additionCategory}" var="category">
+							<div class="add_product_slider">
+								<div class="swiper-wrapper op-item-addition-info">
+									<c:set var="count" value="0" />
+									<c:forEach items="${item.itemAdditions}" var="itemAddition">
+										<c:if test="${category.key == itemAddition.categoryId && count < 10}">
+											<c:set var="count">${count + 1}</c:set>
+											<div class="swiper-slide op-addition-item-box"
+												 data-item-addition-id="${itemAddition.itemAdditionId}" data-item-id="${itemAddition.item.itemId}"
+												 data-item-price="${itemAddition.item.exceptUserDiscountPresentPrice}" data-stock-flag="${itemAddition.item.stockFlag}"
+												 data-stock-quantity="${itemAddition.item.stockQuantity}">
+												<a href="${itemAddition.item.link}" class="img">
+													<img src="${shop:loadImageBySrc(itemAddition.item.imageSrc, 'XS')}" alt="${itemAddition.item.itemName}">
+												</a>
+												<div class="btn_wrap">
+													<button class="btn_buy op-addition-select-box">구매</button>
+													<button class="btn_detail" onclick="location.href='${itemAddition.item.link}'">상세정보</button>
+												</div>
+												<div class="txt">
+													<a href="${itemAddition.item.link}" class="name">${itemAddition.item.itemName}</a>
+													<div class="price_wrap">
+														<p class="price"><span>${op:numberFormat(itemAddition.item.exceptUserDiscountPresentPrice)}</span>원</p>
+														<c:if test="${itemAddition.item.totalDiscountAmount > 0 && itemAddition.item.discountRate > 0}">
+															<p class="percentage"><span>${itemAddition.item.discountRate}</span><sub>%</sub></p>
+														</c:if>
+													</div>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
 								</div>
-							</c:forEach>
-						</div>
-						<div class="swiper-pagination"></div>
+								<div class="swiper-pagination"></div>
+							</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>

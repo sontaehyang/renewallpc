@@ -41,10 +41,7 @@ import saleson.shop.coupon.CouponService;
 import saleson.shop.coupon.domain.Coupon;
 import saleson.shop.coupon.domain.CouponUser;
 import saleson.shop.coupon.support.UserCouponParam;
-import saleson.shop.item.domain.Item;
-import saleson.shop.item.domain.ItemRelation;
-import saleson.shop.item.domain.ItemReview;
-import saleson.shop.item.domain.RecommendMail;
+import saleson.shop.item.domain.*;
 import saleson.shop.item.support.ItemParam;
 import saleson.shop.openmarket.domain.NaverPay;
 import saleson.shop.order.OrderService;
@@ -60,9 +57,8 @@ import saleson.shop.wishlist.domain.WishlistGroup;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping({"/item", "/products"})
@@ -273,6 +269,17 @@ public class ItemController {
 		// 판매자 정보
 		Seller seller = sellerService.getSellerById(item.getSellerId());
 
+		// 추가구성 카테고리
+		List<Integer> categoryIds = item.getItemAdditions().stream().map(ia -> ia.getCategoryId()).distinct().collect(Collectors.toList());
+		Map<Integer, String> additionCategory = new HashMap<>();
+		for (ItemAddition itemAddition : item.getItemAdditions()) {
+			for (int categoryId : categoryIds) {
+				if (itemAddition.getCategoryId() == categoryId) {
+					additionCategory.put(categoryId, itemAddition.getCategoryName());
+				}
+			}
+		}
+
 		model.addAttribute("asp28Analytics", new Asp28Analytics(item, "Web"));
 		model.addAttribute("naverPay", new NaverPay("Web", "/products/view/"+itemUserCode, configPgService.getConfigPg()));
 		model.addAttribute("item", item);
@@ -280,6 +287,7 @@ public class ItemController {
 		model.addAttribute("couponCount", couponCount);
 		model.addAttribute("seller", seller);		// 판매자 정보
 		model.addAttribute("config", configService.getShopConfig(Config.SHOP_CONFIG_ID));
+		model.addAttribute("additionCategory", additionCategory);
 
 		OpenGraphUtils.setOpenGraphModelByItem(model, item);
 

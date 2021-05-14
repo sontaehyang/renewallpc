@@ -761,7 +761,7 @@ function add_product(){
 	$selectprdAdd.change(function() {
 		$sliderprdAdd.removeClass("view");
 		var indexSelect = $(".add_product .inner > select option").index($(".add_product .inner > select option:selected"));
-		console.log(indexSelect);
+		//console.log(indexSelect);
 		$sliderprdAdd.eq(indexSelect).addClass("view");
 	});
 }

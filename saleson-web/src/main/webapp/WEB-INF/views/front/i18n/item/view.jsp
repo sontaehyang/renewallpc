@@ -551,27 +551,41 @@
 		<c:if test="${item.itemAdditionFlag == 'Y'}">
 			<div class="inner item_add_sec">
 				<p class="top_tit">추가상품<span>상품을 선택하면 주문상품에 추가됩니다.</span></p>
-				<ul class="iadd_list item-addition-info">
-					<c:forEach items="${item.itemAdditions}" var="itemAddition">
-						<li>
-							<div class="ov_sel addition-item-box"
-								 data-item-addition-id="${itemAddition.itemAdditionId}" data-item-id="${itemAddition.item.itemId}"
-								 data-item-price="${itemAddition.item.exceptUserDiscountPresentPrice}" data-stock-flag="${itemAddition.item.stockFlag}"
-								 data-stock-quantity="${itemAddition.item.stockQuantity}">
-								<button class="sel_btn addition-select-box">추가구매</button>
-								<a href="${itemAddition.item.link}" class="det_btn" target="_blank">상품상세</a>
-							</div><!--// ov_sel -->
-							<p class="img"><img src="${shop:loadImageBySrc(itemAddition.item.imageSrc, 'XS')}" alt="${itemAddition.item.itemName}"></p>
-							<p class="tit">${itemAddition.item.itemName}</p>
-							<dl class="price">
-								<dt><b>${op:numberFormat(itemAddition.item.exceptUserDiscountPresentPrice)}</b>원</dt>
-								<c:if test="${itemAddition.item.totalDiscountAmount > 0 && itemAddition.item.discountRate > 0}">
-									<dd>${itemAddition.item.discountRate}</dd>
-								</c:if>
-							</dl>
-						</li>
+				<div class="iadd_tabs">
+					<c:forEach items="${additionCategory}" var="category" varStatus="i">
+						<a href="#" class="${i.index == 0 ? 'on' : ''}">${category.value}</a>
 					</c:forEach>
-				</ul><!--// iadd_list -->
+				</div><!--// iadd_tabs -->
+				<div class="iadd_tc_sec">
+					<c:forEach items="${additionCategory}" var="category">
+						<div class="iadd_tabcont">
+							<ul class="iadd_list item-addition-info">
+								<c:set var="count" value="0" />
+								<c:forEach items="${item.itemAdditions}" var="itemAddition">
+									<c:if test="${category.key == itemAddition.categoryId && count < 10}">
+										<c:set var="count">${count + 1}</c:set>
+										<li>
+											<div class="ov_sel addition-item-box" data-item-addition-id="${itemAddition.itemAdditionId}" data-item-id="${itemAddition.item.itemId}"
+												 data-item-price="${itemAddition.item.exceptUserDiscountPresentPrice}" data-stock-flag="${itemAddition.item.stockFlag}"
+												 data-stock-quantity="${itemAddition.item.stockQuantity}">
+												<button class="sel_btn addition-select-box">함께 구매</button>
+												<a href="${itemAddition.item.link}" class="det_btn" target="_blank">상세화면</a>
+											</div><!--// ov_sel -->
+											<p class="img"><img src="${shop:loadImageBySrc(itemAddition.item.imageSrc, 'XS')}" alt="${itemAddition.item.itemName}"></p>
+											<p class="tit">${itemAddition.item.itemName}</p>
+											<dl class="price">
+												<dt><b>${op:numberFormat(itemAddition.item.exceptUserDiscountPresentPrice)}</b>원</dt>
+												<c:if test="${itemAddition.item.totalDiscountAmount > 0 && itemAddition.item.discountRate > 0}">
+													<dd>${itemAddition.item.discountRate}</dd>
+												</c:if>
+											</dl>
+										</li>
+									</c:if>
+								</c:forEach>
+							</ul><!--// iadd_list -->
+						</div>
+					</c:forEach>
+				</div><!--// iadd_tc_sec -->
 			</div><!--// inner item_add_sec -->
 		</c:if>
 

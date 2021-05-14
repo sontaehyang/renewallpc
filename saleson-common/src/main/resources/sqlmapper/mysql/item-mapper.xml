@@ -298,6 +298,8 @@
 		<result property="itemId" column="ITEM_ID" />
 		<result property="ordering" column="ORDERING" />
 		<result property="createdDate" column="CREATED_DATE" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="categoryName" column="CATEGORY_NAME" />
 
 		<association property="item" javaType="saleson.shop.item.domain.Item">
 			<result property="itemId" column="ADDITION_ITEM_ID" />
@@ -3539,6 +3541,7 @@
 	<!-- 추가 상품 목록 -->
 	<select id="getItemAdditionList" parameterType="saleson.shop.item.support.ItemParam" resultMap="ItemAdditionResult">
 		SELECT
+			C.CATEGORY_ID, C.CATEGORY_NAME,
 			IA.*,
 			I.ITEM_ID AS ADDITION_ITEM_ID,
 			I.ITEM_USER_CODE AS ADDITION_ITEM_USER_CODE,
@@ -3567,9 +3570,12 @@
 			I.SPOT_WEEK_DAY,
 			I.QUICK_DELIVERY_EXTRA_CHARGE_FLAG
 		FROM OP_ITEM_ADDITION IA
-		INNER JOIN OP_ITEM I ON IA.ADDITION_ITEM_ID = I.ITEM_ID
+			INNER JOIN OP_ITEM I ON IA.ADDITION_ITEM_ID = I.ITEM_ID
+			LEFT JOIN OP_ITEM_CATEGORY IC ON IA.ADDITION_ITEM_ID = IC.ITEM_ID
+			LEFT JOIN OP_CATEGORY C ON IC.CATEGORY_ID = C.CATEGORY_ID
 		WHERE
 			IA.ITEM_ID = #{itemId} AND I.DISPLAY_FLAG = 'Y' AND I.ITEM_OPTION_FLAG = 'N'
+			AND C.CATEGORY_FLAG = 'Y'
 			<if test='privateTypes != null'>
 				AND I.PRIVATE_TYPE IN (
 					<foreach collection="privateTypes" item="privateType" index="i" open="" separator="," close="">
