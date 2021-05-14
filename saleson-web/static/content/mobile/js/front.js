@@ -753,6 +753,17 @@ function add_product(){
 		//},
 		spaceBetween: 14
 	});
+
+	/* 추가상품 탭추가  -210513 - lmo */
+	var $selectprdAdd = $(".add_product .inner > select");
+	var $sliderprdAdd = $(".ap_slider_sec .add_product_slider");
+	$sliderprdAdd.eq(0).addClass("view");
+	$selectprdAdd.change(function() {
+		$sliderprdAdd.removeClass("view");
+		var indexSelect = $(".add_product .inner > select option").index($(".add_product .inner > select option:selected"));
+		console.log(indexSelect);
+		$sliderprdAdd.eq(indexSelect).addClass("view");
+	});
 }
 //관련 상품 슬라이드
 function relation(){
@@ -847,8 +858,7 @@ function delievery_tip(){
 //FAQ
 function faq(){
 	//FAQ 리스트
-	$('.faq_list ul li a').on('click', function(e){
-		e.preventDefault();
+	$('.faq_list ul li .oneDepth').on('click', function(){
 		$('.faq_list .oneDepth').removeClass('on');
 		$('.faq_list .twoDepthBox').slideUp('fast');
 		if (!$(this).next('.twoDepthBox').is(':visible')) {

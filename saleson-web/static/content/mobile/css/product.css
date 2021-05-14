@@ -735,7 +735,7 @@
 
 /* 추가상품 */
 .add_product {background:#f3f3f3;padding-top:6px;overflow:hidden; }
-.add_product .inner {position:relative; background:#fff;     padding: 38px 0; }
+.add_product .inner {position:relative; background:#fff; padding: 30px 0;}
 .add_product h4 {
     font-size: 16px;
     font-weight: 500;
@@ -743,7 +743,17 @@
     padding: 0 20px 10px;
     font-family: S-CoreDream-5Medium;
 }
-.add_product .add_product_slider {padding:0 20px; }
+.add_product h5 {
+    padding: 0 20px 10px;
+    font-weight: 400;color: #757575;
+}
+.add_product .inner > select {width: calc(100% - 40px);margin: 0 20px 10px;}
+.add_product .ap_slider_sec {position: relative;height: 285px;overflow: hidden;}
+.add_product .add_product_slider {
+    position: absolute;left: 0;top: -100%;
+    width: 100%;padding:0 20px;
+}
+.add_product .add_product_slider.view {top: 0;}
 .add_product .add_product_slider .swiper-slide {    width: 186px !important;}
 .add_product .add_product_slider a {display:inline-block; width:187px; }
 .add_product .add_product_slider .img {
@@ -820,14 +830,14 @@
     color: #ffffff;
 }
 .add_product .add_product_slider .btn_wrap button.btn_buy::before{
-    content: "";
+    content: "+";
     display: inline-block;
-    width: 15px;
+    /*width: 15px;
     height: 36px;
     background:url(/content/mobile/images/common/icon_chk_w.png) no-repeat center center;
-    background-size:100% auto;
-    margin-right: 10px;
-    vertical-align:top;
+    background-size:100% auto;*/
+    margin-right: 5px;
+    font-size: 20px;line-height: 36px;vertical-align:top;
 }
 .add_product .add_product_slider .btn_wrap button.btn_detail{
     margin-right: 0;

@@ -9,10 +9,10 @@
 
 <c:forEach items="${pageContent.content}" var="list" varStatus="i">
 	<li>
-		<a href="#" data-id="${list.id}" class="oneDepth op-faq-click">
+		<div data-id="${list.id}" class="oneDepth op-faq-click">
 			<p>${list.title}</p>
 			<span class="arr"></span>
-		</a>
+		</div>
 		<div class="twoDepthBox" style="display:none;">
 			<p>${list.content}</p>
 		</div><!--// twoDepthBox E -->

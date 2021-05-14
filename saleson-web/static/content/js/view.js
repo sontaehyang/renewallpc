@@ -51,6 +51,18 @@ $(function(){
 		}
 	});
 
+	// 추가상품 탭추가 - 210513 - lmo
+	var $tabItemAdd = $(".iadd_tabs");
+	$tabItemAdd.find("> a").on("click", function(e) {
+		e.preventDefault();
+		$tabItemAdd.find("> a").removeClass("on");
+		$(this).addClass("on");
+		var indextab = $tabItemAdd.find("> a").index(this);
+		//console.log(indextab);
+		$(".iadd_tabcont").hide(0);
+		$(".iadd_tc_sec .iadd_tabcont:eq("+indextab+")").show();
+	});
+
 
 	// Tab관련
 	var $itemTab = $(".cont_tabs");
