@@ -663,8 +663,8 @@
 						</c:if>--%>
 					</ul>
 				</div>
-				<div class="box_list info-item-pay">
-					<div class="pay_box01" style="border:none;">
+				<div class="box_list info-item-pay" style="border:none; margin:0;">
+					<div class="pay_box01">
 						<p>결제 가능한 <strong>페이안내<i>!</i></strong><span>주문/결제시 다양한 간편결제로 결제가 가능합니다.</span></p>
 						<ul>
 							<li style="padding:0;"><span><img src="/content/images/common/pay_img_01.png"></span><span><img src="/content/images/common/pay_img_02.png"></span><span><img src="/content/images/common/pay_img_03.png"></span></li>
