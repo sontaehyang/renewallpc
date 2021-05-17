@@ -1838,22 +1838,18 @@ public class OrderServiceImpl implements OrderService {
 		List<OrderGiftItem> orderGiftItems
 				= orderGiftItemService.getOrderGiftItemListByOrderCode(order.getOrderCode());
 
-		boolean isQuickDelivery = false;
+		DeliveryMethodType deliveryMethodType = null;
 		for (OrderShippingInfo orderShippingInfo : order.getOrderShippingInfos()) {
 
 			for (OrderItem orderItem: orderShippingInfo.getOrderItems()) {
 				setOrderGiftItemForOrderItem(orderGiftItems, orderItem);
 
-				// 퀵배송
-				if ("Y".equals(orderItem.getQuickDeliveryFlag())) {
-					isQuickDelivery = true;
-				}
+				// 배송방법
+				deliveryMethodType = orderItem.getDeliveryMethodType();
 			}
 		}
 
-		if (isQuickDelivery) {
-			order.setQuickDeliveryFlag("Y");
-		}
+		order.setDeliveryMethodType(deliveryMethodType);
 
 		/*
 		ClaimApplyParam claimApplyParam = new ClaimApplyParam();
@@ -2692,10 +2688,8 @@ public class OrderServiceImpl implements OrderService {
 							cloneObject = (BuyItem) buyItem.clone();
 							cloneObject.getItemPrice().setQuantity(buyQuantity.getQuantity());
 
-							// 퀵배송
-							if ("Y".equals(buy.getQuickDeliveryFlag())) {
-								cloneObject.setQuickDeliveryFlag("Y");
-							}
+							// 배송방법
+							cloneObject.setDeliveryMethodType(buy.getDeliveryMethodType());
 
 							items.add(cloneObject);
 

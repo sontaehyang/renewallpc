@@ -190,8 +190,8 @@
 											<c:choose>
 												<c:when test="${empty orderItem.deliveryNumber}">
 													<c:choose>
-														<c:when test="${orderItem.quickDeliveryFlag == 'Y'}">
-															퀵 배송
+														<c:when test="${orderItem.deliveryMethodType == 'QUICK'}">
+															${orderItem.deliveryMethodType.title}
 														</c:when>
 														<c:otherwise>
 															직접수령 (${op:date(orderItem.shippingDate)})
@@ -245,7 +245,7 @@
 									</c:choose>
 								</td>
 								<td class="text-right" style="font-weight:bold; color:#333">
-										${op:numberFormat(totalSaleAmount)}원
+									${op:numberFormat(totalSaleAmount)}원
 								</td>
 								<td class="text-right">
 									<c:choose>
@@ -254,8 +254,8 @@
 												<c:when test="${orderItem.orderShipping.shippingPaymentType == '2'}">
 													<span style="color:red">
 														<c:choose>
-															<c:when test="${orderItem.quickDeliveryFlag == 'Y'}">
-																퀵
+															<c:when test="${orderItem.deliveryMethodType == 'QUICK'}">
+																${orderItem.deliveryMethodType.title}
 															</c:when>
 															<c:otherwise>
 																${op:numberFormat(orderItem.orderShipping.realShipping)}원
@@ -266,7 +266,8 @@
 												</c:when>
 												<c:otherwise>
 													<c:choose>
-														<c:when test="${orderItem.orderShipping.payShipping == 0}">무료</c:when>
+														<c:when test="${orderItem.orderShipping.payShipping == 0 && orderItem.deliveryMethodType == 'NORMAL'}">무료</c:when>
+														<c:when test="${orderItem.deliveryMethodType == 'PICK_UP'}">${orderItem.deliveryMethodType.title}</c:when>
 														<c:otherwise>
 															${op:numberFormat(orderItem.orderShipping.payShipping)}원
 														</c:otherwise>
@@ -276,8 +277,16 @@
 										</c:when>
 										<c:otherwise>
 											<c:choose>
-												<c:when test="${orderItem.quickDeliveryFlag == 'Y'}">
-													<span style="color:red">퀵 (착불)</span>
+												<c:when test="${orderItem.deliveryMethodType != 'NORMAL'}">
+													<c:if test="orderItem.deliveryMethodType == 'QUICK'">
+														<span style="color:red">
+													</c:if>
+
+													${orderItem.deliveryMethodType.title}
+
+													<c:if test="orderItem.deliveryMethodType == 'QUICK'">
+														(착불)</span>
+													</c:if>
 												</c:when>
 												<c:otherwise>
 													묶음배송

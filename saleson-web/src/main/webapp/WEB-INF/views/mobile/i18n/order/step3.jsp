@@ -90,33 +90,28 @@
 						<ul class="del_info type-view">
 							<li>
 								<span class="del_tit t_lgray">배송방법</span>
-								<div class="info-view">
-									<c:choose>
-										<c:when test="${order.quickDeliveryFlag == 'Y'}">
-											퀵서비스
-										</c:when>
-										<c:otherwise>
-											일반택배
-										</c:otherwise>
-									</c:choose>
-								</div>
+								<div class="info-view">${order.deliveryMethodType.title}</div>
 							</li>
 							<li>
 								<span class="del_tit t_lgray">배송비</span>
 								<div class="info-view">
-									${op:numberFormat(order.totalShippingAmount)}원
-									<c:if test="${order.quickDeliveryFlag == 'Y'}">
-										(착불)
-									</c:if>
+									<c:choose>
+										<c:when test="${order.deliveryMethodType == 'QUICK'}">
+											착불
+										</c:when>
+										<c:otherwise>
+											<b class="delv_price">${op:numberFormat(order.totalShippingAmount)}</b>원
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</li>
 							<li>
 								<span class="del_tit t_lgray">배송 주의사항</span>
 								<div class="info-view txt">
 									<p>&middot; 택배</p>
-									평일 00시까지 결제완료하시면 당일 발송됩니다.
+									제작상품이기에 출고까지 1~2일 소요됩니다.
 									<p>&middot; 퀵서비스</p>
-									평일 00시까지 결제완료하시면 당일 발송됩니다. <br>퀵서비스 특성 상 다품목, 대량 주문 시 결제하신 운송비 보다 초과할 경우 착불처리되오니 이용에 참고부탁드립니다.
+									평일 오전 11시까지 결제 후 전화주시면 당일발송 됩니다. <br/>퀵서비스 비용은 착불이며, 지역에 따라 비용은 상이합니다.
 								</div>
 							</li>
 						</ul>

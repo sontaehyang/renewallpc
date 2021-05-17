@@ -244,16 +244,7 @@
 								<br><button type="button" class="btn btn-default btn-sm deposit-check-cancel">입금확인 취소</button>
 							</c:if>
 						</td>
-						<td>
-							<c:choose>
-								<c:when test="${orderItem.quickDeliveryFlag == 'Y'}">
-									퀵 배송
-								</c:when>
-								<c:otherwise>
-									일반택배
-								</c:otherwise>
-							</c:choose>
-						</td>
+						<td>${orderItem.deliveryMethodType.title}</td>
 						<td>
 							${orderItem.userName}
 							<c:if test="${not empty orderItem.loginId}">

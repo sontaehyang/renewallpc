@@ -145,14 +145,7 @@
 							<c:if test="${orderItem.shippingDate != '00000000000000'}">
 								<c:choose>
 									<c:when test="${empty orderItem.deliveryNumber}">
-										<c:choose>
-											<c:when test="${orderItem.quickDeliveryFlag == 'Y'}">
-												퀵 배송
-											</c:when>
-											<c:otherwise>
-												직접수령
-											</c:otherwise>
-										</c:choose>
+										${orderItem.deliveryMethodType.title}
 									</c:when>
 									<c:otherwise>
 										송장 번호 : ${orderItem.deliveryNumber}(${orderItem.deliveryCompanyName})

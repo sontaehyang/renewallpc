@@ -39,6 +39,7 @@ import saleson.shop.coupon.domain.Coupon;
 import saleson.shop.coupon.domain.CouponUser;
 import saleson.shop.coupon.support.UserCouponParam;
 import saleson.shop.item.domain.Item;
+import saleson.shop.item.domain.ItemAddition;
 import saleson.shop.item.domain.ItemRelation;
 import saleson.shop.item.domain.ItemReview;
 import saleson.shop.item.support.ItemParam;
@@ -55,7 +56,10 @@ import saleson.shop.restocknotice.domain.RestockNotice;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping({"/m/item", "/m/products"})
@@ -238,12 +242,24 @@ public class ItemMobileController {
 		// 판매자 정보
 		Seller seller = sellerService.getSellerById(item.getSellerId());
 
+		// 추가구성 카테고리
+		List<Integer> categoryIds = item.getItemAdditions().stream().map(ia -> ia.getCategoryId()).distinct().collect(Collectors.toList());
+		Map<Integer, String> additionCategory = new HashMap<>();
+		for (ItemAddition itemAddition : item.getItemAdditions()) {
+			for (int categoryId : categoryIds) {
+				if (itemAddition.getCategoryId() == categoryId) {
+					additionCategory.put(categoryId, itemAddition.getCategoryName());
+				}
+			}
+		}
+
 		model.addAttribute("asp28Analytics", new Asp28Analytics(item, "Mobile"));
 		model.addAttribute("naverPay", new NaverPay("Mobile", "/m/products/view/"+itemUserCode, configPgService.getConfigPg()));
 		model.addAttribute("item", item);
 		model.addAttribute("couponCount", couponCount);
 		model.addAttribute("seller", seller);		// 판매자 정보
 		model.addAttribute("config", configService.getShopConfig(Config.SHOP_CONFIG_ID));
+		model.addAttribute("additionCategory", additionCategory);
 
 		if ("T".equals(login)) {
 			model.addAttribute("loginPopup", login);

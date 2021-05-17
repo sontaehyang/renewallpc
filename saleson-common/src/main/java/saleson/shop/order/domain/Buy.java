@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import saleson.common.enumeration.DeliveryMethodType;
 import saleson.common.utils.CommonUtils;
 import saleson.common.utils.ShopUtils;
 import saleson.common.utils.UserUtils;
@@ -236,14 +237,14 @@ public class Buy {
 
 	private String createdDate;
 
-	// 퀵배송 여부 (Y:퀵배송, N:일반택배)
-	private String quickDeliveryFlag;
+	// 배송 방법 (일반택배, 퀵서비스, 방문수령)
+	private DeliveryMethodType deliveryMethodType;
 
-	public String getQuickDeliveryFlag() {
-		return quickDeliveryFlag;
+	public DeliveryMethodType getDeliveryMethodType() {
+		return deliveryMethodType;
 	}
-	public void setQuickDeliveryFlag(String quickDeliveryFlag) {
-		this.quickDeliveryFlag = quickDeliveryFlag;
+	public void setDeliveryMethodType(DeliveryMethodType deliveryMethodType) {
+		this.deliveryMethodType = deliveryMethodType;
 	}
 
     public String getCreatedDate() {

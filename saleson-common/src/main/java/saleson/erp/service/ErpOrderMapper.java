@@ -4,6 +4,7 @@ import com.onlinepowers.framework.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import saleson.common.enumeration.DeliveryMethodType;
 import saleson.common.utils.ShopUtils;
 import saleson.erp.domain.ErpOrderStatus;
 import saleson.erp.domain.ErpOrderType;
@@ -251,8 +252,10 @@ public class ErpOrderMapper {
 
 		// 배송비가 있으면 선결제, 없으면 무료배송
 		String shipMethod = "";
-		if ("Y".equals(buyItem.getQuickDeliveryFlag())) {
+		if (DeliveryMethodType.QUICK.equals(buyItem.getDeliveryMethodType())) {
 			shipMethod = "퀵";
+		} else if (DeliveryMethodType.PICK_UP.equals(buyItem.getDeliveryMethodType())) {
+			shipMethod = DeliveryMethodType.PICK_UP.getTitle();
 		} else if ("3".equals(shippingType) && buyItem.getBuyShipping().getRealShipping() == 0) {
 			shipMethod = "무료배송";
 		} else if ("1".equals(buyItem.getShippingPaymentType())) {
@@ -452,8 +455,10 @@ public class ErpOrderMapper {
 		// 반품, 교환이 아닌 경우에만 배송방법 처리 - 배송비가 있으면 선결제, 없으면 무료배송
 		String shipMethod = "";
 		if (!isReturnExchange) {
-			if ("Y".equals(orderItem.getQuickDeliveryFlag())) {
+			if (DeliveryMethodType.QUICK.equals(orderItem.getDeliveryMethodType())) {
 				shipMethod = "퀵";
+			} else if (DeliveryMethodType.PICK_UP.equals(orderItem.getDeliveryMethodType())) {
+				shipMethod = DeliveryMethodType.PICK_UP.getTitle();
 			} else if ("3".equals(shippingType) && realShipping == 0) {
 				shipMethod = "무료배송";
 			} else if ("1".equals(orderItem.getOrderShipping().getShippingPaymentType())) {

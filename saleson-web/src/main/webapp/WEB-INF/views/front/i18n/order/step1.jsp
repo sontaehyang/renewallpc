@@ -497,8 +497,9 @@
 						<th scope="row">배송방법</th>
 						<td>
 							<div class="input_wrap col-w-3">
-								<input type="radio" id="quickDeliveryFlag1" name="quickDeliveryFlag" value="N" checked="checked"> <label for="quickDeliveryFlag1">일반택배</label>&nbsp;&nbsp;
-								<input type="radio" id="quickDeliveryFlag2" name="quickDeliveryFlag" value="Y"> <label for="quickDeliveryFlag2">퀵서비스</label>&nbsp;&nbsp;
+								<input type="radio" id="normal" name="deliveryMethodType" value="NORMAL" checked="checked"> <label for="normal">일반택배</label>&nbsp;&nbsp;
+								<input type="radio" id="quick" name="deliveryMethodType" value="QUICK"> <label for="quick">퀵서비스</label>&nbsp;&nbsp;
+								<input type="radio" id="pickUp" name="deliveryMethodType" value="PICK_UP"> <label for="pickUp">방문수령</label>&nbsp;&nbsp;
 							</div>
 						</td>
 					</tr>
@@ -1679,8 +1680,24 @@
                 Order.setShippingAmount();
             });
 
-            $('input[name=quickDeliveryFlag]').on('change', function() {
-            	
+            $('input[name=deliveryMethodType]').on('change', function() {
+
+				// 복수배송지가 설정되어있을 경우 한곳으로 보내기 처리 (퀵, 방문수령)
+            	if ($(this).val() != 'NORMAL' && $('.op-receive-input-area').children('div').length > 1) {
+
+					if (confirm('일반택배가 아닐 경우 복수배송지가 초기화됩니다.\n초기화 하시겠습니까?')) {
+						Order.cancelMultipleDelivery();
+					} else {
+						$('input[name=deliveryMethodType]').eq(0).prop('checked', true);
+						return false;
+					}
+				}
+
+				// 포인트 적용 후 배송방법 변경 시 결제 금액이 마이너스가 나오는 경우가 있음
+				$('input#retentionPointUseAll').prop('checked', false);
+				$('.op-total-point-discount-amount-text').val(0);
+				Order.pointUsed(0);
+
                 Order.setShippingAmount();
             });
 

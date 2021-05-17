@@ -528,12 +528,16 @@
 							<span class="del_tit t_lgray">배송방법</span>
 							<div class="info-view rad_g">
 								<p>
-									<input id="quickDeliveryFlag1" type="radio" name="quickDeliveryFlag" value="N" checked="checked">
-									<label for="quickDeliveryFlag1"><span><span></span></span>일반택배</label>
+									<input id="normal" type="radio" name="deliveryMethodType" value="NORMAL" checked="checked">
+									<label for="normal"><span><span></span></span>일반택배</label>
 								</p>
 								<p>
-									<input id="quickDeliveryFlag2" type="radio" name="quickDeliveryFlag" value="Y">
-									<label for="quickDeliveryFlag2"><span><span></span></span>퀵서비스</label>
+									<input id="quick" type="radio" name="deliveryMethodType" value="QUICK">
+									<label for="quick"><span><span></span></span>퀵서비스</label>
+								</p>
+								<p>
+									<input id="pickUp" type="radio" name="deliveryMethodType" value="PICK_UP">
+									<label for="pickUp"><span><span></span></span>방문수령</label>
 								</p>
 							</div>
 						</li>
@@ -545,9 +549,9 @@
 							<span class="del_tit t_lgray">배송 주의사항</span>
 							<div class="info-view txt">
 								<p>&middot; 택배</p>
-								평일 00시까지 결제완료하시면 당일 발송됩니다.
+								제작상품이기에 출고까지 1~2일 소요됩니다.
 								<p>&middot; 퀵서비스</p>
-								평일 00시까지 결제완료하시면 당일 발송됩니다. <br>퀵서비스 특성 상 다품목, 대량 주문 시 결제하신 운송비 보다 초과할 경우 착불처리되오니 이용에 참고부탁드립니다.
+								평일 오전 11시까지 결제 후 전화주시면 당일발송 됩니다. <br>퀵서비스 비용은 착불이며, 지역에 따라 비용은 상이합니다.
 							</div>
 						</li>
 					</ul>
@@ -1548,7 +1552,23 @@ $(function(){
 		Order.setShippingAmount();
 	});
 
-	$('input[name=quickDeliveryFlag]').on('change', function() {
+	$('input[name=deliveryMethodType]').on('change', function() {
+
+		// 복수배송지가 설정되어있을 경우 한곳으로 보내기 처리 (퀵, 방문수령)
+		if ($(this).val() != 'NORMAL' && $('.op-receive-input-area').children('div').length > 1) {
+
+			if (confirm('일반택배가 아닐 경우 복수배송지가 초기화됩니다.\n초기화 하시겠습니까?')) {
+				Order.cancelMultipleDelivery();
+			} else {
+				$('input[name=deliveryMethodType]').eq(0).prop('checked', true);
+				return false;
+			}
+		}
+
+		// 포인트 적용 후 배송방법 변경 시 결제 금액이 마이너스가 나오는 경우가 있음
+		$('input#retentionPointUseAll').prop('checked', false);
+		$('.op-total-point-discount-amount-text').val(0);
+		Order.pointUsed(0);
 
 		Order.setShippingAmount();
 	});

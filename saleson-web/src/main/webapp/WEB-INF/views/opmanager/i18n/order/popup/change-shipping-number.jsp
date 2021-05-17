@@ -48,14 +48,7 @@
 							<td class="text-left">
 								<c:choose>
 									<c:when test="${empty orderItem.deliveryNumber}">
-										<c:choose>
-											<c:when test="${orderItem.quickDeliveryFlag == 'Y'}">
-												퀵 배송
-											</c:when>
-											<c:otherwise>
-												직접수령
-											</c:otherwise>
-										</c:choose>
+										${orderItem.deliveryMethodType.title}
 									</c:when>
 									<c:otherwise>
 										${orderItem.deliveryCompanyName}

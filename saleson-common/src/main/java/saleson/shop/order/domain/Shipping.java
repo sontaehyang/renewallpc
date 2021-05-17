@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import saleson.common.enumeration.DeliveryMethodType;
 import saleson.common.utils.SellerUtils;
 import saleson.shop.item.domain.Item;
 
@@ -120,14 +121,14 @@ public class Shipping {
 	// 배송 요구사항
 	private String content;
 
-	// 퀵배송 여부 (Y:퀵배송, N:일반택배)
-	private String quickDeliveryFlag;
+	// 배송 방법 (일반택배, 퀵서비스, 방문수령)
+	private DeliveryMethodType deliveryMethodType;
 
-	public String getQuickDeliveryFlag() {
-		return quickDeliveryFlag;
+	public DeliveryMethodType getDeliveryMethodType() {
+		return deliveryMethodType;
 	}
-	public void setQuickDeliveryFlag(String quickDeliveryFlag) {
-		this.quickDeliveryFlag = quickDeliveryFlag;
+	public void setDeliveryMethodType(DeliveryMethodType deliveryMethodType) {
+		this.deliveryMethodType = deliveryMethodType;
 	}
 
 	public String getContent() {
@@ -258,11 +259,17 @@ public class Shipping {
 				shipping.setShippingReturn(isAdditionItem ? 0 : item.getShippingReturn());
 				shipping.setShippingFreeAmount(isAdditionItem ? 0 : item.getShippingFreeAmount());
 				shipping.setShippingPaymentType(isAdditionItem ? "1" : buyItem.getShippingPaymentType());
+				shipping.setDeliveryMethodType(DeliveryMethodType.NORMAL);
 
 				// 퀵배송일 경우 착불 처리
-				if ("Y".equals(buyItem.getQuickDeliveryFlag())) {
+				if (DeliveryMethodType.QUICK.equals(buyItem.getDeliveryMethodType())) {
 					shipping.setShippingPaymentType("2");
-					shipping.setQuickDeliveryFlag("Y");
+					shipping.setDeliveryMethodType(DeliveryMethodType.QUICK);
+
+				// 방문수령일 경우 무료배송 처리
+				} else if (DeliveryMethodType.PICK_UP.equals(buyItem.getDeliveryMethodType())) {
+					shipping.setShippingType("1");
+					shipping.setDeliveryMethodType(DeliveryMethodType.PICK_UP);
 				}
 				
 				// 본사 배송이면?
@@ -313,7 +320,8 @@ public class Shipping {
 		}
 		
 		int shippingSequence = 0;
-		long quickDeliveryCount = list.stream().filter(b -> "Y".equals(b.getQuickDeliveryFlag())).count();
+		long quickDeliveryCount = list.stream().filter(b -> DeliveryMethodType.QUICK.equals(b.getDeliveryMethodType())).count();
+		long pickUpCount = list.stream().filter(b -> DeliveryMethodType.PICK_UP.equals(b.getDeliveryMethodType())).count();
 
 		for(Shipping shipping : groups) {
 			shipping.setShippingSequence(shippingSequence++);
@@ -329,8 +337,8 @@ public class Shipping {
 			if ("1".equals(shipping.getShippingType())) { // 무료 배송
 				
 				realShipping = addDeliveryCharge;
-				
-				
+
+
 			} else if ("2".equals(shipping.getShippingType()) || "3".equals(shipping.getShippingType())) { // 2 : 판매자 조건부, 3 : 출고지 조건부, 
 				
 				int totalItemAmount = 0;
@@ -437,16 +445,16 @@ public class Shipping {
 			// 착불인경우 사용자 배송비 금액을 0으로 잡는다
 			if ("2".equals(shipping.getShippingPaymentType())) {
 				shipping.setPayShipping(0);
+			}
 
-				// 퀵배송일 경우 배송비 금액을 0으로 처리
-				if (quickDeliveryCount > 0) {
-					shipping.setAddDeliveryCharge(0);
-					shipping.setRealShipping(0);
-					shipping.setPayShipping(0);
-					shipping.setShipping(0);
-					shipping.setShippingExtraCharge1(0);
-					shipping.setShippingExtraCharge2(0);
-				}
+			// 퀵배송, 방문수령일 경우 배송비 금액을 0으로 처리
+			if (quickDeliveryCount > 0 || pickUpCount > 0) {
+				shipping.setAddDeliveryCharge(0);
+				shipping.setRealShipping(0);
+				shipping.setPayShipping(0);
+				shipping.setShipping(0);
+				shipping.setShippingExtraCharge1(0);
+				shipping.setShippingExtraCharge2(0);
 			}
 			
 			// CJH 2016.10.20 배송비 할인액을 더해서 정산금액으로 셋팅한다. - 배송비 쿠폰은 본사부담 할인

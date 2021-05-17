@@ -4,6 +4,7 @@ import com.onlinepowers.framework.repository.CodeInfo;
 import com.onlinepowers.framework.util.CodeUtils;
 import com.onlinepowers.framework.util.StringUtils;
 import lombok.ToString;
+import saleson.common.enumeration.DeliveryMethodType;
 import saleson.model.OrderGiftItem;
 import saleson.shop.order.claimapply.domain.OrderCancelApply;
 import saleson.shop.order.claimapply.domain.OrderReturnApply;
@@ -1200,8 +1201,8 @@ public class OrderItem {
 	private String parentItemOptions;
 	private List<OrderItem> additionItemList;
 
-	// 퀵배송 여부 (Y:퀵배송, N:일반택배)
-	private String quickDeliveryFlag;
+	// 배송 방법 (일반택배, 퀵서비스, 방문수령)
+	private DeliveryMethodType deliveryMethodType;
 
 	private String erpOriginUnique;
 
@@ -1235,11 +1236,11 @@ public class OrderItem {
 	public void setErpOriginUnique(String erpOriginUnique) {
 		this.erpOriginUnique = erpOriginUnique;
 	}
-	public String getQuickDeliveryFlag() {
-		return quickDeliveryFlag;
+	public DeliveryMethodType getDeliveryMethodType() {
+		return deliveryMethodType;
 	}
-	public void setQuickDeliveryFlag(String quickDeliveryFlag) {
-		this.quickDeliveryFlag = quickDeliveryFlag;
+	public void setDeliveryMethodType(DeliveryMethodType deliveryMethodType) {
+		this.deliveryMethodType = deliveryMethodType;
 	}
 	public int getParentItemId() {
 		return parentItemId;

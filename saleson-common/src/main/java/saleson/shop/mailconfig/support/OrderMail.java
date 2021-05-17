@@ -4,6 +4,7 @@ import com.onlinepowers.framework.util.DateUtils;
 import com.onlinepowers.framework.util.MessageUtils;
 import com.onlinepowers.framework.util.StringUtils;
 import saleson.common.config.SalesonProperty;
+import saleson.common.enumeration.DeliveryMethodType;
 import saleson.common.utils.ShopUtils;
 import saleson.shop.config.domain.Config;
 import saleson.shop.mailconfig.domain.MailConfig;
@@ -708,8 +709,11 @@ public class OrderMail extends MailTemplate {
 					.append("원</td>").toString();
 
 			String shippingText = shippingAmount == 0 ? "무료" : StringUtils.numberFormat(shippingAmount) + "원";
-			if ("Y".equals(item.getQuickDeliveryFlag())) {
-				shippingText = "퀵 (착불)";
+
+			if (DeliveryMethodType.QUICK.equals(item.getDeliveryMethodType())) {
+				shippingText = DeliveryMethodType.QUICK.getTitle() + " (착불)";
+			} else if (DeliveryMethodType.PICK_UP.equals(item.getDeliveryMethodType())) {
+				shippingText = DeliveryMethodType.PICK_UP.getTitle();
 			}
 
 			// 배송비

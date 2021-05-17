@@ -203,7 +203,11 @@
 
                                                         <c:choose>
                                                             <c:when test="${orderItem.orderShipping.shippingPaymentType == '2'}">
-                                                                <br />착불 (${op:numberFormat(orderItem.orderShipping.realShipping)}원)
+                                                                <br />
+                                                                착불
+                                                                <c:if test="${orderItem.deliveryMethodType != 'QUICK'}">
+                                                                    (${op:numberFormat(orderItem.orderShipping.realShipping)}원)
+                                                                </c:if>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <c:if test="${orderItem.orderShipping.payShipping > 0}">
@@ -302,7 +306,10 @@
 
                                                         <c:choose>
                                                             <c:when test="${orderItem.orderShipping.shippingPaymentType == '2'}">
-                                                                <br />착불 (${op:numberFormat(orderItem.orderShipping.realShipping)}원)
+                                                                <br />착불
+                                                                <c:if test="${orderItem.deliveryMethodType != 'QUICK'}">
+                                                                    (${op:numberFormat(orderItem.orderShipping.realShipping)}원)
+                                                                </c:if>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <c:if test="${orderItem.orderShipping.payShipping > 0}">
