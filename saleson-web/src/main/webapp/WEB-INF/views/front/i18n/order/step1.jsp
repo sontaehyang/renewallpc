@@ -606,7 +606,7 @@
 						</c:if>
 						<c:if test="${ not empty buy.buyPayments['card'] && cashDiscountFlag == 'N'}">
 							<li>
-								<input type="radio" id="payType-naverpayCard" value="card" name="payType"> <label for="payType-naverpayCard">네이버페이</label>
+								<input type="radio" id="payType-naverpayCard" value="card" name="payType"> <label for="payType-naverpayCard">네이버페이(기타)</label>
 							</li>
 							<li>
 								<input type="radio" id="payType-card" value="card" name="payType"
@@ -663,7 +663,15 @@
 						</c:if>--%>
 					</ul>
 				</div>
-
+				<div class="box_list info-item-pay">
+					<div class="pay_box01" style="margin-top:20px;">
+						<p>결제 가능한 <strong>페이안내<i>!</i></strong><span>주문/결제시 다양한 간편결제로 결제가 가능합니다.</span></p>
+						<ul>
+							<li style="padding:0;"><span><img src="/content/images/common/pay_img_01.png"></span><span><img src="/content/images/common/pay_img_02.png"></span><span><img src="/content/images/common/pay_img_03.png"></span></li>
+						</ul>
+					</div>
+				</div>
+				
 				<c:if test="${ not empty buy.buyPayments['bank'] }">
 					<div class="payType-input" id="payType-bank-input" <c:if test="${ buy.defaultPaymentType != 'bank' }">style="display:none;"</c:if>>
 						<h3 class="sub_title mt30">무통장 입금</h3>
@@ -965,7 +973,7 @@
 
                 <c:if test="${ not empty buy.buyPayments['naverpay'] }">
                     <div class="payType-input" id="payType-naverpay-input" <c:if test="${ buy.defaultPaymentType != 'naverpay' }">style="display:none;"</c:if>>
-                        <h3 class="sub_title mt30">네이버페이 결제</h3>
+                        <h3 class="sub_title mt30">네이버페이 결제(기타)</h3>
                         <div class="board_wrap">
                             <table cellpadding="0" cellspacing="0" class="board-write">
                                 <caption>네이버페이 결제</caption>
