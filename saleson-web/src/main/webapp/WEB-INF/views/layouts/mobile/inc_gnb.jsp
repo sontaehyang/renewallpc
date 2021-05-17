@@ -53,9 +53,9 @@
 		<div class="category">
 			<ul>
 				<li><a href="/m" ${gnbHome}>홈</a></li>
-				<li><a href="/m/pages/battle_grounds_pc" ${gnbBattleGrounds}>배틀그라운드</a></li>
-				<li><a href="/m/pages/overwatch" ${gnbOverwatch}>오버워치</a></li>
-				<li><a href="/m/pages/high_professional" ${gnbHighProfessional}>고성능/전문가용PC</a></li>
+				<li><a href="/m/pages/battle_grounds_pc" ${gnbBattleGrounds}>리그오브레전드</a></li>
+				<li><a href="/m/pages/overwatch" ${gnbOverwatch}>로스트아크</a></li>
+				<li><a href="/m/pages/high_professional" ${gnbHighProfessional}>배틀그라운드</a></li>
 				<li><a href="/m/pages/body_monitor" ${gnbBodyMonitor}>본체+모니터</a></li>
 				<li><a href="/m/pages/renewallpc" ${gnbLabtop}>노트북</a></li>
 				<li><a href="/m/pages/cash_special" ${gnbCashSpecial}>현금특가</a></li>
