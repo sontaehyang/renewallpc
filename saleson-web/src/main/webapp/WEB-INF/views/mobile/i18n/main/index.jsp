@@ -41,7 +41,7 @@
 			<div class="left">
 				<div class="play_box">
 					<a href="/m/pages/pick">
-						<img src="/content/mobile/images/common/mv_live_img.png" alt="mv_live_img">
+						<img src="/content/mobile/images/common/mobile_live_img_20210520.png" alt="mv_live_img">
 					</a>
 				</div>
 			</div>
