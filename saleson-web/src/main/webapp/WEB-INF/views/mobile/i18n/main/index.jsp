@@ -39,9 +39,9 @@
 		</div>
 		<div class="on_air_content">
 			<div class="left">
-				<div class="play_box">
-					<a href="/m/pages/pick">
-						<img src="/content/mobile/images/common/mobile_live_img_20210520.png" alt="mv_live_img">
+				<div class="play_box" style="border:4px solid #67479e;">
+					<a href="/m/pages/pick" style="display:block;">
+						<img src="/content/mobile/images/common/mobile_live_img_20210521.png" alt="mv_live_img">
 					</a>
 				</div>
 			</div>
