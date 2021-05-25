@@ -27,7 +27,7 @@
                             <div class="price_box">
                                 <div class="leave_amount">
                                     <div class="text"><span>남은수량</span></div>
-                                    <div class="number"><span class="bg_black">${!empty item.displayQuantity ? item.displayQuantity : '50'}</span><span>50</span></div>
+                                    <div class="number"><span class="bg_black">${!empty item.displayQuantity ? item.displayQuantity : '50'}</span><span>20</span></div>
                                 </div>
                                 <p class="tit">${item.itemName}</p>
                                 <div class="price">

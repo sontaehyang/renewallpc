@@ -459,11 +459,13 @@
 .ms0202_list > dd .top .sale {float:left;line-height:20px;}
 .ms0202_list > dd .top .count {float:right;}
 .ms0202_list > dd .top p.count {position: relative;}
+
+/*한정주량 변경시
 .ms0202_list > dd:nth-child(2) .top p.count:after{content:'30'; display:block; clear:both; position: absolute; right: 8px; top: 0; color: #999; font-size: 14px;}
 .ms0202_list > dd:nth-child(3) .top p.count:after{content:'77'; display:block; clear:both; position: absolute; right: 8px; top: 0; color: #999; font-size: 14px;}
 .ms0202_list > dd:nth-child(4) .top p.count:after{content:'33'; display:block; clear:both; position: absolute; right: 8px; top: 0; color: #999; font-size: 14px;}
 .ms0202_list > dd:nth-child(5) .top p.count:after{content:'50'; display:block; clear:both; position: absolute; right: 8px; top: 0; color: #999; font-size: 14px;}
-
+*/
 
 
 /*.ms0202 .txt_ban {display:block;margin-top:30px;padding:5px 10px;background:#dcf0ff;font-size:20px;font-weight:500;color:#1f1f1f;text-align:center;line-height:50px;transition:background 0.4s;}

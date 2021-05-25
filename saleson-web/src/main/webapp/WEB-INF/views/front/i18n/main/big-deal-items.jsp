@@ -27,7 +27,7 @@
                         </c:if>
                     </p><!--// ov_btns -->
                 </div><!--// imgs -->
-                <div class="mid"><p class="count"><b>${!empty item.displayQuantity ? item.displayQuantity : '50'}</b>30</p></div>
+                <div class="mid"><p class="count"><b>${!empty item.displayQuantity ? item.displayQuantity : '50'}</b>20</p></div>
                 <a href="${item.link}" class="tit">${item.itemName}</a>
                 <dl class="btm">
                     <dt>
@@ -60,7 +60,7 @@
                     <c:if test="${item.totalDiscountAmount > 0 && item.discountRate > 0}">
                         <span class="sale">${item.discountRate}</span>
                     </c:if>
-                    <p class="count"><b>${!empty item.displayQuantity ? item.displayQuantity : '50'}</b><!--// 30 --></p>
+                    <p class="count"><b>${!empty item.displayQuantity ? item.displayQuantity : '50'}</b>20</p>
                 </div>
                 <a href="${item.link}" class="tit">${item.itemName}</a>
                 <p class="price">${op:numberFormat(item.exceptUserDiscountPresentPrice)}</p>
