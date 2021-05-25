@@ -27,7 +27,7 @@
                         </c:if>
                     </p><!--// ov_btns -->
                 </div><!--// imgs -->
-                <div class="mid"><p class="count"><b>${!empty item.displayQuantity ? item.displayQuantity : '50'}</b>50</p></div>
+                <div class="mid"><p class="count"><b>${!empty item.displayQuantity ? item.displayQuantity : '50'}</b>40</p></div>
                 <a href="${item.link}" class="tit">${item.itemName}</a>
                 <dl class="btm">
                     <dt>
