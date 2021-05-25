@@ -60,7 +60,7 @@
                     <c:if test="${item.totalDiscountAmount > 0 && item.discountRate > 0}">
                         <span class="sale">${item.discountRate}</span>
                     </c:if>
-                    <p class="count"><b>${!empty item.displayQuantity ? item.displayQuantity : '50'}</b>30</p>
+                    <p class="count"><b>${!empty item.displayQuantity ? item.displayQuantity : '50'}</b><!--// 30 --></p>
                 </div>
                 <a href="${item.link}" class="tit">${item.itemName}</a>
                 <p class="price">${op:numberFormat(item.exceptUserDiscountPresentPrice)}</p>
