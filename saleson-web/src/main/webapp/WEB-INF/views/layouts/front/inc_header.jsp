@@ -65,7 +65,7 @@
 		</div><!--// hd_feature -->
 
 		<div class="hd_ico_menu">
-			<a href="/event/spot" class="ico_ts">타임세일</a>
+			<a href="/event/spot" class="ico_ts">월간특가</a>
 			<a href="/pages/dealer_shop" class="ico_ds">딜러샵</a>
 		</div><!--// hd_ico_menu -->
 	</div><!--// inner -->
