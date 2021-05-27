@@ -9,11 +9,21 @@
 	<div class="inner">
 		<div class="ft_info">
 			<div class="ft_bd">
-				<div class="ft_bd_nav">
+			
+				<div class="">
+					<a href="#" class="acti">공지사항</a>
+				</div>
+				<!--// 각 최소4개씩 출력 -->
+				<div class="ft_bd_cont" style="display:block;">
+					<ul id="op-main-notice"></ul>
+					<a href="/notice/list" class="top_link" title="공지사항 더보기">MORE</a>
+				</div>
+			
+			
+				<!-- div class="ft_bd_nav">
 					<a href="#" class="acti">공지사항</a>
 					<a href="#">자주하는 질문(FAQ)</a>
 				</div>
-				<!--// 각 최소4개씩 출력 -->
 				<div class="ft_bd_cont" style="display:block;">
 					<ul id="op-main-notice"></ul>
 					<a href="/notice/list" class="top_link" title="공지사항 더보기">MORE</a>
@@ -21,17 +31,26 @@
 				<div class="ft_bd_cont">
 					<ul id="op-main-faq"></ul>
 					<a href="/faq" class="top_link" title="자주하는 질문(FAQ) 더보기">MORE</a>
-				</div>
+				</div-->
 			</div><!--// ft_bd -->
 
 			<div class="ft_bank">
-				<p class="tit">온라인입금 계좌</p>
+			
+				<div class="">
+					<a href="#" class="acti">자주하는 질문(FAQ)</a>
+				</div>
+				<div class="ft_bd_cont" style="display:block;">
+					<ul id="op-main-faq"></ul>
+					<a href="/faq" class="top_link" title="자주하는 질문(FAQ) 더보기">MORE</a>
+				</div>
+		
+				<!-- p class="tit">온라인입금 계좌</p>
 				<p class="logo"><img src="/content/images/common/sh_logo.png" alt="신한은행"></p>
 				<ul class="txt">
 					<li>신한은행</li>
 					<li>140-012-890215</li>
 					<li>㈜월드와이드메모리</li>
-				</ul>
+				</ul -->
 			</div><!--// ft_bank -->
 
 			<div class="ft_sc">
