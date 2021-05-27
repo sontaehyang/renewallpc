@@ -10,8 +10,8 @@
 		<div class="ft_info">
 			<div class="ft_bd">
 			
-				<div class="">
-					<a href="#" class="acti">공지사항</a>
+				<div style="margin-bottom: 10px;font-size: 16px; font-weight: 500; color: #1f1f1f;">
+					공지사항
 				</div>
 				<!--// 각 최소4개씩 출력 -->
 				<div class="ft_bd_cont" style="display:block;">
@@ -36,8 +36,8 @@
 
 			<div class="ft_bank">
 			
-				<div class="">
-					<a href="#" class="acti">자주하는 질문(FAQ)</a>
+				<div style="margin-bottom: 10px;font-size: 16px; font-weight: 500; color: #1f1f1f;">
+					자주하는 질문(FAQ)
 				</div>
 				<div class="ft_bd_cont" style="display:block;">
 					<ul id="op-main-faq"></ul>
