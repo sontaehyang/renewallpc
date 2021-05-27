@@ -11,7 +11,7 @@
 <%@ taglib prefix="shop" 	uri="/WEB-INF/tlds/shop" %>
 
 <c:if test="${!empty spotItems}">
-	<p class="sec_tit">타임세일 - 오늘의 찬스<a href="/event/spot" class="btn_more">MORE ></a></p>
+	<p class="sec_tit">월간특가 - 이달의 찬스<a href="/event/spot" class="btn_more">MORE ></a></p>
 	<div class="ts_l">
 		<c:forEach items="${spotItems}" var="item" varStatus="i" begin="0" end="0">
 			<dl class="ts_box" data-spot-format-date="${item.spotFormatDate}">
