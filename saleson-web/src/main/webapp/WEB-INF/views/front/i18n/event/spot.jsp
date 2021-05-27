@@ -15,7 +15,7 @@
 	<div class="location_area">
 		<div class="breadcrumbs">
 			<a href="/" class="home"><span class="hide">home</span></a>
-			<span>타임세일</span>
+			<span>월간특가</span>
 		</div>
 	</div><!-- // location_area E -->
 	<div id="contents" class="pt10">
