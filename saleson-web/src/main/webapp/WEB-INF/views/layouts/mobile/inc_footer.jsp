@@ -20,11 +20,11 @@
 		<dd>상담시간 : 평일 오전 9시 ~ 오후 7시(주말, 공휴일 휴무) <br>점심시간 : 오후 12시 30분 ~ 오후 1시 30분</dd>
 		<dd><a href="tel:1544-2432" class="ft_tel">1544-2432</a></dd>
 	</dl>
-	<dl class="ft_info fti02">
+	<!--dl class="ft_info fti02">
 		<dt>온라인 입금계좌</dt>
 		<dd class="ex"><span>신한은행</span>140-012-890215</dd>
 		<dd><span>예금주</span>㈜월드와이드메모리</dd>
-	</dl>
+	</dl-->
 	<dl class="ft_info fti03">
 		<dt>
 			<p class="ft_logo">Re.New.All PC</p>
