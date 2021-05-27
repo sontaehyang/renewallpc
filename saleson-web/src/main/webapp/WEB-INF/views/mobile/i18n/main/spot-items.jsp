@@ -8,7 +8,7 @@
 <c:if test="${!empty spotItems}">
 	<div class="time_sale">
 		<div class="title">
-			<h3><span><img src="/content/mobile/images/common/ico_hot.png" alt=""></span>타임세일</h3>
+			<h3><span><img src="/content/mobile/images/common/ico_hot.png" alt=""></span>월간특가</h3>
 			<a href="/m/event/spot" class="more_btn">MORE</a>
 		</div>
 		<div class="time_sale_slider">
