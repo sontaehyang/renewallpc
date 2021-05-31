@@ -10,8 +10,8 @@
 <%@ taglib prefix="module" 	tagdir="/WEB-INF/tags/modules"%>
 	
 	<!-- 내용 : s -->
-	<div class="con" style="padding:50px 20px 20px 20px;">
-		<div class="event_banner02">
+	<div class="con" style="padding:20px 20px 20px 20px;">
+		<div class="event_banner02" style="padding:0 0 20px 0;">
 			<!-- // 타임세일 img src="/content/images/common/timeSale1.jpg" alt="타임세일"-->
 			<img src="/content/images/common/timeSale_20210527.jpg" alt="월간특가">
 		</div>
