@@ -9,18 +9,23 @@
 <!--div class="left_banner">${categoryEdit.banner}</div-->
 
 <div class="branch_quick">
-	<div class="bch_info">
-		<a href="#">
-			<img src="/content/images/common/bch_img01.png" alt="이마트 영등포점">
-			이마트 영등포점
-		</a>
-		<a href="#">
-			<img src="/content/images/common/bch_img02.png" alt="이마트 킨텍스점">
-			이마트 킨텍스점
-		</a>
-	</div>
-	<a href="#">지점위치 안내</a>
+<div class="bch_info">
+	<a href="javascript:;" data-needpopup-show="#popup_001" class="kk002">
+		<img src="/content/images/common/bch_img01.png" alt="이마트 영등포점">
+		이마트 영등포점
+	</a>
+	<a href="javascript:;" data-needpopup-show="#popup_002" class="kk002">
+		<img src="/content/images/common/bch_img02.png" alt="이마트 킨텍스점">
+		이마트 킨텍스점
+	</a>
+	<a href="javascript:;" data-needpopup-show="#popup_003" class="kk002">
+		<img src="/content/images/common/bch_img03.jpg" alt="이마트 킨텍스점">
+		연수점
+	</a>
+</div>
+<a href="javascript:;" data-needpopup-show="#popup_004">지점위치 안내</a>
 </div><!--// branch_quick -->
+
 
 <div id="quick-menu" class="quick_menu">
 	<div class="quick_menu_inner">
