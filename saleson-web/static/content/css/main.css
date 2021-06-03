@@ -605,6 +605,24 @@
 .msec06 .mreview_list .info .btm:after {content:"";display:block;clear:both;}
 .msec06 .mreview_list .info .btm > dt {float:left;}
 .msec06 .mreview_list .info .btm > dd {float:right;font-family:'Montserrat';font-weight:500;}
+/* 더보기버튼 추가 - 210603 - lmo */
+.msec06 .btn_mreview_more {
+	display: block;width: 40%;margin: 40px auto 0;
+	background: #fff;border: solid 1px #1f1f1f;border-radius: 60px;
+	font-size: 20px;font-weight: 500;color: #1f1f1f;text-align: center;line-height: 58px;
+	transition: background 0.4s, color 0.4s;
+}
+.msec06 .btn_mreview_more:after {
+	content: "+";
+	display: inline-block;margin-left: 10px;
+	font-size: 26px;font-weight: 700;
+	vertical-align: top;transition: color 0.4s;
+}
+.msec06 .btn_mreview_more:hover, .msec06 .btn_mreview_more:focus {
+	background: #1f1f1f;
+	color: #fff;
+}
+.msec06 .btn_mreview_more:hover:after, .msec06 .btn_mreview_more:focus:after {color: #fff;}
 
 
 /* msec07 */
