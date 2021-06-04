@@ -149,7 +149,7 @@
 		</ul>
 	</div>
 	<div class="pop_sc_t01 layer-ms010204">
-		<p class="layer-title">지점안내</p>
+		<!--p class="layer-title">지점안내</p-->
 		<div class="layer-content">
 			<dl class="sub-layout">
 				<dt>
