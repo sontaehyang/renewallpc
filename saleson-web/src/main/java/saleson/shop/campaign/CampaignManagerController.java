@@ -981,36 +981,16 @@ public class CampaignManagerController {
      */
     @GetMapping("/send-list-auto/{campaignId}/{autoMonth}")
     @RequestProperty(layout = "base")
-    public String getAutoSendDetail(Model model,
-                                    @RequestParam(value = "page", defaultValue = "1") int page,
+    public String getAutoSendDetail(Model model, CampaignSendLogDto dto,
                                     @PathVariable("campaignId") Long campaignId,
-                                    @PathVariable("autoMonth") String autoMonth) throws Exception {
+                                    @PageableDefault(sort = "sendDate", direction = Sort.Direction.DESC) Pageable pageable) throws Exception {
 
-        List<MessageInfo> messageInfoList = campaignService.getMessageInfoList(campaignId, autoMonth);
-
-        List<MessageInfo> messageInfoListSort = messageInfoList.stream()
-                .sorted(Comparator.comparing(MessageInfo::getSendDate))
-                .collect(Collectors.toList());
-
-        int count = messageInfoListSort.size();
-        int itemsPerPage = 10;
-        Pagination pagination = Pagination.getInstance(count, itemsPerPage);
-        int startRownum = 0;
-        int endRownum = pagination.getItemsPerPage() * page;
-
-        if (endRownum > count) {
-            endRownum = count;
+        if (campaignId != null) {
+            dto.setCampaignKey(StringUtils.long2string(campaignId));
         }
 
-        if (page > 1) {
-            startRownum = (page - 1) * itemsPerPage;
-        }
-
-        pagination.setStartRownum(startRownum);
-        pagination.setEndRownum(endRownum);
-
-        model.addAttribute("pagination", pagination);
-        model.addAttribute("pageContent", messageInfoListSort.subList(pagination.getStartRownum(), pagination.getEndRownum()));
+        model.addAttribute("dto", dto);
+        model.addAttribute("pageContent", campaignService.getCampaignSendLogs(dto.getPredicate(), pageable));
 
         return "view:/campaign/send-list-auto";
     }

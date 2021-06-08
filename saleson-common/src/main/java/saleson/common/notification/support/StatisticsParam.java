@@ -18,11 +18,19 @@ public class StatisticsParam {
 
     private boolean autoFlag;
     private boolean openFlag;
+    private boolean batchFlag;
 
     private String beginSearchDate;
     private String endSearchDate;
 
     private String id;
+
+    private int page = 1;
+    private int pageSize = 10;
+    private String logTable;
+    private boolean logTableFlag;
+
+    private Long campaignId;
 
     public void setTables(List<String> tables) {
 

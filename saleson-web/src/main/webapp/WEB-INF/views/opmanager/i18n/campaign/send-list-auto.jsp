@@ -10,81 +10,78 @@
 
 <h1 class="popup_title">${op:message('MENU_13201')} 상세</h1>
 
-    <div class="popup_wrap">
-        <div class="popup_contents">
+<div class="popup_wrap">
+    <div class="popup_contents">
 
-            <h4><span>발송 대상</span></h4>
+        <h4><span>발송 대상</span></h4>
 
-            <div class="count_title mt20">
-                <h5>
-                    전체 : ${op:numberFormat(pagination.totalItems)}건 조회
-                </h5>
+        <div class="count_title mt20">
+            <h5>
+                전체 : ${op:numberFormat(pageContent.totalElements)}건 조회
+            </h5>
+        </div>
+
+        <table class="board_list_table">
+            <colgroup>
+                <col style="width:120px" />
+                <col style="width:100px;"/>
+                <col style="width:auto;"/>
+                <col style="width:100px;"/>
+                <col style="width:50px;"/>
+                <col style="width:50px;"/>
+            </colgroup>
+            <thead>
+            <tr>
+                <th scope="col">발송시간</th>
+                <th scope="col">전화번호</th>
+                <th scope="col">메시지</th>
+                <th scope="col">발송타입</th>
+                <th scope="col">성공</th>
+                <th scope="col">수신</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${pageContent.content}" var="list" varStatus="i">
+                <tr>
+                    <td><div>${list.sendDateText}</div></td>
+                    <td><div>${list.phone}</div></td>
+                    <td><div>${list.content}</div></td>
+                    <td><div>${list.typeLabel}</div></td>
+                    <td><div>${op:numberFormat(list.success)}</div></td>
+                    <td>
+                        <div>
+                            <c:choose>
+                                <c:when test="${list.pushFlag}">
+                                    ${op:numberFormat(list.pushReceive)}
+                                </c:when>
+                                <c:otherwise>
+                                    -
+                                </c:otherwise>
+                            </c:choose>
+
+                        </div>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+        <c:if test="${empty pageContent.content}">
+            <div class="no_content">
+                    ${op:message('M00473')} <!-- 데이터가 없습니다. -->
             </div>
+        </c:if>
 
-            <table class="board_list_table">
-                <colgroup>
-                    <col style="width:120px" />
-                    <col style="width:100px;"/>
-                    <col style="width:200px;"/>
-                    <col style="width:20px;"/>
-                    <col style="width:20px;"/>
-                    <col style="width:20px;"/>
-                    <col style="width:20px;"/>
-                    <col style="width:20px;"/>
-                    <col style="width:20px;"/>
-                    <col style="width:20px"/>
-                    <col style="width:20px;"/>
-                    <col style="width:20px;"/>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th scope="col" rowspan="2">발송시간</th>
-                        <th scope="col" rowspan="2">전화번호</th>
-                        <th scope="col" rowspan="2">메시지</th>
-                        <th scope="col" colspan="2">SMS</th>
-                        <th scope="col" colspan="2">MMS</th>
-                        <th scope="col" colspan="2">KAKAO</th>
-                        <th scope="col" colspan="3">PUSH</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">발송</th>
-                        <th scope="col">성공</th>
-                        <th scope="col">발송</th>
-                        <th scope="col">성공</th>
-                        <th scope="col">발송</th>
-                        <th scope="col">성공</th>
-                        <th scope="col">발송</th>
-                        <th scope="col">성공</th>
-                        <th scope="col">수신</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <page:pagination-jpa />
 
-                    <c:forEach items="${pageContent}" var="list" varStatus="i">
-                        <tr>
-                            <td><div>${list.sendDate}</div></td>
-                            <td><div>${list.phoneNumber}</div></td>
-                            <td><div>${list.content}</div></td>
-                            <td>${op:numberFormat(list.smsSent)}</td>
-                            <td>${op:numberFormat(list.smsSuccess)}</td>
-                            <td>${op:numberFormat(list.mmsSent)}</td>
-                            <td>${op:numberFormat(list.mmsSuccess)}</td>
-                            <td>${op:numberFormat(list.kakaoSent)}</td>
-                            <td>${op:numberFormat(list.kakaoSuccess)}</td>
-                            <td>${op:numberFormat(list.pushSent)}</td>
-                            <td>${op:numberFormat(list.pushSuccess)}</td>
-                            <td>${op:numberFormat(list.pushReceive)}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div><!--//popup_contents E-->
-    </div>
+        <div class="btn_all">
+            <div class="btn_center mb0">
+                <a href="javascript:self.close();" class="btn btn-active">확인</a>
+            </div>
+        </div>
 
-<page:pagination-manager />
-
-<div class="btn_all">
-    <div class="btn_center mb0">
-        <a href="javascript:self.close();" class="btn btn-active">확인</a>
-    </div>
+    </div><!--//popup_contents E-->
 </div>
+
+
+
+

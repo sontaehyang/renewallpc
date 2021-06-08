@@ -14,13 +14,14 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import saleson.common.Const;
 import saleson.common.notification.UmsApiService;
-import saleson.common.notification.domain.CampaignStatistics;
+import saleson.common.notification.domain.*;
 import saleson.common.notification.support.StatisticsParam;
 import saleson.common.utils.CommonUtils;
 import saleson.model.campaign.*;
 import saleson.shop.campaign.CampaignRepository;
+import saleson.shop.campaign.CampaignSendLogRepository;
+import saleson.shop.campaign.support.CampaignSendLogDto;
 import saleson.shop.eventcode.EventCodeRepository;
 import saleson.shop.campaign.CampaignUserRepository;
 import saleson.shop.campaign.messageLog.KakaoLogTempRepository;
@@ -58,7 +59,7 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
     UmsApiService umsApiService;
 
     @Autowired
-    RestTemplate customRestTemplate;
+    RestTemplate umsAgentRestTemplate;
 
     @Autowired
     private CampaignUserRepository campaignUserRepository;
@@ -75,41 +76,29 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
     @Autowired
     private PushLogTempRepository pushLogTempRepository;
 
+    @Autowired
+    private CampaignSendLogRepository campaignSendLogRepository;
+
     @Override
     public void updateCampaignSentBatch(String batchDate) throws Exception {
-        String statisticsDate = DateUtils.getToday(Const.DATETIME_FORMAT);
+        //String statisticsDate = DateUtils.getToday(Const.DATETIME_FORMAT);
+        String statisticsDate = "20210430043000";
         String month1 = batchDate.substring(0,6);
         String month2 = DateUtils.addMonth(batchDate, 1).substring(0,6);
 
-        List<String> smsTables = getLogTables("sms_log_", month1, month2);
-        List<String> kakaoSmsTables = getLogTables("ms_kko_sms_msg_log_", month1, month2);
-        List<String> mmsTables = getLogTables("mms_log_", month1, month2);
-        List<String> kakaoMmsTables = getLogTables("ms_kko_mms_msg_log_", month1, month2);
+        List<UmsStatisticsTable> statisticsTables = getLogTables(month1, month2);
 
-        List<String> pushTables = getLogTables("tmb_pushmsg_log_", month1, month2);
-        List<String> pushBatchTables = getLogTables("tmb_pushmsg_batch_log_", month1, month2);
-        List<String> kakaoTables = getLogTables("ms_kko_msg_log_", month1, month2);
+        List<String> tables = new ArrayList<>();
+        tables.add(month1);
+        tables.add(month2);
 
         Map<String, StatisticsInfo> statisticsInfoMap = new HashMap<>();
-
-        updateSent(statisticsInfoMap, "sms", smsTables);
-        updateSent(statisticsInfoMap, "mms", mmsTables);
-        updateSent(statisticsInfoMap,"push", pushTables);
-        updateSent(statisticsInfoMap,"push-batch", pushBatchTables);
-        updateSent(statisticsInfoMap, "kakao", kakaoTables);
-        updateSent(statisticsInfoMap, "kakao-sms", kakaoSmsTables);
-        updateSent(statisticsInfoMap, "kakao-mms", kakaoMmsTables);
+        updateSent(statisticsInfoMap, tables);
 
         Map<String, StatisticsInfo> autoStatisticsInfoMap = new HashMap<>();
         Campaign campaign = getAutoMonthCampaign(batchDate);
 
-        updateAutoSent(autoStatisticsInfoMap, "sms", smsTables, campaign);
-        updateAutoSent(autoStatisticsInfoMap, "mms", mmsTables, campaign);
-        updateAutoSent(autoStatisticsInfoMap,"push", pushTables, campaign);
-        updateAutoSent(autoStatisticsInfoMap,"push-batch", pushBatchTables, campaign);
-        updateAutoSent(autoStatisticsInfoMap, "kakao", kakaoTables, campaign);
-        updateAutoSent(autoStatisticsInfoMap, "kakao-sms", kakaoSmsTables, campaign);
-        updateAutoSent(autoStatisticsInfoMap, "kakao-mms", kakaoMmsTables, campaign);
+        updateAutoSent(autoStatisticsInfoMap, tables, campaign);
 
         statisticsInfoMap.putAll(autoStatisticsInfoMap);
 
@@ -153,21 +142,18 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
         pushLogTempRepository.deleteAll();
         kakaoLogTempRepository.deleteAll();
 
-        insertSentForUser("sms", smsTables);
-        insertSentForUser("mms", mmsTables);
-        insertSentForUser("push", pushTables);
-        insertSentForUser("push-batch", pushBatchTables);
-        insertSentForUser("kakao", kakaoTables);
-        insertSentForUser("kakao-sms", kakaoSmsTables);
-        insertSentForUser("kakao-mms", kakaoMmsTables);
+        if (statisticsTables != null && !statisticsTables.isEmpty()) {
+            statisticsTables.forEach(statistics -> {
+                insertSentForUser(statistics.getType(), statistics.getTable());
+            });
+        }
 
-        insertAutoSentForUser("sms", smsTables, campaign);
-        insertAutoSentForUser("mms", mmsTables, campaign);
-        insertAutoSentForUser("push", pushTables, campaign);
-        insertAutoSentForUser("push-batch", pushBatchTables, campaign);
-        insertAutoSentForUser("kakao", kakaoTables, campaign);
-        insertAutoSentForUser("kakao-sms", kakaoSmsTables, campaign);
-        insertAutoSentForUser("kakao-mms", kakaoMmsTables, campaign);
+        if (statisticsTables != null && !statisticsTables.isEmpty()) {
+
+            statisticsTables.forEach(statistics -> {
+                insertAutoSentForUser(statistics.getType(), statistics.getTable(), campaign);
+            });
+        }
 
         // 사용자별 통계 업데이트
         updateCampaignUser(statisticsDate);
@@ -176,7 +162,16 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
         updateOrderInfoForUser(batchDate, statisticsDate);
     }
 
-    private void updateAutoSent(Map<String, StatisticsInfo> statisticsInfoMap, String sentType, List<String> tables, Campaign campaign) {
+    private String getId() {
+        return environment.getProperty("ums.sub.id");
+    }
+
+    private String getHost() {
+        //return environment.getProperty("ums.api.url");
+        return "http://localhost:8080";
+    }
+
+    private void updateAutoSent(Map<String, StatisticsInfo> statisticsInfoMap, List<String> tables, Campaign campaign) {
 
         if (!tables.isEmpty()) {
 
@@ -184,65 +179,82 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
 
             StatisticsParam param = new StatisticsParam();
             param.setTables(tables);
-            param.setTableType(sentType);
             param.setAutoFlag(true);
             param.setCampaignKey(key);
-            param.setId(environment.getProperty("ums.sub.id"));
+            param.setId(getId());
 
-            setStatisticsInfoMap(statisticsInfoMap, sentType, param);
+            setStatisticsInfoMap(statisticsInfoMap, param);
 
         }
 
     }
 
-    private void updateSent(Map<String, StatisticsInfo> statisticsInfoMap, String sentType, List<String> tables) {
+    private void updateSent(Map<String, StatisticsInfo> statisticsInfoMap, List<String> tables) {
 
         if (!tables.isEmpty()) {
 
             StatisticsParam param = new StatisticsParam();
             param.setTables(tables);
-            param.setTableType(sentType);
-            param.setId(environment.getProperty("ums.sub.id"));
+            param.setId(getId());
 
-            setStatisticsInfoMap(statisticsInfoMap, sentType, param);
+            setStatisticsInfoMap(statisticsInfoMap, param);
 
         }
     }
 
-    private void setStatisticsInfoMap(Map<String, StatisticsInfo> statisticsInfoMap, String sentType, StatisticsParam param) {
-        String url = environment.getProperty("ums.api.url") + "/api/statistics/list";
+    private List<UmsSendInfo> getUmsSendInfos(StatisticsParam param) {
 
-        HttpHeaders headers = umsApiService.getHttpHeaders();
+        try {
+            String url = getHost() + "/api/statistics/send-info?";
 
-        URI uri = UriComponentsBuilder
-                .fromHttpUrl(url)
-                .queryParam("tableType", param.getTableType())
-                .queryParam("tables", String.join(",", param.getTables()))
-                .queryParam("campaignKey", param.getCampaignKey())
-                .queryParam("autoFlag", param.isAutoFlag())
-                .queryParam("openFlag", param.isOpenFlag())
-                .queryParam("beginSearchDate", param.getBeginSearchDate())
-                .queryParam("endSearchDate", param.getEndSearchDate())
-                .queryParam("id", param.getId())
-                .build()
-                .toUri();
+            HttpHeaders headers = umsApiService.getHttpHeaders();
 
-        RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, uri);
+            URI uri = UriComponentsBuilder
+                    .fromHttpUrl(url)
+                    .queryParam("tableType", param.getTableType())
+                    .queryParam("tables", String.join(",", param.getTables()))
+                    .queryParam("campaignKey", param.getCampaignKey())
+                    .queryParam("autoFlag", param.isAutoFlag())
+                    .queryParam("openFlag", param.isOpenFlag())
+                    .queryParam("beginSearchDate", param.getBeginSearchDate())
+                    .queryParam("endSearchDate", param.getEndSearchDate())
+                    .queryParam("id", param.getId())
+                    .build()
+                    .toUri();
 
-        ResponseEntity<List<CampaignStatistics>> response = customRestTemplate.exchange(requestEntity, new ParameterizedTypeReference<List<CampaignStatistics>>() {});
+            RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, uri);
 
-        List<CampaignStatistics> statistics = response.getBody();
-        logger.debug("statistics {}", JsonViewUtils.objectToJson(statistics));
+            ResponseEntity<Map<String, Map<String, Map<String, Long>>>> response = umsAgentRestTemplate.exchange(requestEntity, new ParameterizedTypeReference<Map<String, Map<String, Map<String, Long>>>>() {});
 
-        if (statistics != null && !statistics.isEmpty()) {
+            Map<String, Map<String, Map<String, Long>>> map = response.getBody();
 
-            for (CampaignStatistics s : statistics ) {
+            List<UmsSendInfo> list = new ArrayList<>();
 
-                String id = s.getKey();
+            if (map != null) {
 
-                try {
-                    long sent = s.getSent();
-                    String type = s.getType();
+                Set<String> keySet = map.keySet();
+
+                keySet.forEach(s -> {
+                    list.add(new UmsSendInfo(s, map.get(s)));
+                });
+            }
+
+            return list;
+        } catch (Exception e) {
+            logger.error("getUmsSendInfos error {}",e.getMessage(), e);
+            return new ArrayList<>();
+        }
+    }
+
+    private void setStatisticsInfoMap(Map<String, StatisticsInfo> statisticsInfoMap, StatisticsParam param) {
+
+        try {
+
+            List<UmsSendInfo> list = getUmsSendInfos(param);
+
+            if (!list.isEmpty()) {
+                list.forEach(umsSendInfo -> {
+                    String id = umsSendInfo.getCampaignKey();
 
                     StatisticsInfo statisticsInfo = statisticsInfoMap.get(id);
 
@@ -253,62 +265,48 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
 
                     if (statisticsInfo != null) {
 
-                        switch (sentType) {
-                            case "sms":
-                            case "kakao-sms":
+                        List<String> sendTypes = umsSendInfo.sendTypes();
 
-                                if ("sent".equals(type)) {
-                                    statisticsInfo.setSmsSent(statisticsInfo.getSmsSent() + sent);
-                                } else if ("success".equals(type)) {
-                                    statisticsInfo.setSmsSuccess(statisticsInfo.getSmsSuccess() + sent);
-                                }
+                        StatisticsInfo finalStatisticsInfo = statisticsInfo;
+                        sendTypes.forEach(sendType -> {
+                            switch (sendType) {
+                                case "sms":
+                                case "kakao-sms":
+                                    finalStatisticsInfo.setSmsSent(umsSendInfo.appendCount(finalStatisticsInfo.getSmsSent(), sendType, "sent"));
+                                    finalStatisticsInfo.setSmsSuccess(umsSendInfo.appendCount(finalStatisticsInfo.getSmsSuccess(), sendType, "success"));
+                                    break;
+                                case "mms":
+                                case "kakao-mms":
+                                    finalStatisticsInfo.setMmsSent(umsSendInfo.appendCount(finalStatisticsInfo.getMmsSent(), sendType, "sent"));
+                                    finalStatisticsInfo.setMmsSuccess(umsSendInfo.appendCount(finalStatisticsInfo.getMmsSuccess(), sendType, "success"));
+                                    break;
+                                case "push":
+                                case "push-batch":
 
-                                break;
-                            case "mms":
-                            case "kakao-mms":
+                                    finalStatisticsInfo.setPushSent(umsSendInfo.appendCount(finalStatisticsInfo.getPushSent(), sendType, "sent"));
+                                    finalStatisticsInfo.setPushSuccess(umsSendInfo.appendCount(finalStatisticsInfo.getPushSuccess(), sendType, "success"));
+                                    finalStatisticsInfo.setPushReceive(umsSendInfo.appendCount(finalStatisticsInfo.getPushReceive(), sendType, "open"));
 
-                                if ("sent".equals(type)) {
-                                    statisticsInfo.setMmsSent(statisticsInfo.getMmsSent() + sent);
-                                } else if ("success".equals(type)) {
-                                    statisticsInfo.setMmsSuccess(statisticsInfo.getMmsSuccess() + sent);
-                                }
+                                    break;
 
-                                break;
-                            case "push":
-                            case "push-batch":
+                                case "kakao":
+                                    finalStatisticsInfo.setKakaoSent(umsSendInfo.appendCount(finalStatisticsInfo.getKakaoSent(), sendType, "sent"));
+                                    finalStatisticsInfo.setKakaoSuccess(umsSendInfo.appendCount(finalStatisticsInfo.getKakaoSuccess(), sendType, "success"));
+                                    break;
 
-                                if ("sent".equals(type)) {
-                                    statisticsInfo.setPushSent(statisticsInfo.getPushSent() + sent);
-                                } else if ("success".equals(type)) {
-                                    statisticsInfo.setPushSuccess(statisticsInfo.getPushSuccess() + sent);
-                                } else if ("open".equals(type)) {
-                                    statisticsInfo.setPushReceive(statisticsInfo.getPushReceive() + sent);
-                                }
-
-                                break;
-
-                            case "kakao":
-
-                                if ("sent".equals(type)) {
-                                    statisticsInfo.setKakaoSent(statisticsInfo.getKakaoSent() + sent);
-                                } else if ("success".equals(type)) {
-                                    statisticsInfo.setKakaoSuccess(statisticsInfo.getKakaoSuccess() + sent);
-                                }
-
-                                break;
-
-                            default:
-                        }
+                                default:
+                            }
+                        });
 
                         statisticsInfoMap.put(id, statisticsInfo);
                     }
-
-                } catch (Exception e) {
-                    logger.error("updateCampaignSentBatch not CampaignId [{}] {}", id, e.getMessage(), e);
-                }
+                });
             }
 
+        } catch (Exception e) {
+            logger.error("setStatisticsInfoMap error {}",e.getMessage(), e);
         }
+
     }
 
     private void updateRedirection(String batchDate, String statisticsDate) {
@@ -432,38 +430,23 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
         }
     }
 
-    private List<String> getLogTables(String prefix, String... months) throws JsonProcessingException {
-
-        String schema = "MSAGENT";
-
-        List<String> list = new ArrayList<>();
+    @Override
+    public List<UmsStatisticsTable> getLogTables(String... months) {
 
         HttpHeaders headers = umsApiService.getHttpHeaders();
-        String url = environment.getProperty("ums.api.url") + "/api/statistics/count";
+        String url = getHost() + "/api/statistics/statistics-tables";
 
-        for (String month : months) {
+        URI uri = UriComponentsBuilder
+                .fromHttpUrl(url)
+                .queryParam("tables", String.join(",", months))
+                .build()
+                .toUri();
 
-            String tableName = prefix+month;
+        RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, uri);
 
-            URI uri = UriComponentsBuilder
-                    .fromHttpUrl(url)
-                    .queryParam("schema", schema)
-                    .queryParam("name", tableName)
-                    .build()
-                    .toUri();
-
-            RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, uri);
-
-            ResponseEntity<String> response = customRestTemplate.exchange(requestEntity, String.class);
-
-            HashMap<String, Object> body = (HashMap<String, Object>) JsonViewUtils.jsonToObject(response.getBody(), new TypeReference<HashMap<String, Object>>() {});
-            String tableCount = body.get("tableCount").toString();
-
-            if (Integer.parseInt(tableCount) > 0) {
-                list.add(month);
-            }
-        }
-        return list;
+        ResponseEntity<List<UmsStatisticsTable>> response
+                = umsAgentRestTemplate.exchange(requestEntity, new ParameterizedTypeReference<List<UmsStatisticsTable>>() {});
+        return response.getBody();
     }
 
     private Campaign getAutoMonthCampaign(String batchDate) {
@@ -512,9 +495,14 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
             StatisticsParam param = new StatisticsParam();
             param.setTables(tables);
             param.setTableType(sentType);
-            param.setId(environment.getProperty("ums.sub.id"));
+            param.setId(getId());
 
-            setStatisticsInfoMapForUser(sentType, param);
+            List<UmsSendInfo> umsSendInfos = getUmsSendInfos(param);
+
+            umsSendInfos.forEach(umsSendInfo -> {
+                param.setCampaignKey(umsSendInfo.getCampaignKey());
+                setStatisticsInfoMapForUser(sentType, param, false);
+            });
         }
     }
 
@@ -524,75 +512,151 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
 
             String key = StringUtils.long2string(campaign.getId());
 
+            List<String> autoTables = new ArrayList<>();
+            autoTables.add(tables.get(0));
+
             StatisticsParam param = new StatisticsParam();
-            param.setTables(tables);
+            param.setTables(autoTables);
             param.setTableType(sentType);
             param.setAutoFlag(true);
             param.setCampaignKey(key);
-            param.setId(environment.getProperty("ums.sub.id"));
+            param.setId(getId());
 
-            setStatisticsInfoMapForUser(sentType, param);
+            setStatisticsInfoMapForUser(sentType, param, true);
         }
 
     }
 
-    private void setStatisticsInfoMapForUser(String sentType, StatisticsParam param) {
-        String url = environment.getProperty("ums.api.url") + "/api/statistics/user-list";
+    private void saveStatisticsInfoTempForUser(UmsStatistics searchUmsStatistics,
+                                               StatisticsParam param, String sentType, boolean isSaveLogFlag) {
+        if (searchUmsStatistics != null) {
+            List<CampaignStatistics> statistics = searchUmsStatistics.getList();
 
-        HttpHeaders headers = umsApiService.getHttpHeaders();
+            if (statistics != null && !statistics.isEmpty()) {
 
+                List<SmsLogTemp> smsLogTemp = new ArrayList<>();
+                List<MmsLogTemp> mmsLogTemp = new ArrayList<>();
+                List<PushLogTemp> pushLogTemp = new ArrayList<>();
+                List<KakaoLogTemp> kakaoLogTemp = new ArrayList<>();
 
-        URI uri = UriComponentsBuilder
-                .fromHttpUrl(url)
-                .queryParam("tableType", param.getTableType())
-                .queryParam("tables", String.join(",", param.getTables()))
-                .queryParam("campaignKey", param.getCampaignKey())
-                .queryParam("autoFlag", param.isAutoFlag())
-                .queryParam("openFlag", param.isOpenFlag())
-                .queryParam("beginSearchDate", param.getBeginSearchDate())
-                .queryParam("endSearchDate", param.getEndSearchDate())
-                .queryParam("id", param.getId())
-                .build()
-                .toUri();
+                List<Long> msgkeys = new ArrayList<>();
 
-        RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, uri);
+                try {
+                    for (CampaignStatistics s : statistics) {
+                        if ("sms".equals(sentType)) {
+                            smsLogTemp.add(new SmsLogTemp(s));
 
-        ResponseEntity<List<CampaignStatistics>> response = customRestTemplate.exchange(requestEntity, new ParameterizedTypeReference<List<CampaignStatistics>>() {});
+                        } else if ("mms".equals(sentType)) {
+                            mmsLogTemp.add(new MmsLogTemp(s));
 
-        List<CampaignStatistics> statistics = response.getBody();
-        logger.debug("statistics {}", JsonViewUtils.objectToJson(statistics));
+                        } else if ("push".equals(sentType) || "push-batch".equals(sentType)) {
+                            pushLogTemp.add(new PushLogTemp(s));
 
-        if (statistics != null && !statistics.isEmpty()) {
-            List<SmsLogTemp> smsLogTemp = new ArrayList<>();
-            List<MmsLogTemp> mmsLogTemp = new ArrayList<>();
-            List<PushLogTemp> pushLogTemp = new ArrayList<>();
-            List<KakaoLogTemp> kakaoLogTemp = new ArrayList<>();
+                        } else if ("kakao".equals(sentType) || "kakao-sms".equals(sentType) || "kakao-mms".equals(sentType)) {
+                            kakaoLogTemp.add(new KakaoLogTemp(s));
+                        }
 
-            try {
-                for (CampaignStatistics s : statistics) {
-                    if ("sms".equals(sentType)) {
-                        smsLogTemp.add(new SmsLogTemp(s));
-
-                    } else if ("mms".equals(sentType)) {
-                        mmsLogTemp.add(new MmsLogTemp(s));
-
-                    } else if ("push".equals(sentType) || "push-batch".equals(sentType)) {
-                        pushLogTemp.add(new PushLogTemp(s));
-
-                    } else if ("kakao".equals(sentType) || "kakao-sms".equals(sentType) || "kakao-mms".equals(sentType)) {
-                        kakaoLogTemp.add(new KakaoLogTemp(s));
+                        msgkeys.add(s.getMsgkey());
                     }
+
+                    smsLogTempRepository.saveAll(smsLogTemp);
+                    mmsLogTempRepository.saveAll(mmsLogTemp);
+                    pushLogTempRepository.saveAll(pushLogTemp);
+                    kakaoLogTempRepository.saveAll(kakaoLogTemp);
+
+                    if (isSaveLogFlag) {
+                        CampaignSendLogDto sendLogDto = new CampaignSendLogDto();
+                        sendLogDto.setCampaignKey(param.getCampaignKey());
+                        sendLogDto.setMsgkeys(msgkeys);
+
+                        Iterable<CampaignSendLog> iterable = campaignSendLogRepository.findAll(sendLogDto.getPredicate());
+                        List<CampaignSendLog> sendLogs = new ArrayList<>();
+                        iterable.iterator().forEachRemaining(sendLogs::add);
+
+                        for (CampaignStatistics s : statistics) {
+
+                            CampaignSendLog sendLog = sendLogs.stream()
+                                    .filter(l-> s.getMsgkey().equals(l.getMsgkey()))
+                                    .findFirst().orElse(null);
+
+                            if (sendLog != null) {
+                                sendLog.setType(sentType);
+                                sendLog.setSent(s.getSent());
+                                sendLog.setSuccess(s.getSuccess());
+                                sendLog.setPushReceive(s.getPushReceive());
+                            } else {
+                                sendLogs.add(new CampaignSendLog(sentType, s));
+                            }
+                        }
+                        campaignSendLogRepository.saveAll(sendLogs);
+                    }
+
+                } catch (Exception e) {
+                    logger.error("setStatisticsInfoMapForUser Error [{}] {}", param, e.getMessage(), e);
+                }
+            }
+
+        }
+    }
+
+    private void setStatisticsInfoMapForUser(String sentType, StatisticsParam param, boolean isSaveLogFlag) {
+
+        // 최초 1회 페이징 정보를 조회를 위해 조회
+        int pageSize = 1000;
+
+        try {
+            param.setPageSize(pageSize);
+            param.setPage(1);
+            List<String> tables = param.getTables();
+            param.setLogTable(tables.get(0));
+
+            // 로그 테이블 조회
+            tables.forEach(table -> {
+                List<String> logTables = new ArrayList<>();
+                logTables.add(table);
+
+                int currentPage = 1;
+
+                param.setTables(logTables);
+                param.setLogTableFlag(true);
+
+                UmsStatistics baseUmsStatistics = getUserList(param);
+                if (baseUmsStatistics != null) {
+                    UmsStatisticsPage statisticsPage = baseUmsStatistics.getPage();
+
+                    for (int i=0; i<statisticsPage.getTotalPages(); i++) {
+                        param.setPage(currentPage);
+                        saveStatisticsInfoTempForUser(baseUmsStatistics, param, sentType, isSaveLogFlag);
+                    }
+
+
+                    currentPage++;
                 }
 
-                smsLogTempRepository.saveAll(smsLogTemp);
-                mmsLogTempRepository.saveAll(mmsLogTemp);
-                pushLogTempRepository.saveAll(pushLogTemp);
-                kakaoLogTempRepository.saveAll(kakaoLogTemp);
+            });
 
-            } catch (Exception e) {
-                logger.error("setStatisticsInfoMapForUser Error [{}] {}", param, e.getMessage(), e);
+
+            // 메인 테이블 조회
+            param.setLogTableFlag(false);
+
+            int currentPage = 1;
+            UmsStatistics baseUmsStatistics = getUserList(param);
+
+            if (baseUmsStatistics != null) {
+                UmsStatisticsPage statisticsPage = baseUmsStatistics.getPage();
+
+                for (int i=0; i<statisticsPage.getTotalPages(); i++) {
+                    param.setPage(currentPage);
+                    saveStatisticsInfoTempForUser(baseUmsStatistics, param, sentType, isSaveLogFlag);
+                }
+
+                currentPage++;
             }
+
+        } catch (Exception e) {
+            logger.error("setStatisticsInfoMapForUser Error [{}] {}", param, e.getMessage(), e);
         }
+
     }
 
     private void updateCampaignUser(String statisticsDate) {
@@ -635,6 +699,43 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
             }
         }
 
+    }
+
+    @Override
+    public UmsStatistics getUserList(StatisticsParam param) {
+
+        try {
+
+            String url = getHost() + "/api/statistics/page-user-list";
+
+            HttpHeaders headers = umsApiService.getHttpHeaders();
+
+            URI uri = UriComponentsBuilder
+                    .fromHttpUrl(url)
+                    .queryParam("tableType", param.getTableType())
+                    .queryParam("tables", String.join(",", param.getTables()))
+                    .queryParam("campaignKey", param.getCampaignKey())
+                    .queryParam("autoFlag", param.isAutoFlag())
+                    .queryParam("openFlag", param.isOpenFlag())
+                    .queryParam("batchFlag", param.isBatchFlag())
+                    .queryParam("beginSearchDate", param.getBeginSearchDate())
+                    .queryParam("endSearchDate", param.getEndSearchDate())
+                    .queryParam("id", param.getId())
+                    .queryParam("page", param.getPage())
+                    .queryParam("pageSize", param.getPageSize())
+                    .queryParam("logTableFlag",param.isLogTableFlag())
+                    .queryParam("logTable",param.getLogTable())
+                    .build()
+                    .toUri();
+
+            RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, uri);
+
+            ResponseEntity<UmsStatistics> response = umsAgentRestTemplate.exchange(requestEntity, new ParameterizedTypeReference<UmsStatistics>() {});
+            return response.getBody();
+        } catch (Exception e) {
+            logger.error("getUserList error {}", e.getMessage(), e);
+            return null;
+        }
     }
 
 }

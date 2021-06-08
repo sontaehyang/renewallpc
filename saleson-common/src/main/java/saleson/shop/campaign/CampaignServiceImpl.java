@@ -30,6 +30,8 @@ import saleson.common.enumeration.eventcode.EventCodeType;
 import saleson.common.notification.UmsApiService;
 import saleson.common.notification.domain.CampaignStatistics;
 import saleson.common.notification.domain.CampaignTemplate;
+import saleson.common.notification.domain.UmsStatistics;
+import saleson.common.notification.domain.UmsStatisticsTable;
 import saleson.common.notification.micesoft.MiceMapper;
 import saleson.common.notification.sender.MessageSender;
 import saleson.common.notification.sender.PushSender;
@@ -37,6 +39,7 @@ import saleson.common.notification.support.StatisticsParam;
 import saleson.common.utils.EventViewUtils;
 import saleson.common.utils.LocalDateUtils;
 import saleson.model.campaign.*;
+import saleson.shop.campaign.statistics.CampaignStatisticsService;
 import saleson.shop.campaign.statistics.domain.MessageInfo;
 import saleson.shop.campaign.support.*;
 import saleson.shop.coupon.CouponService;
@@ -105,6 +108,9 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Autowired
     private EventCodeService eventCodeService;
+
+    @Autowired
+    private CampaignSendLogRepository campaignSendLogRepository;
 
     @Override
     public Optional<Campaign> getCampaign(Long id) {
@@ -509,179 +515,6 @@ public class CampaignServiceImpl implements CampaignService {
         }
     }
 
-    private void getAutoSentUser(Long campaignId, List<MessageInfo> list, String sentType, List<String> tables) {
-
-        if (!tables.isEmpty()) {
-            StatisticsParam param = new StatisticsParam();
-            param.setTables(tables);
-            param.setTableType(sentType);
-            param.setAutoFlag(true);
-            param.setId(environment.getProperty("ums.sub.id"));
-
-            setStatisticsInfoMapForUser(campaignId, list, sentType, param);
-        }
-
-    }
-
-    private void setStatisticsInfoMapForUser(Long campaignId, List<MessageInfo> list, String sentType, StatisticsParam param) {
-        String url = environment.getProperty("ums.api.url") + "/api/statistics/user-list";
-
-        HttpHeaders headers = umsApiService.getHttpHeaders();
-
-        URI uri = UriComponentsBuilder
-                .fromHttpUrl(url)
-                .queryParam("tableType", param.getTableType())
-                .queryParam("tables", String.join(",", param.getTables()))
-                .queryParam("campaignKey", param.getCampaignKey())
-                .queryParam("autoFlag", true)
-                .queryParam("id", param.getId())
-                .build()
-                .toUri();
-
-        RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, uri);
-
-        ResponseEntity<List<CampaignStatistics>> response = customRestTemplate.exchange(requestEntity, new ParameterizedTypeReference<List<CampaignStatistics>>() {});
-
-        List<CampaignStatistics> statistics = response.getBody();
-
-        logger.debug("statistics {}", JsonViewUtils.objectToJson(statistics));
-
-        if (statistics != null && !statistics.isEmpty()) {
-
-            try {
-
-                long smsSent = 0L;
-                long smsSuccess = 0L;
-                long mmsSent = 0L;
-                long mmsSuccess = 0L;
-                long pushSent = 0L;
-                long pushSuccess = 0L;
-                long pushReceive = 0L;
-                long kakaoSent = 0L;
-                long kakaoSuccess = 0L;
-
-                for (CampaignStatistics s : statistics) {
-
-                    MessageInfo messageInfo = new MessageInfo();
-
-                    messageInfo.setTitle(s.getTitle());
-                    messageInfo.setContent(s.getContent());
-                    messageInfo.setPhoneNumber(StringUtils.phoneNumberPattern(s.getPhone()));
-                    messageInfo.setSendDate(LocalDateUtils.getDateTime(s.getSendDate()));
-
-                    if ("sms".equals(sentType)) {
-                        messageInfo.setSmsSent(s.getSent());
-                        messageInfo.setSmsSuccess(s.getSuccess());
-
-                        smsSent += messageInfo.getSmsSent();
-                        smsSuccess += messageInfo.getSmsSuccess();
-
-                    } else if ("mms".equals(sentType)) {
-                        messageInfo.setMmsSent(s.getSent());
-                        messageInfo.setMmsSuccess(s.getSuccess());
-
-                        mmsSent += messageInfo.getMmsSent();
-                        mmsSuccess += messageInfo.getMmsSuccess();
-
-                    } else if ("push".equals(sentType) || "push-batch".equals(sentType)) {
-                        messageInfo.setPushSent(s.getSent());
-                        messageInfo.setPushSuccess(s.getSuccess());
-                        messageInfo.setPushReceive(s.getPushReceive());
-
-                        pushSent += messageInfo.getPushSent();
-                        pushSuccess += messageInfo.getPushSuccess();
-                        pushReceive += messageInfo.getPushReceive();
-
-                    } else if ("kakao".equals(sentType) || "kakao-sms".equals(sentType) || "kakao-mms".equals(sentType)) {
-                        messageInfo.setKakaoSent(s.getSent());
-                        messageInfo.setKakaoSuccess(s.getSuccess());
-
-                        kakaoSent += messageInfo.getKakaoSent();
-                        kakaoSuccess += messageInfo.getKakaoSuccess();
-                    }
-
-                    list.add(messageInfo);
-                }
-
-                Campaign campaign = campaignRepository.findById(campaignId).get();
-
-                campaign.setSmsSent(smsSent == 0 ? campaign.getSmsSent() : smsSent);
-                campaign.setSmsSuccess(smsSuccess == 0 ? campaign.getSmsSuccess() : smsSuccess);
-                campaign.setMmsSent(mmsSent == 0 ? campaign.getMmsSent() : mmsSent);
-                campaign.setMmsSuccess(mmsSuccess == 0 ? campaign.getMmsSent() : mmsSuccess);
-                campaign.setPushSent(pushSent == 0 ? campaign.getPushSent() : pushSent);
-                campaign.setPushSuccess(pushSuccess == 0 ? campaign.getPushSuccess() : pushSuccess);
-                campaign.setPushReceive(pushReceive == 0 ? campaign.getPushReceive() : pushReceive);
-                campaign.setKakaoSent(kakaoSent == 0 ? campaign.getKakaoSent() : kakaoSent);
-                campaign.setKakaoSuccess(kakaoSuccess == 0 ? campaign.getKakaoSuccess() : kakaoSuccess);
-
-                campaignRepository.save(campaign);
-
-            } catch (Exception e) {
-                logger.error("setStatisticsInfoMapForUser Error [{}] {}", param, e.getMessage(), e);
-            }
-        }
-    }
-
-    private List<String> getLogTables(String prefix, String... months) throws JsonProcessingException {
-
-        String schema = "MSAGENT";
-
-        List<String> list = new ArrayList<>();
-
-        HttpHeaders headers = umsApiService.getHttpHeaders();
-        String url = environment.getProperty("ums.api.url") + "/api/statistics/count";
-
-        for (String month : months) {
-
-            String tableName = prefix+month;
-
-            URI uri = UriComponentsBuilder
-                    .fromHttpUrl(url)
-                    .queryParam("schema", schema)
-                    .queryParam("name", tableName)
-                    .build()
-                    .toUri();
-
-            RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, uri);
-
-            ResponseEntity<String> response = customRestTemplate.exchange(requestEntity, String.class);
-
-            HashMap<String, Object> body = (HashMap<String, Object>) JsonViewUtils.jsonToObject(response.getBody(), new TypeReference<HashMap<String, Object>>() {});
-            String tableCount = body.get("tableCount").toString();
-
-            if (Integer.parseInt(tableCount) > 0) {
-                list.add(month);
-            }
-        }
-        return list;
-    }
-
-    @Override
-    public List<MessageInfo> getMessageInfoList(Long campaignId, String autoMonth) throws Exception {
-
-        List<MessageInfo> list = new ArrayList<>();
-
-        List<String> smsTables = getLogTables("sms_log_", autoMonth, autoMonth);
-        List<String> kakaoSmsTables = getLogTables("ms_kko_sms_msg_log_", autoMonth, autoMonth);
-        List<String> mmsTables = getLogTables("mms_log_", autoMonth, autoMonth);
-        List<String> kakaoMmsTables = getLogTables("ms_kko_mms_msg_log_", autoMonth, autoMonth);
-
-        List<String> pushTables = getLogTables("tmb_pushmsg_log_", autoMonth, autoMonth);
-        List<String> pushBatchTables = getLogTables("tmb_pushmsg_batch_log_", autoMonth, autoMonth);
-        List<String> kakaoTables = getLogTables("ms_kko_msg_log_", autoMonth, autoMonth);
-
-        getAutoSentUser(campaignId, list, "sms", smsTables);
-        getAutoSentUser(campaignId, list, "mms", mmsTables);
-        getAutoSentUser(campaignId, list,"push", pushTables);
-        getAutoSentUser(campaignId, list,"push-batch", pushBatchTables);
-        getAutoSentUser(campaignId, list, "kakao", kakaoTables);
-        getAutoSentUser(campaignId, list, "kakao-sms", kakaoSmsTables);
-        getAutoSentUser(campaignId, list, "kakao-mms", kakaoMmsTables);
-
-        return list;
-    }
-
     private void setEventCodesForRegular(CampaignRegular campaignRegular) throws Exception {
         List<CampaignRegularUrl> orgUrls = campaignRegular.getUrlList();
 
@@ -722,5 +555,10 @@ public class CampaignServiceImpl implements CampaignService {
                 campaignRegular.setUrlList(urls);
             }
         }
+    }
+
+    @Override
+    public Page<CampaignSendLog> getCampaignSendLogs(Predicate predicate, Pageable pageable) {
+        return campaignSendLogRepository.findAll(predicate,pageable);
     }
 }

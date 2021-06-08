@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import saleson.model.campaign.Campaign;
 import saleson.model.campaign.CampaignBatch;
+import saleson.model.campaign.CampaignSendLog;
 import saleson.shop.campaign.statistics.domain.MessageInfo;
 import saleson.shop.campaign.support.CampaignUserParam;
 
@@ -93,5 +94,5 @@ public interface CampaignService {
 
     void updateCampaign(Long campaignId, Campaign campaign, CampaignUserParam campaignUserParam, String status) throws Exception;
 
-    List<MessageInfo> getMessageInfoList(Long campaignId, String autoMonth) throws Exception;
+    Page<CampaignSendLog> getCampaignSendLogs(Predicate predicate, Pageable pageable);
 }

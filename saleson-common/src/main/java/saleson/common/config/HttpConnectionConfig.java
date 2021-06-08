@@ -12,55 +12,38 @@ public class HttpConnectionConfig {
 
     @Bean
     public RestTemplate customRestTemplate() {
-
-        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-
-        factory.setConnectTimeout(5000); // 연결시간초과
-        factory.setReadTimeout(10000); // 읽기시간초과
-
-        HttpClient client = HttpClientBuilder.create()
-                .setMaxConnTotal(200)
-                //.setMaxConnPerRoute(20) // ip & port 당 연결 제한
-                .build();
-
-        factory.setHttpClient(client);
-
-        return new RestTemplate(factory);
+        return new RestTemplate(getFactory(5000, 10000, 200));
     }
 
     @Bean
     public RestTemplate naverPaymentRestTemplate() {
-
-        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-
-        factory.setConnectTimeout(60000); // 연결시간초과
-        factory.setReadTimeout(60000); // 읽기시간초과
-
-        HttpClient client = HttpClientBuilder.create()
-                .setMaxConnTotal(200)
-                //.setMaxConnPerRoute(20) // ip & port 당 연결 제한
-                .build();
-
-        factory.setHttpClient(client);
-
-        return new RestTemplate(factory);
+        return new RestTemplate(getFactory(60000, 60000, 200));
     }
 
     @Bean
     public RestTemplate naverOtherRestTemplate() {
+        return new RestTemplate(getFactory(10000, 10000, 200));
+    }
+
+    @Bean
+    public RestTemplate umsAgentRestTemplate() {
+        return new RestTemplate(getFactory(60000, 60000, 200));
+    }
+
+    private HttpComponentsClientHttpRequestFactory getFactory (int connectTimeout, int readTimeout, int maxConnTotal) {
 
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 
-        factory.setConnectTimeout(10000); // 연결시간초과
-        factory.setReadTimeout(10000); // 읽기시간초과
+        factory.setConnectTimeout(connectTimeout); // 연결시간초과
+        factory.setReadTimeout(readTimeout); // 읽기시간초과
 
         HttpClient client = HttpClientBuilder.create()
-                .setMaxConnTotal(200)
+                .setMaxConnTotal(maxConnTotal)
                 //.setMaxConnPerRoute(20) // ip & port 당 연결 제한
                 .build();
 
         factory.setHttpClient(client);
 
-        return new RestTemplate(factory);
+        return factory;
     }
 }
