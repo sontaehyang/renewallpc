@@ -218,7 +218,7 @@
 				<p class="img"><img src="/content/images/common/main-layer-ms010204-map.jpg"></p>
 				<dl class="info">
 					<dt>경기도 고양시 덕양구 화랑로139</dt>
-					<dd>상담시간 : 매일 AM 10:00 ~ PM 10:00 (공휴일 휴무) <br>점심시간 : PM 12:30 ~ PM 01:30</dd>
+					<dd>상담시간 : 매일 AM 11:00 ~ PM 09:00 (공휴일 휴무) <br>점심시간 : PM 12:30 ~ PM 01:30</dd>
 					<dd class="tel">02-334-3989</dd>
 				</dl>
 				<a href="http://kko.to/e1F-lywD0" target="_blank" class="btn-map" title="본사 지도 새창으로 바로가기">지도보기</a>
@@ -227,14 +227,14 @@
 				<p class="tit">이마트 영등포점</p>
 				<dl class="info">
 					<dt>서울 영등포구 영중로 15 타임스퀘어</dt>
-					<dd>상담시간 : 매일 AM 10:00 ~ PM 10:00 (둘째,넷째 일요일 휴무)</dd>
+					<dd>상담시간 : 매일 AM 11:00 ~ PM 09:00 (둘째,넷째 일요일 휴무)</dd>
 					<dd class="tel">02-2633-2432</dd>
 				</dl>
 				<a href="http://kko.to/K_Er2ywDT" target="_blank" class="btn-map" title="이마트 영등포점 지도 새창으로 바로가기">지도보기</a>
 				<p class="tit">이마트 킨텍스점</p>
 				<dl class="info">
 					<dt>경기 고양시 일산서구 킨텍스로 171</dt>
-					<dd>상담시간 : 매일 AM 10:00 ~ PM 10:00 (둘째,넷째 수요일 휴무)</dd>
+					<dd>상담시간 : 매일 AM 11:00 ~ PM 09:00 (둘째,넷째 수요일 휴무)</dd>
 					<dd class="tel">031-924-2432</dd>
 				</dl>
 				<a href="http://kko.to/rl7Sly6DH" target="_blank" class="btn-map" title="이마트 킨텍스점 지도 새창으로 바로가기">지도보기</a>
