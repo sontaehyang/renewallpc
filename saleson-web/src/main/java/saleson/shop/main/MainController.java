@@ -280,7 +280,7 @@ public class MainController {
 		ItemParam itemParam = new ItemParam();
 		itemParam.setConditionType("FRONT_MAIN");
 		itemParam.setRecommendFlag("Y");
-		itemParam.setLimit(4);
+		//itemParam.setLimit(4);
 
 		if (!UserUtils.isManagerLogin()) {
 			// 전용상품 조회
