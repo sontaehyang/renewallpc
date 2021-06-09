@@ -14,6 +14,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import saleson.common.Const;
 import saleson.common.notification.UmsApiService;
 import saleson.common.notification.domain.*;
 import saleson.common.notification.support.StatisticsParam;
@@ -81,8 +82,7 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
 
     @Override
     public void updateCampaignSentBatch(String batchDate) throws Exception {
-        //String statisticsDate = DateUtils.getToday(Const.DATETIME_FORMAT);
-        String statisticsDate = "20210430043000";
+        String statisticsDate = DateUtils.getToday(Const.DATETIME_FORMAT);
         String month1 = batchDate.substring(0,6);
         String month2 = DateUtils.addMonth(batchDate, 1).substring(0,6);
 
@@ -167,8 +167,7 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
     }
 
     private String getHost() {
-        //return environment.getProperty("ums.api.url");
-        return "http://localhost:8080";
+        return environment.getProperty("ums.api.url");
     }
 
     private void updateAutoSent(Map<String, StatisticsInfo> statisticsInfoMap, List<String> tables, Campaign campaign) {
