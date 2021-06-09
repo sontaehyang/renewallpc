@@ -2263,6 +2263,13 @@
 		<if test='conditionType == "FRONT_MYPAGE" or conditionType == "FRONT_CATEGORY" or conditionType == "FRONT_TEAM" or conditionType == "FRONT_GROUP"'>
 			<include refid="itemOptionSoldOutFlagFromQuery" />
 		</if>
+		ORDER BY
+		<choose>
+			<when test='orderBy == "LIKE_COUNT"'>I.LIKE_COUNT DESC, I.CREATED_DATE DESC</when>
+			<when test='orderBy == "SCORE"'>I.SCORE DESC, I.CREATED_DATE DESC</when>
+			<when test='orderBy == "CREATED_DATE"'>I.CREATED_DATE DESC</when>
+			<otherwise>I.CREATED_DATE DESC</otherwise>
+		</choose>
 	</select>
 
 	<select id="getItemReviewById" parameterType="Integer" resultMap="ItemReviewResult">

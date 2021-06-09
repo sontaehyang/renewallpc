@@ -94,7 +94,7 @@
 		</div>
 		<div class="event_list_t01">
 			<h2>이마트 진행중인 행사</h2>
-			<p><a href="https://blog.naver.com/PostList.nhn?blogId=kaceroo4&from=postList&categoryNo=10&parentCategoryNo=10#category-name" target="_blank"><img src="http://bonoyahana.esellersimg.co.kr/homepage/pop_menu/button.jpg" alt="이마트 이벤트"></a></p>
+			<p><a href="https://blog.naver.com/PostList.nhn?blogId=kaceroo4&from=postList&categoryNo=22#category-name" target="_blank"><img src="http://bonoyahana.esellersimg.co.kr/homepage/pop_menu/button.jpg" alt="이마트 이벤트"></a></p>
 		</div>
 	</div>
 	</div>
@@ -114,7 +114,7 @@
 		</div>
 		<div class="event_list_t01">
 			<h2>이마트 진행중인 행사</h2>
-			<p><a href="https://blog.naver.com/PostList.nhn?blogId=kaceroo4&from=postList&categoryNo=10&parentCategoryNo=10#category-name" target="_blank"><img src="http://bonoyahana.esellersimg.co.kr/homepage/pop_menu/button.jpg" alt="이마트 이벤트"></a></p>
+			<p><a href="https://blog.naver.com/PostList.nhn?blogId=kaceroo4&from=postList&categoryNo=22#category-name" target="_blank"><img src="http://bonoyahana.esellersimg.co.kr/homepage/pop_menu/button.jpg" alt="이마트 이벤트"></a></p>
 		</div>
 	</div>
 	</div>
@@ -134,7 +134,7 @@
 		</div>
 		<div class="event_list_t01">
 			<h2>이마트 진행중인 행사</h2>
-			<p><a href="https://blog.naver.com/PostList.nhn?blogId=kaceroo4&from=postList&categoryNo=10&parentCategoryNo=10#category-name" target="_blank"><img src="http://bonoyahana.esellersimg.co.kr/homepage/pop_menu/button.jpg" alt="이마트 이벤트"></a></p>
+			<p><a href="https://blog.naver.com/PostList.nhn?blogId=kaceroo4&from=postList&categoryNo=22#category-name" target="_blank"><img src="http://bonoyahana.esellersimg.co.kr/homepage/pop_menu/button.jpg" alt="이마트 이벤트"></a></p>
 		</div>
 	</div>
 	</div>
@@ -228,7 +228,7 @@
 	
 	.event_list_t01{margin: 0 20px;}
 	.event_list_t01>p{padding: 5px 0 20px 0;}
-	.event_list_t01>h2{font-size: 24px; margin-bottom: 0; font-weight: 500; color: #1f1f1f;}
+	.event_list_t01>h2{font-size: 20px; margin-top: 10px; margin-bottom: 0; font-weight: 500; color: #1f1f1f;}
 	.event_list_t01>ul{padding: 0; margin: 0;} 
 	.event_list_t01>ul:after{content:''; display:block; clear:both;} 
 	.event_list_t01>ul>li{float: left; width: 49%; list-style: none;}
