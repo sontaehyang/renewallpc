@@ -699,9 +699,9 @@
 .review_slider { width: 100%;height: 100%;}
 .review_slider .swiper-slide {
     padding: 8px;
-    margin-left: -5px;
+    margin-left: -1px;
     display: flex;
-    width: 77.48%;
+    width: 79%;
     border: solid 1px #d0d0d0;
     background-color: #ffffff;
 }
