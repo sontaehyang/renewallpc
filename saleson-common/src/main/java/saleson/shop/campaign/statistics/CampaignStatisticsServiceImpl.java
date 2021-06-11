@@ -1,16 +1,16 @@
 package saleson.shop.campaign.statistics;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.onlinepowers.framework.util.DateUtils;
-import com.onlinepowers.framework.util.JsonViewUtils;
 import com.onlinepowers.framework.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -22,8 +22,6 @@ import saleson.common.utils.CommonUtils;
 import saleson.model.campaign.*;
 import saleson.shop.campaign.CampaignRepository;
 import saleson.shop.campaign.CampaignSendLogRepository;
-import saleson.shop.campaign.support.CampaignSendLogDto;
-import saleson.shop.eventcode.EventCodeRepository;
 import saleson.shop.campaign.CampaignUserRepository;
 import saleson.shop.campaign.messageLog.KakaoLogTempRepository;
 import saleson.shop.campaign.messageLog.MmsLogTempRepository;
@@ -31,6 +29,8 @@ import saleson.shop.campaign.messageLog.PushLogTempRepository;
 import saleson.shop.campaign.messageLog.SmsLogTempRepository;
 import saleson.shop.campaign.statistics.domain.StatisticsInfo;
 import saleson.shop.campaign.support.CampaignDto;
+import saleson.shop.campaign.support.CampaignSendLogDto;
+import saleson.shop.eventcode.EventCodeRepository;
 import saleson.shop.order.OrderMapper;
 
 import java.math.BigDecimal;
@@ -578,8 +578,8 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
                                     .filter(l-> s.getMsgkey().equals(l.getMsgkey()))
                                     .findFirst().orElse(null);
 
-                            if (sendLog != null) {
-                                sendLog.setType(sentType);
+                            if (sendLog != null && sentType.equals(sendLog.getType())) {
+                                //sendLog.setType(sentType);
                                 sendLog.setSent(s.getSent());
                                 sendLog.setSuccess(s.getSuccess());
                                 sendLog.setPushReceive(s.getPushReceive());
@@ -600,62 +600,53 @@ public class CampaignStatisticsServiceImpl implements CampaignStatisticsService{
 
     private void setStatisticsInfoMapForUser(String sentType, StatisticsParam param, boolean isSaveLogFlag) {
 
-        // 최초 1회 페이징 정보를 조회를 위해 조회
-        int pageSize = 1000;
-
         try {
-            param.setPageSize(pageSize);
-            param.setPage(1);
-            List<String> tables = param.getTables();
-            param.setLogTable(tables.get(0));
+            List<String> baseTables = param.getTables();
+
+            param.setLogTable(baseTables.get(0));
 
             // 로그 테이블 조회
-            tables.forEach(table -> {
+            baseTables.forEach(table -> {
                 List<String> logTables = new ArrayList<>();
                 logTables.add(table);
-
-                int currentPage = 1;
 
                 param.setTables(logTables);
                 param.setLogTableFlag(true);
 
-                UmsStatistics baseUmsStatistics = getUserList(param);
-                if (baseUmsStatistics != null) {
-                    UmsStatisticsPage statisticsPage = baseUmsStatistics.getPage();
-
-                    for (int i=0; i<statisticsPage.getTotalPages(); i++) {
-                        param.setPage(currentPage);
-                        saveStatisticsInfoTempForUser(baseUmsStatistics, param, sentType, isSaveLogFlag);
-                    }
-
-
-                    currentPage++;
-                }
-
+                processSaveStatisticsInfoTempForUser(param, sentType, isSaveLogFlag);
             });
-
 
             // 메인 테이블 조회
             param.setLogTableFlag(false);
+            List<String> logTables = new ArrayList<>();
+            logTables.add(baseTables.get(0));
+            param.setTables(logTables);
 
-            int currentPage = 1;
-            UmsStatistics baseUmsStatistics = getUserList(param);
-
-            if (baseUmsStatistics != null) {
-                UmsStatisticsPage statisticsPage = baseUmsStatistics.getPage();
-
-                for (int i=0; i<statisticsPage.getTotalPages(); i++) {
-                    param.setPage(currentPage);
-                    saveStatisticsInfoTempForUser(baseUmsStatistics, param, sentType, isSaveLogFlag);
-                }
-
-                currentPage++;
-            }
+            processSaveStatisticsInfoTempForUser(param, sentType, isSaveLogFlag);
 
         } catch (Exception e) {
             logger.error("setStatisticsInfoMapForUser Error [{}] {}", param, e.getMessage(), e);
         }
 
+    }
+
+    private void processSaveStatisticsInfoTempForUser(StatisticsParam param, String sentType, boolean isSaveLogFlag) {
+        // 최초 1회 페이징 정보를 조회를 위해 조회
+        int pageSize = 1000;
+        param.setPageSize(pageSize);
+        param.setPage(1);
+        UmsStatistics baseUmsStatistics = getUserList(param);
+
+        if (baseUmsStatistics != null) {
+
+            UmsStatisticsPage statisticsPage = baseUmsStatistics.getPage();
+
+            for (int i=0; i<statisticsPage.getTotalPages(); i++) {
+                param.setPage(i + 1);
+                UmsStatistics umsStatistics = getUserList(param);
+                saveStatisticsInfoTempForUser(umsStatistics, param, sentType, isSaveLogFlag);
+            }
+        }
     }
 
     private void updateCampaignUser(String statisticsDate) {
