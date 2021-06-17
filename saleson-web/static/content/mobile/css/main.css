@@ -574,10 +574,11 @@
 */
 
 .goods_product .goods_tab .inner ul li:nth-of-type(1) a:before{background-image: url(/content/mobile/images/common/ms04_ico01.png);}
-.goods_product .goods_tab .inner ul li:nth-of-type(2) a:before{background-image: url(/content/mobile/images/common/ms04_ico02.png);}
-.goods_product .goods_tab .inner ul li:nth-of-type(3) a:before{background-image: url(/content/mobile/images/common/ms04_ico08.png);}
-.goods_product .goods_tab .inner ul li:nth-of-type(4) a:before{background-image: url(/content/mobile/images/common/ms04_ico07.png);}
-.goods_product .goods_tab .inner ul li:nth-of-type(5) a:before{background-image: url(/content/mobile/images/common/ms04_ico11.png);}
+.goods_product .goods_tab .inner ul li:nth-of-type(2) a:before{background-image: url(/content/mobile/images/common/ms04_ico20.png);}
+.goods_product .goods_tab .inner ul li:nth-of-type(3) a:before{background-image: url(/content/mobile/images/common/ms04_ico02.png);}
+.goods_product .goods_tab .inner ul li:nth-of-type(4) a:before{background-image: url(/content/mobile/images/common/ms04_ico08.png);}
+.goods_product .goods_tab .inner ul li:nth-of-type(5) a:before{background-image: url(/content/mobile/images/common/ms04_ico07.png);}
+.goods_product .goods_tab .inner ul li:nth-of-type(+) a:before{background-image: url(/content/mobile/images/common/ms04_ico11.png);}
 
 
 .goods_product .goods_list {padding:0 20px; display: block !important;}

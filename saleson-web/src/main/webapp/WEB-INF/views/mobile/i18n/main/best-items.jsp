@@ -60,6 +60,7 @@
 <script>
 	$(function() {
 	  $("p.price_pc").prepend("<a href='/m/products/view/G2000002353'><img src='/content/mobile/images/common/1_price.jpg'></a>");
+	  $("p.BRD").prepend("<a href='/m/products/view/G2000002374'><img src='/content/mobile/images/common/7_brand.jpg'></a>");
 	  $("p.needs_pc").prepend("<a href='/m/products/view/G2000002374'><img src='/content/mobile/images/common/2_use.jpg'></a>");
 	  $("p.laptop_aio_pc").prepend("<a href='/m/products/view/G2000002395'><img src='/content/mobile/images/common/3_laptop.jpg'></a>");
 	  $("p.MonitorAll").prepend("<a href='/m/products/view/G2000002456'><img src='/content/mobile/images/common/4_monitor.jpg'></a>");
@@ -74,6 +75,10 @@
 $(document).ready(function(){
 	$('#price_pc').click(function(){
 		var offset = $('.price_pc').offset();
+		$('html').animate({scrollTop : offset.top}, 400);
+	});
+	$('#BRD').click(function(){
+		var offset = $('.BRD').offset();
 		$('html').animate({scrollTop : offset.top}, 400);
 	});
 	$('#needs_pc').click(function(){
