@@ -12,6 +12,7 @@ import saleson.shop.order.support.OrderException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -63,7 +64,15 @@ public class ErpServiceImpl implements ErpService {
 		}
 
 		try {
-			erpMapper.saveOrderListGet(orderLines);
+			final AtomicInteger counter = new AtomicInteger(0);
+
+			List<List<OrderLine>> groupList = new ArrayList<>(orderLines.stream()
+					.collect(Collectors.groupingBy(i -> counter.getAndIncrement() / 20))
+					.values());
+
+			for (List<OrderLine> gl : groupList) {
+				erpMapper.saveOrderListGet(gl);
+			}
 		} catch (Exception e) {
 			log.error("[saveOrderListGet] erpMapper.saveOrderListGet(orderLines): {} ", e.getMessage(), e);
 		}
