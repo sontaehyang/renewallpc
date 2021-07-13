@@ -29,6 +29,8 @@
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
+				<li><a href="http://help.homenbiz.co.kr/customer/?C_CD=TXRLC-94243-HNQLI-28612" target="_blank">유지보수</a></li>
+
 			</ul><!--// gnb E-->
 		</div>
 	</div><!--// header E-->
@@ -65,10 +67,8 @@
 			</c:forEach>
 			
 			
-			<c:if test="${requestContext.user.loginId == 'opmanager' || requestContext.user.loginId == 'a0000' || requestContext.user.loginId == 'winx11'}">
-			<li><a href="http://help.homenbiz.co.kr/customer/?C_CD=2K16V-30403-7OXB7-90980" target="_blank">유지보수</a></li>
-			</c:if>
-			
+
+
 		</ul>
 	</div>
 	--%>
