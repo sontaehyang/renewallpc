@@ -133,6 +133,8 @@ public class UserDetail implements Serializable {
 	
 	private UserLevel userlevel;
 
+	private String priceTableView;
+
 	public UserDetail() {}
 	
 	public UserDetail(long userId, String phoneNumber, String post,
@@ -581,5 +583,13 @@ public class UserDetail implements Serializable {
 
 	public void setBackPhoneNumber(String backPhoneNumber) {
 		this.backPhoneNumber = backPhoneNumber;
+	}
+
+	public String getPriceTableView() {
+		return priceTableView;
+	}
+
+	public void setPriceTableView(String priceTableView) {
+		this.priceTableView = priceTableView;
 	}
 }

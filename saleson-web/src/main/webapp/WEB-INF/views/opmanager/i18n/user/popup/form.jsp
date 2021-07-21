@@ -48,6 +48,19 @@
 						</div>
 					</td>
 				</tr>
+
+				<tr>
+					<th scope="row">매입단가표 공개여부</th> <!-- 이메일 -->
+					<td class="tleft">
+						<div>
+							<select id="priceTableView" name="priceTableView" title="딜러회원용 매입단가표">
+								<option value="N" ${op:selected(user.userDetail.priceTableView, 'N')}>비공개</option>
+								<option value="Y" ${op:selected(user.userDetail.priceTableView, 'Y')}>공개</option>
+							</select>
+							<sub style="color:orangered">* 매입단가표는 딜러회원이면서 공개 일때만 메인화면에 노출됩니다.</sub>
+						</div>
+					</td>
+				</tr>
 				
 				<tr>
 					<th scope="row">회원 Level</th> <!-- 이메일 -->

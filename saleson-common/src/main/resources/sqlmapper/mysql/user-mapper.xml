@@ -68,6 +68,7 @@
 		
 		<result property="levelName" column="LEVEL_NAME" />
 		<result property="groupName" column="GROUP_NAME" />
+		<result property="priceTableView" column="PRICE_TABLE_VIEW" />
 		
 		<association property="userlevel" resultMap="saleson.shop.userlevel.UserLevelMapper.UserLevelResult"/>
 	</resultMap>
@@ -431,8 +432,8 @@
 	
 	</insert>
 	<insert id="insertUserDetail" parameterType="saleson.shop.user.domain.UserDetail">
-		INSERT INTO OP_USER_DETAIL (USER_ID, NEW_POST, POST, ADDRESS, ADDRESS_DETAIL, TEL_NUMBER, PHONE_NUMBER, FAX_NUMBER, RECEIVE_EMAIL, RECEIVE_SMS, RECEIVE_PUSH, GENDER, AGE, POINT, BUY_COUNT, BUY_PRICE, LEAVE_REASON, SITE_FLAG, LEVEL_ID, USE_FLAG, BIRTHDAY_TYPE, BIRTHDAY)
-		VALUES (#{userId}, #{newPost}, #{fullPost}, #{address}, #{addressDetail}, #{fullTelNumber}, #{fullPhoneNumber}, #{fullFaxNumber}, #{receiveEmail}, #{receiveSms}, #{receivePush}, #{gender}, #{age}, #{point}, #{buyCount}, #{buyPrice}, #{leaveReason}, #{siteFlag}, #{levelId}, #{useFlag}, #{birthdayType}, #{fullBirthday})
+		INSERT INTO OP_USER_DETAIL (USER_ID, NEW_POST, POST, ADDRESS, ADDRESS_DETAIL, TEL_NUMBER, PHONE_NUMBER, FAX_NUMBER, RECEIVE_EMAIL, RECEIVE_SMS, RECEIVE_PUSH, GENDER, AGE, POINT, BUY_COUNT, BUY_PRICE, LEAVE_REASON, SITE_FLAG, LEVEL_ID, USE_FLAG, BIRTHDAY_TYPE, BIRTHDAY, PRICE_TABLE_VIEW)
+		VALUES (#{userId}, #{newPost}, #{fullPost}, #{address}, #{addressDetail}, #{fullTelNumber}, #{fullPhoneNumber}, #{fullFaxNumber}, #{receiveEmail}, #{receiveSms}, #{receivePush}, #{gender}, #{age}, #{point}, #{buyCount}, #{buyPrice}, #{leaveReason}, #{siteFlag}, #{levelId}, #{useFlag}, #{birthdayType}, #{fullBirthday}, #{priceTableView})
 	</insert>
 	
 	<update id="updateUserDetail" parameterType="saleson.shop.user.domain.UserDetail">
@@ -503,6 +504,9 @@
 				</if>
 				<if test="fullBirthday != null and fullBirthday != ''">
 					BIRTHDAY = #{fullBirthday},
+				</if>
+				<if test="priceTableView != null and priceTableView != ''">
+					PRICE_TABLE_VIEW = #{priceTableView},
 				</if>
 			</set>
 		WHERE USER_ID = #{userId}
