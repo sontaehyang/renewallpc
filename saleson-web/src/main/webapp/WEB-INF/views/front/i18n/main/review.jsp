@@ -37,23 +37,37 @@
                 </c:forEach>
             </ul><!--// mreview_list -->
             <button type="button" id="review_more" class="btn_mreview_more">더보기</button>
+            <button type="button" id="review_close" class="btn_mreview_close">닫기</button>
         </div><!--// inner -->
     </section><!--// msec06 -->
 </c:if>
 
 <script>
     $(document).ready(function (){
+        $('#review_close').hide();
         $('.review_list').hide();
-        // var review_count = $('.review_list').length;
+        showItemInit();
+    });
+
+
+    $('#review_more').click(function(){
+        $('.review_list').show();
+        $('#review_close').show();
+        $('#review_more').hide();
+    });
+
+    $('#review_close').click(function(){
+        $('#review_more').show();
+        $('#review_close').hide();
+        $('.review_list').hide();
+        showItemInit();
+    });
+
+    function showItemInit (){
         // 최초 4개만 보이게 설정
         var review_count = 4;
         for( i=0; i < review_count; i++ ) {
             $('.'+ i ).show();
         }
-    });
-
-    $('#review_more').click(function(){
-        $('.review_list').show();
-        $('#review_more').hide();
-    });
+    }
 </script>
