@@ -11,7 +11,7 @@
 <%@ taglib prefix="shop" 	uri="/WEB-INF/tlds/shop" %>
 
 <c:if test="${!empty reviewList}">
-    <section class="msec06">
+    <section class="msec06" id="msec06">
         <div class="inner">
             <p class="sec_tit">고객님들의 솔직한 리뷰</p>
             <ul class="mreview_list">
@@ -37,7 +37,7 @@
                 </c:forEach>
             </ul><!--// mreview_list -->
             <button type="button" id="review_more" class="btn_mreview_more">더보기</button>
-            <button type="button" id="review_close" class="btn_mreview_close">닫기</button>
+            <a href="#msec06"><button type="button" id="review_close" class="btn_mreview_close">닫기</button></a>
         </div><!--// inner -->
     </section><!--// msec06 -->
 </c:if>
@@ -69,5 +69,6 @@
         for( i=0; i < review_count; i++ ) {
             $('.'+ i ).show();
         }
+
     }
 </script>
