@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import saleson.common.Const;
 import saleson.common.utils.ShopUtils;
 import saleson.common.utils.UserUtils;
+import saleson.shop.chart.ChartService;
+import saleson.shop.chart.domain.Chart;
+import saleson.shop.chart.support.ChartParam;
 import saleson.shop.coupon.CouponService;
 import saleson.shop.coupon.domain.CouponOffline;
 import saleson.shop.coupon.domain.CouponUser;
@@ -55,6 +58,7 @@ import saleson.shop.wishlist.support.WishlistParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,6 +95,9 @@ public class MypageMobileController {
 	//LCH-MypageMobileController  마이페이지 <추가>
 	@Autowired
 	private UserLevelService userLevelService;
+
+	@Autowired
+	private ChartService chartService;
 
 	//LCH-MypageMobileController  마이페이지 <수정>
 
@@ -1160,6 +1167,83 @@ public class MypageMobileController {
 		
 		
 	}
-	
+
+
+
+	/**
+	 * 매입단가표
+	 * @param
+	 * @return
+	 */
+	@GetMapping("/chart")
+	public String chart(Model model, Chart chart, @RequestParam(value="searchName", required = false) String searchName ) {
+		ChartParam chartParam = new ChartParam();
+		List<Chart> chartCategory1, chartCategory2, chartCategory3 = null;
+
+		if(searchName != null){
+			chartParam.setItemName(searchName);
+		} else {
+			chartParam.setItemLevel1(chart.getItemLevel1());
+			chartParam.setItemLevel2(chart.getItemLevel2());
+			chartParam.setItemLevel3(chart.getItemLevel3());
+
+			if (chartParam.getItemLevel1() == null && chartParam.getItemLevel2() == null && chartParam.getItemLevel3() == null && chartParam.getItemName() == null) {
+				chartParam.setItemLevel1("50000");
+				chartParam.setItemLevel2("50100");
+
+				chartCategory2 = chartService.getChartCategory2(chartParam.getItemLevel1());
+				chartCategory3 = chartService.getChartCategory3(chartParam.getItemLevel2());
+				model.addAttribute("itemLevel1", chartParam.getItemLevel1());
+				model.addAttribute("itemLevel2", chartParam.getItemLevel2());
+				model.addAttribute("chartCategory2", chartCategory2);
+				model.addAttribute("chartCategory3", chartCategory3);
+			} else {
+				// 월드와이드 메모리와 ERP DB 데이터가 상이해서 HDD/SSD 전용 로직 생성 추후 분리 되면 제거
+				if (chartParam.getItemLevel1() != null && (chartParam.getItemLevel1().equals("56000") || chartParam.getItemLevel1().equals("58000"))) {
+					if (chartParam.getItemLevel1().equals("58000")) {
+						chartParam.setItemLevel1_2("56000");
+					} else {
+						chartParam.setItemLevel1_2("58000");
+					}
+
+					List<Chart> categoryInfo = chartService.getCategoryInfo(chartParam);
+					HashMap categoryMap = new HashMap();
+					categoryMap.put("itemLevel1", chartParam.getItemLevel1());
+					categoryMap.put("itemLevel1_2", chartParam.getItemLevel1_2());
+					chartCategory1 = chartService.getChartCategory1(categoryMap);
+
+					if (chartParam.getItemLevel1().equals("58000")) {
+						model.addAttribute("itemLevel1", "58000");
+						model.addAttribute("itemLevel2", "58000");
+					} else {
+						model.addAttribute("itemLevel1", "56000");
+						model.addAttribute("itemLevel2", "56000");
+					}
+
+					chartCategory2 = chartService.getChartCategory2(chartParam.getItemLevel1());
+					model.addAttribute("HDD_SSDCategory1", chartCategory1);
+					model.addAttribute("HDD_SSDCategory2", chartCategory2);
+
+				}else {
+					List<Chart> categoryInfo = chartService.getCategoryInfo(chartParam);
+					chartParam.setItemLevel1(categoryInfo.get(0).getItemLevel1());
+					chartParam.setItemLevel2(categoryInfo.get(0).getItemLevel2());
+
+					chartCategory2 = chartService.getChartCategory2(chartParam.getItemLevel1());
+					chartCategory3 = chartService.getChartCategory3(chartParam.getItemLevel2());
+					model.addAttribute("itemLevel1", chartParam.getItemLevel1());
+					model.addAttribute("itemLevel2", chartParam.getItemLevel2());
+					model.addAttribute("itemLevel3", chart.getItemLevel3());
+					model.addAttribute("chartCategory2", chartCategory2);
+					model.addAttribute("chartCategory3", chartCategory3);
+				}
+			}
+		}
+
+		List<Chart> chartList = chartService.getChartItemList(chartParam);
+		model.addAttribute("chartList", chartList);
+
+		return ViewUtils.view();
+	}
 	
 }

@@ -13,7 +13,14 @@
 			<a href="/" class="on">SHOP</a>
 			<a href="#">COMPANY</a>
 		</div><!--// hdt_menu -->
-	
+		<div class="hdt_ico_menu">
+			<a href="/pages/dealer_shop" class="hdt_ds">딜러샵</a>
+			<sec:authorize access="hasRole('ROLE_USER')">
+				<c:if test="${requestContext.user.userDetail.groupCode == 'DEALER' && requestContext.user.userDetail.priceTableView == 'Y'}">
+					<a href="/mypage/chart" class="hdt_ct">매입단가표</a>
+				</c:if>
+			</sec:authorize>
+		</div>
 		<!--  로그인시 class:on 삭제시 장바구니 개수 가려짐 -->
 		<ul class="util_menu on"> 
 			<sec:authorize access="hasRole('ROLE_USER')">
@@ -66,7 +73,7 @@
 
 		<div class="hd_ico_menu">
 			<a href="/event/spot" class="ico_ts">월간특가</a>
-			<a href="/pages/dealer_shop" class="ico_ds">딜러샵</a>
+
 		</div><!--// hd_ico_menu -->
 	</div><!--// inner -->
 </div><!--// hd_btm -->

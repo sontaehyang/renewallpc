@@ -4,6 +4,18 @@
 
 $(document).ready(function(){
 
+	// 매입단가표 탭 - 210720
+	$('.sort-product a').on('click', function(e){
+		e.preventDefault();
+		$('.sort-product a').removeClass('active');
+		$(this).addClass('active')
+	});
+	$('.sort-category li').on('click', function(e){
+		e.preventDefault();
+		$('.sort-category li').removeClass('active');
+		$(this).addClass('active')
+	});
+
 	// 푸터 게시판 탭 - 201112
 	$('.ft_bd_nav > a').on("click", function(e){
 		e.preventDefault();

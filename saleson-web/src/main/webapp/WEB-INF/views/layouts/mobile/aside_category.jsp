@@ -71,6 +71,9 @@
 				<li class="none"><a href="/m/event">이벤트</a></li>
 				<li><a href="/m/notice/list">고객센터</a></li>
 				<li class="none"><a href="/m/faq">FAQ</a></li>
+				<c:if test="${requestContext.user.userDetail.groupCode == 'DEALER' && requestContext.user.userDetail.priceTableView == 'Y'}">
+					<li><a href="/m/mypage/chart">매입단가표</a></li>
+				</c:if>
 			</ul>
 		</div>
 	</div><!-- //service -->

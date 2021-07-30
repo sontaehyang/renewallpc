@@ -316,3 +316,204 @@
 .g_number .tit {margin:15px 0 20px;font-size: 24px;}
 .g_number .coupon_input{max-width:250px;height:40px;}
 .g_number .btn_large {margin: 30px 0 ; display:inline-block; background: #ff7101; min-width:130px;  height:50px; padding:0 50px; font-size:18px; line-height:50px; color:#fff; text-align:center; box-sizing:border-box;}
+
+
+/*210721 매입단가표 추가*/
+.sort-product {
+    position: relative;
+    padding: 20px 25px 15px;
+}
+.sort-product .swiper-slide {
+    text-align: center;
+}
+
+.sort-product .swiper-slide:before{
+    content: '';
+    display: block;
+    width: 59px;
+    height: 59px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background-color: #666;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.sort-product .swiper-slide.active:before {
+    background-color: #01a3de ;
+}
+.sort-product .swiper-slide.ico01:before {
+    background-image: url(/content/mobile/images/common/mackbook_ico_tit.png);
+    background-size: 34px auto;
+}
+.sort-product .swiper-slide.ico02:before {
+    background-image: url(/content/mobile/images/common/cpu_ico.png);
+    background-size: 34px auto;
+}
+.sort-product .swiper-slide.ico03:before {
+    background-image: url(/content/mobile/images/common/ram_ico.png);
+    background-size: 34px auto;
+}
+.sort-product .swiper-slide.ico04:before {
+    background-image: url(/content/mobile/images/common/hdd_ico.png);
+    background-size: 34px auto;
+}
+.sort-product .swiper-slide.ico05:before {
+    background-image: url(/content/mobile/images/common/vga_ico.png);
+    background-size: 34px auto;
+}
+.sort-product .swiper-slide.ico06:before {
+    background-image: url(/content/mobile/images/common/board_ico.png);
+    background-size: 34px auto;
+}
+.sort-product .swiper-slide.ico07:before {
+    background-image: url(/content/mobile/images/common/lcd_ico.png);
+    background-size: 34px auto;
+}
+.swiper-button-prev, .swiper-button-next {
+    margin-top: -15px;
+}
+.sort-product .swiper-button-prev {
+    left: 5px;
+    width: 26px;
+    height: 44px;
+    background-image: url(/content/mobile/images/common/unit_left.png);
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: 10px 15px;;
+}
+.sort-product .swiper-button-next {
+    right:5px;
+    width: 26px;
+    height: 44px;
+    background-image: url(/content/mobile/images/common/unit_right.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: 10px 15px;;
+}
+
+
+.relation-box {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    width: 100%;
+    font-size: 0;
+    padding: 10px 20px;
+    margin: 0;
+    border-top: 1px solid #d0d0d0;
+    background: #f6f6f6;
+}
+.relation-box a {
+    width: calc(100%/5 - 4px);
+    background: #fff;
+    border: 1px solid #d0d0d0;
+    margin-top: 4px;
+    color: #666;
+    font-size: 11px;
+    margin-right: 5px;
+    display: inline-block;
+    border-radius: 3px;
+    height: 30px;
+    text-align: center;
+    line-height: 28px;
+}
+.relation-box a:nth-child(5n) {
+    margin-right: 0;
+}
+.relation-box a.active {
+    background: #01a3de;
+    color: #fff;
+    border: none;
+}
+.item-wrap {
+    padding: 5px 18px;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    margin-top: -1px;
+    border-top: 1px solid #d0d0d0;
+}
+.item-wrap .item-box {
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+}
+.item-wrap .item-box a {
+    display: inline-block;
+    margin: 2px 1px;
+    border: 1px solid #e0e0e0;
+    padding: 0 7px;
+    line-height: 23px;
+    height: 25px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    border-radius: 3px;
+    vertical-align: top;
+}
+.item-wrap .item-box a.active {
+    background: #e9f9ff;
+    border: 1px solid #01a3de;
+}
+
+.purchase {
+    padding: 0 20px;
+    border-bottom: 1px solid #ccc;
+}
+.purchase ul li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #bcbcbc
+}
+.purchase ul li:last-child {
+    border-bottom: 0 none;
+}
+.purchase ul li span {
+    font-size: 13px;
+}
+.purchase ul li .txt {
+    width: 70%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #000;
+}
+.purchase ul li .price {
+    width: 30%;
+    text-align: right;
+    color: #01a3de;
+    padding-right: 5px;
+}
+
+.search-wrap {
+    display: flex;
+    padding: 10px 20px;
+}
+.search-wrap select {
+    width: 30%;
+    height: 32px;
+    background-color: #fff;
+    padding: 0 10px 0 5px;
+    font-weight: 400;
+    color: #888;
+    border-right: 0 none;
+}
+.search-wrap input {
+    width: 65%;
+    font-size: 14px;
+    background: #fff;
+    color: #888;
+    font-weight: 400;
+    height: 32px;
+}
+.search-wrap button {
+    width: 32px;
+    height: 32px;
+    font-size: 0;
+    background: url(/content/mobile/images/common/btn_search_blue.png) no-repeat center center;
+    background-size: 32px auto;
+}
+.search-wrap select,
+.search-wrap input,
+.search-wrap button {
+    border-radius: 0;
+}

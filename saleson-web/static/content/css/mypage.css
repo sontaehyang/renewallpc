@@ -232,3 +232,162 @@
 .easy_login .login_list li .btn_release{color:#4d4d4d; background:#f7f7f7; border:1px solid #d1d1d1; }
 .easy_login .login_list li .btn_connect{color:#fff; background:#ff7101; }
 
+
+/*210719 매입단가표 추가*/
+
+.sort-category {
+	display: flex;
+	flex-wrap: wrap;
+}
+.sort-category li {
+	width: calc(100%/7);
+	text-align: center;
+	padding: 20px;
+}
+.sort-category li:hover span{
+	color: #36a3e0;
+}
+.sort-category li img {
+	width: 100px;
+	height: 100px;
+}
+.sort-category li span {
+	display: block;
+	color: #666;
+	font-weight: bold;
+	font-size: 16px;
+	margin-top: 5px;
+	transition: color 0.3s;
+}
+.sort-category li.active span{
+	color: #36a3e0;
+}
+
+
+
+.sort-product {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: left;
+	font-size: 0;
+}
+
+.sort-product a{
+	border: solid #ccc;
+	border-width: 1px 0 1px 1px;
+	width: calc(100%/5);
+	font-size: 14px;
+	height: 44px;
+	line-height: 44px;
+	text-align: center;
+	font-weight: bold;
+	color: #333;
+	background: #f3f3f3;
+	text-decoration: none;
+}
+.sort-product a:nth-child(5n),
+.sort-product a:last-child {
+	border-right: 1px solid #ccc;
+}
+.sort-product.ty02 a{
+	border-top: 0;
+}
+
+.sort-product a.active {
+	color: #36a3e0;
+	border-color: #36a3e0;
+	background: #fff;
+}
+.sort-product a.active+a {
+	border-left:1px solid #36a3e0;
+}
+.product-list {
+	/*display: flex;*/
+	flex-wrap: wrap;
+	padding: 20px
+}
+.product-list span  {
+	min-width: 60px;
+	margin-right: 6px;
+	font-weight: 600;
+}
+
+.product-list span:first-child:before {
+	content: none;
+}
+
+.product-list span:before {
+	content: '';
+	display: inline-block;
+	width: 1px;
+	height: 10px;
+	margin-top: -2px;
+	margin-right: 4px;
+	background: #666;
+	vertical-align: middle;
+}
+.price-table-wrap {
+	margin: 20px 0;
+}
+.price-table-wrap th {
+	background-color: #f3f3f3;
+	padding: 7px;
+	font-size: 14px;
+	border-top: 2px solid #999;
+	border-bottom: 1px solid #999;
+	color: #333;
+	font-weight: 500;
+}
+.price-table-wrap table{
+	table-layout: fixed;
+}
+.price-table-wrap tr.table-even td{
+	background: #fff;
+}
+.price-table-wrap tr.table-odd td {
+	background:#f3f8fc ;
+}
+.price-table-wrap tr td {
+	padding: 5px;
+	border-bottom: 1px solid #999;
+}
+.price-table-wrap tr:last-child td {
+	border-bottom: 2px solid #999;
+}
+.price-table-wrap td.txt {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap
+}
+.price-table-wrap td.ta-center {
+	text-align: center;
+	font-weight: 600;
+}
+.price-table-wrap td.ta-center span{
+	margin: 0 3px;
+}
+.price-table-wrap td.ta-right {
+	text-align: right;
+	font-weight: 500;
+	padding: 5px 15px 5px 5px;
+}
+.search-wrap {
+	display: flex;
+	justify-content: center;
+}
+.search-wrap select {
+	width: 80px;
+	height: 30px;
+	margin-right: 10px;
+}
+.search-wrap input {
+	width: 120px;
+	margin-right: 10px;
+}
+.search-wrap button {
+	width: 60px;
+	border: 1px solid #ddd;
+	color: #555;
+	padding: 3px 7px;
+	background: #efefef;
+}

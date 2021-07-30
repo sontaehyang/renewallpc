@@ -5,6 +5,19 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="saleson.erp.domain.ErpMapper">
+    <resultMap id="ChartResult" type="saleson.shop.chart.domain.Chart">
+        <result property="itemLevel1" column="ITEM_LEVEL1" />
+        <result property="levelName1" column="LEVEL_NAME1" />
+        <result property="itemLevel2" column="ITEM_LEVEL2" />
+        <result property="levelName2" column="LEVEL_NAME2" />
+        <result property="itemLevel3" column="ITEM_LEVEL3" />
+        <result property="levelName3" column="LEVEL_NAME3" />
+        <result property="itemCode" column="ITEM_CODE" />
+        <result property="itemName" column="ITEM_NAME" />
+        <result property="spec" column="SPEC" />
+        <result property="itemP" column="ITEM_P" />
+    </resultMap>
+
 
 	<select id="test" resultType="long">
 		SELECT 1
@@ -227,4 +240,83 @@
     </select>
 
 
+    <select id="getChartItemList" parameterType="saleson.shop.chart.support.ChartParam" resultMap="ChartResult">
+        SELECT
+            ITEM_LEVEL1
+             , LEVEL_NAME1
+             , ITEM_LEVEL2
+             , LEVEL_NAME2
+             , ITEM_LEVEL3
+             , LEVEL_NAME3
+             , ITEM_CODE
+             , ITEM_NAME
+             , SPEC
+             , ITEM_P
+
+        FROM UNILITE.SHOP_PURCH_PRICE_V
+        where 1=1
+        <if test="itemLevel1 != null and itemLevel1 != ''">
+            AND ITEM_LEVEL1 = #{itemLevel1}
+        </if>
+        <if test="itemLevel2 != null and itemLevel2 != ''">
+            AND ITEM_LEVEL2 = #{itemLevel2}
+        </if>
+        <if test="itemLevel3 != null and itemLevel3 != ''">
+            AND ITEM_LEVEL3 = #{itemLevel3}
+        </if>
+        <if test="itemName != null and itemName != ''">
+            AND ITEM_NAME LIKE CONCAT('%', #{itemName}, '%')
+        </if>
+    </select>
+
+    <select id="getChartCategory1" parameterType="hashmap" resultMap="ChartResult">
+        SELECT
+            DISTINCT ITEM_LEVEL1
+                   , LEVEL_NAME1
+        FROM UNILITE.SHOP_PURCH_PRICE_V
+        WHERE ITEM_LEVEL1 IN ( #{itemLevel1},  #{itemLevel1_2})
+    </select>
+
+    <select id="getChartCategory2" parameterType="String" resultMap="ChartResult">
+        SELECT
+        DISTINCT ITEM_LEVEL2
+            , LEVEL_NAME2
+        FROM UNILITE.SHOP_PURCH_PRICE_V
+        WHERE ITEM_LEVEL1 = #{value}
+    </select>
+
+    <select id="getChartCategory3" parameterType="String" resultMap="ChartResult">
+        SELECT
+        DISTINCT ITEM_LEVEL3
+            , LEVEL_NAME3
+        FROM UNILITE.SHOP_PURCH_PRICE_V
+        WHERE ITEM_LEVEL2 = #{value}
+        ORDER BY ITEM_LEVEL3 DESC
+    </select>
+
+    <select id="getCategoryInfo" parameterType="saleson.shop.chart.support.ChartParam" resultMap="ChartResult">
+        SELECT
+        DISTINCT ITEM_LEVEL1
+        , LEVEL_NAME1
+        , ITEM_LEVEL2
+        , LEVEL_NAME2
+        FROM UNILITE.SHOP_PURCH_PRICE_V
+        where 1=1
+        <if test="itemLevel1 != null and itemLevel1 != ''">
+            <choose>
+                <when test="itemLevel1_2 != null and itemLevel1_2 != ''">
+                    AND ITEM_LEVEL1 IN (#{itemLevel1}, #{itemLevel1_2})
+                </when>
+                <otherwise>
+                    AND ITEM_LEVEL1 = #{itemLevel1}
+                </otherwise>
+            </choose>
+        </if>
+        <if test="itemLevel2 != null and itemLevel2 != ''">
+            AND ITEM_LEVEL2 = #{itemLevel2}
+        </if>
+        <if test="itemLevel3 != null and itemLevel3 != ''">
+            AND ITEM_LEVEL3 = #{itemLevel3}
+        </if>
+    </select>
 </mapper>

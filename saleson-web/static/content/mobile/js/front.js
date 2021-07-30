@@ -86,7 +86,7 @@ $(function(){
 
 
 
-$(function(){
+$(document).ready(function(){
 	// 상단여백 초기세팅
 	var hd_H = $("#header_wrap").innerHeight();
 	$("#wrap").css("padding-top", hd_H);
@@ -144,8 +144,15 @@ $(function(){
 	if($('.pop_filter').size() !=0){
 		mFilter(); //셀렉트 탭메뉴
 	}
+
+	if($('.sort-product').size() !=0){
+		chartSlide();
+	}
 	// comment(); //댓글
 	/*combostar(); //별점 주기*/
+
+	// 매입단가표 탭
+	chartTab();
 });
 
 function setupClassFn(){
@@ -201,6 +208,24 @@ function OpenMainLayer(popupName) {
 	$(".main-overlay").stop().fadeIn(400);
 	$("html, body").css("overflow-y", "hidden");
 }
+// 매입단가표 탭 - 210720
+function chartTab () {
+	$('.chart-slide .swiper-slide').on('click', function(e){
+		e.preventDefault();
+		$('.chart-slide .swiper-slide').removeClass('active');
+		$(this).addClass('active')
+	})
+	$('.relation-box a').on('click', function(e){
+		e.preventDefault();
+		$('.relation-box a').removeClass('active');
+		$(this).addClass('active')
+	});
+	$('.item-box a').on('click', function(e){
+		e.preventDefault();
+		$('.item-box a').removeClass('active');
+		$(this).addClass('active')
+	});
+}
 
 function setMainVisual() {
 	// 메인 비주얼
@@ -244,6 +269,18 @@ function setMainEventSlider() {
 			delay: 3000,
 			disableOnInteraction: false,
 		}
+	});
+}
+
+function chartSlide() {
+	var chart_slide = new Swiper('.chart-slide', {
+		slidesPerView: 4,
+		slidesPerGroup: 4,
+		loop: true,
+		navigation: {
+			nextEl: '.swiper-button-next',
+			prevEl: '.swiper-button-prev',
+		},
 	});
 }
 

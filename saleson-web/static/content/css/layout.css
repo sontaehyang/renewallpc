@@ -88,15 +88,15 @@
 .hd_feature {float:left;margin-left:12px;font-size:0;}
 .hd_feature > a {display:inline-block;padding:0 18px;font-size:16px;font-weight:500;color:#1f1f1f;line-height:54px;vertical-align:top;transition:color 0.4s;}
 .hd_feature > a:hover, .hd_feature > a:focus {color:#ff7101;}
-.hd_ico_menu {float:right;margin-right:15px;font-size:0;}
+.hd_ico_menu {float:right;margin-right:-15px;font-size:0;}
 .hd_ico_menu > a {display:inline-block;padding:0 15px;font-family:'S-CoreDream-5Medium';font-size:16px;color:#000;text-align:center;line-height:54px;vertical-align:top;transition:color 0.4s;}
 .hd_ico_menu > a:before {content:"";display:inline-block;width:25px;height:54px;vertical-align:top;}
 .hd_ico_menu > a.ico_ts:before {margin-right:5px;background:url(../images/common/hd_btm_ico01.png) no-repeat center 15px;}
-.hd_ico_menu > a.ico_ds:before {background:url(../images/common/hd_btm_ico02.png) no-repeat center center;}
+/*.hd_ico_menu > a.ico_ds:before {background:url(../images/common/hd_btm_ico02.png) no-repeat center center;}*/
 .hd_ico_menu > a.ico_ts:hover, .hd_ico_menu > a.ico_ts:focus {color:#eb2940;}
 .hd_ico_menu > a.ico_ts:hover:before, .hd_ico_menu > a.ico_ts:focus:before {background:url(../images/common/hd_btm_ico01_ov.png) no-repeat center 15px;animation:hdB_ico01 0.2s ease-in-out forwards;}
-.hd_ico_menu > a.ico_ds:hover, .hd_ico_menu > a.ico_ds:focus {color:#8968c5;}
-.hd_ico_menu > a.ico_ds:hover:before, .hd_ico_menu > a.ico_ds:focus:before {background:url(../images/common/hd_btm_ico02_ov.png) no-repeat center center;animation:hdB_ico02 0.4s ease-in-out forwards;}
+/*.hd_ico_menu > a.ico_ds:hover, .hd_ico_menu > a.ico_ds:focus {color:#8968c5;}*/
+/*.hd_ico_menu > a.ico_ds:hover:before, .hd_ico_menu > a.ico_ds:focus:before {background:url(../images/common/hd_btm_ico02_ov.png) no-repeat center center;animation:hdB_ico02 0.4s ease-in-out forwards;}*/
 @keyframes hdB_ico01 {
     0% {transform:rotate(0deg);}
     10% {transform:rotate(-45deg);}
@@ -381,4 +381,54 @@
 }
 .gnbs .menu ul>li>ul>li>a:hover {color:#ff7101; text-decoration:underline; }
 .gnbs .menu01{width:388px;}
-.gnbs .menu01>li{width:50%;}   
+.gnbs .menu01>li{width:50%;}
+
+/*210719 매입단가표 추가*/
+
+.hdt_ico_menu {
+    float: left;
+    margin-left: 10px;
+}
+
+.hdt_ico_menu a {
+    display: inline-block;
+    padding: 0 10px;
+    font-family: 'S-CoreDream-4Regular';
+    font-size: 13px;
+    color: #000;
+    text-align: center;
+    line-height: 39px;
+    font-weight: 100;
+    vertical-align: top;
+    transition: all 0.4s;
+}
+.hdt_ico_menu a:before {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 39px;
+    vertical-align: top;
+    transition: all 0.4s,background 0.4s;
+}
+.hdt_ico_menu a.hdt_ct:before {
+    background: url(/content/images/common/hd_chart.png) no-repeat left center;
+    background-size: 25px auto;
+}
+.hdt_ico_menu a.hdt_ct:hover {
+    color: #003FD4 ;
+}
+.hdt_ico_menu a.hdt_ct:hover:before {
+    background: url(/content/images/common/hd_chart_ov.png) no-repeat left center;
+    background-size: 25px auto;
+}
+
+.hdt_ico_menu > a.hdt_ds:before {
+    background:url(../images/common/hd_btm_ico02.png) no-repeat center center;
+}
+.hdt_ico_menu > a.hdt_ds:hover, .hdt_ico_menu > a.hdt_ds:focus {
+    color:#8968c5;
+}
+.hdt_ico_menu > a.hdt_ds:hover:before, .hdt_ico_menu > a.hdt_ds:focus:before {
+    background:url(../images/common/hd_btm_ico02_ov.png) no-repeat center center;
+    /* animation:hdB_ico02 0.4s ease-in-out forwards; */
+}
