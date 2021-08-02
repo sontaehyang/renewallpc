@@ -861,8 +861,8 @@ public class MypageController {
 		model.addAttribute("qnaList", qnaService.getQnaListByParam(qnaParam));
 		return ViewUtils.view();
 	}*/
-	
-	
+
+	// 기간별 조회 버튼 Active
 	// 기간별 조회 버튼 Active
 	public void setSearchDate(Model model, String startDate, String endDate) {
 		String today = DateUtils.getToday(Const.DATE_FORMAT);
