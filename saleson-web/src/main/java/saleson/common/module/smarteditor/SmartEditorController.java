@@ -245,7 +245,7 @@ public class SmartEditorController {
 		
 		// 컨텐츠에 이미지 변환 
 		for (HashMap<String, String> fileInfo : uploadImages) {
-			ctpContent = ctpContent.replaceAll("./" + fileInfo.get("originalFilename"), "/upload/ctp/" + ctpFilename + "_" + uniqueFolderName + "/" + fileInfo.get("newFilename"));
+			ctpContent = ctpContent.replace("./" + fileInfo.get("originalFilename"), "/upload/ctp/" + ctpFilename + "_" + uniqueFolderName + "/" + fileInfo.get("newFilename"));
 		}
 	
 		// body 안의 내용만 가져온다. <body> ~ </body>
