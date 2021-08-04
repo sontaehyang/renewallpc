@@ -14,9 +14,18 @@
 			<a href="#">COMPANY</a>
 		</div><!--// hdt_menu -->
 		<div class="hdt_ico_menu">
-			<a href="/pages/dealer_shop" class="hdt_ds">딜러샵</a>
+			<c:if test="${requestContext.user.userDetail.groupCode == 'DEALER1' }">
+				<a href="/pages/dealer_shop1" class="hdt_ds">딜러샵</a>
+			</c:if>
+			<c:if test="${requestContext.user.userDetail.groupCode == 'DEALER2' }">
+				<a href="/pages/dealer_shop2" class="hdt_ds">딜러샵</a>
+			</c:if>
+			<c:if test="${requestContext.user.userDetail.groupCode == 'DEALER3' }">
+				<a href="/pages/dealer_shop3" class="hdt_ds">딜러샵</a>
+			</c:if>
 			<sec:authorize access="hasRole('ROLE_USER')">
-				<c:if test="${requestContext.user.userDetail.groupCode == 'DEALER' && requestContext.user.userDetail.priceTableView == 'Y'}">
+				<c:if test="${(requestContext.user.userDetail.groupCode == 'DEALER1' || requestContext.user.userDetail.groupCode == 'DEALER2' || requestContext.user.userDetail.groupCode == 'DEALER3' )
+								&& requestContext.user.userDetail.priceTableView == 'Y'}">
 					<a href="/mypage/chart" class="hdt_ct">매입단가표</a>
 				</c:if>
 			</sec:authorize>
