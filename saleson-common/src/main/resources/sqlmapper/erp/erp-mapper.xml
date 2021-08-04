@@ -252,7 +252,6 @@
              , ITEM_NAME
              , SPEC
              , ITEM_P
-
         FROM UNILITE.SHOP_PURCH_PRICE_V
         where 1=1
         <if test="itemLevel1 != null and itemLevel1 != ''">
@@ -267,6 +266,7 @@
         <if test="itemName != null and itemName != ''">
             AND ITEM_NAME LIKE CONCAT('%', #{itemName}, '%')
         </if>
+        ORDER BY ITEM_P DESC
     </select>
 
     <select id="getChartCategory1" parameterType="hashmap" resultMap="ChartResult">
