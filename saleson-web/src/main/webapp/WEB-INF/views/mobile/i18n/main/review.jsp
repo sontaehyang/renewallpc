@@ -17,9 +17,8 @@
         </div>
         <div class="review_section_list">
             <div class="review_slider">
-                <div class="swiper-wrapper">
                     <c:forEach items="${reviewList}" var="review">
-                        <div class="swiper-slide">
+                        <div class="review_box">
                             <a href="${review.item.link}" class="review_img">
                                 <div class="img"><img src="${shop:loadImageBySrc(review.item.imageSrc, 'XS')}" alt="${review.item.itemName}"></div>
                                 <button type="button">상품보기</button>
@@ -37,7 +36,6 @@
                             </div><!--// review_info -->
                         </div>
                     </c:forEach>
-                </div>
             </div><!--// review_slider -->
         </div><!--// review_section_list -->
     </div><!--// review_section -->

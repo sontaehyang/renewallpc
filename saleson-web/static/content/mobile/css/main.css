@@ -694,33 +694,41 @@
 .cash_event .cash_event_wrap .row_bnn .right{float: right;margin-right: 0;}
 .cash_event .cash_event_wrap .row_bnn .right .right_t{margin-bottom: 12px;}
 
-/* 솔직한리뷰 */
+/* 솔직한리뷰  210722 수정*/
 .review_section {padding: 10px 0 28px; background-color: #f3f3f3;}
 .review_section .review_section_list {overflow-x: hidden; padding: 0 20px;}
-.review_slider { width: 100%;height: 100%;}
-.review_slider .swiper-slide {
+.review_slider {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.review_slider .review_box {
     padding: 8px;
-    margin-left: -5px;
+    margin-right: 10px;
     display: flex;
     width: 79%;
     border: solid 1px #d0d0d0;
     background-color: #ffffff;
 }
-.review_section .review_slider .swiper-slide a{
-    margin-right: 10px;}
-.review_section .review_slider .swiper-slide .img{
+.review_section .review_slider .review_box a{
+    margin-right: 10px;
+}
+.review_section .review_slider .review_box .img{
     width: 86px;
     height: 86px;
     margin-bottom: 4px;
 }
-.review_section .review_slider .swiper-slide button{
+.review_section .review_slider .review_box button{
     width: 100%;
     border: solid 1px #e8e8e8;
     font-size: 9px;
     color: #1f0000;
     padding: 5px 0;
 }
-.review_section .review_slider .swiper-slide .review_info .rating{
+.review_section .review_slider .review_box .review_info {
+    width: 170px;
+}
+.review_section .review_slider .review_box .review_info .rating{
     margin-bottom: 10px;
     position: relative;
     width: 58px;
@@ -728,15 +736,16 @@
     background:url(/content/mobile/images/main/bg_starpoint_off2.png) no-repeat left top;
     background-size:auto 100%;
 }
-.review_section .review_slider .swiper-slide .review_info .rating > div.on{
+.review_section .review_slider .review_box .review_info .rating > div.on{
     position: absolute;
     left:0;top:0;height:11px;
     background:url(/content/mobile/images/main/bg_starpoint_on2.png) no-repeat left top;
     background-size:auto 100%;
 }
-.review_section .review_slider .swiper-slide .review_info .tit{
+.review_section .review_slider .review_box .review_info .tit{
     font-size: 11px;
     font-weight: 500;
+    max-height:11px;
     color: #1f1f1f;
     text-decoration: underline;
     text-overflow: ellipsis;
@@ -744,8 +753,9 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow-y: hidden;
+    white-space: normal;
 }
-.review_section .review_slider .swiper-slide .review_info .text{
+.review_section .review_slider .review_box .review_info .text{
     margin-top: 10px;
     font-size: 10px;
     max-height: 60px;
@@ -756,8 +766,9 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow-y: hidden;
+    white-space: normal;
 }
-.review_section .review_slider .swiper-slide .review_info .btm{
+.review_section .review_slider .review_box .review_info .btm{
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
@@ -765,7 +776,7 @@
     font-size: 9px;
     color: #b3b3b3;
 }
-.review_section .review_slider .swiper-slide .review_info .btm .date{
+.review_section .review_slider .review_box .review_info .btm .date{
     font-family: Montserrat;
 }
 /* 솔직한리뷰 */

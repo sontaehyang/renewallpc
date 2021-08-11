@@ -176,7 +176,7 @@ function mains(){
 	// setNewProductSlider();
 
 	// 한정수량
-	// setLimitedProductSlider();
+	//setLimitedProductSlider();
 
 	// 배너 슬라이드
 	setBannerSlider();

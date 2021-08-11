@@ -381,7 +381,7 @@
 						mainBestItemsEvent();
 						break;
 					case 'review' :
-						setReviewSlider();
+						//setReviewSlider();
 						break;
 					default :
 				}
