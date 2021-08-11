@@ -67,7 +67,7 @@
             <c:forEach items="${chartList}" var="chart" varStatus="i">
                 <li>
                     <span class="txt">${chart.itemName}</span>
-                    <span class="price">${chart.itemP}원</span>
+                    <span class="price">${op:numberFormat(chart.itemP)}원</span>
                 </li>
             </c:forEach>
         </ul>

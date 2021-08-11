@@ -71,8 +71,18 @@
 				<li class="none"><a href="/m/event">이벤트</a></li>
 				<li><a href="/m/notice/list">고객센터</a></li>
 				<li class="none"><a href="/m/faq">FAQ</a></li>
-				<c:if test="${requestContext.user.userDetail.groupCode == 'DEALER' && requestContext.user.userDetail.priceTableView == 'Y'}">
-					<li><a href="/m/mypage/chart">매입단가표</a></li>
+				<c:if test="${requestContext.user.userDetail.groupCode == 'DEALER1' }">
+					<li class="none"><a href="/m/pages/dealer_shop1" class="hdt_ds">딜러샵</a></li>
+				</c:if>
+				<c:if test="${requestContext.user.userDetail.groupCode == 'DEALER2' }">
+					<li class="none"><a href="/m/pages/dealer_shop2" class="hdt_ds">딜러샵</a></li>
+				</c:if>
+				<c:if test="${requestContext.user.userDetail.groupCode == 'DEALER3' }">
+					<li class="none"><a href="/m/pages/dealer_shop3" class="hdt_ds">딜러샵</a></li>
+				</c:if>
+				<c:if test="${(requestContext.user.userDetail.groupCode == 'DEALER1' || requestContext.user.userDetail.groupCode == 'DEALER2' || requestContext.user.userDetail.groupCode == 'DEALER3' )
+							&& requestContext.user.userDetail.priceTableView == 'Y'}">
+					<li class="none"><a href="/m/mypage/chart" class="hdt_ct">매입단가표</a></li>
 				</c:if>
 			</ul>
 		</div>

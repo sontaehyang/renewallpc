@@ -118,7 +118,7 @@
                         </c:otherwise>
                     </c:choose>
                     <td class="txt">${chart.itemName}</td>
-                    <td class="ta-right"><span>${chart.itemP} </span>원</td>
+                    <td class="ta-right"><span>${op:numberFormat(chart.itemP)} </span>원</td>
                 </tr>
             </c:forEach>
             </tbody>
