@@ -367,7 +367,7 @@ p.item_image_main a.delete_item_image.mobile {
 												<li id="prod${status.index}_item_${item.itemId}">
 													<input type="hidden" name="prod${status.index}ItemIds" value="${item.itemId}" />
 													<p class="image"><img src="${shop:loadImage(item.itemCode, item.itemImage, 'XS')}" class="item_image size-100 none" alt="상품이미지" /></p>
-													<p class="title">[${item.itemUserCode}] <label style="color:red">[${op:numberFormat(item.salePrice)}]</label><br />${item.itemName}</p>
+													<p class="title">[${item.itemUserCode}] <label style="color:red">[${op:numberFormat(item.salePrice)}]</label><label style="color:blue">[${op:numberFormat(item.exceptSpotDiscount)}]</label><br />${item.itemName}</p>
 													
 													<span class="ordering">${i.count}</span>
 													<a href="javascript:javascript:deleteItem();" class="delete_item"><img src="/content/opmanager/images/icon/icon_x.gif" alt="" /></a>
@@ -409,7 +409,7 @@ p.item_image_main a.delete_item_image.mobile {
 													<li id="prod${status.index}_item_${item.itemId}">
 														<input type="hidden" name="prod${status.index}ItemIds" value="${item.itemId}" />
 														<p class="image"><img src="${shop:loadImageBySrc(item.imageSrc, 'XS')}" class="item_image size-100 none" alt="상품이미지" /></p>
-														<p class="title">[${item.itemUserCode}] <label style="color:red">[${op:numberFormat(item.salePrice)}]</label><br />${item.itemName}</p>
+														<p class="title">[${item.itemUserCode}] <label style="color:red">[${op:numberFormat(item.salePrice)}]</label><label style="color:blue">[${op:numberFormat(item.exceptSpotDiscount)}]</label><br />${item.itemName}</p>
 														
 														<span class="ordering">${cnt}</span>
 														<a href="javascript:deleteItem();" class="delete_item"><img src="/content/opmanager/images/icon/icon_x.gif" alt="" /></a>

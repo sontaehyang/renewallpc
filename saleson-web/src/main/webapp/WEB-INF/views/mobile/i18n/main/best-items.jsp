@@ -60,10 +60,10 @@
 <script>
 	$(function() {
 	  $("p.price_pc").prepend("<a href='/m/products/view/G2000002353'><img src='/content/mobile/images/common/1_price.jpg'></a>");
-	  $("p.BRD").prepend("<a href='/m/products/view/G2000002374'><img src='/content/mobile/images/common/7_brand.jpg'></a>");
+	  $("p.BRD").prepend("<a href='/m/products/view/G2000002502'><img src='/content/mobile/images/common/7_brand.jpg'></a>");
 	  $("p.needs_pc").prepend("<a href='/m/products/view/G2000002374'><img src='/content/mobile/images/common/2_use.jpg'></a>");
 	  $("p.laptop_aio_pc").prepend("<a href='/m/products/view/G2000002395'><img src='/content/mobile/images/common/3_laptop.jpg'></a>");
-	  $("p.MonitorAll").prepend("<a href='/m/products/view/G2000002456'><img src='/content/mobile/images/common/4_monitor.jpg'></a>");
+	  $("p.MonitorAll").prepend("<a href='/m/products/view/G2000003039'><img src='/content/mobile/images/common/4_monitor.jpg'></a>");
 	  $("p.appliance").prepend("<a href='/m/products/view/G2000002559'><img src='/content/mobile/images/common/5_life.jpg'></a>");
 	});
 </script>
