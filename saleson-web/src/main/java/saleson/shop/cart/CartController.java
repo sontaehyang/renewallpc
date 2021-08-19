@@ -8,6 +8,7 @@ import com.onlinepowers.framework.util.StringUtils;
 import com.onlinepowers.framework.util.ViewUtils;
 import com.onlinepowers.framework.web.bind.annotation.RequestProperty;
 import com.onlinepowers.framework.web.servlet.view.JsonView;
+import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,11 +61,15 @@ public class CartController {
 
         Buy buy = cartService.getBuyInfoByCart(cartParam);
 
+        // 에이스카운터 장바구니 수집위해 JSONArray로 보내줌
+        JSONArray jsonCartItems = JSONArray.fromObject(buy.getReceivers());
+
         model.addAttribute("naverPay", new NaverPay("Web", "/cart", configPgService.getConfigPg()));
         model.addAttribute("asp28Analytics", new Asp28Analytics(buy.getItems(), "Web", "Cart"));
         model.addAttribute("categoriesTeamList", rankingService.getRankingListForMain(5));
         model.addAttribute("buy", buy);
         model.addAttribute("count", buy.getTotalItemCount());
+        model.addAttribute("jsonCartItems", jsonCartItems);
         return ViewUtils.getView("/cart/index");
     }
 

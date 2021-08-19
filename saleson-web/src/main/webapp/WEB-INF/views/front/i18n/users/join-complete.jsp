@@ -80,3 +80,19 @@ Event snippet for 구매_NEW conversion page In your html page, add the snippet 
 		return false;
 	} 
 </script>
+
+
+<!-- 카카오픽셀 설치 [회원가입 이벤트 전송] -->
+<script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>
+<script type="text/javascript">
+	kakaoPixel('1612698247174901358').pageView();
+	kakaoPixel('1612698247174901358').completeRegistration();
+</script>
+
+<!-- 에이스카운터 설치 [회원가입] -->
+<!-- This script is for AceCounter START -->
+<script language='javascript'>
+	var _jn='join';
+	var _jid='${joinId}';
+</script>
+<!-- AceCounter END -->

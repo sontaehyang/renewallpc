@@ -313,6 +313,8 @@ public class UserMobileController {
 		model.addAttribute("newItemList", newItemList);
 		model.addAttribute("categoriesTeamList", categoriesTeamList);
 		model.addAttribute("redirect", redirect);*/
+		//에이스카운터 Id 확인용
+
 		return ViewUtils.getView("/users/join-complete");
 	}
 	

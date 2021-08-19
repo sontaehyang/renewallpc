@@ -147,6 +147,33 @@
 </div><!--// inner E-->
 
 <page:javascript>
+    <!-- 카카오픽셀 설치 [장바구니 보기 이벤트 전송] -->
+    <script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>
+    <script type="text/javascript">
+        kakaoPixel('1612698247174901358').pageView();
+        kakaoPixel('1612698247174901358').viewCart();
+    </script>
+
+    <!-- 에이스카운터 설치 pc[장바구니목록페이지]-->
+    <!-- AceCounter eCommerce (Cart_Inout) v8.0 Start -->
+    <script language='javascript'>
+        var jsonItems = ${jsonCartItems};
+        var jsonItemsCnt = jsonItems[0].items.length;
+
+        for(var i = 0; i < jsonItemsCnt; i++) {
+            console.log(jsonItems[0].items[i].itemCode);
+            console.log(jsonItems[0].items[i].itemName);
+            console.log(jsonItems[0].items[i].itemPrice.itemSalePrice.toString());
+            console.log(jsonItems[0].buyQuantitys[i].quantity.toString());
+
+            var _products=(function(){
+                var c={pd: jsonItems[0].items[i].itemCode, pn: jsonItems[0].items[i].itemName, am: jsonItems[0].items[i].itemPrice.itemSalePrice.toString(), qy: jsonItems[0].buyQuantitys[i].quantity.toString(), ct: ''};
+                var u=(!_products)?[]:_products; u['@'+c.pd]=c;return u;
+            })();
+        }
+    </script>
+    <!-- AceCounter eCommerce (Cart_InOut) v8.0 End -->
+
     <script type="text/javascript">
         var buttonType = '';
         $(function(){

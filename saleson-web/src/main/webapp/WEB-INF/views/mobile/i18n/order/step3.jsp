@@ -304,3 +304,62 @@ Event snippet for 구매_NEW conversion page In your html page, add the snippet 
 	} 
 </script>
 
+<script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>
+<script type="text/javascript">
+
+	var scriptJson = ${jsonOrderList};
+	var productsArr = new Array();
+	console.log(scriptJson);
+
+	for (var i=0; scriptJson.length > i; i++){
+		var totalQuantity = 0;
+		for (var j=0; scriptJson[i].orderItems.length > j; j++) {
+			productsArr[j] = {id: scriptJson[i].orderItems[j].itemCode,name: scriptJson[i].orderItems[j].itemName, quantity:  scriptJson[i].orderItems[j].quantity.toString(), price: scriptJson[i].orderItems[j].saleAmount.toString()}
+			totalQuantity += scriptJson[i].orderItems[j].quantity;
+		}
+		console.log(productsArr);
+		console.log(totalQuantity);
+		kakaoPixel('1612698247174901358').pageView();
+		kakaoPixel('1612698247174901358').purchase({
+			total_quantity: totalQuantity.toString(), // 주문 내 상품 개수(optional)
+			total_price: "${order.totalOrderAmount}",  // 주문 총 가격(optional)
+			currency: "KRW",     // 주문 가격의 화폐 단위(optional, 기본 값은 KRW)
+			products: productsArr
+		});
+	}
+</script>
+
+
+
+<!-- *) 구매완료페이지 -->
+<!-- AceCounter Mobile eCommerce (Cart_Inout) v8.0 Start -->
+<script language='javascript'>
+	for (var i=0; scriptJson.length > i; i++) {
+		for (var j = 0; scriptJson[i].orderItems.length > j; j++) {
+			console.log(scriptJson[i].orderItems[j].itemCode);
+			console.log(scriptJson[i].orderItems[j].itemName);
+			console.log(scriptJson[i].orderItems[j].saleAmount.toString());
+			console.log(scriptJson[i].orderItems[j].quantity.toString());
+			var AM_Cart = (function () {
+				var c = {
+					pd: scriptJson[i].orderItems[j].itemCode,
+					pn: scriptJson[i].orderItems[j].itemName,
+					am: scriptJson[i].orderItems[j].saleAmount.toString(),
+					qy: scriptJson[i].orderItems[j].quantity.toString(),
+					ct: '',
+					onm: ''
+				};
+				var u = (!AM_Cart) ? [] : AM_Cart;
+				u[escape('@' + c.pd + c.onm)] = c;
+				return u;
+			})();
+		}
+	}
+</script>
+
+<script language='javascript'>
+	var m_order_code='${ orderCode }';		// 주문코드 필수 입력
+	var m_pay = '${order.orderPayments[0].approvalTypeLabel}'; //결제수단(ex 신용카드,무통장,가상계좌)
+	var m_buy="finish"; //구매 완료 변수(finish 고정값)
+</script>
+

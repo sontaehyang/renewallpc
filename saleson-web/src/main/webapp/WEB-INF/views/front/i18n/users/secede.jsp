@@ -107,7 +107,10 @@ $(function(){
 		if(!confirm("회원탈퇴 하시겠습니까?")){
 			return false;
 		}
-		
+
+		<!-- 에이스카운터 설치 [회원탈퇴] -->
+		var _jn='withdraw';
+
 	});
 	
 });

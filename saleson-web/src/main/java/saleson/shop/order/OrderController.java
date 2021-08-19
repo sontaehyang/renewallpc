@@ -8,6 +8,7 @@ import com.onlinepowers.framework.security.userdetails.User;
 import com.onlinepowers.framework.util.*;
 import com.onlinepowers.framework.web.bind.annotation.RequestProperty;
 import com.onlinepowers.framework.web.servlet.view.JsonView;
+import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -378,13 +379,15 @@ public class OrderController {
 			orderShippingInfo.getOrderItems().clear();
 			orderShippingInfo.getOrderItems().addAll(itemList);
 		}
-
+		JSONArray jsonArray = new JSONArray();
+		model.addAttribute("jsonOrderList", jsonArray.fromObject(order.getOrderShippingInfos()));
 		model.addAttribute("user", UserUtils.getUser());
 		model.addAttribute("order", order);
 		model.addAttribute("orderCode", orderCode);
 		model.addAttribute("orderSequence", orderSequence);
 
 		model.addAttribute("orderItemUserCodes", JsonViewUtils.objectToJson(order.getOrderItemUserCodes()));
+
 
 		return ViewUtils.getView("/order/step3");
 	}

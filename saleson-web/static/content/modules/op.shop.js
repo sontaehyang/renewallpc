@@ -551,6 +551,28 @@ Shop.getMobileTodayItems = function() {
 
 };
 
+<!-- 카카오픽셀 설치 [장바구니 추가 이벤트 전송, 관심상품 추가 이벤트 전송] -->
+Shop.toCollectionScript = function(text, itemCode) {
+    if (text == 'cart') {
+        <!-- 카카오픽셀 설치 [장바구니 추가 이벤트 전송] -->
+        kakaoPixel('1612698247174901358').addToCart({
+            id: itemCode
+        });
+        //alert(itemCode);
+        //alert('카카오픽셀 카트 스크립트');
+    }
+
+    if (text == 'wishlist') {
+        <!-- 카카오픽셀 설치 [장바구니 추가 이벤트 전송] -->
+        kakaoPixel('1612698247174901358').addToWishList({
+            id: itemCode
+        });
+        //alert(itemCode);
+        //alert('카카오픽셀 관심상품 스크립트');
+    }
+}
+
+
 // 상품목록에서 관심상품 담기
 Shop.addToWishList = function(itemId, orderMinQuantity,  isLogin, target, wishlistGroupId, itemType) {
     var quantity = Number(orderMinQuantity) > 1 ? Number(orderMinQuantity) : 1;

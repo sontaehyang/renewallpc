@@ -399,6 +399,9 @@ public class UserController {
 
 		model.addAttribute("categoryEdit", categoriesEditService.getCategoryFontPosition(categoriesEditParam));
 		model.addAttribute("redirect", redirect);
+		//에이스카운터 Id 확인용
+		String joinId = UserUtils.getLoginId();
+		model.addAttribute("joinId", joinId);
 		return ViewUtils.getView("/users/join-complete");
 	}
 

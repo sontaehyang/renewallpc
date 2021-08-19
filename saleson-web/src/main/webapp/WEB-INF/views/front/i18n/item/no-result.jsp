@@ -32,3 +32,20 @@
 	</div><!-- // contents E --> 
 	
 </div>
+
+<!-- 카카오픽셀 설치 [검색 이벤트 전송] -->
+<script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>
+<script type="text/javascript">
+	kakaoPixel('1612698247174901358').pageView();
+	kakaoPixel('1612698247174901358').search({
+		keyword: '${itemParam.query}'
+	});
+</script>
+
+
+<!-- *) 쇼핑몰에서 검색을 이용한 제품찾기 페이지 -->
+<!-- AceCounter eCommerce (Product_Search) v8.0 Start -->
+<script language='javascript'>
+	var _skey='${itemParam.query}';
+</script>
+<!-- AceCounter eCommerce (Product_Search) v8.0 End -->

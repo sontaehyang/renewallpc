@@ -7,6 +7,7 @@ import com.onlinepowers.framework.exception.UserException;
 import com.onlinepowers.framework.util.*;
 import com.onlinepowers.framework.web.bind.annotation.RequestProperty;
 import com.onlinepowers.framework.web.servlet.view.JsonView;
+import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -358,6 +359,9 @@ public class OrderMobileController {
 				orderShippingInfo.getOrderItems().clear();
 				orderShippingInfo.getOrderItems().addAll(itemList);
 			}
+
+			JSONArray jsonArray = new JSONArray();
+			model.addAttribute("jsonOrderList", jsonArray.fromObject(order.getOrderShippingInfos()));
 
 			model.addAttribute("user", UserUtils.getUser());
 			model.addAttribute("order", order);

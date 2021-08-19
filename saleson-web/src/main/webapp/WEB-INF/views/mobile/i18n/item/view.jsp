@@ -31,21 +31,15 @@
 	</c:if>													
 </c:forEach>
 
-	<%--<div class="location">
-		<p class="local">
-			<c:forEach items="${item.breadcrumbs}" var="breadcrumb" varStatus="i">
-				<c:if test="${i.count < 2}">
-					<c:forEach items="${breadcrumb.breadcrumbCategories}" var="subBreadcrumb" varStatus="categoryIndex">
-						<c:set var="categoryClass">route</c:set>
-						<c:if test="${categoryIndex.last}">
-							<c:set var="categoryClass">current</c:set>
-						</c:if>
-						<span class="${categoryClass}">${subBreadcrumb.categoryName}</span>
-					</c:forEach>
-				</c:if>
+
+	<c:forEach items="${item.breadcrumbs}" var="breadcrumb" varStatus="i">
+		<c:if test="${i.count < 2}">
+			<c:forEach items="${breadcrumb.breadcrumbCategories}" var="subBreadcrumb" varStatus="categoryIndex">
+				<c:set var="ctLabel" value="${subBreadcrumb.categoryName}"></c:set>
 			</c:forEach>
-		</p>
-	</div>--%><!-- //location -->
+		</c:if>
+	</c:forEach>
+
 
 	<div class="con view_wrap">
 		<div class="view_img${item.itemSoldOut ? ' sold-out' : ''}">
@@ -686,10 +680,10 @@
 								<button type="button" class="btn btn_m_restock ${isRestockNotice ? 'on' : ''}" onclick="restockNotice()">재입고알림</button>
 							</c:when>
 							<c:otherwise>
-								<button type="button" class="btn btn_m_save" onclick="addToWishList()">
+								<button type="button" class="btn btn_m_save" onclick="AM_PRODUCT($('.quantity').val()); addToWishList(); toCollectionScript('wishlist');">
 									<span class="screen_out">찜하기</span>
 								</button>
-								<button type="button" class="btn btn_m_cart" onclick="addToCart()">장바구니</button>
+								<button type="button" class="btn btn_m_cart" onclick="AM_PRODUCT($('.quantity').val()); addToCart(); toCollectionScript('cart');">장바구니</button>
 								<button type="button" class="btn btn_m_buy" onclick="buyNow()">구매하기</button>
 							</c:otherwise>
 						</c:choose>
@@ -717,6 +711,26 @@
 	<jsp:include page="../include/layer-wishlist.jsp" />
 
 <page:javascript>
+
+<!-- 카카오픽셀 설치 [콘텐츠 / 상품 조회 이벤트 전송] -->
+<script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>
+<script type="text/javascript">
+	kakaoPixel('1612698247174901358').pageView();
+	kakaoPixel('1612698247174901358').viewContent({
+		id: '${item.itemUserCode}'
+	});
+</script>
+
+
+<!-- 에이스카운터 설치 M [제품상세페이지 분석코드] -->
+<!-- AceCounter Mobile eCommerce (Product_Detail) v8.0 Start -->
+<script language='javascript'>
+	var m_pd ="${item.itemName}";
+	var m_ct ="${ctLabel}";
+	var m_amt="${item.salePrice}";
+</script>
+
+
 <script type="text/javascript" src="/content/modules/naverpay/naver.pay.js"></script>
 <script type="text/javascript">
 	// ksh 2020-12-03 옵션조합형 선택정보
@@ -781,6 +795,27 @@
 			});
 		}
 	});
+
+
+	function toCollectionScript(text) {
+
+		if (text == 'cart') {
+			<!-- 카카오픽셀 설치 [장바구니 추가 이벤트 전송] -->
+			kakaoPixel('1612698247174901358').addToCart({
+				id: '${item.itemUserCode}'
+			});
+			//alert('카카오픽셀 카트 스크립트');
+		}
+
+		if (text == 'wishlist') {
+			<!-- 카카오픽셀 설치 [장바구니 추가 이벤트 전송] -->
+			kakaoPixel('1612698247174901358').addToWishList({
+				id: '${item.itemUserCode}'
+			});
+			//alert('카카오픽셀 관심상품 스크립트');
+		}
+
+	}
 </script>
 <script src="/content/modules/mobile/item.view.js"></script>
 

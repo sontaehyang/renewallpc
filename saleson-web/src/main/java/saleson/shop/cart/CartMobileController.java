@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,11 +66,15 @@ public class CartMobileController {
 
         Buy buy = cartService.getBuyInfoByCart(cartParam);
 
+        // 에이스카운터 장바구니 수집위해 JSONArray로 보내줌
+        JSONArray jsonCartItems = JSONArray.fromObject(buy.getReceivers());
+
         model.addAttribute("naverPay", new NaverPay("Mobile", "/m/cart", configPgService.getConfigPg()));
         model.addAttribute("asp28Analytics", new Asp28Analytics(buy.getItems(), "Mobile", "Cart"));
         model.addAttribute("categoriesTeamList", rankingService.getRankingListForMain(5));
         model.addAttribute("buy", buy);
         model.addAttribute("count", buy.getTotalItemCount());
+        model.addAttribute("jsonCartItems", jsonCartItems);
         return ViewUtils.getView("/cart/index");
     }
 

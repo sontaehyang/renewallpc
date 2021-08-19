@@ -32,6 +32,16 @@
 <!-- 20210315 21:44  son 수정 / END -->
 
 
+<!-- 카카오픽셀 설치 [방문 이벤트 전송] -->
+<script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>
+<script type="text/javascript">
+	kakaoPixel('1612698247174901358').pageView();
+</script>
+
+
+
+
+
 <!--네이버 연관채널 메타태그-->
 <script type="application/ld+json">
 	{

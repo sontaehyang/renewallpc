@@ -22,6 +22,7 @@
 										<c:if test="${code.detail == '1'}">
 											<option value="${code.value}" ${code.detail == '1' ? 'selected="selected"' : ''}>
 												${code.label}
+												<c:set var="ctLabel" value="${code.label}"></c:set>
 											</option>
 										</c:if>
 									</c:forEach>
@@ -29,6 +30,7 @@
 										<c:forEach items="${codes}" var="code">
 											<option value="${code.value}">
 												${code.label}
+												<c:set var="ctLabel" value="${code.label}"></c:set>
 											</option>
 										</c:forEach>
 									</optgroup>
@@ -37,9 +39,8 @@
 						</c:if>
 					</c:forEach>
 				</div><!--// breadcrumbs -->
-				<p class="prd_code">상품코드 <b>${item.itemUserCode}</b></p>
+				<p class="prd_code">상품코드<b>${item.itemUserCode}</b></p>
 			</div><!-- // location_area E -->
-
 			<div class="view_top">
 				<div class="photo_wrap">
 					<div class="item_photo${item.itemSoldOut ? ' sold-out' : ''}">
@@ -522,9 +523,9 @@
 											<button type="button" class="item-btn restock ${isRestockNotice ? 'on' : ''}" onclick="javascript:restockNotice()" title="재입고알림">재입고알림</button>
 										</c:when>
 										<c:otherwise>
-											<button type="button" class="item-btn buy" onclick="javascript:buyNow()" title="구매하기">구매하기</button>
-											<button type="button" class="item-btn cart" onclick="javascript:addToCart()" title="장바구니">장바구니</button>
-											<button type="button" class="item-btn wish" onclick="javascript:addToWishList()"  title="관심상품">관심상품</button>
+											<button type="button" class="item-btn buy" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:buyNow()" title="구매하기">구매하기</button>
+											<button type="button" class="item-btn cart" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:addToCart(); toCollectionScript('cart');" title="장바구니">장바구니</button>
+											<button type="button" class="item-btn wish" onclick="javascript:addToWishList(); toCollectionScript('wishlist');"  title="관심상품">관심상품</button>
 
 											<!-- 네이버 NPAY구매 영역 E-->
 											<naverPay:item-page-button />
@@ -709,9 +710,9 @@
 									<button type="button" class="item-btn restock ${isRestockNotice ? 'on' : ''}" onclick="javascript:restockNotice()" title="재입고알림">재입고알림</button>
 								</c:when>
 								<c:otherwise>
-									<button type="button" class="item-btn buy" onclick="javascript:buyNow()" title="구매하기">구매하기</button>
-									<button type="button" class="item-btn cart" onclick="javascript:addToCart()" title="장바구니">장바구니</button>
-									<button type="button" class="item-btn wish" onclick="javascript:addToWishList()"  title="관심상품">관심상품</button>
+									<button type="button" class="item-btn buy" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:buyNow()" title="구매하기">구매하기</button>
+									<button type="button" class="item-btn cart" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:addToCart(); toCollectionScript('cart');" title="장바구니">장바구니</button>
+									<button type="button" class="item-btn wish" onclick="javascript:addToWishList(); toCollectionScript('wishlist');"  title="관심상품">관심상품</button>
 
 									<!-- 네이버 NPAY구매 영역 E-->
 									<naverPay:item-page-button />
@@ -738,6 +739,24 @@
 
 
 	<page:javascript>
+		<!-- 카카오픽셀 설치 [콘텐츠 / 상품 조회 이벤트 전송] -->
+		<script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>
+		<script type="text/javascript">
+			kakaoPixel('1612698247174901358').pageView();
+			kakaoPixel('1612698247174901358').viewContent({
+				id: '${item.itemUserCode}'
+			});
+		</script>
+
+		<!-- 에이스카운터 설치 PC [제품상세페이지 분석코드] -->
+		<!-- AceCounter eCommerce (Product_Detail) v8.0 Start -->
+		<script language='javascript'>
+			var _pd ="${item.itemName}";
+			var _ct ="${ctLabel}";
+			var _amt ="${item.salePrice}";
+		</script>
+
+
 		<script src="/content/modules/op.social.js"></script>
 		<script src="/content/modules/op.imageviewer.js"></script>
 		<script src="/content/modules/popup.js"></script>
@@ -804,7 +823,30 @@
 					});
 				}
 			});
+
+			function toCollectionScript(text) {
+
+				if (text == 'cart') {
+					<!-- 카카오픽셀 설치 [장바구니 추가 이벤트 전송] -->
+					kakaoPixel('1612698247174901358').addToCart({
+						id: '${item.itemUserCode}'
+					});
+					//alert('카카오픽셀 카트 스크립트');
+
+				}
+
+				if (text == 'wishlist') {
+					<!-- 카카오픽셀 설치 [장바구니 추가 이벤트 전송] -->
+					kakaoPixel('1612698247174901358').addToWishList({
+						id: '${item.itemUserCode}'
+					});
+					//alert('카카오픽셀 관심상품 스크립트');
+				}
+
+			}
 		</script>
+
+
 		<link rel="stylesheet" type="text/css" href="/content/css/swiper.css">
 		<script src="/content/js/swiper.jquery.min.js"></script>
 		<script src="/content/js/view.js"></script>

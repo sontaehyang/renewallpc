@@ -12,9 +12,9 @@
 					<p class="ov_btns">
 						<a href="${list.item.link}" class="blank_btn" target="_blank">새창 열기</a>
 						<c:if test="${!list.item.itemSoldOut}">
-							<a href="javascript:void(0);" onclick="Shop.addToWishList('${list.item.itemId}', '${list.item.orderMinQuantity}', '${requestContext.userLogin}', '${list.item.link}', '0', '${list.item.itemType}')" class="wish_btn">관심상품 담기</a>
+							<a href="javascript:void(0);" onclick="Shop.addToWishList('${list.item.itemId}', '${list.item.orderMinQuantity}', '${requestContext.userLogin}', '${list.item.link}', '0', '${list.item.itemType}'); Shop.toCollectionScript('wishlist' , '${item.itemCode}');" class="wish_btn">관심상품 담기</a>
 							<c:if test="${list.item.itemOptionFlag == 'N'}">
-								<a href="javascript:void(0);" onclick="Shop.addToCart('${list.item.itemId}', '${list.item.orderMinQuantity}', '${list.item.nonmemberOrderType}', '${requestContext.userLogin}', '${list.item.link}','${list.item.itemType}')" class="cart_btn">장바구니 담기</a>
+								<a href="javascript:void(0);" onclick="Shop.addToCart('${list.item.itemId}', '${list.item.orderMinQuantity}', '${list.item.nonmemberOrderType}', '${requestContext.userLogin}', '${list.item.link}','${list.item.itemType}'); Shop.toCollectionScript('cart' , '${item.itemCode}');" class="cart_btn">장바구니 담기</a>
 							</c:if>
 						</c:if>
 					</p><!--// ov_btns -->

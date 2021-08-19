@@ -54,8 +54,8 @@
 						<div class="item-btns">
 							<c:choose>
 								<c:when test="${item.itemOptionFlag != 'Y' && (item.stockFlag == 'N' || (item.stockFlag == 'Y' and item.stockQuantity > 0) )}">
-		 							<button type="button" class="btn btn-s btn-submit" title="장바구니" onclick="Shop.addToCart('${item.itemId}', '${item.orderMinQuantity}', '${item.nonmemberOrderType}', '${requestContext.userLogin}', '${requestContext.requestUri}','${item.itemType}')"><strong>장바구니</strong></button>
-									<button type="button" class="btn btn-s btn-wish" title="찜하기" onclick="Shop.addToWishList('${item.itemId}', '${item.orderMinQuantity}', '${requestContext.userLogin}', '${requestContext.requestUri}','0','${item.itemType}')"><strong>찜하기</strong></button>
+		 							<button type="button" class="btn btn-s btn-submit" title="장바구니" onclick="Shop.addToCart('${item.itemId}', '${item.orderMinQuantity}', '${item.nonmemberOrderType}', '${requestContext.userLogin}', '${requestContext.requestUri}','${item.itemType}'); Shop.toCollectionScript('cart' , '${item.itemCode}');"><strong>장바구니</strong></button>
+									<button type="button" class="btn btn-s btn-wish" title="찜하기" onclick="Shop.addToWishList('${item.itemId}', '${item.orderMinQuantity}', '${requestContext.userLogin}', '${requestContext.requestUri}','0','${item.itemType}'); Shop.toCollectionScript('wishlist' , '${item.itemCode}');"><strong>찜하기</strong></button>
 		 						</c:when>
 		 						<c:when test="${item.stockQuantity == 0 && item.soldOut == '1' && item.itemOptionFlag != 'Y'}">
 		 							<%-- 
