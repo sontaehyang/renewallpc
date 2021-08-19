@@ -261,7 +261,7 @@
 <div class="main-layer layer-ms010202">
 	<p class="layer-title">대량문의</p>
 	<div class="layer-content">
-		<img src="/content/images/common/main-layer-ms210524.png" alt="대량문의">
+		<img src="/content/images/common/main-layer-ms210524.jpg" alt="대량문의">
 	</div><!--// layer-content -->
 	<button type="button" class="close-layer" title="대량문의 레이어팝업 닫기">대량문의 레이어팝업 닫기</button>
 </div><!--// main-layer -->
