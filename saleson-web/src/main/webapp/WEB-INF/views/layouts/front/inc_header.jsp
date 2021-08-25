@@ -75,7 +75,7 @@
 			<a href="/pages/battle_grounds_pc">리그오브레전드</a>
 			<a href="/pages/overwatch">로스트아크</a>
 			<a href="/pages/high_professional">배틀그라운드</a>
-			<a href="/pages/body_monitor">본체+모니터</a>
+			<a href="/pages/body_monitor">모바일게임전용</a>
 			<a href="/pages/renewallpc">노트북</a>
 			<a href="/pages/cash_special">현금특가</a>
 		</div><!--// hd_feature -->
