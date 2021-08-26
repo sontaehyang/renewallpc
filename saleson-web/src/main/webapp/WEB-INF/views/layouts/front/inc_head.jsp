@@ -138,4 +138,4 @@
 	var hpt_info={'_account':'UHPT-16790'};
 </script>
 <script language="javascript" src="//a22.smlog.co.kr/smart.js" charset="utf-8"></script>
-<noscript><img src="//a22.smlog.co.kr/smart_bda.php?_account=16790" style="display:none;width:0;height:0;" border="0"/></noscript>
+<noscript></noscript>

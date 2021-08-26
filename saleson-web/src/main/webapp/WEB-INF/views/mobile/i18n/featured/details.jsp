@@ -13,6 +13,33 @@
 <div class="con">
 
 	<div>
+		<c:if test="${featuredUrl == 'body_monitor'}">
+			<div class="event_banner">
+				<img src="/content/images/event/intro_01.jpg" alt="상품배너이미지">
+				<div class="m_intro_click">
+					<img src="/content/images/event/intro_02.jpg" alt="상품배너이미지">
+					<div class="cover">
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002229" target="_self" class="link_01">1번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002236" target="_self" class="link_02">2번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002527" target="_self" class="link_03">3번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000003212" target="_self" class="link_04">4번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002304" target="_self" class="link_05">5번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002385" target="_self" class="link_06">6번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002231" target="_self" class="link_07">7번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002861" target="_self" class="link_08">8번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002089" target="_self" class="link_09">9번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002320" target="_self" class="link_10">10번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002309" target="_self" class="link_11">11번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002313" target="_self" class="link_12">12번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002304" target="_self" class="link_13">13번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002385" target="_self" class="link_14">14번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002231" target="_self" class="link_15">15번</a>
+						<a href="https://www.renewallpc.co.kr/m/products/view/G2000002861" target="_self" class="link_16">16번</a>
+					</div>
+				</div>
+				<img src="/content/images/event/intro_03.jpg" alt="상품배너이미지">
+			</div>
+		</c:if>
 		${featured.featuredContent}
 	</div>
 

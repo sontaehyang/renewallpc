@@ -193,7 +193,31 @@ function initEventTab() {
 		</div> --%>
 		<!-- 기획전 설명 2017-05-25 yulsun.yoo -->
 		<div>
-			${featured.featuredContent}
+			<c:if test="${featuredUrl == 'body_monitor'}">
+				<div class="op_imgWrap">
+					<img src="/content/images/event/intro_01.jpg" alt="배너이미지">
+					<div class="intro_click">
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002229" target="_blank" class="link_01">1번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002236" target="_blank" class="link_02">2번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002527" target="_blank" class="link_03">3번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000003212" target="_blank" class="link_04">4번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002304" target="_blank" class="link_05">5번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002385" target="_blank" class="link_06">6번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002231" target="_blank" class="link_07">7번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002861" target="_blank" class="link_08">8번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002089" target="_blank" class="link_09">9번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002320" target="_blank" class="link_10">10번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002309" target="_blank" class="link_11">11번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002313" target="_blank" class="link_12">12번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002304" target="_blank" class="link_13">13번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002385" target="_blank" class="link_14">14번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002231" target="_blank" class="link_15">15번</a>
+						<a href="https://www.renewallpc.co.kr/products/view/G2000002861" target="_blank" class="link_16">16번</a>
+					</div>
+					<img src="/content/images/event/intro_03.jpg" alt="배너이미지">
+				</div>
+			</c:if>
+		${featured.featuredContent}
 		</div>
 		
 		<div class="op-event-wrap">

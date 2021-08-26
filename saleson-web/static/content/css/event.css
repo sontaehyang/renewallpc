@@ -203,3 +203,24 @@
 .event_list ul li .event_info .name{font-size:17px; font-weight:bold;  overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; word-wrap: break-word; line-height: 1.2em; height: 1.2em;}
 .event_list ul li a:hover .name{text-decoration:underline; }
 .event_list ul li .event_info .date{color:#808080; font-size:14px;}
+
+
+/* 배너 클릭시 하이퍼링크 이동 hdh 21.08.26 */
+.op_imgWrap .intro_click {
+	width: 100%;
+	font-size: 0;
+	padding-top: 500px;
+	padding-left: 300px;
+	height: 1239px;
+	background: url(/content/images/event/intro_02.jpg) no-repeat center center;
+	text-align: left;
+}
+.op_imgWrap .intro_click a {
+	display: inline-block;
+	width: 213px;
+	height: 154px;
+	margin: 0 5px 5px 0;
+}
+.op_imgWrap .intro_click a:nth-child(4n) {
+	margin-right: 0;
+}
