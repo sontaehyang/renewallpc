@@ -78,6 +78,7 @@
 			<a href="/pages/body_monitor">모바일게임전용</a>
 			<a href="/pages/renewallpc">노트북</a>
 			<a href="/pages/cash_special">현금특가</a>
+			<a href="/pages/cash_special">깃테스트</a>
 		</div><!--// hd_feature -->
 
 		<div class="hd_ico_menu">
