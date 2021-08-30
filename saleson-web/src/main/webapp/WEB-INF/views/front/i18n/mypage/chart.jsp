@@ -6,11 +6,29 @@
 <%@ taglib prefix="op" 		uri="/WEB-INF/tlds/functions"%>
 <%@ taglib prefix="page" 	tagdir="/WEB-INF/tags/page"%>
 <%@ taglib prefix="shop"	uri="/WEB-INF/tlds/shop" %>
+<style>
+    .btn_WWM_ {
+        display: block;width: 40%;margin: 20px auto 0;
+        background: #fff;border: solid 1px #1f1f1f;border-radius: 60px;
+        font-size: 20px;font-weight: 500;color: #1f1f1f;text-align: center;line-height: 58px;
+        transition: background 0.4s, color 0.4s;
+        margin-bottom: 10px;
+    }
+</style>
+
 
 <div class="inner">
 <%--    <div id="locate"></div>--%>
     <div class="img-wrap">
         <img src="/content/images/common/purchase_banner.png" alt="정직한 매입으로 최선을 다하겠습니다.">
+    </div>
+    <div style="display: flex">
+        <button type="button" class="btn_WWM_"><a href="http://www.worldmemory.co.kr/purchase/autoEstimate.do">
+            <img src="/content/images/btn/middle_bt_new_01_wwm.png" border="0">
+        </a></button>
+        <button type="button" class="btn_WWM_"><a href="http://www.worldmemory.co.kr/files/WorldMemory.exe">
+            <img src="/content/images/btn/middle_bt_new_03_wwm.png" border="0">
+        </a></button>
     </div>
     <ul class="sort-category">
         <li class="30000" onclick="location.href='/mypage/chart?itemLevel1=30000'">
