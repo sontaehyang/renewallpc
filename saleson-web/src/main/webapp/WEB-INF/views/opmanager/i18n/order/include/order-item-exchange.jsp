@@ -248,7 +248,7 @@
 													<label><input type="radio" name="exchangeApplyMap[${apply.claimCode}].claimStatus" value="02" ${op:checked('02', apply.claimStatus)} onclick="exchangeCheckedDisplay('${apply.claimCode}','02')" class="exchange-claim-status" data-claim-code="${apply.claimCode}" /> 교환 보류</label>
 													<label><input type="radio" name="exchangeApplyMap[${apply.claimCode}].claimStatus" value="10" ${op:checked('10', apply.claimStatus)} onclick="exchangeCheckedDisplay('${apply.claimCode}','10')" class="exchange-claim-status" data-claim-code="${apply.claimCode}" /> 회수중</label>
 													<label><input type="radio" name="exchangeApplyMap[${apply.claimCode}].claimStatus" value="11" ${op:checked('11', apply.claimStatus)} onclick="exchangeCheckedDisplay('${apply.claimCode}','11')" class="exchange-claim-status" data-claim-code="${apply.claimCode}" /> 회수 완료</label>
-													<label><input type="radio" name="exchangeApplyMap[${apply.claimCode}].claimStatus" value="03" ${op:checked('03', apply.claimStatus)} onclick="exchangeCheckedDisplay('${apply.claimCode}','03')" class="exchange-claim-status" data-claim-code="${apply.claimCode}" disabled="disabled" /> 교환상품 발송</label>
+													<label><input type="radio" name="exchangeApplyMap[${apply.claimCode}].claimStatus" value="03" ${op:checked('03', apply.claimStatus)} onclick="exchangeCheckedDisplay('${apply.claimCode}','03')" class="exchange-claim-status" data-claim-code="${apply.claimCode}" /> 교환상품 발송</label>
 												<p>
 												<p id="redText_${apply.claimCode}" style="margin-top:5px;color:red"></p>
 											</td>
