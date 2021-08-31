@@ -543,6 +543,29 @@
 									</div>
 								</div>
 							</div><!--// bfs_btm -->
+							<div class="rental_area">
+								<p class="tit">렌탈로 리뉴올 PC 이용하기</p>
+								<div class="month_select">
+									<div class="month">
+										<button type="button">24개월</button>
+										<button type="button">36개월</button>
+										<button type="button">48개월</button>
+										<button type="button" class="on">60개월</button>
+									</div>
+									<span class="txt">무료배송</span>
+								</div>
+								<dl class="month_price">
+									<dt class="rental_txt">렌탈료</dt>
+									<dd class="rental_price">월 <span>82,200</span>원</dd>
+									<dt class="rental_txt card">제휴카드 렌탈료</dt>
+									<dd class="rental_price card">월 <span>69,300</span>원</dd>
+								</dl>
+								<div class="rental_total">
+									<p class="txt">총 렌탈료</p>
+									<p class="total"><span>4,838,000</span>원</p>
+								</div>
+								<button type="button" class="btn_rental">렌탈 구매하기</button>
+							</div>
 						</div><!--// btm_fix_sec -->
 					</form>
 				</div>	<!-- // item_info_view E -->
@@ -711,7 +734,7 @@
 								</c:when>
 								<c:otherwise>
 									<button type="button" class="item-btn buy" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:buyNow()" title="구매하기">구매하기</button>
-									<button type="button" class="item-btn cart" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:addToCart(); toCollectionScript('cart');" title="장바구니">장바구니</button>
+									<button type="button" class="wqitem-btn cart" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:addToCart(); toCollectionScript('cart');" title="장바구니">장바구니</button>
 									<button type="button" class="item-btn wish" onclick="javascript:addToWishList(); toCollectionScript('wishlist');"  title="관심상품">관심상품</button>
 
 									<!-- 네이버 NPAY구매 영역 E-->

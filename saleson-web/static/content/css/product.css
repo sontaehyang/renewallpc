@@ -480,7 +480,7 @@ dl.order-amount > dd .amount {vertical-align:top;}
 
 /* 검색결과 */
 .search_result{padding:45px 0 35px 0; background:url(/content/images/common/line_top.gif) repeat-x 0 0; text-align:center;}
-.search_result .tit{font-size:27px; font-weight:bold;}
+.search_result .tit{font-size:27px; font-weight:bold;}.wish_item{position:relative;}
 .search_result .total{margin-top:15px; color:#666; font-size:14px;}
 .search_result .total strong{color:#2c375e;}
 .guide_box.search{padding:25px 0px; border:0; background:#f8f8f8 url(/content/images/event/search_result_bg.png) no-repeat 285px 40px;}
@@ -488,4 +488,110 @@ dl.order-amount > dd .amount {vertical-align:top;}
 .guide_box.search ul li{font-size:13px;}
 
 
+
+/* 210825 렌탈샵 hdh */
+.rental_area {
+    margin-top: 20px;
+    border-top: 2px solid #222;
+    padding-top: 20px;
+    margin-bottom: 140px;
+}
+.rental_area .tit {
+    font-size: 15px;
+    color: #1F1F1F;
+
+}
+.rental_area .month_select {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 20px;
+}
+.rental_area .month_select .month {
+    font-size: 0;
+}
+.rental_area .month_select .txt {
+    font-size: 14px;
+    color: #b3b3b3;
+}
+.rental_area .month_select button{
+    width: 70px;
+    height: 40px;
+    font-size: 14px;
+    margin-right: 8px;
+    line-height: 38px;
+    color: #1f1f1f;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    transition: border 0.2s;
+}
+.rental_area .month_select button:last-child {
+    margin-right: 0;
+}
+.rental_area .month_select button.on {
+    border: 2px solid #FF4000;
+}
+.rental_area .month_price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 20px;
+    padding: 24px 20px;
+    background: #f9f9f9;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+}
+.rental_area .month_price > * {
+    width: 50%;
+
+}
+.rental_area .month_price dt {
+    font-size: 15px;
+    color: #1F1F1F;
+}
+.rental_area .month_price dd {
+    text-align: right;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 27px;
+    color: #1f1f1f;
+}
+.rental_area .month_price dd span {
+    font-size: 22px;
+    font-family: 'montserrat';
+    font-weight: 600;
+}
+.rental_area .month_price dd.card {
+    color: #FF4000;
+}
+.rental_area .rental_total {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 20px;
+}
+.rental_area .rental_total .txt {
+    font-size: 16px;
+    color: #1f1f1f;
+}
+.rental_area .rental_total .total {
+    font-weight: 600;
+    font-size: 34px;
+    color: #ff4000;
+    line-height: 40px;
+}
+.rental_area .rental_total .total span {
+    font-family: 'montserrat';
+}
+.rental_area .btn_rental {
+    width: 100%;
+    line-height: 58px;
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 700;
+    text-align: center;
+    border: 1px solid #222;
+    background: #222;
+    color: #fff;
+}
 

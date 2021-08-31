@@ -1111,3 +1111,32 @@ select.transparent {/*border:0; padding-left:10px; background-position:right cen
     background-size:4px 8px;
     margin-left:3px;
 }
+
+
+
+
+/* 렌탈 구매 21.08.27 */
+
+.foot_menu_m .option_bottom.type2 .btn_area .btn_m_buy {
+    width: calc(100% - 48px);
+}
+.foot_menu_m .option_bottom.type2 .btn_area .btn_m_save {
+    width: 42px;
+    margin-right: 6px;
+}
+.foot_menu_m .option_bottom.type2 .month_select .month {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+.foot_menu_m .option_bottom.type2 .month_select .month button {
+    width: 25%;
+    font-size: 15px;
+    line-height: 30px;
+}
+.foot_menu_m .option_bottom.type2 .option_area {
+    padding: 20px;
+}
+.foot_menu_m .option_bottom.type2 .total_area {
+    padding-top: 20px;
+}
