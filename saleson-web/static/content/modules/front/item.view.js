@@ -221,7 +221,7 @@ function offScrollEvent() {
 function initItemQuantityEvent() {
 	var $itemQuantity = $('.item-quantity');
 
-	if ($itemQuantity.size() > 0) {
+	if ($itemQuantity.length > 0) {
 
 		// 상품 수량 +
 		$itemQuantity.find('button.plus').on('click', function(e) {
@@ -455,14 +455,14 @@ function initItemOptionEvent() {
 		var $optionBoxType = $(this).closest('.option-group').parent();
 		var $optionGroup = $(this).closest('.option-group');
 		var currentOptionGroupIndex = $optionBoxType.find('.option-group').index($optionGroup);
-		var optionGroupCount = $optionBoxType.find('.option-group').size();
+		var optionGroupCount = $optionBoxType.find('.option-group').length;
 		var optionName = $(this).attr('data-option-name');
 
 		// 옵션 선택 처리.
 		$(this).addClass('on');
 		$optionGroup.find('.option-selected-name').text(optionName);
 
-		var optionSelectedCount = $optionBoxType.find('a.on').size();
+		var optionSelectedCount = $optionBoxType.find('a.on').length;
 
 		// 모든 옵션을 선택한 경우.
 		if (optionGroupCount == optionSelectedCount) {
@@ -561,7 +561,7 @@ function initItemOptionEvent() {
 			});
 
 			// 텍스트 옵션이 없는 경우 바로 추가.
-			if ($('.text-option-id').size() == 0) {
+			if ($('.text-option-id').length == 0) {
 				// 선택된 옵션으로 아이템옵션을 추가한다.
 				addItemOption();
 			} else {
@@ -601,8 +601,8 @@ function initItemOptionEvent() {
 
 		if (item.itemOptionType == 'S') {
 			var $previousOptionGroups = $optionBoxType.find('.option-group:lt(' + currentOptionGroupIndex + ')');
-			var optionGroupCount = $previousOptionGroups.size();
-			var selectedOptionGroupCount = $previousOptionGroups.find('a.on').size();
+			var optionGroupCount = $previousOptionGroups.length;
+			var selectedOptionGroupCount = $previousOptionGroups.find('a.on').length;
 
 			if (selectedOptionGroupCount < optionGroupCount) {
 				alert('위의 정보를 먼저 선택해 주세요.');
@@ -621,7 +621,7 @@ function initItemOptionEvent() {
 			});
 
 		} else {
-			if ($optionGroup.find('li').size() == 0) {
+			if ($optionGroup.find('li').length == 0) {
 				alert('위의 정보를 먼저 선택해 주세요.');
 				return;
 			}
@@ -1490,13 +1490,13 @@ function calculate() {
 
 	// 단품
 	var $quantity = $form.find('.quantity');
-	if ($quantity.size() > 0) {
+	if ($quantity.length > 0) {
 		totalItemPrice = itemPrice * Number($quantity.val());
 	}
 
 	/*
-	if (($quantity.size() > 0 && Number($quantity.val()) < 2)
-		 || ($quantity.size() == 0 && $addedOptions.size() == 0 && $addedItems.size() == 0)) {
+	if (($quantity.length > 0 && Number($quantity.val()) < 2)
+		 || ($quantity.length == 0 && $addedOptions.length == 0 && $addedItems.length == 0)) {
 		$('.total-price').hide();
 		return;
 	}
@@ -1523,7 +1523,7 @@ function calculate() {
 
 	// 옵션조합형 상품
 	for (var i = 0; i < SELECTED_COMBINATION_OPTION_INFOS.length; i++) {
-		if ($quantity.size() > 0) {
+		if ($quantity.length > 0) {
 			var optionPrice = Number(SELECTED_COMBINATION_OPTION_INFOS[i].optionPrice) * $quantity.val();
 
 			totalItemPrice += optionPrice;
@@ -1558,7 +1558,18 @@ function calculate() {
 	// 총 결제금액
 	$('.total-amount').text(Common.numberFormat(totalItemPrice + totalOptionPrice + totalAdditionPrice));
 
+	//렌탈 페이는 수량이 1일때만 변화
+	if ($quantity.val() == 1 ) {
+		// 렌탈페이 - API 통신상 필요한 기본상품 합계 금액 저장
+		$('.rental-send-amount').val(Common.numberFormat(totalItemPrice));
+
+		// 계산후 금액 재정산
+		getMonthRentalContPer(60);
+	}
+
 	$('.total-price').show();
+
+
 }
 
 function initOptionSetting() {
@@ -1605,7 +1616,7 @@ function initOptionSetting() {
 // 정가 표시 방법 (정가가 숫자가 아닌 경우)
 function displayItemPrice() {
 	var $itemPrice = $('#item_price');
-	if ($itemPrice.size() > 0) {
+	if ($itemPrice.length > 0) {
 		var itemPrice = $itemPrice.text().replace(',', '');
 		var $itemPriceInfo = $('#item_price_info');
 
@@ -1638,7 +1649,7 @@ function initItemDescriptionTab() {
 //네이버 체크아웃
 function naverPayInCart() {
 	var $availableItem = $(':checkbox[class^=op-available-item]');
-	if ($availableItem.size() == 0) {
+	if ($availableItem.length == 0) {
 		alert(Message.get('M00440'));
 		return;
 	}
@@ -1924,7 +1935,7 @@ function checkForItem(target) {
 		// 일반옵션
 		var $addedOptions = $form.find('.added-options li');
 
-		if ($addedOptions.size() == 0) {
+		if ($addedOptions.length == 0) {
 			alert('상품필수옵션을 선택해주세요.');
 			$('.option-select-box').focus();
 			return false;
@@ -1978,7 +1989,7 @@ function showAddToWishListLayer() {
 	// 옵션 상품인 경우 옵션 선택 여부 확인.
 	if (item.itemOptionFlag == 'Y') {
 		// 옵션 선택 여부.
-		var optionItemCount = $('input[name=arrayQuantitys]').size();
+		var optionItemCount = $('input[name=arrayQuantitys]').length;
 
 		if (optionItemCount == 0) {
 
@@ -2004,7 +2015,7 @@ function showAddToWishListLayer() {
 
 	// 담기가 가능한 그룹 설정.
 	// 추가할 상품 수.
-	var addWishlistItemCount = $('input[name=arrayItemId]').size();
+	var addWishlistItemCount = $('input[name=arrayItemId]').length;
 	resetWishlistItemCount(addWishlistItemCount);
 
 	layer_open('wishlist_group_layer');
@@ -2091,7 +2102,7 @@ function getSelectedOptionInfo() {
 				$option = $itemOptionInfo.find('input[name=' + name + ']:checked');
 				$target = $itemOptionInfo.find('input[name=' + name + ']').eq(0);
 
-				if ($option.size() == 0) {
+				if ($option.length == 0) {
 					$.validator.validatorAlert($.validator.messages['select'].format($target.attr('title')), $target);
 					$target.focus();
 					hasError = true;
@@ -2232,7 +2243,7 @@ function clearAllOptions() {
 
 // 리뷰 제목 클릭 이벤트 (내용 오픈)
 function reviewClickEvent() {
-	if ($('.review_subject').size() > 0) {
+	if ($('.review_subject').length > 0) {
 		$(document).on('click', '.review_subject', function(e) {
 			e.preventDefault();
 			var $target = $(this).closest('tr').next('tr');
@@ -2402,4 +2413,181 @@ function setCustomerInfo() {
 			}
 		});
 	});
+}
+
+
+
+//---------------------------
+
+// window.onload = pageLoad;
+// function pageLoad(){
+// 	var head= document.getElementsByTagName('head')[0];
+// 	var script= document.createElement('script');
+// 	script.type= 'text/javascript';
+// 	script.src= '//code.jquery.com/jquery-3.3.1.min.js';
+// 	head.appendChild(script);
+// };
+
+function checkUrlForm(strUrl) {
+	var expUrl = /^http[s]?\:\/\//i;
+	return expUrl.test(strUrl);
+}
+
+function openRentalPg(serverType, formId){
+
+	var ip = "";
+
+	var curDate = new Date();
+	var strDate = new Date(2021,4,30,1,30,0);
+	var endDate = new Date(2021,4,30,4,30,0);
+
+	if((curDate.getTime() > strDate.getTime()) &&(curDate.getTime() < endDate.getTime())){
+		alert("코리아크레딧뷰로 차세대 시스템 오픈에 따라\n"
+			+"일시 서비스 중단되었습니다.\n"
+			+"- 중단 일시 : 2021.05.30 01:30 ~ 04:30 (3시간)");
+		return;
+	}
+
+	if(serverType == "dev"){
+		ip = "http://211.178.29.124:8082";
+	}else if(serverType == "local"){
+		ip = "http://10.100.1.161:8082";
+	}else if(serverType == "stg"){
+		ip = "http://211.178.29.124:8082";
+	}else if(serverType == "prd"){
+		ip = "https://rentalpg.bsrental.com:446/";
+	}else{
+		alert("서버 타입을 확인해주세요.");
+		return false;
+	}
+
+	$('head').append('<link id="bsrental_style" rel="stylesheet" href="' + ip + '/resources/css/rentalPg.css" type="text/css" />');
+
+	var storeId = $('#'+formId+' [name="storeId"]').val();
+	var storeCode = $('#'+formId+' [name="storeCode"]').val();
+	var prodName = $('#'+formId+' [name="prodName"]').val();
+	var rentalPer = $('#'+formId+' [name="rentalPer"]').val();
+	var prodAmt = $('#'+formId+' [name="prodAmt"]').val();
+	var postcode = $('#'+formId+' [name="postcode"]').val();
+	var addr = $('#'+formId+' [name="addr"]').val();
+	var addrDtl = $('#'+formId+' [name="addrDtl"]').val();
+	var color = $('#'+formId+' [name="prodColor"]').val();
+	var returnURL = $('#'+formId+' [name="returnURL"]').val();
+	var prodUrl = $('#'+formId+' [name="prodUrl"]').val();
+	var offLineYn = $('#'+formId+' [name="offLineYn"]').val();
+	var storeOrderNo = $('#'+formId+' [name="storeOrderNo"]').val();
+
+	if(typeof storeId == "undefined" || storeId == null || storeId == "") {
+		alert("가맹점아이디를 입력해주세요.");
+		return false;
+	}else if(typeof storeCode == "undefined" || storeCode == null || storeCode == "") {
+		alert("가맹점코드를 입력해주세요.");
+		return false;
+	}else if(typeof prodName == "undefined" || prodName == null || prodName == "") {
+		alert("상품명을 입력해주세요.");
+		return false;
+	}else if(typeof rentalPer == "undefined" || rentalPer == null || rentalPer == "") {
+		alert("렌탈기간을 입력해주세요.");
+		return false;
+	}else if(typeof prodAmt == "undefined" || prodAmt == null || prodAmt == "") {
+		alert("물건대금을 입력해주세요.");
+		return false;
+	}else if(typeof returnURL == "undefined" || returnURL == null || returnURL == "") {
+		alert("returnURL을 입력해주세요.");
+		return false;
+	}else if(typeof prodUrl == "undefined" || prodUrl == null || prodUrl == "") {
+		alert("상품상세URL을 입력해주세요.");
+		return false;
+	}
+
+	/*2021.08.05 JHC 오프라인 호출일 경우 주소체크를 하지 않는다*/
+	if(offLineYn != 'Y'){
+		if(typeof addr == "undefined" || addr == null || addr == "") {
+			alert("주소를 입력해주세요.");
+			return false;
+		}else if(typeof addrDtl == "undefined" || addrDtl == null || addrDtl == "") {
+			alert("상세주소를 입력해주세요.");
+			return false;
+		}
+	}
+	/*2021.08.05 JHC 오프라인 호출일 경우 주소체크를 하지 않는다*/
+
+	if(!checkUrlForm(returnURL)){
+		alert("returnURL이 올바른 URL형식이 아닙니다.");
+		return false;
+	}
+
+	var divCheck = $('#bsDivPopup').length
+
+	if(divCheck > 0){
+		return;
+	}else{
+		var url = ip + "/rentalPgPlatform.do";
+		var popupTag = '<FORM  name="pgIframForm" id="pgIframForm"  method = "POST"  target="iFrm" action="'+url+'" >';
+		popupTag = popupTag + '<input type = "hidden"  name="storeId"  value="'+storeId+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="storeCode"  value="'+storeCode+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="prodName"  value="'+prodName+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="rentalPer"  value="'+rentalPer+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="prodAmt"  value="'+prodAmt+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="postcode"  value="'+postcode+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="addr"  value="'+addr+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="addrDtl"  value="'+addrDtl+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="color"  value="'+color+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="returnURL"  value="'+returnURL+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="prodUrl"  value="'+prodUrl+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="offLineYn"  value="'+offLineYn+'" />';
+		popupTag = popupTag + '<input type = "hidden"  name="storeOrderNo"  value="'+storeOrderNo+'" />';
+		popupTag = popupTag + '</FORM>﻿';
+		popupTag = popupTag + '<div id="bsDivPopup" class="bsRental-modal-wrap">';
+		if(offLineYn != 'Y'){
+			popupTag = popupTag + '<iFRAME id="iFrm" frameBorder="0" name="iFrm" width="800" height="680" id="iFrm" scrolling="yes" class="iFrm"></iFRAME>';
+		}else{
+			popupTag = popupTag + '<iFRAME id="iFrm" frameBorder="0" name="iFrm" width="800" height="820" id="iFrm" scrolling="yes" class="iFrm"></iFRAME>';
+		}
+		popupTag = popupTag + '</div>';
+		$("body").append(popupTag);
+		$("body").css("overflow","hidden");
+		$('#pgIframForm').submit();
+	}
+}
+
+window.addEventListener('message', function(e) {
+	$('.modal-wrap-pop').css("display", "none");
+	$('#bsDivPopup').remove();
+	$('#bsrental_style').remove();
+	$("body").css("overflow","auto");
+});
+
+
+function isPgEmptyCheck(str){
+	if(typeof str == "number"){
+		str = str + "";
+	}
+	if(typeof str == "undefined" || str == null || str == ""){
+		return "empty";
+	} else {
+		return "notempty";
+	}
+}
+
+
+// 렌탈구매
+function buyRental(loginCheck) {
+	// 바로구매가 가능한 지 확인한다.
+	if (!checkForItem('buy_now')) {
+		return;
+	}
+
+	loginCheck = loginCheck == undefined ? true : loginCheck;
+
+	$.post('/cart/buy-now', $('#cartForm').serialize(), function(response) {
+		//clearSelectInformation();
+		Common.responseHandler(response, function() {
+			if (isLogin == 'false' && loginCheck == true) {
+				Common.popup('/users/login?target=order&popup=1&redirect=/order/step1', 'popup-login', 550, 380, 1);
+			} else {
+				location.href='/order/step1';
+			}
+		});
+	}, 'json');
 }

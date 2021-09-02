@@ -742,6 +742,15 @@ span.require {color: #e84700; margin-left: 5px;}
 										</div>
 									</td>
 								</tr>
+								<tr>
+									<td class="label">렌탈페이 적용 여부</td>
+									<td colspan="3">
+										<div>
+											<form:radiobutton path="rentalPayFlag" label="적용" value="Y" />
+											<form:radiobutton path="rentalPayFlag" label="미적용" value="N" />
+										</div>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

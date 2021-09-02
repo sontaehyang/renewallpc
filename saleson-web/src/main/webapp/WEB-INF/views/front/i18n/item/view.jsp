@@ -8,7 +8,6 @@
 <%@ taglib prefix="page" 	tagdir="/WEB-INF/tags/page"%>
 <%@ taglib prefix="shop"	uri="/WEB-INF/tlds/shop" %>
 <%@ taglib prefix="naverPay"	tagdir="/WEB-INF/tags/naverPay" %>
-
 	<div class="view_wrap">
 		<div class="inner item_top_sec">
 			<div class="location_area">
@@ -543,29 +542,31 @@
 									</div>
 								</div>
 							</div><!--// bfs_btm -->
-							<div class="rental_area">
-								<p class="tit">렌탈로 리뉴올 PC 이용하기</p>
-								<div class="month_select">
-									<div class="month">
-										<button type="button">24개월</button>
-										<button type="button">36개월</button>
-										<button type="button">48개월</button>
-										<button type="button" class="on">60개월</button>
+							<c:if test="${item.rentalPayFlag == 'Y'}">
+								<div class="rental_area">
+									<p class="tit">렌탈로 리뉴올 PC 이용하기</p>
+									<div class="month_select monthRentalContPerRentalPg">
+										<div class="month">
+											<button type="button" id="rental_per_24" onclick="getMonthRentalContPer('24')">24개월</button>
+											<button type="button" id="rental_per_36" onclick="getMonthRentalContPer('36')">36개월</button>
+											<button type="button" id="rental_per_48" onclick="getMonthRentalContPer('48')">48개월</button>
+											<button type="button" id="rental_per_60" onclick="getMonthRentalContPer('60')">60개월</button>
+										</div>
+										<span class="txt">무료배송</span>
 									</div>
-									<span class="txt">무료배송</span>
+									<dl class="month_price">
+										<dt class="rental_txt">렌탈료</dt>
+										<dd class="rental_price">월 <span class="rental_price_month">0</span>원</dd>
+										<dt class="rental_txt card">제휴카드 렌탈료</dt>
+										<dd class="rental_price card">월 <span class="rental_price_month_partnership">0</span>원</dd>
+									</dl>
+									<div class="rental_total">
+										<p class="txt">총 렌탈료</p>
+										<p class="total"><span class="rental_total_price">0</span>원</p>
+									</div>
+									<button type="button" onclick="javascript:buyRental()" class="btn_rental">렌탈 구매하기</button>
 								</div>
-								<dl class="month_price">
-									<dt class="rental_txt">렌탈료</dt>
-									<dd class="rental_price">월 <span>82,200</span>원</dd>
-									<dt class="rental_txt card">제휴카드 렌탈료</dt>
-									<dd class="rental_price card">월 <span>69,300</span>원</dd>
-								</dl>
-								<div class="rental_total">
-									<p class="txt">총 렌탈료</p>
-									<p class="total"><span>4,838,000</span>원</p>
-								</div>
-								<button type="button" class="btn_rental">렌탈 구매하기</button>
-							</div>
+							</c:if>
 						</div><!--// btm_fix_sec -->
 					</form>
 				</div>	<!-- // item_info_view E -->
@@ -756,6 +757,8 @@
 		</div><!--// btm_kind_sec -->
 	</div><!--// view_wrap -->
 
+	<!-- 렌탈 구매하기용 총금액 -->
+	<hidden class="rental-send-amount"></hidden>
 
 	<jsp:include page="../include/layer-cart.jsp" />
 	<jsp:include page="../include/layer-wishlist.jsp" />
@@ -783,8 +786,27 @@
 		<script src="/content/modules/op.social.js"></script>
 		<script src="/content/modules/op.imageviewer.js"></script>
 		<script src="/content/modules/popup.js"></script>
-
+		<script src="/content/modules/front/item.view.js"></script>
 		<script type="text/javascript">
+			// 초기 렌탈료 조회  (디폴트 60개월)
+			getMonthRentalContPer(60);
+
+			$('.rental-send-amount').on('change', function(){
+				alert(1);
+			});
+
+			function getMonthRentalContPer(rentalVal){
+				var rentalAmount;
+				$('.monthRentalContPerRentalPg .month').children().removeClass("on");
+				$('#rental_per_'+ rentalVal).addClass("on");
+				if ($('.rental-send-amount').val() == '') {
+					rentalAmount = "${item.salePrice}";
+				} else {
+					rentalAmount = $('.rental-send-amount').val();
+				}
+				calculateRentalFee(rentalVal, rentalAmount);
+			}
+
 			// ksh 2020-12-03 옵션조합형 선택정보
 			var SELECTED_COMBINATION_OPTION_INFOS = [];
 			var IS_COMBINATION_OPTION_SOLD_OUT = '${isCombinationOptionSoldOut}';
@@ -867,12 +889,73 @@
 				}
 
 			}
-		</script>
 
+
+			/* 월렌탈료 총렌탈료 구하기 */
+			function calculateRentalFee(rentalVal, rentalAmount){
+				var prodAmt = rentalAmount;
+				prodAmt = prodAmt.replace(/,/g, '');
+				var rentalPer = rentalVal;
+				var storeCode = '${op:property("rentalpay.seller.code")}';
+				console.log(prodAmt);
+				console.log(rentalPer);
+				console.log(storeCode);
+				var rentalPerApiUrl = '${op:property("rentalpay.rentalPer.api.url")}';
+				$.ajax({
+					url : rentalPerApiUrl,
+					type : "POST",
+					cache : false,
+					dataType: "json",
+					data : {
+						"prodAmt"   : prodAmt,
+						"rentalPer" : rentalPer,
+						"storeCode" : storeCode
+					},
+					success : function(data){
+						var rentalTotAmt = data.rentalTotAmt;
+						var rentalAmt    = data.rentalAmt;
+						var resultMsg = data.resultMsg;
+						var resultCode    = data.resultCode;
+						console.log("총 렌탈료 ==> " + rentalTotAmt);
+						console.log("월 렌탈료 ==> " +rentalAmt);
+						console.log("결과 코드 ==> " +resultCode);
+						console.log("결과 메시지 ==> " +resultMsg);
+						$('.rental_total_price').text(priceToString(rentalTotAmt));
+						$('.rental_price_month').text(priceToString(rentalAmt));
+						$('.rental_price_month_partnership').text(priceToString(rentalAmt - 13000));
+					}
+				});
+			}
+
+			function priceToString(price) {
+				return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			}
+
+			function toCollectionScript(text) {
+
+				if (text == 'cart') {
+					<!-- 카카오픽셀 설치 [장바구니 추가 이벤트 전송] -->
+					kakaoPixel('1612698247174901358').addToCart({
+						id: '${item.itemUserCode}'
+					});
+					//alert('카카오픽셀 카트 스크립트')
+
+				}
+
+				if (text == 'wishlist') {
+					<!-- 카카오픽셀 설치 [장바구니 추가 이벤트 전송] -->
+					kakaoPixel('1612698247174901358').addToWishList({
+						id: '${item.itemUserCode}'
+					});
+					//alert('카카오픽셀 관심상품 스크립트');
+				}
+
+			}
+		</script>
 
 		<link rel="stylesheet" type="text/css" href="/content/css/swiper.css">
 		<script src="/content/js/swiper.jquery.min.js"></script>
 		<script src="/content/js/view.js"></script>
-		<script src="/content/modules/front/item.view.js"></script>
 		<script type="text/javascript" src="/content/modules/naverpay/naver.pay.js"></script>
+		<script type="text/javascript" src="http://211.178.29.124:8082/resources/common/rentalPg.js"></script>
 	</page:javascript>

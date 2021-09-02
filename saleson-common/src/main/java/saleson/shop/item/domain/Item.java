@@ -39,6 +39,8 @@ public class Item extends ItemBase {
 
 	private String cashDiscountFlag = "N"; // 현금특가 여부
 
+	private String rentalPayFlag = "N"; // 렌탈페이 여부
+
 	public String getCouponUseFlag() {
 		return couponUseFlag;
 	}
@@ -1714,5 +1716,13 @@ public class Item extends ItemBase {
 
 	public void setCashDiscountFlag(String cashDiscountFlag) {
 		this.cashDiscountFlag = cashDiscountFlag;
+	}
+
+	public String getRentalPayFlag() {
+		return rentalPayFlag;
+	}
+
+	public void setRentalPayFlag(String rentalPayFlag) {
+		this.rentalPayFlag = rentalPayFlag;
 	}
 }
