@@ -23,7 +23,7 @@ public class ItemValidator {
 
 		if (StringUtils.isEmpty(itemParam.getSort())
 				|| !itemParam.getSort().matches("(ASC|DESC)")) {
-			itemParam.setSort("ASC");
+			itemParam.setSort("DESC");
 		}
 		// 리스트 타입.
 		if (StringUtils.isEmpty(itemParam.getListType())
@@ -41,7 +41,7 @@ public class ItemValidator {
 
 		if (StringUtils.isEmpty(itemParam.getOrderBy())
 				|| !itemParam.getOrderBy().matches("(ORDERING|HITS|SALE_PRICE)")) {
-			itemParam.setOrderBy("ORDERING");
+			itemParam.setOrderBy("HITS");
 		}
 	}
 
