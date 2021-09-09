@@ -51,7 +51,7 @@
 			<div class="mlive">
 				<p class="tit">시언Pick</p>
 				<a href="/pages/pick" class="ml_thumb">
-					<img src="/content/images/common/pc_live_img_20210521.png">
+					<img src="/content/images/common/pc_live_img_20210909.png">
 				</a>
 				<div class="ml_btm">
 					<!--a href="/products/view/G2000002228">경매 PC <br>보러가기</a>
