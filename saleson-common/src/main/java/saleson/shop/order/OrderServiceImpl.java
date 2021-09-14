@@ -89,6 +89,7 @@ import saleson.shop.order.domain.*;
 import saleson.shop.order.giftitem.OrderGiftItemService;
 import saleson.shop.order.payment.OrderPaymentMapper;
 import saleson.shop.order.pg.PgService;
+import saleson.shop.order.pg.RentalPay;
 import saleson.shop.order.pg.cj.domain.CjResult;
 import saleson.shop.order.pg.config.ConfigPgService;
 import saleson.shop.order.pg.domain.PgData;
@@ -2165,6 +2166,8 @@ public class OrderServiceImpl implements OrderService {
 
 		map.put("payco", new BuyPayment("payco", configPg));
 
+		map.put("rentalpay", new BuyPayment("rentalpay", configPg));
+
 		return map;
 
 	}
@@ -2304,6 +2307,21 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 
+			//rentalTemp에  같은 세션정보가 있다면 값 담아오기
+			RentalPay rentalPayTempParam = new RentalPay();
+			rentalPayTempParam.setSessionId(items.get(0).getSessionId());
+			rentalPayTempParam.setUserId(items.get(0).getUserId());
+			RentalPay rentalPayInfo = orderMapper.getRentalOrderInfo(rentalPayTempParam);
+
+			if(rentalPayInfo != null) {
+				buy.setBuyRentalPay(rentalPayInfo.getBuyRentalPay());
+				buy.setRentalTotAmt(rentalPayInfo.getRentalTotAmt());
+				buy.setRentalMonthAmt(rentalPayInfo.getRentalMonthAmt());
+				buy.setRentalPartnershipAmt(rentalPayInfo.getRentalPartnershipAmt());
+				buy.setRentalPer(rentalPayInfo.getRentalPer());
+			}
+
+
 			// 상품단위로 처리되는 기존 로직을 유지하기 위해 items에 추가한 추가구성상품 삭제
 			List<BuyItem> itemList = items.stream().filter(l -> "N".equals(l.getAdditionItemFlag())).collect(Collectors.toList());
 			items.clear();
@@ -2345,6 +2363,11 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public void insertRentalOrderItemTemp(CartParam cartParam) {
+		orderMapper.insertRentalOrderItemTemp(cartParam);
+	}
+
+	@Override
 	public void deleteOrderItemTemp(long userId, String sessionId) {
 
 		OrderParam orderParam = new OrderParam();
@@ -2352,6 +2375,16 @@ public class OrderServiceImpl implements OrderService {
 		orderParam.setSessionId(sessionId);
 
 		orderMapper.deleteOrderItemTemp(orderParam);
+	}
+
+	@Override
+	public void deleteRentalOrderItemTem(long userId, String sessionId) {
+
+		OrderParam orderParam = new OrderParam();
+		orderParam.setUserId(userId);
+		orderParam.setSessionId(sessionId);
+
+		orderMapper.deleteRentalOrderItemTemp(orderParam);
 	}
 
 	@Override
@@ -2510,6 +2543,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		setOrderItemInfo(list, orderParam);
+
 
 
 		// 추가구성상품
@@ -2779,54 +2813,59 @@ public class OrderServiceImpl implements OrderService {
 		buy.setOrderPrice(0, configService.getShopConfig(Config.SHOP_CONFIG_ID));
 
 		HashMap<String, BuyPayment> payments = new HashMap<String, BuyPayment>();
-		try {
-			// 결제금액 검증
-			this.payAmountVerification(buy, postOrderPrice);
 
-			int notMixPayTypeCount = 0;
-			int totalPayAmount = 0;
-			int totalPointPayAmount = 0;
-			HashMap<String, BuyPayment> buyPayments = buy.getBuyPayments();
-			for(String key : buyPayments.keySet()) {
-				BuyPayment buyPayment = buyPayments.get(key);
+			try {
+				// 결제금액 검증
+				this.payAmountVerification(buy, postOrderPrice);
 
-				//에스크로 사용여부 확인
-				if(buyPayment.getEscrowStatus() != null && buyPayment.getEscrowStatus().equals("0"))
-					escrowStatus = buyPayment.getEscrowStatus();
+				int notMixPayTypeCount = 0;
+				int totalPayAmount = 0;
+				int totalPointPayAmount = 0;
+				HashMap<String, BuyPayment> buyPayments = buy.getBuyPayments();
+				for (String key : buyPayments.keySet()) {
+					BuyPayment buyPayment = buyPayments.get(key);
 
-				if (buyPayment.getAmount() > 0) {
+					//에스크로 사용여부 확인
+					if (buyPayment.getEscrowStatus() != null && buyPayment.getEscrowStatus().equals("0"))
+						escrowStatus = buyPayment.getEscrowStatus();
 
-					if (ArrayUtils.contains(buy.getNotMixPayType(), key)) {
-						notMixPayTypeCount++;
+					if (buyPayment.getAmount() > 0) {
+
+						if (ArrayUtils.contains(buy.getNotMixPayType(), key)) {
+							notMixPayTypeCount++;
+						}
+
+						if (PointUtils.isPointType(key)) {
+							totalPointPayAmount += buyPayment.getAmount();
+						} else {
+							totalPayAmount += buyPayment.getAmount();
+						}
+
+						payments.put(key, buyPayment);
 					}
-
-					if (PointUtils.isPointType(key)) {
-						totalPointPayAmount += buyPayment.getAmount();
-					} else {
-						totalPayAmount += buyPayment.getAmount();
-					}
-
-					payments.put(key, buyPayment);
 				}
+
+				//렌탈페이일 경우
+				if (buy.getBuyRentalPay().equals("Y")) {
+					// 렌탈페이의 경우 즉시결제가 아니기에 대기
+				} else {
+					if (buy.getOrderPrice().getTotalPointDiscountAmount() != totalPointPayAmount) {
+						throw new OrderException(MessageUtils.getMessage("M00246") + " 결제금액을 확인해주세요.");
+					}
+
+					// 결제금액 한번더 검증
+					postOrderPrice.setOrderPayAmount(totalPayAmount);
+					this.payAmountVerification(buy, postOrderPrice);
+
+					if (notMixPayTypeCount > 1) {
+						throw new OrderException("복합 결제가 불가능한 결제 방식을 1개이상 선택하여 결제가 진행되지 않았습니다.");
+					}
+				}
+
+			} catch (OrderException oe) {
+				throw new OrderException(oe.getMessage(), oe.getRedirectUrl(), oe);
 			}
 
-			if (buy.getOrderPrice().getTotalPointDiscountAmount() != totalPointPayAmount) {
-				throw new OrderException(MessageUtils.getMessage("M00246") + " 결제금액을 확인해주세요.");
-			}
-
-			// 결제금액 한번더 검증
-			postOrderPrice.setOrderPayAmount(totalPayAmount);
-			this.payAmountVerification(buy, postOrderPrice);
-
-			if (notMixPayTypeCount > 1) {
-				throw new OrderException("복합 결제가 불가능한 결제 방식을 1개이상 선택하여 결제가 진행되지 않았습니다.");
-			}
-
-
-
-		} catch (OrderException oe) {
-			throw new OrderException(oe.getMessage(), oe.getRedirectUrl(), oe);
-		}
 
 		Buyer buyer = buy.getBuyer();
 
@@ -3177,10 +3216,13 @@ public class OrderServiceImpl implements OrderService {
                 pgData.put("productItems", productItems);
 
                 map.put("naverpay", pgData);
-            }
+
+			} else if ("rentalPay".equals(key)) {
+				System.out.println("무엇을 넣어줄까용용");
+			}
 
 
-			buyPayment.setOrderCode(buy.getOrderCode());
+		buyPayment.setOrderCode(buy.getOrderCode());
             buyPayment.setCreatedDate(createdDate);
 
 			orderMapper.insertOrderPaymentBuyTemp(buyPayment);
@@ -3246,6 +3288,278 @@ public class OrderServiceImpl implements OrderService {
 				} else {
 					orderMapper.insertOrderItemBuyTemp(buyItem);
 				}
+			}
+		}
+
+		// 주문자 정보 기본정보로 저장 체크시 2017-05-18 yulsun.yoo
+		if ("1".equals(buy.getDefaultBuyerCheck())) {
+			buy.getBuyer().setUserId(buy.getUserId());
+			userService.updateUserDetailForOrder(buy.getBuyer());
+		}
+
+		return map;
+	}
+
+	@Override
+	public HashMap<String, Object> saveRentalOrderTemp(HttpSession session, Buy buy) {
+
+		OrderParam orderParam = new OrderParam();
+		orderParam.setSessionId(buy.getSessionId());
+		orderParam.setUserId(buy.getUserId());
+		orderParam.setViewTarget(buy.getDeviceType());
+
+		OrderPrice orderPrice = buy.getOrderPrice();
+
+		String createdDate = DateUtils.getToday(DATETIME_FORMAT);
+
+		// Post로 넘어온 결제 정보로 새로운 객채를 생성하여 계산된 결제 금액과 동일한지 체크함
+		OrderPrice postOrderPrice = this.newOrderPrice(orderPrice);
+		List<BuyItem> list = orderMapper.getOrderItemTempList(orderParam);
+		if (list == null) {
+			throw new OrderException("주문 가능 상품이 없습니다.", "/cart");
+		}
+
+		// 배송지 지정되지 않은 상품있는지 체크용
+		HashMap<String, Integer> checkQuantityTotal = new HashMap<>();
+		for(BuyItem buyItem : list) {
+			ItemPrice itemPrice = buyItem.getItemPrice();
+			String key = "item-" + buyItem.getItemSequence();
+
+			int addCount = 0;
+			if (checkQuantityTotal.get(key) != null) {
+				addCount = checkQuantityTotal.get(key);
+			}
+
+			checkQuantityTotal.put(key, itemPrice.getQuantity() + addCount);
+		}
+
+		// 복합 배송지로인한 상품정보 재정의
+		int shippingIndex = 0;
+		for(Receiver receiver : buy.getReceivers()) {
+
+			receiver.setShippingIndex(shippingIndex);
+			List<BuyItem> items = new ArrayList<>();
+
+			for(BuyQuantity buyQuantity : receiver.getBuyQuantitys()) {
+
+				for(BuyItem buyItem : list) {
+					if (buyQuantity.getItemSequence() == buyItem.getItemSequence()) {
+
+						// 복사해야됨...ㅠㅠ
+						BuyItem cloneObject;
+
+						try {
+
+							String checkKey = "item-" + buyQuantity.getItemSequence();
+							int buyTotalCount = checkQuantityTotal.get(checkKey);
+							if (buyTotalCount - buyQuantity.getQuantity() == 0) {
+								checkQuantityTotal.remove(checkKey);
+							} else {
+
+								if (buyTotalCount - buyQuantity.getQuantity() > 0) {
+									checkQuantityTotal.put(checkKey, buyTotalCount - buyQuantity.getQuantity());
+								} else {
+
+									// 장바구니에 담겨있는 수량보다 구매시도 수량이 많은경우 멈춰!!
+									throw new OrderException("장바구니에 담겨있는 수량보다 구매시도 수량이 많습니다.");
+								}
+							}
+
+
+							cloneObject = (BuyItem) buyItem.clone();
+							cloneObject.getItemPrice().setQuantity(buyQuantity.getQuantity());
+
+							// 배송방법
+							cloneObject.setDeliveryMethodType(buy.getDeliveryMethodType());
+
+							items.add(cloneObject);
+
+						} catch (CloneNotSupportedException e) {
+							throw new OrderException(e.getMessage(), e);
+						}
+
+						break;
+					}
+				}
+
+			}
+
+			// 상품정보 셋팅
+			this.setOrderItemInfo(items, orderParam);
+
+			// 구매가능여부 채크
+			ShopUtils.buyVerification(items, items.size());
+
+			receiver.setItems(items);
+
+			// 상품쿠폰 적용
+			receiver.itemCouponUsed(true, buy, receiver.getShippingIndex());
+
+			// 구매 상품 정책별 그룹
+			String zipcode = receiver.getReceiveZipcode();
+			if (StringUtils.isEmpty(zipcode)) {
+				zipcode = receiver.getFullReceiveZipcode();
+			}
+
+			receiver.setShipping(orderMapper.getIslandTypeByZipcode(zipcode));
+			shippingIndex++;
+		}
+
+		if (checkQuantityTotal.keySet().size() > 0) {
+			throw new OrderException("배송지가 지정되지 않은 상품이 있습니다.");
+		}
+
+
+		buy.setOrderPrice(0, configService.getShopConfig(Config.SHOP_CONFIG_ID));
+
+		HashMap<String, BuyPayment> payments = new HashMap<String, BuyPayment>();
+
+		try {
+			// 결제금액 검증
+			this.payAmountVerification(buy, postOrderPrice);
+
+			int notMixPayTypeCount = 0;
+			int totalPayAmount = 0;
+			int totalPointPayAmount = 0;
+			HashMap<String, BuyPayment> buyPayments = buy.getBuyPayments();
+			for (String key : buyPayments.keySet()) {
+				BuyPayment buyPayment = buyPayments.get(key);
+
+				if (buyPayment.getAmount() > 0) {
+
+					if (ArrayUtils.contains(buy.getNotMixPayType(), key)) {
+						notMixPayTypeCount++;
+					}
+
+					if (PointUtils.isPointType(key)) {
+						totalPointPayAmount += buyPayment.getAmount();
+					} else {
+						totalPayAmount += buyPayment.getAmount();
+					}
+
+					payments.put(key, buyPayment);
+				}
+			}
+
+
+		} catch (OrderException oe) {
+			throw new OrderException(oe.getMessage(), oe.getRedirectUrl(), oe);
+		}
+
+		Buyer buyer = buy.getBuyer();
+
+		// 기존 주문 임시 데이터 삭제 - 주문자 정보등만 삭제 한다. * 상품 임시 데이터는 유지
+		orderMapper.deleteOrderTemp(buy);
+
+		String productName = buy.getItems().get(0).getItem().getItemName();
+		if (buy.getItems().size() > 1) {
+			productName += " 외 " + (buy.getItems().size() - 1) + "개";
+		}
+
+		if (!UserUtils.isUserLogin()) {
+
+			Receiver receiver = buy.getReceivers().get(0);
+
+			// 비회원의 경우 주문자정보 주소 입력란이 없음.. 받는사람 주소로 대신함
+			buyer.setSido(receiver.getReceiveSido());
+			buyer.setSigungu(receiver.getReceiveSigungu());
+			buyer.setEupmyeondong(receiver.getReceiveEupmyeondong());
+			buyer.setNewZipcode(receiver.getReceiveNewZipcode());
+			buyer.setZipcode(receiver.getReceiveZipcode());
+			buyer.setAddress(receiver.getReceiveAddress());
+			buyer.setAddressDetail(receiver.getReceiveAddressDetail());
+
+		}
+
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("productName", productName);
+		map.put("userName", buyer.getUserName());
+		map.put("email", buyer.getEmail());
+		map.put("mobile", buyer.getFullMobile());
+		map.put("orderCode", buy.getOrderCode());
+
+
+		int totalTaxFreeAmount = buy.getOrderPrice().getTaxFreeAmount();
+
+		ConfigPg configPg = configPgService.getConfigPg();
+		List<String> savePaymentType = new ArrayList<>();
+		for(String key : payments.keySet()) {
+			BuyPayment buyPayment = payments.get(key);
+			buyPayment.setData(key, configPg);
+
+			int taxFreeAmount = 0;
+
+			if (totalTaxFreeAmount > 0) {
+				if (!PointUtils.isPointType(key)) {
+					taxFreeAmount = totalTaxFreeAmount < buyPayment.getAmount() ? totalTaxFreeAmount : buyPayment.getAmount();
+					totalTaxFreeAmount -= taxFreeAmount;
+				}
+			}
+
+			buyPayment.setTaxFreeAmount(taxFreeAmount);
+
+			// PG사 init이 Buy로 구현된경우 결제 금액을 전달하기위한 용도
+			buy.setPgPayAmount(buyPayment.getAmount());
+
+			if ("rentalPay".equals(key)) {
+				System.out.println("무엇을 넣어줄까용용");
+			}
+
+			buyPayment.setOrderCode(buy.getOrderCode());
+			buyPayment.setCreatedDate(createdDate);
+
+			orderMapper.insertOrderPaymentBuyTemp(buyPayment);
+
+			savePaymentType.add(key);
+		}
+
+		map.put("savePaymentType", savePaymentType);
+
+		try {
+			// 영수증 신청시 필요한 사업자등록번호, 휴대전화번호등을 조합
+			String cashbillCode = "010-000-1234";
+
+			if (CashbillType.BUSINESS == buy.getCashbill().getCashbillType()) {
+				cashbillCode = buy.getCashbill().getBusinessNumber1() + "-" + buy.getCashbill().getBusinessNumber2() + "-" + buy.getCashbill().getBusinessNumber3();
+			} else if (CashbillType.PERSONAL == buy.getCashbill().getCashbillType()) {
+				cashbillCode = buy.getCashbill().getCashbillPhone1() + "-" + buy.getCashbill().getCashbillPhone2() + "-" + buy.getCashbill().getCashbillPhone3();
+			}
+
+			buy.getCashbill().setCashbillCode(cashbillCode);
+			buy.setCreatedDate(createdDate);
+
+			orderMapper.insertOrderTemp(buy);
+		} catch (Exception e) {
+			log.error(ERROR_MARKER, e.getMessage(), e);
+
+			String errorMessage = "주문처리에 실패 했습니다. 잠시 후 다시 시도해 주십시오. - ETC";
+
+			if (e instanceof DuplicateKeyException) {
+				errorMessage = "주문처리가 잠시 지연되고 있습니다. 잠시 후 다시 시도해 주십시오. - OrderCode";
+			}
+
+			throw new OrderException(errorMessage, e);
+
+		}
+
+		for(Receiver receiver : buy.getReceivers()) {
+
+			receiver.setUserId(buy.getUserId());
+			receiver.setOrderCode(buy.getOrderCode());
+			receiver.setSessionId(buy.getSessionId());
+			receiver.setCreatedDate(createdDate);
+
+			orderMapper.insertOrderShippingBuyTemp(receiver);
+
+			// 주문상품 복사
+			for(BuyItem buyItem : receiver.getItems()) {
+				buyItem.setOrderCode(buy.getOrderCode());
+				buyItem.setShippingIndex(receiver.getShippingIndex());
+				buyItem.setCampaignCode(buy.getCampaignCode());
+				buyItem.setCreatedDate(createdDate);
+
+				orderMapper.insertOrderItemBuyTemp(buyItem);
+
 			}
 		}
 
@@ -3415,6 +3729,7 @@ public class OrderServiceImpl implements OrderService {
 		boolean isBankPayment = false;
 		boolean isPointPayment = false;
 		boolean isNaverpay = false;
+
 
 		int bankPayAmount = 0; // 미수금
 		String payMethodType = "";
@@ -4186,6 +4501,7 @@ public class OrderServiceImpl implements OrderService {
 				if ("card".equals(payMethodType) || "realtimebank".equals(payMethodType) || "hp".equals(payMethodType) || "naverpay".equals(payMethodType) || "point".equals(payMethodType)) {
 					erpService.saveOrderListGet(erpOrder);
 				}
+				// 렌탈페이 용 ERP 연동필요
 			} catch (Exception e) {
 				log.error("ERP 연동 오류 : {}", e.getMessage(), e);
 				throw new OrderException("ERP 연동 오류", "/order/step1");
@@ -4440,6 +4756,696 @@ public class OrderServiceImpl implements OrderService {
 		return orderSequence + "/" + orderCode;
 	}
 
+	@Override
+	public String insertOrderRental(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request) {
+
+		if (pgData != null) {
+			if (!(pgData instanceof PgData || pgData instanceof ReservationResponse || pgData instanceof CjResult)) {
+				throw new OrderException("다른 객체가 들어옴");
+			}
+		}
+
+		ErpOrder erpOrder = new ErpOrder(ErpOrderType.ORDER);
+
+		ConfigPg configPg = configPgService.getConfigPg();
+		// RENTAL 결제
+		String pgType = "rentalpay";
+		String autoCashReceipt = "N";
+
+		//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+		// request 값 확인필요
+		//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+		if (StringUtils.isEmpty(orderParam.getOrderCode())){
+			if ("easypay".equals(pgType)) {
+				orderParam.setOrderCode(request.getParameter("sp_order_no"));
+			} else if ("nicepay".equals(pgType)) {
+				orderParam.setOrderCode(request.getParameter("Moid"));
+			}
+		}
+
+		Buy buy = this.getOrderTemp(orderParam);
+
+		if (buy == null) {
+			throw new OrderException(MessageUtils.getMessage("M00481"), "/");
+		}
+
+		List<BuyPayment> payments = orderMapper.getOrderPaymentBuyTempList(orderParam);
+		if (payments == null) {
+			throw new OrderException(MessageUtils.getMessage("M00481"), "/");
+		}
+
+		String orderCode = buy.getOrderCode();
+
+		String escrowStatus = orderMapper.getOrderItemTempByEscrow(orderCode);
+
+		int orderSequence = 0;
+
+		OrderPrice orderPrice = buy.getOrderPrice();
+
+		// 10 : 결제 완료, 0 : 입금대기
+		String orderStatus = "10";
+		boolean isBankPayment = false;
+		boolean isPointPayment = false;
+		boolean isNaverpay = false;
+		boolean isRentalpay = false;
+
+
+		int bankPayAmount = 0; // 미수금
+		String payMethodType = "";
+
+		for(BuyPayment buyPayment : payments) {
+
+			if ("bank".equals(buyPayment.getApprovalType())
+					|| "ourvbank".equals(buyPayment.getApprovalType())
+					|| "offlinepay".equals(buyPayment.getApprovalType())
+					|| "ars".equals(buyPayment.getApprovalType())
+					|| "vbank".equals(buyPayment.getApprovalType())) {
+
+				orderStatus = "0";
+				isBankPayment = true;
+			}
+
+			if ("bank".equals(buyPayment.getApprovalType())
+					|| "ourvbank".equals(buyPayment.getApprovalType())
+					|| "ars".equals(buyPayment.getApprovalType())
+					|| "vbank".equals(buyPayment.getApprovalType())) {
+
+				bankPayAmount += buyPayment.getAmount();
+			}
+
+			if ("point".equals(buyPayment.getApprovalType())) {
+				isPointPayment = true;
+			}
+
+			if ("naverpay".equals(buyPayment.getApprovalType())) {
+				isNaverpay = true;
+			}
+
+			if ("rentalpay".equals(buyPayment.getApprovalType())) {
+				isRentalpay = true;
+			}
+
+			payMethodType = buyPayment.getApprovalType();
+		}
+
+		// 초기 주문상태 Set
+		buy.setOrderStatus(orderStatus);
+
+		// OP_ORDER_TEMP에 저장된 결제 금액 정보
+		OrderPrice saveOrderPrice = this.newOrderPrice(orderPrice);
+
+		// 주문 요청 상품들을 조회
+		orderParam.setOrderCode(orderCode);
+
+		List<Receiver> list = orderMapper.getOrderShippingBuyTempList(orderParam);
+		if (ValidationUtils.isNull(list)) {
+			throw new OrderException("주문 가능 상품이 없습니다.", "/cart");
+		}
+
+		for(Receiver receiver : list) {
+			orderParam.setShippingIndex(receiver.getShippingIndex());
+			List<BuyItem> buyItems = orderMapper.getOrderBuyItemTempList(orderParam);
+
+			if (buyItems.isEmpty()) {
+				throw new OrderException("주문 가능 상품이 없습니다.", "/cart");
+			}
+
+			// 입점 업체 수수료 일때 판매자 정보에 설정된 수수료를 조회해서 셋팅
+			for(BuyItem buyItem : buyItems) {
+				Item item = buyItem.getItem();
+				if ("1".equals(item.getCommissionType())) {
+					Seller seller = sellerMapper.getSellerById(item.getSellerId());
+					if (seller != null) {
+						item.setCommissionRate(seller.getCommissionRate());
+					}
+				}
+			}
+
+			// 추가구성상품
+			for(BuyItem buyItem : buyItems) {
+				if ("Y".equals(buyItem.getAdditionItemFlag())) {
+					for (BuyItem temp : buyItems) {
+						if ("N".equals(temp.getAdditionItemFlag()) && buyItem.getParentItemId() == temp.getItemId()) {
+							buyItem.setParentItemSequence(temp.getItemSequence());
+							buyItem.setParentItemId(temp.getItemId());
+							buyItem.setParentItemOptions(temp.getOptions());
+
+							buyItem.setDeliveryType(temp.getItem().getDeliveryType());
+							buyItem.setDeliveryCompanyId(temp.getItem().getDeliveryCompanyId());
+							buyItem.setDeliveryCompanyName(temp.getItem().getDeliveryCompanyName());
+							buyItem.setShipmentGroupCode(temp.getItem().getShipmentGroupCode());
+							buyItem.setShipmentId(temp.getItem().getShipmentId());
+							break;
+						}
+					}
+				}
+			}
+
+			receiver.setItems(buyItems);
+		}
+
+		buy.setReceivers(list);
+
+		HashMap<String, Integer> buyQuantityMap = new HashMap<>();
+		this.setOrderItemInfo(buy.getItems(), orderParam, buyQuantityMap);
+
+		if (buy.getReceivers() != null) {
+			for (Receiver receiver : buy.getReceivers()) {
+
+				// 상품쿠폰 적용
+				receiver.itemCouponUsed(false, buy, receiver.getShippingIndex());
+
+				// 구매 상품 정책별 그룹
+				String zipcode = receiver.getReceiveZipcode();
+
+				if (StringUtils.isEmpty(zipcode)) {
+					zipcode = receiver.getFullReceiveZipcode();
+				}
+
+				receiver.setShipping(orderMapper.getIslandTypeByZipcode(zipcode));
+			}
+		}
+
+		// 재고 차감 목록
+		buy.setStockMap(buyQuantityMap);
+
+		// 구매가능여부 채크
+		ShopUtils.buyVerification(buy.getItems(), buy.getItems().size());
+
+		// 사용한 포인트
+		orderPrice.setTotalPointDiscountAmount(saveOrderPrice.getTotalPointDiscountAmount());
+
+		// 배송비 할인쿠폰 적용
+//		if (UserUtils.isUserLogin() == true) {
+//
+//			int shippingCouponCount = 0;
+//			int totalShippingCouponDiscountAmount = 0;
+//			if (buy.getReceivers().size() <= 1) {
+//				List<ShippingCoupon> shippingCoupons = orderMapper.getOrderShippingCouponBuyTemp(orderParam);
+//				if (!shippingCoupons.isEmpty()) {
+//					List<Shipping> shippings = buy.getReceivers().get(0).getItemGroups();
+//
+//					for(ShippingCoupon sCoupon : shippingCoupons) {
+//						for(Shipping shipping : shippings) {
+//							if (shipping.getRealShipping() == sCoupon.getDiscountAmount()
+//									&& shipping.getShippingGroupCode().equals(sCoupon.getShippingGroupCode())) {
+//
+//								shipping.setShippingCouponCount(1);
+//								shipping.setDiscountShipping(shipping.getRealShipping() - shipping.getAddDeliveryCharge());
+//								shipping.setPayShipping(shipping.getRealShipping() - shipping.getDiscountShipping());
+//
+//								shippingCouponCount += shipping.getShippingCouponCount();
+//								totalShippingCouponDiscountAmount += shipping.getDiscountShipping();
+//								break;
+//							}
+//						}
+//					}
+//				}
+//			}
+//
+//			buy.setShippingCoupon(shippingCouponCount);
+//			saveOrderPrice.setTotalShippingCouponUseCount(shippingCouponCount);
+//			saveOrderPrice.setTotalShippingCouponDiscountAmount(totalShippingCouponDiscountAmount);
+//		}
+
+		buy.setOrderPrice(bankPayAmount, configService.getShopConfig(Config.SHOP_CONFIG_ID));
+
+		try {
+			// 결제금액 검증
+			this.payAmountVerification(buy, saveOrderPrice);
+		} catch (OrderException oe) {
+			throw new OrderException(oe.getMessage(), oe.getRedirectUrl(), oe);
+		}
+
+		List<OrderPgData> successOrderPgDatas = new ArrayList<>();
+
+		try {
+
+			Buyer buyer = buy.getBuyer();
+			buyer.setIp(saleson.common.utils.CommonUtils.getClientIp(request));
+			buyer.setOrderCode(orderCode);
+			buyer.setUserId(buy.getUserId());
+			if (UserUtils.isUserLogin()) {
+				buyer.setLoginId(UserUtils.getLoginId());
+			}
+
+			buyer.setOrderPrice(orderPrice);
+			orderMapper.insertOrder(buyer);
+
+			erpOrder.setBuyer(buyer);
+
+
+			int shippingInfoSequence = 0;
+			int shippingSequence = 0;
+			int itemSequence = 0;
+			orderSequence = buyer.getOrderSequence();
+
+			for(Receiver receiver : buy.getReceivers()) {
+
+				// 주문상품 배송지 정보를 저장
+				OrderShippingInfo orderShippingInfo = new OrderShippingInfo(orderCode, orderSequence, shippingInfoSequence++, receiver);
+				orderMapper.insertOrderShippingInfo(orderShippingInfo);
+
+				erpOrder.addOrderShippingInfo(orderShippingInfo);
+
+				for(Shipping shipping : receiver.getItemGroups()) {
+					shipping.setOrderCode(orderCode);
+					shipping.setOrderSequence(orderSequence);
+					shipping.setShippingSequence(shippingSequence++);
+
+					orderMapper.insertOrderShipping(shipping);
+
+
+
+
+					// 1개상품용 쿠폰일 경우 메일링에 해당 상품 분리적용으로 인해 buyItems 생성
+					List<BuyItem> buyItems = new ArrayList<>();
+
+					if (shipping.isSingleShipping()) {
+						BuyItem buyItem = shipping.getBuyItem();
+
+						// 묶음배송 처리 데이터 추가
+						if (!StringUtils.isEmpty(shipping.getShipmentGroupCode())) {
+							buyItem.setShipmentGroupCode(shipping.getShipmentGroupCode());
+						}
+
+						// 상품 정보 세팅
+						this.setOrderItemForBuy(itemSequence, buyItems, buyItem, buy, shipping, orderShippingInfo, escrowStatus);
+
+						// 네이버페이로 결제할 경우 포인트 적립 안함.
+						if (isNaverpay) {
+							buyItem.getItemPrice().setEarnPoint(0);
+							buyItem.getItemPrice().setSellerPoint(0);
+						}
+					} else {
+						for(BuyItem buyItem : shipping.getBuyItems()) {
+
+							// 묶음배송 처리 데이터 추가
+							buyItem.setShipmentGroupCode(shipping.getShipmentGroupCode());
+
+							// 상품 정보 세팅
+							this.setOrderItemForBuy(itemSequence + buyItems.size(), buyItems, buyItem, buy, shipping, orderShippingInfo, escrowStatus);
+
+							// 네이버페이로 결제할 경우 포인트 적립 안함.
+							if (isNaverpay) {
+								buyItem.getItemPrice().setEarnPoint(0);
+								buyItem.getItemPrice().setSellerPoint(0);
+							}
+						}
+					}
+
+					itemSequence += buyItems.size();
+
+					this.insertOrderItem(buyItems);
+					shipping.setBuyItems(buyItems);
+
+					erpOrder.addBuyItems(buyItems);
+				}
+			}
+
+			int paymentSequence = 0;
+
+			buy.setPayments(payments);
+
+			int cnt = 1;
+			int totCnt = payments.size();
+
+			for(BuyPayment buyPayment : payments) {
+				String approvalType = buyPayment.getApprovalType();
+
+				OrderPayment orderPayment = new OrderPayment();
+				orderPayment.setOrderCode(orderCode);
+				orderPayment.setOrderSequence(orderSequence);
+				orderPayment.setPaymentSequence(paymentSequence++);
+				orderPayment.setApprovalType(approvalType);
+				orderPayment.setAmount(buyPayment.getAmount());
+				orderPayment.setTaxFreeAmount(buyPayment.getTaxFreeAmount());
+				orderPayment.setNowPaymentFlag("N");
+
+				if ("Y".equals(orderPayment.getNowPaymentFlag())) {
+					orderPayment.setRemainingAmount(buyPayment.getAmount());
+					orderPayment.setPayDate(DateUtils.getToday(DATETIME_FORMAT));
+				}
+
+				orderPayment.setPaymentType("1");
+				orderPayment.setDeviceType(buy.getDeviceType());
+				orderMapper.insertOrderPayment(orderPayment);
+
+
+				// 현금영수증 발행 - 현금영수증 발행 가능한 포인트 및 실시간 계좌이체만 (은행입금, 가상계좌는 입금이 확인되는 시점에 발행)
+				if (!"Y".equals(autoCashReceipt) && (PointUtils.isPossibleToIssueReceipt(approvalType) || "realtimebank".equals(approvalType))) {
+					CashbillParam cashbillParam = new CashbillParam();
+
+					cashbillParam.setWhere("orderCode");
+					cashbillParam.setQuery(orderParam.getOrderCode());
+
+					Iterable<CashbillIssue> cashbillIssues = cashbillIssueRepository.findAll(cashbillParam.getPredicate());
+
+					log.debug("[CASHBILL] START ---------------------------------------------");
+					log.debug("[CASHBILL] cashbillIssues Size :  {}", ((List<CashbillIssue>) cashbillIssues).size());
+
+					CashbillResponse response = null;
+					String cashbillService = "";
+
+					if (configPg != null) {
+						cashbillService = configPg.getCashbillServiceType().getCode().toLowerCase();
+					} else {
+						cashbillService = environment.getProperty("cashbill.service");
+					}
+
+					for (CashbillIssue cashbillIssue : cashbillIssues) {
+
+						if ("popbill".equals(cashbillService)) {
+							response = receiptService.receiptIssue(cashbillIssue);
+						} else if ("inicis".equals(cashbillService)) {
+							Cashbill cashbill = cashbillIssue.getCashbill();
+
+							cashbillParam.setCashbillStatus(cashbillIssue.getCashbillStatus());
+							cashbillParam.setAmount(cashbillIssue.getAmount());
+							cashbillParam.setItemName(cashbillIssue.getItemName());
+							cashbillParam.setTaxType(cashbillIssue.getTaxType());
+							cashbillParam.setCashbillCode(cashbill.getCashbillCode());
+							cashbillParam.setCashbillType(cashbill.getCashbillType());
+							cashbillParam.setCustomerName(cashbill.getCustomerName());
+							cashbillParam.setOrderCode(orderParam.getOrderCode());
+
+							response = inicisService.cashReceiptIssued(cashbillParam);
+						} else if ("nicepay".equals(cashbillService)) {
+							Cashbill cashbill = cashbillIssue.getCashbill();
+
+							cashbillParam.setCashbillStatus(cashbillIssue.getCashbillStatus());
+							cashbillParam.setAmount(cashbillIssue.getAmount());
+							cashbillParam.setItemName(cashbillIssue.getItemName());
+							cashbillParam.setTaxType(cashbillIssue.getTaxType());
+							cashbillParam.setCashbillCode(cashbill.getCashbillCode());
+							cashbillParam.setCashbillType(cashbill.getCashbillType());
+							cashbillParam.setCustomerName(cashbill.getCustomerName());
+							cashbillParam.setEmail(buyer.getEmail());
+							cashbillParam.setOrderCode(orderParam.getOrderCode());
+
+							response = nicepayService.cashReceiptIssued(cashbillParam);
+						}
+
+						if (response == null) {
+							log.debug("[CASHBILL] ERROR >> PG 통신오류(응답없음)");
+							throw new OrderException("PG 통신오류(응답없음)");
+						}
+
+						log.debug("[CASHBILL] cashbillIssue :  {}", cashbillIssue);
+						log.debug("[CASHBILL] CashbillResponse response.isSuccess() :  {}", response.isSuccess());
+						if (response.isSuccess()) {
+							cashbillIssue.setIssuedDate(DateUtils.getToday(DATETIME_FORMAT));
+							cashbillIssue.setUpdatedDate(DateUtils.getToday(DATETIME_FORMAT));
+							cashbillIssue.setCashbillStatus(CashbillStatus.ISSUED);
+							cashbillIssue.setMgtKey(response.getMgtKey());
+
+							if (UserUtils.isUserLogin() || UserUtils.isManagerLogin()) {
+								cashbillIssue.setUpdateBy(UserUtils.getUser().getUserName() + "(" + UserUtils.getLoginId() + ")");
+							} else {
+								cashbillIssue.setUpdateBy("비회원");
+							}
+
+							cashbillIssueRepository.save(cashbillIssue);
+
+						} else {
+							log.debug("[CASHBILL] ERROR >> {} : {}", response.getResponseCode(), response.getResponseMessage());
+							throw new OrderException(response.getResponseCode() + " : " + response.getResponseMessage());
+						}
+					}
+					log.debug("[CASHBILL] END ---------------------------------------------");
+				}
+
+
+				String payMethod = "";
+				if ("rentalpay".equals(orderPayment.getApprovalType())) {
+					payMethod = "렌탈페이";
+				}
+
+				erpOrder.setPayMethod(payMethod);
+
+				cnt++;
+			}
+
+
+			try {
+				// ERP 연동 - 신용카드, 실시간 계좌이체, 휴대폰, 네이버페이 결제 (가상계좌는 입금통보 시 ERP연동)
+				if ("rentalpay".equals(payMethodType)) {
+					erpService.saveOrderListGet(erpOrder);
+				}
+				// 렌탈페이 용 ERP 연동필요
+			} catch (Exception e) {
+				log.error("ERP 연동 오류 : {}", e.getMessage(), e);
+				throw new OrderException("ERP 연동 오류", "/order/step1-rental");
+			}
+
+		} catch (OrderException e) {
+
+			log.error(e.getMessage(), e);
+
+			// DB 처리 에러가 발행하면 PG 취소함
+			if (successOrderPgDatas != null) {
+				for(OrderPgData orderPgData : successOrderPgDatas) {
+
+					String approvalType = orderPgData.getApprovalType();
+					orderPgData.setCancelReason("결제 중 오류로 주문 취소");
+
+					if (orderPgData.isSuccess()) {
+						boolean isCancelSuccess = false;
+						if ("inicis".equals(orderPgData.getPgServiceType())) {
+							isCancelSuccess = inicisService.cancel(orderPgData);
+
+						} else if ("lgdacom".equals(orderPgData.getPgServiceType())) {
+							isCancelSuccess = lgDacomService.cancel(orderPgData);
+
+						} else if ("payco".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setRemainAmount(orderPrice.getOrderPayAmount());
+							isCancelSuccess = paycoService.cancel(orderPgData);
+
+						} else if ("kakaopay".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setRemainAmount(orderPrice.getOrderPayAmount());
+							isCancelSuccess = kakaopayService.cancel(orderPgData);
+
+						} else if ("cj".equals(orderPgData.getPgServiceType())) {
+							//isCancelSuccess = cjService.cancel(orderPgData);
+
+							//CJ PG는 RedirectUrl에서 실패시 취소 하도록 하자!!
+							isCancelSuccess = true;
+						} else if ("kspay".equals(orderPgData.getPgServiceType())) {
+							isCancelSuccess = kspayService.cancel(orderPgData);
+
+						} else if ("kcp".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setOrderCode(orderCode);
+							isCancelSuccess = kcpService.cancel(orderPgData);
+
+						} else if("easypay".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setOrderCode(orderCode);
+							isCancelSuccess = easypayService.cancel(orderPgData);
+
+						} else if("nicepay".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setOrderCode(orderCode);
+							orderPgData.setRequest(request);
+							orderPgData.setCancelAmount(orderPgData.getPgAmount());
+							isCancelSuccess = nicepayService.cancel(orderPgData);
+						} else if("naverpay".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setCancelAmount(orderPgData.getPgAmount());
+							orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
+
+							isCancelSuccess = orderPgData.isSuccess();
+						}
+
+						if (isCancelSuccess == false) {
+							// 결제 취소 실패!!
+							System.out.println("TID -> " + orderPgData.getPgKey() + " -> 결제취소 실패!!");
+							OrderCancelFail orderCancelFail = new OrderCancelFail();
+
+							orderCancelFail.setUpdateData(orderPgData);
+							orderCancelFail.setPgServiceType(orderPgData.getPgServiceType());
+
+							if (UserUtils.isManagerLogin()) {
+								orderCancelFail.setCancelRequester("2");
+							} else {
+								orderCancelFail.setCancelRequester("1");
+							}
+
+							throw new OrderException("결제취소 실패", "/order/step1", orderCancelFail, e);
+						}
+
+						// 현금영수증 취소
+						receiptService.cancelCashbill(orderCode);
+					}
+				}
+			}
+
+			throw new OrderException("결제 처리 중 에러가 발생하여 거래가 취소되었습니다. <br>" + e.getMessage(), "/order/step1", e);
+			//throw new OrderException("결제 처리도중 에러가 발생하여 거래가 취소 되었습니다. 카드결제의 경우 승인취소 문자를 받지 못하신 경우 고객센터로 연락 바랍니다.", "/order/step1");
+		} catch (Exception e) {
+
+			log.error("OrderService.inserOrder 처리 중 오류 발생", e);
+
+			// DB 처리 에러가 발행하면 PG 취소함
+			if (successOrderPgDatas != null) {
+				for(OrderPgData orderPgData : successOrderPgDatas) {
+					orderPgData.setCancelReason("결제 중 오류로 주문 취소");
+
+					String approvalType = orderPgData.getApprovalType();
+
+					if (orderPgData.isSuccess()) {
+						boolean isCancelSuccess = false;
+						if ("inicis".equals(orderPgData.getPgServiceType())) {
+							isCancelSuccess = inicisService.cancel(orderPgData);
+
+						} else if ("lgdacom".equals(orderPgData.getPgServiceType())) {
+							isCancelSuccess = lgDacomService.cancel(orderPgData);
+
+						} else if ("payco".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setRemainAmount(orderPrice.getOrderPayAmount());
+							isCancelSuccess = paycoService.cancel(orderPgData);
+
+						} else if ("kakaopay".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setRemainAmount(orderPrice.getOrderPayAmount());
+							isCancelSuccess = kakaopayService.cancel(orderPgData);
+
+						} else if ("cj".equals(orderPgData.getPgServiceType())) {
+							//isCancelSuccess = cjService.cancel(orderPgData);
+
+							//CJ PG는 RedirectUrl에서 실패시 취소 하도록 하자!!
+							isCancelSuccess = true;
+						} else if ("kspay".equals(orderPgData.getPgServiceType())) {
+							isCancelSuccess = kspayService.cancel(orderPgData);
+
+						} else if ("kcp".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setOrderCode(orderCode);
+							isCancelSuccess = kcpService.cancel(orderPgData);
+
+						} else if("easypay".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setOrderCode(orderCode);
+							isCancelSuccess = easypayService.cancel(orderPgData);
+
+						} else if("nicepay".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setOrderCode(orderCode);
+							orderPgData.setRequest(request);
+							orderPgData.setCancelAmount(orderPgData.getPgAmount());
+							orderPgData.setMessage("주문취소");
+							isCancelSuccess = nicepayService.cancel(orderPgData);
+						} else if("naverpay".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setCancelAmount(orderPgData.getPgAmount());
+							orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
+
+							isCancelSuccess = orderPgData.isSuccess();
+						}
+
+						if (isCancelSuccess == false) {
+							// 결제 취소 실패!!
+							log.debug("TID -> " + orderPgData.getPgKey() + " -> 결제취소 실패!!");
+							OrderCancelFail orderCancelFail = new OrderCancelFail();
+
+							orderCancelFail.setUpdateData(orderPgData);
+							orderCancelFail.setPgServiceType(orderPgData.getPgServiceType());
+
+							if (UserUtils.isManagerLogin()) {
+								orderCancelFail.setCancelRequester("2");
+							} else {
+								orderCancelFail.setCancelRequester("1");
+							}
+
+							throw new OrderException("결제취소 실패", "/order/step1", orderCancelFail, e);
+						}
+
+						// 현금영수증 취소
+						receiptService.cancelCashbill(orderCode);
+					}
+				}
+			}
+
+			throw new OrderException("결제 처리 중 에러가 발생하여 거래가 취소되었습니다. <br>" + e.getMessage(), "/order/step1", e);
+			//throw new OrderException("결제 처리도중 에러가 발생하여 거래가 취소 되었습니다. 카드결제의 경우 승인취소 문자를 받지 못하신 경우 고객센터로 연락 바랍니다.", "/order/step1");
+		}
+
+		try {
+			// 주문서 작성 임시 저장 정보 삭제
+			orderMapper.deleteOrderItemTemp(orderParam);
+
+			// 주문이 완료된 장바구니 상품들 삭제
+			List<Integer> itemIds = new ArrayList<>();
+			for(BuyItem buyItem : buy.getItems()) {
+				itemIds.add(buyItem.getItemId());
+			}
+
+			// 장바구니 삭제
+			if (!itemIds.isEmpty()) {
+				CartParam cartParam = new CartParam();
+				cartParam.setUserId(buy.getUserId());
+				cartParam.setSessionId(buy.getSessionId());
+				cartParam.setItemIds(itemIds);
+
+				// 로컬에서는 테스트를 위해서 장바구니를 삭제 하지 않는다.
+				if (!ServiceType.LOCAL) {
+					cartMapper.deleteCartByItemIds(cartParam);
+				}
+			}
+
+		} catch(Exception e) {
+			log.error("주문 처리 후 임시 데이터 삭제시 ERROR: {}", e.getMessage(), e);
+		}
+
+		// Message 발송
+		try {
+			this.sendOrderMessageTx(buy);
+		} catch(Exception e) {
+			log.error("주문 메시지 발송 ERROR: {}", e.getMessage(), e);
+		}
+
+		// 재고 차감
+		try {
+			HashMap<String, Integer> stockMap = buy.getStockMap();
+			if (stockMap == null) {
+				return orderSequence + "/" + orderCode;
+			}
+
+			this.updateStockDeduction(stockMap);
+
+		} catch(Exception e) {
+			log.error("재고 차감 ERROR: {}", e.getMessage(), e);
+		}
+
+		// 로그인시 주소록 저장 선택시 기본 배송지 저장
+		if (UserUtils.isUserLogin()) {
+			if ("Y".equals(buy.getSaveDeliveryFlag())) {
+
+				Receiver receiver = buy.getReceivers().get(0);
+
+				UserDelivery userDelivery = new UserDelivery();
+				userDelivery.setUserId(buy.getUserId());
+				userDelivery.setDefaultFlag("Y");
+
+				String title = buy.getSaveDeliveryName();
+				if (StringUtils.isEmpty(title) == false) {
+					title = title.trim();
+					if ("".equals(title)) {
+						title= receiver.getReceiveName();
+					}
+				} else {
+					title = receiver.getReceiveName();
+				}
+
+				userDelivery.setTitle(title);
+				userDelivery.setUserName(receiver.getReceiveName());
+				userDelivery.setPhone(receiver.getFullReceivePhone());
+				userDelivery.setMobile(receiver.getFullReceiveMobile());
+				userDelivery.setNewZipcode(receiver.getReceiveNewZipcode());
+				userDelivery.setZipcode(receiver.getReceiveZipcode());
+				userDelivery.setSido(receiver.getReceiveSido());
+				userDelivery.setSigungu(receiver.getReceiveSido());
+				userDelivery.setEupmyeondong(receiver.getReceiveEupmyeondong());
+				userDelivery.setAddress(receiver.getReceiveAddress());
+				userDelivery.setAddressDetail(receiver.getReceiveAddressDetail());
+
+				userDeliveryService.insertUserDelivery(userDelivery);
+			}
+		}
+
+		return orderSequence + "/" + orderCode;
+	}
 	/**
 	 * 상품 재고 차감
 	 * @param stockMap

@@ -467,6 +467,14 @@
 								<input type="hidden" name="arrayRequiredItems" value="${item.itemId}||${item.orderMinQuantity < 0 ? 1 : item.orderMinQuantity}||" />
 							</c:if>
 						</div>
+						<c:if test="${item.rentalPayFlag == 'Y' && !item.itemSoldOut}">
+							<input type="hidden" id="buyRentalPay" name="buyRentalPay" />
+							<input type="hidden" id="rentalTotAmt" name="rentalTotAmt" />
+							<input type="hidden" id="rentalMonthAmt" name="rentalMonthAmt" />
+							<input type="hidden" id="rentalPartnershipAmt" name="rentalPartnershipAmt" />
+							<input type="hidden" id="rentalPer" name="rentalPer" />
+						</c:if>
+
 
 						<div class="btm_fix_sec">
 							<c:if test="${(item.itemOptionFlag == 'N' || item.itemOptionType == 'C') && !item.itemSoldOut}">
@@ -523,7 +531,14 @@
 										</c:when>
 										<c:otherwise>
 											<button type="button" class="item-btn buy" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:buyNow()" title="구매하기">구매하기</button>
-											<button type="button" class="item-btn cart" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:addToCart(); toCollectionScript('cart');" title="장바구니">장바구니</button>
+											<c:choose>
+												<c:when test="${item.rentalPayFlag == 'Y' && !item.itemSoldOut}">
+													<button type="button" class="item-btn cart" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:addToCartItemView(); toCollectionScript('cart');" title="장바구니">장바구니</button>
+												</c:when>
+												<c:otherwise>
+													<button type="button" class="item-btn cart" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:addToCart(); toCollectionScript('cart');" title="장바구니">장바구니</button>
+												</c:otherwise>
+											</c:choose>
 											<button type="button" class="item-btn wish" onclick="javascript:addToWishList(); toCollectionScript('wishlist');"  title="관심상품">관심상품</button>
 
 											<!-- 네이버 NPAY구매 영역 E-->
@@ -542,15 +557,16 @@
 									</div>
 								</div>
 							</div><!--// bfs_btm -->
-							<c:if test="${item.rentalPayFlag == 'Y'}">
+							<c:if test="${item.rentalPayFlag == 'Y' && !item.itemSoldOut}">
+								<script type="text/javascript" src="http://211.178.29.124:8082/resources/common/rentalPg.js"></script>
 								<div class="rental_area">
 									<p class="tit">렌탈로 리뉴올 PC 이용하기</p>
 									<div class="month_select monthRentalContPerRentalPg">
 										<div class="month">
-											<button type="button" id="rental_per_24" onclick="getMonthRentalContPer('24')">24개월</button>
-											<button type="button" id="rental_per_36" onclick="getMonthRentalContPer('36')">36개월</button>
-											<button type="button" id="rental_per_48" onclick="getMonthRentalContPer('48')">48개월</button>
-											<button type="button" id="rental_per_60" onclick="getMonthRentalContPer('60')">60개월</button>
+											<button type="button" id="rental_per_24" onclick="getMonthRentalPer('24')">24개월</button>
+											<button type="button" id="rental_per_36" onclick="getMonthRentalPer('36')">36개월</button>
+											<button type="button" id="rental_per_48" onclick="getMonthRentalPer('48')">48개월</button>
+											<button type="button" id="rental_per_60" onclick="getMonthRentalPer('60')">60개월</button>
 										</div>
 										<span class="txt">무료배송</span>
 									</div>
@@ -735,9 +751,15 @@
 								</c:when>
 								<c:otherwise>
 									<button type="button" class="item-btn buy" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:buyNow()" title="구매하기">구매하기</button>
-									<button type="button" class="wqitem-btn cart" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:addToCart(); toCollectionScript('cart');" title="장바구니">장바구니</button>
+									<c:choose>
+										<c:when test="${item.rentalPayFlag == 'Y' && !item.itemSoldOut}">
+											<button type="button" class="wqitem-btn cart" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:addToCartItemView(); toCollectionScript('cart');" title="장바구니">장바구니</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button" class="wqitem-btn cart" onclick="try{AW_PRODUCT($('.quantity').val());}catch(e){}; javascript:addToCart(); toCollectionScript('cart');" title="장바구니">장바구니</button>
+										</c:otherwise>
+									</c:choose>
 									<button type="button" class="item-btn wish" onclick="javascript:addToWishList(); toCollectionScript('wishlist');"  title="관심상품">관심상품</button>
-
 									<!-- 네이버 NPAY구매 영역 E-->
 									<naverPay:item-page-button />
 								</c:otherwise>
@@ -782,20 +804,21 @@
 			var _amt ="${item.salePrice}";
 		</script>
 
-
 		<script src="/content/modules/op.social.js"></script>
 		<script src="/content/modules/op.imageviewer.js"></script>
 		<script src="/content/modules/popup.js"></script>
 		<script src="/content/modules/front/item.view.js"></script>
 		<script type="text/javascript">
-			// 초기 렌탈료 조회  (디폴트 60개월)
-			getMonthRentalContPer(60);
+
+			// 초기 렌탈료 조회  (디폴트 24개월)
+			// getMonthRentalPer(24);
 
 			$('.rental-send-amount').on('change', function(){
 				alert(1);
 			});
 
-			function getMonthRentalContPer(rentalVal){
+			function getMonthRentalPer(rentalVal){
+				//alert(rentalVal);
 				var rentalAmount;
 				$('.monthRentalContPerRentalPg .month').children().removeClass("on");
 				$('#rental_per_'+ rentalVal).addClass("on");
@@ -804,6 +827,7 @@
 				} else {
 					rentalAmount = $('.rental-send-amount').val();
 				}
+
 				calculateRentalFee(rentalVal, rentalAmount);
 			}
 
@@ -920,6 +944,11 @@
 						console.log("월 렌탈료 ==> " +rentalAmt);
 						console.log("결과 코드 ==> " +resultCode);
 						console.log("결과 메시지 ==> " +resultMsg);
+						$('#rentalTotAmt').val(rentalTotAmt);
+						$('#rentalMonthAmt').val(rentalAmt);
+						$('#rentalPartnershipAmt').val(rentalAmt - 13000);
+						$('#rentalPer').val(rentalPer);
+
 						$('.rental_total_price').text(priceToString(rentalTotAmt));
 						$('.rental_price_month').text(priceToString(rentalAmt));
 						$('.rental_price_month_partnership').text(priceToString(rentalAmt - 13000));
@@ -951,11 +980,31 @@
 				}
 
 			}
+
+
+
+			// window.onload = function () {
+			// 	cookieJquery();
+			// }
+			//
+			// function cookieJquery () {
+			// 	var script1 = document.createElement("script");
+			// 	script1.type = "text/javascript";
+			// 	script1.charset = "utf-8";
+			// 	script1.src = "/content/modules/jquery/jquery.cookie.js";
+			// 	document.getElementsByTagName("head")[0].appendChild(script1);
+			// }
+			// function rentalPg() {
+			// 	var script2 = document.createElement("script");
+			// 	script2.type = "text/javascript";
+			// 	script2.src = "http://211.178.29.124:8082/resources/common/rentalPg.js";
+			// 	document.getElementsByTagName("head")[0].appendChild(script2);
+			// }
 		</script>
 
 		<link rel="stylesheet" type="text/css" href="/content/css/swiper.css">
 		<script src="/content/js/swiper.jquery.min.js"></script>
 		<script src="/content/js/view.js"></script>
 		<script type="text/javascript" src="/content/modules/naverpay/naver.pay.js"></script>
-		<script type="text/javascript" src="http://211.178.29.124:8082/resources/common/rentalPg.js"></script>
+
 	</page:javascript>

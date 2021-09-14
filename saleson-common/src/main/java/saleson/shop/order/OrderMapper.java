@@ -5,7 +5,9 @@
 	import saleson.common.notification.support.StatisticsParam;
 	import saleson.common.opmanager.count.OpmanagerCount;
 	import saleson.erp.domain.OrderLineStatus;
+	import saleson.shop.cart.support.CartParam;
 	import saleson.shop.order.domain.*;
+	import saleson.shop.order.pg.RentalPay;
 	import saleson.shop.order.support.BatchKey;
 	import saleson.shop.order.support.OrderParam;
 	import saleson.shop.order.support.StockDeduction;
@@ -213,6 +215,12 @@ public interface OrderMapper {
 	 * @param buyItem
 	 */
 	void insertOrderItemTemp(BuyItem buyItem);
+
+	/**
+	 * 주문 상품 렌탈정보 임시 테이블 등록
+	 * @param buyItem
+	 */
+	void insertRentalOrderItemTemp(CartParam cartParam);
 	
 	/**
 	 * 배송비 할인 쿠폰 임시 데이터 조회
@@ -293,7 +301,13 @@ public interface OrderMapper {
 	 * @param orderParam
 	 */
 	void deleteOrderItemTemp(OrderParam orderParam);
-	
+
+	/**
+	 * 주문 상품 렌탈정보 임시 테이블 삭제
+	 * @param orderParam
+	 */
+	void deleteRentalOrderItemTemp(OrderParam orderParam);
+
 	/**
 	 * 기존 주문 임시 데이터 삭제
 	 * @param buy
@@ -641,4 +655,12 @@ public interface OrderMapper {
 	 * @param ols
 	 */
 	void saveErpOrderStatus(OrderLineStatus ols);
+
+
+	/**
+	 * rentalOrderItemTemp 데이터 조회
+	 * @param sessionId
+	 * @return
+	 */
+	RentalPay getRentalOrderInfo(RentalPay rentalPayTempParam);
 }

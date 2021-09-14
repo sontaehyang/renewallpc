@@ -42,7 +42,8 @@ public class SalesonProperty extends PropertiesUtils {
 	private static String naverCheckoutWishlistApiUrl;
 	private static String naverCheckoutOrderApiUrl;
 	private static String mailSender;
-
+	private static String rentalpaySellerCode;
+	private static String rentalpaySellerKey;
 
 
 	@Value("${upload.base.folder}")
@@ -345,4 +346,14 @@ public class SalesonProperty extends PropertiesUtils {
 	public static String getMailSender() {
 		return mailSender;
 	}
+
+	public static String getRentalpaySellerCode() {
+		return rentalpaySellerCode;
+	}
+
+	public static String getRentalpaySellerKey() {
+		return rentalpaySellerKey;
+	}
+
+
 }

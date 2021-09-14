@@ -439,31 +439,33 @@
 						</tbody>
 					</table>
 				</div><!--//item_order E-->
-			<div class="item_rental set_box_2 set_box view">
-				<a href="#" class="set_btn">렌탈로 리뉴올 PC이용하기</a>
-				<div class="set_det">
-					<div class="month_select">
-						<div class="month">
-							<button type="button">24개월</button>
-							<button type="button">36개월</button>
-							<button type="button">48개월</button>
-							<button type="button" class="on">60개월</button>
+			<c:if test="${item.rentalPayFlag == 'Y'}">
+				<div class="item_rental set_box_2 set_box view">
+					<a href="#" class="set_btn">렌탈로 리뉴올 PC이용하기</a>
+					<div class="set_det">
+						<div class="month_select">
+							<div class="month">
+								<button type="button">24개월</button>
+								<button type="button">36개월</button>
+								<button type="button">48개월</button>
+								<button type="button" class="on">60개월</button>
+							</div>
+							<span class="txt">무료배송</span>
 						</div>
-						<span class="txt">무료배송</span>
+						<dl class="month_price">
+							<dt class="rental_txt">렌탈료</dt>
+							<dd class="rental_price">월 <span>82,200</span>원</dd>
+							<dt class="rental_txt card">제휴카드 렌탈료</dt>
+							<dd class="rental_price card">월 <span>69,300</span>원</dd>
+						</dl>
+						<div class="rental_total">
+							<p class="txt">총 렌탈료</p>
+							<p class="total"><span>4,838,000</span>원</p>
+						</div>
+						<button type="button" class="btn_rental">렌탈 구매하기</button>
 					</div>
-					<dl class="month_price">
-						<dt class="rental_txt">렌탈료</dt>
-						<dd class="rental_price">월 <span>82,200</span>원</dd>
-						<dt class="rental_txt card">제휴카드 렌탈료</dt>
-						<dd class="rental_price card">월 <span>69,300</span>원</dd>
-					</dl>
-					<div class="rental_total">
-						<p class="txt">총 렌탈료</p>
-						<p class="total"><span>4,838,000</span>원</p>
-					</div>
-					<button type="button" class="btn_rental">렌탈 구매하기</button>
 				</div>
-			</div>
+			</c:if>
 			</div><!--//view_info E-->
 		</c:if>
 
@@ -725,43 +727,46 @@
 							<li>삼성·페이코·SSG·L페이·SK페이</li>
 						</ul>
 					</div>
-					<div class="option_bottom type2">
-						<button type="button" class="btn_open rental">
-							<span class="screen_out"></span>
-							<div></div>
-						</button>
-						<div class="option_area">
-							<div class="conts_area type_option">
-								<div class="month_select">
-									<div class="month">
-										<button type="button">24개월</button>
-										<button type="button">36개월</button>
-										<button type="button">48개월</button>
-										<button type="button" class="on">60개월</button>
-									</div>
-									<span class="txt">무료배송</span>
-								</div>
-								<dl class="month_price">
-									<dt class="rental_txt">렌탈료</dt>
-									<dd class="rental_price">월 <span>82,200</span>원</dd>
-									<dt class="rental_txt card">제휴카드 렌탈료</dt>
-									<dd class="rental_price card">월 <span>69,300</span>원</dd>
-								</dl>
-							</div>
-							<div class="total_area">
-								<p class="total_tit">총 렌탈료</p>
-								<p class="total_price">
-									<span>890,360,500</span>원
-								</p>
-							</div>
-						</div>
-						<div class="btn_area">
-							<button type="button" class="btn btn_m_save">
-								<span class="screen_out">찜하기</span>
+					<c:if test="${item.rentalPayFlag == 'Y'}">
+						<div class="option_bottom type2">
+							<button type="button" class="btn_open rental">
+								<span class="screen_out"></span>
+								<div></div>
 							</button>
-							<button type="button" class="btn btn_m_buy">렌탈 구매하기</button>
+							<div class="option_area">
+								<div class="conts_area type_option">
+									<div class="month_select">
+										<div class="month">
+											<button type="button">24개월</button>
+											<button type="button">36개월</button>
+											<button type="button">48개월</button>
+											<button type="button" class="on">60개월</button>
+										</div>
+										<span class="txt">무료배송</span>
+									</div>
+									<dl class="month_price">
+										<dt class="rental_txt">렌탈료</dt>
+										<dd class="rental_price">월 <span>82,200</span>원</dd>
+										<dt class="rental_txt card">제휴카드 렌탈료</dt>
+										<dd class="rental_price card">월 <span>69,300</span>원</dd>
+									</dl>
+								</div>
+								<div class="total_area">
+									<p class="total_tit">총 렌탈료</p>
+									<p class="total_price">
+										<span>890,360,500</span>원
+									</p>
+								</div>
+							</div>
+
+								<div class="btn_area">
+									<button type="button" class="btn btn_m_save">
+										<span class="screen_out">찜하기</span>
+									</button>
+									<button type="button" class="btn btn_m_buy">렌탈 구매하기</button>
+								</div>
 						</div>
-					</div>
+					</c:if>
 				</div>
 			</form>
 		</div>

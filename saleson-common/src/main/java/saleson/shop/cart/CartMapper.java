@@ -109,4 +109,5 @@ public interface CartMapper {
 	 * @param cartParam
 	 */
 	void updateShippingPaymentType(CartParam cartParam);
+
 }

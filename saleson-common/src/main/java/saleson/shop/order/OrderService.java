@@ -5,6 +5,7 @@ import saleson.common.enumeration.OrderCodePrefix;
 import saleson.common.enumeration.OrderLogType;
 import saleson.common.opmanager.count.OpmanagerCount;
 import saleson.model.OrderGiftItem;
+import saleson.shop.cart.support.CartParam;
 import saleson.shop.config.domain.Config;
 import saleson.shop.order.api.ApiOrderList;
 import saleson.shop.order.api.OrderDetail;
@@ -275,6 +276,13 @@ public interface OrderService {
 	 * @return
 	 */
 	public HashMap<String, Object> saveOrderTemp(HttpSession session, Buy buy);
+
+	/**
+	 * 렌탈 주문 임시 저장
+	 * @param buy
+	 * @return
+	 */
+	public HashMap<String, Object> saveRentalOrderTemp(HttpSession session, Buy buy);
 	
 	/**
 	 * 주문 등록
@@ -285,12 +293,28 @@ public interface OrderService {
 	 * @return
 	 */
 	public String insertOrder(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request);
+
+	/**
+	 * 렌탈 주문 등록
+	 * @param orderParam
+	 * @param pgData
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	public String insertOrderRental(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request);
 	
 	/**
 	 * 주문상품 임시 저장
 	 * @param buyItem
 	 */
 	public void insertOrderItemTemp(BuyItem buyItem);
+
+	/**
+	 * 주문상품 렌탈정보 임시 저장
+	 * @param buyItem
+	 */
+	public void insertRentalOrderItemTemp(CartParam cartParam);
 	
 	/**
 	 * 주문상품 임시 저장 정보 삭제
@@ -298,6 +322,14 @@ public interface OrderService {
 	 * @param sessionId
 	 */
 	public void deleteOrderItemTemp(long userId, String sessionId);
+
+	/**
+	 * 주문상품 렌탈정보 임시 저장 정보 삭제
+	 * @param userId
+	 * @param sessionId
+	 */
+	public void deleteRentalOrderItemTem(long userId, String sessionId);
+
 	
 	/**
 	 * 주문 임시 데이터 삭제
@@ -346,6 +378,7 @@ public interface OrderService {
 	public void saveOrderInfo(Order order);
 	
 	/**
+	 *
 	 * 송장번호 수정
 	 * @param orderItem
 	 */

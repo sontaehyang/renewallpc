@@ -641,7 +641,7 @@ Common.popup = function(url, popupName, width, height, scrollbars, xPosition, yP
 
     if (isMobileLayer == true || isMobileLayer == 'true') {
 
-        if ($('.op-app-popup-wrap').size() == 0) {
+        if ($('.op-app-popup-wrap').length == 0) {
             $('body').wrapInner('<div class="op-app-popup-wrap"></div>');
         }
 
@@ -878,7 +878,7 @@ Common.excuteFrameworkScript = function(script) {
 Common.deleteCheckedList = function(url) {
     var $form = $('#listForm');
 
-    if ($form.find('input[name=id]:checked').size() == 0) {
+    if ($form.find('input[name=id]:checked').length == 0) {
         alert('삭제할 항목을 선택해 주세요');
         return;
     }
@@ -899,7 +899,7 @@ Common.deleteCheckedList = function(url) {
 Common.updateCheckedList = function(url) {
     var form = $('#listForm');
 
-    if (form.find('input[type=id]:checked').size() == 0) {
+    if (form.find('input[type=id]:checked').length == 0) {
         alert('수정할 항목을 선택해 주세요');
         return;
     }
@@ -923,7 +923,7 @@ Common.changeListOrdering = function(url) {
     var $form = $('#listForm');
 
     /*
-    if ($form.find('input[name=id]:checked').size() == 0) {
+    if ($form.find('input[name=id]:checked').length == 0) {
         alert('삭제할 항목을 선택해 주세요');
         return;
     }*/
@@ -954,7 +954,7 @@ Common.changeListOrdering = function(url) {
  */
 Common.updateListData = function(url, message, callback){
     var $form = $('#listForm');
-    if ($form.find('input[name=id]:checked').size() == 0) {
+    if ($form.find('input[name=id]:checked').length == 0) {
         alert(Message.get("M00308"));	// 처리할 항목을 선택해 주세요.
         return;
     }
@@ -1012,7 +1012,7 @@ Common.getEditorContent = function(id, isRequired) {
 
 function fn_ProcessSelectedList(controller, mode){
     var alt = mode=='update' ? '수정' : '삭제';
-    if($('input.checkAll:checked').size()==0){
+    if($('input.checkAll:checked').length==0){
         alert(alt+'할 항목을 선택해 주세요');
         return;
     }
@@ -1037,7 +1037,7 @@ function fn_ProcessSelectedList(controller, mode){
 
 Common.dimmed = {
     show: function() {
-        if ($('#dimmed').size() == 0) {
+        if ($('#dimmed').length == 0) {
             $('body').append('<div id="dimmed"></div>');
         }
         $('#dimmed').show();
@@ -1066,11 +1066,11 @@ Common.loading = {
 
 Common.loading.show = function () {
 
-    if ($('#loading-dimmed').size() == 0) {
+    if ($('#loading-dimmed').length == 0) {
         $('body').append('<div id="loading-dimmed" style="display: none"></div>');
     }
 
-    if ($('#loading').size() == 0) {
+    if ($('#loading').length == 0) {
         $('body').append('<div id="loading" style="display: none"></div>');
     }
 
@@ -1171,7 +1171,7 @@ var EventHandler = {};
 EventHandler.checkAllEvent = function() {
     var $checkAll = $('#check_all');
 
-    if ($checkAll.size() > 0) {
+    if ($checkAll.length > 0) {
         $checkAll.on("click", function() {
             var isChecked = $(this).prop('checked');
 
@@ -1449,7 +1449,7 @@ var Message = {
         $('#fade_out_message').clearQueue().stop().remove();
         var message = this.isMessageCode(msg) ? this.get(msg) : msg;
 
-        if ($('#fade_out_message').size() == 0) {
+        if ($('#fade_out_message').length == 0) {
             $('body').append('<div id="fade_out_message"></div>');
         }
         //
@@ -1504,8 +1504,8 @@ EventHandler.calendarStartDateAndEndDateVaild =  function(){
         var ymd1 = "";
         var ymd2 = "";
 
-        var $startDate = $('input[name$="StartDate"]').size() > 0 ? $('input[name$="StartDate"]') : $('input[name$="startDate"]');
-        var $endDate = $('input[name$="EndDate"]').size() > 0 ? $('input[name$="EndDate"]') : $('input[name$="endtDate"]');
+        var $startDate = $('input[name$="StartDate"]').length > 0 ? $('input[name$="StartDate"]') : $('input[name$="startDate"]');
+        var $endDate = $('input[name$="EndDate"]').length > 0 ? $('input[name$="EndDate"]') : $('input[name$="endtDate"]');
 
         if ($startDate.val() != undefined && $startDate.val() != '') {
             ymd1 = $startDate.val();
@@ -1651,7 +1651,7 @@ Common.DateButtonEvent = {
         sInput = sInput == undefined ? 'input[name="startDate"]' : sInput;
         eInput = eInput == undefined ? 'input[name="endDate"]' : eInput;
         character = character == undefined ? '' : character;
-        if ($(element).size() > 0 && $(sInput).size() > 0 && $(eInput).size() > 0) {
+        if ($(element).length > 0 && $(sInput).length > 0 && $(eInput).length > 0) {
             var date = new Date();
             var eDate = date.getFullYear() + character + Common.addZero((date.getMonth() + 1), 2) + character + Common.addZero(date.getDate(), 2);
             $.each($(element), function(){

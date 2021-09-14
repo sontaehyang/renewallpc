@@ -128,3 +128,54 @@
     margin: 0 auto;
 
 }
+
+
+/* 210903 렌탈 약관 추가*/
+
+.order_pay.term .type01 {
+    display: none;
+}
+.order_pay .type03 {
+    display: none;
+}
+.order_pay.term .type02 {
+    float: right;
+}
+.order_pay.term .type03 {
+    display: block;
+}
+.order_pay.term .type03{
+    width:calc(100% - 325px); float:left; margin-right:12px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.order_pay.term .type03 .rental_info_wrap {
+    border:1px solid #d7d7d7;
+    padding: 20px;
+    margin-top: 10px;
+}
+.order_pay.term .type03 .info_tit {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 600;
+}
+.order_pay.term .type03 .square_tit {
+    margin-top: 10px;
+    font-size: 15px;
+}
+.order_pay.term .type03 .circle_tit {
+    margin-top: 10px;
+    font-size: 14px;
+}
+.order_pay.term .type03 .info:before {
+    content: '-';
+    display: inline-block;
+    margin-right: 5px;
+}
+.order_pay.term .type03 .info span {
+    color: #ff3737 ;
+}
+.order_pay.term .type03  .check_agree{
+    margin-top: 10px;
+    text-align: right;
+}

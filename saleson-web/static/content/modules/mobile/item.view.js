@@ -39,7 +39,7 @@ function updateItemHits() {
 function initItemQuantityEvent() {
 	var $itemQuantity = $('.op-item-quantity');
 
-	if ($itemQuantity.size() > 0) {
+	if ($itemQuantity.length > 0) {
 
 		// 상품 수량 +
 		$itemQuantity.find('button.op-item-order-count-plus').on('click', function (e) {
@@ -253,7 +253,7 @@ function initItemOptionEvent() {
 		var $optionBoxType = $(this).closest('.op-option-group').parent();
 		var $optionGroup = $(this).closest('.op-option-group');
 		var currentOptionGroupIndex = $optionBoxType.find('.op-option-group').index($optionGroup);
-		var optionGroupCount = $optionBoxType.find('.op-option-group').size();
+		var optionGroupCount = $optionBoxType.find('.op-option-group').length;
 		var optionName = $(this).attr('data-option-name');
 
 		// 옵션 선택 처리.
@@ -261,7 +261,7 @@ function initItemOptionEvent() {
 		$optionGroup.find('.option-selected-name').text(optionName);
 		$optionGroup.find('.option-selected-name').addClass('sel');
 
-		var optionSelectedCount = $optionBoxType.find('a.on').size();
+		var optionSelectedCount = $optionBoxType.find('a.on').length;
 
 		// 모든 옵션을 선택한 경우.
 		if (optionGroupCount == optionSelectedCount) {
@@ -359,7 +359,7 @@ function initItemOptionEvent() {
 			});
 
 			// 텍스트 옵션이 없는 경우 바로 추가.
-			if ($('.text-option-id').size() == 0) {
+			if ($('.text-option-id').length == 0) {
 				// 선택된 옵션으로 아이템옵션을 추가한다.
 				addItemOption();
 			} else {
@@ -403,8 +403,8 @@ function initItemOptionEvent() {
 
 		if (item.itemOptionType == 'S') {
 			var $previousOptionGroups = $optionBoxType.find('.op-option-group:lt(' + currentOptionGroupIndex + ')');
-			var optionGroupCount = $previousOptionGroups.size();
-			var selectedOptionGroupCount = $previousOptionGroups.find('a.on').size();
+			var optionGroupCount = $previousOptionGroups.length;
+			var selectedOptionGroupCount = $previousOptionGroups.find('a.on').length;
 
 			if (selectedOptionGroupCount < optionGroupCount) {
 				alert('위의 정보를 먼저 선택해 주세요.');
@@ -425,7 +425,7 @@ function initItemOptionEvent() {
 			});
 
 		} else {
-			if ($optionGroup.find('li').size() == 0) {
+			if ($optionGroup.find('li').length == 0) {
 				alert('위의 정보를 먼저 선택해 주세요.');
 				return;
 			}
@@ -1260,11 +1260,11 @@ function getItemOptionInfo() {
 // 모든 상품 옵션을 선택했는가?
 function isSelectedAllOption() {
 	var $itemOptionInfo = getItemOptionInfo();
-	var optionGroupCount = $itemOptionInfo.find('tr').size();
+	var optionGroupCount = $itemOptionInfo.find('tr').length;
 	var optionCheckedCount = 0;
 
 	// 라디오 옵션 체크 카운트
-	optionCheckedCount += $itemOptionInfo.find('input[type=radio]:checked').size();
+	optionCheckedCount += $itemOptionInfo.find('input[type=radio]:checked').length;
 
 	// 셀렉트박스 옵션 체크 카운트
 	$itemOptionInfo.find('select').each(function () {
@@ -1328,7 +1328,7 @@ function calculate() {
 
 	// 단품
 	var $quantity = $('.quantity');
-	if ($quantity.size() > 0) {
+	if ($quantity.length > 0) {
 		totalItemPrice = itemPrice * Number($quantity.val());
 	}
 
@@ -1349,7 +1349,7 @@ function calculate() {
 
 	// 옵션조합형 상품
 	for (var i = 0; i < SELECTED_COMBINATION_OPTION_INFOS.length; i++) {
-		if ($quantity.size() > 0) {
+		if ($quantity.length > 0) {
 			var optionPrice = Number(SELECTED_COMBINATION_OPTION_INFOS[i].optionPrice) * $quantity.val();
 
 			totalItemPrice += optionPrice;
@@ -1619,7 +1619,7 @@ function checkForItem(target) {
 		var $textOptions = $('.text-option-value');
 
 		var rst = true;
-		if ($addedOptions.size() == 0 && $('.text-option-value').size() > 0) {
+		if ($addedOptions.length == 0 && $('.text-option-value').length > 0) {
 			$textOptions.each(function () {
 				if ($(this).val() == null || $(this).val() == '') {
 					alert('텍스트 옵션값을 입력 후 옵션 추가 버튼을 눌러 옵션을 추가해주세요.');
@@ -1632,11 +1632,11 @@ function checkForItem(target) {
 			if (rst == false) return false;
 		}
 
-		if ($('.text-option-value').size() > 0 && $addedOptions.size() == 0) {
+		if ($('.text-option-value').length > 0 && $addedOptions.length == 0) {
 			alert('옵션 추가 버튼을 눌러 옵션을 추가해주세요.');
 			return false;
 
-		} else if ($addedOptions.size() == 0) {
+		} else if ($addedOptions.length == 0) {
 			alert('상품필수옵션을 선택해주세요.');
 			$('.op-option-select-box').focus();
 			return false;
@@ -1808,7 +1808,7 @@ function showHideReviewMoreButton() {
 		totalItems = Number($info.find('.total-items').text());
 	}
 
-	if ($("#op-review-list").find(' > li').size() == totalItems || totalItems == 0) {
+	if ($("#op-review-list").find(' > li').length == totalItems || totalItems == 0) {
 		$('.op-review-more-load').hide();
 	}
 }
@@ -1840,7 +1840,7 @@ function showHideQnaMoreButton() {
 		totalItems = Number($info.find('.total-items').text());
 	}
 
-	if ($("#op-qna-list").find(' > li').size() == totalItems || totalItems == 0) {
+	if ($("#op-qna-list").find(' > li').length == totalItems || totalItems == 0) {
 		$('.op-qna-more-load').hide();
 	}
 }

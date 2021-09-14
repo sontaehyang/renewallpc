@@ -619,6 +619,17 @@
 		<result property="count" column="COUNT"/>
 	</resultMap>
 
+	<resultMap id="RentalOrderItemInfoResult" type="saleson.shop.order.pg.RentalPay">
+		<result property="userId" column="USER_ID" />
+		<result property="sessionId" column="SESSION_ID" />
+		<result property="buyRentalPay" column="BUY_RENTAL_PAY" />
+		<result property="rentalTotAmt" column="RENTAL_TOT_AMT" />
+		<result property="rentalMonthAmt" column="RENTAL_MONTH_AMT" />
+		<result property="rentalPartnershipAmt" column="RENTAL_PARTNERSHIP_AMT" />
+		<result property="rentalPer" column="RENTAL_PER" />
+		<result property="createdDate" column="CREATED_DATE" />
+	</resultMap>
+
 	<!-- 신규주문 (결제완료/출고지시전) -->
 	<sql id="defaultNewOrderWhereQuery">
 		OI.ORDER_STATUS = '10'
@@ -2441,6 +2452,11 @@
 		VALUES(#{userId}, #{sessionId}, #{itemSequence}, #{itemId}, #{itemPrice.quantity}, #{options}, #{shippingPaymentType}, #{additionItemFlag}, #{parentItemSequence}, #{parentItemId}, #{parentItemOptions}, <include refid="CommonMapper.datetime" />, #{campaignCode})
 </insert>
 
+	<insert id="insertRentalOrderItemTemp" parameterType="saleson.shop.cart.support.CartParam">
+		INSERT INTO OP_RENTAL_ORDER_ITEM_TEMP (USER_ID, SESSION_ID, BUY_RENTAL_PAY, RENTAL_TOT_AMT, RENTAL_MONTH_AMT, RENTAL_PARTNERSHIP_AMT, RENTAL_PER,  CREATED_DATE)
+		VALUES(#{userId}, #{sessionId}, #{buyRentalPay}, #{rentalTotAmt}, #{rentalMonthAmt}, #{rentalPartnershipAmt}, #{rentalPer}, <include refid="CommonMapper.datetime" />)
+	</insert>
+
 	<insert id="insertOrderTemp" parameterType="saleson.shop.order.domain.Buy">
 		INSERT INTO OP_ORDER_TEMP (
 			USER_ID, 
@@ -2752,6 +2768,20 @@
 	
 	<delete id="deleteOrderItemTemp" parameterType="saleson.shop.order.support.OrderParam">
 		DELETE FROM OP_ORDER_ITEM_TEMP
+		<where>
+			<choose>
+				<when test="isLogin == true">
+					AND USER_ID = #{userId}
+				</when>
+				<otherwise>
+					AND SESSION_ID = #{sessionId}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+
+	<delete id="deleteRentalOrderItemTemp" parameterType="saleson.shop.order.support.OrderParam">
+		DELETE FROM OP_RENTAL_ORDER_ITEM_TEMP
 		<where>
 			<choose>
 				<when test="isLogin == true">
@@ -3961,5 +3991,10 @@
 			<include refid="CommonMapper.datetime"/>
 	   )
 	</insert>
+
+	<select id="getRentalOrderInfo" parameterType="saleson.shop.order.pg.RentalPay" resultMap="RentalOrderItemInfoResult">
+		SELECT * FROM OP_RENTAL_ORDER_ITEM_TEMP
+		WHERE SESSION_ID = #{sessionId} AND USER_ID = #{userId}
+	</select>
 
 </mapper>

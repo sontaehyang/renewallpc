@@ -107,7 +107,7 @@
 		// 자동완성 스크립트
 		$query.on('keyup', function(e){
 			if (e.keyCode == 13) {
-				if ($('#searchForm .searchArea:visible ul li.on').size()>0) {
+				if ($('#searchForm .searchArea:visible ul li.on').length>0) {
 					$query.val($('#searchForm .searchArea:visible ul li.on').text());
 				}
 			}
@@ -182,6 +182,7 @@
 			"limit": limit
 		};
 
+
 		Common.loading.display = false;
 
 		// 미리 저장 된 json파일 불러오기 (DB access 없음) - /keyword/keyword-init 으로 즉각 반영 가능
@@ -210,7 +211,7 @@
 
 	function arrowEvent(keyCode) {
 		if (keyCode == 38 || keyCode == 40) {
-			if ($('#searchForm .searchArea:visible ul li.on').size()>0) {
+			if ($('#searchForm .searchArea:visible ul li.on').length>0) {
 				// 40(↓), 38(↑) nextIdx 조정
 				if (keyCode == 40) {
 					nextIdx = $('#searchForm .searchArea:visible ul').find('li.on').index()+1;
@@ -220,11 +221,11 @@
 				}
 
 				// li가 마지막이고 다음 선택이면 첫번째, 처음이고 이전선택이면 마지막 li로 설정
-				if ($('#searchForm .searchArea:visible ul li').size()==nextIdx) {
+				if ($('#searchForm .searchArea:visible ul li').length==nextIdx) {
 					nextIdx = 0;
 				}
 				else if (nextIdx < 0) {
-					nextIdx = $('#searchForm .searchArea:visible ul li').size()-1;
+					nextIdx = $('#searchForm .searchArea:visible ul li').length-1;
 				}
 				// addClass 전에 on 클래스 모드 제거
 				$('#searchForm ul li.on').removeClass('on');
@@ -238,7 +239,7 @@
 					$query.val($('#searchForm .searchArea:visible ul li.on').text());
 				}
 				else if (keyCode == 38) {
-					$('#searchForm .searchArea:visible ul li').eq($('#searchForm .searchArea:visible ul li').size()-1).addClass('on');
+					$('#searchForm .searchArea:visible ul li').eq($('#searchForm .searchArea:visible ul li').length-1).addClass('on');
 					$query.val($('#searchForm .searchArea:visible ul li.on').text());
 				}
 			}
@@ -301,7 +302,7 @@
 	// searchForm submit시 검색어와 추천 검색어 확인 후 link로 연결
 	function formValidator() {
 		$("#searchForm").validator(function(){
-			if ($('#searchForm .searchArea:visible ul li.on').size()>0) {
+			if ($('#searchForm .searchArea:visible ul li.on').length>0) {
 				$query.val($('#searchForm .searchArea:visible ul li.on').text());
 			}
 

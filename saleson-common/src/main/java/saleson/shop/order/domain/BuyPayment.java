@@ -118,7 +118,12 @@ public class BuyPayment {
             this.mid = configPg.getNpayClientId();
             this.key = configPg.getNpayClientSecret();
 
-        }
+        } else if ("rentalpay".equals(approvalType)) {
+
+			this.serviceType = "bsrental";
+			this.mid = SalesonProperty.getRentalpaySellerCode();
+			this.key = SalesonProperty.getRentalpaySellerKey();
+		}
 	}
 	
 	public BuyPayment(String approvalType, ConfigPg configPg) {

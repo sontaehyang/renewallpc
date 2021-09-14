@@ -157,4 +157,43 @@ public class Cart {
 	public void setParentItemOptions(String parentItemOptions) {
 		this.parentItemOptions = parentItemOptions;
 	}
+
+
+	// 렌탈페이용 파라미터
+	public String buyRentalPay = "N";
+    public String rentalTotAmt;
+	public String rentalMonthAmt;
+	public String rentalPartnershipAmt;
+	public String rentalPer;
+
+	public String getBuyRentalPay() {
+		return buyRentalPay;
+	}
+	public void setBuyRentalPay(String buyRentalPay) {
+		this.buyRentalPay = buyRentalPay;
+	}
+	public String getRentalTotAmt() {
+		return rentalTotAmt;
+	}
+	public void setRentalTotAmt(String rentalTotAmt) {
+		this.rentalTotAmt = rentalTotAmt;
+	}
+	public String getRentalMonthAmt() {
+		return rentalMonthAmt;
+	}
+	public void setRentalMonthAmt(String rentalMonthAmt) {
+		this.rentalMonthAmt = rentalMonthAmt;
+	}
+	public String getRentalPartnershipAmt() {
+		return rentalPartnershipAmt;
+	}
+	public void setRentalPartnershipAmt(String rentalPartnershipAmt) {
+		this.rentalPartnershipAmt = rentalPartnershipAmt;
+	}
+	public String getRentalPer() {
+		return rentalPer;
+	}
+	public void setRentalPer(String rentalPer) {
+		this.rentalPer = rentalPer;
+	}
 }

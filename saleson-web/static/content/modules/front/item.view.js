@@ -52,6 +52,7 @@ $(function() {
 	setCustomerInfo();
 });
 
+
 //상품 조회 수 업데이트.
 function updateItemHits() {
 	$.post('/common/update-item-hits', {'itemId' : item.itemId}, function() {
@@ -1558,14 +1559,12 @@ function calculate() {
 	// 총 결제금액
 	$('.total-amount').text(Common.numberFormat(totalItemPrice + totalOptionPrice + totalAdditionPrice));
 
-	//렌탈 페이는 수량이 1일때만 변화
-	if ($quantity.val() == 1 ) {
-		// 렌탈페이 - API 통신상 필요한 기본상품 합계 금액 저장
-		$('.rental-send-amount').val(Common.numberFormat(totalItemPrice));
 
-		// 계산후 금액 재정산
-		getMonthRentalContPer(60);
-	}
+	// 렌탈페이 - API 통신상 필요한 모든합계 금액
+	$('.rental-send-amount').val(Common.numberFormat(totalItemPrice + totalOptionPrice + totalAdditionPrice));
+	// 계산후 렌탈페이 금액 재정산
+	getMonthRentalPer(24);
+
 
 	$('.total-price').show();
 
@@ -1825,15 +1824,40 @@ function addToCart() {
 
 			Shop.openCartWishlistLayer('cart');
 
-			/*
+
+			// var message = Message.get("M00595") + '\n' + Message.get("M00596");	// 장바구니에 상품을 담았습니다.\n바로 확인하시겠습니까?
+			// if (confirm(message)) {
+			// 	location.href = '/cart';
+			// }
+
+		});
+	}, 'json');
+}
+
+// 상품상세 장바구니 담기
+function addToCartItemView() {
+	// 장바구니에 담을 수 있는 지 확인한다.
+	if (!checkForItem('cart')) {
+		return;
+	}
+
+	$.post('/cart/add-item-to-cart', $('#cartForm').serialize(), function(response) {
+		clearSelectInformation();
+		Common.responseHandler(response, function() {
+			Shop.getCartInfo();
+
+			//Shop.openCartWishlistLayer('cart');
+
+
 			var message = Message.get("M00595") + '\n' + Message.get("M00596");	// 장바구니에 상품을 담았습니다.\n바로 확인하시겠습니까?
 			if (confirm(message)) {
 				location.href = '/cart';
 			}
-			*/
+
 		});
 	}, 'json');
 }
+
 
 // 바로구매
 function buyNow(loginCheck) {
@@ -1841,7 +1865,7 @@ function buyNow(loginCheck) {
 	if (!checkForItem('buy_now')) {
 		return;
 	}
-
+	buttonType = 'buynow';
 	loginCheck = loginCheck == undefined ? true : loginCheck;
 
 	$.post('/cart/buy-now', $('#cartForm').serialize(), function(response) {
@@ -1858,7 +1882,11 @@ function buyNow(loginCheck) {
 
 var PopupLogin = {};
 PopupLogin.Callback = function() {
-	buyNow(false);
+	if (buttonType=='buynow') {
+		buyNow(false);
+	} else {
+		buyRental(false);
+	}
 };
 
 // 장바구니/바로구매 가능한지 확인한다.
@@ -2580,14 +2608,19 @@ function buyRental(loginCheck) {
 
 	loginCheck = loginCheck == undefined ? true : loginCheck;
 
+	buttonType = 'buyRental';
+
+	// 렌탈페이구매
+	$('#buyRentalPay').val("Y");
 	$.post('/cart/buy-now', $('#cartForm').serialize(), function(response) {
 		//clearSelectInformation();
 		Common.responseHandler(response, function() {
 			if (isLogin == 'false' && loginCheck == true) {
-				Common.popup('/users/login?target=order&popup=1&redirect=/order/step1', 'popup-login', 550, 380, 1);
+				Common.popup('/users/login?target=order&popup=1&redirect=/order/step1-rental', 'popup-login', 550, 380, 1);
 			} else {
-				location.href='/order/step1';
+				location.href='/order/step1-rental';
 			}
 		});
 	}, 'json');
 }
+

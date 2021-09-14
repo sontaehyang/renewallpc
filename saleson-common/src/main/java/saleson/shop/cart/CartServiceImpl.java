@@ -439,6 +439,18 @@ public class CartServiceImpl implements CartService {
         cartParam.setCartIds(cartSequence);
         cartParam.setCampaignCode(cart.getCampaignCode());
 
+        // 렌탈 결제시 주문상품 렌탈정보 임시 저장
+        if (cart.getBuyRentalPay().equals("Y")) {
+            cartParam.setBuyRentalPay(cart.getBuyRentalPay());
+            cartParam.setRentalTotAmt(cart.getRentalTotAmt());
+            cartParam.setRentalMonthAmt(cart.getRentalMonthAmt());
+            cartParam.setRentalPartnershipAmt(cart.getRentalPartnershipAmt());
+            cartParam.setRentalPer(cart.getRentalPer());
+
+            orderService.deleteRentalOrderItemTem(cartParam.getUserId(), cartParam.getSessionId());
+            orderService.insertRentalOrderItemTemp(cartParam);
+        }
+
         // 장바구니에 담긴 상품을 Temp로 복사..
         this.copyCartToOrderItemTemp(cartParam);
 
@@ -607,6 +619,7 @@ public class CartServiceImpl implements CartService {
 
             orderService.insertOrderItemTemp(buyItem);
         }
+
 
         // 기존 주문 임시 데이터 삭제
         orderService.deleteOrderTemp(cartParam.getUserId(), cartParam.getSessionId());

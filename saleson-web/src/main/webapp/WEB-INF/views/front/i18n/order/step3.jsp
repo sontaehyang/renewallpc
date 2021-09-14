@@ -12,34 +12,34 @@
 	<div class="location_area">
 		<!--jsp:include page="/WEB-INF/views/layouts/front/saleson_all_categories.jsp" /-->
 		<div class="breadcrumbs">
-			<a href="/" class="home"><span class="hide">home</span></a> 
-			<span>주문완료</span> 
+			<a href="/" class="home"><span class="hide">home</span></a>
+			<span>주문완료</span>
 		</div>
 	</div><!-- // location_area E -->
-	  
+
 	<div class="content_title">
 		<h2 class="title">주문완료</h2>
-	</div>		<!--//content_title E-->	
+	</div>		<!--//content_title E-->
 
 	<div class="order_step">
 		<ul>
 			<li><span class="number">01</span> 장바구니</li>
 			<li class="off"><span class="number">02</span> 주문결제</li>
-			<li class="on"><span class="number">03</span> 주문완료</li> 
+			<li class="on"><span class="number">03</span> 주문완료</li>
 		</ul>
-	</div> <!--// order_step E -->	
-	
-	<div class="order_thank"> 
+	</div> <!--// order_step E -->
+
+	<div class="order_thank">
 		<p class="txt02">리뉴올PC를 이용해 주셔서 감사합니다.</p>
 		<p class="txt03">고객님의 주문이 완료되었습니다. 주문하신 내역은 <strong><a href="/mypage/order">[마이페이지]</a></strong>에서 확인이 가능합니다.</p>
 	</div>
-		
-	<div class="order_confirm"> 
-		<p class="number">주문번호 : <span>${ orderCode }</span></p> 
-	</div><!--// order_confirm E--> 
-	
+
+	<div class="order_confirm">
+		<p class="number">주문번호 : <span>${ orderCode }</span></p>
+	</div><!--// order_confirm E-->
+
 	<h3 class="sub_title mt30">주문내역</h3>
-	
+
 	<c:set var="totalPrice" value="0"/>
 	<c:set var="totalEarnPoint" value="0"/>
 	<c:set var="totalCouponDiscountAmount" value="0"/>
@@ -54,64 +54,64 @@
 			</c:if>
 		</c:if>
 	</c:forEach>
-	
-	
-	<c:forEach var="shippingInfo" items="${order.orderShippingInfos }" varStatus="i"> 
-		<div class="board_wrap">  
+
+
+	<c:forEach var="shippingInfo" items="${order.orderShippingInfos }" varStatus="i">
+		<div class="board_wrap">
 			<table cellpadding="0" cellspacing="0" class="order_view">
 				<caption>배송지 ${i.index }</caption>
 				<colgroup>
-					<col style="width:160px;"> 
-					<col style="width:auto;">	 				
+					<col style="width:160px;">
+					<col style="width:auto;">
 				</colgroup>
 				<tbody>
 					<tr>
 						<th scope="row">구매자 이름</th>
-						<td>${order.buyerName }</td> 
-					</tr> 
+						<td>${order.buyerName }</td>
+					</tr>
 					<tr>
 						<th scope="row">수취인 이름</th>
-						<td>${shippingInfo.receiveName }</td> 
-					</tr> 
+						<td>${shippingInfo.receiveName }</td>
+					</tr>
 					<tr>
 						<th scope="row">배송지 주소</th>
-						<td>(${shippingInfo.receiveNewZipcode }) ${shippingInfo.receiveAddress }&nbsp;${shippingInfo.receiveAddressDetail }</td> 
-					</tr> 
+						<td>(${shippingInfo.receiveNewZipcode }) ${shippingInfo.receiveAddress }&nbsp;${shippingInfo.receiveAddressDetail }</td>
+					</tr>
 					<tr>
 						<th scope="row">수취인 휴대전화</th>
-						<td>${shippingInfo.receiveMobile }</td> 
-					</tr> 
+						<td>${shippingInfo.receiveMobile }</td>
+					</tr>
 					<tr>
 						<th scope="row">수취인 연락처</th>
-						<td>${shippingInfo.receivePhone }</td> 
-					</tr> 
+						<td>${shippingInfo.receivePhone }</td>
+					</tr>
 					<tr>
 						<th scope="row">배송시 요구사항</th>
-						<td>${shippingInfo.memo }</td> 
+						<td>${shippingInfo.memo }</td>
 					</tr>
 				</tbody>
-			</table><!--//view E-->	 	
+			</table><!--//view E-->
 		</div>
 
-		<div class="board_wrap mt15"> 	
+		<div class="board_wrap mt15">
 			<table cellpadding="0" cellspacing="0" class="order_list">
 				<caption>상품 list</caption>
-				<colgroup> 
+				<colgroup>
 					<col style="width:auto;">
 					<col style="width:72px;">
 					<col style="width:108px;">
 					<col style="width:108px;">
 					<col style="width:108px;">
-					<col style="width:120px;">  
+					<col style="width:120px;">
 				</colgroup>
 				<thead>
-					<tr> 
+					<tr>
 						<th scope="col" class="none_left">상품명/옵션정보</th>
 						<th scope="col">수량</th>
 						<th scope="col">상품금액</th>
 						<th scope="col">할인금액</th>
-						<th scope="col">할인금액적용</th> 
-						<th scope="col">배송비</th>  
+						<th scope="col">할인금액적용</th>
+						<th scope="col">배송비</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -213,9 +213,9 @@
 						</tr>
 					</c:forEach>
 				</tbody>
-			</table><!--// mypage_list E-->	  	 		 
+			</table><!--// mypage_list E-->
 		</div> <!-- /// board_wrap E -->
-	
+
 	</c:forEach>
 
 	<!--// 배송방법 추가 S -->
@@ -260,13 +260,13 @@
 		</table><!--//view E-->
 	</div>
 	<!--// 배송방법 추가 E -->
-	
+
 	<%--<div class="boadr_total">
 		<div>
-			총 상품합계 금액  ${op:numberFormat(order.itemTotalAmount)}원  +  배송비  ${op:numberFormat(order.shippingTotalAmount)}원  = <span class="delivery_total">총액 <span>${op:numberFormat(order.orderTotalAmount)}원</span></span>					  
-		</div> 
+			총 상품합계 금액  ${op:numberFormat(order.itemTotalAmount)}원  +  배송비  ${op:numberFormat(order.shippingTotalAmount)}원  = <span class="delivery_total">총액 <span>${op:numberFormat(order.orderTotalAmount)}원</span></span>
+		</div>
 	</div> --%>
-	
+
 	<h3 class="sub_title mt30">결제내역</h3>
 	<div class="price_box" style="margin-top: 10px">
 		<div class="price_inner">
@@ -305,28 +305,28 @@
 			<p>적립예정 ${op:message('M00246')} : <span>${op:numberFormat(totalEarnPoint)}  P</span> </p>
 		</div>
 	</div>
-	
- 	<h3 class="sub_title mt30">결제수단</h3>  
- 	<div class="board_wrap">  
+
+ 	<h3 class="sub_title mt30">결제수단</h3>
+ 	<div class="board_wrap">
  	<c:forEach items="${order.orderPayments}" var="payment">
  		<c:if test="${payment.amount > 0 || payment.cancelAmount > 0 || payment.remainingAmount > 0}">
 			<c:set var="unit">원</c:set>
-				
+
 			<c:choose>
 				<c:when test="${payment.approvalType == 'point'}">
 					<c:set var="unit">P</c:set>
 				</c:when>
-			</c:choose>			
+			</c:choose>
 			<table cellpadding="0" cellspacing="0" class="order_view">
 				<caption>결제수단</caption>
 				<colgroup>
-					<col style="width:15%;"> 
-					<col style="width:auto;"> 	 				
+					<col style="width:15%;">
+					<col style="width:auto;">
 				</colgroup>
 				<tbody>
 					<tr>
 						<th scope="row">결제방식</th>
-						<td>${payment.approvalTypeLabel}</td>  
+						<td>${payment.approvalTypeLabel}</td>
 					</tr>
 					<tr>
 						<th scope="row">결제금액</th>
@@ -336,11 +336,11 @@
 									${op:numberFormat(payment.amount)}${unit}
 									<c:if test="${payment.amount != payment.remainingAmount && payment.remainingAmount > 0}">
 										<strong style="display:block; padding-top: 5px;">(잔여액 : ${op:numberFormat(payment.remainingAmount)}${unit})</strong>
-									</c:if> 
+									</c:if>
 								</c:when>
 								<c:otherwise>${op:numberFormat(payment.cancelAmount)}${unit}</c:otherwise>
 							</c:choose>
-						</td>  
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">결제상태</th>
@@ -354,7 +354,7 @@
 									</c:choose>
 								</c:otherwise>
 							</c:choose>
-						</td>  
+						</td>
 					</tr>
 					<c:if test="${payment.approvalType == 'vbank'}">
 						<tr>
@@ -371,16 +371,16 @@
 						</tr>
 					</c:if>
 				</tbody>
-			</table> 
-		</c:if>			
-	</c:forEach> 
+			</table>
+		</c:if>
+	</c:forEach>
 	</div><!-- // board_wrap E -->
-	
-	<div class="btn_wrap pt30">  
-		<a href="/" class="btn btn-default btn-lg" title="쇼핑계속하기">쇼핑계속하기</a>  
-		<a href="/mypage/order" class="btn btn-success btn-lg" title="주문내역조회">주문내역조회</a> 
-	</div>	 		
-	
+
+	<div class="btn_wrap pt30">
+		<a href="/" class="btn btn-default btn-lg" title="쇼핑계속하기">쇼핑계속하기</a>
+		<a href="/mypage/order" class="btn btn-success btn-lg" title="주문내역조회">주문내역조회</a>
+	</div>
+
 </div><!--// inner E-->
 
 <page:javascript>
@@ -410,14 +410,14 @@
 </page:javascript>
 
 <!-- 전환페이지 설정 -->
-<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script> 
-<script type="text/javascript"> 
+<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
 	var _nasa={};
 	if(window.wcs) _nasa["cnv"] = wcs.cnv("1","1"); // 전환유형, 전환가치 설정해야함. 설치매뉴얼 참고
-</script> 
+</script>
 
 
-<!-- 
+<!--
 구글 전환추적 로그분석 transaction_id 주문번호 변수 삽입
 Event snippet for 구매_NEW conversion page In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button.
 -->
@@ -426,7 +426,7 @@ Event snippet for 구매_NEW conversion page In your html page, add the snippet 
 		var callback = function () { if (typeof(url) != 'undefined') { window.location = url; } };
 		gtag('event', 'conversion', { 'send_to': 'AW-754482062/8nYfCLnyx40CEI734ecC', 'value': 10.0, 'currency': 'KRW', 'transaction_id': '', 'event_callback': callback });
 		return false;
-	} 
+	}
 </script>
 
 <script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>

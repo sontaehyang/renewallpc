@@ -140,7 +140,7 @@ public class PgData {
 	private String paymethod;
 
 	// 이니시스 웹 결제
-	private String resultCode;
+//	private String resultCode;
 	private String authUrl;
 	private String authToken;
 	private String netCancelUrl;
@@ -172,13 +172,13 @@ public class PgData {
 	// Son Jun-Eu 2017.09.27 EASYPAY 결제
 	private EasypayRequest easypayRequest;
 		
-	public String getResultCode() {
-		return resultCode;
-	}
-
-	public void setResultCode(String resultCode) {
-		this.resultCode = resultCode;
-	}
+//	public String getResultCode() {
+//		return resultCode;
+//	}
+//
+//	public void setResultCode(String resultCode) {
+//		this.resultCode = resultCode;
+//	}
 
 	public String getAuthUrl() {
 		return authUrl;
@@ -1757,5 +1757,72 @@ public class PgData {
 
 	public void setCancelDate(String CancelDate) {
 		this.CancelDate = CancelDate;
+	}
+
+
+	// BS 렌탈 페이
+	public String prodName;
+    public String contPer;
+    public String prodRent;
+    public String resultTimes;
+    public String resultCode;
+    public String apprKey;
+    public String orderNo;
+
+
+	public String getProdName() {
+		return prodName;
+	}
+
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
+	}
+
+	public String getContPer() {
+		return contPer;
+	}
+
+	public void setContPer(String contPer) {
+		this.contPer = contPer;
+	}
+
+	public String getProdRent() {
+		return prodRent;
+	}
+
+	public void setProdRent(String prodRent) {
+		this.prodRent = prodRent;
+	}
+
+	public String getResultTimes() {
+		return resultTimes;
+	}
+
+	public void setResultTimes(String resultTimes) {
+		this.resultTimes = resultTimes;
+	}
+
+	public String getResultCode() {
+		return resultCode;
+	}
+
+	public void setResultCode(String resultCode) {
+		this.resultCode = resultCode;
+	}
+
+	public String getApprKey() {
+		return apprKey;
+	}
+
+	public void setApprKey(String apprKey) {
+		this.apprKey = apprKey;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 }

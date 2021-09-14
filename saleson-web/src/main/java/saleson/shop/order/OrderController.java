@@ -292,6 +292,50 @@ public class OrderController {
 		}
 	}
 
+
+	/**
+	 * 주문정보 임시 저장
+	 * @param requestContext
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("save-rental")
+	public JsonView saveRental(RequestContext requestContext, HttpServletRequest request,
+						 HttpSession session, Buy buy) {
+
+		if (!requestContext.isAjaxRequest()) {
+			throw new NotAjaxRequestException();
+		}
+
+		Enumeration params = request.getParameterNames();
+		while(params.hasMoreElements()){
+			String paramName = (String)params.nextElement();
+			System.out.println("Attribute1 Name - "+paramName+", Value - "+request.getParameter(paramName));
+		}
+
+		long userId = 0;
+		if (UserUtils.isUserLogin()) {
+			userId = UserUtils.getUserId();
+		}
+
+		try {
+
+			buy.setOrderCode(orderService.getNewOrderCode(OrderCodePrefix.FRONT));
+			buy.setUserId(userId);
+			buy.setSessionId(session.getId());
+			buy.setDeviceType("WEB");
+			buy.setRealDeviceType(DeviceUtils.resolveDevice(request));
+			buy.setUserIp(request.getRemoteAddr());
+
+			orderLogService.put(buy.getOrderCode());
+
+			return JsonViewUtils.success(orderService.saveRentalOrderTemp(session, buy));
+		} catch(Exception e){
+			log.debug("order save() : {}", e.getMessage());
+			return JsonViewUtils.failure(e.getMessage());
+		}
+	}
+
 	/**
 	 * 결제
 	 * @param session
@@ -339,6 +383,65 @@ public class OrderController {
 		}
 
 		return ViewUtils.redirect("/order/step3/" + orderCode);
+	}
+
+	/**
+	 * 렌탈결제
+	 * @param session
+	 * @param orderParam
+	 * @param pgData
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@GetMapping("pay")
+	public String payRental(HttpSession session, OrderParam orderParam, PgData pgData,
+					  HttpServletRequest request, HttpServletResponse response) {
+
+		if (pgData == null) {
+			return "ERROR";
+		}
+
+		if (!pgData.getResultCode().equals("0000")) {
+			return ViewUtils.redirect("/");
+		}
+
+		pgData.setRequest(request);
+		pgData.setResponse(response);
+
+		Enumeration params = request.getParameterNames();
+		while(params.hasMoreElements()){
+			String paramName = (String)params.nextElement();
+			System.out.println("Pay Attribute Name - "+paramName+", Value - "+request.getParameter(paramName));
+		}
+
+		String pgRentalprodName = pgData.getProdName();
+		String pgRentalItemName = pgRentalprodName.substring(0, pgRentalprodName.indexOf("_"));
+		String pgRentalOrderCode = pgRentalprodName.substring(pgRentalprodName.indexOf("_") + 1);
+
+		pgData.setProdName(pgRentalItemName);
+		orderParam.setOrderCode(pgRentalOrderCode);
+		orderParam.setUserId(UserUtils.getUserId());
+		orderParam.setSessionId(session.getId());
+		orderParam.setViewTarget("WEB");
+
+		if (UserUtils.isUserLogin() == false) {
+			orderParam.setUserId(0);
+		}
+
+		String orderCode = null;
+		try {
+
+			orderLogService.put(orderParam.getOrderCode());
+
+			orderCode = orderService.insertOrderRental(orderParam, pgData, session, request);
+		} catch (Exception e) {
+			log.error("[ORDER-ERROR] 주문(결제) 처리 시 오류 발생 : {}", orderParam.getOrderCode(), e);
+
+			throw new UserException(e.getMessage(), "/order/step1-rental");
+		}
+
+		return ViewUtils.redirect("/order/step3-rental/" + orderCode);
 	}
 	
 	/**
@@ -391,6 +494,59 @@ public class OrderController {
 
 		return ViewUtils.getView("/order/step3");
 	}
+
+
+	/**
+	 * 결제 완료 페이지
+	 * @param orderCode
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("step3-rental/{orderSequence}/{orderCode}")
+	public String step3Rental(@PathVariable("orderSequence") int orderSequence,
+						@PathVariable("orderCode") String orderCode, Model model,
+						HttpServletRequest request) {
+
+		orderLogService.put(orderCode);
+
+		OrderParam orderParam = new OrderParam();
+
+		orderParam.setOrderCode(orderCode);
+		orderParam.setUserId(UserUtils.getUserId());
+
+		if (UserUtils.isUserLogin() == false) {
+			orderParam.setUserId(0);
+		}
+
+		orderParam.setOrderSequence(orderSequence);
+		orderParam.setOrderCode(orderCode);
+
+		Order order = orderService.getOrderByParam(orderParam);
+		if (order == null) {
+			throw new OrderException("주문정보가 없습니다.", "/");
+		}
+
+		// 상품단위로 처리되는 기존 로직을 유지하기 위해 orderItems에 추가한 추가구성상품 삭제
+		for (OrderShippingInfo orderShippingInfo : order.getOrderShippingInfos()) {
+			List<OrderItem> itemList = orderShippingInfo.getOrderItems()
+					.stream().filter(l -> "N".equals(l.getAdditionItemFlag())).collect(Collectors.toList());
+
+			orderShippingInfo.getOrderItems().clear();
+			orderShippingInfo.getOrderItems().addAll(itemList);
+		}
+		JSONArray jsonArray = new JSONArray();
+		model.addAttribute("jsonOrderList", jsonArray.fromObject(order.getOrderShippingInfos()));
+		model.addAttribute("user", UserUtils.getUser());
+		model.addAttribute("order", order);
+		model.addAttribute("orderCode", orderCode);
+		model.addAttribute("orderSequence", orderSequence);
+
+		model.addAttribute("orderItemUserCodes", JsonViewUtils.objectToJson(order.getOrderItemUserCodes()));
+
+
+		return ViewUtils.getView("/order/step3-rental");
+	}
+
 	
 	/**
 	 * 쿠폰 목록
@@ -1077,4 +1233,69 @@ public class OrderController {
             return ViewUtils.redirect(url, message);
         }
     }
+
+
+	/**
+	 * 렌탈 주문서 작성
+	 * @param requestContext
+	 * @param orderParam
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/step1-rental")
+	public String step1Rental(RequestContext requestContext, OrderParam orderParam,
+						HttpSession session, Model model) {
+
+		orderLogService.put("");
+
+		HashMap<String, BuyPayment> buyPayments = orderService.getPaymentType();
+		if (buyPayments.keySet().isEmpty()) {
+			throw new OrderException(MessageUtils.getMessage("M01256"), "/");
+		}
+
+		Config shopConfig = configService.getShopConfig(Config.SHOP_CONFIG_ID);
+
+		long userId = 0;
+		if (UserUtils.isUserLogin()) {
+			userId = UserUtils.getUserId();
+		}
+
+		orderParam.setSessionId(session.getId());
+		orderParam.setUserId(userId);
+		Buy buy = orderService.getBuyForStep1(orderParam);
+
+		orderLogService.put(buy.getOrderCode());
+
+		buy.setBuyPayments(buyPayments);
+
+		ConfigPg configPg = configPgService.getConfigPg();
+		String pgService = "";
+		String autoCashReceipt = "";
+		String useEscrow = "";
+
+		if (configPg != null) {
+			pgService = configPg.getPgType().getCode().toLowerCase();
+			autoCashReceipt = configPg.isUseAutoCashReceipt() ? "Y" : "N";
+			useEscrow = configPg.isUseEscroow() ? "Y" : "N";
+		} else {
+			pgService = SalesonProperty.getPgService();
+			autoCashReceipt = environment.getProperty("pg.autoCashReceipt");
+			useEscrow = environment.getProperty("pg.useEscrow");
+		}
+
+		model.addAttribute("nowYear", DateUtils.getToday("yyyy"));
+		model.addAttribute("buy", buy);
+		model.addAttribute("shopConfig", shopConfig);
+		model.addAttribute("asp28Analytics", new Asp28Analytics(buy, "Web", "Order"));
+		model.addAttribute("useCoupon", ShopUtils.useCoupon());
+		model.addAttribute("userData", buy.getUserData());
+		model.addAttribute("cashbillTypes", enumMapper.get("CashbillType"));
+		model.addAttribute("pgService", pgService);
+		model.addAttribute("autoCashReceipt", autoCashReceipt);
+		model.addAttribute("useEscrow", useEscrow);
+
+		return ViewUtils.view();
+	}
+
 }

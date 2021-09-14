@@ -39,13 +39,13 @@ Shop.findItem = function(targetId) {
 // 관련상품 추가
 Shop.addRelationItem = function(id, item) {
     var key = id + '_item_' + item.itemId;
-    var itemCount = $('#' + key).size();
+    var itemCount = $('#' + key).length;
 
     if (itemCount == 0) {
         if (typeof findItemCallback == 'function') {
             findItemCallback(id, item);
         } else {
-            var ordering = $('input[name=' + id + 'ItemIds]').size() + 1;
+            var ordering = $('input[name=' + id + 'ItemIds]').length + 1;
             var html = '';
             html += '<li id="' + key + '">';
 
@@ -85,7 +85,7 @@ Shop.deleteRelationItem = function(key) {
 // 관련상품 추가여부 확인
 Shop.isAddedRelationItem = function(id, itemId) {
     var key = id + '_item_' + itemId;
-    var itemCount = $('#' + key).size();
+    var itemCount = $('#' + key).length;
     if (itemCount == 0) {
         return false;
     }
@@ -99,7 +99,7 @@ Shop.deleteRelationItemAll = function(targetId) {
 };
 
 Shop.isAvilableRelatedItemCount = function(targetId) {
-    var count = $('#' + targetId).find('li').size();
+    var count = $('#' + targetId).find('li').length;
     if (count > 20) {
         return false;
     }
@@ -125,7 +125,7 @@ var ShopEventHandler = {};
 var CURRENT_SELECT_CATEGORY_LEVEL;
 ShopEventHandler.categorySelectboxChagneEvent = function() {
 
-    if ($('#categoryGroupId').size() > 0) {
+    if ($('#categoryGroupId').length > 0) {
         // 카테고리 그룹 선택
         $('#categoryGroupId').on('change', function(){
             var categoryGroupId = $(this).val();
@@ -209,7 +209,7 @@ ShopEventHandler.categorySelectboxChagneEvent = function() {
 var CURRENT_SELECT_CATEGORY_LEVEL;
 ShopEventHandler.categorySelectboxChagneEvent2 = function() {
 
-    if ($('#code').size() > 0) {
+    if ($('#code').length > 0) {
 
         // 카테고리 그룹 선택
 
@@ -403,7 +403,7 @@ Shop.getTopBanner = function() {
     Common.loading.display = false;
     var $topBanner = $('#op-top-banner');
 
-    if ($topBanner.size() == 0) {
+    if ($topBanner.length == 0) {
         return;
     }
 
@@ -450,7 +450,7 @@ Shop.getTodayItems = function() {
     Common.loading.display = false;
     var $todayItems = $('.op-today-items');
 
-    if ($todayItems.size() == 0) {
+    if ($todayItems.length == 0) {
         return;
     }
 
@@ -501,7 +501,7 @@ Shop.getMobileTodayItems = function() {
     Common.loading.display = false;
     var $todayItems = $('.op-today-items');
 
-    if ($todayItems.size() == 0) {
+    if ($todayItems.length == 0) {
         return;
     }
 
@@ -645,7 +645,7 @@ Shop.applyForArrival = function(itemId, isLogin, target) {
 
 //관심상품 수 조회
 Shop.getWishlistCount = function() {
-    if ($('#aside_wishlist_count').size() == 0) {
+    if ($('#aside_wishlist_count').length == 0) {
         return;
     }
 
@@ -669,7 +669,7 @@ Shop.getCartInfo = function() {
         Common.responseHandler(response, function(response) {
             var obj = response.data;
 
-            if ($('#quick-menu').size() > 0) {
+            if ($('#quick-menu').length > 0) {
                 $('#aside_cart_quantity').text(Common.numberFormat(obj.cartQuantity));
                 $('#header_cart_quantity').text(Common.numberFormat(obj.cartQuantity));
             } else {
@@ -719,9 +719,9 @@ Shop.closeCartWishlistLayer = function() {
 Shop.findCategory = function() {
     // 카테고리 검색 (하위 카테고리 목록)
     var $category = $('.category_depth01 > li > a');
-    if ($category.size() > 0) {
+    if ($category.length > 0) {
         $category.on('click', function(e) {
-            var hasChildCategories = $(this).next().size() > 0 ? true : false;
+            var hasChildCategories = $(this).next().length > 0 ? true : false;
 
             if (hasChildCategories) {
                 e.preventDefault();
@@ -782,7 +782,7 @@ Shop.quickMenuPagination = function() {
     // QUICK MENU
     var $quickMenu = $('#quick-menu');
     var $todayItems = $('.item_area ul');
-    var todayItemCount = $todayItems.find('> li').size();
+    var todayItemCount = $todayItems.find('> li').length;
     var todayItemsIndex = 0;
     var itemHeight = 58;
     var itemsPerPage = 3;
@@ -837,11 +837,11 @@ Shop.getCouponInfo = function() {
         Common.responseHandler(response, function(response) {
             var obj = response.data;
 
-            if ($('#aside_coupon_count').size() > 0) {
+            if ($('#aside_coupon_count').length > 0) {
                 $('#aside_coupon_count').text(Common.numberFormat(obj.userCouponCount));
             }
 
-            if ($('#aside_shipping_coupon_count').size() > 0) {
+            if ($('#aside_shipping_coupon_count').length > 0) {
                 $('#aside_shipping_coupon_count').text(Common.numberFormat(obj.userShippingCount));
             }
 
@@ -865,7 +865,7 @@ Shop.getCouponInfo = function() {
 Shop.handlePagination = function(formSelector) {
     var $pagination = $('.op-pagination');
     var $form = $(formSelector);
-    if ($pagination.size() == 0 || $form.size() == 0) {
+    if ($pagination.length == 0 || $form.length == 0) {
         return;
     }
 
@@ -880,7 +880,7 @@ Shop.handlePagination = function(formSelector) {
 
             var page = m[0].replace('page=', '');
 
-            if ($form.find('input[name=page]').size() == 0) {
+            if ($form.find('input[name=page]').length == 0) {
                 $form.append('<input type="hidden" name="page" value="' + page + '" />')
             } else {
                 $form.find('input[name=page]').val(page);
