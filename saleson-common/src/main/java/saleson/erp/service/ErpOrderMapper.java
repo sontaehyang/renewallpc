@@ -228,6 +228,12 @@ public class ErpOrderMapper {
 			this.bindOrderShippingInfo(ol, erpOrder.getOrderShippingInfos());
 			ol.setPayMethod(erpOrder.getPayMethod());
 			ol.setBillType(erpOrder.getBillType());
+
+			if (erpOrder.getPayMethod().equals("렌탈페이")) {
+				ol.setShopCd("S002");
+				ol.setShopName("BS렌탈");
+				ol.setSolNo(9990);
+			}
 		});
 
 		return orderLines;

@@ -809,12 +809,15 @@
 		<script src="/content/modules/popup.js"></script>
 		<script src="/content/modules/front/item.view.js"></script>
 		<script type="text/javascript">
+			var rentalFlag = '${item.rentalPayFlag}';
 
-			// 초기 렌탈료 조회  (디폴트 24개월)
-			// getMonthRentalPer(24);
+			// 렌탈 사용시 초기 렌탈료 조회  (디폴트 24개월)
+			if (rentalFlag == 'Y') {
+				getMonthRentalPer(24);
+			}
 
 			$('.rental-send-amount').on('change', function(){
-				alert(1);
+				//alert(1);
 			});
 
 			function getMonthRentalPer(rentalVal){

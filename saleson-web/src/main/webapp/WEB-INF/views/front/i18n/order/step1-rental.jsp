@@ -783,7 +783,8 @@
     <input type="hidden" name="postcode" class="postcode"> <!-- 우편번호 -->
     <input type="hidden" name="prodColor" class="prodColor"> <!-- 색상 -->
     <input type="hidden" name="returnURL" class="returnURL"> <!-- 리다이렉트 주소 -->
-    <input type="hidden" name="prodUrl" class="prodUrl"> <!-- 해당 상품의 이미지URL -->
+    <input type="hidden" name="prodUrl" class="prodUrl"> <!-- 상품상세 url -->
+    <input type="hidden" name="storeOrderNo" class="storeOrderNo"> <!-- 해당 상품의 이미지URL -->
 </form>
 
 <page:javascript>
@@ -896,13 +897,11 @@
                         return false;
                     }
 
-
                     var isSuccess = false;
                     var savePaymentType = [];
                     alert('통과');
                     $.post('/order/save-rental', $("#buy").serialize(), function(response){
                         Common.responseHandler(response, function(response) {
-                            alert('아작스 통과');
                             isSuccess = true;
                             savePaymentType = response.data.savePaymentType;
                             alert(response);
@@ -912,12 +911,22 @@
                             // 렌탈페이 제공폼에 데이터 넣기
                             var rentalPayShopId = '${op:property("rentalpay.seller.id")}';
                             var rentalPayShopCode = '${op:property("rentalpay.seller.code")}';
-                            var singleShippingVal = '${rentalItemName}';
-                            if (singleShippingVal == 'single') {
-                                itemNameForRental = '${buy.receivers[0].itemGroups[0].buyItem.itemName}_'+ $('input[name="orderCode"]').val();
-                            } else {
-                                itemNameForRental = '${buy.receivers[0].itemGroups[0].buyItems[0].itemName}_'+ $('input[name="orderCode"]').val();
+                            var itemCodeForRental =  response.data.itemCode;
+                            var itemNameForRentalTemp = response.data.productName;
+                            var quantityForRental = response.data.quantity;
+                            var itemNameForRental = itemNameForRentalTemp;
+
+                            for (var i=1; i < quantityForRental; i++) {
+                                itemNameForRental += '|' + itemNameForRentalTemp
                             }
+
+
+                            //var singleShippingVal = '${rentalItemName}';
+                            //console.log("이름 테스트 - > " + itemNameForRental);
+                            //console.log("이름 테스트 - > " + itemCodeForRental);
+                            //console.log("갯수 테스트 - > " + quantityForRental);
+                            // console.log('개수 테스트 => ' + itemQuantityForRental);
+
                             var siteUrl = '${op:property("saleson.url.shoppingmall")}';
                             $('.storeId').val(rentalPayShopId);     <!-- 가맹점아이디 -->
                             $('.storeCode').val(rentalPayShopCode);   <!-- 가맹점 코드 -->
@@ -929,7 +938,8 @@
                             $('.postcode').val($('input[name="receivers[0].receiveNewZipcode"]').val());    <!-- 우편번호 -->
                             $('.prodColor').val('');   <!-- 색상 -->
                             $('.returnURL').val(siteUrl + '/order/pay');   <!-- 리다이렉트 주소 -->
-                            $('.prodUrl').val(siteUrl + $('#step1ItemImage').attr("src"));     <!-- 해당 상품의 이미지URL -->
+                            $('.prodUrl').val(siteUrl + '/products/view/' + itemCodeForRental);     <!-- 해당 상품의 이미지URL -->
+                            $('.storeOrderNo').val( $('input[name="orderCode"]').val());     <!-- 상점 주문번호 -->
                             <!-- 해당 상품의 이미지URL $('#step1ItemImage').attr("src")-->
                             console.log( 'ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ');
                             console.log( $('.storeId').val());
@@ -943,6 +953,7 @@
                             console.log( $('.prodColor').val());
                             console.log( $('.returnURL').val());
                             console.log( $('.prodUrl').val());
+                            console.log( $('.storeOrderNo').val());
 
                             openRentalPg('stg', 'pgForm');
 

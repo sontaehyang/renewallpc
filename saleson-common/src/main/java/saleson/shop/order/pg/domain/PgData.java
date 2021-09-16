@@ -1768,7 +1768,7 @@ public class PgData {
     public String resultCode;
     public String apprKey;
     public String orderNo;
-
+    public String storeOrderNo;
 
 	public String getProdName() {
 		return prodName;
@@ -1824,5 +1824,13 @@ public class PgData {
 
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
+	}
+
+	public String getStoreOrderNo() {
+		return storeOrderNo;
+	}
+
+	public void setStoreOrderNo(String storeOrderNo) {
+		this.storeOrderNo = storeOrderNo;
 	}
 }

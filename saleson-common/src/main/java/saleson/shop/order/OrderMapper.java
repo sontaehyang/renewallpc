@@ -663,4 +663,14 @@ public interface OrderMapper {
 	 * @return
 	 */
 	RentalPay getRentalOrderInfo(RentalPay rentalPayTempParam);
+
+	/**
+	 * 렌탈주문 정보 저장
+	 */
+	void insertOrderRental(OrderRental orderRental);
+
+	/**
+	 * 렌탈주문 정보 가져오기
+	 */
+	OrderRental getOrderRental(String orderCode);
 }

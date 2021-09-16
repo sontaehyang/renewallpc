@@ -302,7 +302,7 @@ public interface OrderService {
 	 * @param request
 	 * @return
 	 */
-	public String insertOrderRental(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request);
+	public String insertOrderForRentalBuy(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request, String rentalPer);
 	
 	/**
 	 * 주문상품 임시 저장
@@ -549,4 +549,14 @@ public interface OrderService {
 	 * ERP 주문 상태 연동 배치
 	 */
 	void erpOrderStatusBatch();
+
+	/**
+	 * 렌탈주문 정보 저장
+	 */
+	void insertOrderRental(OrderRental orderRental);
+
+	/**
+	 * 렌탈주문 정보 가져오기
+	 */
+	OrderRental getOrderRental(String orderCode);
 }

@@ -58,6 +58,8 @@ public class ErpOrder {
 				payMethod = "가상계좌";
 			} else if ("naverpay".equals(orderPayment.getApprovalType())) {
 				payMethod = "네이버페이";
+			} else if ("rentalpay".equals(orderPayment.getApprovalType())) {
+				payMethod = "렌탈페이";
 			}
 		}
 

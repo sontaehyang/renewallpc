@@ -1561,9 +1561,12 @@ function calculate() {
 
 
 	// 렌탈페이 - API 통신상 필요한 모든합계 금액
-	$('.rental-send-amount').val(Common.numberFormat(totalItemPrice + totalOptionPrice + totalAdditionPrice));
-	// 계산후 렌탈페이 금액 재정산
-	getMonthRentalPer(24);
+	$('.rental-send-amount').val(Common.numberFormat(totalItemPrice + totalOptionPrice + totalAdditionPrice));// 계산후 렌탈페이 금액 재정산
+
+	// 계산후 렌탈페이 재정산
+	if (rentalFlag == 'Y') {
+		getMonthRentalPer(24);
+	}
 
 
 	$('.total-price').show();
@@ -2443,141 +2446,6 @@ function setCustomerInfo() {
 	});
 }
 
-
-
-//---------------------------
-
-// window.onload = pageLoad;
-// function pageLoad(){
-// 	var head= document.getElementsByTagName('head')[0];
-// 	var script= document.createElement('script');
-// 	script.type= 'text/javascript';
-// 	script.src= '//code.jquery.com/jquery-3.3.1.min.js';
-// 	head.appendChild(script);
-// };
-
-function checkUrlForm(strUrl) {
-	var expUrl = /^http[s]?\:\/\//i;
-	return expUrl.test(strUrl);
-}
-
-function openRentalPg(serverType, formId){
-
-	var ip = "";
-
-	var curDate = new Date();
-	var strDate = new Date(2021,4,30,1,30,0);
-	var endDate = new Date(2021,4,30,4,30,0);
-
-	if((curDate.getTime() > strDate.getTime()) &&(curDate.getTime() < endDate.getTime())){
-		alert("코리아크레딧뷰로 차세대 시스템 오픈에 따라\n"
-			+"일시 서비스 중단되었습니다.\n"
-			+"- 중단 일시 : 2021.05.30 01:30 ~ 04:30 (3시간)");
-		return;
-	}
-
-	if(serverType == "dev"){
-		ip = "http://211.178.29.124:8082";
-	}else if(serverType == "local"){
-		ip = "http://10.100.1.161:8082";
-	}else if(serverType == "stg"){
-		ip = "http://211.178.29.124:8082";
-	}else if(serverType == "prd"){
-		ip = "https://rentalpg.bsrental.com:446/";
-	}else{
-		alert("서버 타입을 확인해주세요.");
-		return false;
-	}
-
-	$('head').append('<link id="bsrental_style" rel="stylesheet" href="' + ip + '/resources/css/rentalPg.css" type="text/css" />');
-
-	var storeId = $('#'+formId+' [name="storeId"]').val();
-	var storeCode = $('#'+formId+' [name="storeCode"]').val();
-	var prodName = $('#'+formId+' [name="prodName"]').val();
-	var rentalPer = $('#'+formId+' [name="rentalPer"]').val();
-	var prodAmt = $('#'+formId+' [name="prodAmt"]').val();
-	var postcode = $('#'+formId+' [name="postcode"]').val();
-	var addr = $('#'+formId+' [name="addr"]').val();
-	var addrDtl = $('#'+formId+' [name="addrDtl"]').val();
-	var color = $('#'+formId+' [name="prodColor"]').val();
-	var returnURL = $('#'+formId+' [name="returnURL"]').val();
-	var prodUrl = $('#'+formId+' [name="prodUrl"]').val();
-	var offLineYn = $('#'+formId+' [name="offLineYn"]').val();
-	var storeOrderNo = $('#'+formId+' [name="storeOrderNo"]').val();
-
-	if(typeof storeId == "undefined" || storeId == null || storeId == "") {
-		alert("가맹점아이디를 입력해주세요.");
-		return false;
-	}else if(typeof storeCode == "undefined" || storeCode == null || storeCode == "") {
-		alert("가맹점코드를 입력해주세요.");
-		return false;
-	}else if(typeof prodName == "undefined" || prodName == null || prodName == "") {
-		alert("상품명을 입력해주세요.");
-		return false;
-	}else if(typeof rentalPer == "undefined" || rentalPer == null || rentalPer == "") {
-		alert("렌탈기간을 입력해주세요.");
-		return false;
-	}else if(typeof prodAmt == "undefined" || prodAmt == null || prodAmt == "") {
-		alert("물건대금을 입력해주세요.");
-		return false;
-	}else if(typeof returnURL == "undefined" || returnURL == null || returnURL == "") {
-		alert("returnURL을 입력해주세요.");
-		return false;
-	}else if(typeof prodUrl == "undefined" || prodUrl == null || prodUrl == "") {
-		alert("상품상세URL을 입력해주세요.");
-		return false;
-	}
-
-	/*2021.08.05 JHC 오프라인 호출일 경우 주소체크를 하지 않는다*/
-	if(offLineYn != 'Y'){
-		if(typeof addr == "undefined" || addr == null || addr == "") {
-			alert("주소를 입력해주세요.");
-			return false;
-		}else if(typeof addrDtl == "undefined" || addrDtl == null || addrDtl == "") {
-			alert("상세주소를 입력해주세요.");
-			return false;
-		}
-	}
-	/*2021.08.05 JHC 오프라인 호출일 경우 주소체크를 하지 않는다*/
-
-	if(!checkUrlForm(returnURL)){
-		alert("returnURL이 올바른 URL형식이 아닙니다.");
-		return false;
-	}
-
-	var divCheck = $('#bsDivPopup').length
-
-	if(divCheck > 0){
-		return;
-	}else{
-		var url = ip + "/rentalPgPlatform.do";
-		var popupTag = '<FORM  name="pgIframForm" id="pgIframForm"  method = "POST"  target="iFrm" action="'+url+'" >';
-		popupTag = popupTag + '<input type = "hidden"  name="storeId"  value="'+storeId+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="storeCode"  value="'+storeCode+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="prodName"  value="'+prodName+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="rentalPer"  value="'+rentalPer+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="prodAmt"  value="'+prodAmt+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="postcode"  value="'+postcode+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="addr"  value="'+addr+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="addrDtl"  value="'+addrDtl+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="color"  value="'+color+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="returnURL"  value="'+returnURL+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="prodUrl"  value="'+prodUrl+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="offLineYn"  value="'+offLineYn+'" />';
-		popupTag = popupTag + '<input type = "hidden"  name="storeOrderNo"  value="'+storeOrderNo+'" />';
-		popupTag = popupTag + '</FORM>﻿';
-		popupTag = popupTag + '<div id="bsDivPopup" class="bsRental-modal-wrap">';
-		if(offLineYn != 'Y'){
-			popupTag = popupTag + '<iFRAME id="iFrm" frameBorder="0" name="iFrm" width="800" height="680" id="iFrm" scrolling="yes" class="iFrm"></iFRAME>';
-		}else{
-			popupTag = popupTag + '<iFRAME id="iFrm" frameBorder="0" name="iFrm" width="800" height="820" id="iFrm" scrolling="yes" class="iFrm"></iFRAME>';
-		}
-		popupTag = popupTag + '</div>';
-		$("body").append(popupTag);
-		$("body").css("overflow","hidden");
-		$('#pgIframForm').submit();
-	}
-}
 
 window.addEventListener('message', function(e) {
 	$('.modal-wrap-pop').css("display", "none");

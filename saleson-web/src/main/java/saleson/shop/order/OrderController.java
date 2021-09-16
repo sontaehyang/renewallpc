@@ -5,6 +5,7 @@ import com.onlinepowers.framework.exception.NotAjaxRequestException;
 import com.onlinepowers.framework.exception.PageNotFoundException;
 import com.onlinepowers.framework.exception.UserException;
 import com.onlinepowers.framework.security.userdetails.User;
+import com.onlinepowers.framework.sequence.service.SequenceService;
 import com.onlinepowers.framework.util.*;
 import com.onlinepowers.framework.web.bind.annotation.RequestProperty;
 import com.onlinepowers.framework.web.servlet.view.JsonView;
@@ -94,6 +95,9 @@ public class OrderController {
 
     @Autowired
 	private PolicyService policyService;
+
+	@Autowired
+	private SequenceService sequenceService;
 
 	@GetMapping("test")
 	@RequestProperty(layout="blank")
@@ -415,12 +419,14 @@ public class OrderController {
 			System.out.println("Pay Attribute Name - "+paramName+", Value - "+request.getParameter(paramName));
 		}
 
-		String pgRentalprodName = pgData.getProdName();
-		String pgRentalItemName = pgRentalprodName.substring(0, pgRentalprodName.indexOf("_"));
-		String pgRentalOrderCode = pgRentalprodName.substring(pgRentalprodName.indexOf("_") + 1);
+		String pgRentalItemName = pgData.getProdName();
+		// 복수개 구매시 API 가이드대로 넣은 | 기준으로 맨앞의 상품명만 가져옴
+		if (pgRentalItemName.indexOf("_") > 0) {
+			pgRentalItemName = pgRentalItemName.substring(0, pgRentalItemName.indexOf("_"));
+		}
 
 		pgData.setProdName(pgRentalItemName);
-		orderParam.setOrderCode(pgRentalOrderCode);
+		orderParam.setOrderCode(pgData.getStoreOrderNo());
 		orderParam.setUserId(UserUtils.getUserId());
 		orderParam.setSessionId(session.getId());
 		orderParam.setViewTarget("WEB");
@@ -434,7 +440,22 @@ public class OrderController {
 
 			orderLogService.put(orderParam.getOrderCode());
 
-			orderCode = orderService.insertOrderRental(orderParam, pgData, session, request);
+			orderCode = orderService.insertOrderForRentalBuy(orderParam, pgData, session, request, pgData.getContPer());
+
+			//렌탈정보 저장
+            OrderRental orderRental = new OrderRental();
+			orderRental.setOrderRentalId(sequenceService.getId("OP_ORDER_RENTAL"));
+			orderRental.setOrderCode(orderParam.getOrderCode());
+			orderRental.setRentalItemName(pgData.getProdName());
+			orderRental.setRentalPer(pgData.getContPer());
+			orderRental.setRentalTotAmt(Integer.parseInt(pgData.getContPer()) * Integer.parseInt(pgData.getProdRent()));
+			orderRental.setRentalMonthAmt(Integer.parseInt(pgData.getProdRent()));
+			orderRental.setOrderNo(pgData.getOrderNo());
+			orderRental.setApprKey(pgData.getApprKey());
+			orderRental.setResultTimes(pgData.getResultTimes());
+
+			orderService.insertOrderRental(orderRental);
+
 		} catch (Exception e) {
 			log.error("[ORDER-ERROR] 주문(결제) 처리 시 오류 발생 : {}", orderParam.getOrderCode(), e);
 
@@ -499,7 +520,7 @@ public class OrderController {
 	/**
 	 * 결제 완료 페이지
 	 * @param orderCode
-	 * @param model
+	 * @param step3-rental
 	 * @return
 	 */
 	@GetMapping("step3-rental/{orderSequence}/{orderCode}")
@@ -522,6 +543,7 @@ public class OrderController {
 		orderParam.setOrderCode(orderCode);
 
 		Order order = orderService.getOrderByParam(orderParam);
+		OrderRental orderRental = orderService.getOrderRental(orderCode);
 		if (order == null) {
 			throw new OrderException("주문정보가 없습니다.", "/");
 		}
@@ -538,6 +560,7 @@ public class OrderController {
 		model.addAttribute("jsonOrderList", jsonArray.fromObject(order.getOrderShippingInfos()));
 		model.addAttribute("user", UserUtils.getUser());
 		model.addAttribute("order", order);
+		model.addAttribute("orderRental", orderRental);
 		model.addAttribute("orderCode", orderCode);
 		model.addAttribute("orderSequence", orderSequence);
 

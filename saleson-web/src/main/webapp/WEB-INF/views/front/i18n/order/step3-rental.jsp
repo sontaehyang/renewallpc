@@ -93,6 +93,8 @@
             </table><!--//view E-->
         </div>
 
+
+        <h3 class="sub_title mt30">렌탈내역</h3>
         <div class="board_wrap mt15">
             <table cellpadding="0" cellspacing="0" class="order_list">
                 <caption>상품 list</caption>
@@ -108,9 +110,9 @@
                 <tr>
                     <th scope="col" class="none_left">상품명/옵션정보</th>
                     <th scope="col">수량</th>
-                    <th scope="col">상품금액</th>
-                    <th scope="col">할인금액</th>
-                    <th scope="col">할인금액적용</th>
+                    <th scope="col">총 렌탈료</th>
+                    <th scope="col">렌탈기간</th>
+                    <th scope="col">월 렌탈료</th>
                     <th scope="col">배송비</th>
                 </tr>
                 </thead>
@@ -158,13 +160,13 @@
                         </td>
                         <td>${op:numberFormat(orderItem.quantity)} 개</td>
                         <td>
-                            <p class="price_01">${op:numberFormat(totalItemAmount)}원</p>
+                            <p class="price_01">${op:numberFormat(orderRental.rentalTotAmt)}원</p>
                         </td>
                         <td>
-                            <p class="price_01">${ op:numberFormat(totalDiscountAmount) }원</p>
+                            <p>${orderRental.rentalPer} 개월</p>
                         </td>
                         <td>
-                            <div class="sum">${op:numberFormat(totalSaleAmount)}원</div>
+                            <div class="sum">${op:numberFormat(orderRental.rentalMonthAmt)}원</div>
                         </td>
                         <td>
                             <p class="delivery_price">
@@ -219,46 +221,46 @@
     </c:forEach>
 
     <!--// 배송방법 추가 S -->
-    <h3 class="sub_title mt30">배송방법</h3>
-    <div class="board_wrap">
-        <table cellpadding="0" cellspacing="0" class="order_view">
-            <caption>배송방법</caption>
-            <colgroup>
-                <col style="width:160px;">
-                <col style="width:auto;">
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row">배송방법</th>
-                <td>${order.deliveryMethodType.title}</td>
-            </tr>
-            <tr>
-                <th scope="row">배송비</th>
-                <td>
-                    <c:choose>
-                        <c:when test="${order.deliveryMethodType == 'QUICK'}">
-                            착불
-                        </c:when>
-                        <c:otherwise>
-                            <b class="delv_price">${op:numberFormat(order.totalShippingAmount)}</b>원
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" valign="top">배송 주의사항</th>
-                <td>
-                    <div class="box_list_02 pt0">
-                        <ul>
-                            <li><span class="tit">택배</span>제작상품이기에 출고까지 1~2일 소요됩니다.</li>
-                            <li><span class="tit">퀵서비스</span>평일 오전 11시까지 결제 후 전화주시면 당일발송 됩니다. 퀵서비스 비용은 착불이며, 지역에 따라 비용은 상이합니다.</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table><!--//view E-->
-    </div>
+<%--    <h3 class="sub_title mt30">배송방법</h3>--%>
+<%--    <div class="board_wrap">--%>
+<%--        <table cellpadding="0" cellspacing="0" class="order_view">--%>
+<%--            <caption>배송방법</caption>--%>
+<%--            <colgroup>--%>
+<%--                <col style="width:160px;">--%>
+<%--                <col style="width:auto;">--%>
+<%--            </colgroup>--%>
+<%--            <tbody>--%>
+<%--            <tr>--%>
+<%--                <th scope="row">배송방법</th>--%>
+<%--                <td>${order.deliveryMethodType.title}</td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <th scope="row">배송비</th>--%>
+<%--                <td>--%>
+<%--                    <c:choose>--%>
+<%--                        <c:when test="${order.deliveryMethodType == 'QUICK'}">--%>
+<%--                            착불--%>
+<%--                        </c:when>--%>
+<%--                        <c:otherwise>--%>
+<%--                            <b class="delv_price">${op:numberFormat(order.totalShippingAmount)}</b>원--%>
+<%--                        </c:otherwise>--%>
+<%--                    </c:choose>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <th scope="row" valign="top">배송 주의사항</th>--%>
+<%--                <td>--%>
+<%--                    <div class="box_list_02 pt0">--%>
+<%--                        <ul>--%>
+<%--                            <li><span class="tit">택배</span>제작상품이기에 출고까지 1~2일 소요됩니다.</li>--%>
+<%--                            <li><span class="tit">퀵서비스</span>평일 오전 11시까지 결제 후 전화주시면 당일발송 됩니다. 퀵서비스 비용은 착불이며, 지역에 따라 비용은 상이합니다.</li>--%>
+<%--                        </ul>--%>
+<%--                    </div>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--            </tbody>--%>
+<%--        </table><!--//view E-->--%>
+<%--    </div>--%>
     <!--// 배송방법 추가 E -->
 
     <%--<div class="boadr_total">
@@ -267,226 +269,226 @@
         </div>
     </div> --%>
 
-    <h3 class="sub_title mt30">결제내역</h3>
-    <div class="price_box" style="margin-top: 10px">
-        <div class="price_inner">
-            <div class="money">
-                <p class="txt01">상품금액</p>
-                <p class="prices"><span>${op:numberFormat(order.totalItemAmount)}</span>원</p>
-            </div>
+<%--    <h3 class="sub_title mt30">렌탈내역</h3>--%>
+<%--    <div class="price_box" style="margin-top: 10px">--%>
+<%--        <div class="price_inner">--%>
+<%--            <div class="money">--%>
+<%--                <p class="txt01">상품금액</p>--%>
+<%--                <p class="prices"><span>${op:numberFormat(order.totalItemAmount)}</span>원</p>--%>
+<%--            </div>--%>
 
-            <span class="icons"><img src="/content/images/icon/icon_minus.png" alt="빼기"></span>
-            <div class="money">
-                <p class="txt01">할인금액</p>
-                <p class="prices"><span>${op:numberFormat(order.totalDiscountAmount)}</span>원</p>
-            </div>
+<%--            <span class="icons"><img src="/content/images/icon/icon_minus.png" alt="빼기"></span>--%>
+<%--            <div class="money">--%>
+<%--                <p class="txt01">할인금액</p>--%>
+<%--                <p class="prices"><span>${op:numberFormat(order.totalDiscountAmount)}</span>원</p>--%>
+<%--            </div>--%>
 
-            <span class="icons"><img src="/content/images/icon/icon_plus.png" alt="더하기"></span>
-            <div class="money">
-                <p class="txt01">배송비</p>
-                <p class="prices"><span>${op:numberFormat(order.totalShippingAmount)}</span>원</p>
-            </div>
+<%--            <span class="icons"><img src="/content/images/icon/icon_plus.png" alt="더하기"></span>--%>
+<%--            <div class="money">--%>
+<%--                <p class="txt01">배송비</p>--%>
+<%--                <p class="prices"><span>${op:numberFormat(order.totalShippingAmount)}</span>원</p>--%>
+<%--            </div>--%>
 
 
-            <%--
-            <span class="icons"><img src="/content/image/icon/icon_minus.png" alt="빼기"></span>
-            <div class="money">
-                <p class="txt01">${op:message('M00246')} 사용</p>
-                <p class="prices"><span>${op:numberFormat(totalUsedPoint)}</span>원</p>
-            </div>
-             --%>
-            <span class="icons"><img src="/content/images/icon/icon_sum.png" alt="더하기"></span>
-            <div class="money">
-                <p class="txt01"><strong>결제금액</strong></p>
-                <p class="prices total"><span>${op:numberFormat(order.totalOrderAmount)}</span>원</p>
-            </div>
-        </div> <!-- // price_inner E -->
-        <div class="add_point">
-            <p>적립예정 ${op:message('M00246')} : <span>${op:numberFormat(totalEarnPoint)}  P</span> </p>
-        </div>
-    </div>
+<%--            &lt;%&ndash;--%>
+<%--            <span class="icons"><img src="/content/image/icon/icon_minus.png" alt="빼기"></span>--%>
+<%--            <div class="money">--%>
+<%--                <p class="txt01">${op:message('M00246')} 사용</p>--%>
+<%--                <p class="prices"><span>${op:numberFormat(totalUsedPoint)}</span>원</p>--%>
+<%--            </div>--%>
+<%--             &ndash;%&gt;--%>
+<%--            <span class="icons"><img src="/content/images/icon/icon_sum.png" alt="더하기"></span>--%>
+<%--            <div class="money">--%>
+<%--                <p class="txt01"><strong>결제금액</strong></p>--%>
+<%--                <p class="prices total"><span>${op:numberFormat(order.totalOrderAmount)}</span>원</p>--%>
+<%--            </div>--%>
+<%--        </div> <!-- // price_inner E -->--%>
+<%--        <div class="add_point">--%>
+<%--            <p>적립예정 ${op:message('M00246')} : <span>${op:numberFormat(totalEarnPoint)}  P</span> </p>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
-    <h3 class="sub_title mt30">결제수단</h3>
-    <div class="board_wrap">
-        <c:forEach items="${order.orderPayments}" var="payment">
-            <c:if test="${payment.amount > 0 || payment.cancelAmount > 0 || payment.remainingAmount > 0}">
-                <c:set var="unit">원</c:set>
+<%--    <h3 class="sub_title mt30">결제수단</h3>--%>
+<%--    <div class="board_wrap">--%>
+<%--        <c:forEach items="${order.orderPayments}" var="payment">--%>
+<%--            <c:if test="${payment.amount > 0 || payment.cancelAmount > 0 || payment.remainingAmount > 0}">--%>
+<%--                <c:set var="unit">원</c:set>--%>
 
-                <c:choose>
-                    <c:when test="${payment.approvalType == 'point'}">
-                        <c:set var="unit">P</c:set>
-                    </c:when>
-                </c:choose>
-                <table cellpadding="0" cellspacing="0" class="order_view">
-                    <caption>결제수단</caption>
-                    <colgroup>
-                        <col style="width:15%;">
-                        <col style="width:auto;">
-                    </colgroup>
-                    <tbody>
-                    <tr>
-                        <th scope="row">결제방식</th>
-                        <td>${payment.approvalTypeLabel}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">결제금액</th>
-                        <td>
-                            <c:choose>
-                                <c:when test="${payment.paymentType == '1'}">
-                                    ${op:numberFormat(payment.amount)}${unit}
-                                    <c:if test="${payment.amount != payment.remainingAmount && payment.remainingAmount > 0}">
-                                        <strong style="display:block; padding-top: 5px;">(잔여액 : ${op:numberFormat(payment.remainingAmount)}${unit})</strong>
-                                    </c:if>
-                                </c:when>
-                                <c:otherwise>${op:numberFormat(payment.cancelAmount)}${unit}</c:otherwise>
-                            </c:choose>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">결제상태</th>
-                        <td>
-                            <c:choose>
-                                <c:when test="${empty payment.payDate}">미결</c:when>
-                                <c:otherwise>
-                                    <c:choose>
-                                        <c:when test="${payment.paymentType == '1'}">결제완료</c:when>
-                                        <c:otherwise>결제취소</c:otherwise>
-                                    </c:choose>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                    </tr>
-                    <c:if test="${payment.approvalType == 'vbank'}">
-                        <tr>
-                            <th scope="row">입금시간</th>
-                            <td>${op:date(payment.bankDate)}까지</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">입금정보</th>
-                            <td>${payment.bankVirtualNo}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">입금자명</th>
-                            <td>${payment.bankInName}</td>
-                        </tr>
-                    </c:if>
-                    </tbody>
-                </table>
-            </c:if>
-        </c:forEach>
-    </div><!-- // board_wrap E -->
+<%--                <c:choose>--%>
+<%--                    <c:when test="${payment.approvalType == 'point'}">--%>
+<%--                        <c:set var="unit">P</c:set>--%>
+<%--                    </c:when>--%>
+<%--                </c:choose>--%>
+<%--                <table cellpadding="0" cellspacing="0" class="order_view">--%>
+<%--                    <caption>결제수단</caption>--%>
+<%--                    <colgroup>--%>
+<%--                        <col style="width:15%;">--%>
+<%--                        <col style="width:auto;">--%>
+<%--                    </colgroup>--%>
+<%--                    <tbody>--%>
+<%--                    <tr>--%>
+<%--                        <th scope="row">결제방식</th>--%>
+<%--                        <td>${payment.approvalTypeLabel}</td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <th scope="row">결제금액</th>--%>
+<%--                        <td>--%>
+<%--                            <c:choose>--%>
+<%--                                <c:when test="${payment.paymentType == '1'}">--%>
+<%--                                    ${op:numberFormat(payment.amount)}${unit}--%>
+<%--                                    <c:if test="${payment.amount != payment.remainingAmount && payment.remainingAmount > 0}">--%>
+<%--                                        <strong style="display:block; padding-top: 5px;">(잔여액 : ${op:numberFormat(payment.remainingAmount)}${unit})</strong>--%>
+<%--                                    </c:if>--%>
+<%--                                </c:when>--%>
+<%--                                <c:otherwise>${op:numberFormat(payment.cancelAmount)}${unit}</c:otherwise>--%>
+<%--                            </c:choose>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <th scope="row">결제상태</th>--%>
+<%--                        <td>--%>
+<%--                            <c:choose>--%>
+<%--                                <c:when test="${empty payment.payDate}">미결</c:when>--%>
+<%--                                <c:otherwise>--%>
+<%--                                    <c:choose>--%>
+<%--                                        <c:when test="${payment.paymentType == '1'}">결제완료</c:when>--%>
+<%--                                        <c:otherwise>결제취소</c:otherwise>--%>
+<%--                                    </c:choose>--%>
+<%--                                </c:otherwise>--%>
+<%--                            </c:choose>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                    <c:if test="${payment.approvalType == 'vbank'}">--%>
+<%--                        <tr>--%>
+<%--                            <th scope="row">입금시간</th>--%>
+<%--                            <td>${op:date(payment.bankDate)}까지</td>--%>
+<%--                        </tr>--%>
+<%--                        <tr>--%>
+<%--                            <th scope="row">입금정보</th>--%>
+<%--                            <td>${payment.bankVirtualNo}</td>--%>
+<%--                        </tr>--%>
+<%--                        <tr>--%>
+<%--                            <th scope="row">입금자명</th>--%>
+<%--                            <td>${payment.bankInName}</td>--%>
+<%--                        </tr>--%>
+<%--                    </c:if>--%>
+<%--                    </tbody>--%>
+<%--                </table>--%>
+<%--            </c:if>--%>
+<%--        </c:forEach>--%>
+<%--    </div><!-- // board_wrap E -->--%>
 
     <div class="btn_wrap pt30">
         <a href="/" class="btn btn-default btn-lg" title="쇼핑계속하기">쇼핑계속하기</a>
-        <a href="/mypage/order" class="btn btn-success btn-lg" title="주문내역조회">주문내역조회</a>
+        <a href="/mypage/order" class="btn btn-success btn-lg" title="렌탈내역조회">렌탈내역조회</a>
     </div>
 
-</div><!--// inner E-->
+<%--</div><!--// inner E-->--%>
 
-<page:javascript>
-    <script type="text/javascript">
-        //<![CDATA[
-        var DaumConversionDctSv="type=P,orderID=,amount=";
-        var DaumConversionAccountID="AhEsM4T6uIfTz.omUTDgpw00";
-        if(typeof DaumConversionScriptLoaded=="undefined"&&location.protocol!="file:"){
-            var DaumConversionScriptLoaded=true;
-            document.write(unescape("%3Cscript%20type%3D%22text/javas"+"cript%22%20src%3D%22"+(location.protocol=="https:"?"https":"http")+"%3A//t1.daumcdn.net/cssjs/common/cts/vr200/dcts.js%22%3E%3C/script%3E"));
-        }
-        //]]>
+<%--<page:javascript>--%>
+<%--    <script type="text/javascript">--%>
+<%--        //<![CDATA[--%>
+<%--        var DaumConversionDctSv="type=P,orderID=,amount=";--%>
+<%--        var DaumConversionAccountID="AhEsM4T6uIfTz.omUTDgpw00";--%>
+<%--        if(typeof DaumConversionScriptLoaded=="undefined"&&location.protocol!="file:"){--%>
+<%--            var DaumConversionScriptLoaded=true;--%>
+<%--            document.write(unescape("%3Cscript%20type%3D%22text/javas"+"cript%22%20src%3D%22"+(location.protocol=="https:"?"https":"http")+"%3A//t1.daumcdn.net/cssjs/common/cts/vr200/dcts.js%22%3E%3C/script%3E"));--%>
+<%--        }--%>
+<%--        //]]>--%>
 
-        $(document).ready(function() {
+<%--        $(document).ready(function() {--%>
 
-            try {
-                var jsonString = '${orderItemUserCodes}';
-                var orderCode = '${orderCode}';
+<%--            try {--%>
+<%--                var jsonString = '${orderItemUserCodes}';--%>
+<%--                var orderCode = '${orderCode}';--%>
 
-                if (jsonString != '' && jsonString != 'null') {
-                    EventLog.order(orderCode, JSON.parse(jsonString));
-                }
-            } catch (e) {}
-        });
+<%--                if (jsonString != '' && jsonString != 'null') {--%>
+<%--                    EventLog.order(orderCode, JSON.parse(jsonString));--%>
+<%--                }--%>
+<%--            } catch (e) {}--%>
+<%--        });--%>
 
-    </script>
-</page:javascript>
+<%--    </script>--%>
+<%--</page:javascript>--%>
 
-<!-- 전환페이지 설정 -->
-<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
-<script type="text/javascript">
-    var _nasa={};
-    if(window.wcs) _nasa["cnv"] = wcs.cnv("1","1"); // 전환유형, 전환가치 설정해야함. 설치매뉴얼 참고
-</script>
-
-
-<!--
-구글 전환추적 로그분석 transaction_id 주문번호 변수 삽입
-Event snippet for 구매_NEW conversion page In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button.
--->
-<script>
-    function gtag_report_conversion(url) {
-        var callback = function () { if (typeof(url) != 'undefined') { window.location = url; } };
-        gtag('event', 'conversion', { 'send_to': 'AW-754482062/8nYfCLnyx40CEI734ecC', 'value': 10.0, 'currency': 'KRW', 'transaction_id': '', 'event_callback': callback });
-        return false;
-    }
-</script>
-
-<script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>
-<script type="text/javascript">
-
-    var scriptJson = ${jsonOrderList};
-    var productsArr = new Array();
-    console.log(scriptJson);
-
-    for (var i=0; scriptJson.length > i; i++){
-        var totalQuantity = 0;
-        for (var j=0; scriptJson[i].orderItems.length > j; j++) {
-            productsArr[j] = {id: scriptJson[i].orderItems[j].itemCode,name: scriptJson[i].orderItems[j].itemName, quantity:  scriptJson[i].orderItems[j].quantity.toString(), price: scriptJson[i].orderItems[j].saleAmount.toString()}
-            totalQuantity += scriptJson[i].orderItems[j].quantity;
-        }
-        console.log(productsArr);
-        console.log(totalQuantity);
-        kakaoPixel('1612698247174901358').pageView();
-        kakaoPixel('1612698247174901358').purchase({
-            total_quantity: totalQuantity.toString(), // 주문 내 상품 개수(optional)
-            total_price: "${order.totalOrderAmount}",  // 주문 총 가격(optional)
-            currency: "KRW",     // 주문 가격의 화폐 단위(optional, 기본 값은 KRW)
-            products: productsArr
-        });
-    }
-</script>
+<%--<!-- 전환페이지 설정 -->--%>
+<%--<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>--%>
+<%--<script type="text/javascript">--%>
+<%--    var _nasa={};--%>
+<%--    if(window.wcs) _nasa["cnv"] = wcs.cnv("1","1"); // 전환유형, 전환가치 설정해야함. 설치매뉴얼 참고--%>
+<%--</script>--%>
 
 
-<!-- *) 구매완료페이지 -->
-<!-- AceCounter eCommerce (Cart_Inout) v8.0 Start -->
-<script language='javascript'>
-    for (var i=0; scriptJson.length > i; i++) {
-        for (var j = 0; scriptJson[i].orderItems.length > j; j++) {
-            console.log(scriptJson[i].orderItems[j].itemCode);
-            console.log(scriptJson[i].orderItems[j].itemName);
-            console.log(scriptJson[i].orderItems[j].saleAmount.toString());
-            console.log(scriptJson[i].orderItems[j].quantity.toString());
-            var _products = (function () {
-                var c = {
-                    pd: scriptJson[i].orderItems[j].itemCode,
-                    pn: scriptJson[i].orderItems[j].itemName,
-                    am: scriptJson[i].orderItems[j].saleAmount.toString(),
-                    qy: scriptJson[i].orderItems[j].quantity.toString(),
-                    ct: '',
-                    onm: ''
-                };
-                var u = (!_products) ? [] : _products;
-                u[escape('@' + c.pd + c.onm)] = c;
-                return u;
-            })();
-        }
-    }
-</script>
-<!-- AceCounter eCommerce (Cart_InOut) v8.0 End -->
+<%--<!----%>
+<%--구글 전환추적 로그분석 transaction_id 주문번호 변수 삽입--%>
+<%--Event snippet for 구매_NEW conversion page In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button.--%>
+<%---->--%>
+<%--<script>--%>
+<%--    function gtag_report_conversion(url) {--%>
+<%--        var callback = function () { if (typeof(url) != 'undefined') { window.location = url; } };--%>
+<%--        gtag('event', 'conversion', { 'send_to': 'AW-754482062/8nYfCLnyx40CEI734ecC', 'value': 10.0, 'currency': 'KRW', 'transaction_id': '', 'event_callback': callback });--%>
+<%--        return false;--%>
+<%--    }--%>
+<%--</script>--%>
 
-<!-- AceCounter eCommerce (Buy_Finish) v8.0 Start -->
-<script language='javascript'>
-    var _onum = '${ orderCode }';  // 주문코드 필수 입력
-    var _amt = '${order.totalOrderAmount}';  // 총 구매액
-    var _pay = '${order.orderPayments[0].approvalTypeLabel}';   //결제수단(ex 신용카드,무통장,가상계좌)
-    var _buy = 'finish';    //구매 완료 변수(finish 고정값)
-</script>
+<%--<script type="text/javascript" charset="UTF-8" src="//t1.daumcdn.net/adfit/static/kp.js"></script>--%>
+<%--<script type="text/javascript">--%>
+
+<%--    var scriptJson = ${jsonOrderList};--%>
+<%--    var productsArr = new Array();--%>
+<%--    console.log(scriptJson);--%>
+
+<%--    for (var i=0; scriptJson.length > i; i++){--%>
+<%--        var totalQuantity = 0;--%>
+<%--        for (var j=0; scriptJson[i].orderItems.length > j; j++) {--%>
+<%--            productsArr[j] = {id: scriptJson[i].orderItems[j].itemCode,name: scriptJson[i].orderItems[j].itemName, quantity:  scriptJson[i].orderItems[j].quantity.toString(), price: scriptJson[i].orderItems[j].saleAmount.toString()}--%>
+<%--            totalQuantity += scriptJson[i].orderItems[j].quantity;--%>
+<%--        }--%>
+<%--        console.log(productsArr);--%>
+<%--        console.log(totalQuantity);--%>
+<%--        kakaoPixel('1612698247174901358').pageView();--%>
+<%--        kakaoPixel('1612698247174901358').purchase({--%>
+<%--            total_quantity: totalQuantity.toString(), // 주문 내 상품 개수(optional)--%>
+<%--            total_price: "${order.totalOrderAmount}",  // 주문 총 가격(optional)--%>
+<%--            currency: "KRW",     // 주문 가격의 화폐 단위(optional, 기본 값은 KRW)--%>
+<%--            products: productsArr--%>
+<%--        });--%>
+<%--    }--%>
+<%--</script>--%>
+
+
+<%--<!-- *) 구매완료페이지 -->--%>
+<%--<!-- AceCounter eCommerce (Cart_Inout) v8.0 Start -->--%>
+<%--<script language='javascript'>--%>
+<%--    for (var i=0; scriptJson.length > i; i++) {--%>
+<%--        for (var j = 0; scriptJson[i].orderItems.length > j; j++) {--%>
+<%--            console.log(scriptJson[i].orderItems[j].itemCode);--%>
+<%--            console.log(scriptJson[i].orderItems[j].itemName);--%>
+<%--            console.log(scriptJson[i].orderItems[j].saleAmount.toString());--%>
+<%--            console.log(scriptJson[i].orderItems[j].quantity.toString());--%>
+<%--            var _products = (function () {--%>
+<%--                var c = {--%>
+<%--                    pd: scriptJson[i].orderItems[j].itemCode,--%>
+<%--                    pn: scriptJson[i].orderItems[j].itemName,--%>
+<%--                    am: scriptJson[i].orderItems[j].saleAmount.toString(),--%>
+<%--                    qy: scriptJson[i].orderItems[j].quantity.toString(),--%>
+<%--                    ct: '',--%>
+<%--                    onm: ''--%>
+<%--                };--%>
+<%--                var u = (!_products) ? [] : _products;--%>
+<%--                u[escape('@' + c.pd + c.onm)] = c;--%>
+<%--                return u;--%>
+<%--            })();--%>
+<%--        }--%>
+<%--    }--%>
+<%--</script>--%>
+<%--<!-- AceCounter eCommerce (Cart_InOut) v8.0 End -->--%>
+
+<%--<!-- AceCounter eCommerce (Buy_Finish) v8.0 Start -->--%>
+<%--<script language='javascript'>--%>
+<%--    var _onum = '${ orderCode }';  // 주문코드 필수 입력--%>
+<%--    var _amt = '${order.totalOrderAmount}';  // 총 구매액--%>
+<%--    var _pay = '${order.orderPayments[0].approvalTypeLabel}';   //결제수단(ex 신용카드,무통장,가상계좌)--%>
+<%--    var _buy = 'finish';    //구매 완료 변수(finish 고정값)--%>
+<%--</script>--%>
 <!-- AceCounter eCommerce (Buy_Finish) v8.0 End -->

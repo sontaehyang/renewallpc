@@ -630,6 +630,19 @@
 		<result property="createdDate" column="CREATED_DATE" />
 	</resultMap>
 
+	<resultMap id="OrderRentalResult" type="saleson.shop.order.domain.OrderRental">
+		<result property="orderRentalId" column="ORDER_RENTAL_ID" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="rentalItemName" column="RENTAL_ITEM_NAME" />
+		<result property="rentalPer" column="RENTAL_PER" />
+		<result property="rentalTotAmt" column="RENTAL_TOT_AMT" />
+		<result property="rentalMonthAmt" column="RENTAL_MONTH_AMT" />
+		<result property="orderNo" column="ORDER_NO" />
+		<result property="apprKey" column="APPR_KEY" />
+		<result property="resultTimes" column="RESULT_TIMES" />
+		<result property="createDate" column="CREATED_DATE" />
+	</resultMap>
+
 	<!-- 신규주문 (결제완료/출고지시전) -->
 	<sql id="defaultNewOrderWhereQuery">
 		OI.ORDER_STATUS = '10'
@@ -3997,4 +4010,36 @@
 		WHERE SESSION_ID = #{sessionId} AND USER_ID = #{userId}
 	</select>
 
+
+	<insert id="insertOrderRental" parameterType="saleson.shop.order.domain.OrderRental">
+		INSERT INTO OP_ORDER_RENTAL
+		(
+		ORDER_RENTAL_ID,
+		ORDER_CODE,
+		RENTAL_ITEM_NAME,
+		RENTAL_PER,
+		RENTAL_TOT_AMT,
+		RENTAL_MONTH_AMT,
+		ORDER_NO,
+		APPR_KEY,
+		RESULT_TIMES,
+		CREATED_DATE
+		) VALUES (
+		#{orderRentalId},
+		#{orderCode},
+		#{rentalItemName},
+		#{rentalPer},
+		#{rentalTotAmt},
+		#{rentalMonthAmt},
+		#{orderNo},
+		#{apprKey},
+		#{resultTimes},
+		<include refid="CommonMapper.datetime" />
+		)
+	</insert>
+
+	<select id="getOrderRental" parameterType="String" resultMap="OrderRentalResult">
+		SELECT * FROM OP_ORDER_RENTAL
+		WHERE ORDER_CODE = #{value}
+	</select>
 </mapper>

@@ -272,47 +272,47 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private ConfigLogService configLogService;
 
-    @Autowired
-    private ReceiptService receiptService;
+	@Autowired
+	private ReceiptService receiptService;
 
-    @Autowired
-    private CashbillService cashbillService;
+	@Autowired
+	private CashbillService cashbillService;
 
-    @Autowired
-    private PopbillService popbillService;
+	@Autowired
+	private PopbillService popbillService;
 
-    @Autowired
-    private CashbillRepository cashbillRepository;
+	@Autowired
+	private CashbillRepository cashbillRepository;
 
-    @Autowired
-    private CashbillIssueRepository cashbillIssueRepository;
+	@Autowired
+	private CashbillIssueRepository cashbillIssueRepository;
 
-    @Autowired
+	@Autowired
 	private UmsService umsService;
 
-    @Autowired
+	@Autowired
 	private GiftItemService giftItemService;
 
-    @Autowired
+	@Autowired
 	private OrderGiftItemService orderGiftItemService;
 
-    @Autowired
+	@Autowired
 	Environment environment;
 
-    @Autowired
+	@Autowired
 	private UnifiedMessagingService unifiedMessagingService;
 
-    @Autowired
+	@Autowired
 	private ApplicationInfoService applicationInfoService;
 
 	@Autowired
-    private ConfigPgService configPgService;
+	private ConfigPgService configPgService;
 
-    @Autowired
-    private NaverPaymentApi naverPaymentApi;
+	@Autowired
+	private NaverPaymentApi naverPaymentApi;
 
-    @Autowired
-    private ErpService erpService;
+	@Autowired
+	private ErpService erpService;
 
 	@Override
 	public OrderShippingInfo getOrderShippingInfoByParam(OrderParam orderParam) {
@@ -341,12 +341,13 @@ public class OrderServiceImpl implements OrderService {
 
 	/**
 	 * 취소 신청시 환불 계좌 정보를 입력받아야 하는가?
+	 *
 	 * @param payments
 	 * @return
 	 */
 	private boolean getIsWriteBankInfo(List<OrderPayment> payments) {
 		boolean isWriteBankInfo = false;
-		for(OrderPayment orderPayment : payments) {
+		for (OrderPayment orderPayment : payments) {
 			if ("bank".equals(orderPayment.getApprovalType()) || "vbank".equals(orderPayment.getApprovalType())) {
 				if (orderPayment.getRemainingAmount() > 0) {
 					isWriteBankInfo = true;
@@ -366,13 +367,14 @@ public class OrderServiceImpl implements OrderService {
 
 	/**
 	 * 취소 신청시 환불 계좌 은행 리스트 KEY
+	 *
 	 * @param payments
 	 * @return
 	 */
 	private String getBankListKey(List<OrderPayment> payments) {
 		String bankListKey = "DEFAULT_BANK_LIST";
 
-		for(OrderPayment orderPayment : payments) {
+		for (OrderPayment orderPayment : payments) {
 			if ("vbank".equals(orderPayment.getApprovalType())) {
 				OrderPgData orderPgData = orderPayment.getOrderPgData();
 				if (orderPgData != null) {
@@ -402,12 +404,12 @@ public class OrderServiceImpl implements OrderService {
 
 		List<OrderPayment> list = orderPaymentMapper.getWaitingDepositListByParam(orderParam);
 		if (list != null) {
-			for(OrderPayment payment : list) {
+			for (OrderPayment payment : list) {
 				isPaymentVerificationCancel(payment);
 				// 엑셀다운로드가 아닌 경우 무조건 마스킹
-				if(!(conditionType != null && conditionType.equals("ORDER-DETAIL-EXCEL"))){
+				if (!(conditionType != null && conditionType.equals("ORDER-DETAIL-EXCEL"))) {
 					waitingDepositMaskingDataSet(payment);
-				} else if(!(SecurityUtils.hasRole("ROLE_EXCEL") && SecurityUtils.hasRole("ROLE_ISMS"))){
+				} else if (!(SecurityUtils.hasRole("ROLE_EXCEL") && SecurityUtils.hasRole("ROLE_ISMS"))) {
 					waitingDepositMaskingDataSet(payment);
 				}
 			}
@@ -416,32 +418,33 @@ public class OrderServiceImpl implements OrderService {
 		return list;
 	}
 
-	private void waitingDepositMaskingDataSet(OrderPayment payment){
-		String loginId = payment.getLoginId();				// 아이디
-		String userName = payment.getUserName();			// 회원명
-		String buyerName = payment.getBuyerName();			// 주문자
-		String bankInName = payment.getBankInName();		// 입금자명의
-		String bankVirtualNo = payment.getBankVirtualNo();	// 입금계좌
+	private void waitingDepositMaskingDataSet(OrderPayment payment) {
+		String loginId = payment.getLoginId();                // 아이디
+		String userName = payment.getUserName();            // 회원명
+		String buyerName = payment.getBuyerName();            // 주문자
+		String bankInName = payment.getBankInName();        // 입금자명의
+		String bankVirtualNo = payment.getBankVirtualNo();    // 입금계좌
 
-		if(loginId != null){
+		if (loginId != null) {
 			payment.setLoginId(UserUtils.reMasking(loginId, "email"));
 		}
-		if(userName != null){
+		if (userName != null) {
 			payment.setUserName(UserUtils.reMasking(userName, "name"));
 		}
-		if(buyerName != null){
+		if (buyerName != null) {
 			payment.setBuyerName(UserUtils.reMasking(buyerName, "name"));
 		}
-		if(bankInName != null){
+		if (bankInName != null) {
 			payment.setBankInName(UserUtils.reMasking(bankInName, "name"));
 		}
-		if(bankVirtualNo != null){
+		if (bankVirtualNo != null) {
 			payment.setBankVirtualNo(UserUtils.reMasking(bankVirtualNo, "account"));
 		}
 	}
 
 	/**
 	 * 입금 확인취소 가능여부 체크
+	 *
 	 * @param payment
 	 */
 	private void isPaymentVerificationCancel(OrderPayment payment) {
@@ -459,8 +462,8 @@ public class OrderServiceImpl implements OrderService {
 
 		int newOrderCount = 0;
 		int itemCount = 0;
-		for(OrderShippingInfo info : order.getOrderShippingInfos()) {
-			for(OrderItem orderItem : info.getOrderItems()) {
+		for (OrderShippingInfo info : order.getOrderShippingInfos()) {
+			for (OrderItem orderItem : info.getOrderItems()) {
 
 				if (ShopUtils.checkOrderStatusChange("payment-verification-cancel", orderItem.getOrderStatus())) {
 					newOrderCount++;
@@ -483,13 +486,13 @@ public class OrderServiceImpl implements OrderService {
 
 		if ("cancel".equals(mode)) {
 			// 입금 확인전 주문 취소
-			for(String id : orderParam.getId()) {
+			for (String id : orderParam.getId()) {
 
 			}
 		} else if ("confirm".equals(mode)) {
 
 			// 입금 확인
-			for(String id : orderParam.getId()) {
+			for (String id : orderParam.getId()) {
 
 				String[] temp = StringUtils.delimitedListToStringArray(id, OrderPayment.PAYMENT_KEY_DIVISION_STRING);
 
@@ -510,28 +513,27 @@ public class OrderServiceImpl implements OrderService {
 				orderParam.setPayAmount(orderPayment.getAmount());
 
 				// 주문 로그 추가로 인해 임시 조회
-                List<OrderItem> logOrderItems
-                        = this.getOrderItemListForOrderLog(orderParam.getOrderCode(), orderParam.getOrderSequence());
+				List<OrderItem> logOrderItems
+						= this.getOrderItemListForOrderLog(orderParam.getOrderCode(), orderParam.getOrderSequence());
 
-				if (orderPaymentMapper.updateConfirmationOfPaymentStep1(orderParam) > 0){
+				if (orderPaymentMapper.updateConfirmationOfPaymentStep1(orderParam) > 0) {
 					if (orderPaymentMapper.updateConfirmationOfPaymentStep2(orderParam) > 0) {
 						orderPaymentMapper.updateConfirmationOfPaymentStep3(orderParam);
 
 
+						// 주문 로그
+						try {
+							for (OrderItem orderItem : logOrderItems) {
 
-                        // 주문 로그
-                        try {
-                            for (OrderItem orderItem : logOrderItems) {
-
-                                this.insertOrderLog(OrderLogType.WAITING_DEPOSIT,
-                                        orderParam.getOrderCode(),
-                                        orderParam.getOrderSequence(),
-                                        orderItem.getItemSequence(),
-                                        orderItem.getOrderStatus());
-                            }
-                        } catch (Exception e) {
-                            log.error(ERROR_MARKER, e.getMessage(), e);
-                        }
+								this.insertOrderLog(OrderLogType.WAITING_DEPOSIT,
+										orderParam.getOrderCode(),
+										orderParam.getOrderSequence(),
+										orderItem.getItemSequence(),
+										orderItem.getOrderStatus());
+							}
+						} catch (Exception e) {
+							log.error(ERROR_MARKER, e.getMessage(), e);
+						}
 
 
 					} else {
@@ -550,7 +552,7 @@ public class OrderServiceImpl implements OrderService {
 					autoCashReceipt = environment.getProperty("pg.autoCashReceipt");
 				}
 
-				if(!"Y".equals(autoCashReceipt)) {
+				if (!"Y".equals(autoCashReceipt)) {
 					// 현금영수증 발행
 					CashbillParam cashbillParam = new CashbillParam();
 
@@ -590,7 +592,7 @@ public class OrderServiceImpl implements OrderService {
 
 						} else {
 							log.debug("[CASHBILL] ERROR >> {} : {}", response.getResponseCode(), response.getResponseMessage());
-							throw new OrderException("현금영수증 발행 오류 - " +response.getResponseCode() + " : " + response.getResponseMessage());
+							throw new OrderException("현금영수증 발행 오류 - " + response.getResponseCode() + " : " + response.getResponseMessage());
 						}
 					}
 					log.debug("[CASHBILL] END ---------------------------------------------");
@@ -603,14 +605,14 @@ public class OrderServiceImpl implements OrderService {
 
 						this.sendOrderMessageTx(order, "order_cready_payment", ShopUtils.getConfig());
 
-					} catch(Exception e) {
-                    log.error(ERROR_MARKER, e.getMessage(), e);
+					} catch (Exception e) {
+						log.error(ERROR_MARKER, e.getMessage(), e);
 					}
 				}
-            }
-        } else {
-            throw new OrderManagerException();
-        }
+			}
+		} else {
+			throw new OrderManagerException();
+		}
 
 	}
 
@@ -648,7 +650,7 @@ public class OrderServiceImpl implements OrderService {
 						sendMailLog.setSendType(templateId);
 						sendMailLog.setOrderCode(buy.getOrderCode());
 
-						sendMailLogService.sendMail(mailConfig, sendMailLog, buyer.getEmail(),buyer.getUserName(), config);
+						sendMailLogService.sendMail(mailConfig, sendMailLog, buyer.getEmail(), buyer.getUserName(), config);
 					}
 				}
 
@@ -681,16 +683,16 @@ public class OrderServiceImpl implements OrderService {
 						sendMailLog.setUserId(userId);
 						sendMailLog.setSendType(templateId);
 						sendMailLog.setOrderCode(buy.getOrderCode());
-						sendMailLogService.sendMail(mailConfig, sendMailLog, buyer.getEmail(),buyer.getUserName(), config);
+						sendMailLogService.sendMail(mailConfig, sendMailLog, buyer.getEmail(), buyer.getUserName(), config);
 					}
 				}
 
 				if (StringUtils.isEmpty(buyer.getFullMobile()) == false) {
 
-					for(BuyPayment payment : buy.getPayments()) {
+					for (BuyPayment payment : buy.getPayments()) {
 
 						if ("bank".equals(payment.getApprovalType())
-							|| "vbank".equals(payment.getApprovalType())) {
+								|| "vbank".equals(payment.getApprovalType())) {
 
 							Ums ums = umsService.getUms(templateId);
 							ApplicationInfo applicationInfo = applicationInfoService.getApplicationInfo(userId);
@@ -735,7 +737,7 @@ public class OrderServiceImpl implements OrderService {
 						mailConfig = orderMail.getMailConfig();
 					} else if ("order_cready_payment".equals(templateId)) {
 						// 주문완료(입금대기->결제완료 바뀔때 or 주문시 바로 결제완료) 메일 설정
-                        OrderMail orderMail = new OrderMail(order, userId, mailConfig, config);
+						OrderMail orderMail = new OrderMail(order, userId, mailConfig, config);
 						mailConfig = orderMail.getMailConfig();
 					}
 
@@ -778,31 +780,31 @@ public class OrderServiceImpl implements OrderService {
 //			throw new OrderManagerException("Error. 입금 확인취소가 적용되지 않았습니다.\n해당 요청건의 상품 처리상태가 신규주문 상태가 아닌것이 있습니다.");
 //		}
 
-        List<OrderPayment> list = orderMapper.getOrderPaymentListByParam(orderParam);
+		List<OrderPayment> list = orderMapper.getOrderPaymentListByParam(orderParam);
 
-        if (list == null || list.isEmpty()) {
-            throw new OrderManagerException("입금확인 취소 처리중 오류가 발생했습니다. ( " + orderParam.getOrderCode() + "의 결제정보를 찾을 수 없습니다. )");
-        }
+		if (list == null || list.isEmpty()) {
+			throw new OrderManagerException("입금확인 취소 처리중 오류가 발생했습니다. ( " + orderParam.getOrderCode() + "의 결제정보를 찾을 수 없습니다. )");
+		}
 
-        for (OrderPayment orderPayment : list) {
-            if ("bank".equals(orderPayment.getApprovalType())) {
-                isPaymentVerificationCancel(orderPayment);
-                if (orderPayment.isPaymentVerificationCancel() == false) {
-                    throw new OrderManagerException("Error. 입금 확인취소가 적용되지 않았습니다.\n해당 요청건의 상품 처리상태가 신규주문 상태가 아닌것이 있습니다.");
-                }
-            }
-        }
+		for (OrderPayment orderPayment : list) {
+			if ("bank".equals(orderPayment.getApprovalType())) {
+				isPaymentVerificationCancel(orderPayment);
+				if (orderPayment.isPaymentVerificationCancel() == false) {
+					throw new OrderManagerException("Error. 입금 확인취소가 적용되지 않았습니다.\n해당 요청건의 상품 처리상태가 신규주문 상태가 아닌것이 있습니다.");
+				}
+			}
+		}
 
 		orderParam.setAdminUserName(UserUtils.getUser().getUserName());
 
-		if ( orderMapper.updateConfirmationOfPaymentCancelStep1(orderParam) == 0) {
+		if (orderMapper.updateConfirmationOfPaymentCancelStep1(orderParam) == 0) {
 			throw new OrderManagerException("Error. 입금 확인취소가 적용되지 않았습니다.\n해당 요청건의 상품 처리상태가 신규주문 상태가 아닌것이 있습니다.");
 		} else {
-			if ( orderMapper.updateConfirmationOfPaymentCancelStep2(orderParam) == 0) {
+			if (orderMapper.updateConfirmationOfPaymentCancelStep2(orderParam) == 0) {
 				throw new OrderManagerException("Error. 입금 확인취소가 적용되지 않았습니다.\n해당 요청건의 상품 처리상태가 신규주문 상태가 아닌것이 있습니다.");
-			} else{
-			    //2017.05.16 Son Jun-Eu - OP_ORDER_ITEM 테이블의 관련 내용 UPDATE
-				if ( orderMapper.updateConfirmationOfPaymentCancelStep3(orderParam) == 0) {
+			} else {
+				//2017.05.16 Son Jun-Eu - OP_ORDER_ITEM 테이블의 관련 내용 UPDATE
+				if (orderMapper.updateConfirmationOfPaymentCancelStep3(orderParam) == 0) {
 					throw new OrderManagerException("Error. 입금 확인취소가 적용되지 않았습니다.\n해당 요청건의 상품 처리상태가 신규주문 상태가 아닌것이 있습니다.");
 				}
 			}
@@ -817,7 +819,7 @@ public class OrderServiceImpl implements OrderService {
 			autoCashReceipt = environment.getProperty("pg.autoCashReceipt");
 		}
 
-		if(!"Y".equals(autoCashReceipt)) {
+		if (!"Y".equals(autoCashReceipt)) {
 			List<Cashbill> cashbills = cashbillRepository.findAllByOrderCode(orderParam.getOrderCode());
 
 			if (!cashbills.isEmpty()) {
@@ -860,10 +862,10 @@ public class OrderServiceImpl implements OrderService {
 
 		List<OrderList> list = orderShippingMapper.getNewOrderListByParam(orderParam);
 
-		for(OrderList order : list){
-			if(!(conditionType!=null && conditionType.equals("ORDER-DETAIL-EXCEL"))){
+		for (OrderList order : list) {
+			if (!(conditionType != null && conditionType.equals("ORDER-DETAIL-EXCEL"))) {
 				newOrderMaskingDataSet(order);
-			} else if(!(SecurityUtils.hasRole("ROLE_EXCEL") && SecurityUtils.hasRole("ROLE_ISMS"))){
+			} else if (!(SecurityUtils.hasRole("ROLE_EXCEL") && SecurityUtils.hasRole("ROLE_ISMS"))) {
 				newOrderMaskingDataSet(order);
 			}
 		}
@@ -874,7 +876,7 @@ public class OrderServiceImpl implements OrderService {
 		return list;
 	}
 
-	private void newOrderMaskingDataSet(OrderList order){
+	private void newOrderMaskingDataSet(OrderList order) {
 		String userName = order.getUserName();
 		String mobile = order.getMobile();
 		String receiveName = order.getReceiveName();
@@ -883,25 +885,25 @@ public class OrderServiceImpl implements OrderService {
 		String receiveAddress = order.getReceiveAddress();
 		String receiveAddressDetail = order.getReceiveAddressDetail();
 
-		if(userName != null){
+		if (userName != null) {
 			order.setUserName(UserUtils.reMasking(userName, "name"));
 		}
-		if(mobile != null){
+		if (mobile != null) {
 			order.setMobile(UserUtils.reMasking(mobile, "tel"));
 		}
-		if(receiveName != null){
+		if (receiveName != null) {
 			order.setReceiveName(UserUtils.reMasking(receiveName, "name"));
 		}
-		if(receiveMobile != null){
+		if (receiveMobile != null) {
 			order.setReceiveMobile(UserUtils.reMasking(receiveMobile, "tel"));
 		}
-		if(receiveZipCode != null){
+		if (receiveZipCode != null) {
 			order.setReceiveZipcode(UserUtils.reMasking(receiveZipCode, "zipCode"));
 		}
-		if(receiveAddress != null){
+		if (receiveAddress != null) {
 			order.setReceiveAddress(UserUtils.reMasking(receiveAddress, "addr"));
 		}
-		if(receiveAddressDetail != null){
+		if (receiveAddressDetail != null) {
 			order.setReceiveAddressDetail(UserUtils.reMasking(receiveAddressDetail, "addrDetail"));
 		}
 	}
@@ -984,10 +986,10 @@ public class OrderServiceImpl implements OrderService {
 		orderParam.setPagination(pagination);
 		orderParam.setLanguage(CommonUtils.getLanguage());
 
-		for(OrderList order : list){
-			if(!(conditionType!=null && conditionType.equals("ORDER-DETAIL-EXCEL"))){
+		for (OrderList order : list) {
+			if (!(conditionType != null && conditionType.equals("ORDER-DETAIL-EXCEL"))) {
 				shippingReadyMaskingDataSet(order);
-			} else if(!(SecurityUtils.hasRole("ROLE_EXCEL") && SecurityUtils.hasRole("ROLE_ISMS"))){
+			} else if (!(SecurityUtils.hasRole("ROLE_EXCEL") && SecurityUtils.hasRole("ROLE_ISMS"))) {
 				shippingReadyMaskingDataSet(order);
 			}
 		}
@@ -998,15 +1000,15 @@ public class OrderServiceImpl implements OrderService {
 		return list;
 	}
 
-	private void shippingReadyMaskingDataSet(OrderList order){
-		String buyerName = order.getUserName();	// 주문자
-		String buyerPhone = order.getMobile();	// 주문자 핸드폰
-		String receiveName = order.getReceiveName();	// 수령인
-		String receiveMobile = order.getReceiveMobile();	// 수령인 전화번호
-		String receiveZipCode = order.getReceiveZipcode();	// 우편번호
+	private void shippingReadyMaskingDataSet(OrderList order) {
+		String buyerName = order.getUserName();    // 주문자
+		String buyerPhone = order.getMobile();    // 주문자 핸드폰
+		String receiveName = order.getReceiveName();    // 수령인
+		String receiveMobile = order.getReceiveMobile();    // 수령인 전화번호
+		String receiveZipCode = order.getReceiveZipcode();    // 우편번호
 		String receiveNewZipCode = order.getReceiveNewZipcode(); // 신 우편번호
-		String receiveAddress = order.getReceiveAddress();	// 주소
-		String receiveAddressDetail = order.getReceiveAddressDetail();	//상세주소
+		String receiveAddress = order.getReceiveAddress();    // 주소
+		String receiveAddressDetail = order.getReceiveAddressDetail();    //상세주소
 
 		if (buyerName != null) {
 			order.setUserName(UserUtils.reMasking(buyerName, "name"));
@@ -1051,7 +1053,7 @@ public class OrderServiceImpl implements OrderService {
 		} else if ("shipping-start".equals(mode) || "shipping-start-send-message".equals(mode)) {
 
 			if (!(shippingParam.getDeliveryCompanyId() > 0
-				&& StringUtils.isNotEmpty(shippingParam.getDeliveryNumber()))) {
+					&& StringUtils.isNotEmpty(shippingParam.getDeliveryNumber()))) {
 				throw new OrderException();
 			}
 
@@ -1068,17 +1070,17 @@ public class OrderServiceImpl implements OrderService {
 				throw new OrderException();
 			}
 
-            ConfigPg configPg = configPgService.getConfigPg();
+			ConfigPg configPg = configPgService.getConfigPg();
 
-            if (orderShippingMapper.getPreShippingCount(shippingParam) == 0) {
-                OrderPgData orderPgData = this.getOrderPgDataByOrderCode(shippingParam.getOrderCode());
-                if (orderPgData != null && "naverpay".equals(orderPgData.getPgServiceType())) {
-                    MultiValueMap<String, Object> pointRequestMap = new LinkedMultiValueMap<String, Object>();
-                    pointRequestMap.add("paymentId", orderPgData.getPgKey());
+			if (orderShippingMapper.getPreShippingCount(shippingParam) == 0) {
+				OrderPgData orderPgData = this.getOrderPgDataByOrderCode(shippingParam.getOrderCode());
+				if (orderPgData != null && "naverpay".equals(orderPgData.getPgServiceType())) {
+					MultiValueMap<String, Object> pointRequestMap = new LinkedMultiValueMap<String, Object>();
+					pointRequestMap.add("paymentId", orderPgData.getPgKey());
 
-                    naverPaymentApi.point(pointRequestMap, configPg);
-                }
-            }
+					naverPaymentApi.point(pointRequestMap, configPg);
+				}
+			}
 
 			// 메시지 전송
 			if ("shipping-start-send-message".equals(mode)) {
@@ -1095,7 +1097,7 @@ public class OrderServiceImpl implements OrderService {
 						String key = shippingParam.getKey().substring(0, shippingParam.getKey().lastIndexOf(OrderItem.ITEM_KEY_DIVISION_STRING));
 						List<String> orders = new ArrayList<>();
 
-						for (int i=0; i<orderMessageParam.getId().length; i++) {
+						for (int i = 0; i < orderMessageParam.getId().length; i++) {
 							if (orderMessageParam.getId()[i].startsWith(key)
 									&& deliveryNumber.equals(orderMessageParam.getShippings().get(i).getDeliveryNumber())) {
 								orders.add(orderMessageParam.getId()[i]);
@@ -1108,7 +1110,7 @@ public class OrderServiceImpl implements OrderService {
 						this.sendOrderMessageTx(order, "order_delivering", ShopUtils.getConfig());
 					}
 
-				} catch(Exception e) {
+				} catch (Exception e) {
 					log.error(ERROR_ORDER_CODE, orderItem.getOrderCode(), e);
 				}
 			}
@@ -1125,62 +1127,62 @@ public class OrderServiceImpl implements OrderService {
 				useEscrow = environment.getProperty("pg.useEscrow");
 			}
 
-            // 에스크로 사용시
-            if ("Y".equals(useEscrow) && "Y".equals(orderItem.getEscrowStatus())) {
-                //이니시스 에스크로 결제완료 상태 시 PG사에 배송등록 요청
-                if ("inicis".equals(pgType)) {
+			// 에스크로 사용시
+			if ("Y".equals(useEscrow) && "Y".equals(orderItem.getEscrowStatus())) {
+				//이니시스 에스크로 결제완료 상태 시 PG사에 배송등록 요청
+				if ("inicis".equals(pgType)) {
 
-                    // 배송등록 요청 정보 가져오기
-                    HashMap<String, Object> paramMap = new HashMap<>();
+					// 배송등록 요청 정보 가져오기
+					HashMap<String, Object> paramMap = new HashMap<>();
 
-                    OrderParam orderParam = new OrderParam();
-                    orderParam.setOrderCode(orderItem.getOrderCode());
-                    orderParam.setOrderSequence(orderItem.getOrderSequence());
-                    orderParam.setItemSequence(orderItem.getItemSequence());
-                    orderParam.setShippingSequence(orderItem.getShippingSequence());
+					OrderParam orderParam = new OrderParam();
+					orderParam.setOrderCode(orderItem.getOrderCode());
+					orderParam.setOrderSequence(orderItem.getOrderSequence());
+					orderParam.setItemSequence(orderItem.getItemSequence());
+					orderParam.setShippingSequence(orderItem.getShippingSequence());
 
-                    paramMap = orderMapper.getInicisDeliveryInfoByParam(orderParam);
+					paramMap = orderMapper.getInicisDeliveryInfoByParam(orderParam);
 
-                    // 무통장 입금(bank) 시 오류로인해 회피 처리 (임시 2018.02.06-KYK)
-                    if (paramMap != null) {
+					// 무통장 입금(bank) 시 오류로인해 회피 처리 (임시 2018.02.06-KYK)
+					if (paramMap != null) {
 
-                        //배송준비중 목록에서 배송시작 누를경우 배송등록을 신규로 설정
-                        paramMap.put("dlv_report", "I");
+						//배송준비중 목록에서 배송시작 누를경우 배송등록을 신규로 설정
+						paramMap.put("dlv_report", "I");
 
-                        if(paramMap.get("PAY_SHIPPING").toString().equals("0"))
-                            paramMap.put("dlv_charge", "SH");
-                        else
-                            paramMap.put("dlv_charge", "BH");
+						if (paramMap.get("PAY_SHIPPING").toString().equals("0"))
+							paramMap.put("dlv_charge", "SH");
+						else
+							paramMap.put("dlv_charge", "BH");
 
-                        boolean isSuccess = inicisService.delivery(paramMap);
+						boolean isSuccess = inicisService.delivery(paramMap);
 
-                        // 2017.7.05 Son Jun-Eu - 에스크로 배송등록 확인 후 상태 갱신
-                        orderParam.setEscrowStatus("20");
-                        orderMapper.updateEscrowStatus(orderParam);
+						// 2017.7.05 Son Jun-Eu - 에스크로 배송등록 확인 후 상태 갱신
+						orderParam.setEscrowStatus("20");
+						orderMapper.updateEscrowStatus(orderParam);
 
-                    }
+					}
 
 
-                }else if("kcp".equals(pgType)){
-                    // 배송등록 요청 정보 가져오기
-                    HashMap<String, Object> paramMap = new HashMap<>();
+				} else if ("kcp".equals(pgType)) {
+					// 배송등록 요청 정보 가져오기
+					HashMap<String, Object> paramMap = new HashMap<>();
 
-                    OrderParam orderParam = new OrderParam();
-                    orderParam.setOrderCode(orderItem.getOrderCode());
-                    orderParam.setOrderSequence(orderItem.getOrderSequence());
-                    orderParam.setItemSequence(orderItem.getItemSequence());
-                    orderParam.setShippingSequence(orderItem.getShippingSequence());
+					OrderParam orderParam = new OrderParam();
+					orderParam.setOrderCode(orderItem.getOrderCode());
+					orderParam.setOrderSequence(orderItem.getOrderSequence());
+					orderParam.setItemSequence(orderItem.getItemSequence());
+					orderParam.setShippingSequence(orderItem.getShippingSequence());
 
-                    paramMap.put("tno",orderMapper.getTidByParam(shippingParam.getOrderCode()));
-                    paramMap.put("deli_numb",shippingParam.getDeliveryNumber());
-                    paramMap.put("deli_corp",shippingParam.getDeliveryCompanyName());
+					paramMap.put("tno", orderMapper.getTidByParam(shippingParam.getOrderCode()));
+					paramMap.put("deli_numb", shippingParam.getDeliveryNumber());
+					paramMap.put("deli_corp", shippingParam.getDeliveryCompanyName());
 
-                    boolean isSuccess = kcpService.delivery(paramMap);
+					boolean isSuccess = kcpService.delivery(paramMap);
 
-                    orderParam.setEscrowStatus("20");
-                    orderMapper.updateEscrowStatus(orderParam);
-                }
-            }
+					orderParam.setEscrowStatus("20");
+					orderMapper.updateEscrowStatus(orderParam);
+				}
+			}
 		}
 
 		// 주문 로그
@@ -1204,7 +1206,7 @@ public class OrderServiceImpl implements OrderService {
 
 		// 확장자 체크
 		if (!(fileExtension.equalsIgnoreCase("xlsx"))) {
-			throw new UserException(MessageUtils.getMessage("M01533"));	// 엑셀 파일(.xlsx)만 업로드가 가능합니다.
+			throw new UserException(MessageUtils.getMessage("M01533"));    // 엑셀 파일(.xlsx)만 업로드가 가능합니다.
 		}
 
 		// 엑셀 셀 읽기 : http://poi.apache.org/spreadsheet/quick-guide.html#CellContents 자세한 건 여기서 확인 - skc
@@ -1224,12 +1226,12 @@ public class OrderServiceImpl implements OrderService {
 			return resp;
 
 		} catch (IOException e) {
-			String message = MessageUtils.getMessage("M01534") + "(" + e.getMessage()+ ")";
-			log.error("{}", message , e);
+			String message = MessageUtils.getMessage("M01534") + "(" + e.getMessage() + ")";
+			log.error("{}", message, e);
 			throw new UserException(message); // 엑셀 파일 로드 시 오류가 발생하였습니다.
 
 		} catch (Exception e) {
-			String message = MessageUtils.getMessage("M01534") + "(" + e.getMessage()+ ")";
+			String message = MessageUtils.getMessage("M01534") + "(" + e.getMessage() + ")";
 			log.error("{}", message, e);
 
 			throw new UserException(message); // 엑셀 파일 로드 시 오류가 발생하였습니다.
@@ -1242,7 +1244,7 @@ public class OrderServiceImpl implements OrderService {
 		Map<String, Object> resp = new HashMap<>();
 		String result = "";
 		if (sheet == null) {
-			resp.put("result",  result);
+			resp.put("result", result);
 			return resp;
 		}
 
@@ -1252,8 +1254,8 @@ public class OrderServiceImpl implements OrderService {
 
 		List<String> key = new ArrayList<>();
 
-		int rowDataCount = 0;			// 데이터 수 (타이틀, 헤더 제외)
-		int rowErrorCount = 0;			// 오류 수
+		int rowDataCount = 0;            // 데이터 수 (타이틀, 헤더 제외)
+		int rowErrorCount = 0;            // 오류 수
 		for (Row row : sheet) {
 			int rowIndex = row.getRowNum() + 1;
 
@@ -1302,7 +1304,7 @@ public class OrderServiceImpl implements OrderService {
 
 				switch (cell.getColumnIndex()) {
 
-					case 11:	// 택배사
+					case 11:    // 택배사
 						deliveryCompany = deliveryCompanyService.getDeliveryCompanyById(ShopUtils.getInt(cell));
 						if (deliveryCompany != null) {
 							shippingParam.setDeliveryCompanyId(ShopUtils.getInt(cell));
@@ -1315,7 +1317,7 @@ public class OrderServiceImpl implements OrderService {
 						}
 						break;
 
-					case 12:	// 운송장번호
+					case 12:    // 운송장번호
 						shippingParam.setDeliveryNumber(ShopUtils.getString(cell));
 						break;
 
@@ -1325,7 +1327,7 @@ public class OrderServiceImpl implements OrderService {
 
 			} // cell
 
-			if ( shippingParam.getDeliveryCompanyId() != 0 && !"".equals(shippingParam.getDeliveryNumber()) ) {
+			if (shippingParam.getDeliveryCompanyId() != 0 && !"".equals(shippingParam.getDeliveryNumber())) {
 
 				shippingParam.setAdminUserName(UserUtils.getManagerName());
 				shippingParam.setConditionType("OPMANAGER");
@@ -1362,8 +1364,8 @@ public class OrderServiceImpl implements OrderService {
 
 		// 처리결과
 		result = "\n<p class=\"sheet\"><span>[배송정보 등록]</span> Total:" + rowDataCount
-			+ ", Process:" + (rowDataCount - rowErrorCount)
-			+ ", Error:" + rowErrorCount + "</p>\n";
+				+ ", Process:" + (rowDataCount - rowErrorCount)
+				+ ", Error:" + rowErrorCount + "</p>\n";
 
 		if (rowErrorCount > 0) {
 			result += "<p class=\"line\">----------------------------------------------------------------------------</p>\n";
@@ -1407,7 +1409,7 @@ public class OrderServiceImpl implements OrderService {
 					List<String> orders = new ArrayList<>();
 
 					// 엑셀파일 읽을 때 생성한 keyList로 함께 배송하는 상품의 상품 순번 얻어오기
-					for (int i=0; i<keyList.size(); i++) {
+					for (int i = 0; i < keyList.size(); i++) {
 						if (keyList.get(i).startsWith(code)) {
 							orders.add(keyList.get(i).split(devision)[2]);
 						}
@@ -1447,11 +1449,11 @@ public class OrderServiceImpl implements OrderService {
 		orderParam.setPagination(pagination);
 		orderParam.setLanguage(CommonUtils.getLanguage());
 
-		if(list != null){
-			for(OrderList order : list){
-				if(!(conditionType != null && conditionType.equals("ORDER-DETAIL-EXCEL"))){
+		if (list != null) {
+			for (OrderList order : list) {
+				if (!(conditionType != null && conditionType.equals("ORDER-DETAIL-EXCEL"))) {
 					shippingMaskingDataSet(order);
-				} else if(!(SecurityUtils.hasRole("ROLE_EXCEL") && SecurityUtils.hasRole("ROLE_ISMS"))){
+				} else if (!(SecurityUtils.hasRole("ROLE_EXCEL") && SecurityUtils.hasRole("ROLE_ISMS"))) {
 					shippingMaskingDataSet(order);
 				}
 			}
@@ -1463,7 +1465,7 @@ public class OrderServiceImpl implements OrderService {
 		return list;
 	}
 
-	private void shippingMaskingDataSet(OrderList order){
+	private void shippingMaskingDataSet(OrderList order) {
 		String buyerName = order.getUserName();
 		String buyerPhone = order.getMobile();
 		String receiveName = order.getReceiveName();
@@ -1513,7 +1515,7 @@ public class OrderServiceImpl implements OrderService {
 		if ("cancel-delivery".equals(mode)) {
 
 			// 2017.10.20 juneu.son 에스크로 주문건의 경우 배송취소 불가능
-			if(!"N".equals(orderMapper.getOrderItemByEscrow(orderParam.getOrderCode())))
+			if (!"N".equals(orderMapper.getOrderItemByEscrow(orderParam.getOrderCode())))
 				throw new OrderManagerException("에스크로 결제 주문은 배송취소를 할 수 없습니다.");
 
 			orderShippingMapper.updateShippingCancel(shippingParam);
@@ -1568,7 +1570,7 @@ public class OrderServiceImpl implements OrderService {
 		Item item = null;
 		try {
 			item = itemService.getItemById(itemId);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.warn("상품 정보가 조회되지 않음 ({}), {}", itemId, e.getMessage(), e);
 		}
 
@@ -1579,7 +1581,7 @@ public class OrderServiceImpl implements OrderService {
 		if (StringUtils.isNotEmpty(orderItem.getOptions())) {
 			List<ItemOption> buyOptions = ShopUtils.getRequiredItemOptions(item, orderItem.getOptions());
 			if (buyOptions != null) {
-				for(ItemOption itemOption : buyOptions) {
+				for (ItemOption itemOption : buyOptions) {
 					String stockKey = "";
 					if ("T".equals(itemOption.getOptionType())) {
 						if ("Y".equals(item.getStockFlag())) {
@@ -1649,6 +1651,7 @@ public class OrderServiceImpl implements OrderService {
 
 	/**
 	 * 재고량 복원
+	 *
 	 * @param map
 	 * @return
 	 */
@@ -1660,12 +1663,12 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			List<StockRestoration> stocks = new ArrayList<>();
-			for(String key : map.keySet()) {
+			for (String key : map.keySet()) {
 				int quantity = map.get(key);
 				stocks.add(new StockRestoration(key, quantity));
 			}
 
-			for(StockRestoration stock : stocks) {
+			for (StockRestoration stock : stocks) {
 
 				if ("STOCK".equals(stock.getStockRestorationType())) {
 					orderMapper.updateStockRestorationForItem(stock);
@@ -1745,7 +1748,7 @@ public class OrderServiceImpl implements OrderService {
 											&& orderItem.getOptions().equals(additionOrderItem.getParentItemOptions())
 											&& orderItem.getOrderStatus().equals(additionOrderItem.getOrderStatus())) {
 
-											additionItems.add(additionOrderItem);
+										additionItems.add(additionOrderItem);
 									}
 								}
 
@@ -1762,7 +1765,7 @@ public class OrderServiceImpl implements OrderService {
 			return null;
 		}
 
-		for(Order order : list) {
+		for (Order order : list) {
 			bindOrder(order, orderParam);
 		}
 
@@ -1781,7 +1784,7 @@ public class OrderServiceImpl implements OrderService {
 		/* 교환, 반품 거절 사유 상품별로 불러오기 */
 		for (OrderShippingInfo shippingInfos : order.getOrderShippingInfos()) {
 			for (OrderItem orderItem : shippingInfos.getOrderItems()) {
-				if("59".equals(orderItem.getOrderStatus())) { //교환 거절
+				if ("59".equals(orderItem.getOrderStatus())) { //교환 거절
 					orderItem.setClaimRefusalReasonText(orderClaimApplyMapper.getClaimRefusalReasonText(orderItem));
 				} else if ("69".equals(orderItem.getOrderStatus())) {
 					orderItem.setClaimRefusalReasonText(orderClaimApplyMapper.getClaimRefusalReasonText(orderItem));
@@ -1827,6 +1830,7 @@ public class OrderServiceImpl implements OrderService {
 
 	/**
 	 * 주문정보 셋팅
+	 *
 	 * @param order
 	 * @param orderParam
 	 */
@@ -1842,7 +1846,7 @@ public class OrderServiceImpl implements OrderService {
 		DeliveryMethodType deliveryMethodType = null;
 		for (OrderShippingInfo orderShippingInfo : order.getOrderShippingInfos()) {
 
-			for (OrderItem orderItem: orderShippingInfo.getOrderItems()) {
+			for (OrderItem orderItem : orderShippingInfo.getOrderItems()) {
 				setOrderGiftItemForOrderItem(orderGiftItems, orderItem);
 
 				// 배송방법
@@ -2132,7 +2136,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		if (UserUtils.isUserLogin()) {
-			for(String ptCode : PointUtils.getPointTypes()) {
+			for (String ptCode : PointUtils.getPointTypes()) {
 				map.put(ptCode, new BuyPayment(ptCode, configPg));
 			}
 		}
@@ -2158,8 +2162,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		if (configPg.isUseNpayPayment()) {
-            map.put("naverpay", new BuyPayment("naverpay", configPg));
-        }
+			map.put("naverpay", new BuyPayment("naverpay", configPg));
+		}
 
 		// [Kakaopay] 관리자 결제 정보 설정 DB에는 추가하지 않음.
 		//map.put("kakaopay", new BuyPayment("kakaopay", configPg));
@@ -2210,7 +2214,7 @@ public class OrderServiceImpl implements OrderService {
 					receiver.setReceiveName(user.getUserName());
 				}
 
-                buyer.setLoginId(user.getLoginId());
+				buyer.setLoginId(user.getLoginId());
 				buyer.setEmail(user.getEmail());
 				if (userDetail != null) {
 					//					buyer.setCompanyName(userDetail.getCompanyName());
@@ -2265,7 +2269,7 @@ public class OrderServiceImpl implements OrderService {
 
 		// CJH 추가 구성품이 있는경우 복수배송지 선택 불가
 		boolean isAdditionItem = false;
-		for(BuyItem item : items) {
+		for (BuyItem item : items) {
 			if ("Y".equals(item.getAdditionItemFlag())) {
 				isAdditionItem = true;
 			}
@@ -2275,7 +2279,7 @@ public class OrderServiceImpl implements OrderService {
 
 
 		HashMap<Long, String> sellerMap = new HashMap<>();
-		for(Receiver receiver : buy.getReceivers()) {
+		for (Receiver receiver : buy.getReceivers()) {
 
 			receiver.setItems(items);
 
@@ -2284,7 +2288,7 @@ public class OrderServiceImpl implements OrderService {
 
 			// 배송지별 구매상품 초기화
 			List<BuyQuantity> buyQuantitys = new ArrayList<>();
-			for(BuyItem buyItem : items) {
+			for (BuyItem buyItem : items) {
 				BuyQuantity buyQuantity = new BuyQuantity();
 				buyQuantity.setItemSequence(buyItem.getItemSequence());
 				buyQuantity.setQuantity(buyItem.getItemPrice().getQuantity());
@@ -2313,7 +2317,7 @@ public class OrderServiceImpl implements OrderService {
 			rentalPayTempParam.setUserId(items.get(0).getUserId());
 			RentalPay rentalPayInfo = orderMapper.getRentalOrderInfo(rentalPayTempParam);
 
-			if(rentalPayInfo != null) {
+			if (rentalPayInfo != null) {
 				buy.setBuyRentalPay(rentalPayInfo.getBuyRentalPay());
 				buy.setRentalTotAmt(rentalPayInfo.getRentalTotAmt());
 				buy.setRentalMonthAmt(rentalPayInfo.getRentalMonthAmt());
@@ -2332,7 +2336,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		String sellerNames = "";
-		for(Long sellerId : sellerMap.keySet()) {
+		for (Long sellerId : sellerMap.keySet()) {
 			sellerNames += (StringUtils.isEmpty(sellerNames) ? "" : ", ") + sellerMap.get(sellerId);
 		}
 		buy.setSellerNames(sellerNames);
@@ -2423,7 +2427,7 @@ public class OrderServiceImpl implements OrderService {
 
 			Item item = buyItem.getItem();
 
-            item.setItemOptions(itemService.getItemOptionList(item, false));
+			item.setItemOptions(itemService.getItemOptionList(item, false));
 
 			// 1. 상품의 필수 옵션을 구성
 			buyItem.setOptionList(ShopUtils.getRequiredItemOptions(item, buyItem.getOptions()));
@@ -2468,7 +2472,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			if (isError) {
-				throw new OrderException("해당 상품의 최소 구매가능 수량은 "+ item.getOrderMinQuantity() +"개 입니다.", "/cart");
+				throw new OrderException("해당 상품의 최소 구매가능 수량은 " + item.getOrderMinQuantity() + "개 입니다.", "/cart");
 			}
 
 			OrderQuantity orderQuantity = buyItem.getOrderQuantity();
@@ -2545,7 +2549,6 @@ public class OrderServiceImpl implements OrderService {
 		setOrderItemInfo(list, orderParam);
 
 
-
 		// 추가구성상품
 		orderParam.setAdditionItemFlag("Y");
 		List<BuyItem> additionItems = orderMapper.getOrderItemTempList(orderParam);
@@ -2587,7 +2590,7 @@ public class OrderServiceImpl implements OrderService {
 			// 사용 가능한 포인트 금액보다 더 많이씀..
 			int retentionPoint = this.getRetentionPoint(buy.getUserId(), 0);
 			if (postOrderPrice.getTotalPointDiscountAmount() > retentionPoint) {
-				throw new OrderException(MessageUtils.getMessage("M01261"));	// 해당 주문에서 사용 가능한 포인트를 다시 확인해주세요.
+				throw new OrderException(MessageUtils.getMessage("M01261"));    // 해당 주문에서 사용 가능한 포인트를 다시 확인해주세요.
 			}
 
 
@@ -2595,7 +2598,7 @@ public class OrderServiceImpl implements OrderService {
 			int pointUseMin = shopConfig.getPointUseMin();
 
 			if (pointUseMax == 0) {
-				throw new OrderException(MessageUtils.getMessage("M01262"));	// 포인트사용 기능은 현재 사이트에서 재공되지 않습니다.
+				throw new OrderException(MessageUtils.getMessage("M01262"));    // 포인트사용 기능은 현재 사이트에서 재공되지 않습니다.
 			}
 
 			if (postOrderPrice.getTotalPointDiscountAmount() < pointUseMin) {
@@ -2603,7 +2606,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			if (postOrderPrice.getTotalPointDiscountAmount() != orderPrice.getTotalPointDiscountAmount()) {
-				throw new OrderException(MessageUtils.getMessage("M01263"));	// 포인트 사용 금액이 잘못 되었습니다.
+				throw new OrderException(MessageUtils.getMessage("M01263"));    // 포인트 사용 금액이 잘못 되었습니다.
 			}
 		}
 
@@ -2613,7 +2616,7 @@ public class OrderServiceImpl implements OrderService {
 				throw new OrderException("사용가능한 배송비 쿠폰 수량을 확인해주세요.");
 			}
 
-			if (postOrderPrice.getTotalShippingCouponDiscountAmount()  != orderPrice.getTotalShippingCouponDiscountAmount()) {
+			if (postOrderPrice.getTotalShippingCouponDiscountAmount() != orderPrice.getTotalShippingCouponDiscountAmount()) {
 				throw new OrderException("베송비 쿠폰 사용액을 확인해주세요.");
 			}
 		}
@@ -2622,18 +2625,18 @@ public class OrderServiceImpl implements OrderService {
 
 
 		if (totalCouponDiscountAmount != orderPrice.getTotalCouponDiscountAmount()) {
-			throw new OrderException(MessageUtils.getMessage("M01264"));	// 쿠폰 사용 금액이 잘못 되었습니다.
+			throw new OrderException(MessageUtils.getMessage("M01264"));    // 쿠폰 사용 금액이 잘못 되었습니다.
 		}
 
 
 		if (postOrderPrice.getOrderPayAmount() != orderPrice.getOrderPayAmount()) {
-			throw new OrderException(MessageUtils.getMessage("M01265"));	// 결제 금액이 변경 되어 주문을 계속 진행하실수 없습니다.
+			throw new OrderException(MessageUtils.getMessage("M01265"));    // 결제 금액이 변경 되어 주문을 계속 진행하실수 없습니다.
 		}
 
 		int minimumPaymentAmount = shopConfig.getMinimumPaymentAmount();
 		if (minimumPaymentAmount > 0) {
 			if (orderPrice.getOrderPayAmount() < minimumPaymentAmount) {
-				throw new OrderException(MessageUtils.getMessage("M01046") +" (" + NumberUtils.formatNumber(minimumPaymentAmount, "#,##0") + ") "+ MessageUtils.getMessage("M01266"));	//최소 결제 가능 금액(1,000)보다 결제 시도 하시는 금액이 작아 결제를 진행하실수 없습니다.
+				throw new OrderException(MessageUtils.getMessage("M01046") + " (" + NumberUtils.formatNumber(minimumPaymentAmount, "#,##0") + ") " + MessageUtils.getMessage("M01266"));    //최소 결제 가능 금액(1,000)보다 결제 시도 하시는 금액이 작아 결제를 진행하실수 없습니다.
 			}
 		}
 	}
@@ -2663,7 +2666,7 @@ public class OrderServiceImpl implements OrderService {
 
 		OrderPrice orderPrice = buy.getOrderPrice();
 
-        String createdDate = DateUtils.getToday(DATETIME_FORMAT);
+		String createdDate = DateUtils.getToday(DATETIME_FORMAT);
 
 		// Post로 넘어온 결제 정보로 새로운 객채를 생성하여 계산된 결제 금액과 동일한지 체크함
 		OrderPrice postOrderPrice = this.newOrderPrice(orderPrice);
@@ -2674,7 +2677,7 @@ public class OrderServiceImpl implements OrderService {
 
 		// 배송지 지정되지 않은 상품있는지 체크용
 		HashMap<String, Integer> checkQuantityTotal = new HashMap<>();
-		for(BuyItem buyItem : list) {
+		for (BuyItem buyItem : list) {
 			ItemPrice itemPrice = buyItem.getItemPrice();
 			String key = "item-" + buyItem.getItemSequence();
 
@@ -2688,14 +2691,14 @@ public class OrderServiceImpl implements OrderService {
 
 		// 복합 배송지로인한 상품정보 재정의
 		int shippingIndex = 0;
-		for(Receiver receiver : buy.getReceivers()) {
+		for (Receiver receiver : buy.getReceivers()) {
 
 			receiver.setShippingIndex(shippingIndex);
 			List<BuyItem> items = new ArrayList<>();
 
-			for(BuyQuantity buyQuantity : receiver.getBuyQuantitys()) {
+			for (BuyQuantity buyQuantity : receiver.getBuyQuantitys()) {
 
-				for(BuyItem buyItem : list) {
+				for (BuyItem buyItem : list) {
 					if (buyQuantity.getItemSequence() == buyItem.getItemSequence()) {
 
 						// 복사해야됨...ㅠㅠ
@@ -2773,11 +2776,11 @@ public class OrderServiceImpl implements OrderService {
 		if (buy.getReceivers().size() <= 1 && UserUtils.isUserLogin()) {
 			if (buy.getUseShippingCoupon() != null) {
 				List<Shipping> shippings = buy.getReceivers().get(0).getItemGroups();
-				for(String key : buy.getUseShippingCoupon().keySet()) {
+				for (String key : buy.getUseShippingCoupon().keySet()) {
 					ShippingCoupon sCoupon = buy.getUseShippingCoupon().get(key);
 
 					if ("Y".equals(sCoupon.getUseFlag())) {
-						for(Shipping shipping : shippings) {
+						for (Shipping shipping : shippings) {
 
 							// 2016.4.27 CJH - 상품 개당 배송비일때 쿠폰 사용 못함[고객사요청]
 							if ("5".equals(shipping.getShippingType())) {
@@ -2814,57 +2817,57 @@ public class OrderServiceImpl implements OrderService {
 
 		HashMap<String, BuyPayment> payments = new HashMap<String, BuyPayment>();
 
-			try {
-				// 결제금액 검증
+		try {
+			// 결제금액 검증
+			this.payAmountVerification(buy, postOrderPrice);
+
+			int notMixPayTypeCount = 0;
+			int totalPayAmount = 0;
+			int totalPointPayAmount = 0;
+			HashMap<String, BuyPayment> buyPayments = buy.getBuyPayments();
+			for (String key : buyPayments.keySet()) {
+				BuyPayment buyPayment = buyPayments.get(key);
+
+				//에스크로 사용여부 확인
+				if (buyPayment.getEscrowStatus() != null && buyPayment.getEscrowStatus().equals("0"))
+					escrowStatus = buyPayment.getEscrowStatus();
+
+				if (buyPayment.getAmount() > 0) {
+
+					if (ArrayUtils.contains(buy.getNotMixPayType(), key)) {
+						notMixPayTypeCount++;
+					}
+
+					if (PointUtils.isPointType(key)) {
+						totalPointPayAmount += buyPayment.getAmount();
+					} else {
+						totalPayAmount += buyPayment.getAmount();
+					}
+
+					payments.put(key, buyPayment);
+				}
+			}
+
+			//렌탈페이일 경우
+			if (buy.getBuyRentalPay().equals("Y")) {
+				// 렌탈페이의 경우 즉시결제가 아니기에 대기
+			} else {
+				if (buy.getOrderPrice().getTotalPointDiscountAmount() != totalPointPayAmount) {
+					throw new OrderException(MessageUtils.getMessage("M00246") + " 결제금액을 확인해주세요.");
+				}
+
+				// 결제금액 한번더 검증
+				postOrderPrice.setOrderPayAmount(totalPayAmount);
 				this.payAmountVerification(buy, postOrderPrice);
 
-				int notMixPayTypeCount = 0;
-				int totalPayAmount = 0;
-				int totalPointPayAmount = 0;
-				HashMap<String, BuyPayment> buyPayments = buy.getBuyPayments();
-				for (String key : buyPayments.keySet()) {
-					BuyPayment buyPayment = buyPayments.get(key);
-
-					//에스크로 사용여부 확인
-					if (buyPayment.getEscrowStatus() != null && buyPayment.getEscrowStatus().equals("0"))
-						escrowStatus = buyPayment.getEscrowStatus();
-
-					if (buyPayment.getAmount() > 0) {
-
-						if (ArrayUtils.contains(buy.getNotMixPayType(), key)) {
-							notMixPayTypeCount++;
-						}
-
-						if (PointUtils.isPointType(key)) {
-							totalPointPayAmount += buyPayment.getAmount();
-						} else {
-							totalPayAmount += buyPayment.getAmount();
-						}
-
-						payments.put(key, buyPayment);
-					}
+				if (notMixPayTypeCount > 1) {
+					throw new OrderException("복합 결제가 불가능한 결제 방식을 1개이상 선택하여 결제가 진행되지 않았습니다.");
 				}
-
-				//렌탈페이일 경우
-				if (buy.getBuyRentalPay().equals("Y")) {
-					// 렌탈페이의 경우 즉시결제가 아니기에 대기
-				} else {
-					if (buy.getOrderPrice().getTotalPointDiscountAmount() != totalPointPayAmount) {
-						throw new OrderException(MessageUtils.getMessage("M00246") + " 결제금액을 확인해주세요.");
-					}
-
-					// 결제금액 한번더 검증
-					postOrderPrice.setOrderPayAmount(totalPayAmount);
-					this.payAmountVerification(buy, postOrderPrice);
-
-					if (notMixPayTypeCount > 1) {
-						throw new OrderException("복합 결제가 불가능한 결제 방식을 1개이상 선택하여 결제가 진행되지 않았습니다.");
-					}
-				}
-
-			} catch (OrderException oe) {
-				throw new OrderException(oe.getMessage(), oe.getRedirectUrl(), oe);
 			}
+
+		} catch (OrderException oe) {
+			throw new OrderException(oe.getMessage(), oe.getRedirectUrl(), oe);
+		}
 
 
 		Buyer buyer = buy.getBuyer();
@@ -2905,7 +2908,7 @@ public class OrderServiceImpl implements OrderService {
 
 		ConfigPg configPg = configPgService.getConfigPg();
 		List<String> savePaymentType = new ArrayList<>();
-		for(String key : payments.keySet()) {
+		for (String key : payments.keySet()) {
 			BuyPayment buyPayment = payments.get(key);
 			buyPayment.setData(key, configPg);
 
@@ -2923,7 +2926,7 @@ public class OrderServiceImpl implements OrderService {
 			// PG사 init이 Buy로 구현된경우 결제 금액을 전달하기위한 용도
 			buy.setPgPayAmount(buyPayment.getAmount());
 			if ("card".equals(key) || "vbank".equals(key) || "realtimebank".equals(key) || "escrow".equals(key)
-				|| "hp".equals(key)) {
+					|| "hp".equals(key)) {
 
 				PgData data = new PgData();
 
@@ -3008,13 +3011,13 @@ public class OrderServiceImpl implements OrderService {
 					kcpRequest.setGood_mny(StringUtils.integer2string(orderPrice.getOrderPayAmount()));
 					kcpRequest.setBuyr_name(buyer.getUserName());
 					kcpRequest.setBuyr_mail(buyer.getEmail());
-					kcpRequest.setBuyr_tel1(buyer.getPhone1()+buyer.getPhone2()+buyer.getPhone3());
-					kcpRequest.setBuyr_tel2(buyer.getMobile1()+buyer.getMobile2()+buyer.getMobile3());
+					kcpRequest.setBuyr_tel1(buyer.getPhone1() + buyer.getPhone2() + buyer.getPhone3());
+					kcpRequest.setBuyr_tel2(buyer.getMobile1() + buyer.getMobile2() + buyer.getMobile3());
 
 					data.setKcpRequest(kcpRequest);
 
 					pgData = kcpService.init(data, session);
-				} else if("easypay".equals(pgType)) {
+				} else if ("easypay".equals(pgType)) {
 					EasypayRequest easypayRequest = new EasypayRequest();
 
 					easypayRequest.setEp_order_no(buy.getOrderCode());
@@ -3032,7 +3035,7 @@ public class OrderServiceImpl implements OrderService {
 					data.setEasypayRequest(easypayRequest);
 
 					pgData = easypayService.init(data, session);
-				} else if("nicepay".equals(pgType)) {
+				} else if ("nicepay".equals(pgType)) {
 
 					// 휴대폰 결제일 경우 length 체크 (필드 길이 에러 발생)
 					if ("hp".equals(key)) {
@@ -3060,7 +3063,8 @@ public class OrderServiceImpl implements OrderService {
 
 					try {
 						token = JwtUtils.getToken(request);
-					} catch (Exception ignore) {}
+					} catch (Exception ignore) {
+					}
 
 					data.setSalesonId(ShopUtils.getSalesOnIdByHeader(request));
 					data.setSalesonToken(token);
@@ -3079,26 +3083,26 @@ public class OrderServiceImpl implements OrderService {
 			} else if ("kakaopay".equals(key)) {
 
 				String requestDealApproveUrl = environment.getProperty("kakaopay.web.path")
-					+ environment.getProperty("kakaopay.msg.name");
+						+ environment.getProperty("kakaopay.msg.name");
 				String MERCHANT_ID = environment.getProperty("kakaopay.mid");
 				String merchantEncKey = environment.getProperty("kakaopay.merchant.enc.key");
 				String merchantHashKey = environment.getProperty("kakaopay.merchant.hash.key");
 				String certifiedFlag = "CN";
 
-				String PR_TYPE = "WPM";		// 결제 요청 타입 - WPM: WEB결제, MPM: Mobile결제
-				String channelType = "4";	// 채널타입 - 2:모바일웹결제 채널, 4: PC TMS 결제 채널
+				String PR_TYPE = "WPM";        // 결제 요청 타입 - WPM: WEB결제, MPM: Mobile결제
+				String channelType = "4";    // 채널타입 - 2:모바일웹결제 채널, 4: PC TMS 결제 채널
 
 				if (DeviceUtils.MOBILE.equals(buy.getRealDeviceType())) {
-					PR_TYPE = "MPM";		// 결제 요청 타입 - WPM: WEB결제, MPM: Mobile결제
+					PR_TYPE = "MPM";        // 결제 요청 타입 - WPM: WEB결제, MPM: Mobile결제
 					channelType = "2";
 				}
 
-				String requestorName = "";	// ???
-				String requestorTel = "";	// ???
+				String requestorName = "";    // ???
+				String requestorTel = "";    // ???
 
 
-				String MERCHANT_TXN_NUM = buy.getOrderCode();	// 가맹점 거래번호.(주문번호)
-				String PRODUCT_NAME = productName; 	// 상품명
+				String MERCHANT_TXN_NUM = buy.getOrderCode();    // 가맹점 거래번호.(주문번호)
+				String PRODUCT_NAME = productName;    // 상품명
 				String AMOUNT = Integer.toString(buyPayment.getAmount());
 				String serviceAmt = "0";
 				String supplyAmt = "0";
@@ -3162,68 +3166,68 @@ public class OrderServiceImpl implements OrderService {
 				approveDto.setBlockBin(blockBin);
 
 				map.put("kakaopay", kakaopayService.init(approveDto, session));
-            } else if ("naverpay".equals(key)) {
-                HashMap<String, Object> pgData = new HashMap<>();
-                pgData.put("productName", buy.getItems().get(0).getItem().getItemName());
-                pgData.put("totalPayAmount", buy.getPgPayAmount());
-                pgData.put("taxScopeAmount", buy.getPgPayAmount());
-                pgData.put("taxExScopeAmount", 0);
+			} else if ("naverpay".equals(key)) {
+				HashMap<String, Object> pgData = new HashMap<>();
+				pgData.put("productName", buy.getItems().get(0).getItem().getItemName());
+				pgData.put("totalPayAmount", buy.getPgPayAmount());
+				pgData.put("taxScopeAmount", buy.getPgPayAmount());
+				pgData.put("taxExScopeAmount", 0);
 
-                List<HashMap<String,Object>> productItems = new ArrayList<HashMap<String,Object>>();
-                int productCount = 0;
-                for (BuyItem item: buy.getItems()) {
-                    if (productItems.size() > 0) {
+				List<HashMap<String, Object>> productItems = new ArrayList<HashMap<String, Object>>();
+				int productCount = 0;
+				for (BuyItem item : buy.getItems()) {
+					if (productItems.size() > 0) {
 
-                        boolean isDuplicateItem = false;
-                        int duplicateIndex = 0;
+						boolean isDuplicateItem = false;
+						int duplicateIndex = 0;
 
-                        for(int i=0;i<productItems.size();i++) {
-                            String itemCode = productItems.get(i).get("uid").toString();
+						for (int i = 0; i < productItems.size(); i++) {
+							String itemCode = productItems.get(i).get("uid").toString();
 
-                            if (itemCode.equals(item.getItemUserCode())) {
-                                duplicateIndex = i;
-                                isDuplicateItem = true;
-                            }
-                        }
+							if (itemCode.equals(item.getItemUserCode())) {
+								duplicateIndex = i;
+								isDuplicateItem = true;
+							}
+						}
 
-                        if (isDuplicateItem) {
-                            HashMap<String,Object> productItem = productItems.get(duplicateIndex);
-                            productItem.put("count", (int)productItem.get("count") + item.getItemPrice().getQuantity());
-                            productCount += item.getItemPrice().getQuantity();
-                        } else {
-                            HashMap<String,Object> newProductItem = new HashMap<String,Object>();
-                            newProductItem.put("name", item.getItemName());
-                            newProductItem.put("count", item.getItemPrice().getQuantity());
-                            newProductItem.put("categoryType", "PRODUCT");
-                            newProductItem.put("categoryId", "GENERAL");
-                            newProductItem.put("uid", item.getItemUserCode());
-                            productItems.add(newProductItem);
-                            productCount += item.getItemPrice().getQuantity();
-                        }
-                    } else {
-                        HashMap<String,Object> newProductItem = new HashMap<String,Object>();
-                        newProductItem.put("name", item.getItemName());
-                        newProductItem.put("count", item.getItemPrice().getQuantity());
-                        newProductItem.put("categoryType", "PRODUCT");
-                        newProductItem.put("categoryId", "GENERAL");
-                        newProductItem.put("uid", item.getItemUserCode());
-                        productItems.add(newProductItem);
-                        productCount += item.getItemPrice().getQuantity();
-                    }
+						if (isDuplicateItem) {
+							HashMap<String, Object> productItem = productItems.get(duplicateIndex);
+							productItem.put("count", (int) productItem.get("count") + item.getItemPrice().getQuantity());
+							productCount += item.getItemPrice().getQuantity();
+						} else {
+							HashMap<String, Object> newProductItem = new HashMap<String, Object>();
+							newProductItem.put("name", item.getItemName());
+							newProductItem.put("count", item.getItemPrice().getQuantity());
+							newProductItem.put("categoryType", "PRODUCT");
+							newProductItem.put("categoryId", "GENERAL");
+							newProductItem.put("uid", item.getItemUserCode());
+							productItems.add(newProductItem);
+							productCount += item.getItemPrice().getQuantity();
+						}
+					} else {
+						HashMap<String, Object> newProductItem = new HashMap<String, Object>();
+						newProductItem.put("name", item.getItemName());
+						newProductItem.put("count", item.getItemPrice().getQuantity());
+						newProductItem.put("categoryType", "PRODUCT");
+						newProductItem.put("categoryId", "GENERAL");
+						newProductItem.put("uid", item.getItemUserCode());
+						productItems.add(newProductItem);
+						productCount += item.getItemPrice().getQuantity();
+					}
 
-                }
-                pgData.put("productCount", productCount);
-                pgData.put("productItems", productItems);
+				}
+				pgData.put("productCount", productCount);
+				pgData.put("productItems", productItems);
 
-                map.put("naverpay", pgData);
+				map.put("naverpay", pgData);
 
 			} else if ("rentalPay".equals(key)) {
 				System.out.println("무엇을 넣어줄까용용");
 			}
 
 
-		buyPayment.setOrderCode(buy.getOrderCode());
-            buyPayment.setCreatedDate(createdDate);
+			buyPayment.setOrderCode(buy.getOrderCode());
+			buyPayment.setCreatedDate(createdDate);
 
 			orderMapper.insertOrderPaymentBuyTemp(buyPayment);
 
@@ -3233,17 +3237,17 @@ public class OrderServiceImpl implements OrderService {
 		map.put("savePaymentType", savePaymentType);
 
 		try {
-		    // 영수증 신청시 필요한 사업자등록번호, 휴대전화번호등을 조합
-            String cashbillCode = "010-000-1234";
+			// 영수증 신청시 필요한 사업자등록번호, 휴대전화번호등을 조합
+			String cashbillCode = "010-000-1234";
 
-            if (CashbillType.BUSINESS == buy.getCashbill().getCashbillType()) {
-                cashbillCode = buy.getCashbill().getBusinessNumber1() + "-" + buy.getCashbill().getBusinessNumber2() + "-" + buy.getCashbill().getBusinessNumber3();
-            } else if (CashbillType.PERSONAL == buy.getCashbill().getCashbillType()) {
-                cashbillCode = buy.getCashbill().getCashbillPhone1() + "-" + buy.getCashbill().getCashbillPhone2() + "-" + buy.getCashbill().getCashbillPhone3();
-            }
+			if (CashbillType.BUSINESS == buy.getCashbill().getCashbillType()) {
+				cashbillCode = buy.getCashbill().getBusinessNumber1() + "-" + buy.getCashbill().getBusinessNumber2() + "-" + buy.getCashbill().getBusinessNumber3();
+			} else if (CashbillType.PERSONAL == buy.getCashbill().getCashbillType()) {
+				cashbillCode = buy.getCashbill().getCashbillPhone1() + "-" + buy.getCashbill().getCashbillPhone2() + "-" + buy.getCashbill().getCashbillPhone3();
+			}
 
-            buy.getCashbill().setCashbillCode(cashbillCode);
-            buy.setCreatedDate(createdDate);
+			buy.getCashbill().setCashbillCode(cashbillCode);
+			buy.setCreatedDate(createdDate);
 
 			orderMapper.insertOrderTemp(buy);
 		} catch (Exception e) {
@@ -3261,29 +3265,29 @@ public class OrderServiceImpl implements OrderService {
 
 		// 배송비 쿠폰 사용 임시 저장
 		if (!insertShippingCoupons.isEmpty()) {
-			for(ShippingCoupon sCoupon : insertShippingCoupons) {
+			for (ShippingCoupon sCoupon : insertShippingCoupons) {
 				sCoupon.setOrderCode(buy.getOrderCode());
 				orderMapper.insertOrderShippingCouponBuyTemp(sCoupon);
 			}
 		}
 
-		for(Receiver receiver : buy.getReceivers()) {
+		for (Receiver receiver : buy.getReceivers()) {
 
 			receiver.setUserId(buy.getUserId());
 			receiver.setOrderCode(buy.getOrderCode());
 			receiver.setSessionId(buy.getSessionId());
-            receiver.setCreatedDate(createdDate);
+			receiver.setCreatedDate(createdDate);
 
 			orderMapper.insertOrderShippingBuyTemp(receiver);
 
 			// 주문상품 복사
-			for(BuyItem buyItem : receiver.getItems()) {
+			for (BuyItem buyItem : receiver.getItems()) {
 				buyItem.setOrderCode(buy.getOrderCode());
 				buyItem.setShippingIndex(receiver.getShippingIndex());
 				buyItem.setCampaignCode(buy.getCampaignCode());
 				buyItem.setCreatedDate(createdDate);
 
-				if(!escrowStatus.equals("N")) {
+				if (!escrowStatus.equals("N")) {
 					orderMapper.insertOrderItemBuyTempForEscrow(buyItem);
 				} else {
 					orderMapper.insertOrderItemBuyTemp(buyItem);
@@ -3321,7 +3325,7 @@ public class OrderServiceImpl implements OrderService {
 
 		// 배송지 지정되지 않은 상품있는지 체크용
 		HashMap<String, Integer> checkQuantityTotal = new HashMap<>();
-		for(BuyItem buyItem : list) {
+		for (BuyItem buyItem : list) {
 			ItemPrice itemPrice = buyItem.getItemPrice();
 			String key = "item-" + buyItem.getItemSequence();
 
@@ -3335,14 +3339,14 @@ public class OrderServiceImpl implements OrderService {
 
 		// 복합 배송지로인한 상품정보 재정의
 		int shippingIndex = 0;
-		for(Receiver receiver : buy.getReceivers()) {
+		for (Receiver receiver : buy.getReceivers()) {
 
 			receiver.setShippingIndex(shippingIndex);
 			List<BuyItem> items = new ArrayList<>();
 
-			for(BuyQuantity buyQuantity : receiver.getBuyQuantitys()) {
+			for (BuyQuantity buyQuantity : receiver.getBuyQuantitys()) {
 
-				for(BuyItem buyItem : list) {
+				for (BuyItem buyItem : list) {
 					if (buyQuantity.getItemSequence() == buyItem.getItemSequence()) {
 
 						// 복사해야됨...ㅠㅠ
@@ -3477,13 +3481,17 @@ public class OrderServiceImpl implements OrderService {
 		map.put("email", buyer.getEmail());
 		map.put("mobile", buyer.getFullMobile());
 		map.put("orderCode", buy.getOrderCode());
+		if (buy.getBuyRentalPay().equals("Y")) {
+			map.put("quantity", buy.getReceivers().get(0).getBuyQuantitys().get(0).getQuantity());
+			map.put("itemCode", buy.getReceivers().get(0).getItems().get(0).getItemCode());
+		}
 
 
 		int totalTaxFreeAmount = buy.getOrderPrice().getTaxFreeAmount();
 
 		ConfigPg configPg = configPgService.getConfigPg();
 		List<String> savePaymentType = new ArrayList<>();
-		for(String key : payments.keySet()) {
+		for (String key : payments.keySet()) {
 			BuyPayment buyPayment = payments.get(key);
 			buyPayment.setData(key, configPg);
 
@@ -3542,7 +3550,7 @@ public class OrderServiceImpl implements OrderService {
 
 		}
 
-		for(Receiver receiver : buy.getReceivers()) {
+		for (Receiver receiver : buy.getReceivers()) {
 
 			receiver.setUserId(buy.getUserId());
 			receiver.setOrderCode(buy.getOrderCode());
@@ -3552,7 +3560,7 @@ public class OrderServiceImpl implements OrderService {
 			orderMapper.insertOrderShippingBuyTemp(receiver);
 
 			// 주문상품 복사
-			for(BuyItem buyItem : receiver.getItems()) {
+			for (BuyItem buyItem : receiver.getItems()) {
 				buyItem.setOrderCode(buy.getOrderCode());
 				buyItem.setShippingIndex(receiver.getShippingIndex());
 				buyItem.setCampaignCode(buy.getCampaignCode());
@@ -3597,15 +3605,15 @@ public class OrderServiceImpl implements OrderService {
 
 
 		int shippingIndex = 0;
-		for(Receiver receiver : buy.getReceivers()) {
+		for (Receiver receiver : buy.getReceivers()) {
 
 			receiver.setShippingIndex(shippingIndex++);
 
 			List<BuyItem> items = new ArrayList<>();
 
-			for(BuyQuantity buyQuantity : receiver.getBuyQuantitys()) {
+			for (BuyQuantity buyQuantity : receiver.getBuyQuantitys()) {
 
-				for(BuyItem buyItem : list) {
+				for (BuyItem buyItem : list) {
 					if (buyQuantity.getItemSequence() == buyItem.getItemSequence()) {
 
 						// 복사해야됨...ㅠㅠ
@@ -3697,7 +3705,7 @@ public class OrderServiceImpl implements OrderService {
 			autoCashReceipt = environment.getProperty("pg.autoCashReceipt");
 		}
 
-		if (StringUtils.isEmpty(orderParam.getOrderCode())){
+		if (StringUtils.isEmpty(orderParam.getOrderCode())) {
 			if ("easypay".equals(pgType)) {
 				orderParam.setOrderCode(request.getParameter("sp_order_no"));
 			} else if ("nicepay".equals(pgType)) {
@@ -3734,22 +3742,22 @@ public class OrderServiceImpl implements OrderService {
 		int bankPayAmount = 0; // 미수금
 		String payMethodType = "";
 
-		for(BuyPayment buyPayment : payments) {
+		for (BuyPayment buyPayment : payments) {
 
 			if ("bank".equals(buyPayment.getApprovalType())
-				|| "ourvbank".equals(buyPayment.getApprovalType())
-				|| "offlinepay".equals(buyPayment.getApprovalType())
-				|| "ars".equals(buyPayment.getApprovalType())
-				|| "vbank".equals(buyPayment.getApprovalType())) {
+					|| "ourvbank".equals(buyPayment.getApprovalType())
+					|| "offlinepay".equals(buyPayment.getApprovalType())
+					|| "ars".equals(buyPayment.getApprovalType())
+					|| "vbank".equals(buyPayment.getApprovalType())) {
 
 				orderStatus = "0";
 				isBankPayment = true;
 			}
 
 			if ("bank".equals(buyPayment.getApprovalType())
-				|| "ourvbank".equals(buyPayment.getApprovalType())
-				|| "ars".equals(buyPayment.getApprovalType())
-				|| "vbank".equals(buyPayment.getApprovalType())) {
+					|| "ourvbank".equals(buyPayment.getApprovalType())
+					|| "ars".equals(buyPayment.getApprovalType())
+					|| "vbank".equals(buyPayment.getApprovalType())) {
 
 				bankPayAmount += buyPayment.getAmount();
 			}
@@ -3779,7 +3787,7 @@ public class OrderServiceImpl implements OrderService {
 			throw new OrderException("주문 가능 상품이 없습니다.", "/cart");
 		}
 
-		for(Receiver receiver : list) {
+		for (Receiver receiver : list) {
 			orderParam.setShippingIndex(receiver.getShippingIndex());
 			List<BuyItem> buyItems = orderMapper.getOrderBuyItemTempList(orderParam);
 
@@ -3788,7 +3796,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			// 입점 업체 수수료 일때 판매자 정보에 설정된 수수료를 조회해서 셋팅
-			for(BuyItem buyItem : buyItems) {
+			for (BuyItem buyItem : buyItems) {
 				Item item = buyItem.getItem();
 				if ("1".equals(item.getCommissionType())) {
 					Seller seller = sellerMapper.getSellerById(item.getSellerId());
@@ -3799,7 +3807,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			// 추가구성상품
-			for(BuyItem buyItem : buyItems) {
+			for (BuyItem buyItem : buyItems) {
 				if ("Y".equals(buyItem.getAdditionItemFlag())) {
 					for (BuyItem temp : buyItems) {
 						if ("N".equals(temp.getAdditionItemFlag()) && buyItem.getParentItemId() == temp.getItemId()) {
@@ -3862,10 +3870,10 @@ public class OrderServiceImpl implements OrderService {
 				if (!shippingCoupons.isEmpty()) {
 					List<Shipping> shippings = buy.getReceivers().get(0).getItemGroups();
 
-					for(ShippingCoupon sCoupon : shippingCoupons) {
-						for(Shipping shipping : shippings) {
+					for (ShippingCoupon sCoupon : shippingCoupons) {
+						for (Shipping shipping : shippings) {
 							if (shipping.getRealShipping() == sCoupon.getDiscountAmount()
-								&& shipping.getShippingGroupCode().equals(sCoupon.getShippingGroupCode())) {
+									&& shipping.getShippingGroupCode().equals(sCoupon.getShippingGroupCode())) {
 
 								shipping.setShippingCouponCount(1);
 								shipping.setDiscountShipping(shipping.getRealShipping() - shipping.getAddDeliveryCharge());
@@ -3917,7 +3925,7 @@ public class OrderServiceImpl implements OrderService {
 			int itemSequence = 0;
 			orderSequence = buyer.getOrderSequence();
 
-			for(Receiver receiver : buy.getReceivers()) {
+			for (Receiver receiver : buy.getReceivers()) {
 
 				// 주문상품 배송지 정보를 저장
 				OrderShippingInfo orderShippingInfo = new OrderShippingInfo(orderCode, orderSequence, shippingInfoSequence++, receiver);
@@ -3925,14 +3933,12 @@ public class OrderServiceImpl implements OrderService {
 
 				erpOrder.addOrderShippingInfo(orderShippingInfo);
 
-				for(Shipping shipping : receiver.getItemGroups()) {
+				for (Shipping shipping : receiver.getItemGroups()) {
 					shipping.setOrderCode(orderCode);
 					shipping.setOrderSequence(orderSequence);
 					shipping.setShippingSequence(shippingSequence++);
 
 					orderMapper.insertOrderShipping(shipping);
-
-
 
 
 					// 1개상품용 쿠폰일 경우 메일링에 해당 상품 분리적용으로 인해 buyItems 생성
@@ -3955,7 +3961,7 @@ public class OrderServiceImpl implements OrderService {
 							buyItem.getItemPrice().setSellerPoint(0);
 						}
 					} else {
-						for(BuyItem buyItem : shipping.getBuyItems()) {
+						for (BuyItem buyItem : shipping.getBuyItems()) {
 
 							// 묶음배송 처리 데이터 추가
 							buyItem.setShipmentGroupCode(shipping.getShipmentGroupCode());
@@ -3987,7 +3993,7 @@ public class OrderServiceImpl implements OrderService {
 			int cnt = 1;
 			int totCnt = payments.size();
 
-			for(BuyPayment buyPayment : payments) {
+			for (BuyPayment buyPayment : payments) {
 				String approvalType = buyPayment.getApprovalType();
 
 				OrderPayment orderPayment = new OrderPayment();
@@ -4005,7 +4011,7 @@ public class OrderServiceImpl implements OrderService {
 					receiptDataSave(buy, totCnt, cnt);
 				} else if (PointUtils.isPointType(approvalType)) {
 					// 현금성 포인트일 경우 포인트 금액만큼 현금영수증 발급
-					if(PointUtils.isPossibleToIssueReceipt(approvalType)){
+					if (PointUtils.isPossibleToIssueReceipt(approvalType)) {
 						receiptDataSave(buy, totCnt, cnt);
 					}
 
@@ -4164,9 +4170,9 @@ public class OrderServiceImpl implements OrderService {
 								buyPayment.setBankExpirationDate(DateUtils.date(closeDate));
 								buyPayment.setBankInName(orderPgData.getBankInName());
 							}
-						} else if("easypay".equals(pgType)) {
+						} else if ("easypay".equals(pgType)) {
 							EasypayRequest easypayRequest = new EasypayRequest(request);
-							((PgData)pgData).setEasypayRequest(easypayRequest);
+							((PgData) pgData).setEasypayRequest(easypayRequest);
 
 							orderPgData = easypayService.pay(pgData, session);
 
@@ -4199,7 +4205,7 @@ public class OrderServiceImpl implements OrderService {
 								buyPayment.setBankExpirationDate(DateUtils.date(closeDate));
 								buyPayment.setBankInName(orderPgData.getBankInName());
 							}
-						} else if("nicepay".equals(pgType)) {
+						} else if ("nicepay".equals(pgType)) {
 							((PgData) pgData).setApprovalType(approvalType);
 							orderPgData = nicepayService.pay(pgData, session);
 
@@ -4513,7 +4519,7 @@ public class OrderServiceImpl implements OrderService {
 
 			// DB 처리 에러가 발행하면 PG 취소함
 			if (successOrderPgDatas != null) {
-				for(OrderPgData orderPgData : successOrderPgDatas) {
+				for (OrderPgData orderPgData : successOrderPgDatas) {
 
 					String approvalType = orderPgData.getApprovalType();
 					orderPgData.setCancelReason("결제 중 오류로 주문 취소");
@@ -4546,37 +4552,37 @@ public class OrderServiceImpl implements OrderService {
 							orderPgData.setOrderCode(orderCode);
 							isCancelSuccess = kcpService.cancel(orderPgData);
 
-						} else if("easypay".equals(orderPgData.getPgServiceType())) {
+						} else if ("easypay".equals(orderPgData.getPgServiceType())) {
 							orderPgData.setOrderCode(orderCode);
 							isCancelSuccess = easypayService.cancel(orderPgData);
 
-						} else if("nicepay".equals(orderPgData.getPgServiceType())) {
+						} else if ("nicepay".equals(orderPgData.getPgServiceType())) {
 							orderPgData.setOrderCode(orderCode);
 							orderPgData.setRequest(request);
 							orderPgData.setCancelAmount(orderPgData.getPgAmount());
 							isCancelSuccess = nicepayService.cancel(orderPgData);
-						} else if("naverpay".equals(orderPgData.getPgServiceType())) {
-                            orderPgData.setCancelAmount(orderPgData.getPgAmount());
-                            orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
+						} else if ("naverpay".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setCancelAmount(orderPgData.getPgAmount());
+							orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
 
-                            isCancelSuccess = orderPgData.isSuccess();
-                        }
+							isCancelSuccess = orderPgData.isSuccess();
+						}
 
 						if (isCancelSuccess == false) {
-                            // 결제 취소 실패!!
-                            System.out.println("TID -> " + orderPgData.getPgKey() + " -> 결제취소 실패!!");
-                            OrderCancelFail orderCancelFail = new OrderCancelFail();
+							// 결제 취소 실패!!
+							System.out.println("TID -> " + orderPgData.getPgKey() + " -> 결제취소 실패!!");
+							OrderCancelFail orderCancelFail = new OrderCancelFail();
 
-                            orderCancelFail.setUpdateData(orderPgData);
-                            orderCancelFail.setPgServiceType(orderPgData.getPgServiceType());
+							orderCancelFail.setUpdateData(orderPgData);
+							orderCancelFail.setPgServiceType(orderPgData.getPgServiceType());
 
-                            if (UserUtils.isManagerLogin()) {
-                                orderCancelFail.setCancelRequester("2");
-                            } else {
-                                orderCancelFail.setCancelRequester("1");
-                            }
+							if (UserUtils.isManagerLogin()) {
+								orderCancelFail.setCancelRequester("2");
+							} else {
+								orderCancelFail.setCancelRequester("1");
+							}
 
-                            throw new OrderException("결제취소 실패", "/order/step1", orderCancelFail, e);
+							throw new OrderException("결제취소 실패", "/order/step1", orderCancelFail, e);
 						}
 
 						// 현금영수증 취소
@@ -4593,8 +4599,8 @@ public class OrderServiceImpl implements OrderService {
 
 			// DB 처리 에러가 발행하면 PG 취소함
 			if (successOrderPgDatas != null) {
-				for(OrderPgData orderPgData : successOrderPgDatas) {
-                    orderPgData.setCancelReason("결제 중 오류로 주문 취소");
+				for (OrderPgData orderPgData : successOrderPgDatas) {
+					orderPgData.setCancelReason("결제 중 오류로 주문 취소");
 
 					String approvalType = orderPgData.getApprovalType();
 
@@ -4626,38 +4632,38 @@ public class OrderServiceImpl implements OrderService {
 							orderPgData.setOrderCode(orderCode);
 							isCancelSuccess = kcpService.cancel(orderPgData);
 
-						} else if("easypay".equals(orderPgData.getPgServiceType())) {
+						} else if ("easypay".equals(orderPgData.getPgServiceType())) {
 							orderPgData.setOrderCode(orderCode);
 							isCancelSuccess = easypayService.cancel(orderPgData);
 
-						} else if("nicepay".equals(orderPgData.getPgServiceType())) {
+						} else if ("nicepay".equals(orderPgData.getPgServiceType())) {
 							orderPgData.setOrderCode(orderCode);
-                            orderPgData.setRequest(request);
-                            orderPgData.setCancelAmount(orderPgData.getPgAmount());
-                            orderPgData.setMessage("주문취소");
+							orderPgData.setRequest(request);
+							orderPgData.setCancelAmount(orderPgData.getPgAmount());
+							orderPgData.setMessage("주문취소");
 							isCancelSuccess = nicepayService.cancel(orderPgData);
-						} else if("naverpay".equals(orderPgData.getPgServiceType())) {
-                            orderPgData.setCancelAmount(orderPgData.getPgAmount());
-                            orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
+						} else if ("naverpay".equals(orderPgData.getPgServiceType())) {
+							orderPgData.setCancelAmount(orderPgData.getPgAmount());
+							orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
 
-                            isCancelSuccess = orderPgData.isSuccess();
-                        }
+							isCancelSuccess = orderPgData.isSuccess();
+						}
 
 						if (isCancelSuccess == false) {
-                            // 결제 취소 실패!!
-                            log.debug("TID -> " + orderPgData.getPgKey() + " -> 결제취소 실패!!");
-                            OrderCancelFail orderCancelFail = new OrderCancelFail();
+							// 결제 취소 실패!!
+							log.debug("TID -> " + orderPgData.getPgKey() + " -> 결제취소 실패!!");
+							OrderCancelFail orderCancelFail = new OrderCancelFail();
 
-                            orderCancelFail.setUpdateData(orderPgData);
-                            orderCancelFail.setPgServiceType(orderPgData.getPgServiceType());
+							orderCancelFail.setUpdateData(orderPgData);
+							orderCancelFail.setPgServiceType(orderPgData.getPgServiceType());
 
-                            if (UserUtils.isManagerLogin()) {
-                                orderCancelFail.setCancelRequester("2");
-                            } else {
-                                orderCancelFail.setCancelRequester("1");
-                            }
+							if (UserUtils.isManagerLogin()) {
+								orderCancelFail.setCancelRequester("2");
+							} else {
+								orderCancelFail.setCancelRequester("1");
+							}
 
-                            throw new OrderException("결제취소 실패", "/order/step1", orderCancelFail, e);
+							throw new OrderException("결제취소 실패", "/order/step1", orderCancelFail, e);
 						}
 
 						// 현금영수증 취소
@@ -4676,7 +4682,7 @@ public class OrderServiceImpl implements OrderService {
 
 			// 주문이 완료된 장바구니 상품들 삭제
 			List<Integer> itemIds = new ArrayList<>();
-			for(BuyItem buyItem : buy.getItems()) {
+			for (BuyItem buyItem : buy.getItems()) {
 				itemIds.add(buyItem.getItemId());
 			}
 
@@ -4693,14 +4699,14 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error("주문 처리 후 임시 데이터 삭제시 ERROR: {}", e.getMessage(), e);
 		}
 
 		// Message 발송
 		try {
 			this.sendOrderMessageTx(buy);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error("주문 메시지 발송 ERROR: {}", e.getMessage(), e);
 		}
 
@@ -4713,7 +4719,7 @@ public class OrderServiceImpl implements OrderService {
 
 			this.updateStockDeduction(stockMap);
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error("재고 차감 ERROR: {}", e.getMessage(), e);
 		}
 
@@ -4731,7 +4737,7 @@ public class OrderServiceImpl implements OrderService {
 				if (StringUtils.isEmpty(title) == false) {
 					title = title.trim();
 					if ("".equals(title)) {
-						title= receiver.getReceiveName();
+						title = receiver.getReceiveName();
 					}
 				} else {
 					title = receiver.getReceiveName();
@@ -4757,7 +4763,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public String insertOrderRental(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request) {
+	public String insertOrderForRentalBuy(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request, String rentalPer) {
 
 		if (pgData != null) {
 			if (!(pgData instanceof PgData || pgData instanceof ReservationResponse || pgData instanceof CjResult)) {
@@ -4775,7 +4781,7 @@ public class OrderServiceImpl implements OrderService {
 		//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
 		// request 값 확인필요
 		//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-		if (StringUtils.isEmpty(orderParam.getOrderCode())){
+		if (StringUtils.isEmpty(orderParam.getOrderCode())) {
 			if ("easypay".equals(pgType)) {
 				orderParam.setOrderCode(request.getParameter("sp_order_no"));
 			} else if ("nicepay".equals(pgType)) {
@@ -4813,7 +4819,7 @@ public class OrderServiceImpl implements OrderService {
 		int bankPayAmount = 0; // 미수금
 		String payMethodType = "";
 
-		for(BuyPayment buyPayment : payments) {
+		for (BuyPayment buyPayment : payments) {
 
 			if ("bank".equals(buyPayment.getApprovalType())
 					|| "ourvbank".equals(buyPayment.getApprovalType())
@@ -4862,7 +4868,7 @@ public class OrderServiceImpl implements OrderService {
 			throw new OrderException("주문 가능 상품이 없습니다.", "/cart");
 		}
 
-		for(Receiver receiver : list) {
+		for (Receiver receiver : list) {
 			orderParam.setShippingIndex(receiver.getShippingIndex());
 			List<BuyItem> buyItems = orderMapper.getOrderBuyItemTempList(orderParam);
 
@@ -4871,7 +4877,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			// 입점 업체 수수료 일때 판매자 정보에 설정된 수수료를 조회해서 셋팅
-			for(BuyItem buyItem : buyItems) {
+			for (BuyItem buyItem : buyItems) {
 				Item item = buyItem.getItem();
 				if ("1".equals(item.getCommissionType())) {
 					Seller seller = sellerMapper.getSellerById(item.getSellerId());
@@ -4882,7 +4888,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			// 추가구성상품
-			for(BuyItem buyItem : buyItems) {
+			for (BuyItem buyItem : buyItems) {
 				if ("Y".equals(buyItem.getAdditionItemFlag())) {
 					for (BuyItem temp : buyItems) {
 						if ("N".equals(temp.getAdditionItemFlag()) && buyItem.getParentItemId() == temp.getItemId()) {
@@ -5000,22 +5006,21 @@ public class OrderServiceImpl implements OrderService {
 			int itemSequence = 0;
 			orderSequence = buyer.getOrderSequence();
 
-			for(Receiver receiver : buy.getReceivers()) {
+			for (Receiver receiver : buy.getReceivers()) {
 
 				// 주문상품 배송지 정보를 저장
 				OrderShippingInfo orderShippingInfo = new OrderShippingInfo(orderCode, orderSequence, shippingInfoSequence++, receiver);
 				orderMapper.insertOrderShippingInfo(orderShippingInfo);
 
+				orderShippingInfo.setMemo(rentalPer + "개월 렌탈, " + orderShippingInfo.getMemo());
 				erpOrder.addOrderShippingInfo(orderShippingInfo);
 
-				for(Shipping shipping : receiver.getItemGroups()) {
+				for (Shipping shipping : receiver.getItemGroups()) {
 					shipping.setOrderCode(orderCode);
 					shipping.setOrderSequence(orderSequence);
 					shipping.setShippingSequence(shippingSequence++);
 
 					orderMapper.insertOrderShipping(shipping);
-
-
 
 
 					// 1개상품용 쿠폰일 경우 메일링에 해당 상품 분리적용으로 인해 buyItems 생성
@@ -5038,7 +5043,7 @@ public class OrderServiceImpl implements OrderService {
 							buyItem.getItemPrice().setSellerPoint(0);
 						}
 					} else {
-						for(BuyItem buyItem : shipping.getBuyItems()) {
+						for (BuyItem buyItem : shipping.getBuyItems()) {
 
 							// 묶음배송 처리 데이터 추가
 							buyItem.setShipmentGroupCode(shipping.getShipmentGroupCode());
@@ -5070,7 +5075,7 @@ public class OrderServiceImpl implements OrderService {
 			int cnt = 1;
 			int totCnt = payments.size();
 
-			for(BuyPayment buyPayment : payments) {
+			for (BuyPayment buyPayment : payments) {
 				String approvalType = buyPayment.getApprovalType();
 
 				OrderPayment orderPayment = new OrderPayment();
@@ -5203,80 +5208,80 @@ public class OrderServiceImpl implements OrderService {
 			log.error(e.getMessage(), e);
 
 			// DB 처리 에러가 발행하면 PG 취소함
-			if (successOrderPgDatas != null) {
-				for(OrderPgData orderPgData : successOrderPgDatas) {
+//			if (successOrderPgDatas != null) {
+//				for(OrderPgData orderPgData : successOrderPgDatas) {
+//
+//					String approvalType = orderPgData.getApprovalType();
+//					orderPgData.setCancelReason("결제 중 오류로 주문 취소");
+//
+//					if (orderPgData.isSuccess()) {
+//						boolean isCancelSuccess = false;
+//						if ("inicis".equals(orderPgData.getPgServiceType())) {
+//							isCancelSuccess = inicisService.cancel(orderPgData);
+//
+//						} else if ("lgdacom".equals(orderPgData.getPgServiceType())) {
+//							isCancelSuccess = lgDacomService.cancel(orderPgData);
+//
+//						} else if ("payco".equals(orderPgData.getPgServiceType())) {
+//							orderPgData.setRemainAmount(orderPrice.getOrderPayAmount());
+//							isCancelSuccess = paycoService.cancel(orderPgData);
+//
+//						} else if ("kakaopay".equals(orderPgData.getPgServiceType())) {
+//							orderPgData.setRemainAmount(orderPrice.getOrderPayAmount());
+//							isCancelSuccess = kakaopayService.cancel(orderPgData);
+//
+//						} else if ("cj".equals(orderPgData.getPgServiceType())) {
+//							//isCancelSuccess = cjService.cancel(orderPgData);
+//
+//							//CJ PG는 RedirectUrl에서 실패시 취소 하도록 하자!!
+//							isCancelSuccess = true;
+//						} else if ("kspay".equals(orderPgData.getPgServiceType())) {
+//							isCancelSuccess = kspayService.cancel(orderPgData);
+//
+//						} else if ("kcp".equals(orderPgData.getPgServiceType())) {
+//							orderPgData.setOrderCode(orderCode);
+//							isCancelSuccess = kcpService.cancel(orderPgData);
+//
+//						} else if("easypay".equals(orderPgData.getPgServiceType())) {
+//							orderPgData.setOrderCode(orderCode);
+//							isCancelSuccess = easypayService.cancel(orderPgData);
+//
+//						} else if("nicepay".equals(orderPgData.getPgServiceType())) {
+//							orderPgData.setOrderCode(orderCode);
+//							orderPgData.setRequest(request);
+//							orderPgData.setCancelAmount(orderPgData.getPgAmount());
+//							isCancelSuccess = nicepayService.cancel(orderPgData);
+//						} else if("naverpay".equals(orderPgData.getPgServiceType())) {
+//							orderPgData.setCancelAmount(orderPgData.getPgAmount());
+//							orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
+//
+//							isCancelSuccess = orderPgData.isSuccess();
+//						}
+//
+//						if (isCancelSuccess == false) {
+//							// 결제 취소 실패!!
+//							System.out.println("TID -> " + orderPgData.getPgKey() + " -> 결제취소 실패!!");
+//							OrderCancelFail orderCancelFail = new OrderCancelFail();
+//
+//							orderCancelFail.setUpdateData(orderPgData);
+//							orderCancelFail.setPgServiceType(orderPgData.getPgServiceType());
+//
+//							if (UserUtils.isManagerLogin()) {
+//								orderCancelFail.setCancelRequester("2");
+//							} else {
+//								orderCancelFail.setCancelRequester("1");
+//							}
+//
+//							throw new OrderException("결제취소 실패", "/order/step1", orderCancelFail, e);
+//						}
+//
+//						// 현금영수증 취소
+//						receiptService.cancelCashbill(orderCode);
+//					}
+//				}
+//			}
 
-					String approvalType = orderPgData.getApprovalType();
-					orderPgData.setCancelReason("결제 중 오류로 주문 취소");
-
-					if (orderPgData.isSuccess()) {
-						boolean isCancelSuccess = false;
-						if ("inicis".equals(orderPgData.getPgServiceType())) {
-							isCancelSuccess = inicisService.cancel(orderPgData);
-
-						} else if ("lgdacom".equals(orderPgData.getPgServiceType())) {
-							isCancelSuccess = lgDacomService.cancel(orderPgData);
-
-						} else if ("payco".equals(orderPgData.getPgServiceType())) {
-							orderPgData.setRemainAmount(orderPrice.getOrderPayAmount());
-							isCancelSuccess = paycoService.cancel(orderPgData);
-
-						} else if ("kakaopay".equals(orderPgData.getPgServiceType())) {
-							orderPgData.setRemainAmount(orderPrice.getOrderPayAmount());
-							isCancelSuccess = kakaopayService.cancel(orderPgData);
-
-						} else if ("cj".equals(orderPgData.getPgServiceType())) {
-							//isCancelSuccess = cjService.cancel(orderPgData);
-
-							//CJ PG는 RedirectUrl에서 실패시 취소 하도록 하자!!
-							isCancelSuccess = true;
-						} else if ("kspay".equals(orderPgData.getPgServiceType())) {
-							isCancelSuccess = kspayService.cancel(orderPgData);
-
-						} else if ("kcp".equals(orderPgData.getPgServiceType())) {
-							orderPgData.setOrderCode(orderCode);
-							isCancelSuccess = kcpService.cancel(orderPgData);
-
-						} else if("easypay".equals(orderPgData.getPgServiceType())) {
-							orderPgData.setOrderCode(orderCode);
-							isCancelSuccess = easypayService.cancel(orderPgData);
-
-						} else if("nicepay".equals(orderPgData.getPgServiceType())) {
-							orderPgData.setOrderCode(orderCode);
-							orderPgData.setRequest(request);
-							orderPgData.setCancelAmount(orderPgData.getPgAmount());
-							isCancelSuccess = nicepayService.cancel(orderPgData);
-						} else if("naverpay".equals(orderPgData.getPgServiceType())) {
-							orderPgData.setCancelAmount(orderPgData.getPgAmount());
-							orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
-
-							isCancelSuccess = orderPgData.isSuccess();
-						}
-
-						if (isCancelSuccess == false) {
-							// 결제 취소 실패!!
-							System.out.println("TID -> " + orderPgData.getPgKey() + " -> 결제취소 실패!!");
-							OrderCancelFail orderCancelFail = new OrderCancelFail();
-
-							orderCancelFail.setUpdateData(orderPgData);
-							orderCancelFail.setPgServiceType(orderPgData.getPgServiceType());
-
-							if (UserUtils.isManagerLogin()) {
-								orderCancelFail.setCancelRequester("2");
-							} else {
-								orderCancelFail.setCancelRequester("1");
-							}
-
-							throw new OrderException("결제취소 실패", "/order/step1", orderCancelFail, e);
-						}
-
-						// 현금영수증 취소
-						receiptService.cancelCashbill(orderCode);
-					}
-				}
-			}
-
-			throw new OrderException("결제 처리 중 에러가 발생하여 거래가 취소되었습니다. <br>" + e.getMessage(), "/order/step1", e);
+			throw new OrderException("결제 처리 중 에러가 발생하여 거래가 취소되었습니다. <br>" + e.getMessage(), "/order/step1-rental", e);
 			//throw new OrderException("결제 처리도중 에러가 발생하여 거래가 취소 되었습니다. 카드결제의 경우 승인취소 문자를 받지 못하신 경우 고객센터로 연락 바랍니다.", "/order/step1");
 		} catch (Exception e) {
 
@@ -5284,7 +5289,7 @@ public class OrderServiceImpl implements OrderService {
 
 			// DB 처리 에러가 발행하면 PG 취소함
 			if (successOrderPgDatas != null) {
-				for(OrderPgData orderPgData : successOrderPgDatas) {
+				for (OrderPgData orderPgData : successOrderPgDatas) {
 					orderPgData.setCancelReason("결제 중 오류로 주문 취소");
 
 					String approvalType = orderPgData.getApprovalType();
@@ -5317,17 +5322,17 @@ public class OrderServiceImpl implements OrderService {
 							orderPgData.setOrderCode(orderCode);
 							isCancelSuccess = kcpService.cancel(orderPgData);
 
-						} else if("easypay".equals(orderPgData.getPgServiceType())) {
+						} else if ("easypay".equals(orderPgData.getPgServiceType())) {
 							orderPgData.setOrderCode(orderCode);
 							isCancelSuccess = easypayService.cancel(orderPgData);
 
-						} else if("nicepay".equals(orderPgData.getPgServiceType())) {
+						} else if ("nicepay".equals(orderPgData.getPgServiceType())) {
 							orderPgData.setOrderCode(orderCode);
 							orderPgData.setRequest(request);
 							orderPgData.setCancelAmount(orderPgData.getPgAmount());
 							orderPgData.setMessage("주문취소");
 							isCancelSuccess = nicepayService.cancel(orderPgData);
-						} else if("naverpay".equals(orderPgData.getPgServiceType())) {
+						} else if ("naverpay".equals(orderPgData.getPgServiceType())) {
 							orderPgData.setCancelAmount(orderPgData.getPgAmount());
 							orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
 
@@ -5357,7 +5362,7 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 
-			throw new OrderException("결제 처리 중 에러가 발생하여 거래가 취소되었습니다. <br>" + e.getMessage(), "/order/step1", e);
+			throw new OrderException("결제 처리 중 에러가 발생하여 거래가 취소되었습니다. <br>" + e.getMessage(), "/order/step1-rental", e);
 			//throw new OrderException("결제 처리도중 에러가 발생하여 거래가 취소 되었습니다. 카드결제의 경우 승인취소 문자를 받지 못하신 경우 고객센터로 연락 바랍니다.", "/order/step1");
 		}
 
@@ -5367,7 +5372,7 @@ public class OrderServiceImpl implements OrderService {
 
 			// 주문이 완료된 장바구니 상품들 삭제
 			List<Integer> itemIds = new ArrayList<>();
-			for(BuyItem buyItem : buy.getItems()) {
+			for (BuyItem buyItem : buy.getItems()) {
 				itemIds.add(buyItem.getItemId());
 			}
 
@@ -5384,14 +5389,14 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error("주문 처리 후 임시 데이터 삭제시 ERROR: {}", e.getMessage(), e);
 		}
 
 		// Message 발송
 		try {
 			this.sendOrderMessageTx(buy);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error("주문 메시지 발송 ERROR: {}", e.getMessage(), e);
 		}
 
@@ -5404,7 +5409,7 @@ public class OrderServiceImpl implements OrderService {
 
 			this.updateStockDeduction(stockMap);
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error("재고 차감 ERROR: {}", e.getMessage(), e);
 		}
 
@@ -5422,7 +5427,7 @@ public class OrderServiceImpl implements OrderService {
 				if (StringUtils.isEmpty(title) == false) {
 					title = title.trim();
 					if ("".equals(title)) {
-						title= receiver.getReceiveName();
+						title = receiver.getReceiveName();
 					}
 				} else {
 					title = receiver.getReceiveName();
@@ -5446,8 +5451,10 @@ public class OrderServiceImpl implements OrderService {
 
 		return orderSequence + "/" + orderCode;
 	}
+
 	/**
 	 * 상품 재고 차감
+	 *
 	 * @param stockMap
 	 */
 	@Override
@@ -5458,12 +5465,12 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			List<StockDeduction> list = new ArrayList<>();
-			for(String key : stockMap.keySet()) {
+			for (String key : stockMap.keySet()) {
 				int quantity = stockMap.get(key);
 				list.add(new StockDeduction(key, quantity));
 			}
 
-			for(StockDeduction stock : list) {
+			for (StockDeduction stock : list) {
 
 				if ("STOCK".equals(stock.getStockDeductionType())) {
 					orderMapper.updateStockDeductionForItem(stock);
@@ -5476,13 +5483,14 @@ public class OrderServiceImpl implements OrderService {
 
 			}
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error(ERROR_MARKER, e.getMessage(), e);
 		}
 	}
 
 	/**
 	 * 상품 정보를 구성
+	 *
 	 * @param itemSequence
 	 * @param buyItems
 	 * @param buyItem
@@ -5508,7 +5516,7 @@ public class OrderServiceImpl implements OrderService {
 		// 10 : 결제완료 인경우 결제확인일을 기록
 		if ("10".equals(buy.getOrderStatus())) {
 			buyItem.setPayDate(DateUtils.getToday(DATETIME_FORMAT));
-			escrowStatus = escrowStatus.equals("N") ? escrowStatus : "10";	//에스크로 사용시 에스크로 상태를 결제완료(10)로 변경
+			escrowStatus = escrowStatus.equals("N") ? escrowStatus : "10";    //에스크로 사용시 에스크로 상태를 결제완료(10)로 변경
 		} else {
 			buyItem.setPayDate("00000000000000");
 		}
@@ -5561,7 +5569,8 @@ public class OrderServiceImpl implements OrderService {
 				List<GiftItem> freeGiftItemList = giftItemService.getGiftItemListForFront(buyItem.getItemId());
 				buyItem.setFreeGiftItemText(ShopUtils.makeGiftItemText(freeGiftItemList));
 				buyItem.setFreeGiftItemList(ShopUtils.conventGiftItemInfoList(freeGiftItemList));
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 		}
 
 		// 출고지, 반송지
@@ -5572,8 +5581,8 @@ public class OrderServiceImpl implements OrderService {
 		buyItem.setDeliveryCompanyName(item.getDeliveryCompanyName());
 
 		// 결제시 포인트 사용하면 지급하지 않는 설정이라면...
-        int usePoint = buy.getOrderPrice().getTotalPointDiscountAmount();
-        // 2: 결제시 포인트 사용하면 포인트을 지급하지 않음
+		int usePoint = buy.getOrderPrice().getTotalPointDiscountAmount();
+		// 2: 결제시 포인트 사용하면 포인트을 지급하지 않음
 		if ("2".equals(shopConfig.getPointSaveType()) && usePoint > 0) {
 			buyItem.getItemPrice().setEarnPoint(0);
 			buyItem.getItemPrice().setSellerPoint(0);
@@ -5662,11 +5671,11 @@ public class OrderServiceImpl implements OrderService {
 
 			// 무통장 입금성공일때만 업데이트한다. 나머지 상태는 뭘해야 되지??
 			if ("0000".equals(pgData.getLGD_RESPCODE().trim())) {
-				if( "I".equals( pgData.getLGD_CASFLAG().trim() ) ) {
+				if ("I".equals(pgData.getLGD_CASFLAG().trim())) {
 					isUpdate = true;
 				}
 			}
-		}else if ("kspay".equals(pgType)) {
+		} else if ("kspay".equals(pgType)) {
 			resultCode = kspayService.confirmationOfPayment(pgData);
 		}
 
@@ -5692,7 +5701,7 @@ public class OrderServiceImpl implements OrderService {
 					orderParam.setPgKey(pgKey);
 					orderParam.setPayAmount(payAmount);
 
-					if (orderPaymentMapper.updateConfirmationOfPaymentStep1(orderParam) > 0){
+					if (orderPaymentMapper.updateConfirmationOfPaymentStep1(orderParam) > 0) {
 						if (orderPaymentMapper.updateConfirmationOfPaymentStep2(orderParam) > 0) {
 							orderPaymentMapper.updateConfirmationOfPaymentStep3(orderParam);
 						} else {
@@ -5739,7 +5748,7 @@ public class OrderServiceImpl implements OrderService {
 			orderParam.setPgKey(pgKey);
 			orderParam.setPayAmount(Integer.parseInt(payAmount));
 
-			if (orderPaymentMapper.updateConfirmationOfPaymentStep1(orderParam) > 0){
+			if (orderPaymentMapper.updateConfirmationOfPaymentStep1(orderParam) > 0) {
 				if (orderPaymentMapper.updateConfirmationOfPaymentStep2(orderParam) > 0) {
 					orderPaymentMapper.updateConfirmationOfPaymentStep3(orderParam);
 				} else {
@@ -5761,11 +5770,12 @@ public class OrderServiceImpl implements OrderService {
 	public String paycoConfirmationOfPayment(String jsonString) {
 
 		try {
-			PayApprovalResult payApprovalResult = (PayApprovalResult) JsonViewUtils.jsonToObject(jsonString, new TypeReference<PayApprovalResult>(){});
+			PayApprovalResult payApprovalResult = (PayApprovalResult) JsonViewUtils.jsonToObject(jsonString, new TypeReference<PayApprovalResult>() {
+			});
 
 			boolean isUpdate = false;
 			int payAmount = 0;
-			for(PaymentDetail payment : payApprovalResult.getPaymentDetails()) {
+			for (PaymentDetail payment : payApprovalResult.getPaymentDetails()) {
 
 				// 무통장
 				if ("02".equals(payment.getPaymentMethodCode()) && "Y".equals(payApprovalResult.getPaymentCompletionYn())) {
@@ -5783,7 +5793,7 @@ public class OrderServiceImpl implements OrderService {
 				orderParam.setPgKey(payApprovalResult.getOrderNo());
 				orderParam.setPayAmount(payAmount);
 
-				if (orderPaymentMapper.updateConfirmationOfPaymentStep1(orderParam) > 0){
+				if (orderPaymentMapper.updateConfirmationOfPaymentStep1(orderParam) > 0) {
 					if (orderPaymentMapper.updateConfirmationOfPaymentStep2(orderParam) > 0) {
 						orderPaymentMapper.updateConfirmationOfPaymentStep3(orderParam);
 					} else {
@@ -5795,7 +5805,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			return "OK";
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error(ERROR_MARKER, e.getMessage(), e);
 
 			return "ERROR";
@@ -5868,10 +5878,10 @@ public class OrderServiceImpl implements OrderService {
 		orderShippingMapper.updateShippingRemittanceDate(orderParam);
 
 
-        // 포인트 적립
-        OrderPointParam opp = new OrderPointParam();
-        opp.setUserId(orderParam.getUserId());
-        pointService.savePointByOrderPointParam(opp);
+		// 포인트 적립
+		OrderPointParam opp = new OrderPointParam();
+		opp.setUserId(orderParam.getUserId());
+		pointService.savePointByOrderPointParam(opp);
 
 
 		// 주문로그
@@ -5884,7 +5894,7 @@ public class OrderServiceImpl implements OrderService {
 		);
 	}
 
-	private String getAdminUser(){
+	private String getAdminUser() {
 
 		String adminUser = "";
 
@@ -5904,7 +5914,7 @@ public class OrderServiceImpl implements OrderService {
 			throw new OrderException();
 		}
 
-		for(OrderShippingInfo info : order.getOrderShippingInfos()) {
+		for (OrderShippingInfo info : order.getOrderShippingInfos()) {
 
 			info.setOrderCode(order.getOrderCode());
 			info.setOrderSequence(order.getOrderSequence());
@@ -5919,7 +5929,7 @@ public class OrderServiceImpl implements OrderService {
 	public void changeShippingNumber(ShippingParam shippingParam) {
 
 		if (shippingParam.getDeliveryCompanyId() == 0
-			|| StringUtils.isEmpty(shippingParam.getDeliveryNumber())) {
+				|| StringUtils.isEmpty(shippingParam.getDeliveryNumber())) {
 			throw new OrderException("잘못된 접근입니다.");
 		}
 
@@ -5942,7 +5952,9 @@ public class OrderServiceImpl implements OrderService {
 		orderMapper.updateAdminMemo(order);
 	}
 
-	/** 구매확정 확인 */
+	/**
+	 * 구매확정 확인
+	 */
 	@Override
 	public int getOrderItemCntForReview(OrderItem orderItem) {
 		return orderMapper.getOrderItemCntForReview(orderItem);
@@ -5971,7 +5983,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 		}
 
-		if(orderPayment.getOrderStatus().equals("0")){
+		if (orderPayment.getOrderStatus().equals("0")) {
 
 			OrderParam orderParam = new OrderParam();
 			orderParam.setOrderCode(orderPayment.getOrderCode());
@@ -5980,10 +5992,10 @@ public class OrderServiceImpl implements OrderService {
 			orderParam.setAdminUserName("system");
 			orderParam.setPayAmount(orderPayment.getAmount());
 
-			if (orderPaymentMapper.updateConfirmationOfPaymentStep1(orderParam) > 0){
+			if (orderPaymentMapper.updateConfirmationOfPaymentStep1(orderParam) > 0) {
 				if (orderPaymentMapper.updateConfirmationOfPaymentStep2(orderParam) > 0) {
 					orderPaymentMapper.updateConfirmationOfPaymentStep3(orderParam);
-					if(!orderPayment.getEscrowStatus().equals("N")){	//에스크로면 에스크로 상태 결제완료로 변경
+					if (!orderPayment.getEscrowStatus().equals("N")) {    //에스크로면 에스크로 상태 결제완료로 변경
 						orderParam.setEscrowStatus("10");
 						orderMapper.updateEscrowStatus(orderParam);
 					}
@@ -6002,95 +6014,95 @@ public class OrderServiceImpl implements OrderService {
 				orderSearchParam.setConditionType("OPMANAGER");
 				Order order = this.getOrderByParam(orderSearchParam);
 
-                // 현금영수증 발행
-                CashbillParam cashbillParam = new CashbillParam();
+				// 현금영수증 발행
+				CashbillParam cashbillParam = new CashbillParam();
 
-                cashbillParam.setWhere("orderCode");
-                cashbillParam.setQuery(orderParam.getOrderCode());
+				cashbillParam.setWhere("orderCode");
+				cashbillParam.setQuery(orderParam.getOrderCode());
 
-                Iterable<CashbillIssue> cashbillIssues = cashbillIssueRepository.findAll(cashbillParam.getPredicate());
+				Iterable<CashbillIssue> cashbillIssues = cashbillIssueRepository.findAll(cashbillParam.getPredicate());
 
-                log.debug("[CASHBILL] START ---------------------------------------------");
-                log.debug("[CASHBILL] cashbillIssues Size :  {}", ((List<CashbillIssue>) cashbillIssues).size());
+				log.debug("[CASHBILL] START ---------------------------------------------");
+				log.debug("[CASHBILL] cashbillIssues Size :  {}", ((List<CashbillIssue>) cashbillIssues).size());
 
-                CashbillResponse response = null;
+				CashbillResponse response = null;
 
-                for (CashbillIssue cashbillIssue : cashbillIssues) {
+				for (CashbillIssue cashbillIssue : cashbillIssues) {
 
-                    if ("popbill".equals(environment.getProperty("cashbill.service"))) {
-                        response = receiptService.receiptIssue(cashbillIssue);
-                    } else if ("inicis".equals(environment.getProperty("cashbill.service"))) {
-                        Cashbill cashbill = cashbillIssue.getCashbill();
+					if ("popbill".equals(environment.getProperty("cashbill.service"))) {
+						response = receiptService.receiptIssue(cashbillIssue);
+					} else if ("inicis".equals(environment.getProperty("cashbill.service"))) {
+						Cashbill cashbill = cashbillIssue.getCashbill();
 
-                        cashbillParam.setCashbillStatus(cashbillIssue.getCashbillStatus());
-                        cashbillParam.setAmount(cashbillIssue.getAmount());
-                        cashbillParam.setItemName(cashbillIssue.getItemName());
-                        cashbillParam.setTaxType(cashbillIssue.getTaxType());
-                        cashbillParam.setCashbillCode(cashbill.getCashbillCode());
-                        cashbillParam.setCashbillType(cashbill.getCashbillType());
-                        cashbillParam.setCustomerName(cashbill.getCustomerName());
-                        cashbillParam.setOrderCode(orderParam.getOrderCode());
+						cashbillParam.setCashbillStatus(cashbillIssue.getCashbillStatus());
+						cashbillParam.setAmount(cashbillIssue.getAmount());
+						cashbillParam.setItemName(cashbillIssue.getItemName());
+						cashbillParam.setTaxType(cashbillIssue.getTaxType());
+						cashbillParam.setCashbillCode(cashbill.getCashbillCode());
+						cashbillParam.setCashbillType(cashbill.getCashbillType());
+						cashbillParam.setCustomerName(cashbill.getCustomerName());
+						cashbillParam.setOrderCode(orderParam.getOrderCode());
 
-                        String email = this.getEmailByOrderCode(orderSearchParam);
+						String email = this.getEmailByOrderCode(orderSearchParam);
 
-                        // 이니시스 현금영수증 발행시 이메일이 필수항목
-                        cashbillParam.setEmail(email);
+						// 이니시스 현금영수증 발행시 이메일이 필수항목
+						cashbillParam.setEmail(email);
 
-                        response = inicisService.cashReceiptIssued(cashbillParam);
-                    }
+						response = inicisService.cashReceiptIssued(cashbillParam);
+					}
 
-                    if (response == null) {
-                        log.debug("[CASHBILL] ERROR >> PG 통신오류(응답없음)");
-                        throw new OrderException("PG 통신오류(응답없음)");
-                    }
+					if (response == null) {
+						log.debug("[CASHBILL] ERROR >> PG 통신오류(응답없음)");
+						throw new OrderException("PG 통신오류(응답없음)");
+					}
 
-                    log.debug("[CASHBILL] cashbillIssue :  {}", cashbillIssue);
-                    log.debug("[CASHBILL] CashbillResponse response.isSuccess() :  {}", response.isSuccess());
-                    if (response.isSuccess()) {
-                        cashbillIssue.setIssuedDate(DateUtils.getToday(DATETIME_FORMAT));
-                        cashbillIssue.setUpdatedDate(DateUtils.getToday(DATETIME_FORMAT));
-                        cashbillIssue.setCashbillStatus(CashbillStatus.ISSUED);
-                        cashbillIssue.setMgtKey(response.getMgtKey());
+					log.debug("[CASHBILL] cashbillIssue :  {}", cashbillIssue);
+					log.debug("[CASHBILL] CashbillResponse response.isSuccess() :  {}", response.isSuccess());
+					if (response.isSuccess()) {
+						cashbillIssue.setIssuedDate(DateUtils.getToday(DATETIME_FORMAT));
+						cashbillIssue.setUpdatedDate(DateUtils.getToday(DATETIME_FORMAT));
+						cashbillIssue.setCashbillStatus(CashbillStatus.ISSUED);
+						cashbillIssue.setMgtKey(response.getMgtKey());
 
-                        if (UserUtils.isUserLogin() || UserUtils.isManagerLogin()) {
-                            cashbillIssue.setUpdateBy(UserUtils.getUser().getUserName() + "(" + UserUtils.getLoginId() + ")");
-                        } else {
-                            cashbillIssue.setUpdateBy("비회원");
-                        }
+						if (UserUtils.isUserLogin() || UserUtils.isManagerLogin()) {
+							cashbillIssue.setUpdateBy(UserUtils.getUser().getUserName() + "(" + UserUtils.getLoginId() + ")");
+						} else {
+							cashbillIssue.setUpdateBy("비회원");
+						}
 
-                        cashbillIssueRepository.save(cashbillIssue);
+						cashbillIssueRepository.save(cashbillIssue);
 
-                    } else {
-                        log.debug("[CASHBILL] ERROR >> {} : {}", response.getResponseCode(), response.getResponseMessage());
-                        throw new OrderException(response.getResponseCode() + " : " + response.getResponseMessage());
-                    }
-                }
-                log.debug("[CASHBILL] END ---------------------------------------------");
+					} else {
+						log.debug("[CASHBILL] ERROR >> {} : {}", response.getResponseCode(), response.getResponseMessage());
+						throw new OrderException(response.getResponseCode() + " : " + response.getResponseMessage());
+					}
+				}
+				log.debug("[CASHBILL] END ---------------------------------------------");
 
 				this.sendOrderMessageTx(order, "order_cready_payment", ShopUtils.getConfig());
 
-			} catch(Exception e) {
+			} catch (Exception e) {
 				log.error("[CASHBILL] ERROR: {}", orderPayment.getOrderCode(), e);
 				throw new OrderException(e.getMessage(), e);
 			}
-		} else {	//입금대기상태가 아닌데 입금통보가 오는 경우 주문번호,날짜등을 로그로 기록.
+		} else {    //입금대기상태가 아닌데 입금통보가 오는 경우 주문번호,날짜등을 로그로 기록.
 			//Make Log
 			String logLoot = environment.getProperty("pg.inipay.home");
-			String logPath = logLoot+"/notiLog/"+DateUtils.getToday()+"/";
-			String fileNm = orderPayment.getOrderCode()+".log";
-			String content = "["+DateUtils.getToday("yyyy-MM-dd HH:mm:ss")+"] "+orderPayment.getOrderCode()+" - PG사로부터 입금통보 수신확인";
+			String logPath = logLoot + "/notiLog/" + DateUtils.getToday() + "/";
+			String fileNm = orderPayment.getOrderCode() + ".log";
+			String content = "[" + DateUtils.getToday("yyyy-MM-dd HH:mm:ss") + "] " + orderPayment.getOrderCode() + " - PG사로부터 입금통보 수신확인";
 
 			File dir = new File(logPath);
 			//디렉토리가 없으면 생성
-			if(!dir.isDirectory()){
+			if (!dir.isDirectory()) {
 				dir.mkdirs();
 			}
 
 			//파일에 내용 쓰기
 			FileWriter fw = null;
 			BufferedWriter out = null;
-			try{
-				fw = new FileWriter(new File(logPath+fileNm), true);
+			try {
+				fw = new FileWriter(new File(logPath + fileNm), true);
 				fw.write(content);
 
 				out = new BufferedWriter(fw);
@@ -6100,7 +6112,7 @@ public class OrderServiceImpl implements OrderService {
 
 			} catch (Exception e) {
 				log.error(ERROR_ORDER_CODE, orderPayment.getOrderCode(), e);
-			    throw new OrderException("[ERROR] " + orderPayment.getOrderCode(), e);
+				throw new OrderException("[ERROR] " + orderPayment.getOrderCode(), e);
 			} finally {
 				if (out != null) {
 					try {
@@ -6151,7 +6163,7 @@ public class OrderServiceImpl implements OrderService {
 			throw new PageNotFoundException();
 		}
 
-        editPayment.setUserId(order.getUserId());
+		editPayment.setUserId(order.getUserId());
 
 		List<OrderPayment> payments = orderMapper.getOrderPaymentListByParam(orderParam);
 		if (payments == null) {
@@ -6159,14 +6171,14 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		if (editPayment.getChangePayments() != null) {
-			for(ChangePayment changePayment : editPayment.getChangePayments()) {
+			for (ChangePayment changePayment : editPayment.getChangePayments()) {
 
 				int paymentSequence = changePayment.getPaymentSequence();
 				int cancelAmount = changePayment.getCancelAmount();
 				if (changePayment.getCancelAmount() > 0) {
 
 					OrderPayment eqPayment = null;
-					for(OrderPayment p : payments) {
+					for (OrderPayment p : payments) {
 						if (p.getPaymentSequence() == paymentSequence) {
 							eqPayment = p;
 							break;
@@ -6177,11 +6189,11 @@ public class OrderServiceImpl implements OrderService {
 						throw new OrderException();
 					}
 
-                    if ("bank".equals(eqPayment.getApprovalType())
-                            || "realtimebank".equals(eqPayment.getApprovalType())
-                            || "vbank".equals(eqPayment.getApprovalType()) ) {
-                        editPayment.setCashbillReissueFlag(true);
-                    }
+					if ("bank".equals(eqPayment.getApprovalType())
+							|| "realtimebank".equals(eqPayment.getApprovalType())
+							|| "vbank".equals(eqPayment.getApprovalType())) {
+						editPayment.setCashbillReissueFlag(true);
+					}
 
 					if (eqPayment.getRemainingAmount() < cancelAmount) {
 						throw new OrderException("결제잔액을 확인하세요.");
@@ -6208,7 +6220,7 @@ public class OrderServiceImpl implements OrderService {
 						orderPgData.setReturnAccountNo(changePayment.getReturnBankVirtualNo());
 						orderPgData.setReturnBankName(changePayment.getReturnBankName());
 						orderPgData.setReturnName(changePayment.getReturnBankInName());
-                        orderPgData.setCancelReason(editPayment.getRefundReason());
+						orderPgData.setCancelReason(editPayment.getRefundReason());
 
 						boolean isSuccess = false;
 
@@ -6222,15 +6234,15 @@ public class OrderServiceImpl implements OrderService {
 
 						// 2017.05.25 Son Jun-Eu - Kspay도 한번 부분취소하면 부분취소만 할수있음.
 						if ("kspay".equals(orderPgData.getPgServiceType())) {
-							if(!"N".equals(orderPgData.getPartCancelDetail()))
+							if (!"N".equals(orderPgData.getPartCancelDetail()))
 								isPartCancel = true;
-							else if(eqPayment.getRemainingAmount() != eqPayment.getTotalPaymentAmount() && eqPayment.getApprovalType().equals("realtimebank"))	//실시간계좌이체는 부분취소시 PG취소 안함
+							else if (eqPayment.getRemainingAmount() != eqPayment.getTotalPaymentAmount() && eqPayment.getApprovalType().equals("realtimebank"))    //실시간계좌이체는 부분취소시 PG취소 안함
 								isPartCancel = true;
 						}
 
 						// 2017.09.04 Son Jun-Eu Kcp 계좌이체,가상계좌에 부분취소 이력이 있으면 이후에도 계속 부분취소
 						if ("kcp".equals(orderPgData.getPgServiceType())) {
-							if(!"CARD".equals(orderPgData.getPgPaymentType()) && "PART_CANCEL".equals(orderPgData.getPartCancelDetail()))
+							if (!"CARD".equals(orderPgData.getPgPaymentType()) && "PART_CANCEL".equals(orderPgData.getPartCancelDetail()))
 								isPartCancel = true;
 						}
 
@@ -6250,12 +6262,12 @@ public class OrderServiceImpl implements OrderService {
 						}
 
 						// 가상계좌 취소요청시 pg가상계좌 환불서비스 사용 안할경우 pg연동취소 사용안함.
-						if ("vbank".equals(eqPayment.getApprovalType()) && "N".equals(useVbankRefundService)){
+						if ("vbank".equals(eqPayment.getApprovalType()) && "N".equals(useVbankRefundService)) {
 							isSuccess = true;
 
-						} else if(!"N".equals(eqPayment.getEscrowStatus())){
+						} else if (!"N".equals(eqPayment.getEscrowStatus())) {
 							if (eqPayment.getEscrowStatus().equals("40")) {
-								if("inicis".equals(orderPgData.getPgServiceType())){
+								if ("inicis".equals(orderPgData.getPgServiceType())) {
 									// 2017.07.05 Son Jun-Eu - 이니시스 에스크로 결제인 경우 PG사에 구매거절 확인 전문송신
 									List<String> param = new ArrayList<>();
 
@@ -6266,7 +6278,7 @@ public class OrderServiceImpl implements OrderService {
 									//									isSuccess = inicisService.escrowDenyConfirm(param);	// 현재 에스크로 배송등록 이후에는 무조건
 									isSuccess = true;
 								}
-							}else if (eqPayment.getEscrowStatus().equals("20")) {
+							} else if (eqPayment.getEscrowStatus().equals("20")) {
 								isSuccess = true;
 
 							}
@@ -6292,11 +6304,11 @@ public class OrderServiceImpl implements OrderService {
 								orderPgData.setRequest(editPayment.getRequest());
 								orderPgData.setResponse(editPayment.getResponse());
 								isSuccess = nicepayService.cancel(orderPgData);
-                            } else if ("naverpay".equals(orderPgData.getPgServiceType())) {
-                                orderPgData.setCancelReason(editPayment.getRefundReason());
-                                orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
-                                isSuccess = orderPgData.isSuccess();
-                            }
+							} else if ("naverpay".equals(orderPgData.getPgServiceType())) {
+								orderPgData.setCancelReason(editPayment.getRefundReason());
+								orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
+								isSuccess = orderPgData.isSuccess();
+							}
 
 						} else {
 
@@ -6319,7 +6331,7 @@ public class OrderServiceImpl implements OrderService {
 								orderPgData.setPaycoCancelProducts(PaycoUtils.makePaycoCancelProducts(item, cancelAmount, order.getShippingTotalAmount(), orderPgData.getPgProcInfo()));
 								orderPgData = paycoService.partCancel(orderPgData);
 							} else if ("kspay".equals(orderPgData.getPgServiceType())) {
-								if(!approvalType.equals("realtimebank"))
+								if (!approvalType.equals("realtimebank"))
 									orderPgData = kspayService.partCancel(orderPgData);
 								else
 									orderPgData.setSuccess(true);
@@ -6332,10 +6344,10 @@ public class OrderServiceImpl implements OrderService {
 								orderPgData.setRequest(editPayment.getRequest());
 								orderPgData.setResponse(editPayment.getResponse());
 								orderPgData = nicepayService.partCancel(orderPgData);
-                            } else if ("naverpay".equals(orderPgData.getPgServiceType())) {
-                                orderPgData.setCancelReason(editPayment.getRefundReason());
-                                orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
-                            }
+							} else if ("naverpay".equals(orderPgData.getPgServiceType())) {
+								orderPgData.setCancelReason(editPayment.getRefundReason());
+								orderPgData = naverPaymentApi.cancel(orderPgData, configPg);
+							}
 
 							isSuccess = orderPgData.isSuccess();
 
@@ -6343,18 +6355,18 @@ public class OrderServiceImpl implements OrderService {
 
 						if (isSuccess) {
 
-                            eqPayment.setCancelAmount(orderPgData.getCancelAmount());
-                            eqPayment.setRemainingAmount(orderPgData.getRemainAmount());
+							eqPayment.setCancelAmount(orderPgData.getCancelAmount());
+							eqPayment.setRemainingAmount(orderPgData.getRemainAmount());
 
 							OrderPayment orderPayment = new OrderPayment(order, eqPayment.getApprovalType());
 
-                            if(isPartCancel) {
-                                // 2017.07.12 Son Jun-Eu 부분취소시 취소금액, 결제잔액 등록
-                                eqPayment.setCancelAmount(orderPgData.getCancelAmount());
-                                eqPayment.setRemainingAmount(orderPgData.getRemainAmount());
+							if (isPartCancel) {
+								// 2017.07.12 Son Jun-Eu 부분취소시 취소금액, 결제잔액 등록
+								eqPayment.setCancelAmount(orderPgData.getCancelAmount());
+								eqPayment.setRemainingAmount(orderPgData.getRemainAmount());
 
-                                orderMapper.updateOrderPgData(orderPgData);
-                            }
+								orderMapper.updateOrderPgData(orderPgData);
+							}
 
 							orderPaymentMapper.updateOrderPaymentForCancel(eqPayment);
 
@@ -6366,14 +6378,14 @@ public class OrderServiceImpl implements OrderService {
 							orderPayment.setBankInName(changePayment.getReturnBankInName());
 							if (StringUtils.isEmpty(changePayment.getReturnBankName()) == false) {
 								List<CodeInfo> list = ShopUtils.getBankListByKey(pgType);
-								for(CodeInfo code : list) {
+								for (CodeInfo code : list) {
 									if (code.getKey().getId().equals(changePayment.getReturnBankName())) {
 										orderPayment.setReturnBankName(code.getLabel());
 										break;
 									}
 								}
 							}
-							orderPayment.setBankVirtualNo(orderPayment.getReturnBankName()+" "+changePayment.getReturnBankVirtualNo());
+							orderPayment.setBankVirtualNo(orderPayment.getReturnBankName() + " " + changePayment.getReturnBankVirtualNo());
 
 							orderPaymentMapper.insertOrderPayment(orderPayment);
 
@@ -6398,21 +6410,21 @@ public class OrderServiceImpl implements OrderService {
 					orderPayment.setPaymentType("2");
 					orderPayment.setOrderPgDataId(eqPayment.getOrderPgDataId());
 					orderPayment.setCancelAmount(cancelAmount);
-                    orderPayment.setRemainingAmount(0);
+					orderPayment.setRemainingAmount(0);
 					orderPayment.setPayDate(DateUtils.getToday(DATETIME_FORMAT));
 					orderPayment.setNowPaymentFlag("Y");
 					orderPayment.setBankInName(changePayment.getReturnBankInName());
 
 					if (StringUtils.isEmpty(changePayment.getReturnBankName()) == false) {
 						List<CodeInfo> list = ShopUtils.getBankListByKey(pgType);
-						for(CodeInfo code : list) {
+						for (CodeInfo code : list) {
 							if (code.getKey().getId().equals(changePayment.getReturnBankName())) {
 								orderPayment.setReturnBankName(code.getLabel());
 								break;
 							}
 						}
 					}
-					orderPayment.setBankVirtualNo(orderPayment.getReturnBankName()+" "+changePayment.getReturnBankVirtualNo());
+					orderPayment.setBankVirtualNo(orderPayment.getReturnBankName() + " " + changePayment.getReturnBankVirtualNo());
 
 					orderPaymentMapper.insertOrderPayment(orderPayment);
 
@@ -6427,7 +6439,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		if (editPayment.getDeletePaymentIds() != null) {
-			for(int paymentSequence : editPayment.getDeletePaymentIds()) {
+			for (int paymentSequence : editPayment.getDeletePaymentIds()) {
 
 				orderParam.setPaymentSequence(paymentSequence);
 
@@ -6450,7 +6462,7 @@ public class OrderServiceImpl implements OrderService {
 
 		if (editPayment.getNewPayments() != null) {
 
-			for(NewPayment payment : editPayment.getNewPayments()) {
+			for (NewPayment payment : editPayment.getNewPayments()) {
 
 				if (payment.getAmount() > 0) {
 
@@ -6499,7 +6511,7 @@ public class OrderServiceImpl implements OrderService {
 			orderPayment.setTaxFreeAmount(0);
 			orderPayment.setCancelAmount(editPayment.getRefundAmount());
 			orderPayment.setRemainingAmount(0);
-			orderPayment.setPayDate(DateUtils.getToday(DATETIME_FORMAT));			// paydate는 현재 시간으로 설정.
+			orderPayment.setPayDate(DateUtils.getToday(DATETIME_FORMAT));            // paydate는 현재 시간으로 설정.
 			orderPayment.setNowPaymentFlag("N");
 			orderPayment.setRefundFlag("Y");
 
@@ -6520,7 +6532,7 @@ public class OrderServiceImpl implements OrderService {
 
 
 		//orderPaymentMapper.updateTotalPayAmount(orderParam);
-        orderMapper.updateConfirmationOfPaymentCancelStep2(orderParam);
+		orderMapper.updateConfirmationOfPaymentCancelStep2(orderParam);
 	}
 
 	@Override
@@ -6552,7 +6564,7 @@ public class OrderServiceImpl implements OrderService {
 		if ("1".equals(adminClaimApply.getClaimType())) { // 취소
 
 			List<OrderItem> erpOrderItems = new ArrayList<>();
-			for(String key : adminClaimApply.getAdminClaimApplyKey()) {
+			for (String key : adminClaimApply.getAdminClaimApplyKey()) {
 
 				OrderCancelApply apply = adminClaimApply.getOrderCancelApply();
 				AdminClaimApplyItem item = adminClaimApply.getItemMap().get(key);
@@ -6634,10 +6646,10 @@ public class OrderServiceImpl implements OrderService {
 
 				// 주문 로그
 				this.insertOrderLog(OrderLogType.CLAIM_CANCEL,
-							apply.getOrderCode(),
-							apply.getOrderSequence(),
-							apply.getItemSequence(),
-							orderItem.getOrderStatus());
+						apply.getOrderCode(),
+						apply.getOrderSequence(),
+						apply.getItemSequence(),
+						orderItem.getOrderStatus());
 
 
 				orderItem.setCancelApply(apply);
@@ -6654,7 +6666,7 @@ public class OrderServiceImpl implements OrderService {
 		} else if ("2".equals(adminClaimApply.getClaimType())) {
 
 			List<OrderItem> erpOrderItems = new ArrayList<>();
-			for(String key : adminClaimApply.getAdminClaimApplyKey()) {
+			for (String key : adminClaimApply.getAdminClaimApplyKey()) {
 
 				OrderReturnApply apply = adminClaimApply.getOrderReturnApply();
 				AdminClaimApplyItem item = adminClaimApply.getItemMap().get(key);
@@ -6775,7 +6787,7 @@ public class OrderServiceImpl implements OrderService {
 
 		} else {
 
-			for(String key : adminClaimApply.getAdminClaimApplyKey()) {
+			for (String key : adminClaimApply.getAdminClaimApplyKey()) {
 
 				OrderExchangeApply apply = adminClaimApply.getOrderExchangeApply();
 				AdminClaimApplyItem item = adminClaimApply.getItemMap().get(key);
@@ -6896,7 +6908,7 @@ public class OrderServiceImpl implements OrderService {
 					try {
 						HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 						// ip = JwtUtils.getClientIpAddress(request);
-                        ip = saleson.common.utils.CommonUtils.getClientIp(request);
+						ip = saleson.common.utils.CommonUtils.getClientIp(request);
 					} catch (Exception e) {
 						log.info("[insertOrderLog] 배치 처리 등과 같이 request가 없는 처리인 경우 IP는 조회할 수 없습니다.", e);
 					}
@@ -6974,16 +6986,16 @@ public class OrderServiceImpl implements OrderService {
 		return orderMapper.getOrderItemByParam(orderParam);
 	}
 
-    @Override
-    public List<OrderItem> getOrderItemListForOrderLog(String orderCode, int orderSequence) {
+	@Override
+	public List<OrderItem> getOrderItemListForOrderLog(String orderCode, int orderSequence) {
 
-        OrderParam orderParam = new OrderParam();
-        orderParam.setOrderCode(orderCode);
-        orderParam.setOrderSequence(orderSequence);
-        this.setConditionTypeForOrderLog(orderParam);
+		OrderParam orderParam = new OrderParam();
+		orderParam.setOrderCode(orderCode);
+		orderParam.setOrderSequence(orderSequence);
+		this.setConditionTypeForOrderLog(orderParam);
 
-        return orderMapper.getOrderItemListByParam(orderParam);
-    }
+		return orderMapper.getOrderItemListByParam(orderParam);
+	}
 
 	@Override
 	public Iterable<OrderLog> getOrderLogListByOrderCode(OrderLog orderLog) {
@@ -7043,21 +7055,21 @@ public class OrderServiceImpl implements OrderService {
 
 	}
 
-    private void receiptDataSave(Buy buy, int totCnt, int cnt) {
+	private void receiptDataSave(Buy buy, int totCnt, int cnt) {
 
-        if (totCnt == cnt) {
-            long pointAmount = 0;
+		if (totCnt == cnt) {
+			long pointAmount = 0;
 
-            // 포인트 사용금액 확인
-            for (BuyPayment payment : buy.getPayments()) {
-                if (PointUtils.isPointType(payment.getApprovalType())) {
-                    pointAmount = (long) payment.getAmount();
-                }
-            }
+			// 포인트 사용금액 확인
+			for (BuyPayment payment : buy.getPayments()) {
+				if (PointUtils.isPointType(payment.getApprovalType())) {
+					pointAmount = (long) payment.getAmount();
+				}
+			}
 
-            Boolean isSuccess = false;
+			Boolean isSuccess = false;
 
-            Cashbill cashbill = buy.getCashbill();
+			Cashbill cashbill = buy.getCashbill();
 
 			ConfigPg configPg = configPgService.getConfigPg();
 			String cashbillService = "";
@@ -7069,105 +7081,106 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			cashbill.setPgService(cashbillService);
-            cashbill.setOrderCode(buy.getOrderCode());
-            cashbill.setCustomerName(buy.getBuyer().getUserName());
-            cashbill.setCreatedDate(DateUtils.getToday(DATETIME_FORMAT));
+			cashbill.setOrderCode(buy.getOrderCode());
+			cashbill.setCustomerName(buy.getBuyer().getUserName());
+			cashbill.setCreatedDate(DateUtils.getToday(DATETIME_FORMAT));
 
-            if (UserUtils.isUserLogin() || UserUtils.isManagerLogin()) {
-                cashbill.setCreatedBy(UserUtils.getUser().getUserName() + "(" + UserUtils.getLoginId() + ")");
-            } else {
-                cashbill.setCreatedBy("비회원");
-            }
+			if (UserUtils.isUserLogin() || UserUtils.isManagerLogin()) {
+				cashbill.setCreatedBy(UserUtils.getUser().getUserName() + "(" + UserUtils.getLoginId() + ")");
+			} else {
+				cashbill.setCreatedBy("비회원");
+			}
 
-            CashbillIssueType cashbillIssueType = CashbillIssueType.NORMAL;
+			CashbillIssueType cashbillIssueType = CashbillIssueType.NORMAL;
 
-            if (CashbillType.NONE == buy.getCashbill().getCashbillType()
-                    && buy.getOrderPrice().getOrderPayAmount() >= 100000) {     // 현금영수증 발급신청은 안했지만 10만원이상 상품구매시
-                cashbill.setCashbillCode("0100001234");
-                cashbill.setCashbillType(CashbillType.PERSONAL);
+			if (CashbillType.NONE == buy.getCashbill().getCashbillType()
+					&& buy.getOrderPrice().getOrderPayAmount() >= 100000) {     // 현금영수증 발급신청은 안했지만 10만원이상 상품구매시
+				cashbill.setCashbillCode("0100001234");
+				cashbill.setCashbillType(CashbillType.PERSONAL);
 
-                cashbillRepository.save(cashbill);
+				cashbillRepository.save(cashbill);
 
-                isSuccess = true;
+				isSuccess = true;
 
-                cashbillIssueType = CashbillIssueType.TEMP;
-            } else if (CashbillType.NONE != buy.getCashbill().getCashbillType() && buy.getCashbill().getCashbillType() != null ) {                                                  // 현금영수증 발급신청했을 경우
-                cashbillRepository.save(cashbill);
+				cashbillIssueType = CashbillIssueType.TEMP;
+			} else if (CashbillType.NONE != buy.getCashbill().getCashbillType() && buy.getCashbill().getCashbillType() != null) {                                                  // 현금영수증 발급신청했을 경우
+				cashbillRepository.save(cashbill);
 
-                isSuccess = true;
-            }
+				isSuccess = true;
+			}
 
-            if (isSuccess) {
-                CashbillIssue taxCashbillIssue = new CashbillIssue();
-                CashbillIssue taxFreeCashbillIssue = new CashbillIssue();
+			if (isSuccess) {
+				CashbillIssue taxCashbillIssue = new CashbillIssue();
+				CashbillIssue taxFreeCashbillIssue = new CashbillIssue();
 
-                long taxCashbillAmount = 0;
-                long taxFreeCashbillAmount = 0;
+				long taxCashbillAmount = 0;
+				long taxFreeCashbillAmount = 0;
 
-                // 배송비 현금영수증
-                if (buy.getOrderPrice().getTotalShippingAmount() > 0) {
-                    taxCashbillAmount += (long) buy.getOrderPrice().getTotalShippingAmount();
-                }
+				// 배송비 현금영수증
+				if (buy.getOrderPrice().getTotalShippingAmount() > 0) {
+					taxCashbillAmount += (long) buy.getOrderPrice().getTotalShippingAmount();
+				}
 
-                // 상품별 과세/면세 구분해서 현금영수증 금액에 추가
-                for (BuyItem item : buy.getItems()) {
+				// 상품별 과세/면세 구분해서 현금영수증 금액에 추가
+				for (BuyItem item : buy.getItems()) {
 
-                    if ("1".equals(item.getItem().getTaxType())) {
-                        taxCashbillAmount += (long) item.getItemPrice().getSaleAmount();
-                    } else {
-                        taxFreeCashbillAmount += (long) item.getItemPrice().getSaleAmount();
-                    }
-                }
+					if ("1".equals(item.getItem().getTaxType())) {
+						taxCashbillAmount += (long) item.getItemPrice().getSaleAmount();
+					} else {
+						taxFreeCashbillAmount += (long) item.getItemPrice().getSaleAmount();
+					}
+				}
 
-                if (taxCashbillAmount <= pointAmount) {
-                    pointAmount -= taxCashbillAmount;
-                    taxCashbillAmount = 0;
+				if (taxCashbillAmount <= pointAmount) {
+					pointAmount -= taxCashbillAmount;
+					taxCashbillAmount = 0;
 
-                    taxFreeCashbillAmount -= pointAmount;
-                    pointAmount = 0;
-                } else {
-                    taxCashbillAmount -= pointAmount;
-                    pointAmount = 0;
+					taxFreeCashbillAmount -= pointAmount;
+					pointAmount = 0;
+				} else {
+					taxCashbillAmount -= pointAmount;
+					pointAmount = 0;
 
-                    if (taxCashbillAmount > 0) {
-                        taxCashbillIssue.setCashbill(cashbill);
-                        taxCashbillIssue.setAmount((long) taxCashbillAmount);
-                        taxCashbillIssue.setCashbillStatus(CashbillStatus.PENDING);
-                        taxCashbillIssue.setItemName(buy.getOrderCode() + "(과세)");
-                        taxCashbillIssue.setCreatedDate(DateUtils.getToday(DATETIME_FORMAT));
-                        taxCashbillIssue.setCashbillIssueType(cashbillIssueType);
-                        taxCashbillIssue.setUpdateBy(buy.getBuyer().getUserName() + "(" + buy.getBuyer().getLoginId() + ")");
-                        taxCashbillIssue.setUpdatedDate(DateUtils.getToday(DATETIME_FORMAT));
-                        taxCashbillIssue.setTaxType(TaxType.CHARGE);
+					if (taxCashbillAmount > 0) {
+						taxCashbillIssue.setCashbill(cashbill);
+						taxCashbillIssue.setAmount((long) taxCashbillAmount);
+						taxCashbillIssue.setCashbillStatus(CashbillStatus.PENDING);
+						taxCashbillIssue.setItemName(buy.getOrderCode() + "(과세)");
+						taxCashbillIssue.setCreatedDate(DateUtils.getToday(DATETIME_FORMAT));
+						taxCashbillIssue.setCashbillIssueType(cashbillIssueType);
+						taxCashbillIssue.setUpdateBy(buy.getBuyer().getUserName() + "(" + buy.getBuyer().getLoginId() + ")");
+						taxCashbillIssue.setUpdatedDate(DateUtils.getToday(DATETIME_FORMAT));
+						taxCashbillIssue.setTaxType(TaxType.CHARGE);
 
-                        cashbillIssueRepository.save(taxCashbillIssue);
-                    }
+						cashbillIssueRepository.save(taxCashbillIssue);
+					}
 
-                    if (taxFreeCashbillAmount > 0) {
-                        taxFreeCashbillIssue.setCashbill(cashbill);
-                        taxFreeCashbillIssue.setAmount((long) taxFreeCashbillAmount);
-                        taxFreeCashbillIssue.setCashbillStatus(CashbillStatus.PENDING);
-                        taxFreeCashbillIssue.setItemName(buy.getOrderCode() + "(면세)");
-                        taxFreeCashbillIssue.setCreatedDate(DateUtils.getToday(DATETIME_FORMAT));
-                        taxFreeCashbillIssue.setCashbillIssueType(cashbillIssueType);
-                        taxFreeCashbillIssue.setUpdateBy(buy.getBuyer().getUserName() + "(" + buy.getBuyer().getLoginId() + ")");
-                        taxFreeCashbillIssue.setUpdatedDate(DateUtils.getToday(DATETIME_FORMAT));
-                        taxFreeCashbillIssue.setTaxType(TaxType.FREE);
+					if (taxFreeCashbillAmount > 0) {
+						taxFreeCashbillIssue.setCashbill(cashbill);
+						taxFreeCashbillIssue.setAmount((long) taxFreeCashbillAmount);
+						taxFreeCashbillIssue.setCashbillStatus(CashbillStatus.PENDING);
+						taxFreeCashbillIssue.setItemName(buy.getOrderCode() + "(면세)");
+						taxFreeCashbillIssue.setCreatedDate(DateUtils.getToday(DATETIME_FORMAT));
+						taxFreeCashbillIssue.setCashbillIssueType(cashbillIssueType);
+						taxFreeCashbillIssue.setUpdateBy(buy.getBuyer().getUserName() + "(" + buy.getBuyer().getLoginId() + ")");
+						taxFreeCashbillIssue.setUpdatedDate(DateUtils.getToday(DATETIME_FORMAT));
+						taxFreeCashbillIssue.setTaxType(TaxType.FREE);
 
-                        cashbillIssueRepository.save(taxFreeCashbillIssue);
-                    }
-                }
-            }
-        }
-    }
+						cashbillIssueRepository.save(taxFreeCashbillIssue);
+					}
+				}
+			}
+		}
+	}
 
-    @Override
-    public String getEmailByOrderCode(OrderParam orderParam) {
-        return orderMapper.getEmailByOrderCode(orderParam);
-    }
+	@Override
+	public String getEmailByOrderCode(OrderParam orderParam) {
+		return orderMapper.getEmailByOrderCode(orderParam);
+	}
 
 	/**
 	 * 주문 상품 등록
+	 *
 	 * @param buyItems
 	 */
 	private void insertOrderItem(List<BuyItem> buyItems) {
@@ -7189,6 +7202,7 @@ public class OrderServiceImpl implements OrderService {
 
 	/**
 	 * 주문 목록에 사은품 추가
+	 *
 	 * @param orderList
 	 */
 	private void setOrderGiftItemForOrderList(List<OrderList> orderList) {
@@ -7262,7 +7276,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 
-		for(int i = 0; i < list.size(); i++){
+		for (int i = 0; i < list.size(); i++) {
 
 			bindOrder(list.get(i), orderParam);
 
@@ -7274,13 +7288,13 @@ public class OrderServiceImpl implements OrderService {
 			order.setCreatedDate(list.get(i).getCreatedDate());
 
 
-			for(int j = 0; j < orderItems.size(); j++){
+			for (int j = 0; j < orderItems.size(); j++) {
 				ItemInfo itemInfo = new ItemInfo();
 				itemInfo.setItemUserCode(orderItems.get(j).getItemUserCode());
 				itemInfo.setImageSrc(ShopUtils.loadImage(orderItems.get(j).getImageSrc(), "M"));
 				itemInfo.setItemName(orderItems.get(j).getItemName());
-				if(orderItems.get(j).getOptions() != null){
-					itemInfo.setOptions(ShopUtils.buyViewOptionText(orderItems.get(j).getOptions()).replace("<br/>",""));
+				if (orderItems.get(j).getOptions() != null) {
+					itemInfo.setOptions(ShopUtils.buyViewOptionText(orderItems.get(j).getOptions()).replace("<br/>", ""));
 					itemInfo.setOptionString(orderItems.get(j).getOptions());
 				}
 
@@ -7325,7 +7339,7 @@ public class OrderServiceImpl implements OrderService {
 		/* 교환, 반품 거절 사유 상품별로 불러오기 */
 		for (OrderShippingInfo shippingInfos : order.getOrderShippingInfos()) {
 			for (OrderItem orderItem : shippingInfos.getOrderItems()) {
-				if("59".equals(orderItem.getOrderStatus())) { //교환 거절
+				if ("59".equals(orderItem.getOrderStatus())) { //교환 거절
 					orderItem.setClaimRefusalReasonText(orderClaimApplyMapper.getClaimRefusalReasonText(orderItem));
 				} else if ("69".equals(orderItem.getOrderStatus())) {
 					orderItem.setClaimRefusalReasonText(orderClaimApplyMapper.getClaimRefusalReasonText(orderItem));
@@ -7337,7 +7351,7 @@ public class OrderServiceImpl implements OrderService {
 		return OrderDetail;
 	}
 
-	private OrderDetail orderDetailDataSet(Order order){
+	private OrderDetail orderDetailDataSet(Order order) {
 		OrderDetail orderDetail = new OrderDetail();
 		ShippingInfo shippingInfo = new ShippingInfo();
 		List<PaymentInfo> paymentList = new ArrayList<>();
@@ -7371,7 +7385,7 @@ public class OrderServiceImpl implements OrderService {
 		shippingInfo.setPayShipping(orderItem.getOrderShipping().getPayShipping());     // 배송비(0원 일 시 무료)
 
 		List<OrderItem> orderItems = order.getOrderShippingInfos().get(0).getOrderItems();
-		for(int i = 0; i < orderItems.size(); i++){
+		for (int i = 0; i < orderItems.size(); i++) {
 			ItemInfo itemInfo = new ItemInfo();
 			itemInfo.setItemId(orderItems.get(i).getItemId());
 			itemInfo.setItemUserCode(orderItems.get(i).getItemUserCode());
@@ -7379,8 +7393,8 @@ public class OrderServiceImpl implements OrderService {
 
 			itemInfo.setItemName(orderItems.get(i).getItemName());
 
-			if(orderItems.get(i).getOptions() != null){
-				itemInfo.setOptions(ShopUtils.buyViewOptionText(orderItems.get(i).getOptions()).replace("<br/>",""));
+			if (orderItems.get(i).getOptions() != null) {
+				itemInfo.setOptions(ShopUtils.buyViewOptionText(orderItems.get(i).getOptions()).replace("<br/>", ""));
 				itemInfo.setOptionString(orderItems.get(i).getOptions());
 			}
 
@@ -7413,8 +7427,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		List<OrderPayment> opList = order.getOrderPayments();
-		if(!opList.isEmpty()){
-			for(int i = 0; i < opList.size(); i++){
+		if (!opList.isEmpty()) {
+			for (int i = 0; i < opList.size(); i++) {
 				PaymentInfo paymentInfo = new PaymentInfo();
 				paymentInfo.setApprovalType(opList.get(i).getApprovalType());     // 결제수단
 				paymentInfo.setApprovalTypeLabel(opList.get(i).getApprovalTypeLabel());
@@ -7426,7 +7440,7 @@ public class OrderServiceImpl implements OrderService {
 				paymentInfo.setBankVirtualNo(opList.get(i).getBankVirtualNo());    // 계좌번호
 				paymentInfo.setBankInName(opList.get(i).getBankInName());       // 입금예정자
 				paymentInfo.setBankDate(opList.get(i).getBankDate());       // 입금예정일(만료일)
-				paymentInfo.setPayInfo(opList.get(i).getPayInfo());			// 결제정보
+				paymentInfo.setPayInfo(opList.get(i).getPayInfo());            // 결제정보
 				paymentList.add(paymentInfo);
 			}
 		}
@@ -7532,7 +7546,7 @@ public class OrderServiceImpl implements OrderService {
 
 		// CJH 추가 구성품이 있는경우 복수배송지 선택 불가
 		boolean isAdditionItem = false;
-		for(BuyItem item : items) {
+		for (BuyItem item : items) {
 			if ("Y".equals(item.getAdditionItemFlag())) {
 				isAdditionItem = true;
 			}
@@ -7542,7 +7556,7 @@ public class OrderServiceImpl implements OrderService {
 
 
 		HashMap<Long, String> sellerMap = new HashMap<>();
-		for(Receiver receiver : buy.getReceivers()) {
+		for (Receiver receiver : buy.getReceivers()) {
 
 			receiver.setItems(items);
 
@@ -7551,7 +7565,7 @@ public class OrderServiceImpl implements OrderService {
 
 			// 배송지별 구매상품 초기화
 			List<BuyQuantity> buyQuantitys = new ArrayList<>();
-			for(BuyItem buyItem : items) {
+			for (BuyItem buyItem : items) {
 				BuyQuantity buyQuantity = new BuyQuantity();
 				buyQuantity.setItemSequence(buyItem.getItemSequence());
 				buyQuantity.setQuantity(buyItem.getItemPrice().getQuantity());
@@ -7577,7 +7591,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		String sellerNames = "";
-		for(Long sellerId : sellerMap.keySet()) {
+		for (Long sellerId : sellerMap.keySet()) {
 			sellerNames += (StringUtils.isEmpty(sellerNames) ? "" : ", ") + sellerMap.get(sellerId);
 		}
 		buy.setSellerNames(sellerNames);
@@ -7598,7 +7612,7 @@ public class OrderServiceImpl implements OrderService {
 		return result;
 	}
 
-	private OrderDetail orderPaymentInfoSet(Buy buy){
+	private OrderDetail orderPaymentInfoSet(Buy buy) {
 		OrderDetail orderDetail = new OrderDetail();
 		List<ItemInfo> items = new ArrayList<>();       // 상품정보
 		ShippingInfo shippingInfo = new ShippingInfo(); // 배송정보
@@ -7619,13 +7633,13 @@ public class OrderServiceImpl implements OrderService {
 		// 개별배송상품여부 isSingleShipping
 
 		// 상품정보
-		if(receiver.getItemGroups().size() > 0){
-			for(int i = 0; i < receiver.getItemGroups().size(); i++){
+		if (receiver.getItemGroups().size() > 0) {
+			for (int i = 0; i < receiver.getItemGroups().size(); i++) {
 				BuyItem buyItem = null;
 				int realShipping = receiver.getItemGroups().get(i).getRealShipping();
-				if(receiver.getItemGroups().get(i).getBuyItems() != null){
+				if (receiver.getItemGroups().get(i).getBuyItems() != null) {
 					List<BuyItem> lbiList = receiver.getItemGroups().get(i).getBuyItems();
-					for(int j = 0; j < lbiList.size(); j++){
+					for (int j = 0; j < lbiList.size(); j++) {
 						buyItem = lbiList.get(j);
 
 						Shipping sh = receiver.getItemGroups().get(i);
@@ -7634,11 +7648,11 @@ public class OrderServiceImpl implements OrderService {
 						item.setItemName(buyItem.getItemName());      // 상품명
 						item.setItemUserCode(buyItem.getItemUserCode());  // 상품코드
 						item.setItemId(buyItem.getItemId());        // 상품아이디
-						if(buyItem.getOptions() != null){
-							item.setOptions(ShopUtils.buyViewOptionText(buyItem.getOptions()).replace("<br/>","")); // 상품옵션
+						if (buyItem.getOptions() != null) {
+							item.setOptions(ShopUtils.buyViewOptionText(buyItem.getOptions()).replace("<br/>", "")); // 상품옵션
 						}
 
-						if(buyItem.getOptionList() != null && buyItem.getOptionList().size() > 0){
+						if (buyItem.getOptionList() != null && buyItem.getOptionList().size() > 0) {
 							// 상품옵션 ID
 							item.setOptionId(buyItem.getOptionList().get(0).getItemOptionId());
 						}
@@ -7655,7 +7669,7 @@ public class OrderServiceImpl implements OrderService {
 
 						/*item.setUseIslandFlag(buyItem.getItem().getUseIslandFlag());*/
 
-						item.setShippingItemCount(sh.getShippingItemCount());	// 박스당 제한수량
+						item.setShippingItemCount(sh.getShippingItemCount());    // 박스당 제한수량
 						item.setShippingFreeAmount(sh.getShippingFreeAmount()); // 조건부 무료배송금액
 						item.setShippingExtraCharge1(sh.getShippingExtraCharge1()); // 제주도 추가 배송비
 						item.setShippingExtraCharge2(sh.getShippingExtraCharge2()); //도서산간 추가배송비
@@ -7693,10 +7707,10 @@ public class OrderServiceImpl implements OrderService {
 					item.setItemName(buyItem.getItemName());      // 상품명
 					item.setItemUserCode(buyItem.getItemUserCode());  // 상품코드
 					item.setItemId(buyItem.getItemId());        // 상품아이디
-					if(buyItem.getOptions() != null){
-						item.setOptions(ShopUtils.buyViewOptionText(buyItem.getOptions()).replace("<br/>","")); // 상품옵션
+					if (buyItem.getOptions() != null) {
+						item.setOptions(ShopUtils.buyViewOptionText(buyItem.getOptions()).replace("<br/>", "")); // 상품옵션
 					}
-					if(buyItem.getOptionList() != null && buyItem.getOptionList().size() > 0){
+					if (buyItem.getOptionList() != null && buyItem.getOptionList().size() > 0) {
 						// 상품옵션 ID
 						item.setOptionId(buyItem.getOptionList().get(0).getItemOptionId());
 					}
@@ -7713,7 +7727,7 @@ public class OrderServiceImpl implements OrderService {
 
 					/*item.setUseIslandFlag(buyItem.getItem().getUseIslandFlag());*/
 
-					item.setShippingItemCount(sh.getShippingItemCount());	// 박스당 제한수량
+					item.setShippingItemCount(sh.getShippingItemCount());    // 박스당 제한수량
 					item.setShippingFreeAmount(sh.getShippingFreeAmount()); // 조건부 무료배송금액
 					item.setShippingExtraCharge1(sh.getShippingExtraCharge1()); // 제주도 추가 배송비
 					item.setShippingExtraCharge2(sh.getShippingExtraCharge2()); //도서산간 추가배송비
@@ -7839,7 +7853,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderDetail;
 	}
 
-	private List<BuyCouponList> apiOrderCouponData(Buy buy){
+	private List<BuyCouponList> apiOrderCouponData(Buy buy) {
 		List<BuyCouponList> resultList = new ArrayList<>();
 
 		if (buy == null) {
@@ -7849,23 +7863,23 @@ public class OrderServiceImpl implements OrderService {
 		List<OrderCoupon> couponList = new ArrayList<>();
 		// buy.getReceivers().get(0).getItemGroups().get(0).getBuyItem().getItemCoupons()
 		Receiver receiver = buy.getReceivers().get(0);
-		if(receiver.getItemGroups().size() > 0){
+		if (receiver.getItemGroups().size() > 0) {
 			boolean singleShipping = false;
-			for(int i = 0; i < receiver.getItemGroups().size(); i++){
+			for (int i = 0; i < receiver.getItemGroups().size(); i++) {
 				BuyCouponList bcListInfo = null;
 				singleShipping = receiver.getItemGroups().get(i).isSingleShipping();
 				BuyItem bi = null;
-				if(singleShipping){
+				if (singleShipping) {
 					bcListInfo = new BuyCouponList();
 					couponList = new ArrayList<>();
 					bi = receiver.getItemGroups().get(i).getBuyItem();
-					if(bi.getItemCoupons() != null && bi.getItemCoupons().size() > 0){
-						for(int ij = 0; ij < bi.getItemCoupons().size(); ij++){
+					if (bi.getItemCoupons() != null && bi.getItemCoupons().size() > 0) {
+						for (int ij = 0; ij < bi.getItemCoupons().size(); ij++) {
 							couponList.add(bi.getItemCoupons().get(ij));
 						}
 					}
 					bcListInfo.setItemId(bi.getItemId());
-					if(bi.getOptionList() != null){
+					if (bi.getOptionList() != null) {
 						bcListInfo.setItemOptionId(bi.getOptionList().get(0).getItemOptionId());
 					} else {
 						bcListInfo.setItemOptionId(0);
@@ -7874,17 +7888,17 @@ public class OrderServiceImpl implements OrderService {
 					resultList.add(bcListInfo);
 				} else {
 					List<BuyItem> jjbi = receiver.getItemGroups().get(i).getBuyItems();
-					for(int j = 0; j < jjbi.size(); j++){
+					for (int j = 0; j < jjbi.size(); j++) {
 						bcListInfo = new BuyCouponList();
 						couponList = new ArrayList<>();
 						bi = jjbi.get(j);
-						if(bi.getItemCoupons() != null && bi.getItemCoupons().size() > 0){
-							for(int ij = 0; ij < bi.getItemCoupons().size(); ij++){
+						if (bi.getItemCoupons() != null && bi.getItemCoupons().size() > 0) {
+							for (int ij = 0; ij < bi.getItemCoupons().size(); ij++) {
 								couponList.add(bi.getItemCoupons().get(ij));
 							}
 						}
 						bcListInfo.setItemId(bi.getItemId());
-						if(bi.getOptionList() != null){
+						if (bi.getOptionList() != null) {
 							bcListInfo.setItemOptionId(bi.getOptionList().get(0).getItemOptionId());
 						} else {
 							bcListInfo.setItemOptionId(0);
@@ -7898,6 +7912,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return resultList;
 	}
+
 	@Override
 	public ReturnApplyInfo getReturnApplyInfo(OrderParam orderParam) {
 
@@ -7930,11 +7945,11 @@ public class OrderServiceImpl implements OrderService {
 		returnApply.setApplyQuantity(orderItem.getQuantity());
 		returnApply.setShipmentReturnId(orderItem.getShipmentReturnId());
 
-		if(!StringUtils.isEmpty(returnApply.getReturnReservePhone()) && !returnApply.getReturnReservePhone().equals("--")) {
+		if (!StringUtils.isEmpty(returnApply.getReturnReservePhone()) && !returnApply.getReturnReservePhone().equals("--")) {
 			returnApply.setReturnReservePhone1(returnApply.getReturnReservePhone().split("-")[0]);
 		}
 
-		if(!StringUtils.isEmpty(returnApply.getReturnReserveMobile()) && !returnApply.getReturnReserveMobile().equals("--")) {
+		if (!StringUtils.isEmpty(returnApply.getReturnReserveMobile()) && !returnApply.getReturnReserveMobile().equals("--")) {
 			returnApply.setReturnReserveMobile1(returnApply.getReturnReserveMobile().split("-")[0]);
 		}
 
@@ -7971,11 +7986,11 @@ public class OrderServiceImpl implements OrderService {
 		exchangeApply.setApplyQuantity(orderItem.getQuantity());
 		exchangeApply.setShipmentReturnId(orderItem.getShipmentReturnId());
 
-		if(!StringUtils.isEmpty(exchangeApply.getExchangeReceivePhone()) && !exchangeApply.getExchangeReceivePhone().equals("--")) {
+		if (!StringUtils.isEmpty(exchangeApply.getExchangeReceivePhone()) && !exchangeApply.getExchangeReceivePhone().equals("--")) {
 			exchangeApply.setExchangeReceiveMobile1(exchangeApply.getExchangeReceivePhone().split("-")[0]);
 		}
 
-		if(!StringUtils.isEmpty(exchangeApply.getExchangeReceiveMobile()) && !exchangeApply.getExchangeReceiveMobile().equals("--")) {
+		if (!StringUtils.isEmpty(exchangeApply.getExchangeReceiveMobile()) && !exchangeApply.getExchangeReceiveMobile().equals("--")) {
 			exchangeApply.setExchangeReceiveMobile1(exchangeApply.getExchangeReceiveMobile().split("-")[0]);
 		}
 
@@ -8001,8 +8016,8 @@ public class OrderServiceImpl implements OrderService {
 
 		// CJH 2016.11.13 사용자가 클릭하고 들어온 상품의 주문상태와 동일한것만 화면에 노출하는 조건 추가
 		String userClickItemStatus = "";
-		for(OrderShippingInfo info : order.getOrderShippingInfos()) {
-			for(OrderItem orderItem : info.getOrderItems()) {
+		for (OrderShippingInfo info : order.getOrderShippingInfos()) {
+			for (OrderItem orderItem : info.getOrderItems()) {
 				if (orderItem.getItemSequence() == claimApply.getItemSequence()) {
 					userClickItemStatus = orderItem.getOrderStatus();
 					break;
@@ -8019,8 +8034,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		int count = 0;
-		for(OrderShippingInfo info : order.getOrderShippingInfos()) {
-			for(OrderItem orderItem : info.getOrderItems()) {
+		for (OrderShippingInfo info : order.getOrderShippingInfos()) {
+			for (OrderItem orderItem : info.getOrderItems()) {
 
 				// 신청
 				if ("1".equals(claimApply.getClaimType())) {
@@ -8072,7 +8087,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int getMaxParentOrderItemSequence(OrderParam orderParam) { return orderMapper.getMaxParentOrderItemSequence(orderParam); }
+	public int getMaxParentOrderItemSequence(OrderParam orderParam) {
+		return orderMapper.getMaxParentOrderItemSequence(orderParam);
+	}
 
 	@Override
 	public void erpOrderStatusBatch() {
@@ -8146,4 +8163,15 @@ public class OrderServiceImpl implements OrderService {
 	private String getTwoDisitItemSequence(int itemSequence) {
 		return itemSequence < 10 ? "0" + itemSequence : "" + itemSequence;
 	}
+
+	@Override
+	public void insertOrderRental(OrderRental orderRental) {
+		orderMapper.insertOrderRental(orderRental);
+	}
+
+	@Override
+	public OrderRental getOrderRental(String orderCode) {
+		return orderMapper.getOrderRental(orderCode);
+	}
+
 }
