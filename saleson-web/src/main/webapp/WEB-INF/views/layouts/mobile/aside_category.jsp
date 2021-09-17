@@ -67,7 +67,7 @@
 		<div class="service_list">
 			<ul>
 				<li class="none"><a href="/m/event/spot">타임세일</a></li>
-				<li><a href="/m/pages/big-deal">득템의 기쁨</a></li>
+				<li><a href="/m/pages/limit">득템의 기쁨</a></li>
 				<li class="none"><a href="/m/event">이벤트</a></li>
 				<li><a href="/m/notice/list">고객센터</a></li>
 				<li class="none"><a href="/m/faq">FAQ</a></li>
