@@ -82,7 +82,7 @@
 			<div class="ms0101_btns">
 				<a href="/pages/newPC" class="btn01">
 					<p class="tit"><b>신품</b>조립PC<span>바로가기</span></p>
-					<p class="txt">온라인 견적 실시간 상담가능</p>
+					<p class="txt">온라인 견적 문의</p>
 				</a>
 				<a href="/pages/Lightning" class="btn02">
 					<p class="tit"><b>번개배송</b>PC<span>보러가기</span></p>
