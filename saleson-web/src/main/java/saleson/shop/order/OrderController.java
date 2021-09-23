@@ -430,6 +430,8 @@ public class OrderController {
 		orderParam.setUserId(UserUtils.getUserId());
 		orderParam.setSessionId(session.getId());
 		orderParam.setViewTarget("WEB");
+		orderParam.setRentalPer(Integer.parseInt(pgData.getContPer()));
+		orderParam.setRentalMonthAmt(Integer.parseInt(pgData.getProdRent()));
 
 		if (UserUtils.isUserLogin() == false) {
 			orderParam.setUserId(0);
@@ -440,7 +442,7 @@ public class OrderController {
 
 			orderLogService.put(orderParam.getOrderCode());
 
-			orderCode = orderService.insertOrderForRentalBuy(orderParam, pgData, session, request, pgData.getContPer());
+			orderCode = orderService.insertOrderForRentalBuy(orderParam, pgData, session, request);
 
 			//렌탈정보 저장
             OrderRental orderRental = new OrderRental();

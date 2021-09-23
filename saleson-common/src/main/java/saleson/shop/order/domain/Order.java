@@ -643,6 +643,35 @@ public class Order {
 	public void setAdditionItemList(List<BuyItem> additionItemList) {
 		this.additionItemList = additionItemList;
 	}
+
+
+	// 렌탈페이용
+	String rentalPayBuy;
+	int rentalPer;
+	int rentalMonthAmt;
+
+	public String getRentalPayBuy() {
+		return rentalPayBuy;
+	}
+	public void setRentalPayBuy(String rentalPayBuy) {
+		this.rentalPayBuy = rentalPayBuy;
+	}
+
+	public int getRentalPer() {
+		return rentalPer;
+	}
+
+	public void setRentalPer(int rentalPer) {
+		this.rentalPer = rentalPer;
+	}
+
+	public int getRentalMonthAmt() {
+		return rentalMonthAmt;
+	}
+
+	public void setRentalMonthAmt(int rentalMonthAmt) {
+		this.rentalMonthAmt = rentalMonthAmt;
+	}
 }
 
 /**
@@ -656,3 +685,4 @@ enum OrderTotal {
 	USER_LEVEL_DISCOUNT_AMOUNT,		// 등급할인금액
 	SALE_AMOUNT					// 구매금액 (할인적용금액)
 }
+

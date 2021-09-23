@@ -13,6 +13,7 @@
 					<a href="/mypage/order" id="lnb_order">쇼핑내역</a>
 					<ul class="depth_03">
 						<li><a href="/mypage/order">주문/배송조회</a></li>
+						<li><a href="/mypage/order-rental">렌탈주문 목록</a></li>
 					</ul>
 				</li>
 				<li>

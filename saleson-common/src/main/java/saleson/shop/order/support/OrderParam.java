@@ -706,4 +706,32 @@ public class OrderParam extends SearchParam {
 		this.parentItemOptions = parentItemOptions;
 	}
 
+
+	// 렌탈페이용
+	String rentalPayBuy;
+	int rentalPer;
+	int rentalMonthAmt;
+
+	public String getRentalPayBuy() {
+		return rentalPayBuy;
+	}
+	public void setRentalPayBuy(String rentalPayBuy) {
+		this.rentalPayBuy = rentalPayBuy;
+	}
+
+	public int getRentalPer() {
+		return rentalPer;
+	}
+
+	public void setRentalPer(int rentalPer) {
+		this.rentalPer = rentalPer;
+	}
+
+	public int getRentalMonthAmt() {
+		return rentalMonthAmt;
+	}
+
+	public void setRentalMonthAmt(int rentalMonthAmt) {
+		this.rentalMonthAmt = rentalMonthAmt;
+	}
 }

@@ -302,7 +302,7 @@ public interface OrderService {
 	 * @param request
 	 * @return
 	 */
-	public String insertOrderForRentalBuy(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request, String rentalPer);
+	public String insertOrderForRentalBuy(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request);
 	
 	/**
 	 * 주문상품 임시 저장

@@ -266,5 +266,34 @@ public class Buyer {
 	public void setEmail2(String email2) {
 		this.email2 = email2;
 	}
-	
+
+
+
+	//RENTAL_PAY_BUY 렌탈 결제용
+	String rentalPayBuy = "N";
+	int rentalPer;
+	int rentalMonthAmt;
+
+	public String getRentalPayBuy() {
+		return rentalPayBuy;
+	}
+	public void setRentalPayBuy(String rentalPayBuy) {
+		this.rentalPayBuy = rentalPayBuy;
+	}
+
+	public int getRentalPer() {
+		return rentalPer;
+	}
+
+	public void setRentalPer(int rentalPer) {
+		this.rentalPer = rentalPer;
+	}
+
+	public int getRentalMonthAmt() {
+		return rentalMonthAmt;
+	}
+
+	public void setRentalMonthAmt(int rentalMonthAmt) {
+		this.rentalMonthAmt = rentalMonthAmt;
+	}
 }

@@ -4763,7 +4763,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public String insertOrderForRentalBuy(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request, String rentalPer) {
+	public String insertOrderForRentalBuy(OrderParam orderParam, Object pgData, HttpSession session, HttpServletRequest request) {
 
 		if (pgData != null) {
 			if (!(pgData instanceof PgData || pgData instanceof ReservationResponse || pgData instanceof CjResult)) {
@@ -4996,6 +4996,9 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			buyer.setOrderPrice(orderPrice);
+			buyer.setRentalPayBuy("Y");
+			buyer.setRentalPer(orderParam.getRentalPer());
+			buyer.setRentalMonthAmt(orderParam.getRentalMonthAmt());
 			orderMapper.insertOrder(buyer);
 
 			erpOrder.setBuyer(buyer);
@@ -5012,7 +5015,7 @@ public class OrderServiceImpl implements OrderService {
 				OrderShippingInfo orderShippingInfo = new OrderShippingInfo(orderCode, orderSequence, shippingInfoSequence++, receiver);
 				orderMapper.insertOrderShippingInfo(orderShippingInfo);
 
-				orderShippingInfo.setMemo(rentalPer + "개월 렌탈, " + orderShippingInfo.getMemo());
+				orderShippingInfo.setMemo(orderParam.getRentalPer() + "개월 렌탈, " + orderShippingInfo.getMemo());
 				erpOrder.addOrderShippingInfo(orderShippingInfo);
 
 				for (Shipping shipping : receiver.getItemGroups()) {

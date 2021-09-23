@@ -380,7 +380,7 @@
 
     <div class="btn_wrap pt30">
         <a href="/" class="btn btn-default btn-lg" title="쇼핑계속하기">쇼핑계속하기</a>
-        <a href="/mypage/order" class="btn btn-success btn-lg" title="렌탈내역조회">렌탈내역조회</a>
+        <a href="/mypage/order-rental" class="btn btn-success btn-lg" title="렌탈내역조회">렌탈내역조회</a>
     </div>
 
 <%--</div><!--// inner E-->--%>

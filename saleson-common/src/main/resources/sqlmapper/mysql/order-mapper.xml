@@ -46,6 +46,9 @@
 		
 		<result property="orderAdminMemo" column="ORDER_ADMIN_MEMO" />
 		<result property="createdDate" column="ORDER_DATE" />
+		<result property="rentalPayBuy" column="RENTAL_PAY_BUY" />
+		<result property="rentalPer" column="RENTAL_PER" />
+		<result property="rentalMonthAmt" column="RENTAL_MONTH_AMT" />
 		<collection property="orderShippingInfos" resultMap="OrderShippingInfoResult" />
 	</resultMap>
 	
@@ -765,7 +768,7 @@
 		AND OIT.SESSION_ID = #{sessionId}
 	</sql>	
 
-	<sql id="sqlOrderWhereQuery">
+	<sql id="">
 		<choose>
 			<when test='conditionType == "ORDER-DETAIL-EXCEL"'>
 				<if test="orderCodes != null and orderCodes.isEmpty()">
@@ -865,6 +868,10 @@
 		<if test="additionItemFlag != null and additionItemFlag != ''">
 			AND OI.ADDITION_ITEM_FLAG = #{additionItemFlag}
 		</if>
+
+		<if test='rentalPayBuy != null and rentalPayBuy != ""'>
+			AND O.RENTAL_PAY_BUY = #{rentalPayBuy}
+		</if>
 	</sql>
 	
 	<!-- 환불정보 -->
@@ -941,6 +948,9 @@
 		O.IP,
 		O.ORDER_ADMIN_MEMO,
 		O.CREATED_DATE AS ORDER_DATE,
+		O.RENTAL_PAY_BUY,
+		O.RENTAL_PER,
+		O.RENTAL_MONTH_AMT,
 
 		OI.ORDER_CODE,
 		OI.ORDER_SEQUENCE,
@@ -1183,7 +1193,7 @@
 		
 		<include refid="sqlDefaultFormForOrder" />
 		<where>
-			<include refid="sqlOrderWhereQuery" />
+			<include refid="" />
 		</where>
 	</select>
 
@@ -1221,7 +1231,7 @@
 						
 					<include refid="sqlDefaultFormForOrder" />
 					<where>
-						<include refid="sqlOrderWhereQuery" />
+						<include refid="" />
 					</where>
 					
 					ORDER BY OI.ORDER_CODE DESC, OI.ORDER_SEQUENCE ASC, OI.SHIPPING_INFO_SEQUENCE ASC, OI.ITEM_SEQUENCE ASC
@@ -1230,7 +1240,7 @@
 
 			) PAGING ON OI.ORDER_CODE = PAGING.ORDER_CODE
 		<where>
-			<include refid="sqlOrderWhereQuery" />
+			<include refid="" />
 		</where>
 		
 		ORDER BY OI.ORDER_CODE DESC, OI.ORDER_SEQUENCE ASC, OI.SHIPPING_INFO_SEQUENCE ASC, OI.ITEM_SEQUENCE ASC
@@ -1278,7 +1288,7 @@
 				
 				</when>
 			</choose>
-			<include refid="sqlOrderWhereQuery" />
+			<include refid="" />
 		</where>
 	</select>
 
@@ -1327,7 +1337,7 @@
 					</when>
 				</choose>
 			
-				<include refid="sqlOrderWhereQuery" />
+				<include refid="" />
 			</where>
 			
 			ORDER BY OI.ORDER_CODE DESC, OI.ORDER_SEQUENCE ASC, OI.SHIPPING_INFO_SEQUENCE ASC, OI.ITEM_SEQUENCE ASC
@@ -2173,7 +2183,11 @@
 			ADDRESS_DETAIL,
 			DATA_STATUS_CODE,
 			IP,
-			CREATED_DATE
+			CREATED_DATE,
+		    RENTAL_PAY_BUY,
+			RENTAL_PER,
+			RENTAL_MONTH_AMT
+
 		) VALUES (
 			#{orderCode},
 			#{orderSequence},
@@ -2194,7 +2208,10 @@
 			#{addressDetail},
 			'1',
 			#{ip},
-			<include refid="CommonMapper.datetime" />
+			<include refid="CommonMapper.datetime" />,
+		    #{rentalPayBuy},
+			#{rentalPer},
+			#{rentalMonthAmt}
 		)
 	</insert>
 	
@@ -3719,7 +3736,7 @@
 
 				</when>
 			</choose>
-			<include refid="sqlOrderWhereQuery" />
+			<include refid="" />
 		</where>
 	</sql>
 

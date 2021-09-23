@@ -304,7 +304,7 @@ public class MypageController {
 			return "redirect:/users/login";
 			//throw new PageNotFoundException();
 		}
-
+		orderParam.setRentalPayBuy("N");
 		orderParam.setAdditionItemFlag("N");
 		List<Order> orderList = orderService.getOrderListByParam(orderParam);
 
@@ -322,6 +322,50 @@ public class MypageController {
 		
 		return ViewUtils.view();
 	}
+
+
+	/**
+	 * 렌탈 주문내역
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("order-rental")
+	public String orderRental(Model model, @ModelAttribute("orderSearchParam") OrderParam orderParam) {
+		orderParam.setSearchDateType("OI.CREATED_DATE");
+		if (UserUtils.isUserLogin()) {
+			orderParam.setUserId(UserUtils.getUserId());
+		} else if (UserUtils.isGuestLogin()) {
+			User user = UserUtils.getGuestLogin();
+			UserDetail userDetail = (UserDetail) user.getUserDetail();
+
+			orderParam.setGuestUserName(user.getUserName());
+			orderParam.setGuestPhoneNumber(userDetail.getPhoneNumber());
+		} else {
+			return "redirect:/users/login";
+			//throw new PageNotFoundException();
+		}
+
+		orderParam.setAdditionItemFlag("N");
+
+		//렌탈의 경우 Y로 렌탈 거래만 검색되게
+		orderParam.setRentalPayBuy("Y");
+		List<Order> orderList = orderService.getOrderListByParam(orderParam);
+
+		model.addAttribute("list", orderList);
+		model.addAttribute("totalCount", orderParam.getPagination().getTotalItems());
+		model.addAttribute("pagination", orderParam.getPagination());
+
+		ItemParam itemParam = new ItemParam();
+		itemParam.setUserId(UserUtils.getUserId());
+		model.addAttribute("nonregisteredReviewList", itemService.getItemNonregisteredReviewList(itemParam));
+
+		userService.setMypageUserInfoForFront(model);
+
+		setSearchDate(model, orderParam.getSearchStartDate(), orderParam.getSearchEndDate());
+
+		return ViewUtils.view();
+	}
+
 	
 	/**
 	 * 주문내역 상세
