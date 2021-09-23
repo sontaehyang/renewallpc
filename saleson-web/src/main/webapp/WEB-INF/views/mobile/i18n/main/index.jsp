@@ -74,9 +74,9 @@
 	<!-- 배송상품 : s -->
 	<div class="delivery_pro">
 		<div class="delivery_pro_content">
-			<a href="/m/pages/Salesking" class="del_today">
-				<p class="tit"><span>판매왕</span>PC</p>
-				<p class="txt">인기상품 총집합!</p>
+			<a href="/m/pages/newPC" class="del_today">
+				<p class="tit"><span>신품조립</span>PC</p>
+				<p class="txt">온라인 견적 실시간 상담가능</p>
 			</a>
 			<a href="/m/pages/Lightning" class="del_quick">
 				<p class="tit"><span>번개배송</span>PC</p>
